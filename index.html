@@ -1,1 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Finance Intelligence | Premium Terminal</title>
+    
+    
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bb-black: #000000;
+            --bb-white: #ffffff;
+            --bb-border: #eaeaea;
+            --bb-dark: #111111;
+            --bb-muted: #555555;
+            --bb-blue: #004B87;
+            --bb-gold: #ffd700;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bb-white);
+            color: var(--bb-dark);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 1. ULTRA-WIDE STICKY HEADER */
+        .bb-fixed-header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .bb-premium-header {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 25px 20px;
+        }
+        
+        .header-wide-layout {
+            display: flex;
+            flex-direction: row; 
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Gold Gradient Shimmer Logo */
+        .animated-logo {
+            font-size: 40px; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1.5px;
+            background: linear-gradient(90deg, #ffffff, var(--bb-gold), #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineLogo 4s linear infinite;
+            white-space: nowrap;
+        }
+        @keyframes shineLogo {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .header-about-box {
+            flex: 1;
+            max-width: 700px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #cccccc;
+            border-left: 3px solid var(--bb-gold); 
+            padding-left: 20px;
+        }
+
+        /* 2. INFINITE 24/7 LIVE MARKET TICKER STRIP */
+        .market-ticker-strip {
+            background: #111111;
+            border-bottom: 2px solid #000000;
+            padding: 14px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            width: 100%;
+        }
+        
+        .ticker-scroll-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: infiniteMarquee 30s linear infinite;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        @keyframes infiniteMarquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        
+        .ticker-item { display: inline-block; margin-right: 50px; }
+        .price-up { color: #00873c; font-weight: 800; }
+        .price-down { color: #cc0000; font-weight: 800; }
+
+        /* 3. ULTRA-WIDE WESTERN 3-COLUMN LAYOUT SYSTEM */
+        .main-terminal-area {
+            margin-top: 230px; 
+            padding: 30px;
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+        }
+
+        @media (min-width: 992px) {
+            .main-terminal-area {
+                grid-template-columns: 1fr 1.6fr 1fr; /* 3 लग्जरी कॉलम ग्रिड */
+            }
+        }
+
+        .terminal-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        /* ब्लूमबर्ग लाइन्स / वर्टीकल बॉर्डर्स */
+        .border-column {
+            border-right: 1px solid var(--bb-border);
+            padding-right: 15px;
+        }
+
+        @media (max-width: 991px) {
+            .border-column { border-right: none; padding-right: 0; }
+        }
+
+        /* 4. PREMIUM CONTENT COMPONENT STYLING */
+        .bb-post-card {
+            border-bottom: 1px solid var(--bb-border);
+            padding-bottom: 25px;
+            margin-bottom: 5px;
+        }
+        .bb-post-card:last-child { border-bottom: none; }
+        
+        .post-tag {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--bb-blue);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .post-headline {
+            font-family: 'Merriweather', serif;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.3px;
+        }
+        .post-headline a { color: var(--bb-black); text-decoration: none; }
+        .post-headline a:hover { color: var(--bb-blue); text-decoration: underline; }
+        
+        .post-excerpt { font-size: 15px; line-height: 1.6; color: var(--bb-muted); }
+
+        /* HIGH-CONVERTING ADSENSE PLACEHOLDERS */
+        .premium-adsense-slot {
+            background-color: #fcfcfc;
+            border: 1px dashed #cccccc;
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+  <!-- FIXED HEADER TOP BLOCK -->
+  <div class="bb-fixed-header-wrapper">
+    <div class="bb-premium-header">
+      <div class="header-wide-layout">
+        <div class="animated-logo">GLOBAL FINANCE</div>
+        <div class="header-about-box">
+          <strong style="color:var(--bb-gold); text-transform:uppercase; display:block; margin-bottom:4px; font-size:11px;">Global Intelligence Terminal</strong>
+          यह एक इंटरनेशनल वित्तीय मंच है जहाँ आपको Financial Trading, Real-time Investment Strategies, Corporate Loans, और Premium Online Earning Tips का सटीक विश्लेषण दिया जाता है।
+        </div>
+      </div>
+    </div>
+
+    <!-- INFINITE DYNAMIC TICKER STRIP -->
+    <div class="market-ticker-strip">
+      <div class="ticker-scroll-content">
+        <div class="ticker-item" style="color:var(--bb-gold);">• ULTRA-LIVE TERMINAL</div>
+        <div class="ticker-item">DOW JONES: <span class="price-up">$39,120.45 (+0.45% ▲)</span></div>
+        <div class="ticker-item">S&P 500: <span class="price-up">$5,480.22 (+0.22% ▲)</span></div>
+        <div class="ticker-item">NASDAQ: <span class="price-down">$17,732.12 (-0.12% ▼)</span></div>
+        <div class="ticker-item">BITCOIN: <span class="price-up">$68,450.00 (+1.85% ▲)</span></div>
+        <div class="ticker-item">ETH: <span class="price-up">$3,540.80 (+2.10% ▲)</span></div>
+        <div class="ticker-item">GOLD: <span class="price-down">$2,320.50 (-0.05% ▼)</span></div>
+        <div class="ticker-item">NIFTY 50: <span class="price-up">23,550.15 (+0.65% ▲)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN TERMINAL AREA (3-COLUMN ENGINE) -->
+  <div class="main-terminal-area">
+    
+    <!-- COLUMN 1: FINANCIAL TRADING & MARKET BREAKING -->
+    <div class="terminal-column border-column">
+      <div style="font-size: 12px; font-weight: 900; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">LATEST MARKET RADAR</div>
+      
+      <article class="bb-post-card">
+        <div class="post-tag">Trading Analytics</div>
+        <h3 class="post-headline"><a href="#">ग्लोबल मार्केट्स में भारी उतार-चढ़ाव, इन्वेस्टर्स के लिए सुरक्षित ट्रेडिंग स्ट्रेटेजी</a></h3>
+        <p class="post-excerpt">अंतर्राष्ट्रीय बाजारों में हो रहे बदलावों के बीच शॉर्ट-टर्म ट्रेडर्स के लिए रिस्क मैनेजमेंट के नियम बदल गए हैं...</p>
+      </article>
+
+      <article class="bb-post-card">
+        <div class="post-tag">Cryptocurrency</div>
+        <h3 class="post-headline"><a href="#">क्रिप्टो मार्केट्स अलर्ट: बिटकॉइन में नया break-out, क्या $70K का स्तर पार होगा?</a></h3>
+        <p class="post-excerpt">टेक्निकल इंडिकेटर्स बताते हैं कि इंस्टीट्यूशनल बाइंग की वजह से डिजिटल एसेट्स में भारी तेजी की संभावना है...</p>
+      </article>
+    </div>
+
+    <!-- COLUMN 2: INTERACTIVE ANALYTICS (MIDDLE EXPANDED SYSTEM) -->
+    <div class="terminal-column border-column">
+      <div style="font-size: 12px; font-weight: 900; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">REAL-TIME FINANCIAL TERMINAL</div>
+      
+      <!-- 24/7 Live Interactive TradingView Chart Component -->
+      <div id="tradingview_chart" style="height: 400px; width: 100%;">
+        <iframe src="https://tradingview.com" style="width: 100%; height: 100%; border: 1px solid var(--bb-border);" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+      </div>
+
+      <!-- High-Converting AdSense Placement Slot -->
+      <div class="premium-adsense-slot">
+        🌟 Google AdSense Responsive Premium Advertisement Placement Node 🌟
+      </div>
+    </div>
+
+    <!-- COLUMN 3: LOANS, INVESTMENT & ONLINE EARNING SECRETS -->
+    <div class="terminal-column">
+      <div style="font-size: 12px; font-weight: 900; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">WEALTH GENERATION NODE</div>
+      
+      <article class="bb-post-card">
+        <div class="post-tag">Corporate Loans</div>
 
