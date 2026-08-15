@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Global Finance Intelligence | Bloomberg v4 Quantum-X</title>
+    <title>Global Finance Intelligence | Bloomberg v4.8 Quantum-X</title>
     
     
     <link href="https://googleapis.com" rel="stylesheet">
@@ -52,13 +52,14 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #151515;
+            gap: 15px;
         }
 
         /* 3D Liquid Gold Logo Animation */
         .qx-animated-logo {
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -1px;
@@ -71,20 +72,19 @@
         }
         @keyframes qxGold { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
 
-        /* Professional Search Input */
+        /* Professional Search Input - मोबाइल रिस्पॉन्सिव फिक्स */
         .qx-search-terminal {
             flex: 1;
             max-width: 450px;
-            margin: 0 20px;
         }
         .qx-search-input {
             width: 100%;
             background: #0d0d0d;
             border: 1px solid #222;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 4px;
             color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
             box-sizing: border-box;
         }
 
@@ -92,16 +92,23 @@
         .qx-subscribe-btn {
             background: linear-gradient(135deg, #ffd700, #b8860b);
             color: #000000;
-            padding: 8px 20px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             white-space: nowrap;
             box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        }
+
+        @media (min-width: 768px) {
+            .qx-animated-logo { font-size: 32px; }
+            .qx-search-input { font-size: 13px; padding: 8px 15px; }
+            .qx-subscribe-btn { font-size: 12px; padding: 8px 24px; }
+            .qx-top-row { padding: 15px 0; gap: 20px; }
         }
 
         /* NAVIGATION MENU BAR */
@@ -113,6 +120,10 @@
             overflow-x: auto;
             white-space: nowrap;
             border-bottom: 1px solid #151515;
+            -webkit-overflow-scrolling: touch;
+        }
+        .qx-menu-bar::-webkit-scrollbar {
+            display: none; /* स्क्रॉल बार छुपाने के लिए */
         }
         .qx-menu-item {
             color: #aaaaaa;
@@ -138,25 +149,26 @@
         .qx-blink-area {
             background: #ff0000;
             color: #ffffff;
-            padding: 3px 10px;
-            font-size: 11px;
+            padding: 3px 8px;
+            font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border-radius: 3px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             box-shadow: 0 0 10px rgba(255,0,0,0.5);
             animation: qxBlink 1.5s ease-in-out infinite;
+            white-space: nowrap;
         }
-        @keyframes qxBlink { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes qxBlink { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
         
         .qx-ticker-scroll {
             flex: 1;
             overflow: hidden;
             white-space: nowrap;
-            margin: 0 20px;
+            margin: 0 15px;
         }
         .qx-scroll-inner {
             display: inline-block;
@@ -174,20 +186,27 @@
 
         .qx-market-open {
             color: var(--bb-neon-green);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
         .qx-pulse-dot {
-            height: 7px;
-            width: 7px;
+            height: 6px;
+            width: 6px;
             background-color: var(--bb-neon-green);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--bb-neon-green);
+        }
+
+        @media (min-width: 768px) {
+            .qx-blink-area { font-size: 11px; padding: 3px 10px; gap: 6px; }
+            .qx-market-open { font-size: 11px; gap: 6px; }
+            .qx-pulse-dot { height: 7px; width: 7px; }
+            .qx-ticker-scroll { margin: 0 20px; }
         }
 
         /* 2. MAIN CONTENT AREA (3-COLUMN ENGINE) */
@@ -204,7 +223,7 @@
         }
 
         @media (max-width: 991px) {
-            .main-terminal-area { margin-top: 210px; } /* Mobile Gap Setup */
+            .main-terminal-area { margin-top: 190px; } /* Mobile Gap Setup */
         }
 
         @media (min-width: 992px) {
@@ -282,7 +301,7 @@
       <div class="qx-top-row">
         <div class="qx-animated-logo">GLOBAL FINANCE</div>
         <div class="qx-search-terminal">
-          <input class="qx-search-input" placeholder="Search markets, stocks, news..." type="text">
+          <input class="qx-search-input" placeholder="Search markets..." type="text">
         </div>
         <button class="qx-subscribe-btn">SUBSCRIBE</button>
       </div>
@@ -292,19 +311,3 @@
         <a class="qx-menu-item active" href="#">🏠 Home</a>
         <a class="qx-menu-item" href="#">📈 Markets</a>
         <a class="qx-menu-item" href="#">📊 Stocks</a>
-        <a class="qx-menu-item" href="#">🪙 Crypto</a>
-        <a class="qx-menu-item" href="#">💱 Forex</a>
-        <a class="qx-menu-item" href="#">📰 News</a>
-        <a class="qx-menu-item" href="#">🛠️ Tools</a>
-      </div>
-
-      <!-- LIVE TICKER STRIP COMPONENT -->
-      <div class="qx-ticker-strip">
-        <div class="qx-blink-area">
-          <span style="height:6px; width:6px; background:#fff; border-radius:50%; display:inline-block;"></span>BREAKING LIVE
-        </div>
-
-        <div class="qx-ticker-scroll">
-          <div class="qx-scroll-inner">
-            <span class="ticker-node">NIFTY 50: <span class="node-up">23,550.15 (+0.65% ▲)</span></span>
-            <span class="ticker-node">S&P 500: <span class="node-up">$5,480.22 (+0.22% ▲)</span></span>
