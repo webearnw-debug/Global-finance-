@@ -3,312 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Global Finance Intelligence | Bloomberg v4.8 Quantum-X</title>
+    <title>Global Finance Advanced | Premium Trading & Intelligence Terminal</title>
     
-    
+    <!-- Ultra-Premium Web Fonts -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
+        /* ==========================================================================
+           CORE DESIGN SYSTEMS & QUANTUM VARIABLES (BLUEPRINT OPTIMIZED)
+           ========================================================================== */
         :root {
-            --bb-black: #000000;
-            --bb-white: #ffffff;
-            --bb-border: #eaeaea;
-            --bb-dark: #0d0d0d;
-            --bb-muted: #666666;
-            --bb-blue: #0056b3;
-            --bb-gold: #ffd700;
-            --bb-neon-green: #00ff66;
+            --bg-body: #0a0c10;
+            --bg-surface: #12161f;
+            --bg-card: #1c212e;
+            --text-primary: #ffffff;
+            --text-secondary: #9aa5b5;
+            --brand-gold: #ffd700;
+            --brand-blue: #0056b3;
+            --neon-green: #00ff66;
+            --neon-red: #ff3333;
+            --border-color: #242b35;
+            --max-width: 1440px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bb-white);
-            color: var(--bb-dark);
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* 1. MASTER FIXED COMPACT HEADER */
-        .qx-master-wrapper {
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* ==========================================================================
+           1. TOP UTILITY STRIP & DYNAMIC TICKER (SECTION 1 IN BLUEPRINT)
+           ========================================================================== */
+        .top-strip {
+            background-color: #000000;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            font-size: 12px;
+            font-weight: 500;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #000000;
-            z-index: 9999999;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            z-index: 1000000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
         }
 
-        .qx-fluid-container {
-            width: 96%;
-            max-width: 1540px;
+        .strip-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: stripMarquee 35s linear infinite;
+        }
+
+        @keyframes stripMarquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .strip-item {
+            display: inline-block;
+            margin-right: 45px;
+            color: var(--text-secondary);
+        }
+
+        .strip-item strong { color: var(--text-primary); }
+        .trend-up { color: var(--neon-green); font-weight: 700; }
+        .trend-down { color: var(--neon-red); font-weight: 700; }
+
+        /* ==========================================================================
+           2. EXECUTIVE NAVBAR SYSTEM (SECTION 2 IN BLUEPRINT)
+           ========================================================================== */
+        .main-navbar {
+            background-color: rgba(10, 12, 16, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 38px;
+            left: 0;
+            width: 100%;
+            z-index: 999999;
+            padding: 15px 0;
+        }
+
+        .nav-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #ffffff, var(--brand-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links { display: none; } /* रिस्पॉन्सिव मेनू */
+        }
+
+        .nav-item {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--brand-gold);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-subscribe {
+            background: linear-gradient(135deg, var(--brand-gold), #b8860b);
+            color: #000000;
+            padding: 9px 24px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 4px;
+            border: none;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           3. HERO INTRO SECTION & SEARCH (SECTION 3 IN BLUEPRINT)
+           ========================================================================== */
+        .hero-section {
+            margin-top: 160px;
+            padding: 90px 0 60px 0;
+            text-align: center;
+            background: radial-gradient(circle at center, #16222f 0%, var(--bg-body) 70%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-badge {
+            color: var(--brand-gold);
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 54px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 35px auto;
+            line-height: 1.6;
+        }
+
+        .search-terminal-box {
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+            display: flex;
+            background: #000000;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .search-terminal-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 16px 20px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-terminal-box button {
+            background: var(--brand-gold);
+            border: none;
+            padding: 0 30px;
+            color: #000;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .hero-stats-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        /* TOP CONTROL ROW (LOGO + SEARCH + SUBSCRIBE) */
-        .qx-top-row {
+        @media (min-width: 768px) {
+            .hero-stats-row { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .stat-node h4 { font-size: 28px; font-weight: 900; color: var(--text-primary); }
+        .stat-node p { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; margin-top: 5px; }
+
+        /* ==========================================================================
+           4. MARKET OVERVIEW GRID SYSTEM (SECTION 4 & 5 IN BLUEPRINT)
+           ========================================================================== */
+        .market-overview-section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header-flex {
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #151515;
-            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
         }
 
-        /* 3D Liquid Gold Logo Animation */
-        .qx-animated-logo {
-            font-size: 24px;
+        .section-title {
+            font-size: 14px;
             font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, #ffffff 0%, #ffd700 25%, #ffffff 50%, #ffd700 75%, #ffffff 100%);
-            background-size: 400% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: qxGold 5s linear infinite;
-            white-space: nowrap;
-        }
-        @keyframes qxGold { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
-
-        /* Professional Search Input - मोबाइल रिस्पॉन्सिव फिक्स */
-        .qx-search-terminal {
-            flex: 1;
-            max-width: 450px;
-        }
-        .qx-search-input {
-            width: 100%;
-            background: #0d0d0d;
-            border: 1px solid #222;
-            padding: 8px 12px;
-            border-radius: 4px;
-            color: #ffffff;
-            font-size: 12px;
-            box-sizing: border-box;
-        }
-
-        /* Premium Golden Subscribe Button */
-        .qx-subscribe-btn {
-            background: linear-gradient(135deg, #ffd700, #b8860b);
-            color: #000000;
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: 0 0 15px rgba(255,215,0,0.3);
-        }
-
-        @media (min-width: 768px) {
-            .qx-animated-logo { font-size: 32px; }
-            .qx-search-input { font-size: 13px; padding: 8px 15px; }
-            .qx-subscribe-btn { font-size: 12px; padding: 8px 24px; }
-            .qx-top-row { padding: 15px 0; gap: 20px; }
-        }
-
-        /* NAVIGATION MENU BAR */
-        .qx-menu-bar {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            padding: 12px 0;
-            overflow-x: auto;
-            white-space: nowrap;
-            border-bottom: 1px solid #151515;
-            -webkit-overflow-scrolling: touch;
-        }
-        .qx-menu-bar::-webkit-scrollbar {
-            display: none; /* स्क्रॉल बार छुपाने के लिए */
-        }
-        .qx-menu-item {
-            color: #aaaaaa;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .qx-menu-item:hover, .qx-menu-item.active {
-            color: #ffd700;
-        }
-
-        /* FINAL TICKER STRIP LAYOUT */
-        .qx-ticker-strip {
-            background: #000000;
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            border-bottom: 2px solid #111;
-        }
-        
-        .qx-blink-area {
-            background: #ff0000;
-            color: #ffffff;
-            padding: 3px 8px;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 0 10px rgba(255,0,0,0.5);
-            animation: qxBlink 1.5s ease-in-out infinite;
-            white-space: nowrap;
-        }
-        @keyframes qxBlink { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
-        
-        .qx-ticker-scroll {
-            flex: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 0 15px;
-        }
-        .qx-scroll-inner {
-            display: inline-block;
-            padding-left: 100%;
-            animation: qxMarquee 26s linear infinite;
-            font-size: 13px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-        @keyframes qxMarquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
-
-        .ticker-node { display: inline-block; margin-right: 40px; }
-        .node-up { color: var(--bb-neon-green); font-weight: 800; }
-        .node-down { color: #ff3333; font-weight: 800; }
-
-        .qx-market-open {
-            color: var(--bb-neon-green);
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .qx-pulse-dot {
-            height: 6px;
-            width: 6px;
-            background-color: var(--bb-neon-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--bb-neon-green);
-        }
-
-        @media (min-width: 768px) {
-            .qx-blink-area { font-size: 11px; padding: 3px 10px; gap: 6px; }
-            .qx-market-open { font-size: 11px; gap: 6px; }
-            .qx-pulse-dot { height: 7px; width: 7px; }
-            .qx-ticker-scroll { margin: 0 20px; }
-        }
-
-        /* 2. MAIN CONTENT AREA (3-COLUMN ENGINE) */
-        .main-terminal-area {
-            margin-top: 170px; 
-            padding: 20px;
-            max-width: 1440px;
-            margin-left: auto;
-            margin-right: auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 35px;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 991px) {
-            .main-terminal-area { margin-top: 190px; } /* Mobile Gap Setup */
-        }
-
-        @media (min-width: 992px) {
-            .main-terminal-area {
-                grid-template-columns: 1fr 1.6fr 1fr; 
-            }
-        }
-
-        .terminal-column {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        /* Sharp Vertical Grid Dividers */
-        .border-column {
-            border-right: 1px solid var(--bb-border);
-            padding-right: 15px;
-        }
-
-        @media (max-width: 991px) {
-            .border-column { border-right: none; padding-right: 0; }
-        }
-
-        /* 3. PREMIUM CONTENT COMPONENTS */
-        .bb-post-card {
-            border-bottom: 1px solid var(--bb-border);
-            padding-bottom: 25px;
-            margin-bottom: 5px;
-        }
-        .bb-post-card:last-child { border-bottom: none; }
-        
-        .post-tag {
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--bb-blue);
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-        }
-        .post-headline {
-            font-family: 'Merriweather', serif;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin: 0 0 10px 0;
-            letter-spacing: -0.3px;
-        }
-        .post-headline a { color: #000000; text-decoration: none; }
-        .post-headline a:hover { color: var(--bb-blue); text-decoration: underline; }
-        
-        .post-excerpt { font-size: 15px; line-height: 1.6; color: var(--bb-muted); }
-
-        /* ADSENSE SLOT */
-        .premium-adsense-slot {
-            background-color: #fcfcfc;
-            border: 1px dashed #cccccc;
-            text-align: center;
-            padding: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #aaaaaa;
             text-transform: uppercase;
             letter-spacing: 1px;
+            border-left: 3px solid var(--brand-gold);
+            padding-left: 12px;
         }
-    </style>
-</head>
-<body>
 
-  <!-- FIXED MASTER HEADER -->
-  <div class="qx-master-wrapper">
-    <div class="qx-fluid-container">
-      
-      <!-- TOP CONTROL ROW -->
-      <div class="qx-top-row">
-        <div class="qx-animated-logo">GLOBAL FINANCE</div>
-        <div class="qx-search-terminal">
-          <input class="qx-search-input" placeholder="Search markets..." type="text">
-        </div>
-        <button class="qx-subscribe-btn">SUBSCRIBE</button>
-      </div>
+        .section-link {
+            font-size: 12px;
+            color: var(--brand-gold);
+            font-weight: 700;
+        }
 
-      <!-- NAVIGATION MENU BAR -->
-      <div class="qx-menu-bar">
-        <a class="qx-menu-item active" href="#">🏠 Home</a>
-        <a class="qx-menu-item" href="#">📈 Markets</a>
-        <a class="qx-menu-item" href="#">📊 Stocks</a>
-Crypto💱 Forex📰 News🛠️ ToolsBREAKING LIVENIFTY 50: 23,550.15 (+0.65% ▲)S&P 500: $5,480.22 (+0.22% ▲)NASDAQ: $17,732.12 (-0.12% ▼)BITCOIN: $70,245.30 (+2.35% ▲)GOLD: $2,345.50 (+0.85% ▲)MARKET OPENLATEST MARKET RADARTrading Analyticsग्लोबल मार्केट्स में भारी उतार-चढ़ाव, इन्वेस्टर्स के लिए सुरक्षित ट्रेडिंग स्ट्रेटेजीअंतर्राष्ट्रीय बाजारों में हो रहे बदलावों के बीच शॉर्ट-टर्म ट्रेडर्स के लिए रिस्क मैनेजमेंट के नियम बदल गए हैं...Cryptocurrencyक्रिप्टो मार्केट्स अलर्ट: बिटकॉइन में नया ब्रेकआउट, क्या $70K का स्तर पार होगा?टेक्निकल इंडिकेटर्स बताते हैं कि इंस्टीट्यूशनल बाइंग की वजह से डिजिटल एसेट्स में भारी तेजी की संभावना है...REAL-TIME FINANCIAL TERMINAL🌟 Google AdSense Responsive Premium Advertisement Placement Node 🌟WEALTH GENERATION NODECorporate Loansबिजनेस लोन गाइडलाइंस 2026: कम ब्याज दर पर लोन स्वीकृत कराने के नियमयदि आप भी अपने बिजनेस को इंटरनेशनल लेवल पर स्केल करना चाहते हैं, तो इन बैंकिंग सीक्रेट्स को जरूर जानें...Earning Tipsप्रीमियम ऑनलाइन अर्निंग: बिना किसी निवेश के डॉलर में कमाने के शीर्ष कोडिंग प्रोजेक्ट्सवैश्विक मंदी के दौर में डिजिटल स्किल्स और रिमोट कोडिंग प्लेटफॉर्म्स के जरिए घर बैठे अमीर बनने का पूरा रोडमैप...
+        .market-index-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 600px) { .market-index-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .market-index-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .index-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .index-name-row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .index-val {
+            font-size: 24px;
+            font-weight: 900;
+            margin: 10px 0 5px 0;
+        }
+
+        /* 5. MARKET MOVERS GRID SYSTEM */
+        .movers-grid {
+            display: grid;
+GLOBAL FINANCEYour trusted partner in financial markets. We provide real-time data, expert analysis, and powerful tools to help you make smarter financial decisions.MarketsStocksIndicesCommoditiesCryptocurrencyTradingTrading PlatformBroker ComparisonTrading StrategiesRisk ManagementInvestingLong Term InvestingPortfolio ManagementMutual FundsBondsToolsStock ScreenerEconomic CalendarCurrency ConverterMargin Calculator© 2026 Global Finance Inc. All Rights Reserved.SitemapDisclaimerPrivacy PolicyTerms of Use
