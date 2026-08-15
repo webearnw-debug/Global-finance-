@@ -319,3 +319,250 @@
 
         /* 5. MARKET MOVERS GRID SYSTEM */
         .movers-grid {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, initial-scale=1.0"> <!-- आईफोन में भी जबरन टैबलेट व्यू चालू करने का गुप्त नियम -->
+    <title>Global Finance Advanced | Premium Trading Terminal</title>
+    
+    <!-- Premium Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. EXACT BLUEPRINT COLOR PALETTE & FORCED TABLET VIEW SYSTEM
+           ========================================================================== */
+        :root {
+            --bg-body: #03070d; /* इमेज जैसा ओरिजिनल डीप नेवी ब्लू-ब्लैक */
+            --bg-navbar: #060b13; 
+            --bg-surface: #0a101d; 
+            --bg-card: #0f1726; 
+            --text-primary: #ffffff;
+            --text-secondary: #708090;
+            --brand-gold: #ffd700;
+            --neon-green: #00ff66;
+            --neon-red: #ff3333;
+            --border-color: #1a2638;
+        }
+
+        * {
+            box-sizing: border-box !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            min-width: 1280px; /* फोन स्क्रीन को सिकुड़ने से रोकेगा */
+            overflow-x: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .site-container {
+            width: 1280px !important; /* आईफोन में भी टैबलेट जैसा चौड़ा फिक्स लेआउट */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================================================
+           2. LAYER 1: TOP TICKER STRIP & UTILITY
+           ========================================================================== */
+        .tm-top-strip {
+            background-color: #010408 !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            padding: 10px 0 !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            color: var(--text-secondary) !important;
+        }
+
+        .strip-flex {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .tm-ticker-wrap {
+            display: flex !important;
+            gap: 22px !important;
+        }
+
+        .tm-node strong { color: #ffffff !important; }
+        .tm-up { color: var(--neon-green) !important; font-weight: 800; }
+        .tm-down { color: var(--neon-red) !important; font-weight: 800; }
+
+        .tm-controls-tray {
+            display: flex !important;
+            align-items: center !important;
+            gap: 15px !important;
+        }
+        .tm-ctrl { color: #ffffff !important; cursor: pointer; }
+        .tm-social {
+            display: flex !important;
+            gap: 12px !important;
+            border-left: 1px solid var(--border-color) !important;
+            padding-left: 15px !important;
+            color: var(--text-secondary) !important;
+        }
+
+        /* ==========================================================================
+           3. LAYER 2: EXECUTIVE NAVIGATION PLATFORM
+           ========================================================================== */
+        .tm-main-navbar {
+            background-color: var(--bg-navbar) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            padding: 15px 0 !important;
+        }
+        
+        .nav-flex {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .brand-block { display: flex !important; flex-direction: column !important; }
+        .main-logo {
+            font-size: 24px !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.5px !important;
+            color: #ffffff !important;
+            text-transform: uppercase !important;
+        }
+        .main-logo span {
+            background: linear-gradient(90deg, #ffd700, #b8860b) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !transparent;
+        }
+        .brand-slogan {
+            font-size: 8px !important;
+            font-weight: 700 !important;
+            color: #4a5768 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            margin-top: 2px !important;
+        }
+
+        .menu-links { display: flex !important; gap: 16px !important; list-style: none !important; }
+        .menu-item {
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            color: var(--text-secondary) !important;
+            letter-spacing: 0.5px !important;
+        }
+        .menu-item:hover, .menu-item.active { color: var(--brand-gold) !important; }
+        .menu-item::after { content: ' ▾' !important; font-size: 9px !important; opacity: 0.5; }
+        .menu-item.no-drop::after { content: '' !important; }
+
+        .nav-actions { display: flex !important; gap: 12px !important; align-items: center !important; }
+        .btn-login {
+            background: #0a101d !important;
+            border: 1px solid var(--border-color) !important;
+            color: #ffffff !important;
+            padding: 8px 16px !important;
+            font-size: 11px !important;
+            font-weight: 700;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+        }
+        .btn-signup {
+            background: linear-gradient(135deg, #ffd700, #b8860b) !important;
+            border: none !important;
+            color: #000000 !important;
+            padding: 8px 18px !important;
+            font-size: 11px !important;
+            font-weight: 900;
+            text-transform: uppercase !important;
+            border-radius: 4px !important;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2) !important;
+        }
+
+        /* ==========================================================================
+           4. LAYER 3: QUANTUM HERO CORE & LIVE EARTH VISUAL
+           ========================================================================== */
+        .tm-hero-canvas {
+            background: radial-gradient(circle at 75% 50%, #0c1a2e 0%, var(--bg-body) 60%) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            padding: 60px 0 !important;
+        }
+        
+        .hero-grid {
+            display: grid !important;
+            grid-template-columns: 1.2fr 1fr !important; /* जबरन आमने-सामने का लेआउट */
+            gap: 40px !important;
+        }
+
+        .hero-left-console { display: flex !important; flex-direction: column !important; justify-content: center !important; }
+        .hero-badge {
+            background-color: rgba(255, 215, 0, 0.06) !important;
+            border: 1px solid rgba(255, 215, 0, 0.15) !important;
+            color: var(--brand-gold) !important;
+            font-size: 9px !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            padding: 4px 10px !important;
+            border-radius: 20px !important;
+            width: max-content !important;
+            margin-bottom: 15px !important;
+        }
+        .hero-main-title {
+            font-size: 46px !important;
+            font-weight: 900 !important;
+            line-height: 1.15 !important;
+            letter-spacing: -1.5px !important;
+            color: #ffffff !important;
+            margin-bottom: 15px !important;
+        }
+        .hero-desc {
+            font-size: 14px !important;
+            color: var(--text-secondary) !important;
+            line-height: 1.6 !important;
+            max-width: 480px !important;
+            margin-bottom: 30px !important;
+        }
+
+        .hero-search-bar {
+            background-color: #010408 !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 4px !important;
+            display: flex !important;
+            max-width: 450px !important;
+            margin-bottom: 35px !important;
+        }
+        .hero-search-bar input {
+            flex: 1 !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 14px 15px !important;
+            color: #ffffff !important;
+            font-size: 13px !important;
+            outline: none !important;
+        }
+        .hero-search-bar button {
+            background-color: #ffd700 !important;
+            border: none !important;
+            padding: 0 20px !important;
+            cursor: pointer;
+            font-weight: 900;
+        }
+
+        .telemetry-row { display: flex !important; gap: 30px !important; }
+        .tel-box h5 { font-size: 20px !important; font-weight: 900 !important; color: #ffffff !important; }
+        .tel-box p { font-size: 10px !important; color: var(--text-secondary) !important; text-transform: uppercase !important; margin-top: 2px; font-weight: 700; }
+
+        /* राइट साइड पैनल: डिजिटल ग्लोब + रैक */
+        .hero-right-visual {
+            display: grid !important;
+            grid-template-columns: 1.1fr 0.9fr !important;
+            gap: 20px !important;
+            align-items: center !important;
+        }
+        .digital-earth-stage {
+            background-color: #010408 !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 6px !important;
+            height: 300px !important;
