@@ -275,3 +275,40 @@
       <article class="bb-post-card">
         <div class="post-tag">Cryptocurrency</div>
         <h3 class="post-headline"><a href="#">क्रिप्टो मार्केट्स अलर्ट: बिटकॉइन में नया ब्रेकआउट, क्या $70K का स्तर पार होगा?</a></h3>
+.header-wide-layout {
+    display: flex !important;
+    flex-direction: column !important; /* छोटे फोन में एलीमेंट्स एक के नीचे एक सुंदर दिखेंगे */
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 15px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+/* जैसे ही स्क्रीन टैबलेट या कंप्यूटर की होगी, यह ऑटोमैटिक चौड़ी और आमने-सामने हो जाएगी */
+@media (min-width: 768px) {
+    .header-wide-layout {
+        flex-direction: row !important;
+        text-align: left !important;
+        justify-content: space-between !important;
+    }
+}
+          .header-about-box {
+    flex: 1;
+    max-width: 700px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #cccccc;
+    border-left: none; /* मोबाइल में बॉर्डर हटाया */
+    padding-left: 0;
+}
+@media (min-width: 768px) {
+    .header-about-box {
+        border-left: 3px solid var(--bb-gold); /* बड़ी स्क्रीन पर वापस दिखेगा */
+        padding-left: 20px;
+    }
+}
+          
