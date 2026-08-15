@@ -327,3 +327,246 @@
     margin-top: 135px !important;
   }
 </style>
+<!-- ======================================================== -->
+<!-- ULTIMATE TERMINAL: PREMIUM MENU, TICKER & SUBSCRIPTION   -->
+<!-- ======================================================== -->
+<div class='bb-quantum-x-upgrade' style='width: 100% !important; display: block; clear: both; position: relative; z-index: 9999999;'>
+
+  <style type='text/css'>
+    /* 1. पिछले पुराने हेडर को छुपाना और नए स्लिम हेडर को फोर्स करना */
+    .v4-fixed-header, .v4-premium-header, .bb-fixed-header-wrapper {
+      display: none !important; height: 0 !important; opacity: 0 !important; visibility: hidden !important;
+    }
+
+    /* 2. न्यू क्वांटम-एक्स फिक्स्ड मास्टर हेडर */
+    .qx-master-wrapper {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      background-color: #000000 !important;
+      z-index: 9999999 !important;
+      font-family: 'Inter', sans-serif !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important;
+    }
+
+    /* एज-टू-एज फुल विड्थ कंटेनर */
+    .qx-fluid-container {
+      width: 96% !important;
+      max-width: 1540px !important;
+      margin: 0 auto !important;
+    }
+
+    /* टॉप रो: लोगो + सर्च टर्मिनल + सब्सक्राइब बटन */
+    .qx-top-row {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 15px 0 !important;
+      border-bottom: 1px solid #151515 !important;
+    }
+
+    /* लाइव 3D लिक्विड गोल्ड लोगो */
+    .qx-animated-logo {
+      font-size: 32px !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      letter-spacing: -1px !important;
+      background: linear-gradient(90deg, #ffffff 0%, #ffd700 25%, #ffffff 50%, #ffd700 75%, #ffffff 100%);
+      background-size: 400% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: qxGold 5s linear infinite;
+      white-space: nowrap !important;
+    }
+    @keyframes qxGold { 0% { background-position: 0% center; } 100% { background-position: 400% center; } }
+
+    /* प्रोफेशनल सर्च टर्मिनल इनपुट बॉक्स */
+    .qx-search-terminal {
+      flex: 1 !important;
+      max-width: 450px !important;
+      margin: 0 30px !important;
+      position: relative !important;
+    }
+    .qx-search-input {
+      width: 100% !important;
+      background: #0d0d0d !important;
+      border: 1px solid #222 !important;
+      padding: 8px 15px 8px 35px !important;
+      border-radius: 4px !important;
+      color: #ffffff !important;
+      font-size: 13px !important;
+    }
+
+    /* लॉगिन हटाकर प्रीमियम 'Subscribe' बटन लगाया */
+    .qx-subscribe-btn {
+      background: linear-gradient(135deg, #ffd700, #b8860b) !important;
+      color: #000000 !important;
+      padding: 8px 24px !important;
+      font-size: 12px !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      border: none !important;
+      border-radius: 4px !important;
+      cursor: pointer !important;
+      white-space: nowrap !important;
+      box-shadow: 0 0 15px rgba(255,215,0,0.3) !important;
+    }
+
+    /* 3. इंटरनेशनल नेविगेशन मेनू बार (Menu Bar) */
+    .qx-menu-bar {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 20px !important;
+      padding: 12px 0 !important;
+      overflow-x: auto !important; /* फोन में स्क्रॉल करने के लिए */
+      white-space: nowrap !important;
+      border-bottom: 1px solid #151515 !important;
+    }
+    .qx-menu-item {
+      color: #aaaaaa !important;
+      text-decoration: none !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    .qx-menu-item:hover, .qx-menu-item.active {
+      color: #ffd700 !important;
+    }
+
+    /* 4. इमेज जैसा अल्ट्रा-लग्जरी लाइव टिकर (Final Ticker Look) */
+    .qx-ticker-strip {
+      background: #000000 !important;
+      padding: 8px 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      border-bottom: 2px solid #111 !important;
+    }
+    
+    /* ब्लिंकिंग एनीमेशन एरिया */
+    .qx-blink-area {
+      background: #ff0000 !important;
+      color: #ffffff !important;
+      padding: 3px 10px !important;
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      border-radius: 3px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      box-shadow: 0 0 10px rgba(255,0,0,0.5) !important;
+      animation: qxBlink 1.5s ease-in-out infinite !important;
+    }
+    @keyframes qxBlink { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+    
+    .qx-ticker-scroll {
+      flex: 1 !important;
+      overflow: hidden !important;
+      white-space: nowrap !important;
+      margin: 0 20px !important;
+    }
+    .qx-scroll-inner {
+      display: inline-block !important;
+      padding-left: 100% !important;
+      animation: qxMarquee 26s linear infinite !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+    }
+    @keyframes qxMarquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+
+    .ticker-node { display: inline-block !important; margin-right: 40px !important; }
+    .node-up { color: #00ff66 !important; font-weight: 800 !important; }
+    .node-down { color: #ff3333 !important; font-weight: 800 !important; }
+
+    /* मार्केट ओपन धड़कता हुआ इंडिकेटर */
+    .qx-market-open {
+      color: #00ff66 !important;
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      text-transform: uppercase !important;
+      white-space: nowrap !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    .qx-pulse-dot {
+      height: 7px !important;
+      width: 7px !important;
+      background-color: #00ff66 !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 8px #00ff66 !important;
+    }
+
+    /* 5. नीचे के मुख्य 3-कॉलम कंटेंट को सही जगह सेट करना */
+    .main-terminal-area {
+      margin-top: 190px !important; /* नया कंपैक्ट पुश गैप */
+    }
+    @media (max-width: 991px) {
+      .main-terminal-area { margin-top: 240px !important; }
+    }
+  </style>
+
+  <!-- MASTER ARCHITECTURE STRUCTURE -->
+  <div class='qx-master-wrapper'>
+    <div class='qx-fluid-container'>
+      
+      <!-- TOP CONTROL ROW -->
+      <div class='qx-top-row'>
+        <!-- 3D गोल्ड लोगो -->
+        <div class='qx-animated-logo'>GLOBAL FINANCE</div>
+        
+        <!-- सर्च टर्मिनल इनपुट -->
+        <div class='qx-search-terminal'>
+          <input class='qx-search-input' placeholder='Search markets, stocks, news...' type='text'/>
+        </div>
+        
+        <!-- नया सब्सक्राइब बटन (लॉगिन रिप्लेस्ड) -->
+        <button class='qx-subscribe-btn' onsubmit='return false;'>SUBSCRIBE</button>
+      </div>
+
+      <!-- NAVIGATION MENU BAR -->
+      <div class='qx-menu-bar'>
+        <a class='qx-menu-item active' href='#'>🏠 Home</a>
+        <a class='qx-menu-item' href='#'>📈 Markets</a>
+        <a class='qx-menu-item' href='#'>📊 Stocks</a>
+        <a class='qx-menu-item' href='#'>🪙 Crypto</a>
+        <a class='qx-menu-item' href='#'>💱 Forex</a>
+        <a class='qx-menu-item' href='#'>📰 News</a>
+        <a class='qx-menu-item' href='#'>🛠️ Tools</a>
+      </div>
+
+      <!-- FINAL TICKER STRIP COMPONENT -->
+      <div class='qx-ticker-strip'>
+        <!-- ब्लिंकिंग लाइव ब्रेकिंग एरिया -->
+        <div class='qx-blink-area'>
+          <span style='height:6px; width:6px; background:#fff; border-radius:50%; display:inline-block;'></span>BREAKING LIVE
+        </div>
+
+        <!-- इनफिनिटी मार्केट रोटेशन लूप -->
+        <div class='qx-ticker-scroll'>
+          <div class='qx-scroll-inner'>
+            <span class='ticker-node'>NIFTY 50: <span class='node-up'>23,550.15 (+0.65% ▲)</span></span>
+            <span class='ticker-node'>S&amp;P 500: <span class='node-up'>$5,480.22 (+0.22% ▲)</span></span>
+            <span class='ticker-node'>NASDAQ: <span class='node-down'>$17,732.12 (-0.12% ▼)</span></span>
+            <span class='ticker-node'>BITCOIN: <span class='node-up'>$70,245.30 (+2.35% ▲)</span></span>
+            <span class='ticker-node'>GOLD: <span class='node-up'>$2,345.50 (+0.85% ▲)</span></span>
+          </div>
+        </div>
+
+        <!-- नियॉन धड़कता हुआ मार्केट स्टेटस -->
+        <div class='qx-market-open'>
+          <span class='qx-pulse-dot'></span>MARKET OPEN
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- ======================================================== -->
