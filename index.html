@@ -1545,3 +1545,481 @@ item.classList.add("active");
 })();
 
 </script>
+<!-- ===== GLOBAL FINANCE FINAL HEADER BUTTON FIX ===== -->
+
+<style>
+/* SUBSCRIBE BUTTON */
+.gf-subscribe-btn{
+    height:40px;
+    border:1px solid #8c691d;
+    border-radius:8px;
+    background:linear-gradient(135deg,#f4c54e,#e6a61c);
+    color:#111;
+    padding:0 14px;
+    font-weight:800;
+    font-size:11px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+.gf-subscribe-btn:hover{
+    filter:brightness(1.08);
+}
+
+/* SUBSCRIBE BOX */
+.gf-subscribe-box{
+    text-align:center;
+}
+
+.gf-subscribe-icon{
+    width:62px;
+    height:62px;
+    margin:0 auto 16px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:rgba(243,183,47,.12);
+    border:1px solid #8c691d;
+    font-size:28px;
+}
+
+.gf-subscribe-box h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+
+.gf-subscribe-box p{
+    color:#8b9bad;
+    font-size:11px;
+    line-height:1.7;
+    margin:0 0 18px;
+}
+
+.gf-subscribe-input{
+    width:100%;
+    height:42px;
+    padding:0 12px;
+    background:#081927;
+    border:1px solid #244158;
+    border-radius:7px;
+    color:#fff;
+    outline:none;
+    margin-bottom:10px;
+}
+
+.gf-subscribe-submit{
+    width:100%;
+    height:42px;
+    border:0;
+    border-radius:7px;
+    background:var(--gold);
+    color:#111;
+    font-weight:800;
+    cursor:pointer;
+}
+
+
+/* MENU */
+.gf-mobile-menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.gf-mobile-menu a{
+    display:block;
+    width:100%;
+    padding:14px 15px;
+    background:#081927;
+    border:1px solid #1a3347;
+    border-radius:8px;
+    color:#dce5ed;
+    font-size:11px;
+    text-decoration:none;
+}
+
+.gf-mobile-menu a:hover{
+    color:var(--gold);
+    border-color:#8c691d;
+}
+
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .nav-actions{
+        gap:6px;
+    }
+
+    .gf-subscribe-btn{
+        padding:0 10px;
+        font-size:10px;
+    }
+
+}
+</style>
+
+<script>
+
+(function(){
+
+    /* ==========================================
+       1. ऊपर वाले SIGN UP को SUBSCRIBE बनाओ
+       ========================================== */
+
+    const buttons = document.querySelectorAll(".nav-actions button");
+
+    buttons.forEach(function(btn){
+
+        if(
+            btn.textContent.trim().toUpperCase() === "SIGN UP"
+        ){
+
+            btn.textContent = "SUBSCRIBE";
+
+            btn.classList.remove("signup-btn");
+            btn.classList.add("gf-subscribe-btn");
+
+            btn.onclick = function(){
+
+                openGFSubscribe();
+
+            };
+
+        }
+
+    });
+
+
+    /* ==========================================
+       2. SUBSCRIBE MODAL
+       ========================================== */
+
+    window.openGFSubscribe = function(){
+
+        const modal = document.getElementById("modal");
+        const title = document.getElementById("modalTitle");
+        const body = document.getElementById("modalBody");
+
+        /* पुराना content पूरी तरह साफ */
+        body.innerHTML = "";
+
+        title.textContent = "SUBSCRIBE";
+
+        body.innerHTML = `
+
+            <div class="gf-subscribe-box">
+
+                <div class="gf-subscribe-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    Stay Updated
+                </h3>
+
+                <p>
+                    Subscribe to Global Finance for
+                    market updates, financial news,
+                    trading education and new tools.
+                </p>
+
+                <input
+                    id="gfSubscribeEmail"
+                    class="gf-subscribe-input"
+                    type="email"
+                    placeholder="Enter your email address"
+                >
+
+                <button
+                    class="gf-subscribe-submit"
+                    onclick="gfSubscribeNow()"
+                >
+                    SUBSCRIBE
+                </button>
+
+            </div>
+
+        `;
+
+        modal.classList.add("show");
+
+    };
+
+
+    /* ==========================================
+       3. SUBSCRIBE ACTION
+       ========================================== */
+
+    window.gfSubscribeNow = function(){
+
+        const email =
+            document.getElementById("gfSubscribeEmail");
+
+        if(!email || !email.value.trim()){
+
+            showGFMessage(
+                "SUBSCRIBE",
+                "Please enter your email address."
+            );
+
+            return;
+
+        }
+
+        showGFMessage(
+            "SUBSCRIBED",
+            "Thank you for subscribing to Global Finance."
+        );
+
+    };
+
+
+    /* ==========================================
+       4. SEARCH — सिर्फ SEARCH
+       ========================================== */
+
+    const searchButtons =
+        document.querySelectorAll(".nav-actions button");
+
+    searchButtons.forEach(function(btn){
+
+        if(btn.textContent.trim() === "⌕"){
+
+            btn.onclick = function(){
+
+                openGFSearch();
+
+            };
+
+        }
+
+    });
+
+
+    window.openGFSearch = function(){
+
+        const modal = document.getElementById("modal");
+        const title = document.getElementById("modalTitle");
+        const body = document.getElementById("modalBody");
+
+        /* पुराने Menu/Subscribe को साफ करो */
+        body.innerHTML = "";
+
+        title.textContent = "SEARCH";
+
+        body.innerHTML = `
+
+            <div class="field">
+
+                <label>
+                    SEARCH GLOBAL FINANCE
+                </label>
+
+                <input
+                    id="gfSearchInput"
+                    type="text"
+                    placeholder="Search markets, stocks, crypto..."
+                    autofocus
+                >
+
+            </div>
+
+            <button
+                class="primary"
+                onclick="gfDoSearch()"
+            >
+                SEARCH
+            </button>
+
+            <div id="gfSearchResult"></div>
+
+        `;
+
+        modal.classList.add("show");
+
+    };
+
+
+    window.gfDoSearch = function(){
+
+        const input =
+            document.getElementById("gfSearchInput");
+
+        const result =
+            document.getElementById("gfSearchResult");
+
+        if(!input) return;
+
+        const query = input.value.trim();
+
+        if(!query){
+
+            result.innerHTML = `
+                <p style="
+                    color:#ff5364;
+                    font-size:11px;
+                    margin-top:14px;
+                ">
+                    Please enter something to search.
+                </p>
+            `;
+
+            return;
+
+        }
+
+        result.innerHTML = `
+            <div style="
+                margin-top:16px;
+                padding:14px;
+                background:#081927;
+                border:1px solid #1a3347;
+                border-radius:8px;
+                font-size:11px;
+                color:#aebdca;
+            ">
+                Searching for:
+                <strong style="color:#f3b72f;">
+                    ${gfSafe(query)}
+                </strong>
+            </div>
+        `;
+
+    };
+
+
+    /* ==========================================
+       5. THREE-LINE MENU — सिर्फ MENU
+       ========================================== */
+
+    const menuButtons =
+        document.querySelectorAll(".nav-actions button");
+
+    menuButtons.forEach(function(btn){
+
+        if(btn.textContent.trim() === "☰"){
+
+            btn.onclick = function(){
+
+                openGFMenu();
+
+            };
+
+        }
+
+    });
+
+
+    window.openGFMenu = function(){
+
+        const modal = document.getElementById("modal");
+        const title = document.getElementById("modalTitle");
+        const body = document.getElementById("modalBody");
+
+        /* पुराने Search/Subscribe को साफ करो */
+        body.innerHTML = "";
+
+        title.textContent = "MENU";
+
+        body.innerHTML = `
+
+            <div class="gf-mobile-menu">
+
+                <a href="#markets"
+                   onclick="closeModal()">
+                    MARKETS
+                </a>
+
+                <a href="#movers"
+                   onclick="closeModal()">
+                    MOVERS
+                </a>
+
+                <a href="#news"
+                   onclick="closeModal()">
+                    NEWS
+                </a>
+
+                <a href="#education"
+                   onclick="closeModal()">
+                    EDUCATION
+                </a>
+
+                <a href="#tools"
+                   onclick="closeModal()">
+                    TOOLS
+                </a>
+
+                <a href="#education"
+                   onclick="closeModal()">
+                    INVESTING
+                </a>
+
+                <a href="#education"
+                   onclick="closeModal()">
+                    TRADING
+                </a>
+
+            </div>
+
+        `;
+
+        modal.classList.add("show");
+
+    };
+
+
+    /* ==========================================
+       6. MESSAGE BOX
+       ========================================== */
+
+    window.showGFMessage = function(titleText,text){
+
+        const modal =
+            document.getElementById("modal");
+
+        const title =
+            document.getElementById("modalTitle");
+
+        const body =
+            document.getElementById("modalBody");
+
+        body.innerHTML = "";
+
+        title.textContent = titleText;
+
+        body.innerHTML = `
+            <p style="
+                line-height:1.8;
+                color:#aebdca;
+                font-size:12px;
+                margin:0;
+                text-align:center;
+            ">
+                ${text}
+            </p>
+        `;
+
+        modal.classList.add("show");
+
+    };
+
+
+    /* ==========================================
+       7. SAFE TEXT
+       ========================================== */
+
+    window.gfSafe = function(text){
+
+        return text
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+
+    };
+
+})();
+</script>
