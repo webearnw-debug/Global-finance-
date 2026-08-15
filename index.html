@@ -1,1 +1,4115 @@
-https://chatgpt.com/backend-api/estuary/content?id=file_0000000001c48211885b7f4cb03244f7&fn=global-finance-code-copy.html&cd=attachment&ts=496332&p=fs&cid=1&sig=743eaa50d2749d140ed5e69827c89ff77f08048ef0025b75fc7317b310cb5b7c&v=0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#020914">
+<meta name="description" content="Global Finance — premium financial markets, trading, investing, news and education dashboard.">
+<title>Global Finance — Smart Decisions, Stronger Future</title>
+
+<style>
+/* =========================================================
+   GLOBAL FINANCE — COMPLETE A-Z FRONTEND
+   Single-file responsive website
+   ========================================================= */
+
+:root{
+  --bg:#020812;
+  --bg2:#06111e;
+  --panel:#071522;
+  --panel2:#0a1a2b;
+  --line:rgba(159,194,224,.15);
+  --line2:rgba(255,255,255,.08);
+  --text:#f5f8fc;
+  --muted:#8293a8;
+  --muted2:#aab7c6;
+  --gold:#f2bb3f;
+  --gold2:#ffd873;
+  --green:#19d66f;
+  --red:#ff5265;
+  --blue:#39a9ff;
+  --purple:#a276ff;
+  --cyan:#52d7ff;
+  --shadow:0 20px 70px rgba(0,0,0,.35);
+  --radius:12px;
+  --max:1540px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  background:
+    radial-gradient(circle at 72% 17%,rgba(22,122,219,.11),transparent 28%),
+    radial-gradient(circle at 15% 45%,rgba(242,187,63,.05),transparent 24%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body.modal-open{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.container{width:min(var(--max),calc(100% - 28px));margin:auto}
+
+/* ---------- top market ribbon ---------- */
+
+.top-ribbon{
+  height:40px;
+  display:flex;
+  align-items:center;
+  background:#01050a;
+  border-bottom:1px solid var(--line2);
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.ribbon-track{
+  display:flex;
+  min-width:max-content;
+  animation:ribbon 42s linear infinite;
+}
+
+.ribbon-track:hover{animation-play-state:paused}
+
+.ribbon-item{
+  height:40px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border-right:1px solid rgba(255,255,255,.06);
+  color:#aab6c5;
+  font-size:11px;
+}
+
+.ribbon-item strong{
+  color:#f4f7fb;
+  font-weight:650;
+}
+
+.up{color:var(--green)!important}
+.down{color:var(--red)!important}
+.gold{color:var(--gold)!important}
+
+.live-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+@keyframes ribbon{
+  to{transform:translateX(-48%)}
+}
+
+/* ---------- primary navigation ---------- */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  min-height:78px;
+  background:rgba(3,10,18,.94);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(22px);
+}
+
+.nav-inner{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.brand{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:260px;
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  color:#08111b;
+  background:linear-gradient(145deg,#ffe59a,#bd831c);
+  box-shadow:0 0 35px rgba(242,187,63,.12);
+  font-weight:950;
+  letter-spacing:-2px;
+}
+
+.brand-copy strong{
+  display:block;
+  font-size:21px;
+  line-height:1;
+  letter-spacing:-.8px;
+}
+
+.brand-copy strong span{color:var(--gold)}
+
+.brand-copy small{
+  display:block;
+  margin-top:5px;
+  color:#8290a0;
+  font-size:8px;
+  letter-spacing:1.2px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  flex:1;
+  justify-content:center;
+}
+
+.nav-link{
+  position:relative;
+  padding:11px 10px;
+  color:#c2cedb;
+  font-size:12px;
+  font-weight:650;
+  border-radius:8px;
+}
+
+.nav-link:hover,
+.nav-link.active{
+  color:var(--gold2);
+  background:rgba(255,255,255,.035);
+}
+
+.nav-link.active:after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:2px;
+  height:2px;
+  background:var(--gold);
+  box-shadow:0 0 10px rgba(242,187,63,.65);
+}
+
+.chev{
+  font-size:8px;
+  color:#718197;
+  margin-left:2px;
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:#06101b;
+  color:#dce6ef;
+}
+
+.icon-btn:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+
+.btn{
+  border:0;
+  border-radius:8px;
+  height:40px;
+  padding:0 15px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.btn-outline{
+  border:1px solid rgba(242,187,63,.6);
+  background:transparent;
+  color:#fff;
+}
+
+.btn-gold{
+  background:linear-gradient(135deg,#ffe291,#d99b23);
+  color:#07101a;
+}
+
+.menu-btn{display:none}
+
+/* ---------- desktop hero ---------- */
+
+.hero-wrap{
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+
+.hero{
+  min-height:365px;
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2,8,16,.98) 0%,
+      rgba(2,8,16,.84) 36%,
+      rgba(2,8,16,.26) 72%,
+      rgba(2,8,16,.92) 100%
+    ),
+    radial-gradient(
+      circle at 68% 52%,
+      rgba(34,160,255,.14),
+      transparent 30%
+    );
+}
+
+.grid-floor{
+  position:absolute;
+  inset:0;
+  opacity:.13;
+  background-image:
+    linear-gradient(
+      rgba(48,151,228,.18) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(48,151,228,.18) 1px,
+      transparent 1px
+    );
+  background-size:46px 46px;
+  transform:
+    perspective(500px)
+    rotateX(62deg)
+    scale(1.6);
+  transform-origin:center bottom;
+}
+
+.hero-content{
+  position:relative;
+  z-index:4;
+  width:100%;
+  padding:48px 52px;
+}
+
+.hero-copy{
+  max-width:600px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border:1px solid rgba(242,187,63,.42);
+  border-radius:7px;
+  color:var(--gold);
+  font-size:9px;
+  font-weight:800;
+  background:rgba(242,187,63,.05);
+}
+
+.hero h1{
+  margin-top:16px;
+  font-size:clamp(42px,4.6vw,66px);
+  line-height:.98;
+  letter-spacing:-3px;
+}
+
+.hero h1 span{color:var(--gold)}
+
+.hero p{
+  margin-top:17px;
+  max-width:515px;
+  color:#aab8c8;
+  font-size:14px;
+  line-height:1.65;
+}
+
+.searchbar{
+  margin-top:20px;
+  width:min(500px,100%);
+  height:48px;
+  display:flex;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:8px;
+  background:rgba(0,0,0,.3);
+}
+
+.searchbar input{
+  flex:1;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  padding:0 14px;
+  font-size:12px;
+}
+
+.searchbar button{
+  width:62px;
+  border:0;
+  background:var(--gold);
+  color:#07101a;
+  font-size:18px;
+}
+
+.stats{
+  display:flex;
+  gap:32px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.stat strong{
+  display:block;
+  font-size:17px;
+}
+
+.stat span{
+  display:block;
+  color:#7d8c9d;
+  font-size:9px;
+  margin-top:3px;
+}
+
+.globe{
+  position:absolute;
+  z-index:2;
+  right:12%;
+  top:50%;
+  width:425px;
+  height:425px;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(83,195,255,.28),
+      rgba(6,29,51,.66) 45%,
+      rgba(1,8,15,.98) 72%
+    );
+  border:1px solid rgba(69,180,255,.26);
+  box-shadow:
+    inset -40px -30px 90px rgba(0,0,0,.85),
+    0 0 100px rgba(38,150,255,.12);
+}
+
+.globe:before{
+  content:"";
+  position:absolute;
+  inset:25px;
+  border-radius:50%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 29px,
+      rgba(54,184,255,.13) 30px 31px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 29px,
+      rgba(54,184,255,.10) 30px 31px
+    );
+  transform:rotate(-12deg) scale(1.08);
+}
+
+.globe:after{
+  content:"";
+  position:absolute;
+  left:8%;
+  top:47%;
+  width:84%;
+  height:2px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #26b8ff,
+      #ffe17d,
+      #26b8ff,
+      transparent
+    );
+  box-shadow:0 0 20px #2db5ff;
+  transform:rotate(-14deg);
+}
+
+.market-float{
+  position:absolute;
+  z-index:5;
+  right:4%;
+  top:50%;
+  transform:translateY(-50%);
+  width:210px;
+  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:rgba(4,13,23,.76);
+  backdrop-filter:blur(16px);
+}
+
+.market-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 3px;
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.market-row:last-child{
+  border-bottom:0;
+}
+
+.market-name{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.market-icon{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#1178c8;
+  color:#fff;
+  font-size:9px;
+  font-weight:850;
+}
+
+.market-info strong{
+  display:block;
+  font-size:9px;
+}
+
+.market-info span{
+  display:block;
+  color:#93a1b2;
+  font-size:9px;
+  margin-top:2px;
+}
+
+.market-change{
+  font-size:9px;
+  font-weight:750;
+  color:var(--green);
+}
+
+/* ---------- tool rail ---------- */
+
+.tool-rail{
+  position:relative;
+  z-index:10;
+  margin-top:-1px;
+  display:grid;
+  grid-template-columns:repeat(9,1fr);
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,22,36,.94),
+      rgba(4,13,24,.96)
+    );
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.tool{
+  min-height:88px;
+  padding:10px 5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:5px;
+  border-right:1px solid rgba(255,255,255,.06);
+  transition:.2s;
+}
+
+.tool:last-child{
+  border-right:0;
+}
+
+.tool:hover{
+  background:rgba(255,255,255,.035);
+  transform:translateY(-2px);
+}
+
+.tool .ti{
+  font-size:21px;
+  color:#d8e7f6;
+}
+
+.tool strong{
+  font-size:10px;
+}
+
+.tool small{
+  font-size:8px;
+  color:#748397;
+}
+
+/* ---------- breaking news ---------- */
+
+.breaking{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:145px 1fr 120px;
+  min-height:56px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#06111e;
+  overflow:hidden;
+}
+
+.breaking-label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold);
+  font-size:11px;
+  font-weight:850;
+  border-right:1px solid rgba(242,187,63,.22);
+}
+
+.breaking-items{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.news-chip{
+  padding:9px 15px;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+
+.news-chip small{
+  display:block;
+  color:#5e7188;
+  font-size:8px;
+}
+
+.news-chip p{
+  margin-top:4px;
+  color:#dce4ed;
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.breaking-more{
+  display:grid;
+  place-items:center;
+  color:var(--gold);
+  font-size:9px;
+  font-weight:800;
+}
+
+/* ---------- section common ---------- */
+
+.section{
+  margin-top:22px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,19,32,.93),
+      rgba(3,12,22,.95)
+    );
+  overflow:hidden;
+}
+
+.section-head{
+  height:52px;
+  padding:0 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.section-head h2{
+  font-size:13px;
+  letter-spacing:.3px;
+}
+
+.section-head a{
+  font-size:9px;
+  color:#8fa0b4;
+}
+
+.section-head a:hover{
+  color:var(--gold);
+}
+
+.section-body{
+  padding:12px;
+}
+
+/* ---------- market overview ---------- */
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+}
+
+.quote-card{
+  min-height:125px;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  background:
+    linear-gradient(
+      180deg,
+      #081725,
+      #06121e
+    );
+}
+
+.quote-card:hover{
+  border-color:rgba(242,187,63,.25);
+}
+
+.quote-card .qname{
+  font-size:9px;
+  color:#d7e1eb;
+}
+
+.quote-card .qprice{
+  font-size:14px;
+  font-weight:750;
+  margin-top:10px;
+}
+
+.quote-card .qchange{
+  font-size:9px;
+  margin-top:3px;
+}
+
+.mini-chart{
+  height:50px;
+  margin-top:8px;
+}
+
+.mini-chart svg{
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+.spark-green{
+  fill:none;
+  stroke:var(--green);
+  stroke-width:2;
+}
+
+.spark-gold{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:2;
+}
+
+.spark-purple{
+  fill:none;
+  stroke:var(--purple);
+  stroke-width:2;
+}
+
+.chart-area{
+  fill:rgba(25,214,111,.04);
+}
+
+/* ---------- movers ---------- */
+
+.tabs{
+  display:flex;
+  gap:4px;
+  overflow:auto;
+  padding-bottom:10px;
+}
+
+.tab{
+  border:0;
+  background:transparent;
+  color:#8798aa;
+  padding:7px 10px;
+  border-radius:7px;
+  font-size:9px;
+  white-space:nowrap;
+}
+
+.tab.active{
+  background:#123b78;
+  color:#fff;
+}
+
+.movers{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.mover{
+  padding:12px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  background:#071725;
+}
+
+.mover:hover{
+  border-color:rgba(64,168,255,.3);
+}
+
+.mover-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.mover strong{
+  font-size:11px;
+}
+
+.mover small{
+  display:block;
+  color:#75879a;
+  margin-top:3px;
+  font-size:8px;
+}
+
+.mover-price{
+  margin-top:12px;
+  font-size:12px;
+}
+
+.mover-change{
+  float:right;
+  color:var(--green);
+  font-size:9px;
+}
+
+/* ---------- news ---------- */
+
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr) 1.05fr;
+  gap:10px;
+}
+
+.news-card{
+  min-height:190px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  overflow:hidden;
+  background:#071624;
+}
+
+.news-image{
+  height:76px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(20,150,255,.24),
+      rgba(1,8,16,.7)
+    ),
+    radial-gradient(
+      circle at 70% 40%,
+      #1c78b0,
+      transparent 35%
+    );
+  position:relative;
+}
+
+.news-image.crypto{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(126,65,255,.35),
+      rgba(1,8,16,.9)
+    ),
+    radial-gradient(
+      circle,
+      #f2bb3f,
+      transparent 20%
+    );
+}
+
+.news-image.stocks{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,190,160,.3),
+      rgba(1,8,16,.9)
+    );
+}
+
+.news-image.economy{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(50,80,110,.65),
+      rgba(1,8,16,.9)
+    );
+}
+
+.news-body{
+  padding:9px;
+}
+
+.tag{
+  display:inline-block;
+  padding:3px 5px;
+  border-radius:4px;
+  background:#146ab1;
+  color:#fff;
+  font-size:7px;
+  font-weight:800;
+}
+
+.tag.goldtag{
+  background:#8b6416;
+}
+
+.tag.purple{
+  background:#613cb5;
+}
+
+.news-body h3{
+  font-size:11px;
+  line-height:1.35;
+  margin-top:7px;
+}
+
+.news-body time{
+  display:block;
+  color:#718195;
+  font-size:8px;
+  margin-top:8px;
+}
+
+.expert{
+  padding:13px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.expert h3{
+  font-size:10px;
+  color:#f0f4f8;
+}
+
+.expert blockquote{
+  margin-top:10px;
+  color:#bac5d1;
+  font-size:11px;
+  line-height:1.55;
+}
+
+.expert cite{
+  display:block;
+  color:#7b8b9d;
+  font-size:8px;
+  margin-top:9px;
+}
+
+.read-btn{
+  align-self:flex-start;
+  margin-top:10px;
+  border:1px solid rgba(242,187,63,.5);
+  background:transparent;
+  color:var(--gold);
+  border-radius:6px;
+  padding:7px 9px;
+  font-size:8px;
+}
+
+/* ---------- CTA ---------- */
+
+.cta{
+  margin-top:22px;
+  padding:20px 28px;
+  border:1px solid rgba(242,187,63,.25);
+  border-radius:10px;
+  background:
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(25,214,111,.08),
+      transparent 30%
+    ),
+    linear-gradient(
+      90deg,
+      #071726,
+      #06111e
+    );
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.cta h2{
+  font-size:20px;
+}
+
+.cta h2 span{
+  color:var(--gold);
+}
+
+.cta p{
+  margin-top:5px;
+  color:#8393a5;
+  font-size:9px;
+}
+
+.cta-features{
+  display:flex;
+  gap:18px;
+  margin-top:11px;
+  flex-wrap:wrap;
+}
+
+.cta-features span{
+  font-size:8px;
+  color:#aab7c5;
+}
+
+.cta-features b{
+  color:#e8f0f7;
+  margin-right:4px;
+}
+
+/* ---------- lower modules ---------- */
+
+.module-grid{
+  display:grid;
+  grid-template-columns:1.25fr 1fr 1fr;
+  gap:12px;
+}
+
+.module{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:9px;
+  background:#061320;
+  padding:13px;
+}
+
+.module h3{
+  font-size:11px;
+}
+
+.module p{
+  margin-top:6px;
+  color:#7e8fa3;
+  font-size:9px;
+  line-height:1.5;
+}
+
+.list{
+  margin-top:10px;
+  display:grid;
+  gap:7px;
+}
+
+.list-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px;
+  border-radius:6px;
+  background:rgba(255,255,255,.025);
+  font-size:9px;
+}
+
+.list-row span:last-child{
+  color:var(--green);
+}
+
+.progress{
+  height:5px;
+  border-radius:99px;
+  background:#101f2d;
+  margin-top:8px;
+  overflow:hidden;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  width:72%;
+  background:linear-gradient(90deg,#208dff,#19d66f);
+}
+
+/* ---------- footer ---------- */
+
+footer{
+  margin-top:26px;
+  border-top:1px solid var(--line);
+  background:#020811;
+}
+
+.footer-main{
+  display:grid;
+  grid-template-columns:1.5fr repeat(5,1fr);
+  gap:28px;
+  padding:30px 0;
+}
+
+.footer-brand p{
+  margin-top:10px;
+  color:#738397;
+  font-size:9px;
+  line-height:1.7;
+  max-width:210px;
+}
+
+.footer h4{
+  font-size:10px;
+  margin-bottom:10px;
+}
+
+.footer a{
+  display:block;
+  color:#78889a;
+  font-size:9px;
+  margin:7px 0;
+}
+
+.footer a:hover{
+  color:var(--gold);
+}
+
+.socials{
+  display:flex;
+  gap:7px;
+  margin-top:14px;
+}
+
+.socials a{
+  width:26px;
+  height:26px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:50%;
+  margin:0;
+}
+
+.footer-bottom{
+  min-height:48px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  color:#657588;
+  font-size:8px;
+}
+
+.footer-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+/* ---------- modal/search ---------- */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:105px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(12px);
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.search-modal{
+  width:min(720px,calc(100% - 28px));
+  border:1px solid rgba(242,187,63,.35);
+  border-radius:12px;
+  background:#06111d;
+  box-shadow:0 30px 100px rgba(0,0,0,.65);
+  padding:10px;
+}
+
+.search-modal input{
+  width:100%;
+  height:54px;
+  border:0;
+  outline:0;
+  border-radius:8px;
+  background:#0a1a2a;
+  color:#fff;
+  padding:0 15px;
+}
+
+.results{
+  padding:8px;
+  display:grid;
+  gap:5px;
+}
+
+.result{
+  padding:10px;
+  border-radius:7px;
+  background:rgba(255,255,255,.025);
+  font-size:10px;
+  color:#bdc9d6;
+}
+
+.result:hover{
+  background:rgba(242,187,63,.08);
+  color:#fff;
+}
+
+/* ---------- desktop side rail ---------- */
+
+.side-drawer{
+  position:fixed;
+  right:-360px;
+  top:0;
+  bottom:0;
+  width:340px;
+  z-index:4500;
+  background:#04101b;
+  border-left:1px solid var(--line);
+  padding:18px;
+  transition:.3s;
+  overflow:auto;
+}
+
+.side-drawer.open{
+  right:0;
+}
+
+.drawer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:15px;
+  border-bottom:1px solid var(--line);
+}
+
+.drawer-close{
+  background:none;
+  border:0;
+  color:#fff;
+  font-size:22px;
+}
+
+.drawer-card{
+  margin-top:12px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:12px;
+  background:#071725;
+}
+
+.drawer-card h3{
+  font-size:11px;
+}
+
+.drawer-card p{
+  margin-top:6px;
+  color:#7f90a3;
+  font-size:9px;
+  line-height:1.5;
+}
+
+/* ---------- mobile bottom navigation ---------- */
+
+.mobile-bottom{
+  display:none;
+  position:fixed;
+  z-index:3000;
+  left:0;
+  right:0;
+  bottom:0;
+  height:60px;
+  background:rgba(3,10,18,.96);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(18px);
+}
+
+.mobile-bottom a{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:3px;
+  color:#718196;
+  font-size:8px;
+}
+
+.mobile-bottom a.active{
+  color:var(--gold);
+}
+
+.mobile-bottom i{
+  font-style:normal;
+  font-size:18px;
+}
+
+/* ---------- responsive ---------- */
+
+@media(max-width:1280px){
+
+  .brand{
+    min-width:220px;
+  }
+
+  .nav-link{
+    padding-left:7px;
+    padding-right:7px;
+    font-size:11px;
+  }
+
+  .globe{
+    right:10%;
+    width:370px;
+    height:370px;
+  }
+
+  .market-float{
+    right:2%;
+    width:195px;
+  }
+
+}
+
+@media(max-width:1050px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .menu-btn{
+    display:block;
+    border-radius:8px;
+  }
+
+  .brand{
+    flex:1;
+  }
+
+  .tool-rail{
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .market-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .movers{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .news-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-main{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .hero{
+    min-height:430px;
+  }
+
+  .globe{
+    right:-80px;
+    opacity:.55;
+  }
+
+  .market-float{
+    right:14px;
+    opacity:.9;
+  }
+
+}
+
+@media(max-width:720px){
+
+  body{
+    padding-bottom:60px;
+  }
+
+  .top-ribbon{
+    height:34px;
+  }
+
+  .ribbon-item{
+    height:34px;
+    padding:0 11px;
+    font-size:9px;
+  }
+
+  .navbar,
+  .nav-inner{
+    min-height:65px;
+  }
+
+  .brand-mark{
+    width:39px;
+    height:39px;
+    border-radius:10px;
+    font-size:15px;
+  }
+
+  .brand-copy strong{
+    font-size:17px;
+  }
+
+  .brand-copy small{
+    display:none;
+  }
+
+  .nav-actions .btn-outline{
+    display:none;
+  }
+
+  .nav-actions .btn-gold{
+    height:36px;
+    padding:0 10px;
+    font-size:9px;
+  }
+
+  .hero{
+    min-height:520px;
+  }
+
+  .hero-content{
+    padding:34px 20px;
+  }
+
+  .hero h1{
+    font-size:39px;
+    letter-spacing:-2px;
+  }
+
+  .hero p{
+    font-size:12px;
+    max-width:370px;
+  }
+
+  .globe{
+    width:300px;
+    height:300px;
+    right:-145px;
+    top:72%;
+    opacity:.32;
+  }
+
+  .market-float{
+    display:none;
+  }
+
+  .stats{
+    gap:17px;
+  }
+
+  .stat strong{
+    font-size:14px;
+  }
+
+  .tool-rail{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .tool{
+    min-height:78px;
+  }
+
+  .breaking{
+    grid-template-columns:1fr;
+  }
+
+  .breaking-label{
+    height:42px;
+    border-right:0;
+    border-bottom:1px solid rgba(242,187,63,.18);
+  }
+
+  .breaking-items{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .breaking-more{
+    height:38px;
+  }
+
+  .market-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .movers{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .news-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .news-card{
+    min-height:175px;
+  }
+
+  .expert{
+    grid-column:1/-1;
+  }
+
+  .module-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cta{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .footer-main{
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+
+  .footer-brand{
+    grid-column:1/-1;
+  }
+
+  .footer-bottom{
+    padding:12px 0;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .mobile-bottom{
+    display:flex;
+  }
+
+}
+
+@media(max-width:470px){
+
+  .container{
+    width:calc(100% - 18px);
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .searchbar{
+    height:46px;
+  }
+
+  .tool-rail{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .tool:nth-child(odd){
+    border-right:1px solid rgba(255,255,255,.06);
+  }
+
+  .tool:nth-child(even){
+    border-right:0;
+  }
+
+  .breaking-items{
+    grid-template-columns:1fr;
+  }
+
+  .news-chip{
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.05);
+  }
+
+  .market-grid,
+  .movers,
+  .news-grid{
+    grid-template-columns:1fr;
+  }
+
+  .news-card{
+    min-height:150px;
+  }
+
+  .news-image{
+    height:65px;
+  }
+
+  .footer-main{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+/* ---------- accessibility ---------- */
+
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *:before,
+  *:after{
+    animation-duration:.01ms!important;
+    scroll-behavior:auto!important;
+    transition:none!important;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     A. GLOBAL MARKET TICKER
+     ========================================================= -->
+
+<div class="top-ribbon">
+
+  <div class="ribbon-track" id="ribbonTrack">
+
+    <div class="ribbon-item">
+      <span class="live-dot"></span>
+      <strong>LIVE MARKETS</strong>
+    </div>
+
+    <div class="ribbon-item">
+      NIFTY 50
+      <strong>24,834.85</strong>
+      <span class="up">▲ 0.75%</span>
+    </div>
+
+    <div class="ribbon-item">
+      SENSEX
+      <strong>81,330.56</strong>
+      <span class="up">▲ 0.68%</span>
+    </div>
+
+    <div class="ribbon-item">
+      NASDAQ
+      <strong>17,689.66</strong>
+      <span class="up">▲ 0.92%</span>
+    </div>
+
+    <div class="ribbon-item">
+      <span class="gold">GOLD</span>
+      <strong>$2,341.20</strong>
+      <span class="up">▲ 0.64%</span>
+    </div>
+
+    <div class="ribbon-item">
+      BTC/USD
+      <strong>$67,853.42</strong>
+      <span class="up">▲ 2.35%</span>
+    </div>
+
+    <div class="ribbon-item">
+      ETH/USD
+      <strong>$3,214.67</strong>
+      <span class="up">▲ 1.25%</span>
+    </div>
+
+    <div class="ribbon-item">
+      DOW JONES
+      <strong>39,431.51</strong>
+      <span class="up">▲ 0.81%</span>
+    </div>
+
+    <div class="ribbon-item">
+      EUR/USD
+      <strong>1.0842</strong>
+      <span class="down">▼ 0.18%</span>
+    </div>
+
+    <div class="ribbon-item">
+      USD/INR
+      <strong>83.92</strong>
+      <span class="up">▲ 0.08%</span>
+    </div>
+
+    <div class="ribbon-item">
+      BRENT
+      <strong>$81.22</strong>
+      <span class="up">▲ 0.44%</span>
+    </div>
+
+    <div class="ribbon-item">
+      S&P 500
+      <strong>5,543.22</strong>
+      <span class="up">▲ 0.56%</span>
+    </div>
+
+    <div class="ribbon-item">
+      <span class="live-dot"></span>
+      <strong>GLOBAL MARKET</strong>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     B. NAVIGATION
+     ========================================================= -->
+
+<header class="navbar">
+
+  <div class="container nav-inner">
+
+    <a
+      class="brand"
+      href="#home"
+      aria-label="Global Finance home"
+    >
+
+      <div class="brand-mark">GF</div>
+
+      <div class="brand-copy">
+
+        <strong>
+          GLOBAL <span>FINANCE</span>
+        </strong>
+
+        <small>
+          SMARTER DECISIONS, STRONGER FUTURE
+        </small>
+
+      </div>
+
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+
+      <a class="nav-link active" href="#home">
+        HOME
+      </a>
+
+      <a class="nav-link" href="#markets">
+        MARKETS <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#trading">
+        TRADING <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#investing">
+        INVESTING <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#crypto">
+        CRYPTO <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#forex">
+        FOREX <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#news">
+        NEWS <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#education">
+        EDUCATION <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#tools">
+        TOOLS <span class="chev">▼</span>
+      </a>
+
+      <a class="nav-link" href="#more">
+        MORE <span class="chev">▼</span>
+      </a>
+
+    </nav>
+
+    <div class="nav-actions">
+
+      <button
+        class="icon-btn"
+        id="searchOpen"
+        aria-label="Open search"
+      >
+        ⌕
+      </button>
+
+      <button
+        class="btn btn-outline"
+        id="loginBtn"
+      >
+        ♙ LOGIN
+      </button>
+
+      <button
+        class="btn btn-gold"
+        id="signupBtn"
+      >
+        ♙ SIGN UP
+      </button>
+
+      <button
+        class="icon-btn menu-btn"
+        id="menuBtn"
+        aria-label="Open menu"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+<main id="home">
+
+<!-- =========================================================
+     C. HERO / GLOBAL FINANCE HEADER
+     ========================================================= -->
+
+<section class="hero-wrap">
+
+  <div class="hero container">
+
+    <div class="grid-floor"></div>
+
+    <div class="hero-content">
+
+      <div class="hero-copy">
+
+        <span class="eyebrow">
+          ✦ #1 FINANCIAL PLATFORM
+        </span>
+
+        <h1>
+          Smart Decisions<br>
+          Stronger <span>Future</span>
+        </h1>
+
+        <p>
+          Real-time market data, expert insights,
+          financial education and powerful tools
+          for traders and investors around the world.
+        </p>
+
+        <form
+          class="searchbar"
+          id="heroSearchForm"
+        >
+
+          <input
+            id="heroSearch"
+            autocomplete="off"
+            placeholder="Search stocks, news, bonds, ETFs..."
+          >
+
+          <button type="submit">
+            ⌕
+          </button>
+
+        </form>
+
+        <div class="stats">
+
+          <div class="stat">
+            <strong>150K+</strong>
+            <span>Active Users</span>
+          </div>
+
+          <div class="stat">
+            <strong>500+</strong>
+            <span>Instruments</span>
+          </div>
+
+          <div class="stat">
+            <strong>50+</strong>
+            <span>Countries</span>
+          </div>
+
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Market Updates</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        class="globe"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="market-float"
+        id="heroMarketPanel"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     D. QUICK TOOLS
+     ========================================================= -->
+
+<div class="container">
+
+  <section
+    class="tool-rail"
+    id="tools"
+  >
+
+    <a
+      class="tool"
+      href="#markets"
+    >
+      <span class="ti">⌁</span>
+      <strong>Live Market</strong>
+      <small>Real-time Data</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#markets"
+    >
+      <span class="ti">◉</span>
+      <strong>Market Overview</strong>
+      <small>Global Indices</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#movers"
+    >
+      <span class="ti">↗</span>
+      <strong>Top Gainers</strong>
+      <small>Stock Winners</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#movers"
+    >
+      <span class="ti">↘</span>
+      <strong>Top Losers</strong>
+      <small>Stock Losers</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#tools"
+    >
+      <span class="ti">♜</span>
+      <strong>Stock Screener</strong>
+      <small>Smart Scanner</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#calendar"
+    >
+      <span class="ti">▣</span>
+      <strong>Economic Calendar</strong>
+      <small>Key Events</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#news"
+    >
+      <span class="ti">▤</span>
+      <strong>News & Insights</strong>
+      <small>Latest Updates</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#portfolio"
+    >
+      <span class="ti">▱</span>
+      <strong>Portfolio</strong>
+      <small>Track & Manage</small>
+    </a>
+
+    <a
+      class="tool"
+      href="#alerts"
+    >
+      <span class="ti">♧</span>
+      <strong>Alerts</strong>
+      <small>Price Alerts</small>
+    </a>
+
+  </section>
+
+<!-- =========================================================
+     E. BREAKING NEWS
+     ========================================================= -->
+
+<section class="breaking">
+
+  <div class="breaking-label">
+    ⚡ BREAKING NEWS
+  </div>
+
+  <div
+    class="breaking-items"
+    id="breakingItems"
+  ></div>
+
+  <a
+    class="breaking-more"
+    href="#news"
+  >
+    VIEW ALL NEWS →
+  </a>
+
+</section>
+
+<!-- =========================================================
+     F. MARKET OVERVIEW
+     ========================================================= -->
+
+<section
+  class="section"
+  id="markets"
+>
+
+  <div class="section-head">
+
+    <h2>
+      MARKET OVERVIEW
+    </h2>
+
+    <a href="#markets">
+      View All Markets →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div
+      class="market-grid"
+      id="marketGrid"
+    ></div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     G. MARKET MOVERS
+     ========================================================= -->
+
+<section
+  class="section"
+  id="movers"
+>
+
+  <div class="section-head">
+
+    <h2>
+      MARKET MOVERS
+    </h2>
+
+    <a href="#movers">
+      View More →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div
+      class="tabs"
+      id="moverTabs"
+    >
+
+      <button
+        class="tab active"
+        data-tab="gainers"
+      >
+        Top Gainers
+      </button>
+
+      <button
+        class="tab"
+        data-tab="losers"
+      >
+        Top Losers
+      </button>
+
+      <button
+        class="tab"
+        data-tab="active"
+      >
+        Most Active
+      </button>
+
+      <button
+        class="tab"
+        data-tab="high"
+      >
+        52 Week High
+      </button>
+
+      <button
+        class="tab"
+        data-tab="low"
+      >
+        52 Week Low
+      </button>
+
+    </div>
+
+    <div
+      class="movers"
+      id="moverGrid"
+    ></div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     H. NEWS & INSIGHTS
+     ========================================================= -->
+
+<section
+  class="section"
+  id="news"
+>
+
+  <div class="section-head">
+
+    <h2>
+      LATEST FINANCIAL NEWS
+    </h2>
+
+    <a href="#news">
+      View All News →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div
+      class="news-grid"
+      id="newsGrid"
+    ></div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     I. CTA
+     ========================================================= -->
+
+<section class="cta">
+
+  <div>
+
+    <h2>
+      Join <span>150,000+</span>
+      Traders & Investors
+    </h2>
+
+    <p>
+      Build your financial dashboard with
+      research, market data and powerful tools.
+    </p>
+
+    <div class="cta-features">
+
+      <span>
+        <b>◉</b>
+        Real-time Data
+      </span>
+
+      <span>
+        <b>♧</b>
+        24/7 Support
+      </span>
+
+      <span>
+        <b>✦</b>
+        Advanced Tools
+      </span>
+
+      <span>
+        <b>▣</b>
+        Secure Platform
+      </span>
+
+    </div>
+
+  </div>
+
+  <button
+    class="btn btn-gold"
+    id="ctaBtn"
+  >
+    Get Started Now
+  </button>
+
+</section>
+
+<!-- =========================================================
+     J. TRADING / INVESTING / CRYPTO / FOREX MODULES
+     ========================================================= -->
+
+<section
+  class="section"
+  id="trading"
+>
+
+  <div class="section-head">
+
+    <h2>
+      FINANCIAL CENTER
+    </h2>
+
+    <a href="#tools">
+      Explore All →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="module-grid">
+
+      <article
+        class="module"
+        id="investing"
+      >
+
+        <h3>
+          TRADING & INVESTING
+        </h3>
+
+        <p>
+          Professional-style research modules
+          for strategies, risk management and
+          long-term portfolio decisions.
+        </p>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Technical Analysis</span>
+            <span>→</span>
+          </div>
+
+          <div class="list-row">
+            <span>Fundamental Analysis</span>
+            <span>→</span>
+          </div>
+
+          <div class="list-row">
+            <span>Risk Management</span>
+            <span>→</span>
+          </div>
+
+          <div class="list-row">
+            <span>Portfolio Allocation</span>
+            <span>→</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article
+        class="module"
+        id="crypto"
+      >
+
+        <h3>
+          CRYPTO MARKET
+        </h3>
+
+        <p>
+          Demo crypto snapshot. Connect a
+          compliant market-data provider
+          for live prices.
+        </p>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Bitcoin</span>
+            <span>$67,853</span>
+          </div>
+
+          <div class="list-row">
+            <span>Ethereum</span>
+            <span>$3,214</span>
+          </div>
+
+          <div class="list-row">
+            <span>Market Sentiment</span>
+            <span>72%</span>
+          </div>
+
+          <div class="list-row">
+            <span>24h Volume</span>
+            <span>$84B</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article
+        class="module"
+        id="forex"
+      >
+
+        <h3>
+          FOREX MARKET
+        </h3>
+
+        <p>
+          Demo FX dashboard with major
+          currency pairs and a placeholder
+          for live API integration.
+        </p>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>EUR / USD</span>
+            <span>1.0842</span>
+          </div>
+
+          <div class="list-row">
+            <span>GBP / USD</span>
+            <span>1.2735</span>
+          </div>
+
+          <div class="list-row">
+            <span>USD / JPY</span>
+            <span>156.20</span>
+          </div>
+
+          <div class="list-row">
+            <span>USD / INR</span>
+            <span>83.92</span>
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     K. ECONOMIC CALENDAR
+     ========================================================= -->
+
+<section
+  class="section"
+  id="calendar"
+>
+
+  <div class="section-head">
+
+    <h2>
+      ECONOMIC CALENDAR
+    </h2>
+
+    <a href="#calendar">
+      Full Calendar →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="module-grid">
+
+      <article class="module">
+
+        <h3>
+          HIGH IMPACT EVENTS
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Central Bank Decision</span>
+            <span>HIGH</span>
+          </div>
+
+          <div class="list-row">
+            <span>Inflation Data</span>
+            <span>HIGH</span>
+          </div>
+
+          <div class="list-row">
+            <span>Employment Report</span>
+            <span>HIGH</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          MARKET SENTIMENT
+        </h3>
+
+        <p>
+          Illustrative sentiment meter —
+          not investment advice.
+        </p>
+
+        <div class="progress">
+          <i></i>
+        </div>
+
+        <div
+          class="list-row"
+          style="margin-top:9px"
+        >
+          <span>Current Score</span>
+          <span>72 / 100</span>
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          WATCHLIST
+        </h3>
+
+        <div
+          class="list"
+          id="watchList"
+        ></div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     L. PORTFOLIO / ALERTS
+     ========================================================= -->
+
+<section
+  class="section"
+  id="portfolio"
+>
+
+  <div class="section-head">
+
+    <h2>
+      PORTFOLIO & ALERT CENTER
+    </h2>
+
+    <a href="#portfolio">
+      Open Dashboard →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="module-grid">
+
+      <article class="module">
+
+        <h3>
+          PORTFOLIO SNAPSHOT
+        </h3>
+
+        <p>
+          This is a frontend preview.
+          Real account data should come
+          from your authenticated backend.
+        </p>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Portfolio Value</span>
+            <span>₹12,50,000</span>
+          </div>
+
+          <div class="list-row">
+            <span>Today's Change</span>
+            <span>+₹18,420</span>
+          </div>
+
+          <div class="list-row">
+            <span>Positions</span>
+            <span>18</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article
+        class="module"
+        id="alerts"
+      >
+
+        <h3>
+          PRICE ALERTS
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>NIFTY 50 above 25,000</span>
+            <span>ON</span>
+          </div>
+
+          <div class="list-row">
+            <span>BTC above $70,000</span>
+            <span>ON</span>
+          </div>
+
+          <div class="list-row">
+            <span>Gold below $2,300</span>
+            <span>OFF</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          RISK CHECK
+        </h3>
+
+        <p>
+          Educational dashboard only.
+          Do not treat this indicator as
+          personalized financial advice.
+        </p>
+
+        <div class="progress">
+          <i style="width:58%"></i>
+        </div>
+
+        <div
+          class="list-row"
+          style="margin-top:9px"
+        >
+          <span>Demo Risk Level</span>
+          <span>MODERATE</span>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     M. EDUCATION
+     ========================================================= -->
+
+<section
+  class="section"
+  id="education"
+>
+
+  <div class="section-head">
+
+    <h2>
+      FINANCE EDUCATION
+    </h2>
+
+    <a href="#education">
+      Explore Academy →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="module-grid">
+
+      <article class="module">
+
+        <h3>
+          BEGINNER
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>What is a Stock?</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>What is an Index?</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>How Trading Works</span>
+            <span>READ</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          INTERMEDIATE
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Technical Indicators</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>Valuation Basics</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>Position Sizing</span>
+            <span>READ</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          ADVANCED
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>Options Concepts</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>Macro Economics</span>
+            <span>READ</span>
+          </div>
+
+          <div class="list-row">
+            <span>Portfolio Theory</span>
+            <span>READ</span>
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     N. MORE / TOOLS
+     ========================================================= -->
+
+<section
+  class="section"
+  id="more"
+>
+
+  <div class="section-head">
+
+    <h2>
+      FINANCIAL TOOLS
+    </h2>
+
+    <a href="#tools">
+      All Tools →
+    </a>
+
+  </div>
+
+  <div class="section-body">
+
+    <div class="module-grid">
+
+      <article class="module">
+
+        <h3>
+          CALCULATORS
+        </h3>
+
+        <div class="list">
+
+          <div class="list-row">
+            <span>SIP Calculator</span>
+            <span>OPEN</span>
+          </div>
+
+          <div class="list-row">
+            <span>Compound Interest</span>
+            <span>OPEN</span>
+          </div>
+
+          <div class="list-row">
+            <span>Loan Calculator</span>
+            <span>OPEN</span>
+          </div>
+
+        </div>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          SCREENER
+        </h3>
+
+        <p>
+          Search stocks by price,
+          market cap, sector, P/E and
+          performance once a data API
+          is connected.
+        </p>
+
+        <button
+          class="read-btn"
+          id="screenerBtn"
+        >
+          Open Screener
+        </button>
+
+      </article>
+
+      <article class="module">
+
+        <h3>
+          AI FINANCE ASSISTANT
+        </h3>
+
+        <p>
+          UI placeholder for a future AI
+          assistant. Keep API keys on your
+          server, never in frontend JavaScript.
+        </p>
+
+        <button
+          class="read-btn"
+          id="aiBtn"
+        >
+          Open Assistant
+        </button>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+</main>
+
+<!-- =========================================================
+     O. FOOTER
+     ========================================================= -->
+
+<footer>
+
+  <div class="container footer-main">
+
+    <div class="footer-brand">
+
+      <div class="brand">
+
+        <div class="brand-mark">
+          GF
+        </div>
+
+        <div class="brand-copy">
+
+          <strong>
+            GLOBAL <span>FINANCE</span>
+          </strong>
+
+          <small>
+            SMARTER DECISIONS, STRONGER FUTURE
+          </small>
+
+        </div>
+
+      </div>
+
+      <p>
+        Your financial information platform for
+        markets, education, research, news and
+        analytical tools. Market values shown
+        in this frontend are demo values until
+        a live provider is connected.
+      </p>
+
+      <div class="socials">
+
+        <a
+          href="#"
+          aria-label="Facebook"
+        >
+          f
+        </a>
+
+        <a
+          href="#"
+          aria-label="X"
+        >
+          𝕏
+        </a>
+
+        <a
+          href="#"
+          aria-label="LinkedIn"
+        >
+          in
+        </a>
+
+        <a
+          href="#"
+          aria-label="YouTube"
+        >
+          ▶
+        </a>
+
+        <a
+          href="#"
+          aria-label="Instagram"
+        >
+          ◎
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer">
+
+      <h4>MARKETS</h4>
+
+      <a href="#markets">Stocks</a>
+      <a href="#markets">Indices</a>
+      <a href="#crypto">Cryptocurrency</a>
+      <a href="#forex">Forex</a>
+      <a href="#markets">Commodities</a>
+
+    </div>
+
+    <div class="footer">
+
+      <h4>TRADING</h4>
+
+      <a href="#trading">
+        Trading Platform
+      </a>
+
+      <a href="#trading">
+        Broker Comparison
+      </a>
+
+      <a href="#trading">
+        Trading Strategies
+      </a>
+
+      <a href="#trading">
+        Risk Management
+      </a>
+
+      <a href="#trading">
+        Technical Analysis
+      </a>
+
+    </div>
+
+    <div class="footer">
+
+      <h4>INVESTING</h4>
+
+      <a href="#investing">
+        Long-Term Investing
+      </a>
+
+      <a href="#investing">
+        Portfolio Management
+      </a>
+
+      <a href="#investing">
+        Mutual Funds
+      </a>
+
+      <a href="#investing">
+        Bonds
+      </a>
+
+      <a href="#investing">
+        REITs
+      </a>
+
+    </div>
+
+    <div class="footer">
+
+      <h4>EDUCATION</h4>
+
+      <a href="#education">
+        Beginner Guide
+      </a>
+
+      <a href="#education">
+        Video Tutorials
+      </a>
+
+      <a href="#education">
+        Webinars
+      </a>
+
+      <a href="#education">
+        Glossary
+      </a>
+
+      <a href="#education">
+        Courses
+      </a>
+
+    </div>
+
+    <div class="footer">
+
+      <h4>TOOLS</h4>
+
+      <a href="#tools">
+        Stock Screener
+      </a>
+
+      <a href="#calendar">
+        Economic Calendar
+      </a>
+
+      <a href="#more">
+        Currency Converter
+      </a>
+
+      <a href="#more">
+        Margin Calculator
+      </a>
+
+      <a href="#alerts">
+        Alerts
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+
+    <span>
+      © <span id="year"></span>
+      Global Finance. All Rights Reserved.
+    </span>
+
+    <div class="footer-links">
+
+      <a href="#">
+        Sitemap
+      </a>
+
+      <a href="#">
+        Disclaimer
+      </a>
+
+      <a href="#">
+        Privacy Policy
+      </a>
+
+      <a href="#">
+        Terms of Use
+      </a>
+
+    </div>
+
+    <span>
+      🌐 English ▾
+    </span>
+
+  </div>
+
+</footer>
+
+<!-- =========================================================
+     MOBILE BOTTOM BAR
+     ========================================================= -->
+
+<nav class="mobile-bottom">
+
+  <a
+    class="active"
+    href="#home"
+  >
+    <i>⌂</i>
+    Home
+  </a>
+
+  <a href="#markets">
+    <i>◉</i>
+    Markets
+  </a>
+
+  <a href="#movers">
+    <i>↗</i>
+    Movers
+  </a>
+
+  <a href="#news">
+    <i>▤</i>
+    News
+  </a>
+
+  <a href="#tools">
+    <i>♜</i>
+    Tools
+  </a>
+
+</nav>
+
+<!-- =========================================================
+     SEARCH MODAL
+     ========================================================= -->
+
+<div
+  class="overlay"
+  id="searchOverlay"
+>
+
+  <div class="search-modal">
+
+    <input
+      id="globalSearch"
+      placeholder="Search stocks, indices, crypto, forex, news, education..."
+      autocomplete="off"
+    >
+
+    <div
+      class="results"
+      id="searchResults"
+    ></div>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     SIDE DRAWER
+     ========================================================= -->
+
+<aside
+  class="side-drawer"
+  id="drawer"
+>
+
+  <div class="drawer-head">
+
+    <strong>
+      GLOBAL FINANCE MENU
+    </strong>
+
+    <button
+      class="drawer-close"
+      id="drawerClose"
+    >
+      ×
+    </button>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      Markets
+    </h3>
+
+    <p>
+      Stocks, indices, commodities,
+      crypto and forex.
+    </p>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      Trading
+    </h3>
+
+    <p>
+      Technical analysis, risk management
+      and trading education.
+    </p>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      Investing
+    </h3>
+
+    <p>
+      Long-term investing, portfolio
+      concepts and research.
+    </p>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      News
+    </h3>
+
+    <p>
+      Financial headlines and market insights.
+    </p>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      Education
+    </h3>
+
+    <p>
+      Beginner to advanced financial
+      learning modules.
+    </p>
+
+  </div>
+
+  <div class="drawer-card">
+
+    <h3>
+      Tools
+    </h3>
+
+    <p>
+      Screeners, calendars, calculators
+      and alerts.
+    </p>
+
+  </div>
+
+</aside>
+
+<script>
+
+/* =========================================================
+   GLOBAL FINANCE — FRONTEND APPLICATION
+   ========================================================= */
+
+const DATA = {
+
+  markets: [
+
+    {
+      name:"NIFTY 50",
+      price:"24,834.85",
+      change:"0.75%",
+      cls:"spark-green"
+    },
+
+    {
+      name:"SENSEX",
+      price:"81,330.56",
+      change:"0.68%",
+      cls:"spark-green"
+    },
+
+    {
+      name:"NASDAQ",
+      price:"17,689.66",
+      change:"0.92%",
+      cls:"spark-green"
+    },
+
+    {
+      name:"DOW JONES",
+      price:"39,431.51",
+      change:"0.81%",
+      cls:"spark-green"
+    },
+
+    {
+      name:"BTC/USD",
+      price:"67,853.42",
+      change:"2.35%",
+      cls:"spark-gold"
+    },
+
+    {
+      name:"ETH/USD",
+      price:"3,214.67",
+      change:"1.25%",
+      cls:"spark-purple"
+    }
+
+  ],
+
+  movers: {
+
+    gainers:[
+
+      [
+        "RELIANCE",
+        "Reliance Industries",
+        "₹2,945.30",
+        "2.45%"
+      ],
+
+      [
+        "TCS",
+        "Tata Consultancy",
+        "₹3,910.75",
+        "2.01%"
+      ],
+
+      [
+        "HDFCBANK",
+        "HDFC Bank",
+        "₹1,688.40",
+        "1.85%"
+      ],
+
+      [
+        "INFY",
+        "Infosys Limited",
+        "₹1,525.60",
+        "1.65%"
+      ],
+
+      [
+        "ICICIBANK",
+        "ICICI Bank",
+        "₹1,234.90",
+        "1.40%"
+      ]
+
+    ],
+
+    losers:[
+
+      [
+        "WIPRO",
+        "Wipro Limited",
+        "₹512.20",
+        "-1.65%"
+      ],
+
+      [
+        "ITC",
+        "ITC Limited",
+        "₹455.80",
+        "-1.22%"
+      ],
+
+      [
+        "AXISBANK",
+        "Axis Bank",
+        "₹1,082.40",
+        "-0.96%"
+      ],
+
+      [
+        "HINDALCO",
+        "Hindalco",
+        "₹712.50",
+        "-0.88%"
+      ],
+
+      [
+        "ONGC",
+        "ONGC",
+        "₹287.30",
+        "-0.71%"
+      ]
+
+    ],
+
+    active:[
+
+      [
+        "RELIANCE",
+        "Reliance Industries",
+        "₹2,945.30",
+        "1.20%"
+      ],
+
+      [
+        "TCS",
+        "Tata Consultancy",
+        "₹3,910.75",
+        "0.92%"
+      ],
+
+      [
+        "INFY",
+        "Infosys Limited",
+        "₹1,525.60",
+        "0.83%"
+      ],
+
+      [
+        "SBIN",
+        "State Bank of India",
+        "₹812.40",
+        "0.76%"
+      ],
+
+      [
+        "HDFCBANK",
+        "HDFC Bank",
+        "₹1,688.40",
+        "0.68%"
+      ]
+
+    ],
+
+    high:[
+
+      [
+        "RELIANCE",
+        "Reliance Industries",
+        "₹2,945.30",
+        "52W HIGH"
+      ],
+
+      [
+        "TCS",
+        "Tata Consultancy",
+        "₹3,910.75",
+        "52W HIGH"
+      ],
+
+      [
+        "INFY",
+        "Infosys Limited",
+        "₹1,525.60",
+        "52W HIGH"
+      ],
+
+      [
+        "ICICIBANK",
+        "ICICI Bank",
+        "₹1,234.90",
+        "52W HIGH"
+      ],
+
+      [
+        "BHARTIARTL",
+        "Bharti Airtel",
+        "₹1,640.20",
+        "52W HIGH"
+      ]
+
+    ],
+
+    low:[
+
+      [
+        "WIPRO",
+        "Wipro Limited",
+        "₹512.20",
+        "52W LOW"
+      ],
+
+      [
+        "PAYTM",
+        "One97 Communications",
+        "₹425.60",
+        "52W LOW"
+      ],
+
+      [
+        "ZOMATO",
+        "Zomato",
+        "₹241.40",
+        "52W LOW"
+      ],
+
+      [
+        "TATASTEEL",
+        "Tata Steel",
+        "₹154.10",
+        "52W LOW"
+      ],
+
+      [
+        "VEDL",
+        "Vedanta",
+        "₹428.50",
+        "52W LOW"
+      ]
+
+    ]
+
+  },
+
+  news:[
+
+    [
+      "MARKETS",
+      "Global Markets Rally as Tech Stocks Lead Gains",
+      "2 hours ago",
+      ""
+    ],
+
+    [
+      "ECONOMY",
+      "Fed Signals Possible Rate Cut in Next Meeting",
+      "3 hours ago",
+      "economy"
+    ],
+
+    [
+      "CRYPTO",
+      "Bitcoin Surges Past $67K Mark Again",
+      "5 hours ago",
+      "crypto"
+    ],
+
+    [
+      "STOCKS",
+      "Top 10 Stocks to Watch This Week",
+      "6 hours ago",
+      "stocks"
+    ]
+
+  ],
+
+  breaking:[
+
+    [
+      "2m ago • MARKETS",
+      "Global Stocks Rally as Tech Leads Gains"
+    ],
+
+    [
+      "15m ago • ECONOMY",
+      "Fed Signals Possible Rate Cut in Next Meeting"
+    ],
+
+    [
+      "32m ago • CRYPTO",
+      "Bitcoin Surges Past $67K Mark Again"
+    ],
+
+    [
+      "1h ago • STOCKS",
+      "Top 10 Stocks to Watch This Week"
+    ]
+
+  ],
+
+  search:[
+
+    "NIFTY 50",
+    "SENSEX",
+    "NASDAQ",
+    "S&P 500",
+    "Bitcoin",
+    "Ethereum",
+    "Gold",
+    "Forex",
+    "Technical Analysis",
+    "Fundamental Analysis",
+    "Stock Screener",
+    "Economic Calendar",
+    "Trading Strategies"
+
+  ]
+
+};
+
+/* ---------- year ---------- */
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+/* ---------- hero market panel ---------- */
+
+const heroPanel =
+  document.getElementById("heroMarketPanel");
+
+const icons = [
+  "N",
+  "S",
+  "N",
+  "D",
+  "₿",
+  "Ξ"
+];
+
+heroPanel.innerHTML =
+  DATA.markets.map((m,i)=>`
+
+    <div class="market-row">
+
+      <div class="market-name">
+
+        <div class="market-icon">
+          ${icons[i]}
+        </div>
+
+        <div class="market-info">
+
+          <strong>
+            ${m.name}
+          </strong>
+
+          <span>
+            ${m.price}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="market-change">
+        ▲ ${m.change}
+      </div>
+
+    </div>
+
+  `).join("");
+
+/* ---------- market cards ---------- */
+
+function sparkPath(seed=0){
+
+  const points = [
+
+    [0,38],
+    [10,31],
+    [20,34],
+    [30,21],
+    [40,28],
+    [50,17],
+    [60,29],
+    [70,23],
+    [80,32],
+    [90,19],
+    [100,25],
+    [112,11],
+    [124,20],
+    [136,8],
+    [150,15]
+
+  ];
+
+  return points.map((p,i)=>{
+
+    const y =
+      p[1] +
+      Math.sin((i+seed)*1.8)*2;
+
+    return `${p[0]},${y}`;
+
+  }).join(" ");
+
+}
+
+document.getElementById("marketGrid").innerHTML =
+  DATA.markets.map((m,i)=>`
+
+    <article class="quote-card">
+
+      <div class="qname">
+        ${m.name}
+      </div>
+
+      <div class="qprice">
+        ${m.price}
+      </div>
+
+      <div class="qchange up">
+        ▲ ${m.change}
+      </div>
+
+      <div class="mini-chart">
+
+        <svg
+          viewBox="0 0 150 50"
+          preserveAspectRatio="none"
+        >
+
+          <polyline
+            class="${m.cls}"
+            points="${sparkPath(i)}"
+          ></polyline>
+
+        </svg>
+
+      </div>
+
+    </article>
+
+  `).join("");
+
+/* ---------- movers ---------- */
+
+const moverGrid =
+  document.getElementById("moverGrid");
+
+function renderMovers(key){
+
+  const rows =
+    DATA.movers[key] ||
+    DATA.movers.gainers;
+
+  moverGrid.innerHTML =
+    rows.map(row=>`
+
+      <article class="mover">
+
+        <div class="mover-top">
+
+          <strong>
+            ${row[0]}
+          </strong>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+        <small>
+          ${row[1]}
+        </small>
+
+        <div class="mover-price">
+
+          ${row[2]}
+
+          <span
+            class="mover-change ${
+              row[3].startsWith("-")
+              ?"down"
+              :"up"
+            }"
+          >
+            ${row[3]}
+          </span>
+
+        </div>
+
+      </article>
+
+    `).join("");
+
+}
+
+renderMovers("gainers");
+
+document
+  .querySelectorAll("#moverTabs .tab")
+  .forEach(tab=>{
+
+    tab.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll("#moverTabs .tab")
+          .forEach(x =>
+            x.classList.remove("active")
+          );
+
+        tab.classList.add("active");
+
+        renderMovers(
+          tab.dataset.tab
+        );
+
+      }
+    );
+
+  });
+
+/* ---------- news ---------- */
+
+const newsGrid =
+  document.getElementById("newsGrid");
+
+const classes = [
+  "",
+  "economy",
+  "crypto",
+  "stocks"
+];
+
+newsGrid.innerHTML =
+  DATA.news.map((n,i)=>`
+
+    <article class="news-card">
+
+      <div
+        class="news-image ${classes[i]}"
+      ></div>
+
+      <div class="news-body">
+
+        <span
+          class="tag ${
+            i===2
+            ?"purple"
+            :i===1
+            ?"goldtag"
+            :""
+          }"
+        >
+          ${n[0]}
+        </span>
+
+        <h3>
+          ${n[1]}
+        </h3>
+
+        <time>
+          ${n[2]}
+        </time>
+
+      </div>
+
+    </article>
+
+  `).join("") + `
+
+    <article class="news-card expert">
+
+      <div>
+
+        <h3>
+          EXPERT OPINION
+        </h3>
+
+        <blockquote>
+          “The key to successful investing is patience,
+          discipline and a long-term perspective.”
+        </blockquote>
+
+        <cite>
+          — Market education example
+        </cite>
+
+      </div>
+
+      <button class="read-btn">
+        Read More Insights
+      </button>
+
+    </article>
+
+  `;
+
+/* ---------- breaking news ---------- */
+
+document.getElementById(
+  "breakingItems"
+).innerHTML =
+  DATA.breaking.map(n=>`
+
+    <div class="news-chip">
+
+      <small>
+        ${n[0]}
+      </small>
+
+      <p>
+        ${n[1]}
+      </p>
+
+    </div>
+
+  `).join("");
+
+/* ---------- watchlist ---------- */
+
+document.getElementById(
+  "watchList"
+).innerHTML = [
+
+  ["NIFTY 50","24,834.85"],
+  ["BTC/USD","$67,853"],
+  ["GOLD","$2,341"],
+  ["EUR/USD","1.0842"]
+
+].map(x=>`
+
+  <div class="list-row">
+
+    <span>
+      ${x[0]}
+    </span>
+
+    <span>
+      ${x[1]}
+    </span>
+
+  </div>
+
+`).join("");
+
+/* ---------- mobile drawer ---------- */
+
+const drawer =
+  document.getElementById("drawer");
+
+document
+  .getElementById("menuBtn")
+  .addEventListener(
+    "click",
+    ()=>drawer.classList.add("open")
+  );
+
+document
+  .getElementById("drawerClose")
+  .addEventListener(
+    "click",
+    ()=>drawer.classList.remove("open")
+  );
+
+/* ---------- search ---------- */
+
+const overlay =
+  document.getElementById("searchOverlay");
+
+const globalSearch =
+  document.getElementById("globalSearch");
+
+const results =
+  document.getElementById("searchResults");
+
+function openSearch(){
+
+  overlay.classList.add("show");
+
+  document.body.classList.add(
+    "modal-open"
+  );
+
+  setTimeout(
+    ()=>globalSearch.focus(),
+    50
+  );
+
+  renderSearch("");
+
+}
+
+function closeSearch(){
+
+  overlay.classList.remove("show");
+
+  document.body.classList.remove(
+    "modal-open"
+  );
+
+}
+
+document
+  .getElementById("searchOpen")
+  .addEventListener(
+    "click",
+    openSearch
+  );
+
+overlay.addEventListener(
+  "click",
+  e=>{
+    if(e.target===overlay){
+      closeSearch();
+    }
+  }
+);
+
+function renderSearch(query){
+
+  const q =
+    query.toLowerCase().trim();
+
+  const matches =
+    DATA.search
+      .filter(
+        x =>
+          x.toLowerCase().includes(q)
+      )
+      .slice(0,8);
+
+  results.innerHTML =
+    matches.map(x=>`
+
+      <div class="result">
+
+        ${x}
+
+        <span
+          style="
+            float:right;
+            color:#f2bb3f
+          "
+        >
+          →
+        </span>
+
+      </div>
+
+    `).join("")
+
+    ||
+
+    `
+      <div class="result">
+        No demo result found.
+        Connect your search/API layer
+        for live results.
+      </div>
+    `;
+
+}
+
+globalSearch.addEventListener(
+  "input",
+  e =>
+    renderSearch(
+      e.target.value
+    )
+);
+
+document
+  .getElementById("heroSearchForm")
+  .addEventListener(
+    "submit",
+    e=>{
+
+      e.preventDefault();
+
+      const q =
+        document
+          .getElementById("heroSearch")
+          .value
+          .trim();
+
+      openSearch();
+
+      globalSearch.value = q;
+
+      renderSearch(q);
+
+    }
+  );
+
+/* ---------- escape ---------- */
+
+document.addEventListener(
+  "keydown",
+  e=>{
+
+    if(e.key==="Escape"){
+
+      closeSearch();
+
+      drawer.classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+);
+
+/* ---------- demo buttons ---------- */
+
+document
+  .getElementById("loginBtn")
+  .addEventListener(
+    "click",
+    ()=>alert(
+      "Login UI is ready. Connect your real authentication backend here."
+    )
+  );
+
+document
+  .getElementById("signupBtn")
+  .addEventListener(
+    "click",
+    ()=>alert(
+      "Signup UI is ready. Connect your real authentication backend here."
+    )
+  );
+
+document
+  .getElementById("ctaBtn")
+  .addEventListener(
+    "click",
+    ()=>alert(
+      "Getting started flow is ready for your backend."
+    )
+  );
+
+document
+  .getElementById("screenerBtn")
+  .addEventListener(
+    "click",
+    ()=>alert(
+      "Stock Screener UI placeholder. Connect a market-data API to make it live."
+    )
+  );
+
+document
+  .getElementById("aiBtn")
+  .addEventListener(
+    "click",
+    ()=>alert(
+      "AI Assistant UI placeholder. Keep API keys on the server, never in this HTML file."
+    )
+  );
+
+/* ---------- active navigation ---------- */
+
+document
+  .querySelectorAll(".nav-link")
+  .forEach(link=>{
+
+    link.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(".nav-link")
+          .forEach(
+            x =>
+              x.classList.remove(
+                "active"
+              )
+          );
+
+        link.classList.add(
+          "active"
+        );
+
+        drawer.classList.remove(
+          "open"
+        );
+
+      }
+    );
+
+  });
+
+/* ---------- tiny demo quote pulse ---------- */
+
+setInterval(
+  ()=>{
+
+    document
+      .querySelectorAll(
+        ".market-change"
+      )
+      .forEach(el=>{
+
+        el.style.opacity=".35";
+
+        setTimeout(
+          ()=>el.style.opacity="1",
+          180
+        );
+
+      });
+
+  },
+  3200
+);
+
+</script>
+
+</body>
+</html>
