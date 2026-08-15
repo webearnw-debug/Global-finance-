@@ -1412,3 +1412,136 @@ item.classList.add("active");
 
 </body>
 </html>
+<style>
+/* ===== MOBILE MENU FIX ===== */
+
+.mobile-menu-list{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:8px !important;
+}
+
+.mobile-menu-list a{
+    display:block !important;
+    width:100% !important;
+    padding:14px 16px !important;
+    border:1px solid #1a3347 !important;
+    border-radius:8px !important;
+    background:#081927 !important;
+    color:#dce5ed !important;
+    font-size:11px !important;
+    text-decoration:none !important;
+}
+
+.mobile-menu-list a:active{
+    background:#10283a !important;
+    color:#f3b72f !important;
+}
+
+
+/* ===== MODAL CONTENT RESET ===== */
+
+#modalBody{
+    overflow:hidden;
+}
+
+
+/* ===== OLD MENU CONTENT HIDE ===== */
+
+#modalBody > .mobile-menu-list{
+    display:flex !important;
+}
+
+
+/* ===== MOBILE ===== */
+
+@media(max-width:600px){
+
+    .modal{
+        padding:14px !important;
+    }
+
+    .modal-box{
+        width:100% !important;
+        max-width:100% !important;
+        max-height:82vh !important;
+        border-radius:18px !important;
+    }
+
+    .modal-head{
+        padding:20px !important;
+    }
+
+    .modal-body{
+        padding:20px !important;
+    }
+
+    .mobile-menu-list{
+        display:flex !important;
+        flex-direction:column !important;
+        gap:8px !important;
+    }
+
+}
+</style>
+
+<script>
+
+/* ===== FINAL MOBILE MENU FIX ===== */
+
+(function(){
+
+    const oldToggleMobile = window.toggleMobile;
+
+    window.toggleMobile = function(){
+
+        const modal = document.getElementById("modal");
+        const title = document.getElementById("modalTitle");
+        const body = document.getElementById("modalBody");
+
+        /* सबसे पहले पुराना content साफ */
+        body.innerHTML = "";
+
+        /* सिर्फ MENU दिखाओ */
+        title.textContent = "MENU";
+
+        body.innerHTML = `
+            <div class="mobile-menu-list">
+
+                <a href="#markets" onclick="closeModal();">
+                    MARKETS
+                </a>
+
+                <a href="#movers" onclick="closeModal();">
+                    MOVERS
+                </a>
+
+                <a href="#news" onclick="closeModal();">
+                    NEWS
+                </a>
+
+                <a href="#education" onclick="closeModal();">
+                    EDUCATION
+                </a>
+
+                <a href="#tools" onclick="closeModal();">
+                    TOOLS
+                </a>
+
+                <a href="#education" onclick="closeModal();">
+                    INVESTING
+                </a>
+
+                <a href="#education" onclick="closeModal();">
+                    TRADING
+                </a>
+
+            </div>
+        `;
+
+        modal.classList.add("show");
+    };
+
+})();
+
+</script>
