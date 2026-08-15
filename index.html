@@ -295,3 +295,35 @@
     <!-- INFINITE 24/7 LIVE MARKET TICKER STRIP -->
     <div class="v4-ticker-strip">
 
+<!-- TERMINAL UPGRADE: FORCE SLIM HEADER & LEFT LOGO LAYOUT -->
+<style type='text/css'>
+  /* 1. विवरणात्मक टेक्स्ट और मैट्रिक्स पैनल को पूरी तरह गायब करना */
+  .v4-about-box, .v4-matrix-panel { 
+    display: none !important; opacity: 0 !important; height: 0 !important; margin: 0 !important; padding: 0 !important; 
+  }
+  
+  /* 2. काले हेडर बॉक्स की पैडिंग को सिकोड़ना ताकि वह स्लिम हो जाए */
+  .v4-premium-header { 
+    padding: 15px 20px !important; 
+  }
+  
+  /* 3. लोगो को बीच से हटाकर जबरन बाईं तरफ (Left Side) सटाना */
+  .v4-header-layout { 
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important; 
+    align-items: center !important;
+    text-align: left !important;
+  }
+  
+  /* 4. लोगो का साइज मोबाइल स्क्रीन के हिसाब से थोड़ा छोटा और स्लिम करना */
+  .animated-logo { 
+    font-size: 28px !important; 
+    margin: 0 !important;
+  }
+
+  /* 5. हेडर स्लिम होने के कारण नीचे के 3-कॉलम ग्रिड को ऊपर सही जगह खींचना */
+  .main-terminal-area {
+    margin-top: 135px !important;
+  }
+</style>
