@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance Intelligence | Ultra Terminal</title>
+    <title>Global Finance Intelligence | Ultra Luxury Terminal</title>
     
     
     <link href="https://googleapis.com" rel="stylesheet">
@@ -17,6 +17,7 @@
             --bb-muted: #555555;
             --bb-blue: #004B87;
             --bb-gold: #ffd700;
+            --bb-neon-green: #00ff66;
         }
 
         body {
@@ -28,20 +29,21 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 1. ULTRA-WIDE STICKY HEADER */
+        /* 1. ULTRA-WIDE FIXED HEADER WITH 3D SHIMMER EFFECT */
         .bb-fixed-header-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 999999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.25);
         }
 
         .bb-premium-header {
             background-color: #000000;
             color: #ffffff;
-            padding: 25px 20px;
+            padding: 30px 20px;
+            border-bottom: 1px solid #222;
         }
         
         .header-wide-layout {
@@ -51,41 +53,68 @@
             align-items: center;
             gap: 40px;
             width: 100%;
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
         }
         
-        /* Gold Gradient Shimmer Logo Animation */
+        /* 3D लिक्विड गोल्ड एनीमेशन लोगो (Sando Style Premium Intro) */
         .animated-logo {
-            font-size: 40px; 
+            font-size: 42px; 
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: -1.5px;
-            background: linear-gradient(90deg, #ffffff, var(--bb-gold), #ffffff);
-            background-size: 200% auto;
+            background: linear-gradient(90deg, #ffffff 0%, var(--bb-gold) 25%, #ffffff 50%, var(--bb-gold) 75%, #ffffff 100%);
+            background-size: 400% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shineLogo 4s linear infinite;
+            animation: liquidGold 6s linear infinite;
             white-space: nowrap;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
         }
-        @keyframes shineLogo {
+        @keyframes liquidGold {
             0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
+            100% { background-position: 400% center; }
         }
         
+        /* प्रीमियम इनफार्मेशन और टर्मिनल स्टेटस बॉक्स (सिर्फ़ टेक्स्ट) */
         .header-about-box {
             flex: 1;
-            max-width: 700px;
+            max-width: 550px;
             font-size: 13px;
             line-height: 1.6;
             color: #cccccc;
             border-left: 3px solid var(--bb-gold); 
             padding-left: 20px;
         }
+        
+        .terminal-status-panel {
+            font-family: monospace;
+            font-size: 11px;
+            color: #888888;
+            background: #111111;
+            padding: 10px 15px;
+            border: 1px solid #222;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        .status-dot {
+            height: 6px;
+            width: 6px;
+            background-color: var(--bb-neon-green);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: blinkDot 1.5s infinite;
+        }
+        @keyframes blinkDot {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
 
         /* 2. INFINITE 24/7 LIVE MARKET TICKER STRIP */
         .market-ticker-strip {
-            background: #111111;
+            background: #0a0a0a;
             border-bottom: 2px solid #000000;
             padding: 14px 0;
             overflow: hidden;
@@ -109,12 +138,12 @@
         }
         
         .ticker-item { display: inline-block; margin-right: 50px; }
-        .price-up { color: #00873c; font-weight: 800; }
-        .price-down { color: #cc0000; font-weight: 800; }
+        .price-up { color: var(--bb-neon-green); font-weight: 800; }
+        .price-down { color: #ff3333; font-weight: 800; }
 
         /* 3. ULTRA-WIDE WESTERN 3-COLUMN LAYOUT SYSTEM */
         .main-terminal-area {
-            margin-top: 230px; 
+            margin-top: 250px; 
             padding: 30px;
             max-width: 1440px;
             margin-left: auto;
@@ -126,7 +155,7 @@
 
         @media (min-width: 992px) {
             .main-terminal-area {
-                grid-template-columns: 1fr 1.6fr 1fr; /* 3-Column Grid */
+                grid-template-columns: 1fr 1.6fr 1fr; 
             }
         }
 
@@ -195,11 +224,23 @@
   <div class="bb-fixed-header-wrapper">
     <div class="bb-premium-header">
       <div class="header-wide-layout">
+        
+        <!-- लिक्विड गोल्ड एनीमेशन के साथ चमचमाता लोगो -->
         <div class="animated-logo">GLOBAL FINANCE</div>
+        
+        <!-- वेबसाइट का लग्जरी टेक्स्ट विवरण बॉक्स -->
         <div class="header-about-box">
-          <b style="color:var(--bb-gold); text-transform:uppercase; display:block; margin-bottom:4px; font-size:11px;">Global Intelligence Terminal</b>
+          <strong style="color:var(--bb-gold); text-transform:uppercase; display:block; margin-bottom:4px; font-size:11px;">Global Intelligence Node</strong>
           यह एक इंटरनेशनल वित्तीय मंच है जहाँ आपको Financial Trading, Real-time Investment Strategies, Corporate Loans, और Premium Online Earning Tips का सटीक विश्लेषण दिया जाता है।
         </div>
+
+        <!-- टेक-प्रोफेशनल लाइव टर्मिनल पैनल (नॉन-क्लिकेबल) -->
+        <div class="terminal-status-panel">
+            <span class="status-dot"></span>SYS: <span style="color:#fff;">ACTIVE</span><br/>
+            FEED: <span style="color:#fff;">SECURE SSL</span><br/>
+            NODE: <span style="color:var(--bb-gold);">INT-v4.0</span>
+        </div>
+        
       </div>
     </div>
 
@@ -209,7 +250,7 @@
         <div class="ticker-item" style="color:var(--bb-gold);">• ULTRA-LIVE TERMINAL</div>
         <div class="ticker-item">DOW JONES: <span class="price-up">$39,120.45 (+0.45% ▲)</span></div>
         <div class="ticker-item">S&P 500: <span class="price-up">$5,480.22 (+0.22% ▲)</span></div>
-        <div class="ticker-item">NASDAQ: <span class="price-down">$17,732.12 (-0.12% ▼)</span></div>
+        <div class="ticker-item">NASDAQ: <span class="price-down">-17,732.12 (-0.12% ▼)</span></div>
         <div class="ticker-item">BITCOIN: <span class="price-up">$68,450.00 (+1.85% ▲)</span></div>
         <div class="ticker-item">ETH: <span class="price-up">$3,540.80 (+2.10% ▲)</span></div>
         <div class="ticker-item">GOLD: <span class="price-down">$2,320.50 (-0.05% ▼)</span></div>
@@ -234,28 +275,3 @@
       <article class="bb-post-card">
         <div class="post-tag">Cryptocurrency</div>
         <h3 class="post-headline"><a href="#">क्रिप्टो मार्केट्स अलर्ट: बिटकॉइन में नया ब्रेकआउट, क्या $70K का स्तर पार होगा?</a></h3>
-        <p class="post-excerpt">टेक्निकल इंडिकेटर्स बताते हैं कि इंस्टीट्यूशनल बाइंग की वजह से डिजिटल एसेट्स में भारी तेजी की संभावना है...</p>
-      </article>
-    </div>
-
-    <!-- COLUMN 2: INTERACTIVE ANALYTICS (MIDDLE EXPANDED SYSTEM) -->
-    <div class="terminal-column border-column">
-      <div style="font-size: 12px; font-weight: 900; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">REAL-TIME FINANCIAL TERMINAL</div>
-      
-      <!-- 24/7 Live Interactive TradingView Chart Component -->
-      <div id="tradingview_chart" style="height: 400px; width: 100%;">
-        <iframe src="https://tradingview.com" style="width: 100%; height: 100%; border: 1px solid var(--bb-border);" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-      </div>
-
-      <!-- High-Converting AdSense Placement Slot -->
-      <div class="premium-adsense-slot">
-        🌟 Google AdSense Responsive Premium Advertisement Placement Node 🌟
-      </div>
-    </div>
-
-    <!-- COLUMN 3: LOANS, INVESTMENT & ONLINE EARNING SECRETS -->
-    <div class="terminal-column">
-      <div style="font-size: 12px; font-weight: 900; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px;">WEALTH GENERATION NODE</div>
-      
-      <article class="bb-post-card">
-        <div class="post-tag">Corporate Loans</div>
