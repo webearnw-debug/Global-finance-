@@ -2023,3 +2023,1028 @@ item.classList.add("active");
 
 })();
 </script>
+<!-- =========================================================
+     GLOBAL FINANCE PREMIUM FOOTER
+     EXISTING CODE DELETE करने की जरूरत नहीं
+     ========================================================= -->
+
+<style>
+
+/* =========================================================
+   OLD FOOTER AUTO HIDE
+   ========================================================= */
+
+body #footer:not(.gf-premium-footer),
+body #footer-wrapper:not(.gf-premium-footer),
+body .footer:not(.gf-premium-footer),
+body .footer-wrapper:not(.gf-premium-footer),
+body #Footer:not(.gf-premium-footer),
+body .site-footer:not(.gf-premium-footer){
+  display:none !important;
+}
+
+
+/* =========================================================
+   PREMIUM FOOTER
+   ========================================================= */
+
+.gf-premium-footer{
+  width:100%;
+  margin:0;
+  padding:0;
+  background:#020a12;
+  color:#9aa7b5;
+  border-top:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+  font-family:inherit;
+  box-sizing:border-box;
+}
+
+.gf-premium-footer *{
+  box-sizing:border-box;
+}
+
+
+/* =========================================================
+   MAIN AREA
+   ========================================================= */
+
+.gf-footer-main{
+  width:100%;
+  max-width:1400px;
+  margin:auto;
+  padding:65px 5%;
+  display:grid;
+  grid-template-columns:1.55fr repeat(5,1fr);
+  gap:40px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.gf-footer-logo-row{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.gf-footer-logo{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,#ffd75c,#e9aa1d);
+  color:#071018;
+  font-size:19px;
+  font-weight:900;
+  box-shadow:0 8px 25px rgba(244,185,47,.16);
+}
+
+.gf-footer-logo.small{
+  width:40px;
+  height:40px;
+  border-radius:9px;
+  font-size:15px;
+}
+
+.gf-footer-brand-name{
+  color:#f3f6f9;
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-.4px;
+}
+
+.gf-footer-brand-name span{
+  color:#f4b92f;
+}
+
+.gf-footer-description{
+  max-width:330px;
+  margin:23px 0;
+  color:#8996a5;
+  font-size:13px;
+  line-height:1.8;
+}
+
+
+/* =========================================================
+   SOCIAL ICONS
+   ========================================================= */
+
+.gf-social-links{
+  display:flex;
+  gap:9px;
+  margin-top:20px;
+}
+
+.gf-social-links a{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:9px;
+  background:#0a1622;
+  color:#dce4eb;
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
+  transition:.25s ease;
+}
+
+.gf-social-links a:hover{
+  background:#f4b92f;
+  color:#061018;
+  border-color:#f4b92f;
+  transform:translateY(-3px);
+}
+
+
+/* =========================================================
+   LINK COLUMNS
+   ========================================================= */
+
+.gf-footer-column h3{
+  margin:0;
+  color:#f2f5f8;
+  font-size:15px;
+  font-weight:800;
+}
+
+.gf-footer-line{
+  display:block;
+  width:38px;
+  height:2px;
+  margin:13px 0 19px;
+  background:#f4b92f;
+}
+
+.gf-footer-column a{
+  display:block;
+  margin:0 0 16px;
+  color:#8794a2;
+  text-decoration:none;
+  font-size:13px;
+  transition:.2s ease;
+}
+
+.gf-footer-column a:hover{
+  color:#f4b92f;
+  transform:translateX(3px);
+}
+
+
+/* =========================================================
+   NEWSLETTER
+   ========================================================= */
+
+.gf-footer-newsletter{
+  max-width:1340px;
+  margin:auto;
+  padding:27px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.gf-newsletter-info{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.gf-newsletter-icon{
+  width:50px;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;
+  background:#0a1724;
+  color:#f4b92f;
+  font-size:21px;
+}
+
+.gf-newsletter-info h3{
+  margin:0 0 5px;
+  color:#f2f5f8;
+  font-size:15px;
+}
+
+.gf-newsletter-info p{
+  margin:0;
+  color:#7d8997;
+  font-size:12px;
+}
+
+.gf-newsletter-form{
+  width:420px;
+  max-width:100%;
+  height:50px;
+  display:flex;
+  overflow:hidden;
+  border:1px solid #1d3042;
+  border-radius:9px;
+  background:#07121d;
+}
+
+.gf-newsletter-form input{
+  flex:1;
+  min-width:0;
+  padding:0 16px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font-size:13px;
+}
+
+.gf-newsletter-form input::placeholder{
+  color:#657383;
+}
+
+.gf-newsletter-form button{
+  width:55px;
+  margin:5px;
+  border:0;
+  border-radius:7px;
+  background:#f4b92f;
+  color:#071018;
+  font-size:17px;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.gf-newsletter-form button:hover{
+  background:#ffd75c;
+}
+
+
+/* =========================================================
+   TRUST BAR
+   ========================================================= */
+
+.gf-trust-section{
+  padding:27px 5%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  background:#030d17;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.gf-trust-item{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding-right:20px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+
+.gf-trust-item:last-child{
+  border-right:0;
+}
+
+.gf-trust-icon{
+  min-width:30px;
+  color:#f4b92f;
+  font-size:25px;
+}
+
+.gf-trust-item strong{
+  display:block;
+  margin-bottom:3px;
+  color:#e8edf2;
+  font-size:10px;
+}
+
+.gf-trust-item p{
+  margin:0;
+  color:#788594;
+  font-size:10px;
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   LOWER AREA
+   ========================================================= */
+
+.gf-footer-bottom{
+  max-width:1400px;
+  margin:auto;
+  padding:50px 5%;
+  display:grid;
+  grid-template-columns:1.6fr repeat(3,1fr);
+  gap:42px;
+}
+
+.gf-footer-about{
+  padding-right:30px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+
+.gf-footer-about p{
+  max-width:315px;
+  margin:19px 0;
+  color:#7e8b99;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.gf-security-badges{
+  display:flex;
+  gap:15px;
+}
+
+.gf-security-badges span{
+  color:#778493;
+  font-size:8px;
+  line-height:1.5;
+}
+
+.gf-bottom-column h4{
+  margin:0 0 17px;
+  color:#e8edf2;
+  font-size:11px;
+}
+
+.gf-bottom-column a{
+  display:block;
+  margin-bottom:14px;
+  color:#8793a0;
+  text-decoration:none;
+  font-size:11px;
+  transition:.2s ease;
+}
+
+.gf-bottom-column a:hover{
+  color:#f4b92f;
+}
+
+
+/* =========================================================
+   APP BUTTONS
+   ========================================================= */
+
+.gf-app-button{
+  min-width:155px;
+  min-height:46px;
+  padding:7px 11px !important;
+  display:flex !important;
+  align-items:center;
+  gap:9px;
+  border:1px solid #1b3042;
+  border-radius:8px;
+  background:#07131f;
+  margin-bottom:9px !important;
+}
+
+.gf-app-symbol{
+  color:#f4b92f;
+  font-size:19px;
+}
+
+.gf-app-button small{
+  display:block;
+  margin-bottom:2px;
+  color:#7e8a98;
+  font-size:7px;
+}
+
+.gf-app-button span:last-child{
+  color:#e6ebf0;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+   ========================================================= */
+
+.gf-copyright{
+  max-width:1340px;
+  margin:auto;
+  padding:19px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-top:1px solid rgba(255,255,255,.08);
+  color:#647280;
+  font-size:10px;
+}
+
+.gf-copyright b{
+  color:#f4b92f;
+  font-size:15px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media(max-width:1000px){
+
+  .gf-footer-main{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .gf-footer-brand{
+    grid-column:span 3;
+  }
+
+  .gf-trust-section{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gf-trust-item:nth-child(2){
+    border-right:0;
+  }
+
+  .gf-footer-bottom{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gf-footer-about{
+    grid-column:span 2;
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    padding-bottom:28px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:600px){
+
+  .gf-footer-main{
+    padding:43px 18px;
+    grid-template-columns:repeat(2,1fr);
+    gap:36px 22px;
+  }
+
+  .gf-footer-brand{
+    grid-column:span 2;
+  }
+
+  .gf-footer-logo{
+    width:45px;
+    height:45px;
+  }
+
+  .gf-footer-brand-name{
+    font-size:18px;
+  }
+
+  .gf-footer-description{
+    font-size:11px;
+    line-height:1.85;
+  }
+
+  .gf-footer-column h3{
+    font-size:13px;
+  }
+
+  .gf-footer-column a{
+    font-size:11px;
+    margin-bottom:13px;
+  }
+
+  .gf-footer-newsletter{
+    padding:24px 18px;
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .gf-newsletter-form{
+    width:100%;
+  }
+
+  .gf-newsletter-info p{
+    font-size:10px;
+  }
+
+  .gf-trust-section{
+    padding:24px 18px;
+    grid-template-columns:1fr 1fr;
+    gap:20px 12px;
+  }
+
+  .gf-trust-item{
+    border-right:0;
+    padding-right:0;
+  }
+
+  .gf-trust-icon{
+    font-size:21px;
+  }
+
+  .gf-trust-item strong{
+    font-size:8px;
+  }
+
+  .gf-trust-item p{
+    font-size:8px;
+  }
+
+  .gf-footer-bottom{
+    padding:38px 18px;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px 18px;
+  }
+
+  .gf-footer-about{
+    grid-column:span 2;
+  }
+
+  .gf-footer-about p{
+    font-size:11px;
+  }
+
+  .gf-bottom-column h4{
+    font-size:10px;
+  }
+
+  .gf-bottom-column a{
+    font-size:10px;
+  }
+
+  .gf-app-column{
+    grid-column:span 2;
+  }
+
+  .gf-copyright{
+    padding:17px 18px;
+    flex-direction:column;
+    text-align:center;
+    font-size:8px;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL
+   ========================================================= */
+
+@media(max-width:380px){
+
+  .gf-footer-main{
+    gap:28px 14px;
+  }
+
+  .gf-footer-column a{
+    font-size:10px;
+  }
+
+  .gf-trust-section{
+    grid-template-columns:1fr;
+  }
+
+  .gf-trust-item{
+    padding-bottom:13px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     NEW PREMIUM FOOTER
+     ========================================================= -->
+
+<footer class="gf-premium-footer">
+
+
+  <!-- MAIN -->
+
+  <div class="gf-footer-main">
+
+
+    <!-- BRAND -->
+
+    <div class="gf-footer-brand">
+
+      <div class="gf-footer-logo-row">
+
+        <div class="gf-footer-logo">
+          GF
+        </div>
+
+        <div class="gf-footer-brand-name">
+          GLOBAL <span>FINANCE</span>
+        </div>
+
+      </div>
+
+      <p class="gf-footer-description">
+        Your financial information platform for markets,
+        education, research, news and analytical tools.
+        Market values shown in this frontend are demo
+        values until a live provider is connected.
+      </p>
+
+      <div class="gf-social-links">
+
+        <a href="#" aria-label="X">𝕏</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+
+      </div>
+
+    </div>
+
+
+    <!-- MARKETS -->
+
+    <div class="gf-footer-column">
+
+      <h3>MARKETS</h3>
+
+      <span class="gf-footer-line"></span>
+
+      <a href="#">› Stocks</a>
+      <a href="#">› Indices</a>
+      <a href="#">› Cryptocurrency</a>
+      <a href="#">› Forex</a>
+      <a href="#">› Commodities</a>
+
+    </div>
+
+
+    <!-- TRADING -->
+
+    <div class="gf-footer-column">
+
+      <h3>TRADING</h3>
+
+      <span class="gf-footer-line"></span>
+
+      <a href="#">› Trading Platform</a>
+      <a href="#">› Trading Strategies</a>
+      <a href="#">› Risk Management</a>
+      <a href="#">› Technical Analysis</a>
+
+    </div>
+
+
+    <!-- INVESTING -->
+
+    <div class="gf-footer-column">
+
+      <h3>INVESTING</h3>
+
+      <span class="gf-footer-line"></span>
+
+      <a href="#">› Long-Term Investing</a>
+      <a href="#">› Portfolio Management</a>
+      <a href="#">› Mutual Funds</a>
+      <a href="#">› Bonds</a>
+      <a href="#">› REITs</a>
+
+    </div>
+
+
+    <!-- TOOLS -->
+
+    <div class="gf-footer-column">
+
+      <h3>TOOLS</h3>
+
+      <span class="gf-footer-line"></span>
+
+      <a href="#">› Stock Screener</a>
+      <a href="#">› Economic Calendar</a>
+      <a href="#">› Currency Converter</a>
+      <a href="#">› Margin Calculator</a>
+      <a href="#">› Alerts</a>
+
+    </div>
+
+
+    <!-- RESOURCES -->
+
+    <div class="gf-footer-column">
+
+      <h3>RESOURCES</h3>
+
+      <span class="gf-footer-line"></span>
+
+      <a href="#">› Education Center</a>
+      <a href="#">› Market News</a>
+      <a href="#">› Reports & Research</a>
+      <a href="#">› Glossary</a>
+      <a href="#">› FAQ</a>
+
+    </div>
+
+  </div>
+
+
+  <!-- NEWSLETTER -->
+
+  <div class="gf-footer-newsletter">
+
+    <div class="gf-newsletter-info">
+
+      <div class="gf-newsletter-icon">
+        ✉
+      </div>
+
+      <div>
+
+        <h3>STAY UPDATED</h3>
+
+        <p>
+          Subscribe to get the latest market insights
+          and exclusive analysis.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <form class="gf-newsletter-form">
+
+      <input
+        type="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <button type="submit">
+        ➤
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <!-- TRUST -->
+
+  <div class="gf-trust-section">
+
+
+    <div class="gf-trust-item">
+
+      <div class="gf-trust-icon">♢</div>
+
+      <div>
+
+        <strong>TRUSTED DATA</strong>
+
+        <p>
+          Real-time & accurate market data
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="gf-trust-item">
+
+      <div class="gf-trust-icon">♙</div>
+
+      <div>
+
+        <strong>SECURE PLATFORM</strong>
+
+        <p>
+          Bank-level security for your data
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="gf-trust-item">
+
+      <div class="gf-trust-icon">◎</div>
+
+      <div>
+
+        <strong>GLOBAL COVERAGE</strong>
+
+        <p>
+          Markets & news from around the world
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="gf-trust-item">
+
+      <div class="gf-trust-icon">♧</div>
+
+      <div>
+
+        <strong>24/7 SUPPORT</strong>
+
+        <p>
+          Our team is here to help you
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOWER FOOTER -->
+
+  <div class="gf-footer-bottom">
+
+
+    <!-- ABOUT -->
+
+    <div class="gf-footer-about">
+
+      <div class="gf-footer-logo-row">
+
+        <div class="gf-footer-logo small">
+          GF
+        </div>
+
+        <div class="gf-footer-brand-name">
+          GLOBAL <span>FINANCE</span>
+        </div>
+
+      </div>
+
+      <p>
+        Empowering investors and traders with data,
+        tools and knowledge to make better financial
+        decisions.
+      </p>
+
+      <div class="gf-security-badges">
+
+        <span>
+          ◈ SSL<br>
+          Secure
+        </span>
+
+        <span>
+          ✥ GDPR<br>
+          Compliant
+        </span>
+
+        <span>
+          ◎ ISO<br>
+          27001
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- COMPANY -->
+
+    <div class="gf-bottom-column">
+
+      <h4>COMPANY</h4>
+
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Advertise With Us</a>
+      <a href="#">Press Room</a>
+      <a href="#">Contact Us</a>
+
+    </div>
+
+
+    <!-- LEGAL -->
+
+    <div class="gf-bottom-column">
+
+      <h4>LEGAL</h4>
+
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Sitemap</a>
+
+    </div>
+
+
+    <!-- APP -->
+
+    <div class="gf-bottom-column gf-app-column">
+
+      <h4>APP</h4>
+
+      <a href="#" class="gf-app-button">
+
+        <span class="gf-app-symbol">
+          ●
+        </span>
+
+        <span>
+          <small>Download on the</small>
+          App Store
+        </span>
+
+      </a>
+
+
+      <a href="#" class="gf-app-button">
+
+        <span class="gf-app-symbol">
+          ▶
+        </span>
+
+        <span>
+          <small>GET IT ON</small>
+          Google Play
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- COPYRIGHT -->
+
+  <div class="gf-copyright">
+
+    <span>
+      © 2026 Global Finance. All rights reserved.
+    </span>
+
+    <span>
+      Made with <b>♡</b> for investors worldwide.
+    </span>
+
+  </div>
+
+
+</footer>
+
+
+<!-- =========================================================
+     NEWSLETTER JS
+     ========================================================= -->
+
+<script>
+
+(function(){
+
+  const form =
+    document.querySelector(".gf-newsletter-form");
+
+  if(!form) return;
+
+  form.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const input =
+      form.querySelector("input");
+
+    const button =
+      form.querySelector("button");
+
+    if(!input.value.trim()) return;
+
+    button.innerHTML="✓";
+
+    setTimeout(function(){
+
+      input.value="";
+      button.innerHTML="➤";
+
+    },1800);
+
+  });
+
+})();
+
+</script>
