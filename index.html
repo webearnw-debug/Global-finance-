@@ -1185,6 +1185,358 @@ function showToast(message){
 }
 
 </script>
+<!-- ==========================================
+ GLOBAL FINANCE — MAIN NAV ENHANCEMENT
+ ADD BEFORE </body>
+========================================== -->
 
+<style>
+
+/* MAIN NAV PREMIUM HIGHLIGHT */
+.gf-nav-button.gf-section-active{
+    background:linear-gradient(
+        135deg,
+        #ffd84a 0%,
+        #f5b719 55%,
+        #d99600 100%
+    ) !important;
+
+    color:#07111b !important;
+
+    border-color:#ffd34a !important;
+
+    box-shadow:
+        0 4px 16px rgba(255,193,7,.18),
+        inset 0 1px 0 rgba(255,255,255,.35);
+
+    transform:translateY(-1px);
+}
+
+/* DROPDOWN SECTION HEADER */
+.gf-section-title{
+    padding:8px 10px 7px;
+    margin-bottom:4px;
+    border-bottom:1px solid rgba(255,193,7,.16);
+    color:#ffc52b;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+/* DROPDOWN LINKS */
+.gf-dropdown .gf-drop-link{
+    transition:
+        background .18s ease,
+        color .18s ease,
+        transform .18s ease;
+}
+
+.gf-dropdown .gf-drop-link:hover{
+    background:#102b3d;
+    color:#ffc52b;
+    transform:translateX(2px);
+}
+
+/* CLICKED CATEGORY */
+.gf-dropdown .gf-drop-link.gf-category-selected{
+    background:linear-gradient(
+        135deg,
+        rgba(255,199,47,.18),
+        rgba(255,169,0,.08)
+    );
+
+    color:#ffd04a;
+
+    border-left:2px solid #ffc52b;
+}
+
+/* KEEP DROPDOWN INSIDE MOBILE */
+@media(max-width:600px){
+
+    .gf-dropdown{
+        left:0;
+        width:calc(100vw - 30px);
+        max-width:270px;
+    }
+
+    .gf-dropdown .gf-drop-link{
+        min-height:42px;
+    }
+
+}
+
+</style>
+
+
+<script>
+(function(){
+
+    /* ==========================================
+       MAIN SECTIONS
+    ========================================== */
+
+    const sectionData = {
+
+        HOME: {
+            title:"HOME",
+            items:[
+                ["🏠","Home"],
+                ["🌎","Market Overview"],
+                ["⭐","Featured Finance"],
+                ["🔥","Trending"]
+            ]
+        },
+
+        MARKETS: {
+            title:"MARKETS",
+            items:[
+                ["📊","Stocks"],
+                ["📈","Trading"],
+                ["💱","Forex"],
+                ["₿","Crypto"],
+                ["🪙","Commodities"],
+                ["🌎","Global Markets"],
+                ["📋","Indices"]
+            ]
+        },
+
+        NEWS: {
+            title:"FINANCIAL NEWS",
+            items:[
+                ["🔥","Breaking News"],
+                ["📊","Market News"],
+                ["💱","Forex News"],
+                ["₿","Crypto News"],
+                ["🏦","Economy"],
+                ["🏢","Company News"],
+                ["🌎","Global Finance News"]
+            ]
+        },
+
+        MORE: {
+            title:"MORE FINANCE",
+            items:[
+                ["💼","Investing"],
+                ["💳","Loans"],
+                ["💰","Personal Finance"],
+                ["🎓","Finance Education"],
+                ["🧮","Financial Tools"],
+                ["🤖","Finance AI"],
+                ["ℹ️","About Global Finance"]
+            ]
+        }
+
+    };
+
+
+    /* ==========================================
+       FIND EXISTING NAVIGATION
+    ========================================== */
+
+    const navButtons =
+        document.querySelectorAll(".gf-nav-button");
+
+
+    /* ==========================================
+       ADD SECTION TITLES
+    ========================================== */
+
+    document.querySelectorAll(".gf-dropdown")
+    .forEach(function(dropdown){
+
+        if(!dropdown.querySelector(".gf-section-title")){
+
+            const title =
+                document.createElement("div");
+
+            title.className =
+                "gf-section-title";
+
+            const parent =
+                dropdown.closest(".gf-nav-item");
+
+            const button =
+                parent ?
+                parent.querySelector(".gf-nav-button") :
+                null;
+
+            if(button){
+
+                title.textContent =
+                    button.textContent
+                    .replace("▼","")
+                    .trim();
+
+                dropdown.prepend(title);
+
+            }
+
+        }
+
+    });
+
+
+    /* ==========================================
+       MAIN BUTTON CLICK
+    ========================================== */
+
+    navButtons.forEach(function(button){
+
+        button.addEventListener("click",function(e){
+
+            e.stopPropagation();
+
+            const dropdownId =
+                this.getAttribute("data-menu");
+
+            const dropdown =
+                document.getElementById(dropdownId);
+
+            if(!dropdown) return;
+
+            const wasOpen =
+                dropdown.classList.contains("show");
+
+
+            /* CLOSE ALL */
+            document.querySelectorAll(".gf-dropdown")
+            .forEach(function(menu){
+
+                menu.classList.remove("show");
+
+            });
+
+
+            document.querySelectorAll(".gf-nav-button")
+            .forEach(function(btn){
+
+                btn.classList.remove(
+                    "gf-section-active"
+                );
+
+                btn.classList.remove("active");
+
+            });
+
+
+            /* OPEN CURRENT */
+            if(!wasOpen){
+
+                dropdown.classList.add("show");
+
+                this.classList.add(
+                    "gf-section-active"
+                );
+
+                this.classList.add("active");
+
+            }
+
+        });
+
+    });
+
+
+    /* ==========================================
+       DROPDOWN ITEM CLICK
+    ========================================== */
+
+    document.querySelectorAll(".gf-drop-link")
+    .forEach(function(link){
+
+        link.addEventListener("click",function(e){
+
+            e.preventDefault();
+            e.stopPropagation();
+
+
+            /* remove old selection */
+
+            document.querySelectorAll(
+                ".gf-drop-link"
+            ).forEach(function(item){
+
+                item.classList.remove(
+                    "gf-category-selected"
+                );
+
+            });
+
+
+            /* highlight selected */
+
+            this.classList.add(
+                "gf-category-selected"
+            );
+
+
+            const category =
+                this.innerText
+                .replace("›","")
+                .trim();
+
+
+            /* show existing toast */
+
+            if(typeof showToast === "function"){
+
+                showToast(
+                    category + " selected"
+                );
+
+            }
+
+
+            /*
+             IMPORTANT:
+
+             अभी ये MAIN CATEGORY buttons हैं।
+
+             जब तुम actual posts डालोगे,
+             इसी जगह actual Blogger/website
+             category URL लगाया जा सकता है।
+            */
+
+        });
+
+    });
+
+
+    /* ==========================================
+       OUTSIDE CLICK
+    ========================================== */
+
+    document.addEventListener("click",function(e){
+
+        if(!e.target.closest(".gf-nav")){
+
+            document.querySelectorAll(
+                ".gf-dropdown"
+            ).forEach(function(menu){
+
+                menu.classList.remove("show");
+
+            });
+
+
+            document.querySelectorAll(
+                ".gf-nav-button"
+            ).forEach(function(btn){
+
+                btn.classList.remove(
+                    "gf-section-active"
+                );
+
+                btn.classList.remove("active");
+
+            });
+
+        }
+
+    });
+
+
+})();
+</script>
 </body>
 </html>
