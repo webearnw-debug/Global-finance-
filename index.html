@@ -1,1712 +1,1600 @@
-<!-- ================= GLOBAL FINANCE : COMPLETE NAVIGATION SYSTEM ================= -->
-<div id="gf-navigation-system">
+<!-- ================= GLOBAL FINANCE TOP HEADER ================= -->
+<div id="GF-TOP-HEADER">
 
 <style>
-/* ================= RESET ================= */
-#gf-navigation-system,
-#gf-navigation-system *{
-    box-sizing:border-box;
+#GF-TOP-HEADER{
+  --gf-bg:#07121d;
+  --gf-bg2:#0b1b2a;
+  --gf-card:#0d2232;
+  --gf-border:rgba(255,255,255,.10);
+  --gf-text:#f5f8fa;
+  --gf-muted:#9aabb8;
+  --gf-gold:#e9b84a;
+  --gf-green:#22c982;
+  --gf-red:#ef6262;
+  --gf-blue:#3aa7ff;
+
+  width:100%;
+  margin:0;
+  padding:0;
+  position:relative;
+  z-index:999999;
+  color:var(--gf-text);
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--gf-bg);
 }
 
-#gf-navigation-system{
-    width:100%;
-    max-width:100%;
-    margin:0;
-    padding:0;
-    font-family:Arial,Helvetica,sans-serif;
-    color:#17202a;
-    background:#fff;
-    position:relative;
-    z-index:99999;
+#GF-TOP-HEADER *{
+  box-sizing:border-box;
 }
 
-#gf-navigation-system button,
-#gf-navigation-system input{
-    font-family:inherit;
+#GF-TOP-HEADER button,
+#GF-TOP-HEADER a,
+#GF-TOP-HEADER input{
+  font-family:inherit;
 }
 
-/* ================= TOP BRAND BAR ================= */
-.gf-topbar{
-    width:100%;
-    min-height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 28px;
-    background:rgba(255,255,255,.97);
-    border-bottom:1px solid #e8edf2;
-    position:relative;
-    z-index:100;
+/* ================= LIVE MARKET STRIP ================= */
+
+.gf-live-strip{
+  width:100%;
+  height:38px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:#040b12;
+  border-bottom:1px solid var(--gf-border);
 }
 
-.gf-brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    color:#17202a;
-    min-width:210px;
+.gf-live-label{
+  flex:0 0 auto;
+  height:100%;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 15px;
+  background:#071521;
+  border-right:1px solid var(--gf-border);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.7px;
 }
 
-.gf-logo{
-    width:45px;
-    height:45px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#102a43,#1e6f5c);
-    color:#fff;
-    font-size:21px;
-    font-weight:900;
-    box-shadow:0 5px 18px rgba(16,42,67,.18);
+.gf-live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gf-green);
+  box-shadow:0 0 9px var(--gf-green);
+  animation:gfPulse 1.8s infinite;
 }
 
-.gf-brand-text{
-    display:flex;
-    flex-direction:column;
-    line-height:1.05;
+@keyframes gfPulse{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
 }
 
-.gf-brand-name{
-    font-size:21px;
-    font-weight:900;
-    letter-spacing:-.5px;
-}
-
-.gf-brand-sub{
-    font-size:9px;
-    letter-spacing:2px;
-    color:#7a8793;
-    margin-top:4px;
-    text-transform:uppercase;
-}
-
-/* ================= HEADER ACTIONS ================= */
-.gf-actions{
-    display:flex;
-    align-items:center;
-    gap:9px;
-}
-
-.gf-action{
-    border:1px solid #e1e7ec;
-    background:#fff;
-    height:40px;
-    padding:0 15px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:700;
-    color:#263746;
-    transition:.2s ease;
-}
-
-.gf-action:hover{
-    border-color:#1e6f5c;
-    transform:translateY(-1px);
-}
-
-.gf-subscribe{
-    background:#102a43;
-    color:#fff;
-    border-color:#102a43;
-}
-
-/* ================= SEARCH ================= */
-.gf-search-box{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(8,20,30,.62);
-    backdrop-filter:blur(7px);
-    display:none;
-    align-items:flex-start;
-    justify-content:center;
-    padding:90px 20px 30px;
-    z-index:100000;
-}
-
-.gf-search-box.active{
-    display:flex;
-}
-
-.gf-search-panel{
-    width:min(680px,100%);
-    background:#fff;
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 25px 80px rgba(0,0,0,.25);
-}
-
-.gf-search-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:15px;
-}
-
-.gf-search-head strong{
-    font-size:20px;
-}
-
-.gf-close{
-    border:0;
-    background:#f2f5f7;
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:18px;
-}
-
-.gf-search-input{
-    width:100%;
-    height:52px;
-    border:1px solid #dfe6eb;
-    border-radius:12px;
-    padding:0 16px;
-    outline:none;
-    font-size:15px;
-}
-
-.gf-search-input:focus{
-    border-color:#1e6f5c;
-}
-
-.gf-search-results{
-    margin-top:14px;
-    max-height:350px;
-    overflow:auto;
-}
-
-.gf-result{
-    padding:13px;
-    border-bottom:1px solid #edf0f2;
-    cursor:pointer;
-}
-
-.gf-result:hover{
-    background:#f7fafb;
-}
-
-/* ================= MARKET TICKER ================= */
-.gf-ticker{
-    width:100%;
-    height:42px;
-    overflow:hidden;
-    background:#f7f9fa;
-    border-bottom:1px solid #e7ecef;
-    display:flex;
-    align-items:center;
-}
-
-.gf-ticker-label{
-    flex:0 0 auto;
-    height:100%;
-    display:flex;
-    align-items:center;
-    padding:0 15px;
-    background:#102a43;
-    color:#fff;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:1px;
-    position:relative;
-    z-index:3;
+.gf-ticker-window{
+  width:100%;
+  overflow:hidden;
 }
 
 .gf-ticker-track{
-    display:flex;
-    width:max-content;
-    animation:gfTicker 65s linear infinite;
+  display:flex;
+  width:max-content;
+  animation:gfTickerMove 55s linear infinite;
 }
 
 .gf-ticker-track:hover{
-    animation-play-state:paused;
+  animation-play-state:paused;
 }
 
 .gf-ticker-item{
-    height:42px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:0 20px;
-    border-right:1px solid #e3e8ec;
-    white-space:nowrap;
-    font-size:12px;
+  min-width:max-content;
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 20px;
+  border-right:1px solid rgba(255,255,255,.07);
+  cursor:pointer;
+  transition:.2s;
+  font-size:10px;
 }
 
-.gf-symbol{
-    font-weight:800;
+.gf-ticker-item:hover{
+  background:rgba(255,255,255,.05);
 }
 
-.gf-price{
-    font-weight:700;
+.gf-ticker-symbol{
+  color:#dbe4ea;
+  font-weight:800;
+}
+
+.gf-ticker-price{
+  color:#fff;
+  font-weight:700;
 }
 
 .gf-up{
-    color:#16835c;
-    font-weight:800;
+  color:var(--gf-green);
+  font-weight:800;
 }
 
 .gf-down{
-    color:#d84b4b;
-    font-weight:800;
+  color:var(--gf-red);
+  font-weight:800;
 }
 
-@keyframes gfTicker{
-    from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
+@keyframes gfTickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
 }
 
-/* ================= BREAKING NEWS ================= */
-.gf-breaking{
-    width:100%;
-    min-height:38px;
-    display:flex;
-    align-items:center;
-    background:#fff;
-    border-bottom:1px solid #e7ecef;
-    overflow:hidden;
+/* ================= MAIN HEADER ================= */
+
+.gf-main-header{
+  min-height:76px;
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:25px;
+  padding:10px 28px;
+  background:
+    radial-gradient(circle at 12% 50%,rgba(58,167,255,.08),transparent 25%),
+    linear-gradient(100deg,#07121d,#081722 55%,#06101a);
+  border-bottom:1px solid var(--gf-border);
+  position:relative;
 }
 
-.gf-breaking-label{
-    flex:0 0 auto;
-    padding:0 16px;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:1px;
-    color:#fff;
-    background:#b83a3a;
-    height:38px;
-    display:flex;
-    align-items:center;
+/* subtle chart background */
+
+.gf-main-header:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:42px 42px;
 }
 
-.gf-breaking-track{
-    overflow:hidden;
-    white-space:nowrap;
-    width:100%;
+/* ================= LOGO ================= */
+
+.gf-logo{
+  position:relative;
+  z-index:2;
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  text-decoration:none;
+  color:#fff;
 }
 
-.gf-breaking-text{
-    display:inline-block;
-    padding-left:100%;
-    animation:gfNews 35s linear infinite;
-    font-size:12px;
-    font-weight:600;
+.gf-logo-mark{
+  width:48px;
+  height:48px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(233,184,74,.55);
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(233,184,74,.18),transparent 55%),
+    #081a28;
+  box-shadow:
+    inset 0 0 20px rgba(233,184,74,.08),
+    0 0 22px rgba(233,184,74,.08);
+  overflow:hidden;
 }
 
-@keyframes gfNews{
-    from{transform:translateX(0)}
-    to{transform:translateX(-100%)}
+.gf-logo-globe{
+  width:30px;
+  height:30px;
+  border:2px solid var(--gf-gold);
+  border-radius:50%;
+  position:relative;
 }
 
-/* ================= MAIN NAVIGATION ================= */
+.gf-logo-globe:before,
+.gf-logo-globe:after{
+  content:"";
+  position:absolute;
+  left:5px;
+  right:5px;
+  height:11px;
+  border-top:1px solid var(--gf-gold);
+  border-bottom:1px solid var(--gf-gold);
+  border-radius:50%;
+  top:7px;
+}
+
+.gf-logo-globe:after{
+  left:11px;
+  right:11px;
+  top:0;
+  bottom:0;
+  height:auto;
+  border-top:0;
+  border-bottom:0;
+  border-left:1px solid var(--gf-gold);
+  border-right:1px solid var(--gf-gold);
+}
+
+.gf-logo-chart{
+  position:absolute;
+  width:19px;
+  height:12px;
+  right:1px;
+  bottom:5px;
+  border-top:2px solid var(--gf-green);
+  transform:skewY(-28deg);
+}
+
+.gf-logo-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1;
+}
+
+.gf-logo-name{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:.5px;
+  white-space:nowrap;
+}
+
+.gf-logo-name span{
+  color:var(--gf-gold);
+}
+
+.gf-logo-tag{
+  margin-top:6px;
+  color:#91a3b0;
+  font-size:7px;
+  letter-spacing:1.6px;
+  white-space:nowrap;
+}
+
+/* ================= NAVIGATION ================= */
+
 .gf-nav{
-    width:100%;
-    background:#fff;
-    border-bottom:1px solid #e5eaee;
-    display:flex;
-    align-items:center;
-    padding:0 22px;
-    position:relative;
-    z-index:90;
+  position:relative;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:1;
+  min-width:0;
 }
 
 .gf-nav-list{
-    display:flex;
-    align-items:center;
-    list-style:none;
-    padding:0;
-    margin:0;
-    width:100%;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  padding:0;
+  margin:0;
 }
 
 .gf-nav-item{
-    position:relative;
+  position:relative;
 }
 
-.gf-nav-link{
-    border:0;
-    background:transparent;
-    min-height:51px;
-    padding:0 15px;
-    cursor:pointer;
-    color:#354452;
-    font-size:12px;
-    font-weight:800;
-    display:flex;
-    align-items:center;
-    gap:5px;
-    text-decoration:none;
-    white-space:nowrap;
+.gf-nav-btn{
+  height:43px;
+  padding:0 11px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  border:0;
+  background:transparent;
+  color:#dce5eb;
+  cursor:pointer;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap;
+  transition:.22s;
 }
 
-.gf-nav-link:hover,
-.gf-nav-item.active>.gf-nav-link{
-    color:#146a56;
+.gf-nav-btn:hover,
+.gf-nav-item.open>.gf-nav-btn{
+  color:var(--gf-gold);
+  background:rgba(233,184,74,.07);
+}
+
+.gf-nav-btn.active{
+  color:var(--gf-gold);
 }
 
 .gf-arrow{
-    font-size:9px;
-    transition:.2s ease;
+  font-size:8px;
+  transition:.2s;
 }
 
-.gf-nav-item:hover .gf-arrow{
-    transform:rotate(180deg);
+.gf-nav-item.open .gf-arrow{
+  transform:rotate(180deg);
 }
 
-/* ================= DROPDOWNS ================= */
+/* ================= DROPDOWN ================= */
+
 .gf-dropdown{
-    position:absolute;
-    top:100%;
-    left:0;
-    min-width:245px;
-    background:#fff;
-    border:1px solid #e3e9ed;
-    border-radius:0 0 14px 14px;
-    box-shadow:0 18px 40px rgba(17,31,44,.13);
-    padding:8px;
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(7px);
-    transition:.18s ease;
+  position:absolute;
+  top:calc(100% + 5px);
+  left:0;
+  min-width:225px;
+  padding:8px;
+  background:#0a1926;
+  border:1px solid rgba(233,184,74,.22);
+  border-radius:12px;
+  box-shadow:0 22px 55px rgba(0,0,0,.45);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(8px);
+  transition:.18s ease;
 }
 
-.gf-nav-item:hover>.gf-dropdown{
-    opacity:1;
-    visibility:visible;
-    transform:translateY(0);
+.gf-nav-item.open>.gf-dropdown{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
 }
 
 .gf-drop-title{
-    padding:10px 11px 7px;
-    color:#8a96a0;
-    font-size:9px;
-    font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:1px;
+  padding:8px 11px 6px;
+  color:var(--gf-gold);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
 }
 
 .gf-drop-link{
-    display:block;
-    text-decoration:none;
-    color:#344553;
-    padding:10px 11px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:650;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:37px;
+  padding:0 11px;
+  color:#d6e0e6;
+  text-decoration:none;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:650;
+  transition:.18s;
 }
 
 .gf-drop-link:hover{
-    background:#f2f7f5;
-    color:#146a56;
+  color:#fff;
+  background:rgba(233,184,74,.09);
+  padding-left:15px;
 }
 
-/* ================= CONTENT PREVIEW ================= */
-.gf-market-overview{
-    width:100%;
-    padding:22px;
-    background:#f8fafb;
+/* ================= HEADER ACTIONS ================= */
+
+.gf-actions{
+  position:relative;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex:0 0 auto;
 }
 
-.gf-overview-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:14px;
+.gf-search-btn,
+.gf-login-btn,
+.gf-signup-btn{
+  height:38px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:10px;
+  font-weight:800;
+  transition:.2s;
 }
 
-.gf-overview-head h2{
-    margin:0;
-    font-size:20px;
-    letter-spacing:-.4px;
+.gf-search-btn{
+  width:38px;
+  border:1px solid var(--gf-border);
+  background:rgba(255,255,255,.03);
+  color:#fff;
 }
 
-.gf-overview-head span{
-    font-size:11px;
-    color:#788691;
+.gf-search-btn:hover{
+  border-color:var(--gf-gold);
+  color:var(--gf-gold);
 }
 
-.gf-market-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:12px;
+.gf-login-btn{
+  padding:0 14px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;
 }
 
-.gf-market-card{
-    background:#fff;
-    border:1px solid #e5eaee;
-    border-radius:13px;
-    padding:15px;
-    transition:.2s ease;
+.gf-login-btn:hover{
+  border-color:var(--gf-gold);
+  color:var(--gf-gold);
 }
 
-.gf-market-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(30,50,65,.07);
+.gf-signup-btn{
+  padding:0 16px;
+  border:1px solid var(--gf-gold);
+  background:linear-gradient(135deg,#e9b84a,#c99425);
+  color:#08121a;
+  box-shadow:0 4px 16px rgba(233,184,74,.15);
 }
 
-.gf-market-card small{
-    color:#7c8994;
-    font-size:10px;
-    font-weight:700;
+.gf-signup-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 7px 22px rgba(233,184,74,.25);
 }
 
-.gf-market-card strong{
-    display:block;
-    font-size:17px;
-    margin:7px 0;
+/* ================= SEARCH PANEL ================= */
+
+.gf-search-overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:90px 18px 20px;
+  background:rgba(2,8,13,.76);
+  backdrop-filter:blur(8px);
+  z-index:1000001;
 }
 
-.gf-change{
-    font-size:11px;
-    font-weight:800;
+.gf-search-overlay.show{
+  display:flex;
 }
 
-/* ================= MOBILE MENU BUTTON ================= */
-.gf-mobile-actions{
-    display:none;
-    align-items:center;
-    gap:7px;
+.gf-search-panel{
+  width:min(680px,100%);
+  background:#0b1b29;
+  border:1px solid rgba(233,184,74,.28);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 30px 90px rgba(0,0,0,.6);
 }
 
-.gf-mobile-button{
-    width:40px;
-    height:40px;
-    border:1px solid #e0e6eb;
-    background:#fff;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:20px;
+.gf-search-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.gf-search-title{
+  font-size:18px;
+  font-weight:900;
+}
+
+.gf-search-close{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:#162b3b;
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.gf-search-input{
+  width:100%;
+  height:52px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:10px;
+  background:#06121d;
+  color:#fff;
+  padding:0 15px;
+  outline:none;
+  font-size:14px;
+}
+
+.gf-search-input:focus{
+  border-color:var(--gf-gold);
+}
+
+.gf-search-hints{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:13px;
+}
+
+.gf-hint{
+  padding:8px 11px;
+  border-radius:7px;
+  background:#122536;
+  color:#b8c5cd;
+  font-size:10px;
+  cursor:pointer;
+}
+
+/* ================= MOBILE BUTTON ================= */
+
+.gf-mobile-menu-btn{
+  display:none;
+  position:relative;
+  z-index:3;
+  width:40px;
+  height:40px;
+  border:1px solid var(--gf-border);
+  background:#0c2030;
+  color:#fff;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:20px;
 }
 
 /* ================= MOBILE DRAWER ================= */
-.gf-mobile-menu{
-    position:fixed;
-    top:0;
-    right:0;
-    width:min(350px,88vw);
-    height:100%;
-    background:#fff;
-    z-index:100001;
-    box-shadow:-20px 0 60px rgba(0,0,0,.18);
-    transform:translateX(105%);
-    transition:.28s ease;
-    overflow-y:auto;
+
+.gf-mobile-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(3px);
+  display:none;
+  z-index:1000000;
 }
 
-.gf-mobile-menu.active{
-    transform:translateX(0);
+.gf-mobile-overlay.show{
+  display:block;
+}
+
+.gf-mobile-drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  width:min(360px,88vw);
+  height:100%;
+  overflow-y:auto;
+  background:#071521;
+  border-left:1px solid rgba(233,184,74,.18);
+  transform:translateX(105%);
+  transition:.28s ease;
+  z-index:1000002;
+  box-shadow:-25px 0 70px rgba(0,0,0,.55);
+}
+
+.gf-mobile-drawer.show{
+  transform:translateX(0);
 }
 
 .gf-mobile-head{
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 18px;
-    border-bottom:1px solid #e8edf0;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 17px;
+  border-bottom:1px solid var(--gf-border);
 }
 
 .gf-mobile-brand{
-    font-weight:900;
-    font-size:17px;
+  font-size:17px;
+  font-weight:900;
+}
+
+.gf-mobile-brand span{
+  color:var(--gf-gold);
 }
 
 .gf-mobile-close{
-    width:38px;
-    height:38px;
-    border:0;
-    border-radius:50%;
-    background:#f1f4f6;
-    cursor:pointer;
-    font-size:20px;
+  width:38px;
+  height:38px;
+  border:1px solid var(--gf-border);
+  background:#0d2232;
+  color:#fff;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:20px;
 }
 
 .gf-mobile-section{
-    padding:8px 12px;
+  padding:10px;
 }
 
-.gf-mobile-link{
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:14px 12px;
-    border:0;
-    background:#fff;
-    text-decoration:none;
-    color:#263846;
-    font-size:13px;
-    font-weight:800;
-    border-radius:9px;
-    cursor:pointer;
-    text-align:left;
+.gf-mobile-row{
+  width:100%;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 13px;
+  margin-bottom:3px;
+  background:transparent;
+  border:0;
+  color:#dce5eb;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:800;
+  text-align:left;
 }
 
-.gf-mobile-link:hover{
-    background:#f3f7f6;
+.gf-mobile-row:hover{
+  background:#102536;
+  color:var(--gf-gold);
 }
 
-.gf-mobile-submenu{
+.gf-mobile-sub{
+  display:none;
+  padding:0 8px 6px;
+}
+
+.gf-mobile-sub.show{
+  display:block;
+}
+
+.gf-mobile-sub a{
+  display:block;
+  padding:10px 13px;
+  color:#98aab6;
+  text-decoration:none;
+  border-radius:7px;
+  font-size:11px;
+}
+
+.gf-mobile-sub a:hover{
+  color:var(--gf-gold);
+  background:#0d2232;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1150px){
+
+  .gf-main-header{
+    gap:12px;
+    padding-left:17px;
+    padding-right:17px;
+  }
+
+  .gf-logo-name{
+    font-size:17px;
+  }
+
+  .gf-logo-tag{
     display:none;
-    padding:0 8px 5px;
-}
+  }
 
-.gf-mobile-submenu.active{
-    display:block;
-}
+  .gf-nav-btn{
+    padding:0 7px;
+    font-size:10px;
+  }
 
-.gf-mobile-submenu a{
-    display:block;
-    padding:10px 13px;
-    text-decoration:none;
-    color:#687680;
-    font-size:12px;
-    border-radius:7px;
-}
-
-.gf-mobile-submenu a:hover{
-    background:#f4f7f8;
-    color:#146a56;
-}
-
-.gf-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    backdrop-filter:blur(2px);
-    z-index:100000;
+  .gf-login-btn{
     display:none;
+  }
+
 }
 
-.gf-overlay.active{
-    display:block;
-}
-
-/* ================= SUBSCRIBE MODAL ================= */
-.gf-subscribe-modal{
-    position:fixed;
-    inset:0;
-    background:rgba(5,16,25,.62);
-    backdrop-filter:blur(6px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100002;
-}
-
-.gf-subscribe-modal.active{
-    display:flex;
-}
-
-.gf-subscribe-panel{
-    width:min(470px,100%);
-    background:#fff;
-    border-radius:20px;
-    padding:26px;
-    box-shadow:0 30px 90px rgba(0,0,0,.3);
-}
-
-.gf-subscribe-panel h2{
-    margin:0 0 8px;
-    font-size:24px;
-}
-
-.gf-subscribe-panel p{
-    margin:0 0 18px;
-    color:#74818b;
-    font-size:13px;
-    line-height:1.6;
-}
-
-.gf-email{
-    width:100%;
-    height:48px;
-    border:1px solid #dfe5e9;
-    border-radius:10px;
-    padding:0 14px;
-    outline:none;
-    margin-bottom:10px;
-}
-
-.gf-email:focus{
-    border-color:#1e6f5c;
-}
-
-.gf-submit{
-    width:100%;
-    height:48px;
-    border:0;
-    border-radius:10px;
-    background:#102a43;
-    color:#fff;
-    font-weight:800;
-    cursor:pointer;
-}
-
-/* ================= MOBILE ================= */
 @media(max-width:900px){
 
-    .gf-topbar{
-        padding:9px 14px;
-        min-height:62px;
-    }
+  .gf-main-header{
+    min-height:66px;
+    padding:8px 13px;
+  }
 
-    .gf-brand{
-        min-width:auto;
-    }
+  .gf-logo-mark{
+    width:42px;
+    height:42px;
+  }
 
-    .gf-logo{
-        width:39px;
-        height:39px;
-        border-radius:10px;
-        font-size:18px;
-    }
+  .gf-logo-name{
+    font-size:16px;
+  }
 
-    .gf-brand-name{
-        font-size:17px;
-    }
+  .gf-nav{
+    display:none;
+  }
 
-    .gf-brand-sub{
-        font-size:7px;
-    }
+  .gf-actions{
+    margin-left:auto;
+  }
 
-    .gf-actions .gf-action:not(.gf-subscribe){
-        display:none;
-    }
+  .gf-mobile-menu-btn{
+    display:block;
+  }
 
-    .gf-actions .gf-subscribe{
-        height:38px;
-        padding:0 11px;
-        font-size:11px;
-    }
+  .gf-signup-btn{
+    display:none;
+  }
 
-    .gf-mobile-actions{
-        display:flex;
-    }
+  .gf-live-strip{
+    height:36px;
+  }
 
-    .gf-nav{
-        display:none;
-    }
+  .gf-ticker-item{
+    height:36px;
+    padding:0 14px;
+    font-size:9px;
+  }
 
-    .gf-ticker-label{
-        padding:0 10px;
-        font-size:8px;
-    }
+  .gf-live-label{
+    padding:0 10px;
+    font-size:8px;
+  }
 
-    .gf-ticker-item{
-        padding:0 14px;
-        font-size:10px;
-    }
-
-    .gf-market-overview{
-        padding:15px;
-    }
-
-    .gf-market-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:9px;
-    }
-
-    .gf-market-card{
-        padding:12px;
-    }
-
-    .gf-market-card strong{
-        font-size:15px;
-    }
-
-    .gf-overview-head h2{
-        font-size:17px;
-    }
 }
 
 @media(max-width:430px){
 
-    .gf-brand-sub{
-        display:none;
-    }
+  .gf-main-header{
+    gap:7px;
+  }
 
-    .gf-brand-name{
-        font-size:16px;
-    }
+  .gf-logo-mark{
+    width:39px;
+    height:39px;
+    border-radius:11px;
+  }
 
-    .gf-subscribe{
-        display:none!important;
-    }
+  .gf-logo-name{
+    font-size:14px;
+  }
 
-    .gf-market-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+  .gf-actions{
+    gap:5px;
+  }
 
-    .gf-breaking-text{
-        font-size:10px;
-    }
+  .gf-search-btn{
+    width:36px;
+    height:36px;
+  }
+
+  .gf-mobile-menu-btn{
+    width:36px;
+    height:36px;
+  }
+
+  .gf-logo-globe{
+    width:25px;
+    height:25px;
+  }
+
 }
 </style>
 
 
-<!-- ================= HEADER ================= -->
+<!-- ================= LIVE MARKET STRIP ================= -->
 
-<header class="gf-topbar">
+<div class="gf-live-strip">
 
-    <a href="/" class="gf-brand" aria-label="Global Finance Home">
+  <div class="gf-live-label">
+    <span class="gf-live-dot"></span>
+    LIVE MARKETS
+  </div>
 
-        <div class="gf-logo">GF</div>
+  <div class="gf-ticker-window">
 
-        <div class="gf-brand-text">
-            <div class="gf-brand-name">Global Finance</div>
-            <div class="gf-brand-sub">Markets • Trading • Finance</div>
-        </div>
+    <div class="gf-ticker-track">
 
-    </a>
+      <div class="gf-ticker-item" data-market="NIFTY 50">
+        <span class="gf-ticker-symbol">NIFTY 50</span>
+        <span class="gf-ticker-price">24,834.85</span>
+        <span class="gf-up">▲ 0.75%</span>
+      </div>
 
-    <div class="gf-actions">
+      <div class="gf-ticker-item" data-market="SENSEX">
+        <span class="gf-ticker-symbol">SENSEX</span>
+        <span class="gf-ticker-price">81,330.56</span>
+        <span class="gf-up">▲ 0.68%</span>
+      </div>
 
-        <button class="gf-action" id="gfSearchBtn">
-            🔍 Search
-        </button>
+      <div class="gf-ticker-item" data-market="NASDAQ">
+        <span class="gf-ticker-symbol">NASDAQ</span>
+        <span class="gf-ticker-price">17,689.66</span>
+        <span class="gf-up">▲ 0.92%</span>
+      </div>
 
-        <button class="gf-action gf-subscribe" id="gfSubscribeBtn">
-            Subscribe
-        </button>
+      <div class="gf-ticker-item" data-market="GOLD">
+        <span class="gf-ticker-symbol">GOLD</span>
+        <span class="gf-ticker-price">$2,341.20</span>
+        <span class="gf-up">▲ 0.64%</span>
+      </div>
 
-        <div class="gf-mobile-actions">
+      <div class="gf-ticker-item" data-market="BTC/USD">
+        <span class="gf-ticker-symbol">BTC/USD</span>
+        <span class="gf-ticker-price">$67,853.42</span>
+        <span class="gf-up">▲ 2.35%</span>
+      </div>
 
-            <button class="gf-mobile-button" id="gfMobileSearch">
-                🔍
-            </button>
+      <div class="gf-ticker-item" data-market="ETH/USD">
+        <span class="gf-ticker-symbol">ETH/USD</span>
+        <span class="gf-ticker-price">$3,214.67</span>
+        <span class="gf-up">▲ 1.25%</span>
+      </div>
 
-            <button class="gf-mobile-button" id="gfMenuBtn">
-                ☰
-            </button>
+      <div class="gf-ticker-item" data-market="EUR/USD">
+        <span class="gf-ticker-symbol">EUR/USD</span>
+        <span class="gf-ticker-price">1.1682</span>
+        <span class="gf-down">▼ 0.14%</span>
+      </div>
 
-        </div>
+      <div class="gf-ticker-item" data-market="OIL">
+        <span class="gf-ticker-symbol">CRUDE OIL</span>
+        <span class="gf-ticker-price">$78.42</span>
+        <span class="gf-up">▲ 0.42%</span>
+      </div>
+
+      <!-- DUPLICATE FOR CONTINUOUS ANIMATION -->
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">NIFTY 50</span>
+        <span class="gf-ticker-price">24,834.85</span>
+        <span class="gf-up">▲ 0.75%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">SENSEX</span>
+        <span class="gf-ticker-price">81,330.56</span>
+        <span class="gf-up">▲ 0.68%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">NASDAQ</span>
+        <span class="gf-ticker-price">17,689.66</span>
+        <span class="gf-up">▲ 0.92%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">GOLD</span>
+        <span class="gf-ticker-price">$2,341.20</span>
+        <span class="gf-up">▲ 0.64%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">BTC/USD</span>
+        <span class="gf-ticker-price">$67,853.42</span>
+        <span class="gf-up">▲ 2.35%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">ETH/USD</span>
+        <span class="gf-ticker-price">$3,214.67</span>
+        <span class="gf-up">▲ 1.25%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">EUR/USD</span>
+        <span class="gf-ticker-price">1.1682</span>
+        <span class="gf-down">▼ 0.14%</span>
+      </div>
+
+      <div class="gf-ticker-item">
+        <span class="gf-ticker-symbol">CRUDE OIL</span>
+        <span class="gf-ticker-price">$78.42</span>
+        <span class="gf-up">▲ 0.42%</span>
+      </div>
 
     </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= MAIN HEADER ================= -->
+
+<header class="gf-main-header">
+
+  <!-- LOGO -->
+
+  <a href="#" class="gf-logo" id="gfLogo">
+
+    <div class="gf-logo-mark">
+      <div class="gf-logo-globe"></div>
+      <div class="gf-logo-chart"></div>
+    </div>
+
+    <div class="gf-logo-text">
+      <div class="gf-logo-name">
+        GLOBAL <span>FINANCE</span>
+      </div>
+
+      <div class="gf-logo-tag">
+        SMARTER DECISIONS • STRONGER FUTURE
+      </div>
+    </div>
+
+  </a>
+
+
+  <!-- ================= DESKTOP NAV ================= -->
+
+  <nav class="gf-nav">
+
+    <ul class="gf-nav-list">
+
+      <li class="gf-nav-item">
+        <button class="gf-nav-btn active" data-page="Home">
+          Home
+        </button>
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Markets
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Markets</div>
+
+          <a href="#" class="gf-drop-link">Stocks</a>
+          <a href="#" class="gf-drop-link">Indices</a>
+          <a href="#" class="gf-drop-link">Commodities</a>
+          <a href="#" class="gf-drop-link">ETFs</a>
+          <a href="#" class="gf-drop-link">Bonds</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Trading
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Trading</div>
+
+          <a href="#" class="gf-drop-link">Trading Strategies</a>
+          <a href="#" class="gf-drop-link">Technical Analysis</a>
+          <a href="#" class="gf-drop-link">Fundamental Analysis</a>
+          <a href="#" class="gf-drop-link">Risk Management</a>
+          <a href="#" class="gf-drop-link">Trading Psychology</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Investing
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Investing</div>
+
+          <a href="#" class="gf-drop-link">Long-Term Investing</a>
+          <a href="#" class="gf-drop-link">Portfolio</a>
+          <a href="#" class="gf-drop-link">Mutual Funds</a>
+          <a href="#" class="gf-drop-link">Bonds</a>
+          <a href="#" class="gf-drop-link">REITs</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Crypto
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Crypto</div>
+
+          <a href="#" class="gf-drop-link">Bitcoin</a>
+          <a href="#" class="gf-drop-link">Ethereum</a>
+          <a href="#" class="gf-drop-link">Crypto News</a>
+          <a href="#" class="gf-drop-link">Market Cap</a>
+          <a href="#" class="gf-drop-link">Top Gainers</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Forex
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Forex</div>
+
+          <a href="#" class="gf-drop-link">Forex News</a>
+          <a href="#" class="gf-drop-link">Currency Pairs</a>
+          <a href="#" class="gf-drop-link">Central Banks</a>
+          <a href="#" class="gf-drop-link">Interest Rates</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          News
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Financial News</div>
+
+          <a href="#" class="gf-drop-link">Breaking News</a>
+          <a href="#" class="gf-drop-link">Markets</a>
+          <a href="#" class="gf-drop-link">Economy</a>
+          <a href="#" class="gf-drop-link">Companies</a>
+          <a href="#" class="gf-drop-link">Central Banks</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          Tools
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">Financial Tools</div>
+
+          <a href="#" class="gf-drop-link">Currency Converter</a>
+          <a href="#" class="gf-drop-link">Profit Calculator</a>
+          <a href="#" class="gf-drop-link">Risk Calculator</a>
+          <a href="#" class="gf-drop-link">Economic Calendar</a>
+          <a href="#" class="gf-drop-link">Stock Screener</a>
+
+        </div>
+
+      </li>
+
+
+      <li class="gf-nav-item">
+
+        <button class="gf-nav-btn">
+          More
+          <span class="gf-arrow">▼</span>
+        </button>
+
+        <div class="gf-dropdown">
+
+          <div class="gf-drop-title">More Finance</div>
+
+          <a href="#" class="gf-drop-link">Loans & Finance</a>
+          <a href="#" class="gf-drop-link">Personal Finance</a>
+          <a href="#" class="gf-drop-link">Banking</a>
+          <a href="#" class="gf-drop-link">Insurance</a>
+          <a href="#" class="gf-drop-link">Financial Planning</a>
+          <a href="#" class="gf-drop-link">Education</a>
+          <a href="#" class="gf-drop-link">About Global Finance</a>
+
+        </div>
+
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+  <!-- ================= ACTION BUTTONS ================= -->
+
+  <div class="gf-actions">
+
+    <button class="gf-search-btn" id="gfSearchOpen" title="Search">
+      ⌕
+    </button>
+
+    <button class="gf-login-btn" id="gfLogin">
+      LOGIN
+    </button>
+
+    <button class="gf-signup-btn" id="gfSignup">
+      SIGN UP
+    </button>
+
+    <button class="gf-mobile-menu-btn" id="gfMobileOpen">
+      ☰
+    </button>
+
+  </div>
 
 </header>
 
 
-<!-- ================= MARKET TICKER ================= -->
+<!-- ================= SEARCH ================= -->
 
-<div class="gf-ticker">
+<div class="gf-search-overlay" id="gfSearchOverlay">
 
-    <div class="gf-ticker-label">
-        MARKETS
-    </div>
+  <div class="gf-search-panel">
 
-    <div class="gf-ticker-track">
+    <div class="gf-search-top">
 
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">NIFTY 50</span>
-            <span class="gf-price">24,985.40</span>
-            <span class="gf-up">▲ 0.72%</span>
-        </div>
+      <div class="gf-search-title">
+        Search Global Finance
+      </div>
 
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">SENSEX</span>
-            <span class="gf-price">81,450.20</span>
-            <span class="gf-up">▲ 0.58%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">NASDAQ</span>
-            <span class="gf-price">21,245.80</span>
-            <span class="gf-up">▲ 0.41%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">DOW</span>
-            <span class="gf-price">44,520.30</span>
-            <span class="gf-down">▼ 0.18%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">EUR/USD</span>
-            <span class="gf-price">1.1682</span>
-            <span class="gf-up">▲ 0.14%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">GBP/USD</span>
-            <span class="gf-price">1.3551</span>
-            <span class="gf-down">▼ 0.09%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">GOLD</span>
-            <span class="gf-price">$3,338.20</span>
-            <span class="gf-up">▲ 0.36%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">SILVER</span>
-            <span class="gf-price">$38.12</span>
-            <span class="gf-up">▲ 0.21%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">BTC/USD</span>
-            <span class="gf-price">$118,420</span>
-            <span class="gf-down">▼ 0.31%</span>
-        </div>
-
-        <!-- duplicate for smooth ticker -->
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">NIFTY 50</span>
-            <span class="gf-price">24,985.40</span>
-            <span class="gf-up">▲ 0.72%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">SENSEX</span>
-            <span class="gf-price">81,450.20</span>
-            <span class="gf-up">▲ 0.58%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">NASDAQ</span>
-            <span class="gf-price">21,245.80</span>
-            <span class="gf-up">▲ 0.41%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">DOW</span>
-            <span class="gf-price">44,520.30</span>
-            <span class="gf-down">▼ 0.18%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">EUR/USD</span>
-            <span class="gf-price">1.1682</span>
-            <span class="gf-up">▲ 0.14%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">GBP/USD</span>
-            <span class="gf-price">1.3551</span>
-            <span class="gf-down">▼ 0.09%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">GOLD</span>
-            <span class="gf-price">$3,338.20</span>
-            <span class="gf-up">▲ 0.36%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">SILVER</span>
-            <span class="gf-price">$38.12</span>
-            <span class="gf-up">▲ 0.21%</span>
-        </div>
-
-        <div class="gf-ticker-item">
-            <span class="gf-symbol">BTC/USD</span>
-            <span class="gf-price">$118,420</span>
-            <span class="gf-down">▼ 0.31%</span>
-        </div>
+      <button class="gf-search-close" id="gfSearchClose">
+        ×
+      </button>
 
     </div>
+
+    <input
+      type="search"
+      class="gf-search-input"
+      id="gfSearchInput"
+      placeholder="Search markets, stocks, forex, crypto, news..."
+    >
+
+    <div class="gf-search-hints">
+
+      <span class="gf-hint">Markets</span>
+      <span class="gf-hint">Trading</span>
+      <span class="gf-hint">Investing</span>
+      <span class="gf-hint">Crypto</span>
+      <span class="gf-hint">Forex</span>
+      <span class="gf-hint">News</span>
+
+    </div>
+
+  </div>
 
 </div>
 
 
-<!-- ================= BREAKING NEWS ================= -->
+<!-- ================= MOBILE OVERLAY ================= -->
 
-<div class="gf-breaking">
+<div class="gf-mobile-overlay" id="gfMobileOverlay"></div>
 
-    <div class="gf-breaking-label">
-        BREAKING
+
+<!-- ================= MOBILE MENU ================= -->
+
+<aside class="gf-mobile-drawer" id="gfMobileDrawer">
+
+  <div class="gf-mobile-head">
+
+    <div class="gf-mobile-brand">
+      GLOBAL <span>FINANCE</span>
     </div>
 
-    <div class="gf-breaking-track">
+    <button class="gf-mobile-close" id="gfMobileClose">
+      ×
+    </button>
 
-        <div class="gf-breaking-text">
-            Global markets update • Forex markets in focus • Investors watch central-bank decisions • Gold and currency markets remain active • Follow Global Finance for market analysis
-        </div>
+  </div>
 
-    </div>
 
-</div>
+  <div class="gf-mobile-section">
 
+    <button class="gf-mobile-row" data-mobile-page="Home">
+      Home
+    </button>
 
-<!-- ================= DESKTOP NAVIGATION ================= -->
 
-<nav class="gf-nav">
+    <button class="gf-mobile-row">
+      Markets <span>＋</span>
+    </button>
 
-<ul class="gf-nav-list">
+    <div class="gf-mobile-sub">
 
-    <li class="gf-nav-item">
-        <a class="gf-nav-link" href="/">Home</a>
-    </li>
-
-
-    <!-- MARKETS -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Markets <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Global Markets</div>
-
-            <a class="gf-drop-link" href="#">Stocks</a>
-            <a class="gf-drop-link" href="#">Indices</a>
-            <a class="gf-drop-link" href="#">Forex</a>
-            <a class="gf-drop-link" href="#">Commodities</a>
-            <a class="gf-drop-link" href="#">Crypto</a>
-            <a class="gf-drop-link" href="#">Bonds</a>
-            <a class="gf-drop-link" href="#">ETFs</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- TRADING -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Trading <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Trading</div>
-
-            <a class="gf-drop-link" href="#">Trading Basics</a>
-            <a class="gf-drop-link" href="#">Technical Analysis</a>
-            <a class="gf-drop-link" href="#">Fundamental Analysis</a>
-            <a class="gf-drop-link" href="#">Trading Strategies</a>
-            <a class="gf-drop-link" href="#">Risk Management</a>
-            <a class="gf-drop-link" href="#">Trading Psychology</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- FOREX NEWS -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Forex News <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Forex</div>
-
-            <a class="gf-drop-link" href="#">Latest Forex News</a>
-            <a class="gf-drop-link" href="#">Currency Pairs</a>
-            <a class="gf-drop-link" href="#">Central Banks</a>
-            <a class="gf-drop-link" href="#">Interest Rates</a>
-            <a class="gf-drop-link" href="#">Economic Events</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- NEWS -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            News <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Finance News</div>
-
-            <a class="gf-drop-link" href="#">Breaking News</a>
-            <a class="gf-drop-link" href="#">Global Markets</a>
-            <a class="gf-drop-link" href="#">Business</a>
-            <a class="gf-drop-link" href="#">Economy</a>
-            <a class="gf-drop-link" href="#">Companies</a>
-            <a class="gf-drop-link" href="#">Technology</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- TOOLS -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Tools <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Finance Tools</div>
-
-            <a class="gf-drop-link" href="#">Currency Converter</a>
-            <a class="gf-drop-link" href="#">Profit & Loss Calculator</a>
-            <a class="gf-drop-link" href="#">Position Size Calculator</a>
-            <a class="gf-drop-link" href="#">Risk / Reward Calculator</a>
-            <a class="gf-drop-link" href="#">Compound Interest</a>
-            <a class="gf-drop-link" href="#">Economic Calendar</a>
-            <a class="gf-drop-link" href="#">Market Hours</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- ANALYSIS -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Analysis <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Analysis</div>
-
-            <a class="gf-drop-link" href="#">Market Analysis</a>
-            <a class="gf-drop-link" href="#">Stock Analysis</a>
-            <a class="gf-drop-link" href="#">Forex Analysis</a>
-            <a class="gf-drop-link" href="#">Technical Signals</a>
-            <a class="gf-drop-link" href="#">Market Trends</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- EDUCATION -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            Education <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Learn Finance</div>
-
-            <a class="gf-drop-link" href="#">Beginner</a>
-            <a class="gf-drop-link" href="#">Intermediate</a>
-            <a class="gf-drop-link" href="#">Advanced</a>
-            <a class="gf-drop-link" href="#">Trading Guides</a>
-            <a class="gf-drop-link" href="#">Finance Dictionary</a>
-            <a class="gf-drop-link" href="#">FAQs</a>
-
-        </div>
-
-    </li>
-
-
-    <!-- AI -->
-
-    <li class="gf-nav-item">
-
-        <a class="gf-nav-link" href="#">
-            🤖 Finance AI
-        </a>
-
-    </li>
-
-
-    <!-- MORE -->
-
-    <li class="gf-nav-item">
-
-        <button class="gf-nav-link">
-            More <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-            <div class="gf-drop-title">Global Finance</div>
-
-            <a class="gf-drop-link" href="#">About Global Finance</a>
-            <a class="gf-drop-link" href="#">Contact</a>
-            <a class="gf-drop-link" href="#">Newsletter</a>
-            <a class="gf-drop-link" href="#">Advertise</a>
-            <a class="gf-drop-link" href="#">Privacy Policy</a>
-            <a class="gf-drop-link" href="#">Disclaimer</a>
-            <a class="gf-drop-link" href="#">Terms & Conditions</a>
-
-        </div>
-
-    </li>
-
-</ul>
-
-</nav>
-
-
-<!-- ================= MOBILE DRAWER ================= -->
-
-<div class="gf-overlay" id="gfOverlay"></div>
-
-<aside class="gf-mobile-menu" id="gfMobileMenu">
-
-    <div class="gf-mobile-head">
-
-        <div class="gf-mobile-brand">
-            Global Finance
-        </div>
-
-        <button class="gf-mobile-close" id="gfMobileClose">
-            ×
-        </button>
+      <a href="#">Stocks</a>
+      <a href="#">Indices</a>
+      <a href="#">Commodities</a>
+      <a href="#">ETFs</a>
+      <a href="#">Bonds</a>
 
     </div>
 
 
-    <div class="gf-mobile-section">
+    <button class="gf-mobile-row">
+      Trading <span>＋</span>
+    </button>
 
-        <a class="gf-mobile-link" href="/">
-            Home
-        </a>
+    <div class="gf-mobile-sub">
 
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Markets <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Stocks</a>
-            <a href="#">Indices</a>
-            <a href="#">Forex</a>
-            <a href="#">Commodities</a>
-            <a href="#">Crypto</a>
-            <a href="#">Bonds</a>
-            <a href="#">ETFs</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Trading <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Trading Basics</a>
-            <a href="#">Technical Analysis</a>
-            <a href="#">Fundamental Analysis</a>
-            <a href="#">Trading Strategies</a>
-            <a href="#">Risk Management</a>
-            <a href="#">Trading Psychology</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Forex News <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Latest Forex News</a>
-            <a href="#">Currency Pairs</a>
-            <a href="#">Central Banks</a>
-            <a href="#">Interest Rates</a>
-            <a href="#">Economic Events</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            News <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Breaking News</a>
-            <a href="#">Global Markets</a>
-            <a href="#">Business</a>
-            <a href="#">Economy</a>
-            <a href="#">Companies</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Tools <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Currency Converter</a>
-            <a href="#">Profit & Loss Calculator</a>
-            <a href="#">Position Size Calculator</a>
-            <a href="#">Risk / Reward Calculator</a>
-            <a href="#">Compound Interest</a>
-            <a href="#">Economic Calendar</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Analysis <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Market Analysis</a>
-            <a href="#">Stock Analysis</a>
-            <a href="#">Forex Analysis</a>
-            <a href="#">Technical Signals</a>
-            <a href="#">Market Trends</a>
-        </div>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            Education <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">Beginner</a>
-            <a href="#">Intermediate</a>
-            <a href="#">Advanced</a>
-            <a href="#">Trading Guides</a>
-            <a href="#">Finance Dictionary</a>
-            <a href="#">FAQs</a>
-        </div>
-
-
-        <a class="gf-mobile-link" href="#">
-            🤖 Finance AI
-        </a>
-
-
-        <button class="gf-mobile-link gfMobileDrop">
-            More <span>＋</span>
-        </button>
-
-        <div class="gf-mobile-submenu">
-            <a href="#">About Global Finance</a>
-            <a href="#">Contact</a>
-            <a href="#">Newsletter</a>
-            <a href="#">Advertise</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Disclaimer</a>
-            <a href="#">Terms & Conditions</a>
-        </div>
+      <a href="#">Trading Strategies</a>
+      <a href="#">Technical Analysis</a>
+      <a href="#">Fundamental Analysis</a>
+      <a href="#">Risk Management</a>
 
     </div>
+
+
+    <button class="gf-mobile-row">
+      Investing <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Long-Term Investing</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Mutual Funds</a>
+      <a href="#">Bonds</a>
+      <a href="#">REITs</a>
+
+    </div>
+
+
+    <button class="gf-mobile-row">
+      Crypto <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Bitcoin</a>
+      <a href="#">Ethereum</a>
+      <a href="#">Crypto News</a>
+      <a href="#">Top Gainers</a>
+
+    </div>
+
+
+    <button class="gf-mobile-row">
+      Forex <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Forex News</a>
+      <a href="#">Currency Pairs</a>
+      <a href="#">Central Banks</a>
+      <a href="#">Interest Rates</a>
+
+    </div>
+
+
+    <button class="gf-mobile-row">
+      News <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Breaking News</a>
+      <a href="#">Markets</a>
+      <a href="#">Economy</a>
+      <a href="#">Companies</a>
+
+    </div>
+
+
+    <button class="gf-mobile-row">
+      Tools <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Currency Converter</a>
+      <a href="#">Profit Calculator</a>
+      <a href="#">Risk Calculator</a>
+      <a href="#">Economic Calendar</a>
+      <a href="#">Stock Screener</a>
+
+    </div>
+
+
+    <button class="gf-mobile-row">
+      More <span>＋</span>
+    </button>
+
+    <div class="gf-mobile-sub">
+
+      <a href="#">Loans & Finance</a>
+      <a href="#">Personal Finance</a>
+      <a href="#">Banking</a>
+      <a href="#">Insurance</a>
+      <a href="#">Financial Planning</a>
+      <a href="#">Education</a>
+      <a href="#">About Global Finance</a>
+
+    </div>
+
+  </div>
 
 </aside>
-
-
-<!-- ================= MARKET OVERVIEW ================= -->
-
-<section class="gf-market-overview">
-
-    <div class="gf-overview-head">
-        <h2>Global Market Overview</h2>
-        <span>Market Snapshot</span>
-    </div>
-
-    <div class="gf-market-grid">
-
-        <div class="gf-market-card">
-            <small>NIFTY 50</small>
-            <strong>24,985.40</strong>
-            <div class="gf-change gf-up">▲ 0.72%</div>
-        </div>
-
-        <div class="gf-market-card">
-            <small>SENSEX</small>
-            <strong>81,450.20</strong>
-            <div class="gf-change gf-up">▲ 0.58%</div>
-        </div>
-
-        <div class="gf-market-card">
-            <small>NASDAQ</small>
-            <strong>21,245.80</strong>
-            <div class="gf-change gf-up">▲ 0.41%</div>
-        </div>
-
-        <div class="gf-market-card">
-            <small>EUR/USD</small>
-            <strong>1.1682</strong>
-            <div class="gf-change gf-up">▲ 0.14%</div>
-        </div>
-
-        <div class="gf-market-card">
-            <small>GOLD</small>
-            <strong>$3,338.20</strong>
-            <div class="gf-change gf-up">▲ 0.36%</div>
-        </div>
-
-        <div class="gf-market-card">
-            <small>BTC/USD</small>
-            <strong>$118,420</strong>
-            <div class="gf-change gf-down">▼ 0.31%</div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= SEARCH MODAL ================= -->
-
-<div class="gf-search-box" id="gfSearchBox">
-
-    <div class="gf-search-panel">
-
-        <div class="gf-search-head">
-
-            <strong>Search Global Finance</strong>
-
-            <button class="gf-close" id="gfSearchClose">
-                ×
-            </button>
-
-        </div>
-
-        <input
-            class="gf-search-input"
-            id="gfSearchInput"
-            type="search"
-            placeholder="Search markets, trading, forex, news..."
-        >
-
-        <div class="gf-search-results" id="gfSearchResults">
-
-            <div class="gf-result">
-                🔎 Try searching for <b>Forex</b>
-            </div>
-
-            <div class="gf-result">
-                📈 Try searching for <b>Trading Strategies</b>
-            </div>
-
-            <div class="gf-result">
-                💰 Try searching for <b>Gold</b>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- ================= SUBSCRIBE MODAL ================= -->
-
-<div class="gf-subscribe-modal" id="gfSubscribeModal">
-
-    <div class="gf-subscribe-panel">
-
-        <div class="gf-search-head">
-
-            <strong>Global Finance</strong>
-
-            <button class="gf-close" id="gfSubscribeClose">
-                ×
-            </button>
-
-        </div>
-
-        <h2>Stay Ahead of the Market</h2>
-
-        <p>
-            Get important market updates, finance news and educational
-            content from Global Finance.
-        </p>
-
-        <input
-            class="gf-email"
-            type="email"
-            placeholder="Enter your email address"
-        >
-
-        <button class="gf-submit" id="gfSubscribeSubmit">
-            Subscribe Now
-        </button>
-
-    </div>
-
-</div>
 
 
 <script>
 (function(){
 
-    "use strict";
+"use strict";
 
-    /* ================= SEARCH ================= */
+/* ================= DESKTOP DROPDOWNS ================= */
 
-    const searchBtn =
-        document.getElementById("gfSearchBtn");
+const navItems =
+document.querySelectorAll("#GF-TOP-HEADER .gf-nav-item");
 
-    const mobileSearch =
-        document.getElementById("gfMobileSearch");
+navItems.forEach(function(item){
 
-    const searchBox =
-        document.getElementById("gfSearchBox");
+  const button =
+  item.querySelector(".gf-nav-btn");
 
-    const searchClose =
-        document.getElementById("gfSearchClose");
+  if(!button) return;
 
-    const searchInput =
-        document.getElementById("gfSearchInput");
+  button.addEventListener("click",function(e){
 
-    const searchResults =
-        document.getElementById("gfSearchResults");
+    e.stopPropagation();
 
+    const wasOpen =
+    item.classList.contains("open");
 
-    function openSearch(){
-
-        searchBox.classList.add("active");
-
-        setTimeout(function(){
-            searchInput.focus();
-        },100);
-
-    }
-
-    function closeSearch(){
-
-        searchBox.classList.remove("active");
-
-    }
-
-
-    if(searchBtn)
-        searchBtn.addEventListener("click",openSearch);
-
-    if(mobileSearch)
-        mobileSearch.addEventListener("click",openSearch);
-
-    if(searchClose)
-        searchClose.addEventListener("click",closeSearch);
-
-
-    searchBox.addEventListener("click",function(e){
-
-        if(e.target === searchBox){
-            closeSearch();
-        }
-
+    navItems.forEach(function(other){
+      other.classList.remove("open");
     });
 
+    if(!wasOpen){
+      item.classList.add("open");
+    }
 
-    searchInput.addEventListener("input",function(){
+  });
 
-        const value =
-            searchInput.value.toLowerCase().trim();
-
-        const items = [
-            ["📈 Markets","Explore global markets, indices and assets."],
-            ["💱 Forex","Forex news, currency pairs and analysis."],
-            ["📰 News","Latest finance and market news."],
-            ["🧮 Tools","Finance calculators and market tools."],
-            ["📚 Education","Learn trading and finance."],
-            ["🤖 Finance AI","Explore the Global Finance AI section."]
-        ];
-
-        if(!value){
-
-            searchResults.innerHTML =
-                "<div class='gf-result'>Start typing to search Global Finance...</div>";
-
-            return;
-
-        }
-
-        const filtered =
-            items.filter(function(item){
-
-                return (
-                    item[0].toLowerCase().includes(value) ||
-                    item[1].toLowerCase().includes(value)
-                );
-
-            });
+});
 
 
-        if(!filtered.length){
+document.addEventListener("click",function(){
 
-            searchResults.innerHTML =
-                "<div class='gf-result'>No matching section found.</div>";
+  navItems.forEach(function(item){
+    item.classList.remove("open");
+  });
 
-            return;
-
-        }
+});
 
 
-        searchResults.innerHTML =
-            filtered.map(function(item){
+/* ================= TICKER CLICK ================= */
 
-                return `
-                    <div class="gf-result">
-                        <strong>${item[0]}</strong><br>
-                        <small>${item[1]}</small>
-                    </div>
-                `;
+document
+.querySelectorAll("#GF-TOP-HEADER .gf-ticker-item")
+.forEach(function(item){
 
-            }).join("");
+  item.addEventListener("click",function(){
 
+    const market =
+    item.getAttribute("data-market") ||
+    item.querySelector(".gf-ticker-symbol")?.textContent ||
+    "Market";
+
+    alert(
+      "Global Finance\n\n" +
+      market +
+      "\n\nMarket detail page can be connected here."
+    );
+
+  });
+
+});
+
+
+/* ================= SEARCH ================= */
+
+const searchOpen =
+document.getElementById("gfSearchOpen");
+
+const searchClose =
+document.getElementById("gfSearchClose");
+
+const searchOverlay =
+document.getElementById("gfSearchOverlay");
+
+const searchInput =
+document.getElementById("gfSearchInput");
+
+
+function openSearch(){
+
+  searchOverlay.classList.add("show");
+
+  setTimeout(function(){
+    searchInput.focus();
+  },100);
+
+}
+
+
+function closeSearch(){
+
+  searchOverlay.classList.remove("show");
+
+}
+
+
+searchOpen.addEventListener("click",openSearch);
+
+searchClose.addEventListener("click",closeSearch);
+
+searchOverlay.addEventListener("click",function(e){
+
+  if(e.target === searchOverlay){
+    closeSearch();
+  }
+
+});
+
+
+/* ================= SEARCH HINTS ================= */
+
+document
+.querySelectorAll("#GF-TOP-HEADER .gf-hint")
+.forEach(function(hint){
+
+  hint.addEventListener("click",function(){
+
+    searchInput.value =
+    hint.textContent;
+
+    searchInput.focus();
+
+  });
+
+});
+
+
+/* ================= LOGIN ================= */
+
+document
+.getElementById("gfLogin")
+.addEventListener("click",function(){
+
+  alert(
+    "Global Finance Login\n\n" +
+    "Login panel is ready to connect with your authentication system."
+  );
+
+});
+
+
+/* ================= SIGN UP ================= */
+
+document
+.getElementById("gfSignup")
+.addEventListener("click",function(){
+
+  alert(
+    "Global Finance Sign Up\n\n" +
+    "Registration panel is ready to connect."
+  );
+
+});
+
+
+/* ================= LOGO ================= */
+
+document
+.getElementById("gfLogo")
+.addEventListener("click",function(e){
+
+  e.preventDefault();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+});
+
+
+/* ================= MOBILE MENU ================= */
+
+const mobileOpen =
+document.getElementById("gfMobileOpen");
+
+const mobileClose =
+document.getElementById("gfMobileClose");
+
+const mobileDrawer =
+document.getElementById("gfMobileDrawer");
+
+const mobileOverlay =
+document.getElementById("gfMobileOverlay");
+
+
+function openMobile(){
+
+  mobileDrawer.classList.add("show");
+  mobileOverlay.classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeMobile(){
+
+  mobileDrawer.classList.remove("show");
+  mobileOverlay.classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+mobileOpen.addEventListener("click",openMobile);
+
+mobileClose.addEventListener("click",closeMobile);
+
+mobileOverlay.addEventListener("click",closeMobile);
+
+
+/* ================= MOBILE SUBMENUS ================= */
+
+document
+.querySelectorAll("#GF-TOP-HEADER .gf-mobile-row")
+.forEach(function(button){
+
+  button.addEventListener("click",function(){
+
+    const submenu =
+    button.nextElementSibling;
+
+    if(
+      submenu &&
+      submenu.classList.contains("gf-mobile-sub")
+    ){
+
+      submenu.classList.toggle("show");
+
+      const span =
+      button.querySelector("span");
+
+      if(span){
+
+        span.textContent =
+        submenu.classList.contains("show")
+        ? "−"
+        : "＋";
+
+      }
+
+    }
+
+  });
+
+});
+
+
+/* ================= ESCAPE ================= */
+
+document.addEventListener("keydown",function(e){
+
+  if(e.key === "Escape"){
+
+    closeSearch();
+    closeMobile();
+
+    navItems.forEach(function(item){
+      item.classList.remove("open");
     });
 
+  }
 
-    /* ================= MOBILE MENU ================= */
-
-    const menuBtn =
-        document.getElementById("gfMenuBtn");
-
-    const mobileMenu =
-        document.getElementById("gfMobileMenu");
-
-    const mobileClose =
-        document.getElementById("gfMobileClose");
-
-    const overlay =
-        document.getElementById("gfOverlay");
-
-
-    function openMenu(){
-
-        mobileMenu.classList.add("active");
-        overlay.classList.add("active");
-        document.body.style.overflow="hidden";
-
-    }
-
-
-    function closeMenu(){
-
-        mobileMenu.classList.remove("active");
-        overlay.classList.remove("active");
-        document.body.style.overflow="";
-
-    }
-
-
-    if(menuBtn)
-        menuBtn.addEventListener("click",openMenu);
-
-    if(mobileClose)
-        mobileClose.addEventListener("click",closeMenu);
-
-    if(overlay)
-        overlay.addEventListener("click",closeMenu);
-
-
-    /* ================= MOBILE DROPDOWNS ================= */
-
-    document
-        .querySelectorAll(".gfMobileDrop")
-        .forEach(function(button){
-
-            button.addEventListener("click",function(){
-
-                const submenu =
-                    button.nextElementSibling;
-
-                submenu.classList.toggle("active");
-
-                const symbol =
-                    button.querySelector("span");
-
-                if(submenu.classList.contains("active")){
-
-                    symbol.textContent="−";
-
-                }else{
-
-                    symbol.textContent="＋";
-
-                }
-
-            });
-
-        });
-
-
-    /* ================= SUBSCRIBE ================= */
-
-    const subscribeBtn =
-        document.getElementById("gfSubscribeBtn");
-
-    const subscribeModal =
-        document.getElementById("gfSubscribeModal");
-
-    const subscribeClose =
-        document.getElementById("gfSubscribeClose");
-
-    const subscribeSubmit =
-        document.getElementById("gfSubscribeSubmit");
-
-
-    function openSubscribe(){
-
-        subscribeModal.classList.add("active");
-
-    }
-
-
-    function closeSubscribe(){
-
-        subscribeModal.classList.remove("active");
-
-    }
-
-
-    if(subscribeBtn)
-        subscribeBtn.addEventListener("click",openSubscribe);
-
-    if(subscribeClose)
-        subscribeClose.addEventListener("click",closeSubscribe);
-
-
-    subscribeModal.addEventListener("click",function(e){
-
-        if(e.target === subscribeModal){
-            closeSubscribe();
-        }
-
-    });
-
-
-    if(subscribeSubmit){
-
-        subscribeSubmit.addEventListener("click",function(){
-
-            alert(
-                "Thank you for subscribing to Global Finance!"
-            );
-
-        });
-
-    }
-
-
-    /* ================= ESCAPE KEY ================= */
-
-    document.addEventListener("keydown",function(e){
-
-        if(e.key === "Escape"){
-
-            closeSearch();
-            closeSubscribe();
-            closeMenu();
-
-        }
-
-    });
+});
 
 
 })();
 </script>
 
 </div>
-<!-- ================= END GLOBAL FINANCE NAVIGATION ================= -->
+<!-- ================= END GLOBAL FINANCE TOP HEADER ================= -->
