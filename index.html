@@ -2899,5 +2899,1318 @@ document.addEventListener(
 );
 
 </script>
+  <!-- =========================================================
+     GLOBAL FINANCE — ADVANCED WORKING TOOLS SYSTEM
+     Add this block before </body>
+========================================================= -->
+
+<style>
+/* ---------- TOOL SYSTEM ---------- */
+
+.gf-tool-overlay{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.gf-tool-overlay.active{
+  display:flex;
+}
+
+.gf-tool-window{
+  width:min(920px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(255,196,45,.10),transparent 28%),
+    linear-gradient(145deg,#07121c,#061019 55%,#08151e);
+  border:1px solid rgba(247,194,52,.55);
+  border-radius:24px;
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.65),
+    0 0 50px rgba(247,194,52,.08);
+  color:#f4f7fa;
+  animation:gfToolIn .25s ease;
+}
+
+@keyframes gfToolIn{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.gf-tool-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:22px 24px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  position:sticky;
+  top:0;
+  background:rgba(6,16,25,.94);
+  backdrop-filter:blur(14px);
+  z-index:3;
+}
+
+.gf-tool-title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.gf-tool-icon{
+  width:48px;
+  height:48px;
+  border:1px solid rgba(247,194,52,.55);
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  color:#f7c234;
+  font-size:22px;
+}
+
+.gf-tool-title h2{
+  margin:0;
+  font-size:20px;
+}
+
+.gf-tool-title span{
+  display:block;
+  margin-top:4px;
+  color:#8da0b2;
+  font-size:12px;
+}
+
+.gf-tool-close{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  background:#0a1824;
+  color:#fff;
+  cursor:pointer;
+  font-size:20px;
+}
+
+.gf-tool-body{
+  padding:24px;
+}
+
+.gf-tool-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.gf-field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.gf-field.full{
+  grid-column:1/-1;
+}
+
+.gf-field label{
+  color:#9fb0c0;
+  font-size:12px;
+  font-weight:700;
+}
+
+.gf-field input,
+.gf-field select{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px 14px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.10);
+  outline:none;
+  background:#07131e;
+  color:#fff;
+}
+
+.gf-field input:focus,
+.gf-field select:focus{
+  border-color:#f7c234;
+  box-shadow:0 0 0 3px rgba(247,194,52,.08);
+}
+
+.gf-tool-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.gf-btn{
+  border:0;
+  border-radius:11px;
+  padding:13px 20px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.gf-btn-primary{
+  background:#f7c234;
+  color:#071019;
+}
+
+.gf-btn-secondary{
+  background:#102130;
+  color:#dce7ef;
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.gf-result{
+  margin-top:20px;
+  padding:18px;
+  border-radius:15px;
+  border:1px solid rgba(247,194,52,.18);
+  background:rgba(255,255,255,.025);
+  min-height:50px;
+}
+
+.gf-result strong{
+  color:#f7c234;
+}
+
+.gf-stock-list{
+  margin-top:15px;
+  display:grid;
+  gap:9px;
+}
+
+.gf-stock-row{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  gap:10px;
+  padding:13px;
+  border-radius:10px;
+  background:#091824;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.gf-up{
+  color:#35d982;
+}
+
+.gf-down{
+  color:#ff6875;
+}
+
+.gf-empty{
+  color:#8da0b2;
+  text-align:center;
+  padding:20px;
+}
+
+@media(max-width:650px){
+  .gf-tool-overlay{
+    padding:8px;
+  }
+
+  .gf-tool-window{
+    max-height:95vh;
+    border-radius:18px;
+  }
+
+  .gf-tool-head{
+    padding:16px;
+  }
+
+  .gf-tool-body{
+    padding:16px;
+  }
+
+  .gf-tool-grid{
+    grid-template-columns:1fr;
+  }
+
+  .gf-field.full{
+    grid-column:auto;
+  }
+
+  .gf-tool-title h2{
+    font-size:17px;
+  }
+
+  .gf-tool-icon{
+    width:42px;
+    height:42px;
+  }
+}
+</style>
+
+
+<!-- TOOL WINDOW -->
+<div id="gfToolOverlay" class="gf-tool-overlay">
+
+  <div class="gf-tool-window">
+
+    <div class="gf-tool-head">
+
+      <div class="gf-tool-title">
+        <div id="gfToolIcon" class="gf-tool-icon">◆</div>
+
+        <div>
+          <h2 id="gfToolName">Global Finance Tool</h2>
+          <span id="gfToolSubtitle">Professional financial tool</span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="gf-tool-close"
+        id="gfToolClose">
+        ×
+      </button>
+
+    </div>
+
+    <div id="gfToolBody" class="gf-tool-body"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   GLOBAL FINANCE — TOOL ENGINE
+========================================================= */
+
+(function(){
+
+"use strict";
+
+const overlay = document.getElementById("gfToolOverlay");
+const toolName = document.getElementById("gfToolName");
+const toolSubtitle = document.getElementById("gfToolSubtitle");
+const toolIcon = document.getElementById("gfToolIcon");
+const toolBody = document.getElementById("gfToolBody");
+const closeBtn = document.getElementById("gfToolClose");
+
+
+/* ---------------------------------------------------------
+   DEMO MARKET DATA
+--------------------------------------------------------- */
+
+const stocks = [
+  {name:"RELIANCE", sector:"Energy", price:2945.30, change:2.45},
+  {name:"TCS", sector:"Technology", price:3910.75, change:2.01},
+  {name:"HDFCBANK", sector:"Banking", price:1688.40, change:1.85},
+  {name:"INFY", sector:"Technology", price:1525.60, change:1.65},
+  {name:"ICICIBANK", sector:"Banking", price:1234.90, change:1.40},
+  {name:"ITC", sector:"Consumer", price:458.20, change:-0.42},
+  {name:"SBIN", sector:"Banking", price:812.45, change:0.88},
+  {name:"BHARTIARTL", sector:"Telecom", price:1865.20, change:1.12},
+  {name:"HINDUNILVR", sector:"Consumer", price:2460.10, change:-0.31},
+  {name:"WIPRO", sector:"Technology", price:528.40, change:0.74}
+];
+
+
+/* ---------------------------------------------------------
+   TOOL DEFINITIONS
+--------------------------------------------------------- */
+
+const tools = {
+
+  "stock-screener":{
+    name:"Stock Screener",
+    subtitle:"Find and compare stocks using smart filters",
+    icon:"⌕",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>SECTOR</label>
+            <select id="gfSector">
+              <option value="all">All Sectors</option>
+              <option>Technology</option>
+              <option>Banking</option>
+              <option>Energy</option>
+              <option>Consumer</option>
+              <option>Telecom</option>
+            </select>
+          </div>
+
+          <div class="gf-field">
+            <label>MINIMUM PRICE</label>
+            <input
+              id="gfMinPrice"
+              type="number"
+              placeholder="e.g. 500">
+          </div>
+
+          <div class="gf-field">
+            <label>MAXIMUM PRICE</label>
+            <input
+              id="gfMaxPrice"
+              type="number"
+              placeholder="e.g. 3000">
+          </div>
+
+          <div class="gf-field">
+            <label>MINIMUM CHANGE %</label>
+            <input
+              id="gfMinChange"
+              type="number"
+              step="0.01"
+              placeholder="e.g. 1">
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            id="gfRunScreener">
+            RUN SCREENER →
+          </button>
+
+          <button
+            class="gf-btn gf-btn-secondary"
+            id="gfResetScreener">
+            RESET
+          </button>
+
+        </div>
+
+        <div id="gfScreenerResult" class="gf-result">
+          <div class="gf-empty">
+            Select filters and run the screener.
+          </div>
+        </div>
+      `;
+    },
+
+    init(){
+
+      document.getElementById("gfRunScreener")
+      .onclick = runScreener;
+
+      document.getElementById("gfResetScreener")
+      .onclick = () => {
+
+        document.getElementById("gfSector").value="all";
+        document.getElementById("gfMinPrice").value="";
+        document.getElementById("gfMaxPrice").value="";
+        document.getElementById("gfMinChange").value="";
+
+        document.getElementById("gfScreenerResult").innerHTML =
+          `<div class="gf-empty">
+            Select filters and run the screener.
+          </div>`;
+      };
+    }
+  },
+
+
+  "economic-calendar":{
+    name:"Economic Calendar",
+    subtitle:"Track important global economic events",
+    icon:"▦",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>COUNTRY</label>
+            <select id="gfCountry">
+              <option>All Countries</option>
+              <option>United States</option>
+              <option>India</option>
+              <option>United Kingdom</option>
+              <option>European Union</option>
+              <option>Japan</option>
+            </select>
+          </div>
+
+          <div class="gf-field">
+            <label>IMPORTANCE</label>
+            <select id="gfImportance">
+              <option>All Events</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_showCalendar()">
+            SHOW EVENTS →
+          </button>
+
+        </div>
+
+        <div id="gfCalendarResult" class="gf-result">
+          <div class="gf-empty">
+            Choose filters and show upcoming events.
+          </div>
+        </div>
+      `;
+    }
+  },
+
+
+  "currency-converter":{
+    name:"Currency Converter",
+    subtitle:"Convert currencies quickly",
+    icon:"$",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>AMOUNT</label>
+            <input
+              id="gfAmount"
+              type="number"
+              value="1">
+          </div>
+
+          <div class="gf-field">
+            <label>FROM</label>
+            <select id="gfFrom">
+              <option>USD</option>
+              <option>INR</option>
+              <option>EUR</option>
+              <option>GBP</option>
+              <option>JPY</option>
+            </select>
+          </div>
+
+          <div class="gf-field">
+            <label>TO</label>
+            <select id="gfTo">
+              <option>INR</option>
+              <option>USD</option>
+              <option>EUR</option>
+              <option>GBP</option>
+              <option>JPY</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_convertCurrency()">
+            CONVERT →
+          </button>
+
+        </div>
+
+        <div id="gfCurrencyResult" class="gf-result">
+          <div class="gf-empty">
+            Enter an amount and select currencies.
+          </div>
+        </div>
+
+        <small style="display:block;margin-top:12px;color:#72879a;">
+          Demo conversion rates — connect a live market API for real-time rates.
+        </small>
+      `;
+    }
+  },
+
+
+  "margin-calculator":{
+    name:"Margin Calculator",
+    subtitle:"Estimate position margin requirements",
+    icon:"M",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>POSITION VALUE</label>
+            <input
+              id="gfPosition"
+              type="number"
+              placeholder="100000">
+          </div>
+
+          <div class="gf-field">
+            <label>LEVERAGE</label>
+            <input
+              id="gfLeverage"
+              type="number"
+              value="5">
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_margin()">
+            CALCULATE →
+          </button>
+
+        </div>
+
+        <div id="gfMarginResult" class="gf-result">
+          <div class="gf-empty">
+            Enter position value and leverage.
+          </div>
+        </div>
+      `;
+    }
+  },
+
+
+  "dividend-calculator":{
+    name:"Dividend Calculator",
+    subtitle:"Estimate dividend income",
+    icon:"◆",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>NUMBER OF SHARES</label>
+            <input
+              id="gfShares"
+              type="number"
+              placeholder="100">
+          </div>
+
+          <div class="gf-field">
+            <label>DIVIDEND PER SHARE</label>
+            <input
+              id="gfDividend"
+              type="number"
+              step="0.01"
+              placeholder="10">
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_dividend()">
+            CALCULATE →
+          </button>
+
+        </div>
+
+        <div id="gfDividendResult" class="gf-result">
+          <div class="gf-empty">
+            Enter shares and dividend per share.
+          </div>
+        </div>
+      `;
+    }
+  },
+
+
+  "market-calculator":{
+    name:"Market Calculator",
+    subtitle:"Calculate basic market position values",
+    icon:"∑",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>ENTRY PRICE</label>
+            <input id="gfEntry" type="number">
+          </div>
+
+          <div class="gf-field">
+            <label>QUANTITY</label>
+            <input id="gfQuantity" type="number">
+          </div>
+
+          <div class="gf-field">
+            <label>EXIT PRICE</label>
+            <input id="gfExit" type="number">
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_marketCalc()">
+            CALCULATE →
+          </button>
+
+        </div>
+
+        <div id="gfMarketResult" class="gf-result">
+          <div class="gf-empty">
+            Enter entry, exit and quantity.
+          </div>
+        </div>
+      `;
+    }
+  },
+
+
+  "alerts":{
+    name:"Market Alerts",
+    subtitle:"Create your own price alert",
+    icon:"♧",
+
+    render(){
+
+      return `
+        <div class="gf-tool-grid">
+
+          <div class="gf-field">
+            <label>SYMBOL</label>
+            <input
+              id="gfAlertSymbol"
+              placeholder="e.g. NIFTY 50">
+          </div>
+
+          <div class="gf-field">
+            <label>TARGET PRICE</label>
+            <input
+              id="gfAlertPrice"
+              type="number"
+              placeholder="25000">
+          </div>
+
+        </div>
+
+        <div class="gf-tool-actions">
+
+          <button
+            class="gf-btn gf-btn-primary"
+            onclick="GF_createAlert()">
+            CREATE ALERT →
+          </button>
+        </div>
+
+        <div id="gfAlertResult" class="gf-result">
+          <div class="gf-empty">
+            No alert created yet.
+          </div>
+        </div>
+
+        <small style="display:block;margin-top:12px;color:#72879a;">
+          Browser demo alert. Push notifications require notification permission
+          and a notification/backend service.
+        </small>
+      `;
+    }
+  }
+
+};
+
+
+/* ---------------------------------------------------------
+   OPEN TOOL
+--------------------------------------------------------- */
+
+function openTool(id){
+
+  const tool = tools[id];
+
+  if(!tool){
+    console.warn("Global Finance tool not found:",id);
+    return;
+  }
+
+  toolName.textContent = tool.name;
+  toolSubtitle.textContent = tool.subtitle;
+  toolIcon.textContent = tool.icon;
+
+  toolBody.innerHTML = tool.render();
+
+  overlay.classList.add("active");
+
+  document.body.style.overflow="hidden";
+
+  if(tool.init){
+    tool.init();
+  }
+}
+
+
+/* ---------------------------------------------------------
+   CLOSE TOOL
+--------------------------------------------------------- */
+
+function closeTool(){
+
+  overlay.classList.remove("active");
+
+  document.body.style.overflow="";
+
+}
+
+
+closeBtn.addEventListener("click",closeTool);
+
+overlay.addEventListener("click",function(e){
+
+  if(e.target === overlay){
+    closeTool();
+  }
+
+});
+
+
+document.addEventListener("keydown",function(e){
+
+  if(e.key==="Escape"){
+    closeTool();
+  }
+
+});
+
+
+/* ---------------------------------------------------------
+   UNIVERSAL LAUNCH BUTTON
+--------------------------------------------------------- */
+
+document.addEventListener("click",function(e){
+
+  const btn = e.target.closest(
+    ".gf-launch-tool, [data-tool], .launch-tool"
+  );
+
+  if(!btn) return;
+
+  const toolId =
+    btn.dataset.tool ||
+    btn.getAttribute("data-tool");
+
+  if(toolId && tools[toolId]){
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    openTool(toolId);
+  }
+
+});
+
+
+/* ---------------------------------------------------------
+   STOCK SCREENER
+--------------------------------------------------------- */
+
+function runScreener(){
+
+  const sector =
+    document.getElementById("gfSector").value;
+
+  const minPrice =
+    parseFloat(document.getElementById("gfMinPrice").value) || 0;
+
+  const maxPriceInput =
+    parseFloat(document.getElementById("gfMaxPrice").value);
+
+  const maxPrice =
+    Number.isFinite(maxPriceInput)
+      ? maxPriceInput
+      : Infinity;
+
+  const minChange =
+    parseFloat(document.getElementById("gfMinChange").value) || -Infinity;
+
+
+  const results = stocks.filter(stock => {
+
+    return (
+      (sector==="all" || stock.sector===sector) &&
+      stock.price >= minPrice &&
+      stock.price <= maxPrice &&
+      stock.change >= minChange
+    );
+
+  });
+
+
+  const box =
+    document.getElementById("gfScreenerResult");
+
+
+  if(!results.length){
+
+    box.innerHTML =
+      `<div class="gf-empty">
+        No stocks matched your filters.
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML = `
+
+    <strong>${results.length} matching stocks</strong>
+
+    <div class="gf-stock-list">
+
+      ${results.map(stock => `
+
+        <div class="gf-stock-row">
+
+          <span>
+            <strong>${stock.name}</strong>
+            <small style="display:block;color:#72879a;">
+              ${stock.sector}
+            </small>
+          </span>
+
+          <span>
+            ₹${stock.price.toLocaleString("en-IN")}
+          </span>
+
+          <span class="${stock.change>=0?'gf-up':'gf-down'}">
+            ${stock.change>=0?'▲':'▼'}
+            ${Math.abs(stock.change).toFixed(2)}%
+          </span>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+  `;
+}
+
+
+/* ---------------------------------------------------------
+   ECONOMIC CALENDAR
+--------------------------------------------------------- */
+
+window.GF_showCalendar = function(){
+
+  const country =
+    document.getElementById("gfCountry").value;
+
+  const importance =
+    document.getElementById("gfImportance").value;
+
+
+  const events = [
+
+    ["US","Federal Reserve Rate Decision","High"],
+    ["India","RBI Monetary Policy","High"],
+    ["EU","ECB Interest Rate Decision","High"],
+    ["UK","Inflation Report","Medium"],
+    ["Japan","GDP Release","Medium"]
+
+  ];
+
+
+  let filtered = events.filter(e => {
+
+    const countryMatch =
+      country==="All Countries" ||
+      e[0]===country ||
+      (country==="United States" && e[0]==="US") ||
+      (country==="European Union" && e[0]==="EU");
+
+    const importanceMatch =
+      importance==="All Events" ||
+      e[2]===importance;
+
+    return countryMatch && importanceMatch;
+
+  });
+
+
+  document.getElementById("gfCalendarResult").innerHTML =
+
+    filtered.length ?
+
+    `
+      <strong>Upcoming Events</strong>
+
+      <div class="gf-stock-list">
+
+        ${filtered.map(e => `
+
+          <div class="gf-stock-row">
+
+            <span>${e[0]}</span>
+            <span>${e[1]}</span>
+            <span>${e[2]}</span>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+    `
+
+    :
+
+    `<div class="gf-empty">
+      No matching events.
+    </div>`;
+};
+
+
+/* ---------------------------------------------------------
+   CURRENCY CONVERTER
+--------------------------------------------------------- */
+
+window.GF_convertCurrency = function(){
+
+  const amount =
+    parseFloat(document.getElementById("gfAmount").value);
+
+  const from =
+    document.getElementById("gfFrom").value;
+
+  const to =
+    document.getElementById("gfTo").value;
+
+
+  if(!amount || amount < 0){
+
+    document.getElementById("gfCurrencyResult").innerHTML =
+      `<div class="gf-empty">
+        Please enter a valid amount.
+      </div>`;
+
+    return;
+  }
+
+
+  /* Demo rates relative to USD */
+
+  const rates = {
+    USD:1,
+    INR:83.50,
+    EUR:.92,
+    GBP:.78,
+    JPY:147
+  };
+
+
+  const result =
+    amount / rates[from] * rates[to];
+
+
+  document.getElementById("gfCurrencyResult").innerHTML = `
+
+    <strong>Conversion Result</strong>
+
+    <div style="font-size:28px;margin-top:12px;">
+      ${result.toLocaleString(undefined,{
+        maximumFractionDigits:2
+      })}
+      ${to}
+    </div>
+
+    <div style="margin-top:8px;color:#8da0b2;">
+      ${amount} ${from} → ${to}
+    </div>
+
+  `;
+};
+
+
+/* ---------------------------------------------------------
+   MARGIN
+--------------------------------------------------------- */
+
+window.GF_margin = function(){
+
+  const position =
+    parseFloat(document.getElementById("gfPosition").value);
+
+  const leverage =
+    parseFloat(document.getElementById("gfLeverage").value);
+
+
+  if(!position || !leverage || leverage<=0){
+
+    document.getElementById("gfMarginResult").innerHTML =
+      `<div class="gf-empty">
+        Enter valid position value and leverage.
+      </div>`;
+
+    return;
+  }
+
+
+  const margin = position / leverage;
+
+
+  document.getElementById("gfMarginResult").innerHTML = `
+
+    <strong>Estimated Required Margin</strong>
+
+    <div style="font-size:28px;margin-top:12px;">
+      ₹${margin.toLocaleString("en-IN",{
+        maximumFractionDigits:2
+      })}
+    </div>
+
+    <div style="margin-top:8px;color:#8da0b2;">
+      Position: ₹${position.toLocaleString("en-IN")}
+      · Leverage: ${leverage}×
+    </div>
+
+  `;
+};
+
+
+/* ---------------------------------------------------------
+   DIVIDEND
+--------------------------------------------------------- */
+
+window.GF_dividend = function(){
+
+  const shares =
+    parseFloat(document.getElementById("gfShares").value);
+
+  const dividend =
+    parseFloat(document.getElementById("gfDividend").value);
+
+
+  if(!shares || !dividend){
+
+    document.getElementById("gfDividendResult").innerHTML =
+      `<div class="gf-empty">
+        Enter valid values.
+      </div>`;
+
+    return;
+  }
+
+
+  const income = shares * dividend;
+
+
+  document.getElementById("gfDividendResult").innerHTML = `
+
+    <strong>Estimated Dividend Income</strong>
+
+    <div style="font-size:28px;margin-top:12px;">
+      ₹${income.toLocaleString("en-IN",{
+        maximumFractionDigits:2
+      })}
+    </div>
+
+    <div style="margin-top:8px;color:#8da0b2;">
+      ${shares.toLocaleString()} shares ×
+      ₹${dividend.toFixed(2)} per share
+    </div>
+
+  `;
+};
+
+
+/* ---------------------------------------------------------
+   MARKET CALCULATOR
+--------------------------------------------------------- */
+
+window.GF_marketCalc = function(){
+
+  const entry =
+    parseFloat(document.getElementById("gfEntry").value);
+
+  const quantity =
+    parseFloat(document.getElementById("gfQuantity").value);
+
+  const exit =
+    parseFloat(document.getElementById("gfExit").value);
+
+
+  if(
+    !Number.isFinite(entry) ||
+    !Number.isFinite(quantity) ||
+    !Number.isFinite(exit)
+  ){
+
+    document.getElementById("gfMarketResult").innerHTML =
+      `<div class="gf-empty">
+        Enter all values.
+      </div>`;
+
+    return;
+  }
+
+
+  const pnl = (exit-entry)*quantity;
+
+  const investment = entry*quantity;
+
+  const percent =
+    investment
+      ? (pnl/investment)*100
+      : 0;
+
+
+  const cls = pnl>=0 ? "gf-up" : "gf-down";
+
+
+  document.getElementById("gfMarketResult").innerHTML = `
+
+    <strong>Position Result</strong>
+
+    <div class="${cls}"
+         style="font-size:28px;margin-top:12px;">
+
+      ${pnl>=0?"+":""}₹${pnl.toLocaleString("en-IN",{
+        maximumFractionDigits:2
+      })}
+
+    </div>
+
+    <div style="margin-top:8px;color:#8da0b2;">
+      Return:
+      ${percent.toFixed(2)}%
+    </div>
+
+  `;
+};
+
+
+/* ---------------------------------------------------------
+   ALERT SYSTEM
+--------------------------------------------------------- */
+
+window.GF_createAlert = function(){
+
+  const symbol =
+    document.getElementById("gfAlertSymbol").value.trim();
+
+  const price =
+    parseFloat(document.getElementById("gfAlertPrice").value);
+
+
+  if(!symbol || !price){
+
+    document.getElementById("gfAlertResult").innerHTML =
+      `<div class="gf-empty">
+        Enter symbol and target price.
+      </div>`;
+
+    return;
+  }
+
+
+  document.getElementById("gfAlertResult").innerHTML = `
+
+    <strong>✓ Alert Created</strong>
+
+    <div style="margin-top:10px;">
+      ${symbol}
+    </div>
+
+    <div style="margin-top:5px;color:#8da0b2;">
+      Target price: ${price}
+    </div>
+
+  `;
+
+
+  /* Browser notification permission */
+
+  if(
+    "Notification" in window &&
+    Notification.permission==="default"
+  ){
+
+    Notification.requestPermission();
+
+  }
+
+};
+
+
+/* ---------------------------------------------------------
+   MAKE EXISTING TOOL BUTTONS COMPATIBLE
+--------------------------------------------------------- */
+
+const toolAliases = {
+
+  "Stock Screener":"stock-screener",
+  "Stock Screener →":"stock-screener",
+
+  "Economic Calendar":"economic-calendar",
+
+  "Currency Converter":"currency-converter",
+
+  "Margin Calculator":"margin-calculator",
+
+  "Dividend Calculator":"dividend-calculator",
+
+  "Market Calculator":"market-calculator",
+
+  "Alerts":"alerts",
+  "Market Alerts":"alerts"
+
+};
+
+
+document.addEventListener("click",function(e){
+
+  const button = e.target.closest("button,a");
+
+  if(!button) return;
+
+  const text =
+    button.textContent
+      .replace(/\s+/g," ")
+      .trim();
+
+  const alias = toolAliases[text];
+
+  if(alias){
+
+    e.preventDefault();
+
+    openTool(alias);
+
+  }
+
+});
+
+
+})();
+</script> 
 </body>
 </html>
