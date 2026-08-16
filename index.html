@@ -2,2900 +2,3478 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#030a12">
-<title>Global Finance</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+<meta name="theme-color" content="#020812">
+<meta name="description"
+      content="Global Finance — Markets, Trading, Investing, Crypto, Forex, News and Financial Education.">
+
+<title>Global Finance — Smart Decisions, Stronger Future</title>
 
 <style>
+/* =========================================================
+   GLOBAL FINANCE — PREMIUM TRADING TERMINAL
+   SINGLE FILE VERSION
+   HTML + CSS + JAVASCRIPT
+   ========================================================= */
+
 :root{
---bg:#030a12;
---panel:#071522;
---panel2:#0a1b2a;
---line:rgba(150,190,220,.16);
---text:#eef6ff;
---muted:#8ea3b7;
---gold:#f5b51b;
---gold2:#ffd45a;
---green:#36d982;
---red:#ff5e68;
---blue:#55a9ff;
+  --bg:#020812;
+  --bg2:#06121e;
+  --panel:#071522;
+  --panel2:#0a1a29;
+  --panel3:#0d2031;
+  --line:rgba(145,190,225,.16);
+  --line2:rgba(255,255,255,.09);
+
+  --gold:#f5b928;
+  --gold2:#ffcf55;
+  --blue:#2186ff;
+  --cyan:#28d9ff;
+  --green:#35d36b;
+  --red:#ff5268;
+  --purple:#9b75ff;
+
+  --text:#f5f8fc;
+  --muted:#8ea0b4;
+  --muted2:#61758a;
+
+  --radius:12px;
+  --shadow:0 18px 55px rgba(0,0,0,.35);
+
+  --desktop:1440px;
 }
 
+/* RESET */
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html{
-scroll-behavior:smooth;
+  scroll-behavior:smooth;
+  background:var(--bg);
 }
 
 body{
-background:
-radial-gradient(circle at 80% 0%,rgba(20,90,130,.18),transparent 35%),
-linear-gradient(180deg,#02070d,#06111d,#030a12);
-color:var(--text);
-font-family:Arial,Helvetica,sans-serif;
-overflow-x:hidden;
+  min-width:320px;
+  background:
+    radial-gradient(circle at 75% 10%,rgba(20,95,150,.15),transparent 35%),
+    radial-gradient(circle at 10% 80%,rgba(245,185,40,.05),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  overflow-x:hidden;
 }
 
-button,input{
-font:inherit;
+/* LOCKED DESKTOP CANVAS
+   On phones the entire desktop canvas is rendered as one unit.
+   Browser pinch zoom remains available. */
+#desktopCanvas{
+  width:var(--desktop);
+  min-height:100vh;
+  margin:0 auto;
+  transform-origin:top center;
+  position:relative;
+}
+
+button,
+input,
+select{
+  font:inherit;
 }
 
 button{
-cursor:pointer;
+  cursor:pointer;
 }
 
 a{
-text-decoration:none;
-color:inherit;
+  color:inherit;
+  text-decoration:none;
 }
 
-/* ================= TOP MARKET TICKER ================= */
+img{
+  max-width:100%;
+  display:block;
+}
 
-.top-ticker{
-height:34px;
-background:#02070d;
-border-bottom:1px solid var(--line);
-overflow:hidden;
-white-space:nowrap;
+/* =========================================================
+   TOP MARKET TICKER
+   ========================================================= */
+
+.market-ticker{
+  height:38px;
+  background:#01060c;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  white-space:nowrap;
 }
 
 .ticker-track{
-display:flex;
-width:max-content;
-animation:tickerMove 45s linear infinite;
-}
-
-.ticker-track:hover{
-animation-play-state:paused;
+  display:flex;
+  align-items:center;
+  height:100%;
+  animation:tickerMove 42s linear infinite;
 }
 
 .ticker-item{
-height:34px;
-display:flex;
-align-items:center;
-gap:7px;
-padding:0 18px;
-border-right:1px solid var(--line);
-font-size:10px;
-color:#b8c6d2;
+  height:100%;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 18px;
+  border-right:1px solid rgba(255,255,255,.06);
+  font-size:12px;
+  color:#dce5ee;
 }
 
-.ticker-dot{
-width:6px;
-height:6px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 10px var(--green);
+.ticker-item strong{
+  color:#fff;
 }
 
-.green{
-color:var(--green);
+.up{
+  color:var(--green)!important;
 }
 
-.red{
-color:var(--red);
+.down{
+  color:var(--red)!important;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+  display:inline-block;
+  animation:pulse 1.4s infinite;
 }
 
 @keyframes tickerMove{
-from{transform:translateX(0)}
-to{transform:translateX(-50%)}
+  from{transform:translateX(0)}
+  to{transform:translateX(-35%)}
 }
 
-/* ================= HEADER ================= */
-
-.header{
-height:78px;
-position:sticky;
-top:0;
-z-index:999;
-background:rgba(3,10,18,.94);
-backdrop-filter:blur(18px);
-border-bottom:1px solid var(--line);
+@keyframes pulse{
+  50%{opacity:.35}
 }
 
-.header-inner{
-width:calc(100% - 28px);
-max-width:1450px;
-height:100%;
-margin:auto;
-display:flex;
-align-items:center;
-gap:18px;
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.main-header{
+  height:82px;
+  background:
+    linear-gradient(180deg,rgba(7,20,33,.98),rgba(3,11,20,.98));
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(18px);
 }
 
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-min-width:220px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:280px;
+  flex-shrink:0;
 }
 
-.logo-icon{
-width:43px;
-height:43px;
-border-radius:50%;
-border:1px solid rgba(245,181,27,.55);
-display:grid;
-place-items:center;
-color:var(--gold);
-font-size:23px;
-background:rgba(245,181,27,.06);
+.brand-logo{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  border:1px solid rgba(245,185,40,.75);
+  display:grid;
+  place-items:center;
+  color:var(--gold);
+  font-weight:900;
+  font-size:18px;
+  background:
+    radial-gradient(circle,rgba(245,185,40,.20),transparent 65%);
+  box-shadow:
+    0 0 25px rgba(245,185,40,.12),
+    inset 0 0 20px rgba(245,185,40,.08);
 }
 
-.logo-name{
-font-size:19px;
-font-weight:900;
-letter-spacing:.7px;
+.brand-title{
+  font-size:22px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.5px;
 }
 
-.logo-sub{
-font-size:7px;
-letter-spacing:1px;
-color:#8ca1b3;
-margin-top:3px;
+.brand-subtitle{
+  color:#7d91a5;
+  font-size:8px;
+  margin-top:6px;
+  letter-spacing:1.4px;
 }
 
 .nav{
-display:flex;
-align-items:center;
-gap:2px;
-flex:1;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex:1;
 }
 
-.nav a{
-font-size:10px;
-font-weight:700;
-color:#b5c4d2;
-padding:11px 8px;
-border-radius:7px;
+.nav button{
+  color:#d9e2eb;
+  border:0;
+  background:transparent;
+  padding:11px 12px;
+  font-size:12px;
+  font-weight:700;
+  border-radius:8px;
 }
 
-.nav a:hover,
-.nav a.active{
-background:rgba(255,255,255,.05);
-color:white;
+.nav button:hover,
+.nav button.active{
+  color:var(--gold);
+  background:rgba(245,185,40,.07);
 }
 
 .header-actions{
-display:flex;
-gap:7px;
-align-items:center;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .icon-btn,
-.menu-btn{
-width:40px;
-height:40px;
-border:1px solid var(--line);
-background:#071521;
-color:#d5e1ea;
-border-radius:9px;
+.login-btn,
+.signup-btn{
+  height:40px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:#071521;
+  color:#fff;
+  padding:0 14px;
 }
 
-.icon-btn:hover,
-.menu-btn:hover{
-border-color:var(--gold);
-color:var(--gold);
+.icon-btn{
+  width:40px;
+  padding:0;
+  display:grid;
+  place-items:center;
+  font-size:18px;
 }
 
-.gold-btn{
-border:1px solid rgba(245,181,27,.5);
-background:linear-gradient(180deg,#ffd052,#e8a916);
-color:#07111a;
-font-size:10px;
-font-weight:900;
-padding:11px 15px;
-border-radius:8px;
+.login-btn:hover{
+  border-color:var(--gold);
 }
 
-.dark-btn{
-border:1px solid var(--line);
-background:#071521;
-color:white;
-font-size:10px;
-font-weight:700;
-padding:11px 15px;
-border-radius:8px;
+.signup-btn{
+  color:#08111a;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-color:var(--gold);
+  font-weight:900;
 }
 
-.menu-btn{
-display:none;
-font-size:20px;
+/* HAMBURGER ALWAYS AVAILABLE */
+.mobile-menu-btn{
+  display:none;
+  width:44px;
+  height:44px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#071521;
+  color:white;
+  font-size:23px;
 }
 
-/* ================= MAIN ================= */
-
-.container{
-width:calc(100% - 28px);
-max-width:1450px;
-margin:auto;
-}
+/* =========================================================
+   PAGE
+   ========================================================= */
 
 .page{
-padding:14px 0 35px;
+  padding:14px;
 }
 
-.layout{
-display:grid;
-grid-template-columns:minmax(0,1fr) 205px;
-gap:12px;
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 300px;
+  gap:14px;
 }
 
-.content{
-min-width:0;
-}
-
-/* ================= HERO ================= */
+/* =========================================================
+   HERO
+   ========================================================= */
 
 .hero{
-min-height:310px;
-border:1px solid var(--line);
-border-radius:13px;
-overflow:hidden;
-position:relative;
-background:
-radial-gradient(circle at 75% 50%,rgba(25,110,160,.28),transparent 32%),
-linear-gradient(115deg,#071521,#07111b 65%,#091c2a);
-box-shadow:0 25px 70px rgba(0,0,0,.38);
+  min-height:350px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(90deg,rgba(3,12,22,.98) 0%,rgba(3,13,23,.90) 38%,rgba(3,13,23,.25) 75%),
+    url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+  box-shadow:var(--shadow);
 }
 
-.hero-grid{
-display:grid;
-grid-template-columns:1.08fr .92fr;
-height:100%;
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 80% 45%,rgba(36,151,255,.13),transparent 28%),
+    linear-gradient(90deg,transparent,rgba(2,8,16,.18));
+  pointer-events:none;
 }
 
-.hero-text{
-padding:38px;
-position:relative;
-z-index:5;
+.hero-content{
+  position:relative;
+  z-index:2;
+  padding:50px 52px;
+  width:64%;
 }
 
-.badge{
-display:inline-block;
-border:1px solid rgba(245,181,27,.4);
-border-radius:30px;
-padding:6px 10px;
-font-size:8px;
-font-weight:800;
-color:var(--gold2);
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border:1px solid rgba(245,185,40,.55);
+  color:var(--gold);
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.5px;
+  background:rgba(245,185,40,.04);
 }
 
 .hero h1{
-font-size:36px;
-line-height:1.06;
-margin:20px 0 12px;
-letter-spacing:-1px;
+  font-size:45px;
+  line-height:1.05;
+  margin:22px 0 14px;
+  letter-spacing:-1.5px;
 }
 
 .hero h1 span{
-color:var(--gold);
+  color:var(--gold);
 }
 
 .hero p{
-font-size:12px;
-line-height:1.65;
-color:#aabac8;
-max-width:480px;
-}
-
-.search{
-display:flex;
-max-width:430px;
-margin-top:20px;
-}
-
-.search input{
-flex:1;
-min-width:0;
-padding:13px;
-background:#06111c;
-border:1px solid var(--line);
-color:white;
-outline:none;
-border-radius:8px 0 0 8px;
-font-size:10px;
-}
-
-.search button{
-width:50px;
-border:0;
-background:var(--gold);
-border-radius:0 8px 8px 0;
-font-size:18px;
-}
-
-.hero-stats{
-display:flex;
-gap:25px;
-margin-top:22px;
-flex-wrap:wrap;
-}
-
-.hero-stat b{
-font-size:13px;
-}
-
-.hero-stat span{
-display:block;
-font-size:8px;
-color:#8ca0b2;
-margin-top:3px;
-}
-
-/* ================= HERO GRAPHIC ================= */
-
-.hero-art{
-position:relative;
-min-height:300px;
-overflow:hidden;
-}
-
-.globe{
-position:absolute;
-width:355px;
-height:355px;
-border-radius:50%;
-right:-45px;
-top:15px;
-background:
-radial-gradient(circle at 38% 30%,rgba(90,180,240,.25),transparent 5%),
-radial-gradient(circle at 50% 50%,#082033,#030c15 70%);
-border:1px solid rgba(75,160,215,.3);
-box-shadow:
-inset 30px 0 70px rgba(40,150,210,.15),
--15px 0 80px rgba(20,110,170,.15);
-}
-
-.globe:before,
-.globe:after{
-content:"";
-position:absolute;
-inset:25px;
-border:1px solid rgba(80,180,240,.18);
-border-radius:50%;
-transform:rotate(25deg) scaleX(.5);
-}
-
-.globe:after{
-inset:40px;
-transform:rotate(-20deg) scaleX(.34);
-}
-
-.hero-markets{
-position:absolute;
-right:18px;
-top:25px;
-width:150px;
-padding:9px;
-z-index:5;
-background:rgba(5,15,24,.82);
-backdrop-filter:blur(12px);
-border:1px solid var(--line);
-border-radius:9px;
-}
-
-.hero-market{
-display:flex;
-gap:7px;
-align-items:center;
-padding:8px 2px;
-border-bottom:1px solid rgba(255,255,255,.06);
-font-size:8px;
-}
-
-.hero-market:last-child{
-border-bottom:0;
-}
-
-.market-icon{
-width:22px;
-height:22px;
-border-radius:50%;
-background:#12344b;
-display:grid;
-place-items:center;
-font-size:9px;
-font-weight:bold;
-}
-
-.hero-market b{
-display:block;
-font-size:8px;
-}
-
-.hero-market span{
-color:var(--green);
-font-size:7px;
-}
-
-.hero-chart{
-position:absolute;
-bottom:35px;
-left:0;
-width:100%;
-height:100px;
-opacity:.6;
-}
-
-/* ================= QUICK MENU ================= */
-
-.quick-grid{
-margin-top:12px;
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:1px;
-background:var(--line);
-border:1px solid var(--line);
-border-radius:11px;
-overflow:hidden;
-}
-
-.quick{
-min-height:88px;
-border:0;
-background:#071521;
-color:white;
-text-align:left;
-padding:14px;
-transition:.2s;
-}
-
-.quick:hover{
-background:#0b1e2d;
-transform:translateY(-1px);
-}
-
-.quick-icon{
-font-size:20px;
-color:var(--gold);
-margin-bottom:8px;
-}
-
-.quick b{
-font-size:10px;
-display:block;
-}
-
-.quick span{
-font-size:8px;
-color:#7e94a8;
-display:block;
-margin-top:4px;
-}
-
-/* ================= BREAKING ================= */
-
-.breaking{
-margin-top:12px;
-display:grid;
-grid-template-columns:125px 1fr 120px;
-border:1px solid rgba(245,181,27,.25);
-border-radius:10px;
-overflow:hidden;
-background:#07141f;
-}
-
-.break-title{
-display:grid;
-place-items:center;
-font-size:10px;
-font-weight:900;
-color:var(--gold);
-border-right:1px solid var(--line);
-}
-
-.break-scroll{
-display:flex;
-overflow:hidden;
-}
-
-.break-item{
-min-width:200px;
-padding:10px 13px;
-border-right:1px solid var(--line);
-font-size:9px;
-}
-
-.break-item small{
-color:#71879a;
-}
-
-.break-item b{
-display:block;
-margin-top:4px;
-}
-
-.break-view{
-display:grid;
-place-items:center;
-font-size:9px;
-font-weight:800;
-color:var(--gold);
-}
-
-/* ================= SECTION ================= */
-
-.section{
-margin-top:12px;
-border:1px solid var(--line);
-border-radius:11px;
-background:rgba(6,16,25,.82);
-overflow:hidden;
-}
-
-.section-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:16px 15px 12px;
-}
-
-.section-head h2{
-font-size:12px;
-}
-
-.section-head a{
-font-size:9px;
-color:#91a8bb;
-}
-
-/* ================= MARKETS ================= */
-
-.market-grid{
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:8px;
-padding:0 12px 12px;
-}
-
-.market-card{
-border:1px solid var(--line);
-background:linear-gradient(180deg,#091a29,#071521);
-border-radius:7px;
-padding:12px 9px;
-overflow:hidden;
-}
-
-.market-card:hover{
-border-color:rgba(245,181,27,.35);
-}
-
-.market-name{
-font-size:9px;
-color:#b6c5d2;
-}
-
-.market-value{
-font-size:12px;
-font-weight:800;
-margin-top:7px;
-}
-
-.market-change{
-font-size:8px;
-color:var(--green);
-margin-top:4px;
-}
-
-.spark{
-height:38px;
-margin-top:7px;
-}
-
-.spark svg{
-width:100%;
-height:100%;
-}
-
-/* ================= MOVERS ================= */
-
-.tabs{
-display:flex;
-gap:5px;
-padding:0 12px 10px;
-overflow:auto;
-}
-
-.tab{
-border:1px solid transparent;
-background:transparent;
-color:#879bad;
-padding:7px 10px;
-border-radius:6px;
-font-size:9px;
-white-space:nowrap;
-}
-
-.tab.active,
-.tab:hover{
-background:#17304d;
-color:white;
-border-color:#24517c;
-}
-
-.movers{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:8px;
-padding:0 12px 13px;
-}
-
-.mover{
-border:1px solid var(--line);
-background:#081824;
-border-radius:7px;
-padding:12px;
-}
-
-.mover b{
-font-size:12px;
-}
-
-.mover small{
-display:block;
-color:#7e93a6;
-font-size:8px;
-margin-top:3px;
-}
-
-.mover strong{
-display:block;
-margin-top:9px;
-font-size:11px;
-}
-
-.mover span{
-font-size:8px;
-}
-
-/* ================= NEWS ================= */
-
-.news-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr) 1fr;
-gap:8px;
-padding:0 12px 13px;
-}
-
-.news{
-border:1px solid var(--line);
-background:#071521;
-border-radius:8px;
-overflow:hidden;
-min-height:175px;
-transition:.2s;
-}
-
-.news:hover{
-transform:translateY(-2px);
-border-color:rgba(245,181,27,.35);
-}
-
-.news-image{
-height:82px;
-background:
-radial-gradient(circle at 70% 40%,rgba(245,181,27,.5),transparent 8%),
-linear-gradient(135deg,#0c3652,#06111d);
-}
-
-.news:nth-child(2) .news-image{
-background:linear-gradient(135deg,#263b5a,#06111d);
-}
-
-.news:nth-child(3) .news-image{
-background:radial-gradient(circle,#d49319 0 5%,transparent 6%),linear-gradient(135deg,#281c08,#06111d);
-}
-
-.news:nth-child(4) .news-image{
-background:linear-gradient(135deg,#153f58,#082033);
-}
-
-.news-body{
-padding:10px;
-}
-
-.news-tag{
-display:inline-block;
-background:#165083;
-padding:3px 5px;
-font-size:7px;
-border-radius:3px;
-}
-
-.news h3{
-font-size:10px;
-line-height:1.4;
-margin:7px 0;
-}
-
-.news p{
-font-size:8px;
-color:#8196a9;
-}
-
-.expert{
-padding:0;
-}
-
-.expert .news-body{
-padding:15px;
-}
-
-.expert h3{
-margin-bottom:10px;
-}
-
-.expert .quote{
-font-size:10px;
-line-height:1.6;
-}
-
-/* ================= CTA ================= */
-
-.cta{
-margin-top:12px;
-padding:20px 23px;
-border:1px solid var(--line);
-border-radius:11px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:15px;
-background:
-radial-gradient(circle at 70% 40%,rgba(25,105,150,.25),transparent 40%),
-#071521;
-}
-
-.cta h2{
-font-size:18px;
-margin-bottom:5px;
-}
-
-.cta p{
-font-size:9px;
-color:#8da2b4;
-}
-
-/* ================= SIDE RAIL ================= */
-
-.sidebar{
-border:1px solid var(--line);
-background:linear-gradient(180deg,#071522,#06111b);
-border-radius:11px;
-padding:11px;
-height:max-content;
-position:sticky;
-top:92px;
-}
-
-.side-title{
-font-size:9px;
-color:#9db1c1;
-margin:4px 0 8px;
-}
-
-.side-price{
-display:flex;
-align-items:center;
-gap:7px;
-padding:9px 1px;
-border-bottom:1px solid var(--line);
-}
-
-.side-price b{
-font-size:8px;
-display:block;
-}
-
-.side-price small{
-display:block;
-font-size:7px;
-color:var(--green);
-margin-top:2px;
-}
-
-.side-links{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:6px;
-margin-top:12px;
-}
-
-.side-link{
-border:1px solid var(--line);
-background:#081824;
-color:#94a9ba;
-padding:10px 3px;
-font-size:7px;
-border-radius:6px;
-}
-
-.side-link:hover{
-color:white;
-border-color:rgba(245,181,27,.4);
-}
-
-.side-news{
-margin-top:13px;
-padding:10px;
-border:1px solid var(--line);
-border-radius:7px;
-}
-
-.side-news b{
-font-size:9px;
-}
-
-.side-news p{
-font-size:8px;
-color:#a7b6c3;
-line-height:1.5;
-padding:9px 0;
-border-bottom:1px solid var(--line);
-}
-
-/* ================= PREMIUM FOOTER ================= */
-
-.footer{
-margin-top:14px;
-background:#02080f;
-border-top:1px solid var(--line);
-box-shadow:0 -20px 80px rgba(0,0,0,.25);
-}
-
-.footer-main{
-padding:38px 0 30px;
-display:grid;
-grid-template-columns:1.5fr repeat(5,1fr);
-gap:25px;
-}
-
-.footer-brand-name{
-display:flex;
-align-items:center;
-gap:8px;
-font-size:12px;
-font-weight:900;
-}
-
-.footer-brand-name .logo-icon{
-width:31px;
-height:31px;
-font-size:16px;
-}
-
-.footer-brand p{
-max-width:270px;
-font-size:9px;
-line-height:1.75;
-color:#788e9f;
-margin-top:13px;
-}
-
-.footer-column h4{
-font-size:9px;
-margin-bottom:13px;
-}
-
-.footer-column a{
-display:block;
-font-size:8px;
-color:#718799;
-margin:8px 0;
-}
-
-.footer-column a:hover{
-color:var(--gold);
-}
-
-.socials{
-display:flex;
-gap:6px;
-margin-top:14px;
-}
-
-.socials button{
-width:28px;
-height:28px;
-border:1px solid var(--line);
-background:#071521;
-color:#a9bac8;
-border-radius:6px;
-}
-
-.footer-bottom{
-border-top:1px solid var(--line);
-padding:13px 0;
-display:flex;
-justify-content:space-between;
-gap:15px;
-color:#62788a;
-font-size:8px;
-}
-
-.footer-links{
-display:flex;
-gap:17px;
-flex-wrap:wrap;
-}
-
-/* ================= SEARCH POPUP ================= */
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.72);
-backdrop-filter:blur(8px);
-z-index:2000;
-display:none;
-padding:10vh 15px;
-}
-
-.overlay.open{
-display:block;
+  color:#c1ceda;
+  max-width:580px;
+  line-height:1.7;
+  font-size:14px;
 }
 
 .search-box{
-max-width:700px;
-margin:auto;
-background:#071522;
-border:1px solid var(--line);
-border-radius:14px;
-padding:18px;
-box-shadow:0 25px 80px rgba(0,0,0,.5);
+  display:flex;
+  width:500px;
+  margin-top:24px;
+  height:48px;
 }
 
-.search-row{
-display:flex;
-gap:7px;
+.search-box input{
+  flex:1;
+  background:rgba(1,7,13,.78);
+  color:#fff;
+  border:1px solid var(--line);
+  border-right:0;
+  padding:0 15px;
+  outline:none;
+  border-radius:8px 0 0 8px;
 }
 
-.search-row input{
-flex:1;
-background:#020a11;
-border:1px solid var(--line);
-color:white;
-padding:13px;
-border-radius:8px;
-outline:none;
+.search-box input:focus{
+  border-color:rgba(245,185,40,.7);
 }
 
-.search-results{
-margin-top:10px;
+.search-box button{
+  width:56px;
+  border:0;
+  background:var(--gold);
+  color:#06101a;
+  font-weight:900;
+  border-radius:0 8px 8px 0;
 }
 
-.result{
-padding:12px 5px;
-border-bottom:1px solid var(--line);
-font-size:10px;
+.hero-stats{
+  display:flex;
+  gap:32px;
+  margin-top:24px;
 }
 
-.result small{
-display:block;
-color:#788e9f;
-margin-top:4px;
+.stat{
+  display:flex;
+  gap:9px;
+  align-items:center;
 }
 
-/* ================= MOBILE DRAWER ================= */
-
-.drawer{
-position:fixed;
-inset:0;
-z-index:1500;
-pointer-events:none;
+.stat-icon{
+  width:28px;
+  height:28px;
+  border:1px solid rgba(245,185,40,.45);
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  color:var(--gold);
 }
 
-.drawer-bg{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.7);
-opacity:0;
-transition:.25s;
+.stat strong{
+  display:block;
+  font-size:13px;
 }
 
-.drawer-panel{
-position:absolute;
-right:0;
-top:0;
-bottom:0;
-width:min(370px,88vw);
-background:#06111c;
-border-left:1px solid var(--line);
-transform:translateX(100%);
-transition:.28s;
-padding:18px;
-overflow:auto;
+.stat small{
+  color:var(--muted);
+  font-size:9px;
 }
 
-.drawer.open{
-pointer-events:auto;
+/* HERO MARKET STACK */
+
+.hero-market-stack{
+  position:absolute;
+  z-index:4;
+  right:25px;
+  top:30px;
+  width:205px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:rgba(4,14,24,.82);
+  backdrop-filter:blur(10px);
+  padding:8px;
 }
 
-.drawer.open .drawer-bg{
-opacity:1;
+.hero-market{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 6px;
+  border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.drawer.open .drawer-panel{
-transform:translateX(0);
+.hero-market:last-child{
+  border-bottom:0;
 }
 
-.drawer-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
+.market-symbol{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#1170c5;
+  font-size:10px;
+  font-weight:900;
 }
 
-.drawer-nav a{
-display:flex;
-justify-content:space-between;
-padding:15px 4px;
-border-bottom:1px solid var(--line);
-font-size:12px;
-color:#bdcad5;
+.market-name{
+  flex:1;
+  font-size:10px;
 }
 
-.drawer-nav a:hover{
-color:var(--gold);
+.market-price{
+  font-size:10px;
+  text-align:right;
 }
 
-/* ================= TOAST ================= */
-
-.toast{
-position:fixed;
-right:18px;
-bottom:18px;
-z-index:3000;
-background:#081824;
-border:1px solid var(--line);
-border-left:3px solid var(--gold);
-border-radius:8px;
-padding:11px 13px;
-font-size:9px;
-transform:translateY(150px);
-transition:.3s;
-box-shadow:0 20px 50px rgba(0,0,0,.5);
-}
-
-.toast.show{
-transform:translateY(0);
-}
-
-.toast b{
-display:block;
-}
-
-.toast span{
-color:#8297aa;
+.market-change{
+  display:block;
+  font-size:8px;
+  margin-top:2px;
 }
 
 /* =========================================================
-   TABLET
-========================================================= */
+   FEATURE NAV
+   ========================================================= */
 
-@media(max-width:1050px){
-
-.layout{
-grid-template-columns:1fr;
+.feature-panel{
+  margin-top:14px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:linear-gradient(135deg,#061321,#081b2a);
 }
 
-.sidebar{
-display:none;
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px 28px;
 }
 
-.nav{
-display:none;
+.feature{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.menu-btn{
-display:block;
+.feature:hover{
+  background:rgba(255,255,255,.04);
+  transform:translateY(-2px);
 }
 
-.header-actions{
-margin-left:auto;
+.feature-icon{
+  width:33px;
+  height:33px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(86,174,255,.28);
+  border-radius:8px;
+  color:#76c6ff;
 }
 
-.header-actions .gold-btn,
-.header-actions .dark-btn{
-display:none;
+.feature strong{
+  display:block;
+  font-size:11px;
 }
 
+.feature small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  margin-top:4px;
 }
 
 /* =========================================================
-   PHONE
-========================================================= */
-
-@media(max-width:720px){
-
-.container{
-width:calc(100% - 12px);
-}
-
-.top-ticker{
-height:28px;
-}
-
-.ticker-item{
-height:28px;
-padding:0 10px;
-font-size:8px;
-}
-
-.header{
-height:62px;
-}
-
-.header-inner{
-width:calc(100% - 12px);
-gap:7px;
-}
-
-.logo{
-min-width:0;
-}
-
-.logo-icon{
-width:35px;
-height:35px;
-font-size:19px;
-}
-
-.logo-name{
-font-size:14px;
-}
-
-.logo-sub{
-font-size:5px;
-}
-
-.icon-btn,
-.menu-btn{
-width:36px;
-height:36px;
-}
-
-.page{
-padding:7px 0 20px;
-}
-
-.hero{
-min-height:540px;
-}
-
-.hero-grid{
-grid-template-columns:1fr;
-}
-
-.hero-text{
-padding:25px 18px;
-}
-
-.hero h1{
-font-size:29px;
-}
-
-.hero p{
-font-size:10px;
-}
-
-.hero-art{
-min-height:245px;
-}
-
-.globe{
-width:300px;
-height:300px;
-right:-95px;
-top:5px;
-}
-
-.hero-markets{
-right:8px;
-top:10px;
-width:130px;
-}
-
-.hero-chart{
-bottom:15px;
-}
-
-.quick-grid{
-grid-template-columns:repeat(3,1fr);
-}
-
-.quick{
-min-height:78px;
-padding:11px 8px;
-}
-
-.quick-icon{
-font-size:17px;
-}
-
-.quick b{
-font-size:9px;
-}
-
-.quick span{
-font-size:7px;
-}
+   BREAKING NEWS
+   ========================================================= */
 
 .breaking{
-grid-template-columns:95px 1fr;
+  margin-top:14px;
+  height:70px;
+  border:1px solid rgba(245,185,40,.35);
+  border-radius:9px;
+  background:#07131e;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
 }
 
-.break-view{
-display:none;
+.breaking-title{
+  width:145px;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold);
+  font-weight:900;
+  font-size:11px;
+  border-right:1px solid rgba(245,185,40,.22);
 }
 
-.break-item{
-min-width:175px;
+.news-strip{
+  display:flex;
+  flex:1;
+  height:100%;
 }
 
-.market-grid{
-grid-template-columns:repeat(3,1fr);
+.news-mini{
+  flex:1;
+  padding:12px 15px;
+  border-right:1px solid var(--line);
+  cursor:pointer;
 }
 
-.movers{
-grid-template-columns:repeat(2,1fr);
+.news-mini:hover{
+  background:rgba(255,255,255,.03);
 }
 
-.news-grid{
-grid-template-columns:repeat(2,1fr);
+.news-mini small{
+  color:var(--muted);
+  font-size:8px;
 }
 
-.expert{
-grid-column:span 2;
+.news-mini strong{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  line-height:1.3;
 }
 
-.footer-main{
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-}
-
-.footer-brand{
-grid-column:span 2;
-}
-
-.footer-bottom{
-flex-direction:column;
-align-items:flex-start;
-}
-
-}
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media(max-width:430px){
-
-.hero{
-min-height:550px;
-}
-
-.hero h1{
-font-size:25px;
-}
-
-.quick-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.market-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.news-grid{
-grid-template-columns:1fr;
-}
-
-.expert{
-grid-column:auto;
-}
-
-.footer-main{
-grid-template-columns:1fr;
-}
-
-.footer-brand{
-grid-column:auto;
-}
-
+.news-view{
+  margin:0 15px;
+  border:1px solid rgba(245,185,40,.55);
+  background:transparent;
+  color:var(--gold);
+  padding:9px 14px;
+  border-radius:7px;
+  font-size:9px;
+  font-weight:800;
 }
 
 /* =========================================================
-   MOBILE COMPUTER-LIKE DENSITY
-========================================================= */
-
-@media(max-width:720px){
-
-body{
-font-size:12px;
-}
+   SECTION
+   ========================================================= */
 
 .section{
-border-radius:8px;
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:linear-gradient(145deg,#06121e,#071724);
+  overflow:hidden;
 }
 
 .section-head{
-padding:13px 10px 10px;
+  min-height:53px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  border-bottom:1px solid var(--line);
 }
 
 .section-head h2{
-font-size:10px;
+  font-size:13px;
+  letter-spacing:.4px;
+}
+
+.section-head a{
+  font-size:10px;
+  color:#87bde9;
+}
+
+.section-body{
+  padding:14px;
+}
+
+/* =========================================================
+   MARKET CARDS
+   ========================================================= */
+
+.market-cards{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
 }
 
 .market-card{
-padding:10px 7px;
+  min-height:125px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:14px;
+  background:linear-gradient(180deg,#091b2a,#071521);
+  cursor:pointer;
+  transition:.2s;
 }
 
-.market-value{
-font-size:10px;
+.market-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(245,185,40,.35);
+}
+
+.market-card small{
+  color:#d2dce5;
+  font-size:10px;
+}
+
+.market-card .price{
+  display:block;
+  margin-top:9px;
+  font-size:15px;
+  font-weight:800;
+}
+
+.change{
+  display:block;
+  margin-top:7px;
+  font-size:9px;
+}
+
+.mini-chart{
+  width:100%;
+  height:42px;
+  margin-top:9px;
+}
+
+/* =========================================================
+   MOVERS
+   ========================================================= */
+
+.mover-tabs{
+  display:flex;
+  gap:5px;
+  margin-bottom:13px;
+}
+
+.mover-tabs button{
+  border:0;
+  padding:7px 12px;
+  border-radius:6px;
+  background:transparent;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.mover-tabs button.active{
+  background:#173f78;
+  color:white;
+}
+
+.mover-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
 }
 
 .mover{
-padding:10px;
+  min-height:88px;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:#081826;
+  cursor:pointer;
 }
 
-.mover b{
-font-size:10px;
+.mover:hover{
+  border-color:rgba(40,217,255,.3);
 }
 
-.news{
-min-height:160px;
+.mover strong{
+  font-size:13px;
 }
+
+.mover small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.mover-price{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-top:13px;
+}
+
+.mover-price b{
+  font-size:12px;
+}
+
+.mover-price span{
+  color:var(--green);
+  font-size:9px;
+}
+
+/* =========================================================
+   NEWS CARDS
+   ========================================================= */
+
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr) 1.05fr;
+  gap:10px;
+}
+
+.news-card{
+  border:1px solid var(--line);
+  border-radius:7px;
+  overflow:hidden;
+  background:#081724;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.news-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(245,185,40,.35);
+}
+
+.news-image{
+  height:110px;
+  background-size:cover;
+  background-position:center;
+}
+
+.news-card:nth-child(1) .news-image{
+  background-image:url("https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=900&q=80");
+}
+
+.news-card:nth-child(2) .news-image{
+  background-image:url("https://images.unsplash.com/photo-1618044733300-9472054094ee?auto=format&fit=crop&w=900&q=80");
+}
+
+.news-card:nth-child(3) .news-image{
+  background-image:url("https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=900&q=80");
+}
+
+.news-card:nth-child(4) .news-image{
+  background-image:url("https://images.unsplash.com/photo-1642790551116-18e150f248e6?auto=format&fit=crop&w=900&q=80");
+}
+
+.news-content{
+  padding:12px;
+}
+
+.category{
+  display:inline-block;
+  padding:4px 6px;
+  border-radius:4px;
+  background:#13508a;
+  font-size:7px;
+  font-weight:900;
+}
+
+.news-content h3{
+  font-size:11px;
+  line-height:1.45;
+  margin-top:8px;
+}
+
+.news-content small{
+  display:block;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.opinion{
+  padding:18px;
+  border:1px solid rgba(245,185,40,.18);
+  background:
+    radial-gradient(circle at 80% 80%,rgba(34,126,255,.15),transparent 45%),
+    #081724;
+  border-radius:7px;
+}
+
+.opinion-label{
+  color:var(--gold);
+  font-size:9px;
+  font-weight:900;
+}
+
+.opinion p{
+  color:#d4dee7;
+  line-height:1.7;
+  font-size:12px;
+  margin:15px 0;
+}
+
+.opinion button{
+  padding:9px 12px;
+  border-radius:6px;
+  border:1px solid rgba(245,185,40,.5);
+  background:transparent;
+  color:var(--gold);
+  font-size:9px;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.side-panel{
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:linear-gradient(145deg,#061421,#071927);
+  overflow:hidden;
+}
+
+.side-head{
+  padding:15px;
+  border-bottom:1px solid var(--line);
+  font-size:11px;
+  font-weight:800;
+  display:flex;
+  justify-content:space-between;
+}
+
+.side-market{
+  padding:10px 12px;
+}
+
+.side-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 2px;
+  border-bottom:1px solid rgba(255,255,255,.045);
+}
+
+.side-row:last-child{
+  border-bottom:0;
+}
+
+.coin{
+  width:27px;
+  height:27px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:10px;
+  font-weight:900;
+  background:#1665aa;
+}
+
+.side-row .name{
+  flex:1;
+  font-size:9px;
+}
+
+.side-row .val{
+  text-align:right;
+  font-size:9px;
+}
+
+.side-row .val span{
+  display:block;
+  margin-top:3px;
+  color:var(--green);
+  font-size:8px;
+}
+
+/* SIDEBAR QUICK GRID */
+
+.quick-grid{
+  padding:13px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.quick{
+  min-height:67px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  border:1px solid transparent;
+  border-radius:7px;
+  cursor:pointer;
+  color:#c9d8e5;
+}
+
+.quick:hover{
+  border-color:var(--line);
+  background:rgba(255,255,255,.03);
+}
+
+.quick i{
+  font-size:19px;
+  color:#8bcfff;
+  font-style:normal;
+}
+
+.quick span{
+  text-align:center;
+  font-size:8px;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
 
 .cta{
-padding:16px;
+  margin-top:14px;
+  min-height:100px;
+  border:1px solid rgba(245,185,40,.28);
+  border-radius:9px;
+  background:
+    linear-gradient(90deg,rgba(4,18,30,.95),rgba(8,27,42,.85)),
+    url("https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1500&q=80")
+    center/cover;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:25px 45px;
 }
 
 .cta h2{
-font-size:14px;
+  font-size:20px;
 }
 
+.cta p{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:7px;
+}
+
+.cta button{
+  border:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#06101a;
+  font-weight:900;
+  padding:12px 25px;
+  border-radius:7px;
+}
+
+/* =========================================================
+   FOOTER — ULTRA LUXURY
+   ========================================================= */
+
+footer{
+  margin-top:14px;
+  border-top:1px solid rgba(245,185,40,.18);
+  background:
+    radial-gradient(circle at 50% 0,rgba(245,185,40,.05),transparent 35%),
+    #020a13;
+}
+
+.footer-main{
+  display:grid;
+  grid-template-columns:1.5fr repeat(5,1fr);
+  gap:25px;
+  padding:40px 25px;
+}
+
+.footer-brand p{
+  color:#8396a9;
+  font-size:10px;
+  line-height:1.8;
+  margin-top:13px;
+  max-width:240px;
+}
+
+.footer-title{
+  font-size:11px;
+  color:#fff;
+  margin-bottom:15px;
+}
+
+.footer-col a{
+  display:block;
+  color:#7f93a7;
+  font-size:9px;
+  margin:10px 0;
+  transition:.2s;
+}
+
+.footer-col a:hover{
+  color:var(--gold);
+  transform:translateX(2px);
+}
+
+.socials{
+  display:flex;
+  gap:7px;
+  margin-top:17px;
+}
+
+.socials button{
+  width:30px;
+  height:30px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:#07131e;
+  color:#aac1d3;
+}
+
+.footer-bottom{
+  min-height:52px;
+  padding:0 25px;
+  border-top:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:#657b8f;
+  font-size:8px;
+}
+
+.footer-links{
+  display:flex;
+  gap:22px;
+}
+
+.footer-links a:hover{
+  color:var(--gold);
+}
+
+/* =========================================================
+   MODAL SYSTEM
+   ========================================================= */
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(7px);
+  z-index:5000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-backdrop.open{
+  display:flex;
+}
+
+.modal{
+  width:720px;
+  max-height:82vh;
+  overflow:auto;
+  border:1px solid rgba(245,185,40,.25);
+  border-radius:13px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(40,120,220,.13),transparent 35%),
+    #06121e;
+  box-shadow:0 30px 100px rgba(0,0,0,.65);
+}
+
+.modal-head{
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+}
+
+.modal-head h2{
+  font-size:16px;
+}
+
+.close{
+  width:34px;
+  height:34px;
+  border-radius:7px;
+  border:1px solid var(--line);
+  background:#081a28;
+  color:white;
+}
+
+.modal-body{
+  padding:22px;
+}
+
+.modal-body h3{
+  color:var(--gold);
+  font-size:13px;
+  margin:17px 0 8px;
+}
+
+.modal-body p,
+.modal-body li{
+  color:#aebdca;
+  font-size:11px;
+  line-height:1.8;
+}
+
+.modal-body ul{
+  padding-left:20px;
+}
+
+/* =========================================================
+   SEARCH RESULTS
+   ========================================================= */
+
+.search-results{
+  margin-top:8px;
+  display:none;
+  position:absolute;
+  width:500px;
+  background:#071724;
+  border:1px solid var(--line);
+  border-radius:8px;
+  z-index:50;
+  box-shadow:var(--shadow);
+}
+
+.search-result{
+  padding:11px 13px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  cursor:pointer;
+}
+
+.search-result:hover{
+  background:rgba(255,255,255,.04);
+}
+
+.search-result strong{
+  font-size:10px;
+}
+
+.search-result small{
+  display:block;
+  color:var(--muted);
+  margin-top:3px;
+  font-size:8px;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  z-index:7000;
+  background:#071925;
+  border:1px solid rgba(245,185,40,.4);
+  color:white;
+  padding:13px 18px;
+  border-radius:8px;
+  box-shadow:var(--shadow);
+  transform:translateY(100px);
+  opacity:0;
+  transition:.3s;
+  font-size:10px;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading{
+  position:relative;
+  overflow:hidden;
+}
+
+.loading::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.05),
+    transparent
+  );
+  animation:shine 1.4s infinite;
+}
+
+@keyframes shine{
+  100%{transform:translateX(100%)}
+}
+
+/* =========================================================
+   DESKTOP CANVAS RESPONSIVE SCALING
+   ========================================================= */
+
+@media(max-width:1450px){
+  #desktopCanvas{
+    transform:scale(calc(100vw / 1440));
+    transform-origin:top left;
+  }
+
+  body{
+    min-height:calc(100vh / (100vw / 1440));
+  }
+}
+
+/* Phones: keep desktop proportions */
+@media(max-width:700px){
+  #desktopCanvas{
+    width:1440px;
+    margin:0;
+  }
+
+  .main-header{
+    position:relative;
+  }
+
+  .nav{
+    display:none;
+  }
+
+  .mobile-menu-btn{
+    display:grid;
+    place-items:center;
+  }
+
+  .header-actions .login-btn,
+  .header-actions .signup-btn{
+    display:none;
+  }
+}
+
+/* =========================================================
+   MOBILE MENU DRAWER
+   ========================================================= */
+
+.mobile-drawer{
+  position:fixed;
+  top:0;
+  right:-430px;
+  width:400px;
+  height:100vh;
+  z-index:6000;
+  background:#04101b;
+  border-left:1px solid rgba(245,185,40,.25);
+  box-shadow:-20px 0 70px rgba(0,0,0,.5);
+  transition:.35s;
+  padding:20px;
+}
+
+.mobile-drawer.open{
+  right:0;
+}
+
+.drawer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:17px;
+  border-bottom:1px solid var(--line);
+}
+
+.drawer-links{
+  padding-top:20px;
+}
+
+.drawer-links button{
+  width:100%;
+  text-align:left;
+  padding:14px;
+  margin-bottom:5px;
+  border:0;
+  border-radius:7px;
+  color:#d9e4ed;
+  background:transparent;
+}
+
+.drawer-links button:hover{
+  color:var(--gold);
+  background:rgba(245,185,40,.06);
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     LIVE TOP TICKER
-===================================================== -->
+<div id="desktopCanvas">
 
-<div class="top-ticker">
-<div class="ticker-track" id="ticker"></div>
+<!-- =======================================================
+     LIVE MARKET TICKER
+======================================================= -->
+
+<div class="market-ticker">
+  <div class="ticker-track" id="tickerTrack">
+
+    <div class="ticker-item">
+      <span class="live-dot"></span>
+      <strong>LIVE MARKETS</strong>
+    </div>
+
+    <div class="ticker-item">
+      NIFTY 50 <strong id="tickNifty">24,834.85</strong>
+      <span class="up">▲ 0.75%</span>
+    </div>
+
+    <div class="ticker-item">
+      SENSEX <strong id="tickSensex">81,330.56</strong>
+      <span class="up">▲ 0.68%</span>
+    </div>
+
+    <div class="ticker-item">
+      NASDAQ <strong>17,689.66</strong>
+      <span class="up">▲ 0.92%</span>
+    </div>
+
+    <div class="ticker-item">
+      GOLD <strong>$2,341.20</strong>
+      <span class="up">▲ 0.64%</span>
+    </div>
+
+    <div class="ticker-item">
+      BTC/USD <strong id="tickBTC">$67,853.42</strong>
+      <span class="up">▲ 2.35%</span>
+    </div>
+
+    <div class="ticker-item">
+      ETH/USD <strong>$3,214.67</strong>
+      <span class="up">▲ 1.25%</span>
+    </div>
+
+    <div class="ticker-item">
+      EUR/USD <strong>1.0842</strong>
+      <span class="up">▲ 0.12%</span>
+    </div>
+
+  </div>
 </div>
 
-<!-- =====================================================
+
+<!-- =======================================================
      HEADER
-===================================================== -->
+======================================================= -->
 
-<header class="header">
+<header class="main-header">
 
-<div class="header-inner">
+  <div class="brand">
 
-<a href="#home" class="logo">
+    <div class="brand-logo">GF</div>
 
-<div class="logo-icon">↗</div>
+    <div>
+      <div class="brand-title">GLOBAL FINANCE</div>
+      <div class="brand-subtitle">
+        SMART DECISIONS, STRONGER FUTURE
+      </div>
+    </div>
 
-<div>
-<div class="logo-name">GLOBAL FINANCE</div>
-<div class="logo-sub">SMART DECISIONS, STRONGER FUTURE</div>
-</div>
+  </div>
 
-</a>
+  <nav class="nav">
 
-<nav class="nav">
+    <button class="active" data-section="home">HOME</button>
+    <button data-section="markets">MARKETS⌄</button>
+    <button data-section="trading">TRADING⌄</button>
+    <button data-section="investing">INVESTING⌄</button>
+    <button data-section="crypto">CRYPTO⌄</button>
+    <button data-section="forex">FOREX⌄</button>
+    <button data-section="news">NEWS⌄</button>
+    <button data-section="education">EDUCATION⌄</button>
+    <button data-section="tools">TOOLS⌄</button>
+    <button data-section="more">MORE⌄</button>
 
-<a class="active" href="#home">HOME</a>
-<a href="#markets">MARKETS⌄</a>
-<a href="#trading">TRADING⌄</a>
-<a href="#investing">INVESTING⌄</a>
-<a href="#crypto">CRYPTO⌄</a>
-<a href="#forex">FOREX⌄</a>
-<a href="#news">NEWS⌄</a>
-<a href="#education">EDUCATION⌄</a>
-<a href="#tools">TOOLS⌄</a>
-<a href="#more">MORE⌄</a>
+  </nav>
 
-</nav>
+  <div class="header-actions">
 
-<div class="header-actions">
+    <button class="icon-btn" id="globalSearchBtn" title="Search">
+      ⌕
+    </button>
 
-<button class="icon-btn" onclick="openSearch()">⌕</button>
+    <button class="login-btn" onclick="openModal('Login')">
+      ♙ LOGIN
+    </button>
 
-<button class="dark-btn" onclick="showToast('Login system ready')">
-LOGIN
-</button>
+    <button class="signup-btn" onclick="openModal('Create your account')">
+      SIGN UP
+    </button>
 
-<button class="gold-btn" onclick="showToast('Registration system ready')">
-SIGN UP
-</button>
+    <button class="mobile-menu-btn" id="menuBtn">
+      ☰
+    </button>
 
-<button class="menu-btn" onclick="openMenu()">
-☰
-</button>
+  </div>
 
-</div>
-
-</div>
 </header>
 
-<!-- =====================================================
-     PAGE
-===================================================== -->
 
-<main id="home" class="page">
+<!-- =======================================================
+     MAIN
+======================================================= -->
 
-<div class="container layout">
+<main class="page">
 
-<div class="content">
+<div class="dashboard-grid">
 
-<!-- HERO -->
+<div class="main-column">
 
-<section class="hero">
+<!-- =======================================================
+     HERO
+======================================================= -->
 
-<div class="hero-grid">
+<section class="hero" id="home">
 
-<div class="hero-text">
+  <div class="hero-content">
 
-<div class="badge">
-◉ AI FINANCIAL PLATFORM
-</div>
+    <div class="eyebrow">
+      ◉ AI FINANCIAL PLATFORM
+    </div>
 
-<h1>
-Smart Decisions<br>
-<span>Stronger Future</span>
-</h1>
+    <h1>
+      Smart Decisions<br>
+      Stronger <span>Future</span>
+    </h1>
 
-<p>
-Real-time market data, expert insights,
-research and powerful financial tools
-for traders and investors.
-</p>
+    <p>
+      Real-time market data, expert insights, powerful financial tools
+      and educational resources for traders and investors.
+    </p>
 
-<div class="search">
+    <div style="position:relative">
 
-<input
-id="mainSearch"
-type="text"
-placeholder="Search stocks, news, bonds, ETFs..."
->
+      <div class="search-box">
 
-<button onclick="searchMain()">⌕</button>
+        <input
+          id="marketSearch"
+          type="search"
+          placeholder="Search stocks, news, bonds, ETFs..."
+          autocomplete="off">
 
-</div>
+        <button id="searchButton">
+          ⌕
+        </button>
 
-<div class="hero-stats">
+      </div>
 
-<div class="hero-stat">
-<b>150K+</b>
-<span>Active Users</span>
-</div>
+      <div class="search-results" id="searchResults"></div>
 
-<div class="hero-stat">
-<b>500+</b>
-<span>Instruments</span>
-</div>
+    </div>
 
-<div class="hero-stat">
-<b>50+</b>
-<span>Countries</span>
-</div>
+    <div class="hero-stats">
 
-<div class="hero-stat">
-<b>24/7</b>
-<span>Market Updates</span>
-</div>
+      <div class="stat">
+        <div class="stat-icon">◉</div>
+        <div>
+          <strong>150K+</strong>
+          <small>Active Users</small>
+        </div>
+      </div>
 
-</div>
+      <div class="stat">
+        <div class="stat-icon">▣</div>
+        <div>
+          <strong>500+</strong>
+          <small>Instruments</small>
+        </div>
+      </div>
 
-</div>
+      <div class="stat">
+        <div class="stat-icon">♙</div>
+        <div>
+          <strong>50+</strong>
+          <small>Countries</small>
+        </div>
+      </div>
 
-<div class="hero-art">
+      <div class="stat">
+        <div class="stat-icon">◷</div>
+        <div>
+          <strong>24/7</strong>
+          <small>Market Updates</small>
+        </div>
+      </div>
 
-<div class="globe"></div>
+    </div>
 
-<div class="hero-markets" id="heroMarkets"></div>
+  </div>
 
-<svg
-class="hero-chart"
-viewBox="0 0 600 160"
-preserveAspectRatio="none"
->
 
-<polyline
-fill="none"
-stroke="#55a9ff"
-stroke-width="2"
-points="
-0,140
-30,120
-60,130
-90,100
-120,115
-150,85
-180,100
-210,70
-240,82
-270,55
-300,72
-330,42
-360,60
-390,34
-420,52
-450,30
-480,43
-510,18
-540,30
-570,12
-600,22
-"
-/>
+  <div class="hero-market-stack">
 
-</svg>
+    <div class="hero-market">
+      <div class="market-symbol">N</div>
+      <div class="market-name">NIFTY 50</div>
+      <div class="market-price">
+        24,834.85
+        <span class="market-change up">▲ 0.75%</span>
+      </div>
+    </div>
 
-</div>
+    <div class="hero-market">
+      <div class="market-symbol">S</div>
+      <div class="market-name">SENSEX</div>
+      <div class="market-price">
+        81,330.56
+        <span class="market-change up">▲ 0.68%</span>
+      </div>
+    </div>
 
-</div>
+    <div class="hero-market">
+      <div class="market-symbol">N</div>
+      <div class="market-name">NASDAQ</div>
+      <div class="market-price">
+        17,689.66
+        <span class="market-change up">▲ 0.92%</span>
+      </div>
+    </div>
 
-</section>
+    <div class="hero-market">
+      <div class="market-symbol">G</div>
+      <div class="market-name">GOLD</div>
+      <div class="market-price">
+        $2,341.20
+        <span class="market-change up">▲ 0.64%</span>
+      </div>
+    </div>
 
-<!-- =====================================================
-     QUICK TOOLS
-===================================================== -->
+    <div class="hero-market">
+      <div class="market-symbol">₿</div>
+      <div class="market-name">BTC/USD</div>
+      <div class="market-price">
+        $67,853.42
+        <span class="market-change up">▲ 2.35%</span>
+      </div>
+    </div>
 
-<section class="quick-grid">
+    <div class="hero-market">
+      <div class="market-symbol">Ξ</div>
+      <div class="market-name">ETH/USD</div>
+      <div class="market-price">
+        $3,214.67
+        <span class="market-change up">▲ 1.25%</span>
+      </div>
+    </div>
 
-<button class="quick" onclick="tool('Live Market')">
-<div class="quick-icon">♧</div>
-<b>Live Market</b>
-<span>Real-time Data</span>
-</button>
-
-<button class="quick" onclick="tool('Market Overview')">
-<div class="quick-icon">◈</div>
-<b>Market Overview</b>
-<span>Global Indices</span>
-</button>
-
-<button class="quick" onclick="tool('Top Gainers')">
-<div class="quick-icon">⌁</div>
-<b>Top Gainers</b>
-<span>Stock Winners</span>
-</button>
-
-<button class="quick" onclick="tool('Top Losers')">
-<div class="quick-icon">⇩</div>
-<b>Top Losers</b>
-<span>Stock Losers</span>
-</button>
-
-<button class="quick" onclick="tool('Stock Screener')">
-<div class="quick-icon">⌕</div>
-<b>Stock Screener</b>
-<span>Smart Scanner</span>
-</button>
-
-<button class="quick" onclick="tool('Economic Calendar')">
-<div class="quick-icon">▦</div>
-<b>Economic Calendar</b>
-<span>Key Events</span>
-</button>
-
-<button class="quick" onclick="tool('News & Insights')">
-<div class="quick-icon">▤</div>
-<b>News & Insights</b>
-<span>Latest Updates</span>
-</button>
-
-<button class="quick" onclick="tool('Portfolio')">
-<div class="quick-icon">▣</div>
-<b>Portfolio</b>
-<span>Track & Manage</span>
-</button>
-
-<button class="quick" onclick="tool('Alerts')">
-<div class="quick-icon">♧</div>
-<b>Alerts</b>
-<span>Price Alerts</span>
-</button>
-
-<button class="quick" onclick="tool('Community')">
-<div class="quick-icon">♙</div>
-<b>Community</b>
-<span>Join Traders</span>
-</button>
+  </div>
 
 </section>
 
-<!-- =====================================================
+
+<!-- =======================================================
+     FEATURE PANEL
+======================================================= -->
+
+<section class="feature-panel">
+
+<div class="feature-grid">
+
+  <div class="feature" onclick="openModal('Live Market')">
+    <div class="feature-icon">⌁</div>
+    <div>
+      <strong>Live Market</strong>
+      <small>Real-time Data</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Market Overview')">
+    <div class="feature-icon">◈</div>
+    <div>
+      <strong>Market Overview</strong>
+      <small>Global Indices</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Top Gainers')">
+    <div class="feature-icon">↗</div>
+    <div>
+      <strong>Top Gainers</strong>
+      <small>Stock Winners</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Top Losers')">
+    <div class="feature-icon">↘</div>
+    <div>
+      <strong>Top Losers</strong>
+      <small>Stock Losers</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Stock Screener')">
+    <div class="feature-icon">⌕</div>
+    <div>
+      <strong>Stock Screener</strong>
+      <small>Smart Scanner</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Economic Calendar')">
+    <div class="feature-icon">▦</div>
+    <div>
+      <strong>Economic Calendar</strong>
+      <small>Key Events</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('News & Insights')">
+    <div class="feature-icon">▤</div>
+    <div>
+      <strong>News & Insights</strong>
+      <small>Latest Updates</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Portfolio')">
+    <div class="feature-icon">▣</div>
+    <div>
+      <strong>Portfolio</strong>
+      <small>Track & Manage</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Alerts')">
+    <div class="feature-icon">♧</div>
+    <div>
+      <strong>Alerts</strong>
+      <small>Price Alerts</small>
+    </div>
+  </div>
+
+  <div class="feature" onclick="openModal('Community')">
+    <div class="feature-icon">♧</div>
+    <div>
+      <strong>Community</strong>
+      <small>Join Traders</small>
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- =======================================================
      BREAKING NEWS
-===================================================== -->
+======================================================= -->
 
 <section class="breaking">
 
-<div class="break-title">
-⚡ BREAKING NEWS
-</div>
+  <div class="breaking-title">
+    ⚡ BREAKING NEWS
+  </div>
 
-<div class="break-scroll">
+  <div class="news-strip">
 
-<div class="break-item">
-<small>2m ago • MARKETS</small>
-<b>Global Markets Rally as Tech Leads Gains</b>
-</div>
+    <div class="news-mini"
+         onclick="openNews('Global Markets Rally as Tech Leads Gains')">
+      <small>2m ago • MARKETS</small>
+      <strong>Global Stocks Rally as Tech Leads Gains</strong>
+    </div>
 
-<div class="break-item">
-<small>15m ago • ECONOMY</small>
-<b>Fed Signals Possible Rate Cut in Next Meeting</b>
-</div>
+    <div class="news-mini"
+         onclick="openNews('Fed Signals Possible Rate Cut in Next Meeting')">
+      <small>15m ago • ECONOMY</small>
+      <strong>Fed Signals Possible Rate Cut in Next Meeting</strong>
+    </div>
 
-<div class="break-item">
-<small>32m ago • CRYPTO</small>
-<b>Bitcoin Surges Past $67K Mark Again</b>
-</div>
+    <div class="news-mini"
+         onclick="openNews('Bitcoin Surges Past $67K Mark Again')">
+      <small>32m ago • CRYPTO</small>
+      <strong>Bitcoin Surges Past $67K Mark Again</strong>
+    </div>
 
-<div class="break-item">
-<small>1h ago • STOCKS</small>
-<b>Top 10 Stocks to Watch This Week</b>
-</div>
+    <div class="news-mini"
+         onclick="openNews('Top 10 Stocks to Watch This Week')">
+      <small>1h ago • STOCKS</small>
+      <strong>Top 10 Stocks to Watch This Week</strong>
+    </div>
 
-</div>
+  </div>
 
-<div class="break-view">
-VIEW ALL NEWS →
-</div>
+  <button class="news-view" onclick="openModal('All Financial News')">
+    VIEW ALL NEWS →
+  </button>
 
 </section>
 
-<!-- =====================================================
+
+<!-- =======================================================
      MARKET OVERVIEW
-===================================================== -->
+======================================================= -->
 
 <section class="section" id="markets">
 
-<div class="section-head">
+  <div class="section-head">
+    <h2>MARKET OVERVIEW</h2>
+    <a href="javascript:void(0)"
+       onclick="openModal('All Markets')">
+       View All Markets →
+    </a>
+  </div>
 
-<h2>MARKET OVERVIEW</h2>
+  <div class="section-body">
 
-<a href="#" onclick="tool('All Markets');return false">
-View All Markets →
-</a>
+    <div class="market-cards">
 
-</div>
+      <div class="market-card"
+           onclick="openChart('NIFTY 50')">
 
-<div class="market-grid" id="marketGrid"></div>
+        <small>NIFTY 50</small>
+        <strong class="price">24,834.85</strong>
+        <span class="change up">▲ 0.75%</span>
 
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,40 15,35 25,39 40,20 55,30 70,18 85,25 100,10 115,20 130,12 145,18 160,5"
+            fill="none"
+            stroke="#35d36b"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="market-card"
+           onclick="openChart('SENSEX')">
+
+        <small>SENSEX</small>
+        <strong class="price">81,330.56</strong>
+        <span class="change up">▲ 0.68%</span>
+
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,35 18,39 30,25 45,28 60,18 75,30 92,12 105,21 120,10 135,15 150,8 160,12"
+            fill="none"
+            stroke="#35d36b"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="market-card"
+           onclick="openChart('NASDAQ')">
+
+        <small>NASDAQ</small>
+        <strong class="price">17,689.66</strong>
+        <span class="change up">▲ 0.92%</span>
+
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,42 10,34 25,37 40,25 50,30 65,16 80,22 95,15 110,20 125,7 145,13 160,4"
+            fill="none"
+            stroke="#35d36b"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="market-card"
+           onclick="openChart('DOW JONES')">
+
+        <small>DOW JONES</small>
+        <strong class="price">39,431.51</strong>
+        <span class="change up">▲ 0.81%</span>
+
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,36 15,32 30,37 45,20 60,28 75,14 90,25 105,15 120,18 135,8 150,12 160,5"
+            fill="none"
+            stroke="#35d36b"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="market-card"
+           onclick="openChart('BTC/USD')">
+
+        <small>BTC/USD</small>
+        <strong class="price">$67,853.42</strong>
+        <span class="change up">▲ 2.35%</span>
+
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,38 12,35 22,42 35,25 50,30 63,19 78,24 90,11 108,17 120,7 138,12 150,5 160,8"
+            fill="none"
+            stroke="#f5b928"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="market-card"
+           onclick="openChart('ETH/USD')">
+
+        <small>ETH/USD</small>
+        <strong class="price">$3,214.67</strong>
+        <span class="change up">▲ 1.25%</span>
+
+        <svg class="mini-chart"
+             viewBox="0 0 160 50"
+             preserveAspectRatio="none">
+
+          <polyline
+            points="0,39 15,30 30,34 44,20 58,26 75,18 90,23 105,12 120,17 135,8 148,14 160,4"
+            fill="none"
+            stroke="#9b75ff"
+            stroke-width="2"/>
+
+        </svg>
+
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
-<!-- =====================================================
+
+<!-- =======================================================
      MARKET MOVERS
-===================================================== -->
+======================================================= -->
 
 <section class="section">
 
-<div class="section-head">
+  <div class="section-head">
+    <h2>MARKET MOVERS</h2>
+    <a href="javascript:void(0)"
+       onclick="openModal('Market Movers')">
+       View More →
+    </a>
+  </div>
 
-<h2>MARKET MOVERS</h2>
+  <div class="section-body">
 
-<a href="#" onclick="tool('Market Movers');return false">
-View More →
-</a>
+    <div class="mover-tabs">
 
-</div>
+      <button class="active"
+              onclick="changeMover(this,'Top Gainers')">
+        Top Gainers
+      </button>
 
-<div class="tabs">
+      <button onclick="changeMover(this,'Top Losers')">
+        Top Losers
+      </button>
 
-<button class="tab active" onclick="changeTab(this,'gainers')">
-Top Gainers
-</button>
+      <button onclick="changeMover(this,'Most Active')">
+        Most Active
+      </button>
 
-<button class="tab" onclick="changeTab(this,'losers')">
-Top Losers
-</button>
+      <button onclick="changeMover(this,'52 Week High')">
+        52 Week High
+      </button>
 
-<button class="tab" onclick="changeTab(this,'active')">
-Most Active
-</button>
+      <button onclick="changeMover(this,'52 Week Low')">
+        52 Week Low
+      </button>
 
-<button class="tab" onclick="changeTab(this,'high')">
-52 Week High
-</button>
+    </div>
 
-<button class="tab" onclick="changeTab(this,'low')">
-52 Week Low
-</button>
+    <div class="mover-grid" id="moverGrid">
 
-</div>
+      <div class="mover"
+           onclick="openChart('RELIANCE')">
+        <strong>RELIANCE</strong>
+        <small>Reliance Industries</small>
+        <div class="mover-price">
+          <b>₹2,945.30</b>
+          <span>▲ 2.45%</span>
+        </div>
+      </div>
 
-<div class="movers" id="movers"></div>
+      <div class="mover"
+           onclick="openChart('TCS')">
+        <strong>TCS</strong>
+        <small>Tata Consultancy</small>
+        <div class="mover-price">
+          <b>₹3,910.75</b>
+          <span>▲ 2.01%</span>
+        </div>
+      </div>
 
+      <div class="mover"
+           onclick="openChart('HDFCBANK')">
+        <strong>HDFCBANK</strong>
+        <small>HDFC Bank</small>
+        <div class="mover-price">
+          <b>₹1,688.40</b>
+          <span>▲ 1.85%</span>
+        </div>
+      </div>
+
+      <div class="mover"
+           onclick="openChart('INFY')">
+        <strong>INFY</strong>
+        <small>Infosys Limited</small>
+        <div class="mover-price">
+          <b>₹1,525.60</b>
+          <span>▲ 1.65%</span>
+        </div>
+      </div>
+
+      <div class="mover"
+           onclick="openChart('ICICIBANK')">
+        <strong>ICICIBANK</strong>
+        <small>ICICI Bank</small>
+        <div class="mover-price">
+          <b>₹1,234.90</b>
+          <span>▲ 1.40%</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </section>
 
-<!-- =====================================================
-     NEWS
-===================================================== -->
+
+<!-- =======================================================
+     LATEST NEWS
+======================================================= -->
 
 <section class="section" id="news">
 
-<div class="section-head">
+  <div class="section-head">
+    <h2>LATEST FINANCIAL NEWS</h2>
+    <a href="javascript:void(0)"
+       onclick="openModal('Financial News')">
+       View All News →
+    </a>
+  </div>
 
-<h2>LATEST FINANCIAL NEWS</h2>
+  <div class="section-body">
 
-<a href="#" onclick="tool('All News');return false">
-View All News →
-</a>
+    <div class="news-grid">
 
-</div>
+      <article class="news-card"
+               onclick="openNews('Global Markets Rally as Tech Leads Gains')">
 
-<div class="news-grid">
+        <div class="news-image"></div>
 
-<article class="news">
+        <div class="news-content">
+          <span class="category">MARKETS</span>
+          <h3>
+            Global Markets Rally as Tech Stocks Lead Gains
+          </h3>
+          <small>2 hours ago</small>
+        </div>
 
-<div class="news-image"></div>
+      </article>
 
-<div class="news-body">
 
-<span class="news-tag">MARKETS</span>
+      <article class="news-card"
+               onclick="openNews('Fed Signals Possible Rate Cut')">
 
-<h3>
-Global Markets Rally as Tech Stocks Lead
-</h3>
+        <div class="news-image"></div>
 
-<p>2 hours ago</p>
+        <div class="news-content">
+          <span class="category">ECONOMY</span>
+          <h3>
+            Fed Signals Possible Rate Cut in Next Meeting
+          </h3>
+          <small>3 hours ago</small>
+        </div>
 
-</div>
+      </article>
 
-</article>
 
-<article class="news">
+      <article class="news-card"
+               onclick="openNews('Bitcoin Surges Past $67K')">
 
-<div class="news-image"></div>
+        <div class="news-image"></div>
 
-<div class="news-body">
+        <div class="news-content">
+          <span class="category">CRYPTO</span>
+          <h3>
+            Bitcoin Surges Past $67K Mark Again
+          </h3>
+          <small>5 hours ago</small>
+        </div>
 
-<span class="news-tag">ECONOMY</span>
+      </article>
 
-<h3>
-Fed Signals Possible Rate Cut in Next Meeting
-</h3>
 
-<p>3 hours ago</p>
+      <article class="news-card"
+               onclick="openNews('Top 10 Stocks to Watch')">
 
-</div>
+        <div class="news-image"></div>
 
-</article>
+        <div class="news-content">
+          <span class="category">STOCKS</span>
+          <h3>
+            Top 10 Stocks to Watch This Week
+          </h3>
+          <small>6 hours ago</small>
+        </div>
 
-<article class="news">
+      </article>
 
-<div class="news-image"></div>
 
-<div class="news-body">
+      <article class="opinion">
 
-<span class="news-tag">CRYPTO</span>
+        <div class="opinion-label">
+          EXPERT OPINION
+        </div>
 
-<h3>
-Bitcoin Surges Past $67K Mark Again
-</h3>
+        <p>
+          “The key to successful investing is patience,
+          discipline and a long-term perspective.”
+        </p>
 
-<p>5 hours ago</p>
+        <small style="color:#758b9e">
+          — Financial Education
+        </small>
 
-</div>
+        <br>
 
-</article>
+        <button onclick="openModal('Investment Insights')">
+          Read More Insights
+        </button>
 
-<article class="news">
+      </article>
 
-<div class="news-image"></div>
+    </div>
 
-<div class="news-body">
-
-<span class="news-tag">STOCKS</span>
-
-<h3>
-Top 10 Stocks to Watch This Week
-</h3>
-
-<p>6 hours ago</p>
-
-</div>
-
-</article>
-
-<article class="news expert">
-
-<div class="news-body">
-
-<h3>EXPERT OPINION</h3>
-
-<p class="quote">
-“The key to successful investing is
-patience, discipline and a long-term perspective.”
-</p>
-
-<p style="margin-top:10px">
-— Warren Buffett
-</p>
-
-<button
-class="gold-btn"
-style="margin-top:12px"
-onclick="tool('Expert Insights')"
->
-Read More
-</button>
-
-</div>
-
-</article>
-
-</div>
-
+  </div>
 </section>
 
-<!-- =====================================================
+
+<!-- =======================================================
      CTA
-===================================================== -->
+======================================================= -->
 
 <section class="cta">
 
-<div>
+  <div>
+    <h2>Join 150,000+ Traders & Investors</h2>
+    <p>
+      Real-time data • Advanced tools • Market research • Education
+    </p>
+  </div>
 
-<h2>
-Join 150,000+ Traders & Investors
-</h2>
-
-<p>
-Real-time data • 24/7 Support • Advanced Tools • Secure Platform
-</p>
-
-</div>
-
-<button
-class="gold-btn"
-onclick="showToast('Welcome to Global Finance')"
->
-Get Started Now
-</button>
+  <button onclick="openModal('Get Started')">
+    Get Started Now
+  </button>
 
 </section>
 
 </div>
 
-<!-- =====================================================
-     RIGHT SIDEBAR
-===================================================== -->
+
+<!-- =======================================================
+     SIDEBAR
+======================================================= -->
 
 <aside class="sidebar">
 
-<div class="side-title">
-LIVE MARKET
-</div>
+<section class="side-panel">
 
-<div id="sidePrices"></div>
+  <div class="side-head">
+    <span>◉ NIFTY 50</span>
+    <span class="up">▲ 0.75%</span>
+  </div>
 
-<div class="side-links">
+  <div class="side-market">
 
-<button class="side-link" onclick="tool('Live Market')">
-♧<br>Live Market
-</button>
+    <div class="side-row">
+      <div class="coin">N</div>
+      <div class="name">NIFTY 50</div>
+      <div class="val">
+        24,834.85
+        <span>▲ 0.75%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('Market Overview')">
-◈<br>Overview
-</button>
+    <div class="side-row">
+      <div class="coin">S</div>
+      <div class="name">SENSEX</div>
+      <div class="val">
+        81,330.56
+        <span>▲ 0.68%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('Top Gainers')">
-⌁<br>Gainers
-</button>
+    <div class="side-row">
+      <div class="coin">N</div>
+      <div class="name">NASDAQ</div>
+      <div class="val">
+        17,689.66
+        <span>▲ 0.92%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('Top Losers')">
-⇩<br>Losers
-</button>
+    <div class="side-row">
+      <div class="coin">G</div>
+      <div class="name">GOLD</div>
+      <div class="val">
+        $2,341.20
+        <span>▲ 0.64%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('Stock Screener')">
-⌕<br>Screener
-</button>
+    <div class="side-row">
+      <div class="coin">₿</div>
+      <div class="name">BTC/USD</div>
+      <div class="val">
+        $67,853.42
+        <span>▲ 2.35%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('Economic Calendar')">
-▦<br>Calendar
-</button>
+    <div class="side-row">
+      <div class="coin">Ξ</div>
+      <div class="name">ETH/USD</div>
+      <div class="val">
+        $3,214.67
+        <span>▲ 1.25%</span>
+      </div>
+    </div>
 
-<button class="side-link" onclick="tool('News')">
-▤<br>News
-</button>
+  </div>
 
-<button class="side-link" onclick="tool('Portfolio')">
-▣<br>Portfolio
-</button>
+</section>
 
-<button class="side-link" onclick="tool('Alerts')">
-♧<br>Alerts
-</button>
 
-<button class="side-link" onclick="tool('Community')">
-♙<br>Community
-</button>
+<section class="side-panel">
 
-</div>
+  <div class="quick-grid">
 
-<div class="side-news">
+    <div class="quick"
+         onclick="openModal('Live Market')">
+      <i>⌁</i>
+      <span>Live Market</span>
+    </div>
 
-<b>⚡ BREAKING NEWS</b>
+    <div class="quick"
+         onclick="openModal('Market Overview')">
+      <i>◈</i>
+      <span>Market Overview</span>
+    </div>
 
-<p>
-Global Markets Rally as Tech Leads Gains
-</p>
+    <div class="quick"
+         onclick="openModal('Top Gainers')">
+      <i>↗</i>
+      <span>Top Gainers</span>
+    </div>
 
-<p>
-Fed Signals Possible Rate Cut in Next Meeting
-</p>
+    <div class="quick"
+         onclick="openModal('Top Losers')">
+      <i>↘</i>
+      <span>Top Losers</span>
+    </div>
 
-<button
-class="gold-btn"
-style="width:100%;padding:9px"
-onclick="document.getElementById('news').scrollIntoView()"
->
-VIEW ALL NEWS →
-</button>
+    <div class="quick"
+         onclick="openModal('Stock Screener')">
+      <i>⌕</i>
+      <span>Stock Screener</span>
+    </div>
 
-</div>
+    <div class="quick"
+         onclick="openModal('Economic Calendar')">
+      <i>▦</i>
+      <span>Economic Calendar</span>
+    </div>
+
+    <div class="quick"
+         onclick="openModal('News & Insights')">
+      <i>▤</i>
+      <span>News & Insights</span>
+    </div>
+
+    <div class="quick"
+         onclick="openModal('Portfolio')">
+      <i>▣</i>
+      <span>Portfolio</span>
+    </div>
+
+    <div class="quick"
+         onclick="openModal('Alerts')">
+      <i>♧</i>
+      <span>Alerts</span>
+    </div>
+
+    <div class="quick"
+         onclick="openModal('Community')">
+      <i>♧</i>
+      <span>Community</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="side-panel">
+
+  <div class="side-head">
+    <span>⚡ BREAKING NEWS</span>
+  </div>
+
+  <div style="padding:14px">
+
+    <div class="news-mini"
+         onclick="openNews('Global Markets Rally')">
+      <small>2m ago • MARKETS</small>
+      <strong>Global Markets Rally as Tech Leads Gains</strong>
+    </div>
+
+    <div class="news-mini"
+         onclick="openNews('Fed Signals Possible Rate Cut')">
+      <small>15m ago • ECONOMY</small>
+      <strong>Fed Signals Possible Rate Cut in Next Meeting</strong>
+    </div>
+
+    <button class="news-view"
+            style="width:100%;margin:12px 0 0"
+            onclick="openModal('All News')">
+      VIEW ALL NEWS →
+    </button>
+
+  </div>
+
+</section>
 
 </aside>
 
 </div>
 
-</main>
 
-<!-- =====================================================
-     PREMIUM FOOTER
-===================================================== -->
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
-<footer class="footer" id="more">
+<footer>
 
-<div class="container footer-main">
+<div class="footer-main">
 
-<div class="footer-brand">
+  <div class="footer-brand">
 
-<div class="footer-brand-name">
+    <div class="brand">
 
-<div class="logo-icon">
-↗
-</div>
+      <div class="brand-logo">GF</div>
 
-GLOBAL FINANCE
+      <div>
+        <div class="brand-title">GLOBAL FINANCE</div>
+        <div class="brand-subtitle">
+          SMART DECISIONS, STRONGER FUTURE
+        </div>
+      </div>
 
-</div>
+    </div>
 
-<p>
-Your trusted partner in financial markets.
-We provide market data, expert analysis,
-education, research and powerful tools
-to help you make smarter financial decisions.
-</p>
+    <p>
+      Your trusted financial information platform for markets,
+      trading, investing, crypto, forex, financial education,
+      market research and analytical tools.
+    </p>
 
-<div class="socials">
+    <div class="socials">
+      <button onclick="toast('Social profile')">f</button>
+      <button onclick="toast('Social profile')">𝕏</button>
+      <button onclick="toast('Social profile')">in</button>
+      <button onclick="toast('Video channel')">▶</button>
+      <button onclick="toast('Instagram')">◎</button>
+    </div>
 
-<button onclick="tool('Facebook')">f</button>
+  </div>
 
-<button onclick="tool('X')">𝕏</button>
 
-<button onclick="tool('LinkedIn')">in</button>
+  <div class="footer-col">
 
-<button onclick="tool('YouTube')">▶</button>
+    <div class="footer-title">MARKETS</div>
 
-<button onclick="tool('Instagram')">◎</button>
+    <a href="#markets">Stocks</a>
+    <a href="#markets">Indices</a>
+    <a href="#markets">Commodities</a>
+    <a href="#markets">Cryptocurrency</a>
+    <a href="#markets">Forex</a>
+    <a href="#markets">ETFs</a>
 
-</div>
+  </div>
 
-</div>
 
-<div class="footer-column">
+  <div class="footer-col">
 
-<h4>MARKETS</h4>
+    <div class="footer-title">TRADING</div>
 
-<a href="#markets">Stocks</a>
-<a href="#markets">Indices</a>
-<a href="#markets">Commodities</a>
-<a href="#crypto">Cryptocurrency</a>
-<a href="#forex">Forex</a>
-<a href="#markets">ETFs</a>
+    <a onclick="openModal('Trading Platform')">Trading Platform</a>
+    <a onclick="openModal('Broker Comparison')">Broker Comparison</a>
+    <a onclick="openModal('Trading Strategies')">Trading Strategies</a>
+    <a onclick="openModal('Risk Management')">Risk Management</a>
+    <a onclick="openModal('Technical Analysis')">Technical Analysis</a>
+    <a onclick="openModal('Chart Patterns')">Chart Patterns</a>
 
-</div>
+  </div>
 
-<div class="footer-column" id="trading">
 
-<h4>TRADING</h4>
+  <div class="footer-col">
 
-<a href="#trading">Trading Platform</a>
-<a href="#trading">Broker Comparison</a>
-<a href="#trading">Trading Strategies</a>
-<a href="#trading">Risk Management</a>
-<a href="#trading">Technical Analysis</a>
-<a href="#trading">Chart Patterns</a>
+    <div class="footer-title">INVESTING</div>
 
-</div>
+    <a onclick="openModal('Long Term Investing')">Long Term Investing</a>
+    <a onclick="openModal('Portfolio Management')">Portfolio Management</a>
+    <a onclick="openModal('Mutual Funds')">Mutual Funds</a>
+    <a onclick="openModal('Bonds')">Bonds</a>
+    <a onclick="openModal('IPO')">IPO</a>
+    <a onclick="openModal('REITs')">REITs</a>
 
-<div class="footer-column" id="investing">
+  </div>
 
-<h4>INVESTING</h4>
 
-<a href="#investing">Long Term Investing</a>
-<a href="#investing">Portfolio Management</a>
-<a href="#investing">Mutual Funds</a>
-<a href="#investing">Bonds</a>
-<a href="#investing">IPO</a>
-<a href="#investing">REITs</a>
+  <div class="footer-col">
 
-</div>
+    <div class="footer-title">EDUCATION</div>
 
-<div class="footer-column" id="education">
+    <a onclick="openModal('Beginner Guide')">Beginner Guide</a>
+    <a onclick="openModal('Video Tutorials')">Video Tutorials</a>
+    <a onclick="openModal('Webinars')">Webinars</a>
+    <a onclick="openModal('E Books')">E-books</a>
+    <a onclick="openModal('Glossary')">Glossary</a>
+    <a onclick="openModal('Courses')">Courses</a>
 
-<h4>EDUCATION</h4>
+  </div>
 
-<a href="#education">Beginner Guide</a>
-<a href="#education">Video Tutorials</a>
-<a href="#education">Webinars</a>
-<a href="#education">E-books</a>
-<a href="#education">Glossary</a>
-<a href="#education">Courses</a>
 
-</div>
+  <div class="footer-col">
 
-<div class="footer-column">
+    <div class="footer-title">TOOLS</div>
 
-<h4>TOOLS</h4>
+    <a onclick="openModal('Stock Screener')">Stock Screener</a>
+    <a onclick="openModal('Economic Calendar')">Economic Calendar</a>
+    <a onclick="openModal('Dividend Calendar')">Dividend Calendar</a>
+    <a onclick="openModal('Currency Converter')">Currency Converter</a>
+    <a onclick="openModal('Margin Calculator')">Margin Calculator</a>
+    <a onclick="openModal('Alerts')">Alerts</a>
 
-<a href="#tools">Stock Screener</a>
-<a href="#tools">Economic Calendar</a>
-<a href="#tools">Dividend Calendar</a>
-<a href="#tools">Currency Converter</a>
-<a href="#tools">Margin Calculator</a>
-<a href="#tools">Price Alerts</a>
-
-</div>
-
-</div>
-
-<div class="container footer-bottom">
-
-<span>
-© 2026 Global Finance. All Rights Reserved.
-</span>
-
-<div class="footer-links">
-
-<a href="#">Sitemap</a>
-<a href="#">Disclaimer</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Use</a>
+  </div>
 
 </div>
 
-<span>
-◎ English⌄
-</span>
+
+<div class="footer-bottom">
+
+  <span>
+    © 2026 Global Finance. All Rights Reserved.
+  </span>
+
+  <div class="footer-links">
+
+    <a onclick="openModal('Sitemap')">Sitemap</a>
+
+    <a onclick="openModal('Disclaimer')">
+      Disclaimer
+    </a>
+
+    <a onclick="openModal('Privacy Policy')">
+      Privacy Policy
+    </a>
+
+    <a onclick="openModal('Terms of Service')">
+      Terms of Service
+    </a>
+
+    <a onclick="openModal('About Us')">
+      About
+    </a>
+
+  </div>
+
+  <span>
+    ◉ English⌄
+  </span>
 
 </div>
 
 </footer>
 
-<!-- =====================================================
-     SEARCH MODAL
-===================================================== -->
-
-<div class="overlay" id="searchOverlay">
-
-<div class="search-box">
-
-<div class="search-row">
-
-<input
-id="overlaySearch"
-placeholder="Search stocks, markets, crypto, news..."
->
-
-<button class="gold-btn" onclick="runSearch()">
-SEARCH
-</button>
-
-<button class="icon-btn" onclick="closeSearch()">
-×
-</button>
+</main>
 
 </div>
 
-<div class="search-results" id="results"></div>
+
+<!-- =======================================================
+     MOBILE DRAWER
+======================================================= -->
+
+<div class="mobile-drawer" id="mobileDrawer">
+
+  <div class="drawer-head">
+
+    <strong>GLOBAL FINANCE</strong>
+
+    <button class="close" id="drawerClose">
+      ×
+    </button>
+
+  </div>
+
+  <div class="drawer-links">
+
+    <button onclick="drawerAction('Home')">HOME</button>
+    <button onclick="drawerAction('Markets')">MARKETS</button>
+    <button onclick="drawerAction('Trading')">TRADING</button>
+    <button onclick="drawerAction('Investing')">INVESTING</button>
+    <button onclick="drawerAction('Crypto')">CRYPTO</button>
+    <button onclick="drawerAction('Forex')">FOREX</button>
+    <button onclick="drawerAction('News')">NEWS</button>
+    <button onclick="drawerAction('Education')">EDUCATION</button>
+    <button onclick="drawerAction('Tools')">TOOLS</button>
+    <button onclick="drawerAction('About')">ABOUT</button>
+
+  </div>
 
 </div>
 
-</div>
 
-<!-- =====================================================
-     MOBILE MENU
-===================================================== -->
+<!-- =======================================================
+     MODAL
+======================================================= -->
 
-<div class="drawer" id="drawer">
+<div class="modal-backdrop" id="modalBackdrop">
 
-<div class="drawer-bg" onclick="closeMenu()"></div>
+  <div class="modal">
 
-<div class="drawer-panel">
+    <div class="modal-head">
 
-<div class="drawer-head">
+      <h2 id="modalTitle">
+        Global Finance
+      </h2>
 
-<div class="footer-brand-name">
+      <button class="close" id="modalClose">
+        ×
+      </button>
 
-<div class="logo-icon">↗</div>
+    </div>
 
-GLOBAL FINANCE
+    <div class="modal-body" id="modalBody">
+    </div>
 
-</div>
-
-<button
-class="icon-btn"
-onclick="closeMenu()"
->
-×
-</button>
+  </div>
 
 </div>
 
-<nav class="drawer-nav">
 
-<a href="#home" onclick="closeMenu()">
-HOME <span>›</span>
-</a>
-
-<a href="#markets" onclick="closeMenu()">
-MARKETS <span>›</span>
-</a>
-
-<a href="#trading" onclick="closeMenu()">
-TRADING <span>›</span>
-</a>
-
-<a href="#investing" onclick="closeMenu()">
-INVESTING <span>›</span>
-</a>
-
-<a href="#crypto" onclick="closeMenu()">
-CRYPTO <span>›</span>
-</a>
-
-<a href="#forex" onclick="closeMenu()">
-FOREX <span>›</span>
-</a>
-
-<a href="#news" onclick="closeMenu()">
-NEWS <span>›</span>
-</a>
-
-<a href="#education" onclick="closeMenu()">
-EDUCATION <span>›</span>
-</a>
-
-<a href="#tools" onclick="closeMenu()">
-TOOLS <span>›</span>
-</a>
-
-<a href="#more" onclick="closeMenu()">
-MORE <span>›</span>
-</a>
-
-</nav>
-
-</div>
-</div>
-
-<!-- =====================================================
+<!-- =======================================================
      TOAST
-===================================================== -->
+======================================================= -->
 
-<div class="toast" id="toast">
+<div class="toast" id="toast"></div>
 
-<b id="toastTitle">
-Global Finance
-</b>
-
-<span id="toastText">
-Action completed.
-</span>
-
-</div>
 
 <script>
+/* =========================================================
+   GLOBAL FINANCE JAVASCRIPT ENGINE
+   ========================================================= */
 
-/* =====================================================
-   MARKET DATA
-===================================================== */
+/*
+  IMPORTANT LIVE DATA CONFIGURATION
 
-const markets=[
+  DO NOT PUT PRIVATE API KEYS DIRECTLY INTO PUBLIC GITHUB CODE.
 
-{
-name:"NIFTY 50",
-value:24834.85,
-change:.75,
-icon:"N"
-},
+  Recommended production architecture:
 
-{
-name:"SENSEX",
-value:81330.56,
-change:.68,
-icon:"S"
-},
+  Browser
+      ↓
+  /api/market
+      ↓
+  Your serverless/backend proxy
+      ↓
+  Market-data provider
 
-{
-name:"NASDAQ",
-value:17689.66,
-change:.92,
-icon:"N"
-},
+  Example:
+  const API_ENDPOINT = "/api/market";
 
-{
-name:"DOW JONES",
-value:39431.51,
-change:.81,
-icon:"D"
-},
+  Your backend can then securely communicate with
+  your selected stock/crypto/news provider.
+*/
 
-{
-name:"BTC/USD",
-value:67853.42,
-change:2.35,
-icon:"₿"
-},
+const CONFIG = {
 
-{
-name:"ETH/USD",
-value:3214.67,
-change:1.25,
-icon:"Ξ"
-},
+  API_ENDPOINT: "",
 
-{
-name:"GOLD",
-value:2341.20,
-change:.64,
-icon:"G"
-}
+  AUTO_REFRESH_MS: 15000,
 
-];
+  siteName: "Global Finance",
 
-/* =====================================================
-   MOVERS
-===================================================== */
-
-const movers={
-
-gainers:[
-
-["RELIANCE","Reliance Industries",2945.30,2.45],
-
-["TCS","Tata Consultancy",3910.75,2.01],
-
-["HDFCBANK","HDFC Bank",1688.40,1.85],
-
-["INFY","Infosys Limited",1525.60,1.65],
-
-["ICICIBANK","ICICI Bank",1234.90,1.40]
-
-],
-
-losers:[
-
-["ADANIENT","Adani Enterprises",3012.40,-1.82],
-
-["WIPRO","Wipro",512.20,-1.45],
-
-["HINDALCO","Hindalco",673.50,-1.21],
-
-["TATASTEEL","Tata Steel",157.35,-1.08],
-
-["SBIN","SBI",842.10,-.92]
-
-],
-
-active:[
-
-["RELIANCE","Reliance Industries",2945.30,2.45],
-
-["HDFCBANK","HDFC Bank",1688.40,1.85],
-
-["ICICIBANK","ICICI Bank",1234.90,1.40],
-
-["TCS","Tata Consultancy",3910.75,2.01],
-
-["SBIN","State Bank",842.10,.92]
-
-],
-
-high:[
-
-["RELIANCE","Reliance Industries",2945.30,2.45],
-
-["TCS","Tata Consultancy",3910.75,2.01],
-
-["INFY","Infosys",1525.60,1.65],
-
-["HDFCBANK","HDFC Bank",1688.40,1.85],
-
-["ICICIBANK","ICICI Bank",1234.90,1.40]
-
-],
-
-low:[
-
-["ADANIENT","Adani Enterprises",3012.40,-1.82],
-
-["WIPRO","Wipro",512.20,-1.45],
-
-["HINDALCO","Hindalco",673.50,-1.21],
-
-["TATASTEEL","Tata Steel",157.35,-1.08],
-
-["SBIN","SBI",842.10,-.92]
-
-]
+  currency: "INR"
 
 };
 
-/* =====================================================
-   FORMAT
-===================================================== */
 
-function money(value){
+/* =========================================================
+   DOM HELPERS
+========================================================= */
 
-return value.toLocaleString(
-"en-IN",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
+const $ = selector => document.querySelector(selector);
 
-}
+const $$ = selector => document.querySelectorAll(selector);
 
-/* =====================================================
-   SPARKLINE
-===================================================== */
 
-function sparkline(){
-
-let points=[];
-let y=55;
-
-for(let i=0;i<25;i++){
-
-y+=((Math.random()-.47)*18);
-
-y=Math.max(8,Math.min(70,y));
-
-points.push((i*5)+","+y);
-
-}
-
-return `
-<svg viewBox="0 0 120 80"
-preserveAspectRatio="none">
-
-<polyline
-fill="none"
-stroke="#36d982"
-stroke-width="2"
-points="${points.join(" ")}"
-/>
-
-</svg>
-`;
-
-}
-
-/* =====================================================
-   RENDER MARKETS
-===================================================== */
-
-function renderMarkets(){
-
-document.getElementById("marketGrid").innerHTML=
-
-markets.slice(0,6).map((m,index)=>`
-
-<div class="market-card">
-
-<div class="market-name">
-${m.name}
-</div>
-
-<div class="market-value">
-${money(m.value)}
-</div>
-
-<div class="market-change">
-▲ ${m.change.toFixed(2)}%
-</div>
-
-<div class="spark">
-${sparkline()}
-</div>
-
-</div>
-
-`).join("");
-
-/* SIDE */
-
-document.getElementById("sidePrices").innerHTML=
-
-markets.map(m=>`
-
-<div class="side-price">
-
-<div class="market-icon">
-${m.icon}
-</div>
-
-<div>
-
-<b>${m.name}</b>
-
-<small>
-▲ ${m.change.toFixed(2)}%
-&nbsp;
-${money(m.value)}
-</small>
-
-</div>
-
-</div>
-
-`).join("");
-
-/* HERO */
-
-document.getElementById("heroMarkets").innerHTML=
-
-markets.slice(0,6).map(m=>`
-
-<div class="hero-market">
-
-<div class="market-icon">
-${m.icon}
-</div>
-
-<div>
-
-<b>${m.name}</b>
-
-<span>
-▲ ${m.change.toFixed(2)}%
-</span>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-/* =====================================================
-   TICKER
-===================================================== */
-
-function renderTicker(){
-
-let data=[...markets,...markets];
-
-document.getElementById("ticker").innerHTML=
-
-data.map(m=>`
-
-<div class="ticker-item">
-
-<span class="ticker-dot"></span>
-
-<b>${m.name}</b>
-
-${money(m.value)}
-
-<span class="${m.change>=0?"green":"red"}">
-
-${m.change>=0?"▲":"▼"}
-
-${Math.abs(m.change).toFixed(2)}%
-
-</span>
-
-</div>
-
-`).join("");
-
-}
-
-/* =====================================================
-   MOVERS
-===================================================== */
-
-function renderMovers(type="gainers"){
-
-let data=movers[type];
-
-document.getElementById("movers").innerHTML=
-
-data.map(item=>`
-
-<div class="mover">
-
-<b>${item[0]}</b>
-
-<small>${item[1]}</small>
-
-<strong>
-₹${money(item[2])}
-</strong>
-
-<span style="color:${item[3]>=0?"var(--green)":"var(--red)"}">
-
-${item[3]>=0?"▲":"▼"}
-
-${Math.abs(item[3]).toFixed(2)}%
-
-</span>
-
-</div>
-
-`).join("");
-
-}
-
-/* =====================================================
-   TABS
-===================================================== */
-
-function changeTab(button,type){
-
-document.querySelectorAll(".tab").forEach(tab=>{
-tab.classList.remove("active");
-});
-
-button.classList.add("active");
-
-renderMovers(type);
-
-}
-
-/* =====================================================
-   SIMULATED MARKET UPDATES
-===================================================== */
-
-function updateMarkets(){
-
-markets.forEach(m=>{
-
-let movement=(Math.random()-.48)*.12;
-
-m.value=m.value*(1+movement/100);
-
-m.change+=movement*.03;
-
-});
-
-renderMarkets();
-
-renderTicker();
-
-}
-
-/* =====================================================
-   TOOLS
-===================================================== */
-
-function tool(name){
-
-showToast(
-name+" module opened.",
-name
-);
-
-}
-
-/* =====================================================
+/* =========================================================
    TOAST
-===================================================== */
+========================================================= */
 
-function showToast(text,title="Global Finance"){
+let toastTimer;
 
-let toast=document.getElementById("toast");
+function toast(message){
 
-document.getElementById("toastTitle").textContent=title;
+  const box = $("#toast");
 
-document.getElementById("toastText").textContent=text;
+  box.textContent = message;
 
-toast.classList.add("show");
+  box.classList.add("show");
 
-clearTimeout(window.toastTimer);
+  clearTimeout(toastTimer);
 
-window.toastTimer=setTimeout(()=>{
+  toastTimer = setTimeout(() => {
 
-toast.classList.remove("show");
+    box.classList.remove("show");
 
-},2800);
-
-}
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-function openSearch(){
-
-document
-.getElementById("searchOverlay")
-.classList.add("open");
-
-document
-.getElementById("overlaySearch")
-.focus();
+  }, 2500);
 
 }
 
-function closeSearch(){
 
-document
-.getElementById("searchOverlay")
-.classList.remove("open");
+/* =========================================================
+   MODAL
+========================================================= */
 
-}
+function openModal(title){
 
-function searchMain(){
+  $("#modalTitle").textContent = title;
 
-let value=document
-.getElementById("mainSearch")
-.value
-.trim();
+  $("#modalBody").innerHTML = getModalContent(title);
 
-if(!value){
-
-showToast("Please enter a search keyword.");
-
-return;
+  $("#modalBackdrop").classList.add("open");
 
 }
 
-document
-.getElementById("overlaySearch")
-.value=value;
 
-openSearch();
+function closeModal(){
 
-runSearch();
+  $("#modalBackdrop").classList.remove("open");
 
 }
 
-function runSearch(){
 
-let query=document
-.getElementById("overlaySearch")
-.value
-.trim()
-.toLowerCase();
-
-let data=[
-
-[
-"Market Overview",
-"Global indices, commodities, crypto and market data."
-],
-
-[
-"Trading Strategies",
-"Technical analysis, trading strategies and risk management."
-],
-
-[
-"Stock Screener",
-"Find stocks using financial and market filters."
-],
-
-[
-"Financial News",
-"Latest market and economic news."
-],
-
-[
-"Economic Calendar",
-"Track important economic events."
-]
-
-];
-
-let filtered=data.filter(item=>
-
-item.join(" ")
-.toLowerCase()
-.includes(query)
-
+$("#modalClose").addEventListener(
+  "click",
+  closeModal
 );
 
-if(!filtered.length){
 
-filtered=[
-[
-"No demo result found",
-"Connect your preferred market/news API for production search."
-]
-];
+$("#modalBackdrop").addEventListener(
+  "click",
+  function(e){
 
-}
+    if(e.target === this){
 
-document.getElementById("results").innerHTML=
+      closeModal();
 
-filtered.map(item=>`
+    }
 
-<div class="result">
-
-<b>${item[0]}</b>
-
-<small>
-${item[1]}
-</small>
-
-</div>
-
-`).join("");
-
-}
-
-/* =====================================================
-   MOBILE MENU
-===================================================== */
-
-function openMenu(){
-
-document
-.getElementById("drawer")
-.classList.add("open");
-
-}
-
-function closeMenu(){
-
-document
-.getElementById("drawer")
-.classList.remove("open");
-
-}
-
-/* =====================================================
-   KEYBOARD
-===================================================== */
-
-document
-.getElementById("overlaySearch")
-.addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="Enter"){
-runSearch();
-}
-
-if(e.key==="Escape"){
-closeSearch();
-}
-
-}
+  }
 );
 
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
-
-renderMarkets();
-
-renderTicker();
-
-renderMovers();
-
-/* =====================================================
-   UPDATE EVERY 4 SECONDS
-===================================================== */
-
-setInterval(
-updateMarkets,
-4000
-);
-
-/* =====================================================
-   OPTIONAL PUBLIC CRYPTO STREAM
-===================================================== */
-
-try{
-
-const socket=new WebSocket(
-"wss://stream.binance.com:9443/stream?streams=btcusdt@miniTicker/ethusdt@miniTicker"
-);
-
-socket.onmessage=function(event){
-
-try{
-
-const packet=JSON.parse(event.data);
-
-const data=packet.data;
-
-if(!data)return;
-
-let marketName=
-data.s==="BTCUSDT"
-?"BTC/USD"
-:"ETH/USD";
-
-let market=markets.find(
-x=>x.name===marketName
-);
-
-if(market){
-
-market.value=Number(data.c);
-
-renderMarkets();
-
-renderTicker();
-
-}
-
-}catch(error){}
-
-};
-
-}catch(error){}
-
-/* =====================================================
-   CLOSE POPUP BY ESC
-===================================================== */
 
 document.addEventListener(
-"keydown",
-function(e){
+  "keydown",
+  function(e){
 
-if(e.key==="Escape"){
+    if(e.key === "Escape"){
 
-closeSearch();
-closeMenu();
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MODAL CONTENT
+========================================================= */
+
+function getModalContent(title){
+
+  const contents = {
+
+    "Privacy Policy": `
+      <h3>Privacy Policy</h3>
+
+      <p>
+        Global Finance is designed as a financial information,
+        education and market-research platform.
+      </p>
+
+      <h3>Information</h3>
+
+      <p>
+        The final production version should clearly explain what
+        information is collected, why it is collected, cookies,
+        analytics, advertising technologies and user rights.
+      </p>
+
+      <h3>Market Data</h3>
+
+      <p>
+        Market data may be supplied by third-party providers.
+        Data availability, timing and accuracy depend on the
+        applicable provider and exchange.
+      </p>
+
+      <h3>Security</h3>
+
+      <p>
+        Never publish private API credentials, passwords or
+        sensitive keys inside a public GitHub repository.
+      </p>
+    `,
+
+    "Disclaimer": `
+      <h3>Financial Disclaimer</h3>
+
+      <p>
+        Global Finance provides financial information,
+        education, research and analytical tools for informational
+        and educational purposes.
+      </p>
+
+      <p>
+        Nothing on this website should automatically be treated
+        as personalized financial, investment, tax or legal advice.
+      </p>
+
+      <p>
+        Markets can rise or fall. Past performance does not
+        guarantee future results. Users should conduct their own
+        research and consider professional advice where appropriate.
+      </p>
+    `,
+
+    "Terms of Service": `
+      <h3>Terms of Service</h3>
+
+      <p>
+        By using Global Finance, users agree to use the website
+        responsibly and comply with applicable laws.
+      </p>
+
+      <h3>Content</h3>
+
+      <p>
+        Market prices, news, charts and other information can
+        contain delays, errors or interruptions depending on
+        external data sources.
+      </p>
+
+      <h3>Third Party Services</h3>
+
+      <p>
+        External APIs, data providers, advertising networks and
+        other services may have their own terms and privacy policies.
+      </p>
+    `,
+
+    "About Us": `
+      <h3>About Global Finance</h3>
+
+      <p>
+        Global Finance is a financial information platform focused
+        on markets, trading, investing, crypto, forex, research,
+        education and financial tools.
+      </p>
+
+      <h3>Our Goal</h3>
+
+      <p>
+        Smart Decisions. Stronger Future.
+      </p>
+
+      <p>
+        The platform is designed to bring market information,
+        educational material, financial news and analytical tools
+        together in one premium interface.
+      </p>
+    `,
+
+    "Live Market": `
+      <h3>Live Market</h3>
+
+      <p>
+        This module is ready for connection to a real market-data
+        provider through the secure API endpoint configured in
+        CONFIG.API_ENDPOINT.
+      </p>
+
+      <ul>
+        <li>Stocks</li>
+        <li>Indices</li>
+        <li>Crypto</li>
+        <li>Forex</li>
+        <li>Commodities</li>
+        <li>Market status</li>
+        <li>Price changes</li>
+      </ul>
+    `,
+
+    "Stock Screener": `
+      <h3>Stock Screener</h3>
+
+      <p>
+        The production version can filter securities by price,
+        market capitalization, sector, volume, P/E, dividend yield,
+        performance and technical indicators.
+      </p>
+    `,
+
+    "Technical Analysis": `
+      <h3>Technical Analysis</h3>
+
+      <p>
+        Technical analysis can include candlestick charts,
+        support and resistance, moving averages, RSI, MACD,
+        volume, trend lines and chart patterns.
+      </p>
+    `,
+
+    "Trading Strategies": `
+      <h3>Trading Strategies</h3>
+
+      <p>
+        Educational sections can cover trend following,
+        momentum, swing trading, position trading, breakouts,
+        mean reversion and risk-management concepts.
+      </p>
+    `,
+
+    "Risk Management": `
+      <h3>Risk Management</h3>
+
+      <p>
+        Risk-management education can include position sizing,
+        stop-loss concepts, diversification, risk/reward ratios
+        and maximum-loss planning.
+      </p>
+    `,
+
+    "Portfolio": `
+      <h3>Portfolio</h3>
+
+      <p>
+        The portfolio interface is prepared for local browser
+        storage or a secure authenticated backend.
+      </p>
+
+      <p>
+        You can later add holdings, average price, current price,
+        profit/loss, allocation and performance charts.
+      </p>
+    `,
+
+    "Alerts": `
+      <h3>Price Alerts</h3>
+
+      <p>
+        Alerts can be connected to a backend market-data service
+        to notify users when an instrument reaches a configured
+        price or percentage-change threshold.
+      </p>
+    `,
+
+    "Economic Calendar": `
+      <h3>Economic Calendar</h3>
+
+      <p>
+        The production calendar can display central-bank decisions,
+        inflation releases, employment reports, GDP releases and
+        other scheduled economic events.
+      </p>
+    `,
+
+    "Financial News": `
+      <h3>Financial News</h3>
+
+      <p>
+        News should be loaded from a properly licensed news/data
+        source. The frontend is prepared to render headline,
+        category, source, timestamp, image and article details.
+      </p>
+    `,
+
+    "All Financial News": `
+      <h3>All Financial News</h3>
+
+      <p>
+        Categories can include Markets, Economy, Stocks, Crypto,
+        Forex, Commodities, Companies, Central Banks and Global
+        Business.
+      </p>
+    `,
+
+    "Get Started": `
+      <h3>Get Started</h3>
+
+      <p>
+        Explore markets, financial education, trading concepts,
+        research tools and news from the Global Finance dashboard.
+      </p>
+    `,
+
+    "Login": `
+      <h3>Login</h3>
+
+      <p>
+        Login functionality requires an authentication backend.
+        This frontend button is ready for your future authentication
+        system.
+      </p>
+    `,
+
+    "Create your account": `
+      <h3>Create Your Account</h3>
+
+      <p>
+        Account registration requires a secure backend.
+        Do not store passwords directly in frontend JavaScript.
+      </p>
+    `
+
+  };
+
+  if(contents[title]){
+
+    return contents[title];
+
+  }
+
+  return `
+    <h3>${escapeHTML(title)}</h3>
+
+    <p>
+      This Global Finance module is active in the interface.
+      Connect the corresponding live data/service endpoint to
+      make external data functionality production-ready.
+    </p>
+
+    <p>
+      The interface is designed for markets, trading, investing,
+      crypto, forex, news, education and financial research.
+    </p>
+  `;
 
 }
 
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
 }
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+function openNews(title){
+
+  openModal(title);
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function openChart(symbol){
+
+  $("#modalTitle").textContent =
+    symbol + " — Market Chart";
+
+  $("#modalBody").innerHTML = `
+
+    <h3>${escapeHTML(symbol)}</h3>
+
+    <div style="
+      height:260px;
+      border:1px solid var(--line);
+      border-radius:9px;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+        #04111c;
+      background-size:40px 40px;
+      position:relative;
+      overflow:hidden;
+    ">
+
+      <svg
+        viewBox="0 0 700 250"
+        preserveAspectRatio="none"
+        style="width:100%;height:100%">
+
+        <polyline
+          points="
+          0,210
+          30,190
+          55,200
+          80,160
+          110,175
+          140,125
+          170,145
+          200,100
+          230,125
+          260,80
+          290,110
+          320,70
+          350,95
+          380,60
+          410,80
+          440,45
+          470,70
+          500,35
+          530,55
+          560,30
+          600,48
+          640,20
+          700,30"
+          fill="none"
+          stroke="#35d36b"
+          stroke-width="3"/>
+
+      </svg>
+
+    </div>
+
+    <p style="margin-top:14px">
+      Chart engine ready for OHLC/candlestick data from your
+      selected market-data provider.
+    </p>
+
+  `;
+
+  $("#modalBackdrop").classList.add("open");
+
+}
+
+
+/* =========================================================
+   SEARCH ENGINE
+========================================================= */
+
+const searchItems = [
+
+  ["NIFTY 50","INDEX"],
+  ["SENSEX","INDEX"],
+  ["NASDAQ","INDEX"],
+  ["BTC/USD","CRYPTO"],
+  ["ETH/USD","CRYPTO"],
+  ["RELIANCE","STOCK"],
+  ["TCS","STOCK"],
+  ["HDFCBANK","STOCK"],
+  ["INFY","STOCK"],
+  ["ICICIBANK","STOCK"],
+  ["Gold","COMMODITY"],
+  ["EUR/USD","FOREX"]
+
+];
+
+
+$("#marketSearch").addEventListener(
+  "input",
+  function(){
+
+    const query =
+      this.value.trim().toLowerCase();
+
+    const box = $("#searchResults");
+
+    if(!query){
+
+      box.style.display="none";
+      return;
+
+    }
+
+    const results =
+      searchItems.filter(item =>
+        item[0].toLowerCase().includes(query)
+      );
+
+    if(!results.length){
+
+      box.innerHTML = `
+        <div class="search-result">
+          <strong>No local result</strong>
+          <small>
+            Connect your live market API for global search.
+          </small>
+        </div>
+      `;
+
+    }else{
+
+      box.innerHTML =
+        results.map(item => `
+
+          <div
+            class="search-result"
+            onclick="openChart('${escapeHTML(item[0])}')">
+
+            <strong>${escapeHTML(item[0])}</strong>
+
+            <small>
+              ${escapeHTML(item[1])}
+            </small>
+
+          </div>
+
+        `).join("");
+
+    }
+
+    box.style.display="block";
+
+  }
+);
+
+
+$("#searchButton").addEventListener(
+  "click",
+  function(){
+
+    const q =
+      $("#marketSearch").value.trim();
+
+    if(!q){
+
+      toast("Enter a stock, crypto, forex pair or market.");
+
+      return;
+
+    }
+
+    openChart(q.toUpperCase());
+
+  }
+);
+
+
+/* =========================================================
+   GLOBAL SEARCH BUTTON
+========================================================= */
+
+$("#globalSearchBtn").addEventListener(
+  "click",
+  function(){
+
+    $("#marketSearch").focus();
+
+    $("#home").scrollIntoView({
+      behavior:"smooth"
+    });
+
+  }
+);
+
+
+/* =========================================================
+   MOVERS
+========================================================= */
+
+function changeMover(button, type){
+
+  $$(".mover-tabs button")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  toast(type + " selected");
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const drawer =
+  $("#mobileDrawer");
+
+$("#menuBtn").addEventListener(
+  "click",
+  function(){
+
+    drawer.classList.add("open");
+
+  }
+);
+
+
+$("#drawerClose").addEventListener(
+  "click",
+  function(){
+
+    drawer.classList.remove("open");
+
+  }
+);
+
+
+function drawerAction(name){
+
+  drawer.classList.remove("open");
+
+  toast(name + " menu selected");
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+$$(".nav button").forEach(button => {
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      $$(".nav button")
+        .forEach(btn =>
+          btn.classList.remove("active")
+        );
+
+      this.classList.add("active");
+
+      const section =
+        this.dataset.section;
+
+      if(section === "home"){
+
+        $("#home").scrollIntoView({
+          behavior:"smooth"
+        });
+
+      }else{
+
+        openModal(
+          section.charAt(0).toUpperCase() +
+          section.slice(1)
+        );
+
+      }
+
+    }
+  );
+
+});
+
+
+/* =========================================================
+   OUTSIDE SEARCH CLICK
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    if(
+      !e.target.closest(".search-box") &&
+      !e.target.closest(".search-results")
+    ){
+
+      $("#searchResults").style.display="none";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   LIVE API ENGINE
+========================================================= */
+
+async function loadLiveMarketData(){
+
+  if(!CONFIG.API_ENDPOINT){
+
+    return;
+
+  }
+
+  try{
+
+    const response =
+      await fetch(CONFIG.API_ENDPOINT, {
+        headers:{
+          "Accept":"application/json"
+        }
+      });
+
+    if(!response.ok){
+
+      throw new Error(
+        "API request failed"
+      );
+
+    }
+
+    const data =
+      await response.json();
+
+    applyLiveData(data);
+
+  }catch(error){
+
+    console.warn(
+      "Live market API unavailable:",
+      error
+    );
+
+  }
+
+}
+
+
+function applyLiveData(data){
+
+  /*
+    Expected example:
+
+    {
+      nifty:{
+        price:24834.85,
+        change:0.75
+      },
+      sensex:{
+        price:81330.56,
+        change:0.68
+      },
+      btc:{
+        price:67853.42,
+        change:2.35
+      }
+    }
+
+    Adapt this function to your actual backend response.
+  */
+
+  if(data.nifty){
+
+    $("#tickNifty").textContent =
+      Number(data.nifty.price)
+      .toLocaleString("en-IN",{
+        minimumFractionDigits:2
+      });
+
+  }
+
+  if(data.sensex){
+
+    $("#tickSensex").textContent =
+      Number(data.sensex.price)
+      .toLocaleString("en-IN",{
+        minimumFractionDigits:2
+      });
+
+  }
+
+  if(data.btc){
+
+    $("#tickBTC").textContent =
+      "$" +
+      Number(data.btc.price)
+      .toLocaleString("en-US",{
+        minimumFractionDigits:2
+      });
+
+  }
+
+}
+
+
+/* =========================================================
+   AUTO REFRESH
+========================================================= */
+
+if(CONFIG.API_ENDPOINT){
+
+  loadLiveMarketData();
+
+  setInterval(
+    loadLiveMarketData,
+    CONFIG.AUTO_REFRESH_MS
+  );
+
+}
+
+
+/* =========================================================
+   CLOCK / STATUS
+========================================================= */
+
+function updateLiveStatus(){
+
+  const dots =
+    document.querySelectorAll(".live-dot");
+
+  dots.forEach(dot => {
+
+    dot.style.opacity =
+      Math.random() > .08 ? "1" : ".35";
+
+  });
+
+}
+
+setInterval(
+  updateLiveStatus,
+  1200
+);
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL DRAGGING
+========================================================= */
+
+document.addEventListener(
+  "dragstart",
+  e => {
+
+    if(e.target.tagName === "IMG"){
+
+      e.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    console.log(
+      "Global Finance initialized."
+    );
+
+    console.log(
+      "Live API endpoint:",
+      CONFIG.API_ENDPOINT || "Not connected"
+    );
+
+  }
 );
 
 </script>
