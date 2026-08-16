@@ -20,63 +20,46 @@ html,body{
 }
 
 body{
-    background:#07111b;
+    background:#06111b;
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
 }
 
-/* =========================================
-   HEADER
-========================================= */
+/* =========================================================
+   GLOBAL FINANCE HEADER
+========================================================= */
 
 .gf-header{
     width:100%;
     position:relative;
     z-index:99999;
-
     background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(22,125,180,.12),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(255,193,7,.09),
-            transparent 28%
-        ),
-        #07111b;
-
+        radial-gradient(circle at 10% 20%,rgba(0,160,255,.12),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(255,193,7,.10),transparent 28%),
+        #06111b;
     border-bottom:1px solid rgba(255,255,255,.10);
 }
 
-/* =========================================
+/* =========================================================
    LIVE MARKET TICKER
-========================================= */
+========================================================= */
 
 .gf-ticker{
     width:100%;
     height:34px;
-
+    overflow:hidden;
     display:flex;
     align-items:center;
-
-    overflow:hidden;
-
-    background:#040b12;
-
+    background:#030a10;
     border-bottom:1px solid rgba(255,255,255,.08);
-
     white-space:nowrap;
 }
 
 .gf-ticker-track{
     display:flex;
-    align-items:center;
-
+    width:max-content;
     min-width:max-content;
-
-    animation:gfTicker 42s linear infinite;
+    animation:gfTicker 48s linear infinite;
 }
 
 .gf-ticker:hover .gf-ticker-track{
@@ -85,30 +68,26 @@ body{
 
 .gf-ticker-item{
     height:34px;
-
     display:flex;
     align-items:center;
-
     padding:0 16px;
-
     border-right:1px solid rgba(255,255,255,.07);
-
     font-size:10px;
     letter-spacing:.3px;
 }
 
 .gf-live{
-    color:#32e875;
+    color:#35e77a;
     font-weight:900;
 }
 
 .gf-price{
-    color:#dfe8ef;
+    color:#e1e9ef;
     margin-left:5px;
 }
 
 .gf-up{
-    color:#39df78;
+    color:#35e77a;
     margin-left:5px;
 }
 
@@ -118,285 +97,163 @@ body{
 }
 
 @keyframes gfTicker{
-
-    0%{
+    from{
         transform:translateX(0);
     }
-
-    100%{
+    to{
         transform:translateX(-50%);
     }
-
 }
 
-/* =========================================
+/* =========================================================
    BRAND BAR
-========================================= */
+========================================================= */
 
 .gf-brandbar{
     width:100%;
     min-height:76px;
-
+    padding:10px 18px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     gap:12px;
-
-    padding:10px 18px;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-
     background:rgba(5,15,24,.97);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-/* =========================================
-   LOGO
-========================================= */
+/* LOGO */
 
 .gf-logo{
+    min-width:0;
     display:flex;
     align-items:center;
-
     gap:10px;
-
-    min-width:0;
 }
 
 .gf-logo-icon{
-    width:44px;
-    height:44px;
-
-    flex:0 0 44px;
-
+    width:45px;
+    height:45px;
+    flex:0 0 45px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    border:1px solid rgba(255,193,7,.65);
-
     border-radius:12px;
-
+    border:1px solid rgba(255,193,7,.65);
     background:
-        radial-gradient(
-            circle at center,
-            rgba(255,193,7,.18),
-            transparent 65%
-        ),
-        #091722;
-
+        radial-gradient(circle,rgba(255,193,7,.20),transparent 65%),
+        #091a27;
     box-shadow:
-        0 0 18px rgba(255,193,7,.08),
-        inset 0 0 15px rgba(255,193,7,.05);
-
-    font-size:20px;
-}
-
-.gf-logo-text{
-    min-width:0;
+        0 0 20px rgba(255,193,7,.10),
+        inset 0 0 15px rgba(255,193,7,.06);
+    font-size:21px;
 }
 
 .gf-logo-name{
     font-size:18px;
     font-weight:900;
-
     letter-spacing:.5px;
-
     white-space:nowrap;
 }
 
 .gf-logo-name span{
-    color:#ffc42b;
+    color:#ffc52b;
 }
 
 .gf-logo-tag{
     margin-top:3px;
-
-    font-size:7px;
-
-    letter-spacing:1.2px;
-
     color:#8193a3;
-
+    font-size:7px;
+    letter-spacing:1.2px;
     white-space:nowrap;
 }
 
-/* =========================================
-   HEADER ACTIONS
-========================================= */
+/* ACTIONS */
 
 .gf-actions{
     display:flex;
     align-items:center;
-
     gap:7px;
+}
+
+.gf-action-btn{
+    height:40px;
+    border-radius:9px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .gf-search,
 .gf-menu{
     width:40px;
-    height:40px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
     border:1px solid rgba(255,255,255,.14);
-
-    border-radius:9px;
-
-    background:#0b1a27;
-
+    background:#0b1b29;
     color:#fff;
-
-    cursor:pointer;
-
     font-size:17px;
-
-    transition:.2s ease;
-}
-
-.gf-search:hover,
-.gf-menu:hover{
-    border-color:#ffc52b;
-    color:#ffc52b;
 }
 
 .gf-subscribe{
-    height:40px;
-
     padding:0 14px;
-
     border:none;
-
-    border-radius:8px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffd34e,
-            #e9a900
-        );
-
+    background:linear-gradient(135deg,#ffd84d,#e7a700);
     color:#101820;
-
     font-size:10px;
-
     font-weight:900;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 5px 20px rgba(255,193,7,.12);
-
-    transition:.2s ease;
+    box-shadow:0 5px 20px rgba(255,193,7,.12);
 }
 
-.gf-subscribe:hover{
-    transform:translateY(-1px);
-
-    box-shadow:
-        0 7px 25px rgba(255,193,7,.22);
-}
-
-/* =========================================
-   NAVIGATION AREA
-========================================= */
+/* =========================================================
+   MAIN FOUR BUTTONS
+========================================================= */
 
 .gf-nav-wrap{
     width:100%;
-
     padding:8px 10px;
-
     background:#06121e;
-
     border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .gf-nav{
     width:100%;
-
     max-width:1200px;
-
     margin:auto;
-
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
+    grid-template-columns:repeat(4,1fr);
     gap:5px;
 }
 
 .gf-nav-item{
     position:relative;
-
-    min-width:0;
 }
-
-/* =========================================
-   MAIN BUTTON
-========================================= */
 
 .gf-nav-button{
     width:100%;
-    height:42px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:7px;
-
+    height:43px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.09);
     background:#0b1d2b;
-
     color:#dce7ee;
-
     cursor:pointer;
-
-    font-size:10px;
-
-    font-weight:900;
-
-    letter-spacing:.3px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
-    gap:5px;
-
-    transition:
-        background .2s ease,
-        color .2s ease,
-        border .2s ease,
-        transform .2s ease;
+    gap:6px;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.2px;
+    transition:.2s ease;
 }
 
-.gf-nav-button:hover{
-    border-color:rgba(255,193,7,.45);
-
-    color:#ffc52b;
-}
-
+.gf-nav-button:hover,
 .gf-nav-button.active{
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffc72f,
-            #e7a700
-        );
-
     color:#08111a;
-
-    border-color:#ffc72f;
-
-    box-shadow:
-        0 4px 15px rgba(255,193,7,.15);
+    border-color:#ffc52b;
+    background:linear-gradient(135deg,#ffd34b,#e7a700);
 }
 
 .gf-arrow{
     font-size:9px;
-
     transition:.2s ease;
 }
 
@@ -404,454 +261,467 @@ body{
     transform:rotate(180deg);
 }
 
-/* =========================================
-   DROPDOWN
-   IMPORTANT:
-   DROPDOWN OPENS BELOW BUTTON
-========================================= */
+/* =========================================================
+   DROPDOWN BELOW BUTTON
+========================================================= */
 
 .gf-dropdown{
-
     position:absolute;
-
-    top:calc(100% + 6px);
-
     left:0;
-
-    width:235px;
-
-    max-width:calc(100vw - 20px);
-
-    padding:8px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #0a1b29,
-            #07141f
-        );
-
-    border:1px solid rgba(255,193,7,.28);
-
-    border-radius:11px;
-
-    box-shadow:
-        0 22px 50px rgba(0,0,0,.62),
-        0 0 30px rgba(0,0,0,.25);
-
+    top:48px;
+    width:245px;
+    padding:7px;
     display:none;
-
-    z-index:1000000;
+    background:#081824;
+    border:1px solid rgba(255,193,7,.30);
+    border-radius:11px;
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.65),
+        0 0 25px rgba(0,0,0,.25);
+    z-index:100000;
 }
 
 .gf-dropdown.show{
-
     display:block;
-
-    animation:
-        gfDropdownOpen .18s ease-out;
+    animation:gfDrop .18s ease-out;
 }
 
-@keyframes gfDropdownOpen{
-
+@keyframes gfDrop{
     from{
         opacity:0;
         transform:translateY(-7px);
     }
-
     to{
         opacity:1;
         transform:translateY(0);
     }
-
 }
-
-/* =========================================
-   DROPDOWN TITLE
-========================================= */
-
-.gf-dropdown-title{
-
-    padding:7px 9px 8px;
-
-    margin-bottom:4px;
-
-    color:#ffc52b;
-
-    font-size:8px;
-
-    font-weight:900;
-
-    letter-spacing:1px;
-
-    border-bottom:
-        1px solid rgba(255,193,7,.15);
-}
-
-/* =========================================
-   DROPDOWN LINKS
-========================================= */
 
 .gf-drop-link{
-
     width:100%;
-
-    min-height:41px;
-
+    min-height:43px;
     padding:9px 10px;
-
+    border-radius:8px;
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
-    gap:8px;
-
-    border-radius:7px;
-
     color:#dce7ee;
-
     background:transparent;
-
+    border:none;
     text-decoration:none;
-
-    font-size:11px;
-
-    font-weight:700;
-
     cursor:pointer;
-
-    transition:.18s ease;
+    font-size:11px;
+    font-weight:800;
+    text-align:left;
 }
 
 .gf-drop-link:hover{
-
     background:#102a3b;
-
     color:#ffc52b;
-
-    transform:translateX(2px);
-}
-
-.gf-drop-link:active{
-
-    background:#16384d;
-
-    transform:scale(.98);
 }
 
 .gf-drop-left{
-
     display:flex;
-
     align-items:center;
-
     gap:8px;
-
-    min-width:0;
 }
 
 .gf-drop-icon{
-
-    width:22px;
-
+    width:25px;
     text-align:center;
-
-    flex:0 0 22px;
-
-    font-size:14px;
+    font-size:15px;
 }
 
 .gf-drop-arrow{
-
-    color:#708696;
-
-    font-size:14px;
-
-    transition:.18s ease;
+    color:#718493;
+    font-size:15px;
 }
 
-.gf-drop-link:hover .gf-drop-arrow{
+/* =========================================================
+   CONTENT AREA
+========================================================= */
 
-    color:#ffc52b;
-
-    transform:translateX(2px);
+.gf-content{
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px 14px 40px;
 }
 
-/* =========================================
-   SEARCH POPUP
-========================================= */
+/* WELCOME */
 
-.gf-search-panel{
-
-    position:fixed;
-
-    inset:0;
-
+.gf-welcome{
+    padding:25px 18px;
+    border:1px solid rgba(255,193,7,.16);
+    border-radius:15px;
     background:
-        rgba(2,8,13,.90);
-
-    backdrop-filter:blur(8px);
-
-    display:none;
-
-    align-items:flex-start;
-
-    justify-content:center;
-
-    padding:90px 15px 20px;
-
-    z-index:10000000;
+        linear-gradient(135deg,rgba(255,193,7,.08),transparent 45%),
+        #081722;
+    overflow:hidden;
+    position:relative;
 }
 
-.gf-search-panel.show{
+.gf-welcome:after{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    right:-100px;
+    top:-120px;
+    border-radius:50%;
+    border:1px solid rgba(255,193,7,.12);
+    box-shadow:
+        0 0 0 25px rgba(255,193,7,.02),
+        0 0 0 50px rgba(255,193,7,.015);
+}
+
+.gf-welcome-label{
+    color:#ffc52b;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.4px;
+}
+
+.gf-welcome h1{
+    margin-top:8px;
+    font-size:26px;
+    line-height:1.2;
+}
+
+.gf-welcome p{
+    margin-top:8px;
+    max-width:650px;
+    color:#8fa2b0;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   DYNAMIC CONTENT PANEL
+========================================================= */
+
+.gf-panel{
+    width:100%;
+    margin-top:15px;
+    padding:18px;
+    display:none;
+    background:#081824;
+    border:1px solid rgba(255,193,7,.22);
+    border-radius:14px;
+    box-shadow:0 15px 45px rgba(0,0,0,.28);
+    animation:gfPanel .2s ease;
+}
+
+.gf-panel.show{
+    display:block;
+}
+
+@keyframes gfPanel{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.gf-panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.gf-panel-title{
+    color:#ffc52b;
+    font-size:19px;
+    font-weight:900;
+}
+
+.gf-panel-close{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.10);
+    background:#0d2534;
+    color:#fff;
+    cursor:pointer;
+}
+
+.gf-panel-text{
+    margin-top:10px;
+    color:#91a5b3;
+    font-size:12px;
+    line-height:1.7;
+}
+
+/* CARDS */
+
+.gf-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.gf-card{
+    min-height:105px;
+    padding:14px;
+    border-radius:11px;
+    background:#0b1e2c;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.gf-card-icon{
+    font-size:20px;
+}
+
+.gf-card h3{
+    margin-top:7px;
+    font-size:12px;
+}
+
+.gf-card p{
+    margin-top:5px;
+    color:#8195a4;
+    font-size:9px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   MARKET VALUE CARDS
+========================================================= */
+
+.gf-market-section{
+    margin-top:15px;
+}
+
+.gf-section-title{
+    margin-bottom:10px;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.4px;
+}
+
+.gf-market-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.gf-market-card{
+    padding:12px;
+    border-radius:10px;
+    background:#081a27;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.gf-market-name{
+    color:#8fa2b0;
+    font-size:9px;
+}
+
+.gf-market-value{
+    margin-top:6px;
+    font-size:15px;
+    font-weight:900;
+}
+
+.gf-market-change{
+    margin-top:4px;
+    color:#35e77a;
+    font-size:9px;
+    font-weight:800;
+}
+
+/* =========================================================
+   FLIPKART READY CARD
+========================================================= */
+
+.gf-shop{
+    margin-top:15px;
+    padding:15px;
+    border-radius:13px;
+    border:1px solid rgba(255,193,7,.18);
+    background:
+        linear-gradient(135deg,rgba(255,193,7,.08),transparent),
+        #081824;
+}
+
+.gf-shop-title{
+    font-size:15px;
+    font-weight:900;
+}
+
+.gf-shop-text{
+    margin-top:5px;
+    color:#899ca9;
+    font-size:10px;
+    line-height:1.6;
+}
+
+.gf-shop-button{
+    margin-top:10px;
+    height:38px;
+    padding:0 15px;
+    border:0;
+    border-radius:8px;
+    background:#ffc52b;
+    color:#07111b;
+    font-weight:900;
+    cursor:pointer;
+    font-size:10px;
+}
+
+/* =========================================================
+   SEARCH POPUP
+========================================================= */
+
+.gf-overlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:85px 15px 20px;
+    background:rgba(1,7,12,.88);
+    backdrop-filter:blur(8px);
+    z-index:1000000;
+}
+
+.gf-overlay.show{
     display:flex;
 }
 
 .gf-search-box{
-
     width:100%;
-
     max-width:600px;
-
-    background:#091925;
-
-    border:1px solid rgba(255,193,7,.25);
-
+    padding:16px;
     border-radius:14px;
-
-    padding:15px;
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,.6);
+    border:1px solid rgba(255,193,7,.25);
+    background:#091925;
+    box-shadow:0 25px 70px rgba(0,0,0,.65);
 }
 
 .gf-search-input{
-
     width:100%;
-
     height:48px;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:8px;
-
-    background:#05111b;
-
-    color:#fff;
-
-    outline:none;
-
     padding:0 14px;
-
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.12);
+    outline:none;
+    background:#05111b;
+    color:#fff;
     font-size:13px;
 }
 
 .gf-search-input:focus{
-
     border-color:#ffc52b;
-
-    box-shadow:
-        0 0 0 2px rgba(255,193,7,.08);
 }
 
-.gf-close-search{
-
-    margin-top:10px;
-
+.gf-popup-button{
     width:100%;
-
     height:40px;
-
-    border:1px solid rgba(255,255,255,.1);
-
-    background:#0e2433;
-
-    color:#fff;
-
+    margin-top:9px;
     border-radius:8px;
-
+    border:1px solid rgba(255,255,255,.10);
+    background:#0d2534;
+    color:#fff;
     cursor:pointer;
 }
 
-/* =========================================
+/* =========================================================
    SUBSCRIBE POPUP
-========================================= */
-
-.gf-sub-popup{
-
-    position:fixed;
-
-    inset:0;
-
-    display:none;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:rgba(0,0,0,.82);
-
-    backdrop-filter:blur(8px);
-
-    z-index:10000001;
-}
-
-.gf-sub-popup.show{
-    display:flex;
-}
+========================================================= */
 
 .gf-sub-card{
-
     width:100%;
-
-    max-width:380px;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(255,193,7,.13),
-            transparent 40%
-        ),
-        #091a27;
-
-    border:1px solid rgba(255,193,7,.3);
-
-    border-radius:16px;
-
+    max-width:390px;
     padding:25px;
-
     text-align:center;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.7);
+    border-radius:16px;
+    background:
+        radial-gradient(circle at 50% 0,rgba(255,193,7,.13),transparent 45%),
+        #091a27;
+    border:1px solid rgba(255,193,7,.28);
+    box-shadow:0 30px 80px rgba(0,0,0,.7);
 }
 
 .gf-sub-card h2{
-
     font-size:22px;
-
-    margin-bottom:9px;
 }
 
 .gf-sub-card p{
-
+    margin-top:8px;
     color:#91a3b0;
-
-    font-size:12px;
-
+    font-size:11px;
     line-height:1.6;
 }
 
 .gf-sub-input{
-
     width:100%;
-
     height:44px;
-
     margin-top:15px;
-
-    background:#05111b;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:8px;
-
-    color:#fff;
-
     padding:0 12px;
-
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#05111b;
+    color:#fff;
     outline:none;
 }
 
 .gf-sub-confirm{
-
     width:100%;
-
     height:44px;
-
     margin-top:9px;
-
-    background:#ffc52b;
-
-    border:none;
-
+    border:0;
     border-radius:8px;
-
+    background:#ffc52b;
     color:#07111b;
-
     font-weight:900;
-
     cursor:pointer;
 }
 
 .gf-sub-close{
-
     margin-top:10px;
-
+    border:0;
     background:transparent;
-
-    border:none;
-
     color:#91a3b0;
-
     cursor:pointer;
 }
 
-/* =========================================
+/* =========================================================
    TOAST
-========================================= */
+========================================================= */
 
 .gf-toast{
-
     position:fixed;
-
     left:50%;
-
     bottom:20px;
-
-    transform:
-        translateX(-50%)
-        translateY(20px);
-
-    background:#102638;
-
-    border:1px solid rgba(255,193,7,.35);
-
-    color:#fff;
-
-    padding:11px 16px;
-
-    border-radius:8px;
-
-    font-size:11px;
-
+    transform:translateX(-50%) translateY(20px);
     opacity:0;
-
     pointer-events:none;
-
-    transition:.25s;
-
-    z-index:10000005;
-
+    z-index:1000010;
+    padding:11px 16px;
+    border-radius:8px;
+    background:#102638;
+    border:1px solid rgba(255,193,7,.35);
+    color:#fff;
+    font-size:11px;
     white-space:nowrap;
+    transition:.25s;
 }
 
 .gf-toast.show{
-
     opacity:1;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
+    transform:translateX(-50%) translateY(0);
 }
 
-/* =========================================
+/* =========================================================
    MOBILE
-========================================= */
+========================================================= */
 
 @media(max-width:600px){
 
@@ -861,19 +731,14 @@ body{
 
     .gf-ticker-item{
         height:30px;
-
         padding:0 11px;
-
         font-size:8px;
     }
 
     .gf-brandbar{
-
-        min-height:66px;
-
+        min-height:65px;
         padding:8px 9px;
-
-        gap:6px;
+        gap:5px;
     }
 
     .gf-logo{
@@ -881,14 +746,10 @@ body{
     }
 
     .gf-logo-icon{
-
         width:37px;
         height:37px;
-
         flex-basis:37px;
-
         border-radius:10px;
-
         font-size:17px;
     }
 
@@ -897,10 +758,8 @@ body{
     }
 
     .gf-logo-tag{
-
         font-size:5px;
-
-        letter-spacing:.8px;
+        letter-spacing:.7px;
     }
 
     .gf-actions{
@@ -909,83 +768,75 @@ body{
 
     .gf-search,
     .gf-menu{
-
-        width:35px;
-        height:35px;
-
-        border-radius:8px;
-
-        font-size:15px;
+        width:34px;
+        height:34px;
+        font-size:14px;
     }
 
     .gf-subscribe{
-
-        height:35px;
-
-        padding:0 9px;
-
-        font-size:8px;
-
-        border-radius:7px;
+        height:34px;
+        padding:0 8px;
+        font-size:7px;
     }
 
     .gf-nav-wrap{
-
         padding:6px;
     }
 
     .gf-nav{
-
         gap:4px;
     }
 
     .gf-nav-button{
-
-        height:39px;
-
+        height:38px;
         font-size:8px;
-
         border-radius:6px;
     }
 
-    /*
-       DROPDOWN MOBILE:
-       हमेशा button के नीचे
-    */
-
     .gf-dropdown{
-
-        top:calc(100% + 5px);
-
-        width:235px;
-
-        max-width:
-            calc(100vw - 18px);
-
-        padding:7px;
-
-        border-radius:10px;
-    }
-
-    .gf-dropdown-title{
-
-        font-size:8px;
-
-        padding:7px 8px;
+        position:absolute;
+        width:calc(100vw - 20px);
+        max-width:300px;
+        top:43px;
     }
 
     .gf-drop-link{
-
         min-height:42px;
-
         font-size:10px;
     }
 
-}
+    .gf-content{
+        padding:14px 8px 35px;
+    }
 
-/* =========================================
-   VERY SMALL PHONES
-========================================= */
+    .gf-welcome{
+        padding:20px 14px;
+    }
+
+    .gf-welcome h1{
+        font-size:21px;
+    }
+
+    .gf-welcome p{
+        font-size:10px;
+    }
+
+    .gf-panel{
+        padding:14px;
+    }
+
+    .gf-panel-title{
+        font-size:16px;
+    }
+
+    .gf-cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .gf-market-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
 
 @media(max-width:360px){
 
@@ -998,1334 +849,1466 @@ body{
     }
 
     .gf-logo-icon{
-
         width:34px;
         height:34px;
-
         flex-basis:34px;
     }
 
     .gf-search,
     .gf-menu{
-
-        width:32px;
-        height:32px;
+        width:31px;
+        height:31px;
     }
 
     .gf-subscribe{
-
-        padding:0 7px;
-
-        font-size:7px;
+        padding:0 6px;
+        font-size:6px;
     }
 
     .gf-nav-button{
         font-size:7px;
     }
 
-    .gf-dropdown{
-
-        width:225px;
-
-        max-width:
-            calc(100vw - 12px);
+    .gf-cards{
+        grid-template-columns:1fr;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <header class="gf-header">
 
-<!-- ======================================
-     LIVE MARKET STRIP
-======================================= -->
-
-<div class="gf-ticker">
-
-<div class="gf-ticker-track">
-
-<div class="gf-ticker-item">
-<span class="gf-live">● LIVE</span>
-</div>
-
-<div class="gf-ticker-item">
-BTC/USD
-<span class="gf-price">$67,853</span>
-<span class="gf-up">▲ 2.35%</span>
-</div>
-
-<div class="gf-ticker-item">
-ETH/USD
-<span class="gf-price">$3,214</span>
-<span class="gf-up">▲ 1.25%</span>
-</div>
+    <!-- LIVE TICKER -->
+
+    <div class="gf-ticker">
+
+        <div class="gf-ticker-track">
+
+            <div class="gf-ticker-item">
+                <span class="gf-live">● LIVE</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                BTC/USD
+                <span class="gf-price">$67,853</span>
+                <span class="gf-up">▲ 2.35%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                ETH/USD
+                <span class="gf-price">$3,214</span>
+                <span class="gf-up">▲ 1.25%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                EUR/USD
+                <span class="gf-price">1.1682</span>
+                <span class="gf-down">▼ 0.14%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                NIFTY 50
+                <span class="gf-price">24,834</span>
+                <span class="gf-up">▲ 0.75%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                SENSEX
+                <span class="gf-price">81,330</span>
+                <span class="gf-up">▲ 0.68%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                NASDAQ
+                <span class="gf-price">17,689</span>
+                <span class="gf-up">▲ 0.92%</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                GOLD
+                <span class="gf-price">$2,341</span>
+                <span class="gf-up">▲ 0.64%</span>
+            </div>
+
+            <!-- DUPLICATE -->
+
+            <div class="gf-ticker-item">
+                <span class="gf-live">● LIVE</span>
+            </div>
+
+            <div class="gf-ticker-item">
+                BTC/USD
+                <span class="gf-price">$67,853</span>
+                <span class="gf-up">▲ 2.35%</span>
+            </div>
 
-<div class="gf-ticker-item">
-EUR/USD
-<span class="gf-price">1.1682</span>
-<span class="gf-down">▼ 0.14%</span>
-</div>
-
-<div class="gf-ticker-item">
-NIFTY 50
-<span class="gf-price">24,834</span>
-<span class="gf-up">▲ 0.75%</span>
-</div>
-
-<div class="gf-ticker-item">
-SENSEX
-<span class="gf-price">81,330</span>
-<span class="gf-up">▲ 0.68%</span>
-</div>
-
-<div class="gf-ticker-item">
-NASDAQ
-<span class="gf-price">17,689</span>
-<span class="gf-up">▲ 0.92%</span>
-</div>
-
-<div class="gf-ticker-item">
-GOLD
-<span class="gf-price">$2,341</span>
-<span class="gf-up">▲ 0.64%</span>
-</div>
-
+            <div class="gf-ticker-item">
+                ETH/USD
+                <span class="gf-price">$3,214</span>
+                <span class="gf-up">▲ 1.25%</span>
+            </div>
 
-<!-- DUPLICATE -->
+            <div class="gf-ticker-item">
+                EUR/USD
+                <span class="gf-price">1.1682</span>
+                <span class="gf-down">▼ 0.14%</span>
+            </div>
 
-<div class="gf-ticker-item">
-<span class="gf-live">● LIVE</span>
-</div>
+            <div class="gf-ticker-item">
+                NIFTY 50
+                <span class="gf-price">24,834</span>
+                <span class="gf-up">▲ 0.75%</span>
+            </div>
 
-<div class="gf-ticker-item">
-BTC/USD
-<span class="gf-price">$67,853</span>
-<span class="gf-up">▲ 2.35%</span>
-</div>
+            <div class="gf-ticker-item">
+                SENSEX
+                <span class="gf-price">81,330</span>
+                <span class="gf-up">▲ 0.68%</span>
+            </div>
 
-<div class="gf-ticker-item">
-ETH/USD
-<span class="gf-price">$3,214</span>
-<span class="gf-up">▲ 1.25%</span>
-</div>
+            <div class="gf-ticker-item">
+                NASDAQ
+                <span class="gf-price">17,689</span>
+                <span class="gf-up">▲ 0.92%</span>
+            </div>
 
-<div class="gf-ticker-item">
-EUR/USD
-<span class="gf-price">1.1682</span>
-<span class="gf-down">▼ 0.14%</span>
-</div>
+            <div class="gf-ticker-item">
+                GOLD
+                <span class="gf-price">$2,341</span>
+                <span class="gf-up">▲ 0.64%</span>
+            </div>
 
-<div class="gf-ticker-item">
-NIFTY 50
-<span class="gf-price">24,834</span>
-<span class="gf-up">▲ 0.75%</span>
-</div>
+        </div>
 
-<div class="gf-ticker-item">
-SENSEX
-<span class="gf-price">81,330</span>
-<span class="gf-up">▲ 0.68%</span>
-</div>
+    </div>
 
-</div>
-</div>
 
+    <!-- BRAND -->
 
-<!-- ======================================
-     BRAND BAR
-======================================= -->
+    <div class="gf-brandbar">
 
-<div class="gf-brandbar">
+        <div class="gf-logo">
 
-<div class="gf-logo">
+            <div class="gf-logo-icon">
+                📈
+            </div>
 
-<div class="gf-logo-icon">
-📈
-</div>
+            <div>
+                <div class="gf-logo-name">
+                    GLOBAL <span>FINANCE</span>
+                </div>
 
-<div class="gf-logo-text">
+                <div class="gf-logo-tag">
+                    SMARTER DECISIONS • STRONGER FUTURE
+                </div>
+            </div>
 
-<div class="gf-logo-name">
-GLOBAL <span>FINANCE</span>
-</div>
+        </div>
 
-<div class="gf-logo-tag">
-SMARTER DECISIONS • STRONGER FUTURE
-</div>
 
-</div>
+        <div class="gf-actions">
 
-</div>
+            <button
+                class="gf-action-btn gf-search"
+                id="gfSearchBtn"
+                aria-label="Search">
+                🔍
+            </button>
 
+            <button
+                class="gf-action-btn gf-subscribe"
+                id="gfSubscribeBtn">
+                SUBSCRIBE
+            </button>
 
-<div class="gf-actions">
+            <button
+                class="gf-action-btn gf-menu"
+                id="gfMenuBtn"
+                aria-label="Menu">
+                ☰
+            </button>
 
-<button
-class="gf-search"
-id="gfSearchBtn"
-type="button">
-🔍
-</button>
+        </div>
 
-<button
-class="gf-subscribe"
-id="gfSubscribeBtn"
-type="button">
-SUBSCRIBE
-</button>
+    </div>
 
-<button
-class="gf-menu"
-id="gfMenuBtn"
-type="button">
-☰
-</button>
 
-</div>
+    <!-- FOUR MAIN BUTTONS -->
 
-</div>
+    <div class="gf-nav-wrap">
 
+        <nav class="gf-nav">
 
-<!-- ======================================
-     FOUR MAIN NAVIGATION BUTTONS
-======================================= -->
+            <!-- HOME -->
 
-<div class="gf-nav-wrap">
+            <div class="gf-nav-item">
 
-<nav class="gf-nav">
+                <button
+                    class="gf-nav-button"
+                    data-menu="homeMenu">
 
+                    HOME
 
-<!-- HOME -->
+                    <span class="gf-arrow">▼</span>
 
-<div class="gf-nav-item">
+                </button>
 
-<button
-class="gf-nav-button"
-type="button"
-data-menu="homeMenu">
+                <div
+                    class="gf-dropdown"
+                    id="homeMenu">
 
-HOME
+                    <button
+                        class="gf-drop-link"
+                        data-content="home">
 
-<span class="gf-arrow">
-▼
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🏠</span>
+                            Home
+                        </span>
 
-</button>
+                        <span class="gf-drop-arrow">›</span>
 
+                    </button>
 
-<div
-class="gf-dropdown"
-id="homeMenu">
+                    <button
+                        class="gf-drop-link"
+                        data-content="globalMarkets">
 
-<div class="gf-dropdown-title">
-GLOBAL FINANCE • HOME
-</div>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🌎</span>
+                            Global Markets
+                        </span>
 
+                        <span class="gf-drop-arrow">›</span>
 
-<a
-class="gf-drop-link"
-href="#">
+                    </button>
 
-<span class="gf-drop-left">
+                    <button
+                        class="gf-drop-link"
+                        data-content="marketOverview">
 
-<span class="gf-drop-icon">
-🏠
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">📊</span>
+                            Market Overview
+                        </span>
 
-Home
+                        <span class="gf-drop-arrow">›</span>
 
-</span>
+                    </button>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                </div>
 
-</a>
+            </div>
 
 
-<a
-class="gf-drop-link"
-href="#">
+            <!-- MARKETS -->
 
-<span class="gf-drop-left">
+            <div class="gf-nav-item">
 
-<span class="gf-drop-icon">
-🌎
-</span>
+                <button
+                    class="gf-nav-button"
+                    data-menu="marketsMenu">
 
-Market Overview
+                    MARKETS
 
-</span>
+                    <span class="gf-arrow">▼</span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                </button>
 
-</a>
+                <div
+                    class="gf-dropdown"
+                    id="marketsMenu">
 
+                    <button
+                        class="gf-drop-link"
+                        data-content="stocks">
 
-<a
-class="gf-drop-link"
-href="#">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">📊</span>
+                            Stocks
+                        </span>
 
-<span class="gf-drop-left">
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-drop-icon">
-⭐
-</span>
+                    </button>
 
-Featured Finance
+                    <button
+                        class="gf-drop-link"
+                        data-content="trading">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">📈</span>
+                            Trading
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
+                    <button
+                        class="gf-drop-link"
+                        data-content="investing">
 
-<a
-class="gf-drop-link"
-href="#">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">💰</span>
+                            Investing
+                        </span>
 
-<span class="gf-drop-left">
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-drop-icon">
-🔥
-</span>
+                    </button>
 
-Trending
+                    <button
+                        class="gf-drop-link"
+                        data-content="crypto">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">₿</span>
+                            Crypto
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
-</div>
+                    <button
+                        class="gf-drop-link"
+                        data-content="forex">
 
-</div>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">💱</span>
+                            Forex
+                        </span>
 
+                        <span class="gf-drop-arrow">›</span>
 
-<!-- MARKETS -->
+                    </button>
 
-<div class="gf-nav-item">
+                    <button
+                        class="gf-drop-link"
+                        data-content="commodities">
 
-<button
-class="gf-nav-button"
-type="button"
-data-menu="marketsMenu">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🪙</span>
+                            Commodities
+                        </span>
 
-MARKETS
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-arrow">
-▼
-</span>
+                    </button>
 
-</button>
+                </div>
 
+            </div>
 
-<div
-class="gf-dropdown"
-id="marketsMenu">
 
-<div class="gf-dropdown-title">
-GLOBAL MARKETS
-</div>
+            <!-- NEWS -->
 
+            <div class="gf-nav-item">
 
-<a
-class="gf-drop-link"
-href="#">
+                <button
+                    class="gf-nav-button"
+                    data-menu="newsMenu">
 
-<span class="gf-drop-left">
+                    NEWS
 
-<span class="gf-drop-icon">
-📊
-</span>
+                    <span class="gf-arrow">▼</span>
 
-Stocks
+                </button>
 
-</span>
+                <div
+                    class="gf-dropdown"
+                    id="newsMenu">
 
-<span class="gf-drop-arrow">
-›
-</span>
+                    <button
+                        class="gf-drop-link"
+                        data-content="breakingNews">
 
-</a>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🔥</span>
+                            Breaking News
+                        </span>
 
+                        <span class="gf-drop-arrow">›</span>
 
-<a
-class="gf-drop-link"
-href="#">
+                    </button>
 
-<span class="gf-drop-left">
+                    <button
+                        class="gf-drop-link"
+                        data-content="globalNews">
 
-<span class="gf-drop-icon">
-📈
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🌎</span>
+                            Global Markets
+                        </span>
 
-Trading
+                        <span class="gf-drop-arrow">›</span>
 
-</span>
+                    </button>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                    <button
+                        class="gf-drop-link"
+                        data-content="cryptoNews">
 
-</a>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">₿</span>
+                            Crypto News
+                        </span>
 
+                        <span class="gf-drop-arrow">›</span>
 
-<a
-class="gf-drop-link"
-href="#">
+                    </button>
 
-<span class="gf-drop-left">
+                    <button
+                        class="gf-drop-link"
+                        data-content="forexNews">
 
-<span class="gf-drop-icon">
-💰
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">💱</span>
+                            Forex News
+                        </span>
 
-Investing
+                        <span class="gf-drop-arrow">›</span>
 
-</span>
+                    </button>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                    <button
+                        class="gf-drop-link"
+                        data-content="economy">
 
-</a>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🏦</span>
+                            Economy
+                        </span>
 
+                        <span class="gf-drop-arrow">›</span>
 
-<a
-class="gf-drop-link"
-href="#">
+                    </button>
 
-<span class="gf-drop-left">
+                </div>
 
-<span class="gf-drop-icon">
-₿
-</span>
+            </div>
 
-Crypto
 
-</span>
+            <!-- MORE -->
 
-<span class="gf-drop-arrow">
-›
-</span>
+            <div class="gf-nav-item">
 
-</a>
+                <button
+                    class="gf-nav-button"
+                    data-menu="moreMenu">
 
+                    MORE
 
-<a
-class="gf-drop-link"
-href="#">
+                    <span class="gf-arrow">▼</span>
 
-<span class="gf-drop-left">
+                </button>
 
-<span class="gf-drop-icon">
-💱
-</span>
+                <div
+                    class="gf-dropdown"
+                    id="moreMenu">
 
-Forex
+                    <button
+                        class="gf-drop-link"
+                        data-content="loans">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">💳</span>
+                            Loans
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
+                    <button
+                        class="gf-drop-link"
+                        data-content="personalFinance">
 
-<a
-class="gf-drop-link"
-href="#">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">💼</span>
+                            Personal Finance
+                        </span>
 
-<span class="gf-drop-left">
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-drop-icon">
-🪙
-</span>
+                    </button>
 
-Commodities
+                    <button
+                        class="gf-drop-link"
+                        data-content="education">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🎓</span>
+                            Financial Education
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
+                    <button
+                        class="gf-drop-link"
+                        data-content="tools">
 
-<a
-class="gf-drop-link"
-href="#">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🧮</span>
+                            Financial Tools
+                        </span>
 
-<span class="gf-drop-left">
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-drop-icon">
-🌎
-</span>
+                    </button>
 
-Global Markets
+                    <button
+                        class="gf-drop-link"
+                        data-content="financeAI">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🤖</span>
+                            Finance AI
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
+                    <button
+                        class="gf-drop-link"
+                        data-content="flipkart">
 
-<a
-class="gf-drop-link"
-href="#">
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">🛒</span>
+                            Finance Store
+                        </span>
 
-<span class="gf-drop-left">
+                        <span class="gf-drop-arrow">›</span>
 
-<span class="gf-drop-icon">
-📋
-</span>
+                    </button>
 
-Market Indices
+                    <button
+                        class="gf-drop-link"
+                        data-content="about">
 
-</span>
+                        <span class="gf-drop-left">
+                            <span class="gf-drop-icon">ℹ️</span>
+                            About Global Finance
+                        </span>
 
-<span class="gf-drop-arrow">
-›
-</span>
+                        <span class="gf-drop-arrow">›</span>
 
-</a>
+                    </button>
 
-</div>
+                </div>
 
-</div>
+            </div>
 
+        </nav>
 
-<!-- NEWS -->
-
-<div class="gf-nav-item">
-
-<button
-class="gf-nav-button"
-type="button"
-data-menu="newsMenu">
-
-NEWS
-
-<span class="gf-arrow">
-▼
-</span>
-
-</button>
-
-
-<div
-class="gf-dropdown"
-id="newsMenu">
-
-<div class="gf-dropdown-title">
-FINANCIAL NEWS
-</div>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🔥
-</span>
-
-Breaking News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-📊
-</span>
-
-Market News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-💱
-</span>
-
-Forex News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-₿
-</span>
-
-Crypto News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🏦
-</span>
-
-Economy
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🏢
-</span>
-
-Company News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🌎
-</span>
-
-Global Finance News
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-</div>
-
-</div>
-
-
-<!-- MORE -->
-
-<div class="gf-nav-item">
-
-<button
-class="gf-nav-button"
-type="button"
-data-menu="moreMenu">
-
-MORE
-
-<span class="gf-arrow">
-▼
-</span>
-
-</button>
-
-
-<div
-class="gf-dropdown"
-id="moreMenu">
-
-<div class="gf-dropdown-title">
-MORE FINANCE
-</div>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-💼
-</span>
-
-Investing
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-💳
-</span>
-
-Loans
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-💰
-</span>
-
-Personal Finance
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🎓
-</span>
-
-Finance Education
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🧮
-</span>
-
-Financial Tools
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-🤖
-</span>
-
-Finance AI
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-
-<a
-class="gf-drop-link"
-href="#">
-
-<span class="gf-drop-left">
-
-<span class="gf-drop-icon">
-ℹ️
-</span>
-
-About Global Finance
-
-</span>
-
-<span class="gf-drop-arrow">
-›
-</span>
-
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
-</div>
+    </div>
 
 </header>
 
 
-<!-- ======================================
+<!-- =======================================================
+     MAIN CONTENT
+======================================================= -->
+
+<main class="gf-content">
+
+    <section class="gf-welcome">
+
+        <div class="gf-welcome-label">
+            GLOBAL FINANCE • MARKETS • NEWS
+        </div>
+
+        <h1>
+            Smarter Financial Decisions
+        </h1>
+
+        <p>
+            Explore markets, trading, investing, crypto, forex,
+            financial news and useful financial tools from one place.
+        </p>
+
+    </section>
+
+
+    <!-- DYNAMIC PANEL -->
+
+    <section
+        class="gf-panel"
+        id="gfPanel">
+
+        <div class="gf-panel-head">
+
+            <div
+                class="gf-panel-title"
+                id="gfPanelTitle">
+                Global Finance
+            </div>
+
+            <button
+                class="gf-panel-close"
+                id="gfPanelClose">
+                ✕
+            </button>
+
+        </div>
+
+        <div
+            class="gf-panel-text"
+            id="gfPanelText">
+        </div>
+
+        <div
+            class="gf-cards"
+            id="gfCards">
+        </div>
+
+    </section>
+
+
+    <!-- MARKET VALUE -->
+
+    <section class="gf-market-section">
+
+        <div class="gf-section-title">
+            MARKET VALUE
+        </div>
+
+        <div class="gf-market-grid">
+
+            <div class="gf-market-card">
+                <div class="gf-market-name">
+                    BTC/USD
+                </div>
+                <div class="gf-market-value">
+                    $67,853
+                </div>
+                <div class="gf-market-change">
+                    ▲ 2.35%
+                </div>
+            </div>
+
+            <div class="gf-market-card">
+                <div class="gf-market-name">
+                    ETH/USD
+                </div>
+                <div class="gf-market-value">
+                    $3,214
+                </div>
+                <div class="gf-market-change">
+                    ▲ 1.25%
+                </div>
+            </div>
+
+            <div class="gf-market-card">
+                <div class="gf-market-name">
+                    NIFTY 50
+                </div>
+                <div class="gf-market-value">
+                    24,834
+                </div>
+                <div class="gf-market-change">
+                    ▲ 0.75%
+                </div>
+            </div>
+
+            <div class="gf-market-card">
+                <div class="gf-market-name">
+                    GOLD
+                </div>
+                <div class="gf-market-value">
+                    $2,341
+                </div>
+                <div class="gf-market-change">
+                    ▲ 0.64%
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FLIPKART / STORE READY -->
+
+    <section class="gf-shop">
+
+        <div class="gf-shop-title">
+            🛒 Finance Store
+        </div>
+
+        <div class="gf-shop-text">
+            यह section बाद में तुम्हारे Flipkart affiliate/product
+            links के लिए इस्तेमाल किया जा सकता है।
+        </div>
+
+        <button
+            class="gf-shop-button"
+            id="gfShopButton">
+            OPEN STORE
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- =======================================================
      SEARCH POPUP
-======================================= -->
+======================================================= -->
 
 <div
-class="gf-search-panel"
-id="gfSearchPanel">
+    class="gf-overlay"
+    id="gfSearchPanel">
 
-<div class="gf-search-box">
+    <div class="gf-search-box">
 
-<input
-class="gf-search-input"
-id="gfSearchInput"
-type="search"
-placeholder="Search markets, stocks, news..."
-autocomplete="off">
+        <input
+            class="gf-search-input"
+            id="gfSearchInput"
+            type="search"
+            placeholder="Search markets, trading, crypto, news...">
 
-<button
-class="gf-close-search"
-id="gfCloseSearch"
-type="button">
+        <button
+            class="gf-popup-button"
+            id="gfCloseSearch">
+            CLOSE SEARCH
+        </button>
 
-CLOSE SEARCH
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
 
-<!-- ======================================
+<!-- =======================================================
      SUBSCRIBE POPUP
-======================================= -->
+======================================================= -->
 
 <div
-class="gf-sub-popup"
-id="gfSubPopup">
+    class="gf-overlay"
+    id="gfSubPopup">
 
-<div class="gf-sub-card">
+    <div class="gf-sub-card">
 
-<h2>
-Join Global Finance
-</h2>
+        <h2>
+            Join Global Finance
+        </h2>
 
-<p>
-Get financial news, market updates and important insights.
-</p>
+        <p>
+            Get financial news, market updates and useful insights.
+        </p>
 
-<input
-class="gf-sub-input"
-type="email"
-placeholder="Enter your email">
+        <input
+            class="gf-sub-input"
+            id="gfEmail"
+            type="email"
+            placeholder="Enter your email">
 
-<button
-class="gf-sub-confirm"
-type="button">
+        <button
+            class="gf-sub-confirm"
+            id="gfSubConfirm">
+            SUBSCRIBE NOW
+        </button>
 
-SUBSCRIBE NOW
+        <button
+            class="gf-sub-close"
+            id="gfSubClose">
+            Close
+        </button>
 
-</button>
-
-<button
-class="gf-sub-close"
-id="gfSubClose"
-type="button">
-
-Close
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
 
-<!-- ======================================
-     TOAST
-======================================= -->
+<!-- TOAST -->
 
 <div
-class="gf-toast"
-id="gfToast">
-
-Menu opened
-
+    class="gf-toast"
+    id="gfToast">
+    Ready
 </div>
 
 
 <script>
 
-/* =========================================
+/* =========================================================
    ELEMENTS
-========================================= */
+========================================================= */
 
-const gfNavButtons =
-document.querySelectorAll(".gf-nav-button");
+const navButtons =
+    document.querySelectorAll(".gf-nav-button");
 
-const gfDropdowns =
-document.querySelectorAll(".gf-dropdown");
+const dropdowns =
+    document.querySelectorAll(".gf-dropdown");
 
+const dropLinks =
+    document.querySelectorAll(".gf-drop-link");
 
-/* =========================================
-   OPEN / CLOSE DROPDOWN
-========================================= */
+const panel =
+    document.getElementById("gfPanel");
 
-gfNavButtons.forEach(function(button){
+const panelTitle =
+    document.getElementById("gfPanelTitle");
 
-    button.addEventListener(
-        "click",
-        function(event){
+const panelText =
+    document.getElementById("gfPanelText");
 
-            event.stopPropagation();
+const panelCards =
+    document.getElementById("gfCards");
 
-            const menuId =
-                this.getAttribute("data-menu");
+const panelClose =
+    document.getElementById("gfPanelClose");
 
-            const menu =
-                document.getElementById(menuId);
-
-            if(!menu){
-                return;
-            }
-
-            const alreadyOpen =
-                menu.classList.contains("show");
+const toast =
+    document.getElementById("gfToast");
 
 
-            /* CLOSE ALL */
+/* =========================================================
+   CONTENT DATABASE
+========================================================= */
 
-            gfDropdowns.forEach(
-                function(dropdown){
+const contentData = {
 
-                    dropdown.classList.remove(
-                        "show"
-                    );
+    home:{
+        title:"Global Finance Home",
+        text:"Global Finance brings markets, financial education, trading topics and important financial information together in one place.",
+        cards:[
+            ["🌎","Global Markets","Explore major markets around the world."],
+            ["📊","Market Data","Track important market indicators."],
+            ["📰","Financial News","Explore financial news and topics."]
+        ]
+    },
 
-                }
-            );
+    globalMarkets:{
+        title:"Global Markets",
+        text:"Explore major market categories including equities, currencies, commodities and digital assets.",
+        cards:[
+            ["🇺🇸","US Markets","Major US market information."],
+            ["🇮🇳","Indian Markets","Indian market information."],
+            ["🌍","International","Global market overview."]
+        ]
+    },
 
+    marketOverview:{
+        title:"Market Overview",
+        text:"A quick overview of major market categories and their movements.",
+        cards:[
+            ["📈","Stocks","Equity market overview."],
+            ["💱","Forex","Currency market overview."],
+            ["🪙","Commodities","Gold and commodity overview."]
+        ]
+    },
 
-            gfNavButtons.forEach(
-                function(btn){
+    stocks:{
+        title:"Stocks",
+        text:"Learn about stocks, companies, equity markets, market capitalization, valuation and fundamental analysis.",
+        cards:[
+            ["📊","Market Cap","Understand company market value."],
+            ["🏢","Companies","Explore company-focused research."],
+            ["📚","Analysis","Learn fundamental and technical analysis."]
+        ]
+    },
 
-                    btn.classList.remove(
-                        "active"
-                    );
+    trading:{
+        title:"Trading",
+        text:"Trading covers short-term and long-term market strategies, risk management, technical analysis and trading psychology.",
+        cards:[
+            ["📈","Technical Analysis","Charts, trends and indicators."],
+            ["🛡️","Risk Management","Position sizing and risk control."],
+            ["🧠","Trading Psychology","Discipline and decision making."]
+        ]
+    },
 
-                }
-            );
+    investing:{
+        title:"Investing",
+        text:"Investing focuses on building wealth over time through assets, diversification, portfolio construction and long-term planning.",
+        cards:[
+            ["💰","Long Term","Long-term investing concepts."],
+            ["📦","Portfolio","Diversification and allocation."],
+            ["🎯","Goals","Goal-based investing concepts."]
+        ]
+    },
 
+    crypto:{
+        title:"Crypto",
+        text:"Explore blockchain, cryptocurrencies, digital assets, wallets, exchanges and crypto market concepts.",
+        cards:[
+            ["₿","Bitcoin","Bitcoin market information."],
+            ["⛓️","Blockchain","Understand blockchain technology."],
+            ["🔐","Security","Learn digital-asset security basics."]
+        ]
+    },
 
-            /* OPEN SELECTED */
+    forex:{
+        title:"Forex",
+        text:"Forex is the global currency market. Learn currency pairs, spreads, leverage, risk and macroeconomic factors.",
+        cards:[
+            ["💱","Currency Pairs","Understand major currency pairs."],
+            ["🌎","Global FX","Global currency markets."],
+            ["🛡️","Risk","Understand leverage and risk."]
+        ]
+    },
 
-            if(!alreadyOpen){
+    commodities:{
+        title:"Commodities",
+        text:"Explore commodities such as gold, silver, energy and agricultural markets.",
+        cards:[
+            ["🥇","Gold","Gold market concepts."],
+            ["🛢️","Energy","Oil and energy markets."],
+            ["🌾","Agriculture","Agricultural commodity markets."]
+        ]
+    },
 
-                menu.classList.add(
-                    "show"
-                );
+    breakingNews:{
+        title:"Breaking News",
+        text:"This area is designed for important financial and market news posts that you add to your website.",
+        cards:[
+            ["🔥","Breaking","Important market developments."],
+            ["📢","Alerts","Financial market alerts."],
+            ["🌎","Global","Major global developments."]
+        ]
+    },
 
-                this.classList.add(
-                    "active"
-                );
+    globalNews:{
+        title:"Global Markets News",
+        text:"A dedicated area for international financial-market news and market-moving developments.",
+        cards:[
+            ["🌎","World Markets","International market updates."],
+            ["📊","Markets","Market-moving information."],
+            ["💼","Business","Business and economic developments."]
+        ]
+    },
 
-            }
+    cryptoNews:{
+        title:"Crypto News",
+        text:"A dedicated area for crypto and blockchain news posts.",
+        cards:[
+            ["₿","Bitcoin","Bitcoin-related news."],
+            ["⛓️","Blockchain","Blockchain developments."],
+            ["🔐","Digital Assets","Digital-asset developments."]
+        ]
+    },
 
-        }
-    );
+    forexNews:{
+        title:"Forex News",
+        text:"A dedicated section for currency-market news and economic events affecting forex.",
+        cards:[
+            ["💱","Currencies","Currency market updates."],
+            ["🏦","Central Banks","Central-bank related developments."],
+            ["📅","Economic Data","Important economic releases."]
+        ]
+    },
 
-});
+    economy:{
+        title:"Economy",
+        text:"Explore inflation, interest rates, GDP, employment, central banks and other economic topics.",
+        cards:[
+            ["📈","Inflation","Inflation concepts and data."],
+            ["🏦","Interest Rates","Rates and monetary policy."],
+            ["🌎","GDP","Economic growth concepts."]
+        ]
+    },
 
+    loans:{
+        title:"Loans",
+        text:"Learn about common loan categories, interest rates, repayment concepts and responsible borrowing.",
+        cards:[
+            ["🏠","Home Loans","Home-finance concepts."],
+            ["🚗","Auto Loans","Vehicle financing concepts."],
+            ["💳","Personal Loans","Personal borrowing basics."]
+        ]
+    },
 
-/* =========================================
-   CLICK OUTSIDE
-========================================= */
+    personalFinance:{
+        title:"Personal Finance",
+        text:"Build financial knowledge around budgeting, saving, investing, debt management and financial planning.",
+        cards:[
+            ["💰","Saving","Build better saving habits."],
+            ["📒","Budgeting","Understand personal budgets."],
+            ["🎯","Planning","Plan financial goals."]
+        ]
+    },
 
-document.addEventListener(
-    "click",
-    function(event){
+    education:{
+        title:"Financial Education",
+        text:"Learn financial concepts from beginner to advanced levels.",
+        cards:[
+            ["🎓","Beginner","Start with financial basics."],
+            ["📚","Intermediate","Build deeper market knowledge."],
+            ["🏆","Advanced","Explore advanced concepts."]
+        ]
+    },
 
-        if(
-            !event.target.closest(
-                ".gf-nav"
-            )
-        ){
+    tools:{
+        title:"Financial Tools",
+        text:"This section is ready for calculators and other financial utilities.",
+        cards:[
+            ["🧮","Calculator","Financial calculation tools."],
+            ["📊","Portfolio","Portfolio-related tools."],
+            ["📈","Market Tools","Market analysis utilities."]
+        ]
+    },
 
-            gfDropdowns.forEach(
-                function(dropdown){
+    financeAI:{
+        title:"Finance AI",
+        text:"This section is ready for a financial AI interface that can explain financial concepts and help users navigate the website.",
+        cards:[
+            ["🤖","AI Assistant","Financial education assistant."],
+            ["📚","Knowledge","Financial concepts and terminology."],
+            ["🧠","Insights","Research and educational insights."]
+        ]
+    },
 
-                    dropdown.classList.remove(
-                        "show"
-                    );
+    flipkart:{
+        title:"Finance Store",
+        text:"This area is prepared for your Flipkart affiliate/product links. Replace the placeholder store action with your actual affiliate URL when ready.",
+        cards:[
+            ["🛒","Products","Add finance-related products."],
+            ["⭐","Recommendations","Create useful product recommendations."],
+            ["🔗","Affiliate","Add your approved affiliate links."]
+        ]
+    },
 
-                }
-            );
-
-
-            gfNavButtons.forEach(
-                function(button){
-
-                    button.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-        }
-
+    about:{
+        title:"About Global Finance",
+        text:"Global Finance is designed as a financial information, education, markets and news platform.",
+        cards:[
+            ["🌎","Global","Finance topics from around the world."],
+            ["📚","Education","Financial learning content."],
+            ["🛡️","Responsible","Educational information should not be treated as personalized financial advice."]
+        ]
     }
-);
 
+};
 
-/* =========================================
-   DROPDOWN LINK CLICK
-========================================= */
 
-document
-.querySelectorAll(".gf-drop-link")
-.forEach(function(link){
+/* =========================================================
+   SHOW CONTENT
+========================================================= */
 
-    link.addEventListener(
-        "click",
-        function(event){
+function showContent(key){
 
-            /*
-              अभी # होने की वजह से
-              page reload नहीं होगा।
-            */
+    const data =
+        contentData[key];
 
-            event.preventDefault();
-
-            event.stopPropagation();
-
-
-            const text =
-                this
-                .innerText
-                .trim();
-
-
-            showToast(
-                text + " selected"
-            );
-
-        }
-    );
-
-});
-
-
-/* =========================================
-   SEARCH
-========================================= */
-
-const gfSearchBtn =
-document.getElementById(
-    "gfSearchBtn"
-);
-
-const gfSearchPanel =
-document.getElementById(
-    "gfSearchPanel"
-);
-
-const gfCloseSearch =
-document.getElementById(
-    "gfCloseSearch"
-);
-
-const gfSearchInput =
-document.getElementById(
-    "gfSearchInput"
-);
-
-
-gfSearchBtn.addEventListener(
-    "click",
-    function(){
-
-        gfSearchPanel.classList.add(
-            "show"
-        );
-
-        setTimeout(
-            function(){
-
-                gfSearchInput.focus();
-
-            },
-            100
-        );
-
-    }
-);
-
-
-gfCloseSearch.addEventListener(
-    "click",
-    function(){
-
-        gfSearchPanel.classList.remove(
-            "show"
-        );
-
-    }
-);
-
-
-gfSearchPanel.addEventListener(
-    "click",
-    function(event){
-
-        if(
-            event.target ===
-            gfSearchPanel
-        ){
-
-            gfSearchPanel.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================
-   SUBSCRIBE
-========================================= */
-
-const gfSubscribeBtn =
-document.getElementById(
-    "gfSubscribeBtn"
-);
-
-const gfSubPopup =
-document.getElementById(
-    "gfSubPopup"
-);
-
-const gfSubClose =
-document.getElementById(
-    "gfSubClose"
-);
-
-
-gfSubscribeBtn.addEventListener(
-    "click",
-    function(){
-
-        gfSubPopup.classList.add(
-            "show"
-        );
-
-    }
-);
-
-
-gfSubClose.addEventListener(
-    "click",
-    function(){
-
-        gfSubPopup.classList.remove(
-            "show"
-        );
-
-    }
-);
-
-
-gfSubPopup.addEventListener(
-    "click",
-    function(event){
-
-        if(
-            event.target ===
-            gfSubPopup
-        ){
-
-            gfSubPopup.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================
-   MENU BUTTON
-========================================= */
-
-document
-.getElementById("gfMenuBtn")
-.addEventListener(
-    "click",
-    function(){
-
-        showToast(
-            "Navigation is available above"
-        );
-
-    }
-);
-
-
-/* =========================================
-   TOAST
-========================================= */
-
-let gfToastTimer;
-
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "gfToast"
-        );
-
-    if(!toast){
+    if(!data){
         return;
     }
+
+    panelTitle.innerText =
+        data.title;
+
+    panelText.innerText =
+        data.text;
+
+    panelCards.innerHTML = "";
+
+    data.cards.forEach(card => {
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "gf-card";
+
+        box.innerHTML = `
+            <div class="gf-card-icon">${card[0]}</div>
+            <h3>${card[1]}</h3>
+            <p>${card[2]}</p>
+        `;
+
+        panelCards.appendChild(box);
+
+    });
+
+    panel.classList.add("show");
+
+    setTimeout(() => {
+
+        panel.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    },50);
+
+}
+
+
+/* =========================================================
+   MAIN NAVIGATION BUTTONS
+   CLICK = DROPDOWN BELOW
+========================================================= */
+
+navButtons.forEach(button => {
+
+    button.addEventListener("click", function(event){
+
+        event.stopPropagation();
+
+        const menuId =
+            this.dataset.menu;
+
+        const menu =
+            document.getElementById(menuId);
+
+        const alreadyOpen =
+            menu.classList.contains("show");
+
+
+        /* CLOSE ALL */
+
+        dropdowns.forEach(drop => {
+            drop.classList.remove("show");
+        });
+
+        navButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+
+        /* OPEN CLICKED */
+
+        if(!alreadyOpen){
+
+            menu.classList.add("show");
+
+            this.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   INNER DROPDOWN BUTTONS
+   CLICK = CONTENT OPENS
+========================================================= */
+
+dropLinks.forEach(link => {
+
+    link.addEventListener("click", function(event){
+
+        event.stopPropagation();
+
+        const key =
+            this.dataset.content;
+
+        showContent(key);
+
+        dropdowns.forEach(drop => {
+            drop.classList.remove("show");
+        });
+
+        navButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        showToast(
+            contentData[key].title + " opened"
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   CLICK OUTSIDE DROPDOWN
+========================================================= */
+
+document.addEventListener("click", function(){
+
+    dropdowns.forEach(drop => {
+        drop.classList.remove("show");
+    });
+
+    navButtons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+});
+
+
+/* =========================================================
+   PANEL CLOSE
+========================================================= */
+
+panelClose.addEventListener("click", function(){
+
+    panel.classList.remove("show");
+
+});
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const searchBtn =
+    document.getElementById("gfSearchBtn");
+
+const searchPanel =
+    document.getElementById("gfSearchPanel");
+
+const searchInput =
+    document.getElementById("gfSearchInput");
+
+const closeSearch =
+    document.getElementById("gfCloseSearch");
+
+
+searchBtn.addEventListener("click", function(){
+
+    searchPanel.classList.add("show");
+
+    setTimeout(() => {
+        searchInput.focus();
+    },100);
+
+});
+
+
+closeSearch.addEventListener("click", function(){
+
+    searchPanel.classList.remove("show");
+
+});
+
+
+searchPanel.addEventListener("click", function(event){
+
+    if(event.target === searchPanel){
+
+        searchPanel.classList.remove("show");
+
+    }
+
+});
+
+
+/* =========================================================
+   SEARCH ENTER
+========================================================= */
+
+searchInput.addEventListener("keydown", function(event){
+
+    if(event.key !== "Enter"){
+        return;
+    }
+
+    const query =
+        this.value.trim().toLowerCase();
+
+    if(!query){
+        showToast("Type something to search");
+        return;
+    }
+
+    let found = null;
+
+    Object.keys(contentData).forEach(key => {
+
+        const title =
+            contentData[key].title.toLowerCase();
+
+        if(!found && title.includes(query)){
+            found = key;
+        }
+
+    });
+
+    searchPanel.classList.remove("show");
+
+    if(found){
+
+        showContent(found);
+
+        showToast(
+            contentData[found].title + " found"
+        );
+
+    }else{
+
+        showToast(
+            "Search topic not found"
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   SUBSCRIBE
+========================================================= */
+
+const subscribeBtn =
+    document.getElementById("gfSubscribeBtn");
+
+const subPopup =
+    document.getElementById("gfSubPopup");
+
+const subClose =
+    document.getElementById("gfSubClose");
+
+const subConfirm =
+    document.getElementById("gfSubConfirm");
+
+const emailInput =
+    document.getElementById("gfEmail");
+
+
+subscribeBtn.addEventListener("click", function(){
+
+    subPopup.classList.add("show");
+
+});
+
+
+subClose.addEventListener("click", function(){
+
+    subPopup.classList.remove("show");
+
+});
+
+
+subPopup.addEventListener("click", function(event){
+
+    if(event.target === subPopup){
+
+        subPopup.classList.remove("show");
+
+    }
+
+});
+
+
+subConfirm.addEventListener("click", function(){
+
+    const email =
+        emailInput.value.trim();
+
+    if(!email || !email.includes("@")){
+
+        showToast(
+            "Please enter a valid email"
+        );
+
+        return;
+
+    }
+
+    showToast(
+        "Subscription request received"
+    );
+
+    emailInput.value = "";
+
+    setTimeout(() => {
+
+        subPopup.classList.remove("show");
+
+    },800);
+
+});
+
+
+/* =========================================================
+   MENU BUTTON
+========================================================= */
+
+document
+    .getElementById("gfMenuBtn")
+    .addEventListener("click", function(){
+
+        const firstButton =
+            document.querySelector(".gf-nav-button");
+
+        firstButton.click();
+
+        showToast(
+            "Navigation opened"
+        );
+
+    });
+
+
+/* =========================================================
+   STORE BUTTON
+========================================================= */
+
+document
+    .getElementById("gfShopButton")
+    .addEventListener("click", function(){
+
+        showContent("flipkart");
+
+        showToast(
+            "Finance Store opened"
+        );
+
+    });
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener("keydown", function(event){
+
+    if(event.key === "Escape"){
+
+        dropdowns.forEach(drop => {
+            drop.classList.remove("show");
+        });
+
+        navButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        searchPanel.classList.remove("show");
+
+        subPopup.classList.remove("show");
+
+    }
+
+});
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
 
     toast.innerText =
         message;
 
-    toast.classList.add(
-        "show"
-    );
+    toast.classList.add("show");
 
+    clearTimeout(toastTimer);
 
-    clearTimeout(
-        gfToastTimer
-    );
+    toastTimer =
+        setTimeout(() => {
 
+            toast.classList.remove("show");
 
-    gfToastTimer =
-        setTimeout(
-            function(){
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            1800
-        );
+        },1800);
 
 }
 
