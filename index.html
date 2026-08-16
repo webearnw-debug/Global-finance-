@@ -2,1729 +2,817 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#050b12">
-<meta name="description" content="Global Finance — Smarter Decisions, Stronger Future">
-<title>Global Finance</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#03070d">
 
 <style>
 /* =========================================================
-   GLOBAL FINANCE — COMPLETE RESPONSIVE WEBSITE
-   ========================================================= */
-
-:root{
-  --bg:#030910;
-  --bg2:#07121d;
-  --panel:#091724;
-  --panel2:#0c1b29;
-  --line:rgba(170,205,230,.14);
-  --text:#f5f8fb;
-  --muted:#8293a4;
-  --gold:#f5c43d;
-  --gold2:#ffd95c;
-  --green:#25df78;
-  --blue:#38a9ff;
-  --red:#ff5964;
-  --radius:12px;
-  --max:1480px;
-}
+   GLOBAL FINANCE — PREMIUM HEADER
+========================================================= */
 
 *{
   box-sizing:border-box;
+}
+
+.gf-wrap,
+.gf-wrap *{
+  box-sizing:border-box;
+}
+
+.gf-wrap{
+  width:100%;
+  max-width:100%;
   margin:0;
   padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:
-    radial-gradient(circle at 75% 10%,rgba(22,91,140,.14),transparent 28%),
-    linear-gradient(180deg,#030910,#06111b 55%,#030910);
-  color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
-}
-
-button,
-input{
-  font:inherit;
-}
-
-button,
-a{
-  -webkit-tap-highlight-color:transparent;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
+  color:#fff;
+  position:relative;
+  z-index:99999;
 }
 
 /* =========================================================
-   TOP MARKET TICKER
-   ========================================================= */
+   MARKET TICKER
+========================================================= */
 
-.top-ticker{
-  height:38px;
+.gf-ticker{
   width:100%;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  white-space:nowrap;
-  background:#02060b;
-  border-bottom:1px solid var(--line);
-}
-
-.ticker-track{
-  display:flex;
-  min-width:max-content;
-  animation:tickerMove 32s linear infinite;
-}
-
-@keyframes tickerMove{
-  from{transform:translateX(0)}
-  to{transform:translateX(-45%)}
-}
-
-.ticker-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:0 20px;
   height:38px;
+  overflow:hidden;
+  background:#050a11;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  white-space:nowrap;
+}
+
+.gf-ticker-track{
+  display:flex;
+  width:max-content;
+  animation:gfTicker 65s linear infinite;
+  will-change:transform;
+}
+
+.gf-ticker:hover .gf-ticker-track{
+  animation-play-state:paused;
+}
+
+.gf-tick{
+  height:38px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 20px;
   border-right:1px solid rgba(255,255,255,.07);
-  color:#b8c4cf;
   font-size:11px;
 }
 
-.live-dot{
+.gf-tick-name{
+  color:#aeb8c4;
+}
+
+.gf-tick-price{
+  font-weight:700;
+  color:#f4f6f8;
+}
+
+.gf-up{
+  color:#20d982;
+  font-weight:700;
+}
+
+.gf-down{
+  color:#ff6269;
+  font-weight:700;
+}
+
+.gf-live{
+  color:#21e28a;
+  font-weight:800;
+}
+
+.gf-live-dot{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
+  background:#20e38a;
+  box-shadow:0 0 9px #20e38a;
+  animation:gfPulse 1.8s infinite;
 }
 
-.up{
-  color:var(--green);
-  font-weight:700;
+@keyframes gfTicker{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
 }
 
-.down{
-  color:var(--red);
-  font-weight:700;
+@keyframes gfPulse{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
 }
 
 /* =========================================================
-   HEADER
-   ========================================================= */
+   MAIN HEADER
+========================================================= */
 
-.header{
+.gf-main{
   width:100%;
-  position:sticky;
-  top:0;
-  z-index:9000;
-  background:rgba(3,9,16,.94);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
-}
-
-.header-inner{
-  width:min(100%,var(--max));
-  min-height:82px;
-  margin:auto;
-  padding:10px 24px;
+  min-height:80px;
+  padding:0 28px;
+  background:
+    linear-gradient(
+      180deg,
+      #07101a 0%,
+      #03070d 100%
+    );
+  border-bottom:1px solid rgba(255,255,255,.10);
   display:flex;
   align-items:center;
-  gap:24px;
 }
 
 /* =========================================================
    LOGO
-   ========================================================= */
+========================================================= */
 
-.brand{
+.gf-logo{
   display:flex;
   align-items:center;
   gap:11px;
+  min-width:230px;
   flex-shrink:0;
+  text-decoration:none;
 }
 
-.logo{
-  width:51px;
-  height:51px;
-  border:2px solid var(--gold);
+.gf-logo-mark{
+  width:46px;
+  height:46px;
+  border:1px solid #e7bc35;
   border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(circle,#162839,#050c13 70%);
-  box-shadow:
-    0 0 0 4px rgba(245,196,61,.06),
-    0 0 25px rgba(245,196,61,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  background:radial-gradient(
+    circle,
+    rgba(231,188,53,.16),
+    transparent 68%
+  );
 }
 
-.logo svg{
-  width:36px;
-  height:36px;
+.gf-logo-mark:before{
+  content:"↗";
+  color:#f4c735;
+  font-size:27px;
+  font-weight:900;
 }
 
-.brand-name{
-  font-size:21px;
+.gf-logo-mark:after{
+  content:"";
+  position:absolute;
+  width:32px;
+  height:32px;
+  border:1px solid rgba(244,199,53,.38);
+  border-radius:50%;
+}
+
+.gf-logo-title{
+  font-size:20px;
   font-weight:900;
   letter-spacing:-.7px;
   line-height:1;
-  white-space:nowrap;
 }
 
-.brand-name span{
-  color:var(--gold);
+.gf-logo-title span{
+  color:#f4c735;
 }
 
-.tagline{
-  margin-top:7px;
-  color:#748493;
+.gf-logo-sub{
+  margin-top:6px;
   font-size:7px;
-  letter-spacing:2px;
-  white-space:nowrap;
+  letter-spacing:1.5px;
+  color:#7f8b99;
+  font-weight:700;
 }
 
 /* =========================================================
    DESKTOP NAV
-   ========================================================= */
+========================================================= */
 
-.nav{
+.gf-nav{
+  height:80px;
   flex:1;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:0;
+  gap:1px;
 }
 
-.nav-link,
-.more-button{
-  height:54px;
-  padding:0 10px;
-  display:flex;
-  align-items:center;
-  gap:6px;
+.gf-nav-item{
+  height:80px;
   position:relative;
-  background:transparent;
+}
+
+.gf-nav-btn{
+  height:80px;
+  padding:0 11px;
   border:0;
-  color:#dbe3ea;
-  cursor:pointer;
+  background:transparent;
+  color:#d9dee5;
   font-size:12px;
   font-weight:700;
+  cursor:pointer;
   white-space:nowrap;
+  transition:.2s;
 }
 
-.nav-link:after,
-.more-button:after{
+.gf-nav-btn:hover,
+.gf-nav-item.active>.gf-nav-btn{
+  color:#f4c735;
+}
+
+.gf-nav-item.active>.gf-nav-btn:after{
   content:"";
   position:absolute;
   bottom:0;
-  left:10px;
-  right:10px;
+  left:11px;
+  right:11px;
   height:2px;
-  background:var(--gold);
-  transform:scaleX(0);
-  transition:.25s;
+  background:#f4c735;
+  box-shadow:0 0 9px rgba(244,199,53,.55);
 }
 
-.nav-link:hover,
-.more-button:hover,
-.nav-link.active{
-  color:var(--gold);
-}
-
-.nav-link:hover:after,
-.nav-link.active:after,
-.more-button:hover:after{
-  transform:scaleX(1);
-}
-
-.nav-icon{
-  font-size:15px;
-}
-
-.arrow{
-  font-size:8px;
-  color:#71808d;
-}
-
-/* =========================================================
-   ACTIONS
-   ========================================================= */
-
-.actions{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  flex-shrink:0;
-}
-
-.action{
-  min-width:41px;
-  height:40px;
-  padding:0 12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  border:1px solid var(--line);
-  border-radius:8px;
-  background:#07121d;
-  color:#fff;
-  cursor:pointer;
-  transition:.22s;
-  font-size:11px;
-  font-weight:800;
-}
-
-.action:hover{
-  border-color:var(--gold);
-  color:var(--gold);
-  transform:translateY(-1px);
-}
-
-.search-btn{
-  font-size:20px;
-  padding:0;
-}
-
-.subscribe{
-  background:var(--gold);
-  color:#07101a;
-  border-color:var(--gold);
-}
-
-.subscribe:hover{
-  background:var(--gold2);
-  color:#07101a;
-}
-
-.youtube-icon{
-  color:#ff333d;
-  font-size:17px;
-}
-
-.menu-btn{
-  display:none;
-  font-size:22px;
-  padding:0;
-}
-
-/* =========================================================
-   MORE DROPDOWN
-   ========================================================= */
-
-.more-wrap{
-  position:relative;
-}
-
-.more-menu{
-  position:absolute;
-  top:58px;
-  right:0;
-  width:300px;
-  padding:9px;
-  background:#07121d;
-  border:1px solid rgba(245,196,61,.25);
-  border-radius:13px;
-  box-shadow:0 25px 70px rgba(0,0,0,.65);
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(-8px);
-  transition:.22s;
-}
-
-.more-wrap.open .more-menu{
-  opacity:1;
-  visibility:visible;
-  transform:translateY(0);
-}
-
-.more-item{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px;
-  border-radius:8px;
+.gf-chevron{
+  margin-left:4px;
+  font-size:9px;
   transition:.2s;
 }
 
-.more-item:hover{
-  background:rgba(245,196,61,.07);
-  color:var(--gold);
-}
-
-.more-icon{
-  width:30px;
-  text-align:center;
-  font-size:18px;
-}
-
-.more-title{
-  display:block;
-  font-size:12px;
-  font-weight:800;
-}
-
-.more-desc{
-  display:block;
-  margin-top:4px;
-  color:#71808e;
-  font-size:10px;
+.gf-nav-item:hover .gf-chevron{
+  transform:rotate(180deg);
 }
 
 /* =========================================================
-   MOBILE DRAWER
-   ========================================================= */
+   DROPDOWN
+========================================================= */
 
-.mobile-drawer{
-  position:fixed;
-  z-index:9500;
-  top:0;
-  right:-100%;
-  width:min(390px,92vw);
-  height:100dvh;
-  overflow:auto;
-  background:#06101a;
-  border-left:1px solid rgba(245,196,61,.22);
-  box-shadow:-25px 0 70px rgba(0,0,0,.65);
-  padding:20px;
-  transition:right .3s ease;
-}
-
-.mobile-drawer.open{
-  right:0;
-}
-
-.mobile-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-bottom:18px;
-  border-bottom:1px solid var(--line);
-}
-
-.mobile-close{
-  width:40px;
-  height:40px;
-  border:1px solid var(--line);
-  background:#091722;
-  color:#fff;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:22px;
-}
-
-.mobile-link{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  padding:15px 10px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  color:#dce4eb;
-  font-size:14px;
-  font-weight:700;
-}
-
-.mobile-link:hover{
-  color:var(--gold);
-}
-
-.mobile-link small{
-  margin-left:auto;
-  color:#687887;
-}
-
-.drawer-subscribe{
-  margin-top:18px;
-  width:100%;
-  height:48px;
-  border:0;
-  border-radius:8px;
-  background:var(--gold);
-  color:#06101a;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* =========================================================
-   OVERLAY
-   ========================================================= */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  z-index:9400;
-  background:rgba(0,0,0,.6);
-  opacity:0;
-  visibility:hidden;
-  transition:.25s;
-}
-
-.overlay.show{
-  opacity:1;
-  visibility:visible;
-}
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-.container{
-  width:min(100% - 40px,var(--max));
-  margin:auto;
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero{
-  min-height:470px;
-  margin-top:18px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  overflow:hidden;
-  position:relative;
-  display:grid;
-  grid-template-columns:45% 55%;
-  background:
-    radial-gradient(circle at 72% 48%,rgba(20,104,157,.35),transparent 34%),
-    linear-gradient(110deg,#06101a,#071a29);
-}
-
-.hero-content{
-  padding:65px 35px 45px;
-  position:relative;
-  z-index:2;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:7px 11px;
-  border:1px solid rgba(245,196,61,.5);
-  border-radius:30px;
-  color:var(--gold);
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.4px;
-}
-
-.hero h1{
-  margin-top:22px;
-  font-size:clamp(38px,4.5vw,68px);
-  line-height:.96;
-  letter-spacing:-2.5px;
-}
-
-.hero h1 span{
-  color:var(--gold);
-}
-
-.hero p{
-  margin-top:22px;
-  max-width:520px;
-  color:#9aa9b7;
-  font-size:15px;
-  line-height:1.7;
-}
-
-.search-box{
-  display:flex;
-  max-width:520px;
-  height:50px;
-  margin-top:27px;
-}
-
-.search-box input{
-  min-width:0;
-  flex:1;
-  border:1px solid #273b4d;
-  border-right:0;
-  border-radius:8px 0 0 8px;
-  background:#06111b;
-  color:#fff;
-  outline:0;
-  padding:0 16px;
-}
-
-.search-box button{
-  width:58px;
-  border:0;
-  border-radius:0 8px 8px 0;
-  background:var(--gold);
-  color:#07101a;
-  font-size:20px;
-  cursor:pointer;
-}
-
-.hero-stats{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-
-.stat strong{
-  display:block;
-  font-size:19px;
-}
-
-.stat span{
-  display:block;
-  margin-top:4px;
-  color:#738594;
-  font-size:9px;
-}
-
-.hero-visual{
-  position:relative;
-  min-height:470px;
-  overflow:hidden;
-}
-
-.globe{
+.gf-dropdown{
   position:absolute;
-  width:min(550px,90%);
-  aspect-ratio:1;
-  border-radius:50%;
-  right:3%;
-  top:50%;
-  transform:translateY(-50%);
-  border:1px solid rgba(70,183,255,.45);
-  background:
-    radial-gradient(circle at 35% 30%,rgba(36,173,255,.35),transparent 13%),
-    radial-gradient(circle at 55% 50%,#0a2639,#04101b 64%);
-  box-shadow:
-    inset 0 0 80px rgba(25,160,240,.16),
-    0 0 80px rgba(17,130,210,.12);
-}
-
-.globe:before{
-  content:"";
-  position:absolute;
-  inset:9%;
-  border-radius:50%;
-  border:1px dashed rgba(74,177,238,.3);
-  transform:rotate(-22deg);
-}
-
-.globe:after{
-  content:"";
-  position:absolute;
-  left:-12%;
-  right:-12%;
-  top:48%;
-  height:2px;
-  background:var(--gold);
-  transform:rotate(-14deg);
-  box-shadow:0 0 14px rgba(245,196,61,.7);
-}
-
-.chart-line{
-  position:absolute;
-  width:78%;
-  height:35%;
-  left:11%;
-  bottom:17%;
-  border-bottom:3px solid #1598e7;
-  transform:rotate(-7deg);
-}
-
-.market-floating{
-  position:absolute;
-  right:20px;
-  top:55px;
-  width:210px;
-  padding:10px;
-  background:rgba(4,13,21,.9);
-  backdrop-filter:blur(10px);
-  border:1px solid var(--line);
-  border-radius:10px;
-  z-index:4;
-}
-
-.float-row{
-  display:grid;
-  grid-template-columns:30px 1fr auto;
-  align-items:center;
-  gap:8px;
-  padding:10px 4px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-.float-row:last-child{
-  border:0;
-}
-
-.coin{
-  width:29px;
-  height:29px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#1385d1;
-  font-size:11px;
-  font-weight:900;
-}
-
-.float-name{
-  font-size:10px;
-  font-weight:800;
-}
-
-.float-price{
-  margin-top:3px;
-  color:#768796;
-  font-size:9px;
-}
-
-.float-change{
-  color:var(--green);
-  font-size:9px;
-  font-weight:800;
-}
-
-/* =========================================================
-   QUICK TOOLS
-   ========================================================= */
-
-.quick-tools{
-  margin-top:15px;
-  display:grid;
-  grid-template-columns:repeat(10,1fr);
-  border:1px solid var(--line);
-  border-radius:12px;
-  overflow:hidden;
-  background:#06111b;
-}
-
-.quick{
-  min-height:91px;
-  padding:14px 9px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  text-align:center;
-  border-right:1px solid var(--line);
-  transition:.2s;
-}
-
-.quick:last-child{
-  border:0;
-}
-
-.quick:hover{
-  background:rgba(245,196,61,.05);
-  color:var(--gold);
-}
-
-.quick-icon{
-  font-size:21px;
-}
-
-.quick strong{
-  font-size:10px;
-}
-
-.quick small{
-  color:#6f8291;
-  font-size:8px;
-}
-
-/* =========================================================
-   BREAKING NEWS
-   ========================================================= */
-
-.breaking{
-  margin-top:15px;
-  min-height:58px;
-  display:flex;
-  align-items:center;
-  border:1px solid rgba(245,196,61,.3);
-  border-radius:10px;
-  overflow:hidden;
-  background:#07121c;
-}
-
-.breaking-label{
-  min-height:58px;
-  padding:0 20px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:var(--gold);
-  font-size:11px;
-  font-weight:900;
-  border-right:1px solid var(--line);
-  white-space:nowrap;
-}
-
-.breaking-track{
-  overflow:hidden;
-  flex:1;
-}
-
-.breaking-content{
-  min-width:max-content;
-  display:flex;
-  animation:breakingMove 28s linear infinite;
-}
-
-.breaking-news{
-  padding:0 30px;
-  font-size:12px;
-  color:#d3dce4;
-}
-
-@keyframes breakingMove{
-  from{transform:translateX(100%)}
-  to{transform:translateX(-100%)}
-}
-
-/* =========================================================
-   SECTION
-   ========================================================= */
-
-.section{
-  margin-top:28px;
-}
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:13px;
-}
-
-.section-title{
-  font-size:16px;
-  font-weight:900;
-  letter-spacing:.2px;
-}
-
-.section-link{
-  color:var(--gold);
-  font-size:10px;
-}
-
-/* =========================================================
-   MARKET OVERVIEW
-   ========================================================= */
-
-.market-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:10px;
-}
-
-.market-card{
-  padding:17px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:linear-gradient(145deg,#091824,#07121c);
-}
-
-.market-name{
-  color:#9aabb9;
-  font-size:10px;
-}
-
-.market-price{
-  margin-top:7px;
-  font-size:18px;
-  font-weight:800;
-}
-
-.market-bottom{
-  margin-top:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.market-change{
-  color:var(--green);
-  font-size:10px;
-  font-weight:800;
-}
-
-.spark{
-  height:24px;
-  margin-top:11px;
-  position:relative;
-  overflow:hidden;
-}
-
-.spark svg{
-  width:100%;
-  height:100%;
-}
-
-/* =========================================================
-   MARKET MOVERS
-   ========================================================= */
-
-.tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:12px;
-  overflow:auto;
-  scrollbar-width:none;
-}
-
-.tabs::-webkit-scrollbar{
-  display:none;
-}
-
-.tab{
-  padding:7px 12px;
-  border:0;
-  border-radius:20px;
-  background:transparent;
-  color:#8999a7;
-  font-size:10px;
-  white-space:nowrap;
-  cursor:pointer;
-}
-
-.tab.active{
-  background:#12355a;
-  color:#fff;
-}
-
-.mover-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-}
-
-.mover{
-  padding:18px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:#07131e;
-}
-
-.mover strong{
-  display:block;
-  font-size:16px;
-}
-
-.mover small{
-  display:block;
-  margin-top:5px;
-  color:#728392;
-}
-
-.mover-bottom{
-  margin-top:16px;
-  display:flex;
-  justify-content:space-between;
-}
-
-.mover-price{
-  font-size:12px;
-  font-weight:800;
-}
-
-.mover-up{
-  color:var(--green);
-  font-size:10px;
-  font-weight:800;
-}
-
-/* =========================================================
-   NEWS
-   ========================================================= */
-
-.news-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr) 1.1fr;
-  gap:11px;
-}
-
-.news-card{
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:#07131e;
-}
-
-.news-image{
-  height:145px;
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 70% 40%,#236a8d,transparent 22%),
-    linear-gradient(135deg,#0a2539,#07101a);
-}
-
-.news-image:before{
-  content:"";
-  width:80%;
-  height:2px;
-  background:#28a6ef;
-  transform:rotate(-15deg);
-  box-shadow:
-    -60px 30px 0 #1b6c9b,
-    60px -22px 0 #43c7ff;
-}
-
-.news-image span{
-  position:absolute;
-  top:10px;
-  left:10px;
-  padding:4px 7px;
-  border-radius:4px;
-  background:#167ac2;
-  font-size:8px;
-  font-weight:900;
-}
-
-.news-body{
-  padding:13px;
-}
-
-.news-body h3{
-  font-size:13px;
-  line-height:1.4;
-}
-
-.news-time{
-  margin-top:12px;
-  color:#71818e;
-  font-size:9px;
-}
-
-.expert{
-  padding:20px;
-  border:1px solid rgba(245,196,61,.25);
-  border-radius:10px;
-  background:
-    radial-gradient(circle at 90% 10%,rgba(245,196,61,.12),transparent 30%),
-    #07131e;
-}
-
-.expert-label{
-  color:var(--gold);
-  font-size:9px;
-  font-weight:900;
-}
-
-.expert blockquote{
-  margin-top:18px;
-  color:#dce5ec;
-  font-size:15px;
-  line-height:1.6;
-}
-
-.expert-author{
-  margin-top:16px;
-  color:#81909d;
-  font-size:10px;
-}
-
-/* =========================================================
-   CTA
-   ========================================================= */
-
-.cta{
-  margin-top:28px;
-  padding:25px 28px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  border:1px solid rgba(245,196,61,.25);
-  border-radius:12px;
-  background:
-    radial-gradient(circle at 70% 50%,rgba(30,125,181,.2),transparent 35%),
-    #07131e;
-}
-
-.cta h2{
-  font-size:23px;
-}
-
-.cta p{
-  margin-top:7px;
-  color:#7d8d9b;
-  font-size:11px;
-}
-
-.cta-button{
-  height:44px;
-  padding:0 20px;
-  border:0;
-  border-radius:7px;
-  background:var(--gold);
-  color:#06101a;
-  font-weight:900;
-  cursor:pointer;
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer{
-  margin-top:30px;
-  border-top:1px solid var(--line);
-  background:#02070c;
-}
-
-.footer-inner{
-  width:min(100% - 40px,var(--max));
-  margin:auto;
-  padding:40px 0 18px;
-  display:grid;
-  grid-template-columns:1.5fr repeat(5,1fr);
-  gap:28px;
-}
-
-.footer-brand p{
-  margin-top:14px;
-  max-width:280px;
-  color:#71818e;
-  font-size:10px;
-  line-height:1.7;
-}
-
-.footer-title{
-  color:#fff;
-  font-size:10px;
-  font-weight:900;
-  margin-bottom:13px;
-}
-
-.footer a{
-  display:block;
-  margin-bottom:9px;
-  color:#71818e;
-  font-size:10px;
-}
-
-.footer a:hover{
-  color:var(--gold);
-}
-
-.footer-bottom{
-  width:min(100% - 40px,var(--max));
-  margin:auto;
-  padding:14px 0;
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  border-top:1px solid var(--line);
-  color:#5f707f;
-  font-size:9px;
-}
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:10000;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(8px);
-  opacity:0;
-  visibility:hidden;
-  transition:.25s;
-}
-
-.modal.show{
-  opacity:1;
-  visibility:visible;
-}
-
-.modal-box{
-  width:min(470px,100%);
-  padding:28px;
-  position:relative;
-  border:1px solid rgba(245,196,61,.3);
-  border-radius:15px;
-  background:#07131e;
-  box-shadow:0 30px 80px rgba(0,0,0,.7);
-}
-
-.modal-close{
-  position:absolute;
-  top:10px;
-  right:13px;
-  border:0;
-  background:none;
-  color:#8b99a5;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.modal h2{
-  font-size:24px;
-}
-
-.modal h2 span{
-  color:var(--gold);
-}
-
-.modal p{
-  margin-top:10px;
-  color:#80909e;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.subscribe-form{
-  margin-top:20px;
-  display:flex;
-  gap:8px;
-}
-
-.subscribe-form input{
-  flex:1;
-  min-width:0;
-  height:46px;
-  padding:0 13px;
-  border:1px solid #263b4d;
-  border-radius:7px;
-  outline:0;
-  background:#040b12;
-  color:#fff;
-}
-
-.subscribe-form button{
-  height:46px;
-  padding:0 16px;
-  border:0;
-  border-radius:7px;
-  background:var(--gold);
-  color:#06101a;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.form-message{
-  margin-top:10px;
-  color:var(--green);
-  font-size:11px;
-}
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-.toast{
-  position:fixed;
+  top:79px;
   left:50%;
-  bottom:25px;
-  z-index:11000;
-  transform:translate(-50%,20px);
-  padding:12px 17px;
-  border:1px solid rgba(245,196,61,.3);
-  border-radius:8px;
-  background:#07131e;
-  color:#fff;
-  font-size:11px;
+  transform:translate(-50%,8px);
+  width:245px;
+  padding:8px;
+  background:#07101a;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
   opacity:0;
+  visibility:hidden;
   pointer-events:none;
-  transition:.25s;
+  transition:.18s ease;
 }
 
-.toast.show{
+.gf-nav-item:hover .gf-dropdown{
   opacity:1;
+  visibility:visible;
+  pointer-events:auto;
   transform:translate(-50%,0);
 }
 
+.gf-dropdown-title{
+  padding:10px 11px 7px;
+  color:#f4c735;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.gf-dropdown a{
+  display:block;
+  padding:11px;
+  border-radius:7px;
+  color:#cbd2db;
+  text-decoration:none;
+  font-size:12px;
+  transition:.18s;
+}
+
+.gf-dropdown a:hover{
+  background:rgba(244,199,53,.08);
+  color:#f4c735;
+}
+
 /* =========================================================
-   TABLET
-   ========================================================= */
+   RIGHT ACTIONS
+========================================================= */
 
-@media(max-width:1150px){
+.gf-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  min-width:190px;
+  flex-shrink:0;
+}
 
-  .header-inner{
-    padding-left:17px;
-    padding-right:17px;
-    gap:12px;
+.gf-icon-btn{
+  width:39px;
+  height:39px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:9px;
+  background:#07101a;
+  color:#e3e8ed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.gf-icon-btn:hover{
+  color:#f4c735;
+  border-color:#f4c735;
+}
+
+.gf-icon-btn svg{
+  width:17px;
+  height:17px;
+}
+
+.gf-sub-btn{
+  height:39px;
+  padding:0 15px;
+  border:1px solid #f4c735;
+  border-radius:8px;
+  background:#f4c735;
+  color:#05080c;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.gf-sub-btn:hover{
+  background:#ffd957;
+  transform:translateY(-1px);
+}
+
+.gf-lang{
+  position:relative;
+}
+
+.gf-lang-btn{
+  height:39px;
+  border:0;
+  background:transparent;
+  color:#dfe4e9;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:700;
+}
+
+.gf-lang-menu{
+  position:absolute;
+  right:0;
+  top:46px;
+  width:110px;
+  padding:6px;
+  background:#07101a;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:10px;
+  display:none;
+  box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+.gf-lang.open .gf-lang-menu{
+  display:block;
+}
+
+.gf-lang-menu button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#cbd2db;
+  padding:9px;
+  text-align:left;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.gf-lang-menu button:hover{
+  background:rgba(244,199,53,.08);
+  color:#f4c735;
+}
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.gf-mobile-toggle{
+  display:none;
+  width:40px;
+  height:40px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:9px;
+  background:#07101a;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:5px;
+}
+
+.gf-mobile-toggle span{
+  width:19px;
+  height:2px;
+  background:#fff;
+  border-radius:2px;
+  transition:.2s;
+}
+
+.gf-mobile-toggle.open span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+
+.gf-mobile-toggle.open span:nth-child(2){
+  opacity:0;
+}
+
+.gf-mobile-toggle.open span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE PANEL
+========================================================= */
+
+.gf-mobile-panel{
+  display:none;
+  width:100%;
+  background:#050b13;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  padding:8px 12px 14px;
+  max-height:calc(100vh - 110px);
+  overflow-y:auto;
+}
+
+.gf-mobile-panel.open{
+  display:block;
+}
+
+.gf-mobile-link{
+  width:100%;
+  min-height:48px;
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:transparent;
+  color:#dfe4ea;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.gf-mobile-link:hover{
+  color:#f4c735;
+}
+
+.gf-mobile-sub{
+  display:none;
+  padding:3px 0 7px 10px;
+}
+
+.gf-mobile-sub.open{
+  display:block;
+}
+
+.gf-mobile-sub a{
+  display:block;
+  padding:11px 13px;
+  color:#929eab;
+  text-decoration:none;
+  font-size:12px;
+  border-left:1px solid rgba(244,199,53,.35);
+}
+
+.gf-mobile-sub a:hover{
+  color:#f4c735;
+}
+
+/* =========================================================
+   SEARCH OVERLAY
+========================================================= */
+
+.gf-search-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(7px);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:105px;
+  z-index:100000;
+}
+
+.gf-search-overlay.open{
+  display:flex;
+}
+
+.gf-search-box{
+  width:min(680px,92%);
+  background:#07101a;
+  border:1px solid rgba(244,199,53,.35);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 25px 80px rgba(0,0,0,.55);
+}
+
+.gf-search-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.gf-search-input{
+  flex:1;
+  height:48px;
+  border:1px solid rgba(255,255,255,.13);
+  background:#03070d;
+  color:#fff;
+  border-radius:9px;
+  outline:none;
+  padding:0 14px;
+  font-size:14px;
+}
+
+.gf-search-input:focus{
+  border-color:#f4c735;
+}
+
+.gf-search-close{
+  width:42px;
+  height:42px;
+  border:0;
+  background:transparent;
+  color:#aaa;
+  cursor:pointer;
+  font-size:25px;
+}
+
+.gf-search-results{
+  padding-top:13px;
+}
+
+.gf-search-result{
+  padding:12px;
+  border-radius:8px;
+  color:#cdd4dc;
+  font-size:12px;
+}
+
+.gf-search-result:hover{
+  background:rgba(244,199,53,.07);
+  color:#f4c735;
+}
+
+/* =========================================================
+   SUBSCRIBE MODAL
+========================================================= */
+
+.gf-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(7px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100001;
+  padding:20px;
+}
+
+.gf-modal.open{
+  display:flex;
+}
+
+.gf-modal-card{
+  width:min(440px,100%);
+  background:#07101a;
+  border:1px solid rgba(244,199,53,.35);
+  border-radius:18px;
+  padding:26px;
+  position:relative;
+  box-shadow:0 25px 80px rgba(0,0,0,.55);
+}
+
+.gf-modal-close{
+  position:absolute;
+  top:12px;
+  right:15px;
+  border:0;
+  background:transparent;
+  color:#888;
+  font-size:23px;
+  cursor:pointer;
+}
+
+.gf-modal-card h2{
+  margin:0 0 7px;
+  font-size:22px;
+}
+
+.gf-modal-card h2 span{
+  color:#f4c735;
+}
+
+.gf-modal-card p{
+  color:#8d99a7;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+.gf-email{
+  width:100%;
+  height:46px;
+  border:1px solid rgba(255,255,255,.13);
+  background:#03070d;
+  border-radius:8px;
+  padding:0 13px;
+  color:#fff;
+  outline:none;
+}
+
+.gf-email:focus{
+  border-color:#f4c735;
+}
+
+.gf-modal-submit{
+  width:100%;
+  height:45px;
+  margin-top:10px;
+  border:0;
+  border-radius:8px;
+  background:#f4c735;
+  color:#05080c;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* =========================================================
+   DESKTOP SIZES
+========================================================= */
+
+@media(max-width:1180px){
+
+  .gf-main{
+    padding:0 15px;
   }
 
-  .brand-name{
-    font-size:18px;
+  .gf-logo{
+    min-width:205px;
   }
 
-  .tagline{
-    font-size:6px;
+  .gf-nav-btn{
+    padding:0 7px;
+    font-size:10.5px;
   }
 
-  .nav-link,
-  .more-button{
-    padding:0 6px;
-    font-size:10px;
+  .gf-actions{
+    min-width:170px;
   }
 
-  .nav-icon{
-    font-size:13px;
-  }
-
-  .actions .youtube{
+  .gf-lang-btn{
     display:none;
-  }
-
-  .quick-tools{
-    grid-template-columns:repeat(5,1fr);
-  }
-
-  .quick:nth-child(5){
-    border-right:0;
-  }
-
-  .quick:nth-child(n+6){
-    border-top:1px solid var(--line);
-  }
-
-  .market-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .mover-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .news-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .expert{
-    grid-column:span 2;
-  }
-
-  .footer-inner{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .footer-brand{
-    grid-column:span 3;
   }
 }
 
 /* =========================================================
-   MOBILE
-   ========================================================= */
+   TABLET / MOBILE
+========================================================= */
 
-@media(max-width:800px){
+@media(max-width:900px){
 
-  body{
-    background:#030a11;
-  }
-
-  .top-ticker{
-    height:34px;
-  }
-
-  .ticker-item{
-    height:34px;
-    padding:0 13px;
-    font-size:9px;
-  }
-
-  .header{
-    position:sticky;
-  }
-
-  .header-inner{
+  .gf-main{
     min-height:70px;
-    padding:9px 12px;
-    gap:7px;
-  }
-
-  .logo{
-    width:43px;
-    height:43px;
-  }
-
-  .logo svg{
-    width:30px;
-    height:30px;
-  }
-
-  .brand-name{
-    font-size:15px;
-    letter-spacing:-.4px;
-  }
-
-  .tagline{
-    margin-top:5px;
-    font-size:5px;
-    letter-spacing:1.2px;
-  }
-
-  .nav{
-    display:none;
-  }
-
-  .actions{
-    margin-left:auto;
-    gap:5px;
-  }
-
-  .action{
-    width:40px;
-    min-width:40px;
-    height:40px;
-    padding:0;
-  }
-
-  .action.search-btn{
-    display:flex;
-  }
-
-  .action.subscribe{
-    font-size:0;
-  }
-
-  .action.subscribe:before{
-    content:"✉";
-    font-size:17px;
-  }
-
-  .youtube{
-    display:flex;
-    font-size:0;
-  }
-
-  .youtube-icon{
-    font-size:17px;
-  }
-
-  .language{
-    display:none;
-  }
-
-  .menu-btn{
-    display:flex;
-  }
-
-  .container{
-    width:calc(100% - 20px);
-  }
-
-  /* MOBILE HERO */
-
-  .hero{
-    margin-top:10px;
-    min-height:auto;
-    grid-template-columns:1fr;
-  }
-
-  .hero-content{
-    padding:30px 19px 20px;
-  }
-
-  .hero h1{
-    margin-top:17px;
-    font-size:39px;
-    letter-spacing:-1.8px;
-  }
-
-  .hero p{
-    margin-top:15px;
-    font-size:12px;
-    line-height:1.6;
-  }
-
-  .search-box{
-    height:47px;
-    margin-top:19px;
-  }
-
-  .search-box button{
-    width:52px;
-  }
-
-  .hero-stats{
-    margin-top:20px;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-  }
-
-  .stat strong{
-    font-size:16px;
-  }
-
-  .hero-visual{
-    min-height:380px;
-  }
-
-  .globe{
-    width:390px;
-    max-width:95%;
-    right:50%;
-    transform:translate(50%,-50%);
-    top:52%;
-  }
-
-  .market-floating{
-    top:15px;
-    right:10px;
-    width:170px;
-  }
-
-  .float-row{
-    padding:7px 3px;
-  }
-
-  .coin{
-    width:25px;
-    height:25px;
-  }
-
-  .float-name{
-    font-size:8px;
-  }
-
-  .float-price,
-  .float-change{
-    font-size:8px;
-  }
-
-  /* QUICK */
-
-  .quick-tools{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .quick{
-    min-height:82px;
-    border-right:1px solid var(--line);
-    border-top:1px solid var(--line);
-  }
-
-  .quick:nth-child(-n+2){
-    border-top:0;
-  }
-
-  .quick:nth-child(2n){
-    border-right:0;
-  }
-
-  /* BREAKING */
-
-  .breaking{
-    min-height:52px;
-  }
-
-  .breaking-label{
-    min-height:52px;
     padding:0 12px;
-    font-size:9px;
   }
 
-  .breaking-news{
-    padding:0 18px;
-    font-size:10px;
+  .gf-nav{
+    display:none;
   }
 
-  /* MARKET */
-
-  .section{
-    margin-top:22px;
+  .gf-logo{
+    min-width:auto;
   }
 
-  .section-title{
-    font-size:14px;
+  .gf-logo-mark{
+    width:42px;
+    height:42px;
   }
 
-  .market-grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
+  .gf-logo-mark:before{
+    font-size:24px;
   }
 
-  .market-card{
-    padding:13px;
+  .gf-logo-title{
+    font-size:17px;
   }
 
-  .market-price{
-    font-size:16px;
+  .gf-logo-sub{
+    font-size:6px;
+    letter-spacing:1px;
   }
 
-  /* MOVERS */
-
-  .mover-grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
+  .gf-actions{
+    margin-left:auto;
+    min-width:auto;
   }
 
-  .mover{
-    padding:14px;
+  .gf-mobile-toggle{
+    display:flex;
   }
 
-  .mover strong{
-    font-size:14px;
-  }
-
-  /* NEWS */
-
-  .news-grid{
-    grid-template-columns:1fr;
-  }
-
-  .expert{
-    grid-column:auto;
-  }
-
-  .news-image{
-    height:170px;
-  }
-
-  /* CTA */
-
-  .cta{
-    padding:21px;
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .cta h2{
-    font-size:19px;
-  }
-
-  .cta-button{
-    width:100%;
-  }
-
-  /* FOOTER */
-
-  .footer-inner{
-    width:calc(100% - 30px);
-    grid-template-columns:repeat(2,1fr);
-    gap:25px 18px;
-  }
-
-  .footer-brand{
-    grid-column:span 2;
-  }
-
-  .footer-bottom{
-    width:calc(100% - 30px);
-    flex-direction:column;
-    text-align:center;
+  .gf-sub-btn{
+    padding:0 12px;
   }
 }
 
 /* =========================================================
-   SMALL PHONE
-   ========================================================= */
+   PHONE
+========================================================= */
 
-@media(max-width:430px){
+@media(max-width:520px){
 
-  .header-inner{
-    padding-left:9px;
-    padding-right:9px;
+  .gf-ticker{
+    height:34px;
   }
 
-  .brand{
+  .gf-tick{
+    height:34px;
+    padding:0 14px;
+    font-size:9px;
+  }
+
+  .gf-main{
+    min-height:65px;
+    padding:0 9px;
+  }
+
+  .gf-logo{
     gap:7px;
   }
 
-  .brand-name{
-    font-size:13px;
+  .gf-logo-mark{
+    width:38px;
+    height:38px;
   }
 
-  .tagline{
-    font-size:4px;
-    letter-spacing:.8px;
-  }
-
-  .logo{
-    width:39px;
-    height:39px;
-  }
-
-  .logo svg{
+  .gf-logo-mark:after{
     width:27px;
     height:27px;
   }
 
-  .actions{
-    gap:3px;
+  .gf-logo-mark:before{
+    font-size:21px;
   }
 
-  .action{
+  .gf-logo-title{
+    font-size:15px;
+  }
+
+  .gf-logo-sub{
+    margin-top:4px;
+    font-size:5px;
+    letter-spacing:.8px;
+  }
+
+  .gf-actions{
+    gap:4px;
+  }
+
+  .gf-icon-btn,
+  .gf-mobile-toggle{
     width:36px;
-    min-width:36px;
     height:36px;
   }
 
-  .hero h1{
-    font-size:34px;
-  }
-
-  .hero-visual{
-    min-height:330px;
-  }
-
-  .market-floating{
-    width:155px;
-  }
-
-  .market-grid,
-  .mover-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .quick strong{
+  .gf-sub-btn{
+    height:36px;
+    padding:0 9px;
     font-size:9px;
   }
 
-  .quick small{
-    font-size:7px;
-  }
-}
-
-/* =========================================================
-   VERY SMALL PHONE
-   ========================================================= */
-
-@media(max-width:360px){
-
-  .brand-name{
-    font-size:12px;
+  .gf-search-overlay{
+    padding-top:78px;
   }
 
-  .tagline{
-    display:none;
-  }
-
-  .action{
-    width:34px;
-    min-width:34px;
-  }
-
-  .hero h1{
-    font-size:31px;
-  }
-
-  .market-floating{
-    transform:scale(.9);
-    transform-origin:top right;
+  .gf-search-box{
+    padding:12px;
   }
 }
 </style>
@@ -1732,1523 +820,1015 @@ a{
 
 <body>
 
-<!-- =======================================================
-     TOP MARKET BAR
-     ======================================================= -->
+<div class="gf-wrap">
 
-<div class="top-ticker">
-  <div class="ticker-track">
+<!-- =====================================================
+     MARKET TICKER
+===================================================== -->
 
-    <div class="ticker-item">
-      <span class="live-dot"></span>
-      LIVE MARKETS
-    </div>
+<div class="gf-ticker">
 
-    <div class="ticker-item">
-      NIFTY 50 <b>24,834.85</b>
-      <span class="up">▲ 0.75%</span>
-    </div>
+<div class="gf-ticker-track">
 
-    <div class="ticker-item">
-      SENSEX <b>81,330.56</b>
-      <span class="up">▲ 0.68%</span>
-    </div>
+<div class="gf-tick">
+<span class="gf-live-dot"></span>
+<span class="gf-live">LIVE</span>
+</div>
 
-    <div class="ticker-item">
-      NASDAQ <b>17,689.66</b>
-      <span class="up">▲ 0.92%</span>
-    </div>
+<div class="gf-tick">
+<span class="gf-tick-name">NIFTY 50</span>
+<span class="gf-tick-price">24,834.85</span>
+<span class="gf-up">▲ 0.75%</span>
+</div>
 
-    <div class="ticker-item">
-      GOLD <b>$2,341.20</b>
-      <span class="up">▲ 0.64%</span>
-    </div>
+<div class="gf-tick">
+<span class="gf-tick-name">SENSEX</span>
+<span class="gf-tick-price">81,330.56</span>
+<span class="gf-up">▲ 0.68%</span>
+</div>
 
-    <div class="ticker-item">
-      BTC/USD <b>$67,853.42</b>
-      <span class="up">▲ 2.35%</span>
-    </div>
+<div class="gf-tick">
+<span class="gf-tick-name">NASDAQ</span>
+<span class="gf-tick-price">17,689.66</span>
+<span class="gf-up">▲ 0.92%</span>
+</div>
 
-    <div class="ticker-item">
-      ETH/USD <b>$3,214.67</b>
-      <span class="up">▲ 1.25%</span>
-    </div>
+<div class="gf-tick">
+<span class="gf-tick-name">DOW JONES</span>
+<span class="gf-tick-price">39,431.51</span>
+<span class="gf-up">▲ 0.81%</span>
+</div>
 
-    <!-- duplicate for smooth ticker -->
+<div class="gf-tick">
+<span class="gf-tick-name">GOLD</span>
+<span class="gf-tick-price">$2,341.20</span>
+<span class="gf-up">▲ 0.64%</span>
+</div>
 
-    <div class="ticker-item">
-      <span class="live-dot"></span>
-      LIVE MARKETS
-    </div>
+<div class="gf-tick">
+<span class="gf-tick-name">BTC/USD</span>
+<span class="gf-tick-price">$67,853</span>
+<span class="gf-up">▲ 2.35%</span>
+</div>
 
-    <div class="ticker-item">
-      NIFTY 50 <b>24,834.85</b>
-      <span class="up">▲ 0.75%</span>
-    </div>
-
-    <div class="ticker-item">
-      SENSEX <b>81,330.56</b>
-      <span class="up">▲ 0.68%</span>
-    </div>
-
-    <div class="ticker-item">
-      NASDAQ <b>17,689.66</b>
-      <span class="up">▲ 0.92%</span>
-    </div>
-
-  </div>
+<div class="gf-tick">
+<span class="gf-tick-name">ETH/USD</span>
+<span class="gf-tick-price">$3,214</span>
+<span class="gf-up">▲ 1.25%</span>
 </div>
 
 
-<!-- =======================================================
-     HEADER
-     ======================================================= -->
-
-<header class="header">
-
-  <div class="header-inner">
-
-    <!-- LOGO -->
-
-    <a href="#" class="brand">
-
-      <div class="logo">
-
-        <svg viewBox="0 0 100 100">
-
-          <circle
-            cx="50"
-            cy="50"
-            r="39"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="3"
-          />
-
-          <polyline
-            points="23,67 37,53 48,60 68,35"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-          <polyline
-            points="58,35 68,35 68,45"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-
-        </svg>
-
-      </div>
-
-      <div>
-        <div class="brand-name">
-          GLOBAL <span>FINANCE</span>
-        </div>
-
-        <div class="tagline">
-          SMARTER DECISIONS, STRONGER FUTURE
-        </div>
-      </div>
-
-    </a>
-
-
-    <!-- DESKTOP NAVIGATION -->
-
-    <nav class="nav">
-
-      <a href="#home" class="nav-link active">
-        <span class="nav-icon">⌂</span>
-        Home
-      </a>
-
-      <a href="#markets" class="nav-link">
-        <span class="nav-icon">⌁</span>
-        Markets
-        <span class="arrow">▼</span>
-      </a>
-
-      <a href="#trading" class="nav-link">
-        <span class="nav-icon">▥</span>
-        Trading
-        <span class="arrow">▼</span>
-      </a>
-
-      <a href="#investing" class="nav-link">
-        <span class="nav-icon">◈</span>
-        Investing
-        <span class="arrow">▼</span>
-      </a>
-
-      <a href="#crypto" class="nav-link">
-        <span class="nav-icon">₿</span>
-        Crypto
-      </a>
-
-      <a href="#forex" class="nav-link">
-        <span class="nav-icon">$</span>
-        Forex
-        <span class="arrow">▼</span>
-      </a>
-
-      <a href="#news" class="nav-link">
-        <span class="nav-icon">▤</span>
-        News
-        <span class="arrow">▼</span>
-      </a>
-
-      <a href="#education" class="nav-link">
-        <span class="nav-icon">◆</span>
-        Education
-      </a>
-
-      <a href="#tools" class="nav-link">
-        <span class="nav-icon">⚒</span>
-        Tools
-        <span class="arrow">▼</span>
-      </a>
-
-
-      <!-- MORE -->
-
-      <div class="more-wrap">
-
-        <button class="more-button" id="moreButton">
-          <span class="nav-icon">•••</span>
-          More
-          <span class="arrow">▼</span>
-        </button>
-
-        <div class="more-menu">
-
-          <a href="#watchlist" class="more-item">
-            <span class="more-icon">☆</span>
-            <span>
-              <span class="more-title">Watchlist</span>
-              <span class="more-desc">Track favorite markets</span>
-            </span>
-          </a>
+<!-- duplicate for seamless movement -->
 
-          <a href="#screener" class="more-item">
-            <span class="more-icon">⌕</span>
-            <span>
-              <span class="more-title">Stock Screener</span>
-              <span class="more-desc">Find market opportunities</span>
-            </span>
-          </a>
-
-          <a href="#calendar" class="more-item">
-            <span class="more-icon">▦</span>
-            <span>
-              <span class="more-title">Economic Calendar</span>
-              <span class="more-desc">Important economic events</span>
-            </span>
-          </a>
-
-          <a href="#ipo" class="more-item">
-            <span class="more-icon">◫</span>
-            <span>
-              <span class="more-title">IPO Center</span>
-              <span class="more-desc">Upcoming IPO information</span>
-            </span>
-          </a>
-
-          <a href="#alerts" class="more-item">
-            <span class="more-icon">♢</span>
-            <span>
-              <span class="more-title">Market Alerts</span>
-              <span class="more-desc">Important price alerts</span>
-            </span>
-          </a>
-
-          <a href="#glossary" class="more-item">
-            <span class="more-icon">?</span>
-            <span>
-              <span class="more-title">Finance Glossary</span>
-              <span class="more-desc">Learn financial terms</span>
-            </span>
-          </a>
-
-        </div>
-
-      </div>
-
-    </nav>
-
-
-    <!-- RIGHT ACTIONS -->
-
-    <div class="actions">
-
-      <button class="action search-btn"
-              id="searchButton"
-              title="Search">
-        ⌕
-      </button>
-
-      <button class="action subscribe"
-              id="subscribeButton">
-        ✉ <span>Subscribe</span>
-      </button>
-
-      <a href="#youtube"
-         class="action youtube"
-         title="YouTube">
-        <span class="youtube-icon">▶</span>
-        <span>YouTube</span>
-      </a>
-
-      <button class="action language">
-        EN <span class="arrow">▼</span>
-      </button>
-
-      <button class="action menu-btn"
-              id="menuButton">
-        ☰
-      </button>
-
-    </div>
-
-  </div>
-
-</header>
-
-
-<!-- =======================================================
-     MOBILE DRAWER
-     ======================================================= -->
-
-<div class="overlay" id="overlay"></div>
-
-<aside class="mobile-drawer" id="mobileDrawer">
-
-  <div class="mobile-top">
-
-    <div class="brand">
-
-      <div class="logo">
-        <svg viewBox="0 0 100 100">
-          <circle
-            cx="50"
-            cy="50"
-            r="39"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="3"
-          />
-          <polyline
-            points="23,67 37,53 48,60 68,35"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="6"
-          />
-          <polyline
-            points="58,35 68,35 68,45"
-            fill="none"
-            stroke="#f5c43d"
-            stroke-width="5"
-          />
-        </svg>
-      </div>
-
-      <div>
-        <div class="brand-name">
-          GLOBAL <span>FINANCE</span>
-        </div>
-        <div class="tagline">
-          SMARTER DECISIONS, STRONGER FUTURE
-        </div>
-      </div>
-
-    </div>
-
-    <button class="mobile-close" id="closeMenu">
-      ×
-    </button>
-
-  </div>
-
-
-  <a class="mobile-link" href="#home">
-    🏠 Home
-  </a>
-
-  <a class="mobile-link" href="#markets">
-    📈 Markets
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#trading">
-    📊 Trading
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#investing">
-    💼 Investing
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#crypto">
-    ₿ Crypto
-  </a>
-
-  <a class="mobile-link" href="#forex">
-    💱 Forex
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#news">
-    📰 News
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#education">
-    🎓 Education
-  </a>
-
-  <a class="mobile-link" href="#tools">
-    🛠 Tools
-    <small>›</small>
-  </a>
-
-  <a class="mobile-link" href="#watchlist">
-    ⭐ Watchlist
-  </a>
-
-  <a class="mobile-link" href="#calendar">
-    📅 Economic Calendar
-  </a>
-
-  <a class="mobile-link" href="#alerts">
-    🔔 Alerts
-  </a>
-
-  <a class="mobile-link" href="#youtube">
-    ▶ YouTube
-  </a>
-
-  <button class="drawer-subscribe" id="drawerSubscribe">
-    SUBSCRIBE TO GLOBAL FINANCE
-  </button>
-
-</aside>
-
-
-<!-- =======================================================
-     MAIN CONTENT
-     ======================================================= -->
-
-<main class="container" id="home">
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <div class="badge">
-        ✦ #1 FINANCIAL PLATFORM
-      </div>
-
-      <h1>
-        Smart Decisions<br>
-        Stronger <span>Future</span>
-      </h1>
-
-      <p>
-        Real-time market data, expert insights,
-        financial education and powerful tools
-        for traders and investors.
-      </p>
-
-      <div class="search-box">
-
-        <input
-          id="heroSearch"
-          type="text"
-          placeholder="Search stocks, news, bonds, ETFs..."
-        >
-
-        <button id="heroSearchButton">
-          ⌕
-        </button>
-
-      </div>
-
-      <div class="hero-stats">
-
-        <div class="stat">
-          <strong>150K+</strong>
-          <span>ACTIVE USERS</span>
-        </div>
-
-        <div class="stat">
-          <strong>500+</strong>
-          <span>INSTRUMENTS</span>
-        </div>
-
-        <div class="stat">
-          <strong>50+</strong>
-          <span>COUNTRIES</span>
-        </div>
-
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>MARKET UPDATES</span>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="hero-visual">
-
-      <div class="globe">
-        <div class="chart-line"></div>
-      </div>
-
-
-      <div class="market-floating">
-
-        <div class="float-row">
-          <div class="coin">N</div>
-          <div>
-            <div class="float-name">NIFTY 50</div>
-            <div class="float-price">24,834.85</div>
-          </div>
-          <div class="float-change">▲.75%</div>
-        </div>
-
-        <div class="float-row">
-          <div class="coin">S</div>
-          <div>
-            <div class="float-name">SENSEX</div>
-            <div class="float-price">81,330.56</div>
-          </div>
-          <div class="float-change">▲.68%</div>
-        </div>
-
-        <div class="float-row">
-          <div class="coin">N</div>
-          <div>
-            <div class="float-name">NASDAQ</div>
-            <div class="float-price">17,689.66</div>
-          </div>
-          <div class="float-change">▲.92%</div>
-        </div>
-
-        <div class="float-row">
-          <div class="coin">G</div>
-          <div>
-            <div class="float-name">GOLD</div>
-            <div class="float-price">$2,341.20</div>
-          </div>
-          <div class="float-change">▲.64%</div>
-        </div>
-
-        <div class="float-row">
-          <div class="coin">₿</div>
-          <div>
-            <div class="float-name">BTC/USD</div>
-            <div class="float-price">$67,853.42</div>
-          </div>
-          <div class="float-change">▲2.35%</div>
-        </div>
-
-        <div class="float-row">
-          <div class="coin">Ξ</div>
-          <div>
-            <div class="float-name">ETH/USD</div>
-            <div class="float-price">$3,214.67</div>
-          </div>
-          <div class="float-change">▲1.25%</div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- QUICK TOOLS -->
-
-  <section class="quick-tools">
-
-    <a href="#live" class="quick">
-      <span class="quick-icon">⌁</span>
-      <strong>Live Market</strong>
-      <small>REAL-TIME DATA</small>
-    </a>
-
-    <a href="#overview" class="quick">
-      <span class="quick-icon">◉</span>
-      <strong>Market Overview</strong>
-      <small>GLOBAL INDICES</small>
-    </a>
-
-    <a href="#gainers" class="quick">
-      <span class="quick-icon">↗</span>
-      <strong>Top Gainers</strong>
-      <small>STOCK WINNERS</small>
-    </a>
-
-    <a href="#losers" class="quick">
-      <span class="quick-icon">↓</span>
-      <strong>Top Losers</strong>
-      <small>STOCK LOSERS</small>
-    </a>
-
-    <a href="#screener" class="quick">
-      <span class="quick-icon">⌕</span>
-      <strong>Stock Screener</strong>
-      <small>SMART SCANNER</small>
-    </a>
-
-    <a href="#calendar" class="quick">
-      <span class="quick-icon">▦</span>
-      <strong>Economic Calendar</strong>
-      <small>KEY EVENTS</small>
-    </a>
-
-    <a href="#news" class="quick">
-      <span class="quick-icon">▤</span>
-      <strong>News & Insights</strong>
-      <small>LATEST UPDATES</small>
-    </a>
-
-    <a href="#portfolio" class="quick">
-      <span class="quick-icon">▣</span>
-      <strong>Portfolio</strong>
-      <small>TRACK & MANAGE</small>
-    </a>
-
-    <a href="#alerts" class="quick">
-      <span class="quick-icon">♧</span>
-      <strong>Alerts</strong>
-      <small>PRICE ALERTS</small>
-    </a>
-
-    <a href="#community" class="quick">
-      <span class="quick-icon">♧</span>
-      <strong>Community</strong>
-      <small>JOIN TRADERS</small>
-    </a>
-
-  </section>
-
-
-  <!-- BREAKING NEWS -->
-
-  <section class="breaking">
-
-    <div class="breaking-label">
-      ⚡ BREAKING NEWS
-    </div>
-
-    <div class="breaking-track">
-
-      <div class="breaking-content">
-
-        <span class="breaking-news">
-          Global Stocks Rally as Tech Leads Gains
-        </span>
-
-        <span class="breaking-news">
-          Fed Signals Possible Rate Cut in Next Meeting
-        </span>
-
-        <span class="breaking-news">
-          Bitcoin Surges Past $67K Mark Again
-        </span>
-
-        <span class="breaking-news">
-          Gold Prices Climb on Global Uncertainty
-        </span>
-
-        <span class="breaking-news">
-          Top Stocks to Watch This Week
-        </span>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- MARKET OVERVIEW -->
-
-  <section class="section" id="overview">
-
-    <div class="section-head">
-
-      <h2 class="section-title">
-        MARKET OVERVIEW
-      </h2>
-
-      <a href="#markets" class="section-link">
-        View All Markets →
-      </a>
-
-    </div>
-
-
-    <div class="market-grid">
-
-      <article class="market-card">
-        <div class="market-name">NIFTY 50</div>
-        <div class="market-price">24,834.85</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 0.75%</span>
-          <span>IN</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,25 15,22 25,24 38,15 51,18 63,10 78,15 91,7 108,12 125,5 150,8"
-              fill="none" stroke="#25df78" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="market-card">
-        <div class="market-name">SENSEX</div>
-        <div class="market-price">81,330.56</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 0.68%</span>
-          <span>IN</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,25 15,20 30,22 45,14 58,18 70,12 85,14 100,7 115,10 130,5 150,7"
-              fill="none" stroke="#25df78" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="market-card">
-        <div class="market-name">NASDAQ</div>
-        <div class="market-price">17,689.66</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 0.92%</span>
-          <span>US</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,27 15,21 27,24 42,13 57,16 70,9 86,12 103,6 117,9 135,3 150,5"
-              fill="none" stroke="#25df78" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="market-card">
-        <div class="market-name">DOW JONES</div>
-        <div class="market-price">39,431.51</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 0.81%</span>
-          <span>US</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,24 14,20 28,21 41,16 55,19 70,11 83,14 98,8 112,11 128,5 150,7"
-              fill="none" stroke="#25df78" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="market-card">
-        <div class="market-name">BTC/USD</div>
-        <div class="market-price">$67,853</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 2.35%</span>
-          <span>CRYPTO</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,25 16,21 29,24 43,15 57,20 72,8 86,13 100,5 118,10 133,4 150,7"
-              fill="none" stroke="#f5c43d" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="market-card">
-        <div class="market-name">ETH/USD</div>
-        <div class="market-price">$3,214</div>
-        <div class="market-bottom">
-          <span class="market-change">▲ 1.25%</span>
-          <span>CRYPTO</span>
-        </div>
-        <div class="spark">
-          <svg viewBox="0 0 150 30" preserveAspectRatio="none">
-            <polyline points="0,26 14,22 29,24 42,17 57,20 73,11 88,15 104,7 120,11 136,5 150,8"
-              fill="none" stroke="#b877ff" stroke-width="2"/>
-          </svg>
-        </div>
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <!-- MARKET MOVERS -->
-
-  <section class="section" id="gainers">
-
-    <div class="section-head">
-      <h2 class="section-title">MARKET MOVERS</h2>
-      <a href="#markets" class="section-link">View More →</a>
-    </div>
-
-    <div class="tabs">
-
-      <button class="tab active">Top Gainers</button>
-      <button class="tab">Top Losers</button>
-      <button class="tab">Most Active</button>
-      <button class="tab">52 Week High</button>
-      <button class="tab">52 Week Low</button>
-
-    </div>
-
-    <div class="mover-grid">
-
-      <article class="mover">
-        <strong>RELIANCE</strong>
-        <small>Reliance Industries</small>
-        <div class="mover-bottom">
-          <span class="mover-price">₹2,945.30</span>
-          <span class="mover-up">▲ 2.45%</span>
-        </div>
-      </article>
-
-      <article class="mover">
-        <strong>TCS</strong>
-        <small>Tata Consultancy</small>
-        <div class="mover-bottom">
-          <span class="mover-price">₹3,910.75</span>
-          <span class="mover-up">▲ 2.01%</span>
-        </div>
-      </article>
-
-      <article class="mover">
-        <strong>HDFCBANK</strong>
-        <small>HDFC Bank</small>
-        <div class="mover-bottom">
-          <span class="mover-price">₹1,688.40</span>
-          <span class="mover-up">▲ 1.85%</span>
-        </div>
-      </article>
-
-      <article class="mover">
-        <strong>INFY</strong>
-        <small>Infosys Limited</small>
-        <div class="mover-bottom">
-          <span class="mover-price">₹1,525.60</span>
-          <span class="mover-up">▲ 1.65%</span>
-        </div>
-      </article>
-
-      <article class="mover">
-        <strong>ICICIBANK</strong>
-        <small>ICICI Bank</small>
-        <div class="mover-bottom">
-          <span class="mover-price">₹1,234.90</span>
-          <span class="mover-up">▲ 1.40%</span>
-        </div>
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <!-- NEWS -->
-
-  <section class="section" id="news">
-
-    <div class="section-head">
-      <h2 class="section-title">LATEST FINANCIAL NEWS</h2>
-      <a href="#news" class="section-link">View All News →</a>
-    </div>
-
-    <div class="news-grid">
-
-      <article class="news-card">
-
-        <div class="news-image">
-          <span>MARKETS</span>
-        </div>
-
-        <div class="news-body">
-          <h3>
-            Global Markets Rally as Tech Stocks Lead Gains
-          </h3>
-          <div class="news-time">2 hours ago</div>
-        </div>
-
-      </article>
-
-
-      <article class="news-card">
-
-        <div class="news-image">
-          <span>ECONOMY</span>
-        </div>
-
-        <div class="news-body">
-          <h3>
-            Fed Signals Possible Rate Cut in Next Meeting
-          </h3>
-          <div class="news-time">3 hours ago</div>
-        </div>
-
-      </article>
-
-
-      <article class="news-card">
-
-        <div class="news-image">
-          <span>CRYPTO</span>
-        </div>
-
-        <div class="news-body">
-          <h3>
-            Bitcoin Surges Past $67K Mark Again
-          </h3>
-          <div class="news-time">5 hours ago</div>
-        </div>
-
-      </article>
-
-
-      <article class="news-card">
-
-        <div class="news-image">
-          <span>STOCKS</span>
-        </div>
-
-        <div class="news-body">
-          <h3>
-            Top 10 Stocks to Watch This Week
-          </h3>
-          <div class="news-time">6 hours ago</div>
-        </div>
-
-      </article>
-
-
-      <article class="expert">
-
-        <div class="expert-label">
-          EXPERT OPINION
-        </div>
-
-        <blockquote>
-          “The key to successful investing is patience,
-          discipline and a long-term perspective.”
-        </blockquote>
-
-        <div class="expert-author">
-          — Warren Buffett
-        </div>
-
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <!-- CTA -->
-
-  <section class="cta">
-
-    <div>
-      <h2>Join 150,000+ Traders & Investors</h2>
-      <p>
-        Real-time data • Advanced tools • Market insights • 24/7 updates
-      </p>
-    </div>
-
-    <button class="cta-button" id="ctaButton">
-      Get Started Now
-    </button>
-
-  </section>
-
-</main>
-
-
-<!-- =======================================================
-     FOOTER
-     ======================================================= -->
-
-<footer class="footer">
-
-  <div class="footer-inner">
-
-    <div class="footer-brand">
-
-      <div class="brand">
-
-        <div class="logo">
-          <svg viewBox="0 0 100 100">
-            <circle
-              cx="50"
-              cy="50"
-              r="39"
-              fill="none"
-              stroke="#f5c43d"
-              stroke-width="3"
-            />
-            <polyline
-              points="23,67 37,53 48,60 68,35"
-              fill="none"
-              stroke="#f5c43d"
-              stroke-width="6"
-            />
-          </svg>
-        </div>
-
-        <div>
-          <div class="brand-name">
-            GLOBAL <span>FINANCE</span>
-          </div>
-          <div class="tagline">
-            SMARTER DECISIONS, STRONGER FUTURE
-          </div>
-        </div>
-
-      </div>
-
-      <p>
-        Your trusted destination for financial markets,
-        trading education, market insights and powerful
-        tools for smarter financial decisions.
-      </p>
-
-    </div>
-
-
-    <div>
-      <div class="footer-title">MARKETS</div>
-      <a href="#stocks">Stocks</a>
-      <a href="#indices">Indices</a>
-      <a href="#commodities">Commodities</a>
-      <a href="#crypto">Cryptocurrency</a>
-      <a href="#forex">Forex</a>
-    </div>
-
-
-    <div>
-      <div class="footer-title">TRADING</div>
-      <a href="#trading">Trading Platform</a>
-      <a href="#strategies">Trading Strategies</a>
-      <a href="#risk">Risk Management</a>
-      <a href="#analysis">Technical Analysis</a>
-      <a href="#charts">Chart Patterns</a>
-    </div>
-
-
-    <div>
-      <div class="footer-title">INVESTING</div>
-      <a href="#longterm">Long Term Investing</a>
-      <a href="#portfolio">Portfolio Management</a>
-      <a href="#funds">Mutual Funds</a>
-      <a href="#bonds">Bonds</a>
-      <a href="#ipo">IPO</a>
-    </div>
-
-
-    <div>
-      <div class="footer-title">EDUCATION</div>
-      <a href="#beginner">Beginner Guide</a>
-      <a href="#videos">Video Tutorials</a>
-      <a href="#webinars">Webinars</a>
-      <a href="#ebooks">E-books</a>
-      <a href="#glossary">Glossary</a>
-    </div>
-
-
-    <div>
-      <div class="footer-title">TOOLS</div>
-      <a href="#screener">Stock Screener</a>
-      <a href="#calendar">Economic Calendar</a>
-      <a href="#calculator">Calculators</a>
-      <a href="#converter">Currency Converter</a>
-      <a href="#alerts">Alerts</a>
-    </div>
-
-  </div>
-
-
-  <div class="footer-bottom">
-
-    <span>
-      © 2026 Global Finance. All Rights Reserved.
-    </span>
-
-    <span>
-      Sitemap &nbsp; • &nbsp;
-      Disclaimer &nbsp; • &nbsp;
-      Privacy Policy &nbsp; • &nbsp;
-      Terms of Use
-    </span>
-
-  </div>
-
-</footer>
-
-
-<!-- =======================================================
-     SUBSCRIBE MODAL
-     ======================================================= -->
-
-<div class="modal" id="subscribeModal">
-
-  <div class="modal-box">
-
-    <button class="modal-close" id="closeModal">
-      ×
-    </button>
-
-    <h2>
-      Stay Ahead With
-      <span>Global Finance</span>
-    </h2>
-
-    <p>
-      Receive financial news, market insights,
-      educational updates and important alerts
-      directly in your inbox.
-    </p>
-
-    <form class="subscribe-form" id="subscribeForm">
-
-      <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-        required
-      >
-
-      <button type="submit">
-        Subscribe
-      </button>
-
-    </form>
-
-    <div class="form-message" id="formMessage"></div>
-
-  </div>
+<div class="gf-tick">
+<span class="gf-live-dot"></span>
+<span class="gf-live">LIVE</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">NIFTY 50</span>
+<span class="gf-tick-price">24,834.85</span>
+<span class="gf-up">▲ 0.75%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">SENSEX</span>
+<span class="gf-tick-price">81,330.56</span>
+<span class="gf-up">▲ 0.68%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">NASDAQ</span>
+<span class="gf-tick-price">17,689.66</span>
+<span class="gf-up">▲ 0.92%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">DOW JONES</span>
+<span class="gf-tick-price">39,431.51</span>
+<span class="gf-up">▲ 0.81%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">GOLD</span>
+<span class="gf-tick-price">$2,341.20</span>
+<span class="gf-up">▲ 0.64%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">BTC/USD</span>
+<span class="gf-tick-price">$67,853</span>
+<span class="gf-up">▲ 2.35%</span>
+</div>
+
+<div class="gf-tick">
+<span class="gf-tick-name">ETH/USD</span>
+<span class="gf-tick-price">$3,214</span>
+<span class="gf-up">▲ 1.25%</span>
+</div>
+
+</div>
+</div>
+
+
+<!-- =====================================================
+     MAIN NAVIGATION
+===================================================== -->
+
+<div class="gf-main">
+
+<a href="/" class="gf-logo">
+
+<div class="gf-logo-mark"></div>
+
+<div>
+<div class="gf-logo-title">
+GLOBAL <span>FINANCE</span>
+</div>
+
+<div class="gf-logo-sub">
+SMARTER DECISIONS • STRONGER FUTURE
+</div>
+</div>
+
+</a>
+
+
+<!-- DESKTOP NAV -->
+
+<nav class="gf-nav">
+
+
+<!-- HOME -->
+
+<div class="gf-nav-item active">
+<button class="gf-nav-btn" onclick="gfGo('/')">
+HOME
+</button>
+</div>
+
+
+<!-- MARKETS -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+MARKETS <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Markets
+</div>
+
+<a href="#">Global Markets</a>
+<a href="#">Stocks & Equities</a>
+<a href="#">Indices</a>
+<a href="#">Commodities</a>
+<a href="#">Market Watch</a>
+
+</div>
+</div>
+
+
+<!-- TRADING -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+TRADING <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Trading
+</div>
+
+<a href="#">Trading Basics</a>
+<a href="#">Technical Analysis</a>
+<a href="#">Trading Strategies</a>
+<a href="#">Indicators</a>
+<a href="#">Risk Management</a>
+
+</div>
+</div>
+
+
+<!-- INVESTING -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+INVESTING <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Investing
+</div>
+
+<a href="#">Stock Investing</a>
+<a href="#">Long-Term Investing</a>
+<a href="#">ETFs</a>
+<a href="#">Mutual Funds</a>
+<a href="#">Portfolio Planning</a>
+
+</div>
+</div>
+
+
+<!-- FOREX -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+FOREX <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Forex
+</div>
+
+<a href="#">Forex Basics</a>
+<a href="#">Currency Pairs</a>
+<a href="#">Forex Analysis</a>
+<a href="#">Economic Calendar</a>
+
+</div>
+</div>
+
+
+<!-- CRYPTO -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+CRYPTO
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Crypto
+</div>
+
+<a href="#">Bitcoin</a>
+<a href="#">Ethereum</a>
+<a href="#">Crypto Markets</a>
+<a href="#">Blockchain</a>
+
+</div>
+</div>
+
+
+<!-- NEWS -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+NEWS <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+News
+</div>
+
+<a href="#">Latest News</a>
+<a href="#">Market News</a>
+<a href="#">Business News</a>
+<a href="#">Economy</a>
+<a href="#">Global News</a>
+
+</div>
+</div>
+
+
+<!-- EDUCATION -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+EDUCATION <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Learn Finance
+</div>
+
+<a href="#">Beginner</a>
+<a href="#">Intermediate</a>
+<a href="#">Advanced</a>
+<a href="#">Trading Academy</a>
+<a href="#">Finance Dictionary</a>
+
+</div>
+</div>
+
+
+<!-- TOOLS -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+TOOLS <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+Financial Tools
+</div>
+
+<a href="#">Compound Interest Calculator</a>
+<a href="#">SIP Calculator</a>
+<a href="#">ROI Calculator</a>
+<a href="#">Profit & Loss Calculator</a>
+<a href="#">Currency Converter</a>
+
+</div>
+</div>
+
+
+<!-- MORE -->
+
+<div class="gf-nav-item">
+
+<button class="gf-nav-btn">
+MORE <span class="gf-chevron">⌄</span>
+</button>
+
+<div class="gf-dropdown">
+
+<div class="gf-dropdown-title">
+More
+</div>
+
+<a href="#">About Global Finance</a>
+<a href="#">Contact</a>
+<a href="#">Newsletter</a>
+<a href="#">Disclaimer</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms & Conditions</a>
+
+</div>
+</div>
+
+</nav>
+
+
+<!-- RIGHT SIDE -->
+
+<div class="gf-actions">
+
+
+<!-- SEARCH -->
+
+<button
+class="gf-icon-btn"
+onclick="gfOpenSearch()"
+aria-label="Search">
+
+<svg
+viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2"
+stroke-linecap="round">
+
+<circle cx="10.8" cy="10.8" r="6.8"></circle>
+<line x1="16" y1="16" x2="21" y2="21"></line>
+
+</svg>
+
+</button>
+
+
+<!-- SUBSCRIBE -->
+
+<button
+class="gf-sub-btn"
+onclick="gfOpenSubscribe()">
+
+SUBSCRIBE
+
+</button>
+
+
+<!-- LANGUAGE -->
+
+<div class="gf-lang" id="gfLanguage">
+
+<button
+class="gf-lang-btn"
+onclick="gfToggleLanguage()">
+
+EN ▾
+
+</button>
+
+<div class="gf-lang-menu">
+
+<button onclick="gfSetLanguage('EN')">English</button>
+<button onclick="gfSetLanguage('HI')">हिन्दी</button>
+<button onclick="gfSetLanguage('ES')">Español</button>
+
+</div>
 
 </div>
 
 
-<div class="toast" id="toast"></div>
+<!-- MOBILE MENU -->
+
+<button
+class="gf-mobile-toggle"
+id="gfMobileToggle"
+onclick="gfToggleMobile()"
+aria-label="Menu">
+
+<span></span>
+<span></span>
+<span></span>
+
+</button>
+
+</div>
+
+</div>
 
 
-<!-- =======================================================
-     JAVASCRIPT
-     ======================================================= -->
+<!-- =====================================================
+     MOBILE NAVIGATION
+===================================================== -->
+
+<div
+class="gf-mobile-panel"
+id="gfMobilePanel">
+
+
+<a class="gf-mobile-link" href="/">
+<span>Home</span>
+</a>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('marketsSub')">
+
+<span>Markets</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="marketsSub">
+
+<a href="#">Global Markets</a>
+<a href="#">Stocks & Equities</a>
+<a href="#">Indices</a>
+<a href="#">Commodities</a>
+<a href="#">Market Watch</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('tradingSub')">
+
+<span>Trading</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="tradingSub">
+
+<a href="#">Trading Basics</a>
+<a href="#">Technical Analysis</a>
+<a href="#">Trading Strategies</a>
+<a href="#">Indicators</a>
+<a href="#">Risk Management</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('investingSub')">
+
+<span>Investing</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="investingSub">
+
+<a href="#">Stock Investing</a>
+<a href="#">Long-Term Investing</a>
+<a href="#">ETFs</a>
+<a href="#">Mutual Funds</a>
+<a href="#">Portfolio Planning</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('forexSub')">
+
+<span>Forex</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="forexSub">
+
+<a href="#">Forex Basics</a>
+<a href="#">Currency Pairs</a>
+<a href="#">Forex Analysis</a>
+<a href="#">Economic Calendar</a>
+
+</div>
+
+
+<a class="gf-mobile-link" href="#">
+<span>Crypto</span>
+</a>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('newsSub')">
+
+<span>News</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="newsSub">
+
+<a href="#">Latest News</a>
+<a href="#">Market News</a>
+<a href="#">Business News</a>
+<a href="#">Economy</a>
+<a href="#">Global News</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('educationSub')">
+
+<span>Education</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="educationSub">
+
+<a href="#">Beginner</a>
+<a href="#">Intermediate</a>
+<a href="#">Advanced</a>
+<a href="#">Trading Academy</a>
+<a href="#">Finance Dictionary</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('toolsSub')">
+
+<span>Tools</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="toolsSub">
+
+<a href="#">Compound Interest Calculator</a>
+<a href="#">SIP Calculator</a>
+<a href="#">ROI Calculator</a>
+<a href="#">Profit & Loss Calculator</a>
+<a href="#">Currency Converter</a>
+
+</div>
+
+
+<button
+class="gf-mobile-link"
+onclick="gfMobileSub('moreSub')">
+
+<span>More</span>
+<span>＋</span>
+
+</button>
+
+<div class="gf-mobile-sub" id="moreSub">
+
+<a href="#">About Global Finance</a>
+<a href="#">Contact</a>
+<a href="#">Newsletter</a>
+<a href="#">Disclaimer</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms & Conditions</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<div
+class="gf-search-overlay"
+id="gfSearchOverlay"
+onclick="gfSearchOutside(event)">
+
+<div class="gf-search-box">
+
+<div class="gf-search-head">
+
+<input
+id="gfSearchInput"
+class="gf-search-input"
+type="search"
+placeholder="Search markets, trading, investing, news..."
+autocomplete="off">
+
+<button
+class="gf-search-close"
+onclick="gfCloseSearch()">
+
+×
+
+</button>
+
+</div>
+
+<div
+class="gf-search-results"
+id="gfSearchResults">
+
+<div class="gf-search-result">
+Start typing to search Global Finance.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SUBSCRIBE
+===================================================== -->
+
+<div
+class="gf-modal"
+id="gfSubscribeModal">
+
+<div class="gf-modal-card">
+
+<button
+class="gf-modal-close"
+onclick="gfCloseSubscribe()">
+
+×
+</button>
+
+<h2>
+Join <span>Global Finance</span>
+</h2>
+
+<p>
+Get the latest market insights, trading education,
+financial news and important updates directly in your inbox.
+</p>
+
+<input
+class="gf-email"
+id="gfEmail"
+type="email"
+placeholder="Enter your email address">
+
+<button
+class="gf-modal-submit"
+onclick="gfSubscribe()">
+
+SUBSCRIBE NOW
+
+</button>
+
+</div>
+
+</div>
+
 
 <script>
 
-(function(){
+/* =========================================================
+   GLOBAL FINANCE NAVIGATION
+========================================================= */
 
-  /* -------------------------------------------------------
-     ELEMENTS
-     ------------------------------------------------------- */
-
-  const moreButton =
-    document.getElementById("moreButton");
-
-  const moreWrap =
-    document.querySelector(".more-wrap");
-
-  const menuButton =
-    document.getElementById("menuButton");
-
-  const closeMenu =
-    document.getElementById("closeMenu");
-
-  const mobileDrawer =
-    document.getElementById("mobileDrawer");
-
-  const overlay =
-    document.getElementById("overlay");
-
-  const subscribeButton =
-    document.getElementById("subscribeButton");
-
-  const drawerSubscribe =
-    document.getElementById("drawerSubscribe");
-
-  const subscribeModal =
-    document.getElementById("subscribeModal");
-
-  const closeModal =
-    document.getElementById("closeModal");
-
-  const subscribeForm =
-    document.getElementById("subscribeForm");
-
-  const formMessage =
-    document.getElementById("formMessage");
-
-  const searchButton =
-    document.getElementById("searchButton");
-
-  const heroSearch =
-    document.getElementById("heroSearch");
-
-  const heroSearchButton =
-    document.getElementById("heroSearchButton");
-
-  const ctaButton =
-    document.getElementById("ctaButton");
-
-  const toast =
-    document.getElementById("toast");
+function gfGo(url){
+  window.location.href=url;
+}
 
 
-  /* -------------------------------------------------------
-     MORE MENU
-     ------------------------------------------------------- */
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
-  moreButton.addEventListener("click",function(e){
+function gfToggleMobile(){
 
-    e.stopPropagation();
+  const panel=
+    document.getElementById("gfMobilePanel");
 
-    moreWrap.classList.toggle("open");
+  const button=
+    document.getElementById("gfMobileToggle");
 
-  });
+  panel.classList.toggle("open");
+  button.classList.toggle("open");
 
-
-  document.addEventListener("click",function(e){
-
-    if(!moreWrap.contains(e.target)){
-
-      moreWrap.classList.remove("open");
-
-    }
-
-  });
+}
 
 
-  /* -------------------------------------------------------
-     MOBILE DRAWER
-     ------------------------------------------------------- */
+/* =========================================================
+   MOBILE SUB MENUS
+========================================================= */
 
-  function openDrawer(){
+function gfMobileSub(id){
 
-    mobileDrawer.classList.add("open");
-    overlay.classList.add("show");
-    document.body.style.overflow="hidden";
+  const item=
+    document.getElementById(id);
 
+  item.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function gfOpenSearch(){
+
+  const overlay=
+    document.getElementById("gfSearchOverlay");
+
+  overlay.classList.add("open");
+
+  setTimeout(function(){
+
+    document
+      .getElementById("gfSearchInput")
+      .focus();
+
+  },100);
+
+}
+
+function gfCloseSearch(){
+
+  document
+    .getElementById("gfSearchOverlay")
+    .classList.remove("open");
+
+}
+
+function gfSearchOutside(event){
+
+  if(event.target.id==="gfSearchOverlay"){
+    gfCloseSearch();
   }
 
-
-  function closeDrawer(){
-
-    mobileDrawer.classList.remove("open");
-    overlay.classList.remove("show");
-    document.body.style.overflow="";
-
-  }
+}
 
 
-  menuButton.addEventListener("click",openDrawer);
+/* =========================================================
+   SIMPLE SEARCH INDEX
+========================================================= */
 
-  closeMenu.addEventListener("click",closeDrawer);
+const gfSearchData=[
 
-  overlay.addEventListener("click",closeDrawer);
+  "NIFTY 50 Market Analysis",
+  "Sensex Latest Market News",
+  "Global Stock Markets",
+  "Trading Strategies",
+  "Technical Analysis",
+  "Risk Management",
+  "Investing for Beginners",
+  "Long Term Investing",
+  "Forex Trading",
+  "Forex Currency Pairs",
+  "Bitcoin Crypto Market",
+  "Ethereum Analysis",
+  "Latest Financial News",
+  "Business News",
+  "Economic News",
+  "Trading Education",
+  "Finance Dictionary",
+  "SIP Calculator",
+  "ROI Calculator",
+  "Compound Interest Calculator",
+  "Profit and Loss Calculator",
+  "Currency Converter",
+  "Global Finance Newsletter"
 
+];
 
-  document.querySelectorAll(".mobile-link")
-    .forEach(function(link){
+document
+  .getElementById("gfSearchInput")
+  .addEventListener("input",function(){
 
-      link.addEventListener("click",closeDrawer);
+    const query=
+      this.value
+        .trim()
+        .toLowerCase();
 
-    });
-
-
-  /* -------------------------------------------------------
-     SUBSCRIBE MODAL
-     ------------------------------------------------------- */
-
-  function openSubscribe(){
-
-    subscribeModal.classList.add("show");
-
-    setTimeout(function(){
-
-      document.getElementById("email").focus();
-
-    },200);
-
-  }
-
-
-  function closeSubscribe(){
-
-    subscribeModal.classList.remove("show");
-
-  }
-
-
-  subscribeButton.addEventListener(
-    "click",
-    openSubscribe
-  );
-
-  drawerSubscribe.addEventListener(
-    "click",
-    function(){
-
-      closeDrawer();
-      openSubscribe();
-
-    }
-  );
-
-  closeModal.addEventListener(
-    "click",
-    closeSubscribe
-  );
-
-
-  subscribeModal.addEventListener(
-    "click",
-    function(e){
-
-      if(e.target===subscribeModal){
-
-        closeSubscribe();
-
-      }
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     SUBSCRIBE FORM
-     ------------------------------------------------------- */
-
-  subscribeForm.addEventListener(
-    "submit",
-    function(e){
-
-      e.preventDefault();
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      if(!email){
-
-        return;
-
-      }
-
-      formMessage.textContent =
-        "✓ Thanks! Your subscription request has been received.";
-
-      subscribeForm.reset();
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     SEARCH
-     ------------------------------------------------------- */
-
-  function performSearch(){
-
-    const query =
-      heroSearch.value.trim();
+    const results=
+      document.getElementById("gfSearchResults");
 
     if(!query){
 
-      showToast(
-        "Type a stock, market, crypto or news topic to search."
-      );
-
-      heroSearch.focus();
+      results.innerHTML=
+        '<div class="gf-search-result">'+
+        'Start typing to search Global Finance.'+
+        '</div>';
 
       return;
-
     }
 
-    showToast(
-      "Searching Global Finance for: " + query
-    );
+    const matched=
+      gfSearchData.filter(function(item){
 
-  }
+        return item
+          .toLowerCase()
+          .includes(query);
 
-
-  heroSearchButton.addEventListener(
-    "click",
-    performSearch
-  );
-
-
-  heroSearch.addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key==="Enter"){
-
-        performSearch();
-
-      }
-
-    }
-  );
-
-
-  searchButton.addEventListener(
-    "click",
-    function(){
-
-      heroSearch.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
       });
 
-      setTimeout(function(){
+    if(!matched.length){
 
-        heroSearch.focus();
+      results.innerHTML=
+        '<div class="gf-search-result">'+
+        'No matching result found.'+
+        '</div>';
 
-      },500);
-
+      return;
     }
-  );
+
+    results.innerHTML=
+      matched.slice(0,8).map(function(item){
+
+        return '<div class="gf-search-result">'+
+               item+
+               '</div>';
+
+      }).join("");
+
+});
 
 
-  /* -------------------------------------------------------
-     TABS
-     ------------------------------------------------------- */
+/* =========================================================
+   SUBSCRIBE
+========================================================= */
 
-  document.querySelectorAll(".tab")
-    .forEach(function(tab){
+function gfOpenSubscribe(){
 
-      tab.addEventListener(
-        "click",
-        function(){
+  document
+    .getElementById("gfSubscribeModal")
+    .classList.add("open");
 
-          document.querySelectorAll(".tab")
-            .forEach(function(item){
+}
 
-              item.classList.remove("active");
+function gfCloseSubscribe(){
 
-            });
+  document
+    .getElementById("gfSubscribeModal")
+    .classList.remove("open");
 
-          tab.classList.add("active");
+}
 
-          showToast(
-            tab.textContent + " selected"
-          );
+function gfSubscribe(){
 
-        }
-      );
+  const email=
+    document
+      .getElementById("gfEmail")
+      .value
+      .trim();
 
-    });
+  if(!email){
 
+    alert("Please enter your email address.");
 
-  /* -------------------------------------------------------
-     CTA
-     ------------------------------------------------------- */
-
-  ctaButton.addEventListener(
-    "click",
-    function(){
-
-      openSubscribe();
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     TOAST
-     ------------------------------------------------------- */
-
-  let toastTimer;
-
-  function showToast(message){
-
-    toast.textContent=message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer=setTimeout(function(){
-
-      toast.classList.remove("show");
-
-    },2600);
-
+    return;
   }
 
+  if(!email.includes("@")){
 
-  /* -------------------------------------------------------
-     ESCAPE
-     ------------------------------------------------------- */
+    alert("Please enter a valid email address.");
 
-  document.addEventListener(
-    "keydown",
-    function(e){
+    return;
+  }
 
-      if(e.key==="Escape"){
-
-        closeDrawer();
-        closeSubscribe();
-        moreWrap.classList.remove("open");
-
-      }
-
-    }
+  alert(
+    "Thank you! Your subscription request has been received."
   );
 
+  document
+    .getElementById("gfEmail")
+    .value="";
 
-  /* -------------------------------------------------------
-     ACTIVE NAV
-     ------------------------------------------------------- */
+  gfCloseSubscribe();
 
-  document.querySelectorAll(".nav-link")
-    .forEach(function(link){
-
-      link.addEventListener(
-        "click",
-        function(){
-
-          document.querySelectorAll(".nav-link")
-            .forEach(function(item){
-
-              item.classList.remove("active");
-
-            });
-
-          link.classList.add("active");
-
-        }
-      );
-
-    });
+}
 
 
-})();
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function gfToggleLanguage(){
+
+  document
+    .getElementById("gfLanguage")
+    .classList.toggle("open");
+
+}
+
+function gfSetLanguage(language){
+
+  const button=
+    document.querySelector(".gf-lang-btn");
+
+  button.textContent=
+    language+" ▾";
+
+  document
+    .getElementById("gfLanguage")
+    .classList.remove("open");
+
+}
+
+
+/* =========================================================
+   CLOSE POPUPS WITH ESC
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key==="Escape"){
+
+      gfCloseSearch();
+      gfCloseSubscribe();
+
+      document
+        .getElementById("gfLanguage")
+        .classList.remove("open");
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PAUSE TICKER WHEN PAGE IS NOT VISIBLE
+========================================================= */
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    const ticker=
+      document.querySelector(".gf-ticker-track");
+
+    if(!ticker) return;
+
+    ticker.style.animationPlayState=
+      document.hidden
+      ? "paused"
+      : "running";
+
+  }
+);
 
 </script>
 
