@@ -1831,6 +1831,1073 @@ document.addEventListener(
 );
 
 </script>
+<!-- =========================================================
+     GLOBAL FINANCE — PREMIUM SIDEWAYS TOOLS
+     ========================================================= -->
 
+<section class="gf-tools-section">
+
+  <div class="gf-tools-title">
+    <div>
+      <small>GLOBAL FINANCE • PROFESSIONAL TOOLS</small>
+      <h2>Financial <span>Tools</span></h2>
+      <p>Powerful tools for smarter trading and investing.</p>
+    </div>
+
+    <div class="gf-tool-counter">10 TOOLS →</div>
+  </div>
+
+
+  <!-- SIDEWAYS TOOL RAIL -->
+  <div class="gf-tools-wrapper">
+
+    <button class="gf-scroll-btn gf-left"
+            onclick="gfScrollTools(-1)">‹</button>
+
+    <div class="gf-tools-rail" id="gfToolsRail">
+
+      <!-- 01 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Stock Screener',
+        'Find and compare stocks using market, sector, price and performance filters.'
+      )">
+
+        <div class="gf-tool-picture gf-p1"></div>
+
+        <div class="gf-tool-info">
+          <small>01</small>
+          <h3>Stock Screener</h3>
+          <p>Find stocks faster</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 02 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Profit Calculator',
+        'Calculate potential profit, loss and percentage return.'
+      )">
+
+        <div class="gf-tool-picture gf-p2"></div>
+
+        <div class="gf-tool-info">
+          <small>02</small>
+          <h3>Profit Calculator</h3>
+          <p>Calculate returns</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 03 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Compound Interest',
+        'Estimate how your investment may grow through compounding.'
+      )">
+
+        <div class="gf-tool-picture gf-p3"></div>
+
+        <div class="gf-tool-info">
+          <small>03</small>
+          <h3>Compound Interest</h3>
+          <p>Grow investments</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 04 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Risk Calculator',
+        'Estimate trading risk and position size before entering a trade.'
+      )">
+
+        <div class="gf-tool-picture gf-p4"></div>
+
+        <div class="gf-tool-info">
+          <small>04</small>
+          <h3>Risk Calculator</h3>
+          <p>Control trading risk</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 05 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Technical Analyzer',
+        'Study technical-analysis concepts and market indicators.'
+      )">
+
+        <div class="gf-tool-picture gf-p5"></div>
+
+        <div class="gf-tool-info">
+          <small>05</small>
+          <h3>Technical Analyzer</h3>
+          <p>Analyze markets</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 06 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Currency Converter',
+        'Compare and convert major global currencies.'
+      )">
+
+        <div class="gf-tool-picture gf-p6"></div>
+
+        <div class="gf-tool-info">
+          <small>06</small>
+          <h3>Currency Converter</h3>
+          <p>Global currencies</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 07 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Economic Calendar',
+        'Track important economic announcements and market events.'
+      )">
+
+        <div class="gf-tool-picture gf-p7"></div>
+
+        <div class="gf-tool-info">
+          <small>07</small>
+          <h3>Economic Calendar</h3>
+          <p>Track market events</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 08 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Price Alerts',
+        'Monitor important price levels and create watchlists.'
+      )">
+
+        <div class="gf-tool-picture gf-p8"></div>
+
+        <div class="gf-tool-info">
+          <small>08</small>
+          <h3>Price Alerts</h3>
+          <p>Watch price levels</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 09 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Dividend Calculator',
+        'Estimate dividend income and potential annual yield.'
+      )">
+
+        <div class="gf-tool-picture gf-p9"></div>
+
+        <div class="gf-tool-info">
+          <small>09</small>
+          <h3>Dividend Calculator</h3>
+          <p>Estimate income</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+
+      <!-- 10 -->
+      <button class="gf-tool" onclick="gfOpenTool(
+        'Crypto Converter',
+        'Compare cryptocurrency values with major fiat currencies.'
+      )">
+
+        <div class="gf-tool-picture gf-p10"></div>
+
+        <div class="gf-tool-info">
+          <small>10</small>
+          <h3>Crypto Converter</h3>
+          <p>Crypto values</p>
+          <b>OPEN TOOL →</b>
+        </div>
+
+      </button>
+
+    </div>
+
+    <button class="gf-scroll-btn gf-right"
+            onclick="gfScrollTools(1)">›</button>
+
+  </div>
+
+
+  <!-- MOBILE SWIPE HINT -->
+  <div class="gf-swipe-hint">
+    SWIPE LEFT / RIGHT TO EXPLORE TOOLS
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PREMIUM TOOL POPUP
+     ========================================================= -->
+
+<div class="gf-tool-popup" id="gfToolPopup">
+
+  <div class="gf-popup-box">
+
+    <button class="gf-popup-close"
+            onclick="gfCloseTool()">×</button>
+
+    <div class="gf-popup-symbol">◆</div>
+
+    <small>GLOBAL FINANCE • PROFESSIONAL TOOL</small>
+
+    <h2 id="gfPopupTitle">Financial Tool</h2>
+
+    <p id="gfPopupDescription">
+      Professional financial tool.
+    </p>
+
+    <div class="gf-popup-demo">
+
+      <div class="gf-demo-header">
+        TOOL PREVIEW
+      </div>
+
+      <div class="gf-demo-row">
+        <span>Input</span>
+        <span>---</span>
+      </div>
+
+      <div class="gf-demo-row">
+        <span>Market Data</span>
+        <span>---</span>
+      </div>
+
+      <div class="gf-demo-row">
+        <span>Result</span>
+        <span>---</span>
+      </div>
+
+    </div>
+
+    <button class="gf-launch">
+      LAUNCH TOOL →
+    </button>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.gf-tools-section{
+  width:100%;
+  padding:38px 18px 45px;
+  box-sizing:border-box;
+  background:
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(245,197,66,.07),
+      transparent 35%
+    ),
+    #030a12;
+  color:#fff;
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.gf-tools-title{
+  max-width:1280px;
+  margin:0 auto 22px;
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.gf-tools-title small{
+  color:#f5c542;
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:900;
+}
+
+.gf-tools-title h2{
+  margin:7px 0 5px;
+  font-size:34px;
+  line-height:1;
+}
+
+.gf-tools-title h2 span{
+  color:#f5c542;
+}
+
+.gf-tools-title p{
+  margin:0;
+  color:#7f8c9c;
+  font-size:12px;
+}
+
+.gf-tool-counter{
+  border:1px solid rgba(245,197,66,.35);
+  color:#f5c542;
+  border-radius:30px;
+  padding:9px 15px;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+
+/* =========================================================
+   TOOL WRAPPER
+   ========================================================= */
+
+.gf-tools-wrapper{
+  max-width:1280px;
+  margin:auto;
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+
+/* =========================================================
+   SIDEWAYS RAIL
+   ========================================================= */
+
+.gf-tools-rail{
+  width:100%;
+
+  display:flex;
+  gap:14px;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:8px 4px 17px;
+
+  scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+
+  scrollbar-width:thin;
+  scrollbar-color:#f5c542 #0b141d;
+
+  -webkit-overflow-scrolling:touch;
+}
+
+.gf-tools-rail::-webkit-scrollbar{
+  height:5px;
+}
+
+.gf-tools-rail::-webkit-scrollbar-track{
+  background:#0b141d;
+  border-radius:20px;
+}
+
+.gf-tools-rail::-webkit-scrollbar-thumb{
+  background:#f5c542;
+  border-radius:20px;
+}
+
+
+/* =========================================================
+   TOOL CARD
+   ========================================================= */
+
+.gf-tool{
+
+  position:relative;
+
+  flex:0 0 220px;
+
+  height:225px;
+
+  padding:0;
+
+  overflow:hidden;
+
+  border:1px solid rgba(150,180,210,.18);
+
+  border-radius:17px;
+
+  background:#07111b;
+
+  color:#fff;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  scroll-snap-align:start;
+
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.gf-tool:hover{
+
+  transform:translateY(-7px);
+
+  border-color:rgba(245,197,66,.7);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.5),
+    0 0 25px rgba(245,197,66,.08);
+}
+
+
+/* =========================================================
+   CARD IMAGE
+   ========================================================= */
+
+.gf-tool-picture{
+
+  width:100%;
+  height:100%;
+
+  background-size:cover;
+  background-position:center;
+
+  transition:transform .5s ease;
+}
+
+.gf-tool:hover .gf-tool-picture{
+  transform:scale(1.07);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
+
+.gf-tool-picture:after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3,8,14,.05) 10%,
+      rgba(3,8,14,.25) 35%,
+      rgba(3,8,14,.98) 100%
+    );
+}
+
+
+/* =========================================================
+   TOOL IMAGES
+   ========================================================= */
+
+.gf-p1{
+  background-image:
+    url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p2{
+  background-image:
+    url("https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p3{
+  background-image:
+    url("https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p4{
+  background-image:
+    url("https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p5{
+  background-image:
+    url("https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p6{
+  background-image:
+    url("https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p7{
+  background-image:
+    url("https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p8{
+  background-image:
+    url("https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p9{
+  background-image:
+    url("https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80");
+}
+
+.gf-p10{
+  background-image:
+    url("https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=900&q=80");
+}
+
+
+/* =========================================================
+   CARD INFORMATION
+   ========================================================= */
+
+.gf-tool-info{
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  padding:16px;
+
+  background:
+    linear-gradient(
+      to top,
+      #07111b 15%,
+      rgba(7,17,27,.93) 75%,
+      transparent
+    );
+}
+
+.gf-tool-info small{
+
+  color:#f5c542;
+
+  font-size:9px;
+
+  font-weight:900;
+}
+
+.gf-tool-info h3{
+
+  margin:5px 0 3px;
+
+  font-size:16px;
+
+  font-weight:800;
+}
+
+.gf-tool-info p{
+
+  margin:0 0 10px;
+
+  color:#8997a7;
+
+  font-size:10px;
+}
+
+.gf-tool-info b{
+
+  color:#f5c542;
+
+  font-size:8px;
+
+  letter-spacing:1.4px;
+}
+
+
+/* =========================================================
+   SIDE ARROWS
+   ========================================================= */
+
+.gf-scroll-btn{
+
+  position:absolute;
+
+  z-index:10;
+
+  width:40px;
+  height:40px;
+
+  border-radius:50%;
+
+  border:1px solid rgba(245,197,66,.5);
+
+  background:rgba(3,10,18,.9);
+
+  color:#f5c542;
+
+  font-size:28px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  backdrop-filter:blur(8px);
+
+  transition:.25s;
+}
+
+.gf-scroll-btn:hover{
+
+  background:#f5c542;
+
+  color:#03070c;
+
+}
+
+.gf-left{
+  left:-5px;
+}
+
+.gf-right{
+  right:-5px;
+}
+
+
+/* =========================================================
+   SWIPE TEXT
+   ========================================================= */
+
+.gf-swipe-hint{
+
+  text-align:center;
+
+  margin-top:7px;
+
+  color:#526171;
+
+  font-size:8px;
+
+  letter-spacing:2px;
+
+}
+
+
+/* =========================================================
+   PREMIUM POPUP
+   ========================================================= */
+
+.gf-tool-popup{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:999999;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:18px;
+
+  background:rgba(0,0,0,.78);
+
+  backdrop-filter:blur(13px);
+}
+
+.gf-tool-popup.active{
+  display:flex;
+}
+
+.gf-popup-box{
+
+  position:relative;
+
+  width:min(500px,100%);
+
+  padding:32px;
+
+  border-radius:22px;
+
+  border:1px solid rgba(245,197,66,.4);
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(245,197,66,.12),
+      transparent 40%
+    ),
+    #07111b;
+
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.7);
+
+  animation:gfPopupIn .3s ease;
+}
+
+@keyframes gfPopupIn{
+
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.96);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.gf-popup-close{
+
+  position:absolute;
+
+  top:13px;
+  right:14px;
+
+  width:37px;
+  height:37px;
+
+  border-radius:50%;
+
+  border:1px solid #263544;
+
+  background:#0b1722;
+
+  color:#fff;
+
+  font-size:24px;
+
+  cursor:pointer;
+}
+
+.gf-popup-symbol{
+
+  width:50px;
+  height:50px;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid #f5c542;
+
+  border-radius:14px;
+
+  color:#f5c542;
+
+  margin-bottom:18px;
+}
+
+.gf-popup-box > small{
+
+  color:#f5c542;
+
+  font-size:9px;
+
+  letter-spacing:1.8px;
+
+  font-weight:900;
+}
+
+.gf-popup-box h2{
+
+  margin:8px 0;
+
+  font-size:29px;
+}
+
+.gf-popup-box p{
+
+  color:#8795a5;
+
+  line-height:1.6;
+
+  font-size:13px;
+}
+
+
+/* =========================================================
+   DEMO PANEL
+   ========================================================= */
+
+.gf-popup-demo{
+
+  margin:20px 0;
+
+  padding:16px;
+
+  border-radius:13px;
+
+  border:1px solid #1b2b3a;
+
+  background:#040b12;
+}
+
+.gf-demo-header{
+
+  color:#718091;
+
+  font-size:8px;
+
+  letter-spacing:1.5px;
+
+  margin-bottom:13px;
+}
+
+.gf-demo-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  padding:10px 0;
+
+  border-bottom:1px solid #142330;
+
+  color:#9ba8b7;
+
+  font-size:11px;
+}
+
+.gf-demo-row:last-child{
+  border-bottom:0;
+}
+
+.gf-launch{
+
+  width:100%;
+
+  padding:14px;
+
+  border:0;
+
+  border-radius:10px;
+
+  background:#f5c542;
+
+  color:#05090e;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:650px){
+
+  .gf-tools-section{
+    padding:30px 10px 35px;
+  }
+
+  .gf-tools-title h2{
+    font-size:27px;
+  }
+
+  .gf-tools-title p{
+    font-size:10px;
+  }
+
+  .gf-tool-counter{
+    padding:7px 9px;
+    font-size:8px;
+  }
+
+  .gf-tools-rail{
+
+    gap:10px;
+
+    padding-bottom:14px;
+
+    scroll-snap-type:x mandatory;
+
+  }
+
+  .gf-tool{
+
+    flex:0 0 72vw;
+
+    height:210px;
+
+    border-radius:15px;
+
+  }
+
+  .gf-scroll-btn{
+    display:none;
+  }
+
+  .gf-swipe-hint{
+    display:block;
+  }
+
+  .gf-popup-box{
+    padding:25px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media(max-width:380px){
+
+  .gf-tool{
+    flex:0 0 78vw;
+  }
+
+  .gf-tools-title{
+    align-items:flex-start;
+  }
+
+  .gf-tools-title h2{
+    font-size:24px;
+  }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICE
+   ========================================================= */
+
+@media(hover:none){
+
+  .gf-tool:hover{
+    transform:none;
+    box-shadow:none;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   SIDE SCROLL
+   ========================================================= */
+
+function gfScrollTools(direction){
+
+  const rail =
+    document.getElementById("gfToolsRail");
+
+  const amount =
+    rail.clientWidth * 0.75;
+
+  rail.scrollBy({
+
+    left: amount * direction,
+
+    behavior:"smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   OPEN TOOL
+   ========================================================= */
+
+function gfOpenTool(title,description){
+
+  document.getElementById(
+    "gfPopupTitle"
+  ).textContent = title;
+
+  document.getElementById(
+    "gfPopupDescription"
+  ).textContent = description;
+
+  document.getElementById(
+    "gfToolPopup"
+  ).classList.add("active");
+
+  document.body.style.overflow="hidden";
+}
+
+
+/* =========================================================
+   CLOSE TOOL
+   ========================================================= */
+
+function gfCloseTool(){
+
+  document.getElementById(
+    "gfToolPopup"
+  ).classList.remove("active");
+
+  document.body.style.overflow="";
+}
+
+
+/* =========================================================
+   CLOSE OUTSIDE
+   ========================================================= */
+
+document.getElementById(
+  "gfToolPopup"
+).addEventListener(
+  "click",
+  function(event){
+
+    if(event.target === this){
+
+      gfCloseTool();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+
+      gfCloseTool();
+
+    }
+
+  }
+);
+
+</script>
 </body>
 </html>
