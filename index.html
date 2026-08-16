@@ -3611,3 +3611,431 @@ section,
 }
 
 </style>
+/* =========================================================
+   GLOBAL FINANCE — PREMIUM MOBILE LAYOUT OVERRIDE
+   पुराने CSS को हटाने की जरूरत नहीं
+   इसे सबसे नीचे add करें
+   ========================================================= */
+
+@media (max-width: 768px){
+
+  /* ---------- MAIN PAGE ---------- */
+
+  html,
+  body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
+
+  body{
+    margin:0;
+    padding:0;
+  }
+
+  /* ---------- HEADER ---------- */
+
+  header,
+  .header,
+  .site-header,
+  .main-header{
+    width:100% !important;
+    min-height:64px !important;
+    height:auto !important;
+    padding:8px 12px !important;
+    margin:0 !important;
+    box-sizing:border-box !important;
+  }
+
+  .header-inner,
+  .header-container,
+  .nav-container{
+    width:100% !important;
+    max-width:none !important;
+    padding:0 4px !important;
+    margin:0 auto !important;
+    gap:8px !important;
+  }
+
+  /* Logo */
+
+  .logo,
+  .brand,
+  .site-logo{
+    transform:scale(.88);
+    transform-origin:left center;
+  }
+
+  /* Search / Subscribe / Menu */
+
+  header button,
+  .header button,
+  .search-btn,
+  .subscribe-btn,
+  .menu-btn{
+    min-width:44px !important;
+    height:44px !important;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero,
+  .hero-section,
+  .hero-banner,
+  .home-hero{
+    width:calc(100% - 10px) !important;
+    margin:8px auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:28px 22px !important;
+    box-sizing:border-box !important;
+    border-radius:18px !important;
+  }
+
+  .hero-content{
+    width:100% !important;
+    max-width:100% !important;
+    padding:0 !important;
+  }
+
+  .hero h1,
+  .hero-title{
+    font-size:clamp(28px,7.5vw,42px) !important;
+    line-height:1.05 !important;
+    margin:8px 0 14px !important;
+  }
+
+  .hero p,
+  .hero-description{
+    font-size:13px !important;
+    line-height:1.55 !important;
+    max-width:100% !important;
+  }
+
+  /* Search box */
+
+  .hero-search,
+  .hero .search-box,
+  .search-box{
+    width:100% !important;
+    max-width:100% !important;
+    height:50px !important;
+    margin-top:18px !important;
+  }
+
+  /* ---------- QUICK CATEGORY STRIP ---------- */
+
+  .quick-links,
+  .quick-actions,
+  .category-grid,
+  .feature-links{
+    width:calc(100% - 10px) !important;
+    margin:8px auto !important;
+
+    display:flex !important;
+    flex-wrap:nowrap !important;
+
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+
+    gap:8px !important;
+    padding:8px 4px !important;
+
+    scrollbar-width:none !important;
+  }
+
+  .quick-links::-webkit-scrollbar,
+  .quick-actions::-webkit-scrollbar,
+  .category-grid::-webkit-scrollbar,
+  .feature-links::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .quick-links > *,
+  .quick-actions > *,
+  .category-grid > *,
+  .feature-links > *{
+    flex:0 0 auto !important;
+    min-width:135px !important;
+  }
+
+  /* ---------- ALL MAIN SECTIONS ---------- */
+
+  section,
+  .section,
+  .content-section{
+    width:calc(100% - 10px) !important;
+    max-width:none !important;
+    margin:8px auto !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Section heading */
+
+  .section-header,
+  .section-title-row{
+    min-height:56px !important;
+    padding:12px 18px !important;
+  }
+
+  .section-header h2,
+  .section-title,
+  section h2{
+    font-size:18px !important;
+    margin:0 !important;
+  }
+
+  /* ---------- MARKET OVERVIEW ---------- */
+
+  .markets-grid,
+  .market-grid,
+  .markets-overview{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+    padding:12px !important;
+  }
+
+  .market-card{
+    min-height:120px !important;
+    padding:16px !important;
+    box-sizing:border-box !important;
+  }
+
+  .market-card h3{
+    font-size:14px !important;
+  }
+
+  .market-card .price{
+    font-size:20px !important;
+  }
+
+  /* ---------- MOVERS ---------- */
+
+  .movers-grid,
+  .market-movers,
+  .movers-container{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    gap:10px !important;
+    padding:12px !important;
+    scrollbar-width:none !important;
+  }
+
+  .movers-grid::-webkit-scrollbar,
+  .market-movers::-webkit-scrollbar,
+  .movers-container::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .mover-card{
+    flex:0 0 210px !important;
+    min-height:130px !important;
+  }
+
+  /* ---------- NEWS ---------- */
+
+  .news-grid,
+  .latest-news-grid,
+  .news-container{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    gap:10px !important;
+    padding:12px !important;
+    scrollbar-width:none !important;
+  }
+
+  .news-grid::-webkit-scrollbar,
+  .latest-news-grid::-webkit-scrollbar,
+  .news-container::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .news-card{
+    flex:0 0 215px !important;
+    min-height:125px !important;
+  }
+
+  /* ---------- FINANCE EDUCATION ---------- */
+
+  .education-grid,
+  .education-container,
+  .academy-grid{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    gap:10px !important;
+    padding:12px !important;
+    scrollbar-width:none !important;
+  }
+
+  .education-grid::-webkit-scrollbar,
+  .education-container::-webkit-scrollbar,
+  .academy-grid::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .education-card{
+    flex:0 0 215px !important;
+    min-height:250px !important;
+  }
+
+  /* ---------- FINANCIAL TOOLS ---------- */
+
+  .tools-grid,
+  .financial-tools-grid,
+  .tools-container{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    gap:10px !important;
+    padding:12px !important;
+    scrollbar-width:none !important;
+  }
+
+  .tools-grid::-webkit-scrollbar,
+  .financial-tools-grid::-webkit-scrollbar,
+  .tools-container::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .tool-card{
+    flex:0 0 215px !important;
+    min-height:190px !important;
+    padding:18px !important;
+    box-sizing:border-box !important;
+  }
+
+  /* ---------- BUTTONS ---------- */
+
+  .open-btn,
+  .tool-card button{
+    min-height:42px !important;
+    padding:8px 18px !important;
+  }
+
+  /* ---------- PREMIUM SUBTLE LIGHT ---------- */
+
+  .hero,
+  .section,
+  section{
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero::before,
+  .section::before,
+  section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+
+    background:
+      radial-gradient(
+        circle at 85% 15%,
+        rgba(255,190,40,.055),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at 10% 80%,
+        rgba(40,140,255,.035),
+        transparent 42%
+      );
+
+    opacity:.8;
+  }
+
+  /* Content stays above light */
+
+  .hero > *,
+  .section > *,
+  section > *{
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- BIG GAP BEFORE FOOTER ---------- */
+
+  main,
+  .main-content{
+    padding-bottom:0 !important;
+  }
+
+  .financial-tools,
+  #financial-tools,
+  .tools-section,
+  .tools{
+    margin-bottom:0 !important;
+  }
+
+  footer,
+  .footer,
+  .site-footer{
+    margin-top:180px !important;
+  }
+
+  /* ---------- MOBILE BOTTOM NAV ---------- */
+
+  .bottom-nav,
+  .mobile-nav,
+  .mobile-bottom-nav{
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+
+    width:100% !important;
+    height:72px !important;
+
+    z-index:9999 !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Page content does not hide behind nav */
+
+  body{
+    padding-bottom:76px !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width:430px){
+
+  .hero{
+    padding:24px 18px !important;
+  }
+
+  .hero h1,
+  .hero-title{
+    font-size:29px !important;
+  }
+
+  .market-card{
+    min-height:112px !important;
+    padding:13px !important;
+  }
+
+  .market-card .price{
+    font-size:18px !important;
+  }
+
+  .mover-card,
+  .news-card,
+  .education-card,
+  .tool-card{
+    flex-basis:205px !important;
+  }
+
+  footer,
+  .footer,
+  .site-footer{
+    margin-top:180px !important;
+  }
+}
