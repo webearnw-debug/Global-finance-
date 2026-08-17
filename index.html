@@ -2,105 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Global Finance</title>
+<title>Global Finance Navigation</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     width:100%;
     min-height:100%;
-    background:#020d17;
+    background:#020b12;
     color:#fff;
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
     overflow-x:hidden;
 }
 
-/* =========================
-   MAIN WEBSITE
-========================= */
+/* ================================
+   MAIN HEADER
+================================ */
 
-.gf-site{
+.gf-header{
     width:100%;
-    min-height:100vh;
     background:
-        radial-gradient(
-            circle at 50% 48%,
-            rgba(255,191,25,.055),
-            transparent 28%
-        ),
-        linear-gradient(
-            180deg,
-            #020b14 0%,
-            #03111d 45%,
-            #020b14 100%
-        );
+    linear-gradient(180deg,#061722 0%,#04111a 100%);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:relative;
+    z-index:5000;
 }
 
-/* =========================
-   MARKET TICKER
-========================= */
+/* ticker */
 
 .gf-ticker{
+    height:58px;
     width:100%;
-    height:64px;
-    display:flex;
-    align-items:center;
     overflow:hidden;
-    background:#020a12;
-    border-bottom:1px solid rgba(255,255,255,.08);
+    background:#020a10;
+    border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .gf-ticker-track{
     display:flex;
     width:max-content;
-    min-width:100%;
-    animation:tickerMove 32s linear infinite;
+    animation:gfTicker 38s linear infinite;
 }
 
 .gf-ticker-item{
-    height:64px;
-    min-width:245px;
-    padding:0 20px;
+    min-width:260px;
+    height:58px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:10px;
+    gap:12px;
     border-right:1px solid rgba(255,255,255,.08);
-    white-space:nowrap;
-    font-size:14px;
+    font-size:15px;
     font-weight:700;
     letter-spacing:.5px;
-}
-
-.gf-ticker-name{
-    color:#f4f7fa;
-}
-
-.gf-ticker-price{
-    color:#dfe7ee;
+    white-space:nowrap;
 }
 
 .gf-up{
-    color:#20dc65;
+    color:#25e779;
 }
 
-@keyframes tickerMove{
+.gf-gold{
+    color:#ffc629;
+}
+
+@keyframes gfTicker{
     from{
         transform:translateX(0);
     }
@@ -109,140 +85,48 @@ body{
     }
 }
 
-/* =========================
-   HEADER
-========================= */
+/* brand */
 
-.gf-header{
+.gf-brandbar{
+    min-height:135px;
     width:100%;
-    min-height:150px;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    padding:24px 28px;
-    background:
-        linear-gradient(
-            180deg,
-            #04121e 0%,
-            #03101a 100%
-        );
-    border-bottom:1px solid rgba(255,255,255,.08);
+    padding:22px 26px;
+    gap:20px;
 }
-
-/* =========================
-   BRAND
-========================= */
 
 .gf-brand{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:16px;
     min-width:0;
+    flex:1;
 }
 
-/* LOGO */
-
 .gf-logo{
-    position:relative;
-    width:88px;
-    height:88px;
-    flex:0 0 88px;
+    width:92px;
+    height:92px;
+    flex:0 0 92px;
     border-radius:50%;
+    border:3px solid #ffc629;
+    background:
+    radial-gradient(circle at 35% 30%,#fff2a0 0%,#ffc629 25%,#b87900 62%,#15100a 100%);
+    box-shadow:
+    0 0 0 7px rgba(255,198,41,.08),
+    0 0 28px rgba(255,198,41,.20);
     display:flex;
     align-items:center;
     justify-content:center;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #ffd94c 0%,
-            #e9a900 25%,
-            #805800 48%,
-            #101820 70%,
-            #020a10 100%
-        );
-
-    border:2px solid #dcae27;
-
-    box-shadow:
-        0 0 0 5px rgba(218,174,39,.08),
-        0 0 20px rgba(255,193,25,.25),
-        inset 0 0 22px rgba(0,0,0,.65);
+    position:relative;
 }
 
 .gf-logo:before{
-    content:"";
-    position:absolute;
-    width:112px;
-    height:112px;
-    border-radius:50%;
-    border:1px dotted rgba(255,199,38,.75);
-}
-
-.gf-logo:after{
-    content:"";
-    position:absolute;
-    width:102px;
-    height:102px;
-    border-radius:50%;
-    border:1px dashed rgba(255,199,38,.35);
-}
-
-/* globe */
-
-.gf-globe{
-    position:relative;
-    width:63px;
-    height:63px;
-    border-radius:50%;
-    overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 32% 28%,
-            #ffe078,
-            #e5a900 42%,
-            #5e4300 72%,
-            #090d10 100%
-        );
-    box-shadow:
-        inset -13px -8px 20px rgba(0,0,0,.7),
-        inset 6px 4px 10px rgba(255,255,255,.15);
-}
-
-/* stylized continents */
-
-.gf-globe span{
-    position:absolute;
-    display:block;
-    background:#161a19;
-    opacity:.9;
-}
-
-.gf-land1{
-    width:25px;
-    height:39px;
-    left:13px;
-    top:7px;
-    border-radius:58% 42% 52% 40%;
-    transform:rotate(-20deg);
-}
-
-.gf-land2{
-    width:18px;
-    height:27px;
-    left:30px;
-    top:31px;
-    border-radius:50% 45% 60% 35%;
-    transform:rotate(20deg);
-}
-
-.gf-land3{
-    width:14px;
-    height:20px;
-    right:7px;
-    top:12px;
-    border-radius:55% 45% 50% 60%;
-    transform:rotate(15deg);
+    content:"GF";
+    font-size:37px;
+    font-weight:1000;
+    color:#070b0e;
+    letter-spacing:-5px;
 }
 
 .gf-brand-text{
@@ -250,465 +134,470 @@ body{
 }
 
 .gf-brand-title{
-    font-size:30px;
+    font-size:36px;
     line-height:1;
-    font-weight:900;
-    letter-spacing:-1px;
+    font-weight:1000;
     white-space:nowrap;
+    letter-spacing:-1.5px;
 }
 
-.gf-brand-title .gold{
-    color:#ffc526;
+.gf-brand-title span{
+    color:#ffc629;
 }
 
 .gf-tagline{
     margin-top:10px;
-    color:#82919d;
-    font-size:11px;
-    letter-spacing:1.5px;
+    color:#8fa1ad;
+    font-size:12px;
     font-weight:700;
+    letter-spacing:2px;
+    white-space:nowrap;
 }
 
-/* =========================
-   HEADER ACTIONS
-========================= */
+/* header actions */
 
 .gf-actions{
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:12px;
+    flex-shrink:0;
 }
 
 .gf-action{
-    width:72px;
-    height:72px;
-    border-radius:17px;
-
-    border:1px solid rgba(130,164,188,.3);
-
-    background:
-        linear-gradient(
-            145deg,
-            #091c2b,
-            #06131f
-        );
-
-    color:white;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
+    height:64px;
+    border-radius:18px;
+    border:1px solid #263d4d;
+    background:#071a27;
+    color:#fff;
     cursor:pointer;
-
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        background .2s ease;
+    transition:.25s ease;
 }
 
 .gf-action:hover{
     transform:translateY(-2px);
-    border-color:#ffc526;
+    border-color:#ffc629;
 }
 
-.gf-search-icon{
-    width:26px;
-    height:26px;
-    border:3px solid white;
-    border-radius:50%;
-    position:relative;
-}
-
-.gf-search-icon:after{
-    content:"";
-    position:absolute;
-    width:11px;
-    height:3px;
-    background:white;
-    right:-8px;
-    bottom:-4px;
-    transform:rotate(48deg);
-    border-radius:4px;
+.gf-search{
+    width:70px;
+    font-size:34px;
 }
 
 .gf-subscribe{
-    width:155px;
-    background:#ffc526;
-    color:#101010;
-    border-color:#ffc526;
-    font-size:14px;
-    font-weight:900;
-    letter-spacing:.3px;
+    min-width:140px;
+    padding:0 25px;
+    background:#ffc629;
+    color:#111;
+    border-color:#ffc629;
+    font-weight:1000;
+    font-size:15px;
 }
 
 .gf-menu{
+    width:70px;
+    font-size:34px;
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.gf-navigation{
+    width:100%;
+    padding:12px 18px 20px;
+    border-top:1px solid rgba(255,255,255,.06);
     position:relative;
 }
 
-.gf-menu-lines{
-    width:29px;
-    height:22px;
+.gf-nav-grid{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.gf-nav-box{
     position:relative;
 }
 
-.gf-menu-lines:before,
-.gf-menu-lines:after,
-.gf-menu-lines span{
-    content:"";
+.gf-nav-button{
+    width:100%;
+    min-height:78px;
+    padding:15px 18px;
+    border-radius:20px;
+    border:1px solid #263e4f;
+    background:
+    linear-gradient(145deg,#09202f,#06141f);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    font-size:19px;
+    font-weight:900;
+    letter-spacing:.7px;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+.gf-nav-button:hover,
+.gf-nav-button.active{
+    border-color:#ffc629;
+    box-shadow:
+    0 0 0 1px rgba(255,198,41,.1),
+    0 8px 28px rgba(0,0,0,.3);
+}
+
+.gf-arrow{
+    width:27px;
+    height:27px;
+    border:1px solid rgba(255,198,41,.55);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ffc629;
+    font-size:14px;
+    transition:.2s ease;
+}
+
+.gf-nav-button.active .gf-arrow{
+    transform:rotate(180deg);
+    background:#ffc629;
+    color:#111;
+}
+
+/* ================================
+   DROPDOWN
+================================ */
+
+.gf-dropdown{
     position:absolute;
     left:0;
-    width:29px;
-    height:3px;
-    border-radius:5px;
-    background:#fff;
+    right:0;
+    top:calc(100% + 8px);
+    background:
+    linear-gradient(145deg,#071d2a,#04111a);
+    border:1px solid rgba(255,198,41,.35);
+    border-radius:20px;
+    padding:14px;
+    display:none;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.65),
+    0 0 35px rgba(255,198,41,.06);
+    z-index:9000;
 }
 
-.gf-menu-lines:before{
-    top:0;
-}
-
-.gf-menu-lines span{
-    top:9px;
-}
-
-.gf-menu-lines:after{
-    top:18px;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.gf-nav{
-    width:100%;
-    padding:20px 20px;
+.gf-dropdown.open{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
+    animation:dropIn .18s ease-out;
+}
 
-    background:#03101a;
+@keyframes dropIn{
+    from{
+        opacity:0;
+        transform:translateY(-8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.gf-drop-item{
+    min-height:72px;
+    border-radius:15px;
+    border:1px solid #21394a;
+    background:#061722;
+    color:#fff;
+    padding:13px;
+    text-align:left;
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.gf-drop-item:hover{
+    border-color:#ffc629;
+    background:#0a2231;
+    transform:translateY(-2px);
+}
+
+.gf-drop-icon{
+    font-size:23px;
+    display:block;
+    margin-bottom:5px;
+}
+
+.gf-drop-title{
+    font-size:14px;
+    font-weight:900;
+    display:block;
+}
+
+.gf-drop-desc{
+    color:#8295a3;
+    font-size:10px;
+    margin-top:4px;
+    display:block;
+}
+
+/* ================================
+   FULLSCREEN PANEL
+================================ */
+
+.gf-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:20000;
+}
+
+.gf-overlay.show{
+    display:flex;
+}
+
+.gf-panel{
+    width:min(850px,100%);
+    max-height:88vh;
+    overflow:auto;
+    background:
+    linear-gradient(145deg,#09202d,#031018);
+    border:1px solid rgba(255,198,41,.45);
+    border-radius:28px;
+    box-shadow:
+    0 30px 100px rgba(0,0,0,.8),
+    0 0 45px rgba(255,198,41,.08);
+    animation:panelIn .2s ease-out;
+}
+
+@keyframes panelIn{
+    from{
+        opacity:0;
+        transform:scale(.94) translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.gf-panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:22px 24px;
     border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.gf-nav-btn{
-    height:70px;
-
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #081c2b,
-            #06131f
-        );
-
-    border:1px solid rgba(108,143,169,.25);
-
-    color:#f5f7f9;
-
-    font-size:16px;
-    font-weight:800;
-
-    letter-spacing:.4px;
-
-    cursor:pointer;
-
-    transition:
-        all .2s ease;
+.gf-panel-title{
+    font-size:25px;
+    font-weight:1000;
 }
 
-.gf-nav-btn:hover{
-    border-color:#dcae27;
-    color:#ffc526;
-    transform:translateY(-1px);
+.gf-panel-title span{
+    color:#ffc629;
 }
 
-.gf-nav-btn span{
-    color:#e9edf0;
-    margin-left:8px;
-}
-
-/* =========================
-   MAIN CENTER
-========================= */
-
-.gf-main{
-    width:100%;
-    min-height:calc(100vh - 284px);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:80px 20px 100px;
-
-    position:relative;
-    overflow:hidden;
-}
-
-/* background glow */
-
-.gf-main:before{
-    content:"";
-    position:absolute;
-    width:600px;
-    height:600px;
+.gf-close{
+    width:45px;
+    height:45px;
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,190,30,.08),
-            transparent 68%
-        );
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    pointer-events:none;
+    border:1px solid #31485a;
+    background:#081a26;
+    color:#fff;
+    font-size:27px;
+    cursor:pointer;
 }
 
-/* =========================
-   CENTER BRAND AREA
-========================= */
+.gf-close:hover{
+    background:#ffc629;
+    color:#111;
+}
 
-.gf-center{
-    position:relative;
-    z-index:2;
+.gf-panel-content{
+    padding:25px;
+}
 
-    width:min(850px,94vw);
+.gf-panel-content h3{
+    color:#ffc629;
+    font-size:20px;
+    margin-bottom:10px;
+}
 
-    min-height:500px;
+.gf-panel-content p{
+    color:#9baeb9;
+    line-height:1.7;
+    margin-bottom:20px;
+}
 
+.gf-service-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.gf-service{
+    padding:18px;
+    border:1px solid #233b4b;
+    border-radius:17px;
+    background:#061722;
+    cursor:pointer;
+}
+
+.gf-service:hover{
+    border-color:#ffc629;
+}
+
+.gf-service strong{
+    display:block;
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.gf-service small{
+    color:#7f929f;
+}
+
+/* ================================
+   SIDE MENU
+================================ */
+
+.gf-side{
+    position:fixed;
+    top:0;
+    right:-390px;
+    width:min(390px,88vw);
+    height:100vh;
+    background:#04121b;
+    border-left:1px solid rgba(255,198,41,.3);
+    z-index:25000;
+    transition:.3s ease;
+    box-shadow:-20px 0 70px rgba(0,0,0,.6);
+    padding:25px;
+}
+
+.gf-side.open{
+    right:0;
+}
+
+.gf-side-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.gf-side-title{
+    font-size:25px;
+    font-weight:1000;
+}
+
+.gf-side-title span{
+    color:#ffc629;
+}
+
+.gf-side-close{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid #324958;
+    background:#081a25;
+    color:#fff;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.gf-side-links{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
+    gap:10px;
 }
 
-/* large globe */
-
-.gf-center-globe{
-    position:relative;
-
-    width:250px;
-    height:250px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    margin-bottom:38px;
-
-    background:
-        radial-gradient(
-            circle at 34% 27%,
-            #ffe276 0%,
-            #ffc52b 18%,
-            #b27b08 40%,
-            #392b08 64%,
-            #050c12 100%
-        );
-
-    border:2px solid #e6b529;
-
-    box-shadow:
-        0 0 30px rgba(255,192,32,.22),
-        0 0 90px rgba(255,192,32,.12),
-        inset -30px -20px 45px rgba(0,0,0,.75),
-        inset 12px 8px 25px rgba(255,255,255,.16);
-}
-
-/* orbit rings */
-
-.gf-center-globe:before{
-    content:"";
-    position:absolute;
-
-    width:315px;
-    height:315px;
-
-    border-radius:50%;
-
-    border:
-        2px dotted rgba(255,197,38,.65);
-
-    box-shadow:
-        0 0 15px rgba(255,197,38,.12);
-}
-
-.gf-center-globe:after{
-    content:"";
-    position:absolute;
-
-    width:350px;
-    height:350px;
-
-    border-radius:50%;
-
-    border:
-        1px dashed rgba(255,197,38,.28);
-}
-
-/* large globe continents */
-
-.gf-big-land{
-    position:absolute;
-    display:block;
-    background:#171a18;
-    box-shadow:0 0 4px rgba(0,0,0,.3);
-}
-
-.gf-big-land.one{
-    width:90px;
-    height:125px;
-    left:48px;
-    top:30px;
-    border-radius:55% 40% 60% 40%;
-    transform:rotate(-18deg);
-}
-
-.gf-big-land.two{
-    width:62px;
-    height:91px;
-    left:103px;
-    top:111px;
-    border-radius:45% 55% 60% 35%;
-    transform:rotate(15deg);
-}
-
-.gf-big-land.three{
-    width:72px;
-    height:90px;
-    right:28px;
-    top:50px;
-    border-radius:45% 55% 50% 65%;
-}
-
-.gf-big-land.four{
-    width:37px;
-    height:48px;
-    right:32px;
-    bottom:35px;
-    border-radius:50%;
-}
-
-/* =========================
-   CENTER TITLE
-========================= */
-
-.gf-center-title{
-    font-size:64px;
-    line-height:1;
-
-    font-weight:950;
-
-    letter-spacing:-2px;
-
-    text-transform:uppercase;
-
+.gf-side-link{
+    width:100%;
+    padding:17px;
+    border-radius:15px;
+    border:1px solid #203949;
+    background:#071a26;
     color:#fff;
-
-    text-shadow:
-        0 2px 10px rgba(0,0,0,.5);
+    text-align:left;
+    cursor:pointer;
+    font-weight:800;
 }
 
-.gf-center-title .gold{
-    color:#ffc526;
+.gf-side-link:hover{
+    border-color:#ffc629;
 }
 
-.gf-center-tagline{
-    margin-top:18px;
+/* ================================
+   TOAST
+================================ */
 
-    font-size:17px;
-
-    color:#aebbc5;
-
-    letter-spacing:4px;
-
-    font-weight:700;
+.gf-toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,120px);
+    background:#071b27;
+    border:1px solid #ffc629;
+    color:#fff;
+    padding:15px 22px;
+    border-radius:14px;
+    z-index:30000;
+    transition:.3s ease;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
-.gf-gold-line{
-    width:270px;
-    height:2px;
-
-    margin-top:32px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #ffc526,
-            transparent
-        );
-
-    box-shadow:
-        0 0 15px rgba(255,197,38,.65);
+.gf-toast.show{
+    transform:translate(-50%,0);
 }
 
-/* =========================
+/* ================================
    MOBILE
-========================= */
+================================ */
 
-@media(max-width:800px){
+@media(max-width:700px){
 
     .gf-ticker{
-        height:52px;
+        height:48px;
     }
 
     .gf-ticker-item{
-        height:52px;
-        min-width:210px;
+        height:48px;
+        min-width:220px;
         font-size:12px;
-        padding:0 14px;
     }
 
-    .gf-header{
-        min-height:118px;
-        padding:18px 15px;
+    .gf-brandbar{
+        min-height:125px;
+        padding:16px 14px;
+        gap:10px;
     }
 
     .gf-logo{
-        width:65px;
-        height:65px;
-        flex-basis:65px;
+        width:72px;
+        height:72px;
+        flex-basis:72px;
     }
 
     .gf-logo:before{
-        width:83px;
-        height:83px;
-    }
-
-    .gf-logo:after{
-        width:76px;
-        height:76px;
-    }
-
-    .gf-globe{
-        width:46px;
-        height:46px;
-    }
-
-    .gf-brand{
-        gap:12px;
+        font-size:29px;
     }
 
     .gf-brand-title{
-        font-size:22px;
-        letter-spacing:-.5px;
+        font-size:25px;
     }
 
     .gf-tagline{
         font-size:8px;
-        margin-top:7px;
         letter-spacing:1px;
     }
 
@@ -717,451 +606,177 @@ body{
     }
 
     .gf-action{
-        width:52px;
-        height:52px;
-        border-radius:13px;
+        height:58px;
+        border-radius:16px;
+    }
+
+    .gf-search,
+    .gf-menu{
+        width:58px;
+        font-size:29px;
     }
 
     .gf-subscribe{
-        width:92px;
+        min-width:92px;
+        padding:0 10px;
         font-size:11px;
     }
 
-    .gf-search-icon{
-        width:21px;
-        height:21px;
-        border-width:2px;
+    .gf-navigation{
+        padding:12px 10px 18px;
     }
 
-    .gf-search-icon:after{
-        width:8px;
-        height:2px;
-        right:-6px;
-        bottom:-3px;
+    .gf-nav-grid{
+        grid-template-columns:repeat(3,1fr);
+        gap:9px;
     }
 
-    .gf-menu-lines{
+    .gf-nav-button{
+        min-height:76px;
+        padding:10px 4px;
+        border-radius:17px;
+        font-size:14px;
+        gap:6px;
+    }
+
+    .gf-arrow{
         width:23px;
-    }
-
-    .gf-menu-lines:before,
-    .gf-menu-lines:after,
-    .gf-menu-lines span{
-        width:23px;
-        height:2px;
-    }
-
-    .gf-menu-lines span{
-        top:9px;
-    }
-
-    .gf-menu-lines:after{
-        top:18px;
-    }
-
-    .gf-nav{
-        padding:12px 10px;
-        gap:8px;
-    }
-
-    .gf-nav-btn{
-        height:58px;
-        border-radius:12px;
+        height:23px;
         font-size:12px;
     }
 
-    .gf-nav-btn span{
-        margin-left:4px;
+    .gf-dropdown{
+        position:fixed;
+        left:10px;
+        right:10px;
+        top:285px;
+        grid-template-columns:1fr 1fr;
+        max-height:65vh;
+        overflow-y:auto;
+        border-radius:20px;
     }
 
-    .gf-main{
-        min-height:calc(100vh - 260px);
-        padding:50px 15px 70px;
+    .gf-drop-item{
+        min-height:70px;
     }
 
-    .gf-center{
-        min-height:600px;
+    .gf-panel{
+        max-height:90vh;
+        border-radius:22px;
     }
 
-    .gf-center-globe{
-        width:185px;
-        height:185px;
-        margin-bottom:30px;
+    .gf-panel-title{
+        font-size:20px;
     }
 
-    .gf-center-globe:before{
-        width:235px;
-        height:235px;
-    }
-
-    .gf-center-globe:after{
-        width:260px;
-        height:260px;
-    }
-
-    .gf-big-land.one{
-        width:66px;
-        height:94px;
-        left:36px;
-        top:22px;
-    }
-
-    .gf-big-land.two{
-        width:45px;
-        height:67px;
-        left:76px;
-        top:83px;
-    }
-
-    .gf-big-land.three{
-        width:53px;
-        height:67px;
-        right:21px;
-        top:37px;
-    }
-
-    .gf-big-land.four{
-        width:28px;
-        height:36px;
-        right:24px;
-        bottom:26px;
-    }
-
-    .gf-center-title{
-        font-size:38px;
-        letter-spacing:-1px;
-    }
-
-    .gf-center-tagline{
-        font-size:11px;
-        letter-spacing:2px;
-        margin-top:14px;
-    }
-
-    .gf-gold-line{
-        width:190px;
-        margin-top:24px;
+    .gf-service-grid{
+        grid-template-columns:1fr;
     }
 }
 
-/* =========================
-   SMALL PHONES
-========================= */
-
-@media(max-width:430px){
+@media(max-width:390px){
 
     .gf-brand-title{
-        font-size:19px;
-    }
-
-    .gf-tagline{
-        font-size:7px;
+        font-size:21px;
     }
 
     .gf-logo{
-        width:56px;
-        height:56px;
-        flex-basis:56px;
+        width:62px;
+        height:62px;
+        flex-basis:62px;
     }
 
-    .gf-globe{
-        width:40px;
-        height:40px;
+    .gf-logo:before{
+        font-size:25px;
     }
 
-    .gf-action{
-        width:45px;
-        height:45px;
+    .gf-search,
+    .gf-menu{
+        width:50px;
     }
 
     .gf-subscribe{
-        width:78px;
+        min-width:75px;
         font-size:9px;
     }
 
-    .gf-nav-btn{
-        height:52px;
-        font-size:10px;
-    }
-
-    .gf-center-title{
-        font-size:31px;
-    }
-
-    .gf-center-tagline{
-        font-size:9px;
-        letter-spacing:1.5px;
-    }
-
-    .gf-center{
-        min-height:560px;
+    .gf-nav-button{
+        font-size:12px;
     }
 }
-
-/* =========================
-   POPUP
-========================= */
-
-.gf-popup{
-    position:fixed;
-    inset:0;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(0,0,0,.72);
-
-    backdrop-filter:blur(7px);
-
-    z-index:9999;
-
-    padding:20px;
-}
-
-.gf-popup.active{
-    display:flex;
-}
-
-.gf-popup-box{
-    width:min(450px,92vw);
-
-    padding:30px;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0a2234,
-            #04121d
-        );
-
-    border:1px solid rgba(255,197,38,.4);
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.7);
-}
-
-.gf-popup-title{
-    font-size:25px;
-    font-weight:900;
-    margin-bottom:12px;
-}
-
-.gf-popup-text{
-    color:#9eabb5;
-    line-height:1.6;
-    margin-bottom:25px;
-}
-
-.gf-popup-close{
-    width:100%;
-    height:52px;
-
-    border:0;
-    border-radius:12px;
-
-    background:#ffc526;
-    color:#111;
-
-    font-weight:900;
-
-    cursor:pointer;
-}
-
-/* =========================
-   MENU PANEL
-========================= */
-
-.gf-panel{
-    position:fixed;
-
-    top:0;
-    right:-330px;
-
-    width:320px;
-    height:100vh;
-
-    z-index:9998;
-
-    background:
-        linear-gradient(
-            180deg,
-            #061825,
-            #020b13
-        );
-
-    border-left:1px solid rgba(255,197,38,.25);
-
-    padding:35px 25px;
-
-    transition:right .3s ease;
-
-    box-shadow:
-        -20px 0 60px rgba(0,0,0,.5);
-}
-
-.gf-panel.active{
-    right:0;
-}
-
-.gf-panel-close{
-    width:48px;
-    height:48px;
-
-    border-radius:12px;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    background:#091d2c;
-
-    color:#fff;
-
-    font-size:25px;
-
-    cursor:pointer;
-
-    margin-bottom:30px;
-}
-
-.gf-panel-title{
-    font-size:25px;
-    font-weight:900;
-    margin-bottom:25px;
-    color:#ffc526;
-}
-
-.gf-panel-link{
-    display:block;
-
-    width:100%;
-
-    padding:17px 10px;
-
-    color:#dce5eb;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-
-    text-decoration:none;
-
-    cursor:pointer;
-}
-
-.gf-panel-link:hover{
-    color:#ffc526;
-}
-
-/* =========================
-   HIDE OLD COMMON WIDGETS
-========================= */
-
-.old-market-value,
-.market-value,
-.finance-store,
-.finance-tools,
-.hero-card,
-.market-grid,
-.market-movers,
-.news-section,
-.education-section,
-.tool-section{
-    display:none !important;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="gf-site">
+<header class="gf-header">
 
-    <!-- =========================
-         TICKER
-    ========================== -->
-
+    <!-- TICKER -->
     <div class="gf-ticker">
-
         <div class="gf-ticker-track">
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">NIFTY 50</span>
-                <span class="gf-ticker-price">24,834</span>
+                NIFTY 50 <b>24,834</b>
                 <span class="gf-up">▲ 0.75%</span>
             </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">SENSEX</span>
-                <span class="gf-ticker-price">81,330</span>
+                SENSEX <b>81,330</b>
                 <span class="gf-up">▲ 0.68%</span>
             </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">NASDAQ</span>
-                <span class="gf-ticker-price">17,689</span>
+                NASDAQ <b>17,689</b>
                 <span class="gf-up">▲ 0.92%</span>
             </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">GOLD</span>
-                <span class="gf-ticker-price">$2,341</span>
+                GOLD <b>$2,341</b>
                 <span class="gf-up">▲ 0.64%</span>
             </div>
 
-            <!-- duplicate for smooth loop -->
+            <div class="gf-ticker-item">
+                BTC/USD <b>$67,853</b>
+                <span class="gf-up">▲ 2.35%</span>
+            </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">NIFTY 50</span>
-                <span class="gf-ticker-price">24,834</span>
+                ETH/USD <b>$3,214</b>
+                <span class="gf-up">▲ 1.25%</span>
+            </div>
+
+            <!-- duplicate for smooth ticker -->
+
+            <div class="gf-ticker-item">
+                NIFTY 50 <b>24,834</b>
                 <span class="gf-up">▲ 0.75%</span>
             </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">SENSEX</span>
-                <span class="gf-ticker-price">81,330</span>
+                SENSEX <b>81,330</b>
                 <span class="gf-up">▲ 0.68%</span>
             </div>
 
             <div class="gf-ticker-item">
-                <span class="gf-ticker-name">NASDAQ</span>
-                <span class="gf-ticker-price">17,689</span>
+                NASDAQ <b>17,689</b>
                 <span class="gf-up">▲ 0.92%</span>
-            </div>
-
-            <div class="gf-ticker-item">
-                <span class="gf-ticker-name">GOLD</span>
-                <span class="gf-ticker-price">$2,341</span>
-                <span class="gf-up">▲ 0.64%</span>
             </div>
 
         </div>
-
     </div>
 
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
-    <header class="gf-header">
+    <!-- BRAND -->
+    <div class="gf-brandbar">
 
         <div class="gf-brand">
 
-            <div class="gf-logo">
-
-                <div class="gf-globe">
-                    <span class="gf-land1"></span>
-                    <span class="gf-land2"></span>
-                    <span class="gf-land3"></span>
-                </div>
-
-            </div>
+            <div class="gf-logo"></div>
 
             <div class="gf-brand-text">
 
                 <div class="gf-brand-title">
-                    GLOBAL <span class="gold">FINANCE</span>
+                    GLOBAL <span>FINANCE</span>
                 </div>
 
                 <div class="gf-tagline">
@@ -1175,427 +790,834 @@ body{
 
         <div class="gf-actions">
 
-            <button
-                class="gf-action"
-                id="searchBtn"
-                aria-label="Search">
-
-                <span class="gf-search-icon"></span>
-
+            <button class="gf-action gf-search"
+                    onclick="gfOpenSearch()">
+                ⌕
             </button>
 
-
-            <button
-                class="gf-action gf-subscribe"
-                id="subscribeBtn">
-
+            <button class="gf-action gf-subscribe"
+                    onclick="gfOpenPanel(
+                    'Subscribe',
+                    'Join Global Finance',
+                    'Subscribe to receive financial updates, market insights and important news.'
+                    )">
                 SUBSCRIBE
-
             </button>
 
-
-            <button
-                class="gf-action gf-menu"
-                id="menuBtn"
-                aria-label="Menu">
-
-                <span class="gf-menu-lines">
-                    <span></span>
-                </span>
-
+            <button class="gf-action gf-menu"
+                    onclick="gfOpenSide()">
+                ☰
             </button>
 
         </div>
 
-    </header>
+    </div>
 
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+    <!-- NAVIGATION -->
+    <nav class="gf-navigation">
 
-    <nav class="gf-nav">
+        <div class="gf-nav-grid">
 
-        <button
-            class="gf-nav-btn"
-            data-page="home">
-            HOME <span>▼</span>
-        </button>
 
-        <button
-            class="gf-nav-btn"
-            data-page="markets">
-            MARKETS <span>▼</span>
-        </button>
+            <!-- MARKETS -->
 
-        <button
-            class="gf-nav-btn"
-            data-page="news">
-            NEWS <span>▼</span>
-        </button>
+            <div class="gf-nav-box">
 
-        <button
-            class="gf-nav-btn"
-            data-page="more">
-            MORE <span>▼</span>
-        </button>
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('markets',this)">
+
+                    MARKETS
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="markets">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Stock Markets',
+                            'Global Stock Markets',
+                            'Explore major stock markets, indices and market movements.'
+                            )">
+
+                        <span class="gf-drop-icon">📈</span>
+                        <span class="gf-drop-title">Stock Markets</span>
+                        <span class="gf-drop-desc">Global equities</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Crypto Markets',
+                            'Cryptocurrency Markets',
+                            'Explore Bitcoin, Ethereum and major cryptocurrency markets.'
+                            )">
+
+                        <span class="gf-drop-icon">₿</span>
+                        <span class="gf-drop-title">Crypto</span>
+                        <span class="gf-drop-desc">Digital assets</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Forex',
+                            'Forex Markets',
+                            'Explore major currency pairs and foreign exchange markets.'
+                            )">
+
+                        <span class="gf-drop-icon">💱</span>
+                        <span class="gf-drop-title">Forex</span>
+                        <span class="gf-drop-desc">Currency markets</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Commodities',
+                            'Commodities',
+                            'Track gold, silver, oil and other major commodities.'
+                            )">
+
+                        <span class="gf-drop-icon">🪙</span>
+                        <span class="gf-drop-title">Commodities</span>
+                        <span class="gf-drop-desc">Gold • Oil • Silver</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TRADING -->
+
+            <div class="gf-nav-box">
+
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('trading',this)">
+
+                    TRADING
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="trading">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Trading',
+                            'Trading Center',
+                            'Trading resources, market concepts and strategies.'
+                            )">
+
+                        <span class="gf-drop-icon">📊</span>
+                        <span class="gf-drop-title">Trading Center</span>
+                        <span class="gf-drop-desc">Trading resources</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Technical Analysis',
+                            'Technical Analysis',
+                            'Charts, indicators, support, resistance and technical analysis concepts.'
+                            )">
+
+                        <span class="gf-drop-icon">📉</span>
+                        <span class="gf-drop-title">Technical Analysis</span>
+                        <span class="gf-drop-desc">Charts & indicators</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Fundamental Analysis',
+                            'Fundamental Analysis',
+                            'Understand company financials, valuation and fundamental research.'
+                            )">
+
+                        <span class="gf-drop-icon">🔎</span>
+                        <span class="gf-drop-title">Fundamental</span>
+                        <span class="gf-drop-desc">Company research</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Risk Management',
+                            'Risk Management',
+                            'Learn about position sizing, diversification and risk management.'
+                            )">
+
+                        <span class="gf-drop-icon">🛡️</span>
+                        <span class="gf-drop-title">Risk Management</span>
+                        <span class="gf-drop-desc">Protect capital</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEWS -->
+
+            <div class="gf-nav-box">
+
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('news',this)">
+
+                    NEWS
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="news">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Market News',
+                            'Market News',
+                            'Latest market developments and financial events.'
+                            )">
+
+                        <span class="gf-drop-icon">📰</span>
+                        <span class="gf-drop-title">Market News</span>
+                        <span class="gf-drop-desc">Markets today</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Business News',
+                            'Business News',
+                            'Business, companies and economic developments.'
+                            )">
+
+                        <span class="gf-drop-icon">🏢</span>
+                        <span class="gf-drop-title">Business</span>
+                        <span class="gf-drop-desc">Company news</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Crypto News',
+                            'Crypto News',
+                            'Cryptocurrency and blockchain market developments.'
+                            )">
+
+                        <span class="gf-drop-icon">₿</span>
+                        <span class="gf-drop-title">Crypto News</span>
+                        <span class="gf-drop-desc">Digital assets</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Economic News',
+                            'Economic News',
+                            'Central banks, inflation, interest rates and economic events.'
+                            )">
+
+                        <span class="gf-drop-icon">🌐</span>
+                        <span class="gf-drop-title">Economy</span>
+                        <span class="gf-drop-desc">Macro events</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOOLS -->
+
+            <div class="gf-nav-box">
+
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('tools',this)">
+
+                    TOOLS
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="tools">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'SIP Calculator',
+                            'SIP Calculator',
+                            'Calculate potential SIP investment growth using your investment amount, duration and expected return.'
+                            )">
+
+                        <span class="gf-drop-icon">🧮</span>
+                        <span class="gf-drop-title">SIP Calculator</span>
+                        <span class="gf-drop-desc">Investment calculator</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Compound Interest',
+                            'Compound Interest Calculator',
+                            'Calculate compound growth over time.'
+                            )">
+
+                        <span class="gf-drop-icon">📐</span>
+                        <span class="gf-drop-title">Compound Interest</span>
+                        <span class="gf-drop-desc">Growth calculator</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Portfolio',
+                            'Portfolio Manager',
+                            'Manage and monitor your investment portfolio.'
+                            )">
+
+                        <span class="gf-drop-icon">💼</span>
+                        <span class="gf-drop-title">Portfolio</span>
+                        <span class="gf-drop-desc">Track investments</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Watchlist',
+                            'Market Watchlist',
+                            'Create and monitor your favorite financial instruments.'
+                            )">
+
+                        <span class="gf-drop-icon">⭐</span>
+                        <span class="gf-drop-title">Watchlist</span>
+                        <span class="gf-drop-desc">Track markets</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEARN -->
+
+            <div class="gf-nav-box">
+
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('learn',this)">
+
+                    LEARN
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="learn">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Beginner',
+                            'Trading for Beginners',
+                            'Start learning financial markets, investing and trading from the basics.'
+                            )">
+
+                        <span class="gf-drop-icon">🎓</span>
+                        <span class="gf-drop-title">Beginner</span>
+                        <span class="gf-drop-desc">Start here</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Intermediate',
+                            'Intermediate Finance',
+                            'Develop deeper knowledge of markets, analysis and trading.'
+                            )">
+
+                        <span class="gf-drop-icon">📚</span>
+                        <span class="gf-drop-title">Intermediate</span>
+                        <span class="gf-drop-desc">Build knowledge</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Advanced',
+                            'Advanced Trading',
+                            'Advanced market analysis, strategies and financial concepts.'
+                            )">
+
+                        <span class="gf-drop-icon">🚀</span>
+                        <span class="gf-drop-title">Advanced</span>
+                        <span class="gf-drop-desc">Advanced concepts</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Glossary',
+                            'Finance Glossary',
+                            'Understand important financial and trading terminology.'
+                            )">
+
+                        <span class="gf-drop-icon">📖</span>
+                        <span class="gf-drop-title">Glossary</span>
+                        <span class="gf-drop-desc">Financial terms</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- MORE -->
+
+            <div class="gf-nav-box">
+
+                <button class="gf-nav-button"
+                        onclick="gfToggleDropdown('more',this)">
+
+                    MORE
+
+                    <span class="gf-arrow">▼</span>
+
+                </button>
+
+                <div class="gf-dropdown" id="more">
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'AI Finance Assistant',
+                            'AI Finance Assistant',
+                            'Your financial AI interface for learning finance, markets and financial concepts.'
+                            )">
+
+                        <span class="gf-drop-icon">🤖</span>
+                        <span class="gf-drop-title">AI Finance Assistant</span>
+                        <span class="gf-drop-desc">Financial AI</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Price Alerts',
+                            'Price Alerts',
+                            'Create and manage market price alerts.'
+                            )">
+
+                        <span class="gf-drop-icon">🔔</span>
+                        <span class="gf-drop-title">Price Alerts</span>
+                        <span class="gf-drop-desc">Market alerts</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'Economic Calendar',
+                            'Economic Calendar',
+                            'Track important economic events and announcements.'
+                            )">
+
+                        <span class="gf-drop-icon">📅</span>
+                        <span class="gf-drop-title">Economic Calendar</span>
+                        <span class="gf-drop-desc">Economic events</span>
+
+                    </button>
+
+
+                    <button class="gf-drop-item"
+                            onclick="gfOpenPanel(
+                            'About',
+                            'About Global Finance',
+                            'Global Finance is designed as a premium financial navigation and information platform.'
+                            )">
+
+                        <span class="gf-drop-icon">ℹ️</span>
+                        <span class="gf-drop-title">About</span>
+                        <span class="gf-drop-desc">About Global Finance</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </nav>
 
+</header>
 
-    <!-- =========================
-         CLEAN CENTER AREA
-         OLD MIDDLE CONTENT REMOVED
-    ========================== -->
 
-    <main class="gf-main">
+<!-- ================================
+     UNIVERSAL POPUP
+================================ -->
 
-        <section class="gf-center">
+<div class="gf-overlay" id="gfOverlay">
 
-            <div class="gf-center-globe">
+    <div class="gf-panel">
 
-                <span class="gf-big-land one"></span>
-                <span class="gf-big-land two"></span>
-                <span class="gf-big-land three"></span>
-                <span class="gf-big-land four"></span>
+        <div class="gf-panel-head">
+
+            <div class="gf-panel-title" id="gfPanelTitle">
+                GLOBAL <span>FINANCE</span>
+            </div>
+
+            <button class="gf-close"
+                    onclick="gfClosePanel()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="gf-panel-content">
+
+            <h3 id="gfPanelHeading">
+                Global Finance
+            </h3>
+
+            <p id="gfPanelText">
+                Financial information and services.
+            </p>
+
+            <div class="gf-service-grid">
+
+                <div class="gf-service"
+                     onclick="gfToast('Service connected')">
+
+                    <strong>📊 Dashboard</strong>
+                    <small>Open connected dashboard</small>
+
+                </div>
+
+                <div class="gf-service"
+                     onclick="gfToast('Service connected')">
+
+                    <strong>🔗 Connect Service</strong>
+                    <small>Connect your future API/service</small>
+
+                </div>
 
             </div>
 
+        </div>
 
-            <h1 class="gf-center-title">
-                GLOBAL <span class="gold">FINANCE</span>
-            </h1>
-
-
-            <div class="gf-center-tagline">
-                SMARTER DECISIONS • STRONGER FUTURE
-            </div>
-
-
-            <div class="gf-gold-line"></div>
-
-        </section>
-
-    </main>
+    </div>
 
 </div>
 
 
-<!-- =========================
-     POPUP
-========================= -->
+<!-- ================================
+     SIDE MENU
+================================ -->
 
-<div class="gf-popup" id="popup">
+<aside class="gf-side" id="gfSide">
 
-    <div class="gf-popup-box">
+    <div class="gf-side-head">
 
-        <div
-            class="gf-popup-title"
-            id="popupTitle">
-            Global Finance
+        <div class="gf-side-title">
+            GLOBAL <span>FINANCE</span>
         </div>
 
-        <div
-            class="gf-popup-text"
-            id="popupText">
-            Welcome to Global Finance.
-        </div>
-
-        <button
-            class="gf-popup-close"
-            id="popupClose">
-            CLOSE
+        <button class="gf-side-close"
+                onclick="gfCloseSide()">
+            ×
         </button>
 
     </div>
 
-</div>
+    <div class="gf-side-links">
 
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'AI Finance Assistant',
+                'AI Finance Assistant',
+                'Financial AI service.'
+                )">
+            🤖 AI Finance Assistant
+        </button>
 
-<!-- =========================
-     SIDE MENU
-========================= -->
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'Portfolio',
+                'Portfolio',
+                'Portfolio management service.'
+                )">
+            💼 Portfolio
+        </button>
 
-<aside class="gf-panel" id="sidePanel">
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'Watchlist',
+                'Watchlist',
+                'Track your favorite markets.'
+                )">
+            ⭐ Watchlist
+        </button>
 
-    <button
-        class="gf-panel-close"
-        id="panelClose">
-        ×
-    </button>
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'Alerts',
+                'Price Alerts',
+                'Market alert service.'
+                )">
+            🔔 Price Alerts
+        </button>
 
-    <div class="gf-panel-title">
-        GLOBAL FINANCE
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'Calendar',
+                'Economic Calendar',
+                'Economic events and announcements.'
+                )">
+            📅 Economic Calendar
+        </button>
+
+        <button class="gf-side-link"
+                onclick="gfOpenPanel(
+                'About',
+                'About Global Finance',
+                'Information about Global Finance.'
+                )">
+            ℹ️ About
+        </button>
+
     </div>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Markets">
-        Markets
-    </a>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Forex">
-        Forex
-    </a>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Crypto">
-        Crypto
-    </a>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Financial News">
-        Financial News
-    </a>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Trading Tools">
-        Trading Tools
-    </a>
-
-    <a
-        class="gf-panel-link"
-        data-panel="Education">
-        Education
-    </a>
 
 </aside>
 
 
+<!-- TOAST -->
+
+<div class="gf-toast" id="gfToast">
+    Connected successfully
+</div>
+
+
 <script>
 
-/* =========================
-   ELEMENTS
-========================= */
+/* =====================================
+   DROPDOWN SYSTEM
+===================================== */
 
-const popup =
-    document.getElementById("popup");
+function gfToggleDropdown(id,button){
 
-const popupTitle =
-    document.getElementById("popupTitle");
+    const dropdown=document.getElementById(id);
 
-const popupText =
-    document.getElementById("popupText");
+    const allDropdowns=document.querySelectorAll('.gf-dropdown');
+    const allButtons=document.querySelectorAll('.gf-nav-button');
 
-const popupClose =
-    document.getElementById("popupClose");
+    const isOpen=dropdown.classList.contains('open');
 
-const subscribeBtn =
-    document.getElementById("subscribeBtn");
+    allDropdowns.forEach(function(item){
+        item.classList.remove('open');
+    });
 
-const searchBtn =
-    document.getElementById("searchBtn");
+    allButtons.forEach(function(item){
+        item.classList.remove('active');
+    });
 
-const menuBtn =
-    document.getElementById("menuBtn");
+    if(!isOpen){
 
-const sidePanel =
-    document.getElementById("sidePanel");
+        dropdown.classList.add('open');
 
-const panelClose =
-    document.getElementById("panelClose");
+        button.classList.add('active');
 
-
-/* =========================
-   POPUP FUNCTION
-========================= */
-
-function showPopup(title,text){
-
-    popupTitle.textContent = title;
-
-    popupText.textContent = text;
-
-    popup.classList.add("active");
+    }
 
 }
 
 
-/* =========================
-   CLOSE POPUP
-========================= */
+/* =====================================
+   CLOSE ALL DROPDOWNS
+===================================== */
 
-popupClose.addEventListener(
-    "click",
-    function(){
+function gfCloseDropdowns(){
 
-        popup.classList.remove("active");
+    document.querySelectorAll('.gf-dropdown')
+    .forEach(function(item){
+        item.classList.remove('open');
+    });
 
-    }
-);
+    document.querySelectorAll('.gf-nav-button')
+    .forEach(function(item){
+        item.classList.remove('active');
+    });
 
-
-/* =========================
-   SUBSCRIBE
-========================= */
-
-subscribeBtn.addEventListener(
-    "click",
-    function(){
-
-        showPopup(
-            "Subscribe",
-            "Global Finance subscription system is ready. Connect your email subscription service here."
-        );
-
-    }
-);
+}
 
 
-/* =========================
+/* =====================================
+   UNIVERSAL POPUP
+===================================== */
+
+function gfOpenPanel(title,heading,text){
+
+    gfCloseDropdowns();
+
+    const overlay=document.getElementById('gfOverlay');
+
+    document.getElementById('gfPanelTitle').innerHTML=
+        'GLOBAL <span>FINANCE</span>';
+
+    document.getElementById('gfPanelHeading').textContent=
+        heading || title;
+
+    document.getElementById('gfPanelText').textContent=
+        text || 'Connected financial service.';
+
+    overlay.classList.add('show');
+
+    document.body.style.overflow='hidden';
+}
+
+
+function gfClosePanel(){
+
+    document.getElementById('gfOverlay')
+    .classList.remove('show');
+
+    document.body.style.overflow='';
+
+}
+
+
+/* =====================================
    SEARCH
-========================= */
+===================================== */
 
-searchBtn.addEventListener(
-    "click",
-    function(){
+function gfOpenSearch(){
 
-        showPopup(
-            "Search",
-            "Search panel is ready. You can connect your website search engine here."
-        );
-
-    }
-);
-
-
-/* =========================
-   MENU
-========================= */
-
-menuBtn.addEventListener(
-    "click",
-    function(){
-
-        sidePanel.classList.add("active");
-
-    }
-);
-
-
-/* =========================
-   CLOSE MENU
-========================= */
-
-panelClose.addEventListener(
-    "click",
-    function(){
-
-        sidePanel.classList.remove("active");
-
-    }
-);
-
-
-/* =========================
-   NAV BUTTONS
-========================= */
-
-document
-.querySelectorAll(".gf-nav-btn")
-.forEach(function(button){
-
-    button.addEventListener(
-        "click",
-        function(){
-
-            const page =
-                this.dataset.page;
-
-            if(page === "home"){
-
-                window.scrollTo({
-                    top:0,
-                    behavior:"smooth"
-                });
-
-                return;
-            }
-
-            showPopup(
-                page.toUpperCase(),
-                page === "markets"
-                    ? "Markets section is ready."
-                    : page === "news"
-                    ? "Financial News section is ready."
-                    : "More sections are ready."
-            );
-
-        }
+    gfOpenPanel(
+        'Search',
+        'Global Finance Search',
+        'Search will connect here to your financial content, markets, news and tools.'
     );
+
+}
+
+
+/* =====================================
+   SIDE MENU
+===================================== */
+
+function gfOpenSide(){
+
+    gfCloseDropdowns();
+
+    document.getElementById('gfSide')
+    .classList.add('open');
+
+}
+
+
+function gfCloseSide(){
+
+    document.getElementById('gfSide')
+    .classList.remove('open');
+
+}
+
+
+/* =====================================
+   TOAST
+===================================== */
+
+function gfToast(message){
+
+    const toast=document.getElementById('gfToast');
+
+    toast.textContent=message;
+
+    toast.classList.add('show');
+
+    setTimeout(function(){
+
+        toast.classList.remove('show');
+
+    },2200);
+
+}
+
+
+/* =====================================
+   CLICK OUTSIDE DROPDOWN
+===================================== */
+
+document.addEventListener('click',function(event){
+
+    const navigation=document.querySelector('.gf-navigation');
+
+    if(
+        navigation &&
+        !navigation.contains(event.target)
+    ){
+
+        gfCloseDropdowns();
+
+    }
 
 });
 
 
-/* =========================
-   SIDE PANEL LINKS
-========================= */
-
-document
-.querySelectorAll(".gf-panel-link")
-.forEach(function(link){
-
-    link.addEventListener(
-        "click",
-        function(){
-
-            const section =
-                this.dataset.panel;
-
-            sidePanel.classList.remove("active");
-
-            showPopup(
-                section,
-                section + " section is ready to connect."
-            );
-
-        }
-    );
-
-});
-
-
-/* =========================
+/* =====================================
    CLICK OUTSIDE POPUP
-========================= */
+===================================== */
 
-popup.addEventListener(
-    "click",
-    function(e){
+document.getElementById('gfOverlay')
+.addEventListener('click',function(event){
 
-        if(e.target === popup){
+    if(event.target===this){
 
-            popup.classList.remove("active");
-
-        }
+        gfClosePanel();
 
     }
-);
+
+});
 
 
-/* =========================
-   ESCAPE KEY
-========================= */
+/* =====================================
+   ESC KEY
+===================================== */
 
-document.addEventListener(
-    "keydown",
-    function(e){
+document.addEventListener('keydown',function(event){
 
-        if(e.key === "Escape"){
+    if(event.key==='Escape'){
 
-            popup.classList.remove("active");
-
-            sidePanel.classList.remove("active");
-
-        }
+        gfCloseDropdowns();
+        gfClosePanel();
+        gfCloseSide();
 
     }
-);
+
+});
 
 </script>
 
