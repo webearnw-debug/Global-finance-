@@ -1,645 +1,1201 @@
-<!-- GLOBAL FINANCE — PREMIUM HEADER ONLY -->
+<!-- =========================================================
+     GLOBAL FINANCE — PREMIUM LIGHT INTERNATIONAL HEADER
+     HEADER ONLY
+========================================================= -->
+
 <style>
-:root{
-  --gf-bg:#07090d;
-  --gf-panel:#0d1118;
-  --gf-text:#f4f5f7;
-  --gf-muted:#8d96a4;
-  --gf-gold:#d8b46a;
-  --gf-gold2:#f0d28c;
-  --gf-line:rgba(255,255,255,.09);
-}
+/* =========================
+   GLOBAL FINANCE VARIABLES
+========================= */
 
-.gf-header{
-  position:sticky;
-  top:0;
-  z-index:99999;
+.gf-premium-header{
+  --gf-white:#ffffff;
+  --gf-soft:#f7f8fa;
+  --gf-soft2:#f1f3f6;
+  --gf-text:#17202b;
+  --gf-text2:#4f5b68;
+  --gf-muted:#7b8794;
+  --gf-border:#e5e8ec;
+  --gf-blue:#173b67;
+  --gf-blue2:#24588f;
+  --gf-gold:#b38a3c;
+  --gf-shadow:0 12px 35px rgba(20,35,55,.10);
+
   width:100%;
-  background:
-    linear-gradient(180deg,rgba(8,10,14,.98),rgba(8,10,14,.93));
-  border-bottom:1px solid var(--gf-line);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  font-family:Arial,Helvetica,sans-serif;
+  position:relative;
+  z-index:99999;
+  background:var(--gf-white);
+  color:var(--gf-text);
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
 }
 
-.gf-header-inner{
-  width:min(1450px,94%);
-  min-height:82px;
+/* =========================
+   TOP BRAND BAR
+========================= */
+
+.gf-topbar{
+  width:100%;
+  border-bottom:1px solid var(--gf-border);
+  background:#ffffff;
+}
+
+.gf-topbar-inner{
+  width:min(1440px,94%);
+  min-height:72px;
   margin:auto;
+
   display:flex;
   align-items:center;
-  gap:28px;
+  justify-content:space-between;
+  gap:25px;
 }
 
-/* LOGO */
+/* =========================
+   BRAND
+========================= */
 
 .gf-brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:13px;
   cursor:pointer;
-  flex-shrink:0;
+  text-decoration:none;
 }
 
 .gf-logo{
-  width:46px;
-  height:46px;
-  border-radius:13px;
-  border:1px solid rgba(216,180,106,.65);
-  display:grid;
-  place-items:center;
-  color:var(--gf-gold2);
+  width:45px;
+  height:45px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #173b67,
+      #285f95
+    );
+
+  color:#ffffff;
+
   font-size:15px;
   font-weight:900;
   letter-spacing:-1px;
-  background:
-    radial-gradient(circle at 30% 20%,
-    rgba(216,180,106,.16),
-    transparent 60%);
+
   box-shadow:
-    inset 0 0 25px rgba(216,180,106,.04),
-    0 0 35px rgba(216,180,106,.05);
+    0 7px 18px rgba(23,59,103,.16);
 }
 
-.gf-brand-name{
+.gf-brand-text{
   line-height:1.05;
 }
 
-.gf-brand-name strong{
-  display:block;
-  color:#f5f5f6;
-  font-size:15px;
-  letter-spacing:2.3px;
+.gf-brand-title{
+  color:#17202b;
+  font-size:16px;
   font-weight:800;
+  letter-spacing:2px;
 }
 
-.gf-brand-name span{
-  display:block;
-  color:var(--gf-gold);
-  font-size:8px;
-  letter-spacing:3px;
+.gf-brand-subtitle{
   margin-top:5px;
+
+  color:var(--gf-gold);
+
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:2.5px;
 }
 
-/* NAV */
+/* =========================
+   TOP RIGHT
+========================= */
 
-.gf-nav{
-  margin-left:auto;
+.gf-top-actions{
   display:flex;
   align-items:center;
+  gap:8px;
+}
+
+.gf-small-button{
+  min-height:38px;
+  padding:0 13px;
+
+  border:1px solid var(--gf-border);
+  border-radius:9px;
+
+  background:#ffffff;
+  color:var(--gf-text2);
+
+  cursor:pointer;
+
+  font-size:11px;
+  font-weight:700;
+
+  transition:
+    background .2s ease,
+    border .2s ease,
+    color .2s ease,
+    transform .2s ease;
+}
+
+.gf-small-button:hover{
+  background:var(--gf-soft);
+  border-color:#cfd5dc;
+  color:var(--gf-blue);
+  transform:translateY(-1px);
+}
+
+.gf-subscribe{
+  min-height:38px;
+  padding:0 16px;
+
+  border:0;
+  border-radius:9px;
+
+  background:var(--gf-blue);
+  color:#ffffff;
+
+  cursor:pointer;
+
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.7px;
+
+  transition:.2s ease;
+}
+
+.gf-subscribe:hover{
+  background:var(--gf-blue2);
+  transform:translateY(-1px);
+}
+
+/* =========================
+   MAIN NAVIGATION
+========================= */
+
+.gf-navigation{
+  width:100%;
+  background:#ffffff;
+  border-bottom:1px solid var(--gf-border);
+}
+
+.gf-navigation-inner{
+  width:min(1440px,94%);
+  min-height:58px;
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* =========================
+   NAV ITEM
+========================= */
+
+.gf-nav-list{
+  display:flex;
+  align-items:center;
+  justify-content:center;
   gap:4px;
+
+  list-style:none;
+  margin:0;
+  padding:0;
 }
 
 .gf-nav-item{
   position:relative;
 }
 
-.gf-nav-btn{
-  border:0;
-  outline:none;
+.gf-nav-button{
+  min-height:42px;
+
+  padding:0 18px;
+
+  border:1px solid transparent;
+  border-radius:9px;
+
   background:transparent;
-  color:#d9dde3;
-  padding:13px 15px;
-  border-radius:10px;
+
+  color:#34404d;
+
   cursor:pointer;
+
   font-size:11px;
   font-weight:800;
-  letter-spacing:.8px;
+  letter-spacing:.7px;
+
   transition:
-    background .25s ease,
-    color .25s ease,
-    transform .25s ease;
+    background .2s ease,
+    color .2s ease,
+    border .2s ease;
 }
 
-.gf-nav-btn:hover,
-.gf-nav-item.open .gf-nav-btn{
-  color:var(--gf-gold2);
-  background:rgba(216,180,106,.075);
+.gf-nav-button:hover,
+.gf-nav-item.gf-active .gf-nav-button{
+  background:#f5f7f9;
+  border-color:#e5e8ec;
+  color:var(--gf-blue);
 }
 
 .gf-arrow{
   display:inline-block;
+
   margin-left:6px;
+
+  color:#7b8794;
+
   font-size:8px;
-  transition:transform .25s ease;
+
+  transition:transform .2s ease;
 }
 
-.gf-nav-item.open .gf-arrow{
+.gf-nav-item.gf-active .gf-arrow{
   transform:rotate(180deg);
 }
 
-/* DROPDOWN */
+/* =========================
+   DROPDOWN
+========================= */
 
 .gf-dropdown{
   position:absolute;
-  top:calc(100% + 13px);
+
+  top:calc(100% + 8px);
   left:50%;
-  width:285px;
-  padding:9px;
+
+  width:270px;
+
+  padding:8px;
+
   transform:
     translateX(-50%)
-    translateY(-8px)
-    scale(.98);
+    translateY(-6px);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,23,31,.99),
-      rgba(10,13,18,.99)
-    );
+  background:#ffffff;
 
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:16px;
+  border:1px solid var(--gf-border);
+
+  border-radius:13px;
 
   box-shadow:
-    0 30px 80px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.035);
+    0 18px 45px rgba(20,35,55,.13);
 
   opacity:0;
   visibility:hidden;
   pointer-events:none;
 
   transition:
-    opacity .2s ease,
-    transform .2s ease,
-    visibility .2s ease;
+    opacity .18s ease,
+    transform .18s ease,
+    visibility .18s ease;
 }
 
-.gf-nav-item.open .gf-dropdown{
+.gf-nav-item.gf-active .gf-dropdown{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
+
   transform:
     translateX(-50%)
-    translateY(0)
-    scale(1);
+    translateY(0);
 }
 
-.gf-dropdown:before{
+/* little top pointer */
+
+.gf-dropdown::before{
   content:"";
+
   position:absolute;
+
   top:-6px;
   left:50%;
-  width:11px;
-  height:11px;
-  transform:translateX(-50%) rotate(45deg);
-  background:#131820;
-  border-left:1px solid rgba(255,255,255,.10);
-  border-top:1px solid rgba(255,255,255,.10);
+
+  width:10px;
+  height:10px;
+
+  background:#ffffff;
+
+  border-left:1px solid var(--gf-border);
+  border-top:1px solid var(--gf-border);
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
 }
+
+/* =========================
+   DROPDOWN OPTION
+========================= */
 
 .gf-option{
   width:100%;
+
   display:block;
-  text-align:left;
-  padding:14px 13px;
+
+  padding:13px 12px;
+
   border:0;
-  border-radius:11px;
-  background:transparent;
-  color:#e8eaed;
+  border-radius:9px;
+
+  background:#ffffff;
+
+  text-align:left;
+
   cursor:pointer;
-  transition:.2s ease;
+
+  transition:
+    background .18s ease,
+    transform .18s ease;
 }
 
 .gf-option:hover{
-  background:rgba(216,180,106,.085);
+  background:#f5f7fa;
   transform:translateX(2px);
 }
 
 .gf-option-title{
   display:block;
+
+  color:#1b2734;
+
   font-size:12px;
   font-weight:800;
-  letter-spacing:.2px;
 }
 
-.gf-option-desc{
+.gf-option-description{
   display:block;
-  color:#747e8c;
+
+  margin-top:4px;
+
+  color:#89939f;
+
   font-size:9px;
-  margin-top:5px;
   line-height:1.4;
 }
 
-/* RIGHT SIDE */
+/* =========================
+   SEARCH BUTTON
+========================= */
 
-.gf-actions{
+.gf-search-button{
+  width:39px;
+  height:39px;
+
+  margin-left:10px;
+
   display:flex;
   align-items:center;
-  gap:8px;
-  margin-left:8px;
-}
+  justify-content:center;
 
-.gf-search{
-  width:40px;
-  height:40px;
-  border-radius:10px;
-  border:1px solid var(--gf-line);
-  background:#0d1118;
-  color:#e8eaed;
+  border:1px solid var(--gf-border);
+  border-radius:9px;
+
+  background:#ffffff;
+
+  color:#45515e;
+
   cursor:pointer;
-  font-size:19px;
-  display:grid;
-  place-items:center;
-  transition:.25s;
+
+  font-size:18px;
+
+  transition:.2s ease;
 }
 
-.gf-search:hover{
-  color:var(--gf-gold2);
-  border-color:rgba(216,180,106,.4);
+.gf-search-button:hover{
+  background:#f5f7f9;
+  color:var(--gf-blue);
 }
 
-.gf-subscribe{
-  height:40px;
-  padding:0 17px;
-  border:0;
-  border-radius:10px;
-  cursor:pointer;
-  background:
-    linear-gradient(
-      135deg,
-      #c89f52,
-      #efd087
-    );
-  color:#171208;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:1px;
-  box-shadow:
-    0 8px 25px rgba(216,180,106,.12);
-  transition:.25s;
-}
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
 
-.gf-subscribe:hover{
-  transform:translateY(-1px);
-  box-shadow:
-    0 12px 30px rgba(216,180,106,.2);
-}
-
-/* MOBILE */
-
-.gf-mobile{
+.gf-mobile-menu-button{
   display:none;
+
+  width:42px;
+  height:42px;
+
+  border:1px solid var(--gf-border);
+  border-radius:9px;
+
+  background:#ffffff;
+
+  color:#25313d;
+
+  cursor:pointer;
+
+  font-size:20px;
 }
+
+/* =========================
+   MOBILE PANEL
+========================= */
+
+.gf-mobile-panel{
+  display:none;
+
+  position:absolute;
+
+  top:100%;
+  left:3%;
+  right:3%;
+
+  padding:10px;
+
+  background:#ffffff;
+
+  border:1px solid var(--gf-border);
+
+  border-radius:14px;
+
+  box-shadow:
+    0 20px 50px rgba(20,35,55,.15);
+}
+
+.gf-mobile-panel.gf-show{
+  display:block;
+}
+
+.gf-mobile-section{
+  margin-bottom:7px;
+}
+
+.gf-mobile-main{
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:14px;
+
+  border:1px solid var(--gf-border);
+  border-radius:9px;
+
+  background:#ffffff;
+
+  color:#273440;
+
+  cursor:pointer;
+
+  font-size:12px;
+  font-weight:800;
+
+  text-align:left;
+}
+
+.gf-mobile-options{
+  display:none;
+
+  padding:5px 0 0 10px;
+}
+
+.gf-mobile-section.gf-open
+.gf-mobile-options{
+  display:block;
+}
+
+.gf-mobile-option{
+  width:100%;
+
+  padding:12px;
+
+  border:0;
+  border-bottom:1px solid #edf0f3;
+
+  background:#fafbfc;
+
+  color:#4b5663;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  font-size:11px;
+}
+
+/* =========================
+   SEARCH PANEL
+========================= */
+
+.gf-search-panel{
+  position:fixed;
+
+  inset:0;
+
+  z-index:100000;
+
+  display:none;
+
+  align-items:flex-start;
+  justify-content:center;
+
+  padding:90px 20px;
+
+  background:rgba(255,255,255,.82);
+
+  backdrop-filter:blur(8px);
+}
+
+.gf-search-panel.gf-show{
+  display:flex;
+}
+
+.gf-search-box{
+  width:min(600px,100%);
+
+  padding:25px;
+
+  background:#ffffff;
+
+  border:1px solid var(--gf-border);
+
+  border-radius:16px;
+
+  box-shadow:
+    0 25px 70px rgba(20,35,55,.18);
+}
+
+.gf-search-title{
+  color:#18232f;
+
+  font-size:22px;
+  font-weight:800;
+
+  margin-bottom:15px;
+}
+
+.gf-search-input{
+  width:100%;
+
+  height:48px;
+
+  padding:0 14px;
+
+  border:1px solid var(--gf-border);
+  border-radius:9px;
+
+  outline:none;
+
+  color:#18232f;
+  background:#fafbfc;
+
+  font-size:14px;
+}
+
+.gf-search-input:focus{
+  border-color:#9eb1c6;
+  background:#ffffff;
+}
+
+.gf-search-close{
+  margin-top:12px;
+
+  padding:10px 15px;
+
+  border:1px solid var(--gf-border);
+  border-radius:8px;
+
+  background:#ffffff;
+
+  color:#4c5865;
+
+  cursor:pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:1050px){
 
-  .gf-nav{
+  .gf-navigation-inner{
+    justify-content:flex-end;
+  }
+
+  .gf-nav-list{
     display:none;
   }
 
-  .gf-mobile{
-    display:grid;
-    place-items:center;
-    width:40px;
-    height:40px;
-    border-radius:10px;
-    border:1px solid var(--gf-line);
-    background:#0d1118;
-    color:#fff;
-    cursor:pointer;
-    font-size:18px;
+  .gf-mobile-menu-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
-  .gf-header-inner{
-    justify-content:space-between;
-  }
-
-  .gf-actions{
-    margin-left:auto;
-  }
 }
 
-@media(max-width:600px){
+@media(max-width:700px){
 
-  .gf-header-inner{
-    min-height:70px;
+  .gf-topbar-inner{
+    min-height:66px;
+
     width:94%;
+
     gap:10px;
   }
 
   .gf-logo{
     width:40px;
     height:40px;
-    border-radius:11px;
   }
 
-  .gf-brand-name strong{
-    font-size:11px;
-    letter-spacing:1.7px;
+  .gf-brand-title{
+    font-size:12px;
+    letter-spacing:1.5px;
   }
 
-  .gf-brand-name span{
+  .gf-brand-subtitle{
     font-size:6px;
-    letter-spacing:2px;
+    letter-spacing:1.8px;
+  }
+
+  .gf-small-button{
+    display:none;
   }
 
   .gf-subscribe{
     display:none;
   }
+
+  .gf-search-button{
+    width:40px;
+    height:40px;
+    margin-left:0;
+  }
+
+  .gf-navigation-inner{
+    min-height:58px;
+  }
+
 }
 
-/* MOBILE MENU PANEL */
+@media(max-width:430px){
 
-.gf-mobile-panel{
-  position:fixed;
-  top:71px;
-  left:3%;
-  right:3%;
-  z-index:99998;
-  padding:12px;
+  .gf-topbar-inner{
+    width:92%;
+  }
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,23,31,.99),
-      rgba(8,11,16,.99)
-    );
+  .gf-brand{
+    gap:9px;
+  }
 
-  border:1px solid var(--gf-line);
-  border-radius:17px;
+  .gf-logo{
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    font-size:13px;
+  }
 
-  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  .gf-brand-title{
+    font-size:11px;
+  }
 
-  display:none;
-}
+  .gf-brand-subtitle{
+    font-size:5px;
+  }
 
-.gf-mobile-panel.show{
-  display:block;
-}
-
-.gf-mobile-main{
-  width:100%;
-  border:1px solid var(--gf-line);
-  background:#0d1118;
-  color:#e9ebef;
-  padding:14px;
-  border-radius:10px;
-  margin-bottom:7px;
-  text-align:left;
-  font-size:11px;
-  font-weight:800;
 }
 </style>
 
 
-<header class="gf-header">
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
-  <div class="gf-header-inner">
+<header class="gf-premium-header">
 
-    <!-- BRAND -->
-    <div class="gf-brand" onclick="gfHome()">
+  <!-- TOP BRAND -->
+  <div class="gf-topbar">
 
-      <div class="gf-logo">GF</div>
+    <div class="gf-topbar-inner">
 
-      <div class="gf-brand-name">
-        <strong>GLOBAL FINANCE</strong>
-        <span>GLOBAL FINANCIAL INTELLIGENCE</span>
+      <div class="gf-brand" onclick="gfGoHome()">
+
+        <div class="gf-logo">
+          GF
+        </div>
+
+        <div class="gf-brand-text">
+
+          <div class="gf-brand-title">
+            GLOBAL FINANCE
+          </div>
+
+          <div class="gf-brand-subtitle">
+            GLOBAL FINANCIAL INTELLIGENCE
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="gf-top-actions">
+
+        <button
+          class="gf-small-button"
+          onclick="gfAction('Markets')">
+          Markets
+        </button>
+
+        <button
+          class="gf-small-button"
+          onclick="gfAction('Watchlist')">
+          Watchlist
+        </button>
+
+        <button
+          class="gf-subscribe"
+          onclick="gfSubscribe()">
+          SUBSCRIBE
+        </button>
+
+        <button
+          class="gf-search-button"
+          onclick="gfOpenSearch()"
+          aria-label="Search">
+          ⌕
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MAIN NAVIGATION -->
+
+  <div class="gf-navigation">
+
+    <div class="gf-navigation-inner">
+
+      <ul class="gf-nav-list">
+
+
+        <!-- MARKETS -->
+
+        <li class="gf-nav-item">
+
+          <button
+            class="gf-nav-button"
+            onclick="gfToggleMenu(this)">
+            MARKETS
+            <span class="gf-arrow">▼</span>
+          </button>
+
+          <div class="gf-dropdown">
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Global Markets')">
+
+              <span class="gf-option-title">
+                Global Markets
+              </span>
+
+              <span class="gf-option-description">
+                Global market overview
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Stocks & Indices')">
+
+              <span class="gf-option-title">
+                Stocks & Indices
+              </span>
+
+              <span class="gf-option-description">
+                Equities and benchmark markets
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Forex & Crypto')">
+
+              <span class="gf-option-title">
+                Forex & Crypto
+              </span>
+
+              <span class="gf-option-description">
+                Currency and digital asset markets
+              </span>
+
+            </button>
+
+          </div>
+
+        </li>
+
+
+        <!-- TRADING -->
+
+        <li class="gf-nav-item">
+
+          <button
+            class="gf-nav-button"
+            onclick="gfToggleMenu(this)">
+            TRADING
+            <span class="gf-arrow">▼</span>
+          </button>
+
+          <div class="gf-dropdown">
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Trading Ideas')">
+
+              <span class="gf-option-title">
+                Trading Ideas
+              </span>
+
+              <span class="gf-option-description">
+                Market setups and ideas
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Technical Analysis')">
+
+              <span class="gf-option-title">
+                Technical Analysis
+              </span>
+
+              <span class="gf-option-description">
+                Charts and indicators
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Trading Strategies')">
+
+              <span class="gf-option-title">
+                Trading Strategies
+              </span>
+
+              <span class="gf-option-description">
+                Trading methodology
+              </span>
+
+            </button>
+
+          </div>
+
+        </li>
+
+
+        <!-- INVESTING -->
+
+        <li class="gf-nav-item">
+
+          <button
+            class="gf-nav-button"
+            onclick="gfToggleMenu(this)">
+            INVESTING
+            <span class="gf-arrow">▼</span>
+          </button>
+
+          <div class="gf-dropdown">
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Investment Ideas')">
+
+              <span class="gf-option-title">
+                Investment Ideas
+              </span>
+
+              <span class="gf-option-description">
+                Long-term investment concepts
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Portfolio')">
+
+              <span class="gf-option-title">
+                Portfolio
+              </span>
+
+              <span class="gf-option-description">
+                Portfolio and allocation
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Wealth Management')">
+
+              <span class="gf-option-title">
+                Wealth Management
+              </span>
+
+              <span class="gf-option-description">
+                Long-term wealth planning
+              </span>
+
+            </button>
+
+          </div>
+
+        </li>
+
+
+        <!-- INTELLIGENCE -->
+
+        <li class="gf-nav-item">
+
+          <button
+            class="gf-nav-button"
+            onclick="gfToggleMenu(this)">
+            INTELLIGENCE
+            <span class="gf-arrow">▼</span>
+          </button>
+
+          <div class="gf-dropdown">
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Market Insights')">
+
+              <span class="gf-option-title">
+                Market Insights
+              </span>
+
+              <span class="gf-option-description">
+                Financial market perspectives
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Economic Outlook')">
+
+              <span class="gf-option-title">
+                Economic Outlook
+              </span>
+
+              <span class="gf-option-description">
+                Macro and economic themes
+              </span>
+
+            </button>
+
+            <button
+              class="gf-option"
+              onclick="gfAction('Research & Reports')">
+
+              <span class="gf-option-title">
+                Research & Reports
+              </span>
+
+              <span class="gf-option-description">
+                Research and financial reports
+              </span>
+
+            </button>
+
+          </div>
+
+        </li>
+
+
+        <!-- SEARCH -->
+
+        <li>
+
+          <button
+            class="gf-search-button"
+            onclick="gfOpenSearch()"
+            aria-label="Search">
+            ⌕
+          </button>
+
+        </li>
+
+      </ul>
+
+
+      <!-- MOBILE BUTTON -->
+
+      <button
+        class="gf-mobile-menu-button"
+        onclick="gfMobileToggle()"
+        aria-label="Open menu">
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- MOBILE PANEL -->
+
+  <div
+    class="gf-mobile-panel"
+    id="gfMobilePanel">
+
+
+    <div class="gf-mobile-section">
+
+      <button
+        class="gf-mobile-main"
+        onclick="gfMobileSection(this)">
+        MARKETS
+        <span>＋</span>
+      </button>
+
+      <div class="gf-mobile-options">
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Global Markets')">
+          Global Markets
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Stocks & Indices')">
+          Stocks & Indices
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Forex & Crypto')">
+          Forex & Crypto
+        </button>
+
       </div>
 
     </div>
 
 
-    <!-- DESKTOP NAV -->
-    <nav class="gf-nav">
-
-      <!-- MARKETS -->
-      <div class="gf-nav-item">
-
-        <button class="gf-nav-btn" onclick="gfToggle(this)">
-          MARKETS
-          <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-          <button class="gf-option"
-                  onclick="gfOpen('Global Markets')">
-
-            <span class="gf-option-title">
-              Global Markets
-            </span>
-
-            <span class="gf-option-desc">
-              Global market overview
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Stocks & Indices')">
-
-            <span class="gf-option-title">
-              Stocks & Indices
-            </span>
-
-            <span class="gf-option-desc">
-              Equities and benchmark indices
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Forex & Crypto')">
-
-            <span class="gf-option-title">
-              Forex & Crypto
-            </span>
-
-            <span class="gf-option-desc">
-              Currency and digital asset markets
-            </span>
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- TRADING -->
-      <div class="gf-nav-item">
-
-        <button class="gf-nav-btn" onclick="gfToggle(this)">
-          TRADING
-          <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-          <button class="gf-option"
-                  onclick="gfOpen('Trading Ideas')">
-
-            <span class="gf-option-title">
-              Trading Ideas
-            </span>
-
-            <span class="gf-option-desc">
-              Market setups and ideas
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Technical Analysis')">
-
-            <span class="gf-option-title">
-              Technical Analysis
-            </span>
-
-            <span class="gf-option-desc">
-              Charts and indicators
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Trading Strategies')">
-
-            <span class="gf-option-title">
-              Trading Strategies
-            </span>
-
-            <span class="gf-option-desc">
-              Strategy education
-            </span>
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- INVESTING -->
-      <div class="gf-nav-item">
-
-        <button class="gf-nav-btn" onclick="gfToggle(this)">
-          INVESTING
-          <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-          <button class="gf-option"
-                  onclick="gfOpen('Investment Ideas')">
-
-            <span class="gf-option-title">
-              Investment Ideas
-            </span>
-
-            <span class="gf-option-desc">
-              Long-term investment concepts
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Portfolio')">
-
-            <span class="gf-option-title">
-              Portfolio
-            </span>
-
-            <span class="gf-option-desc">
-              Portfolio and allocation
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Wealth Management')">
-
-            <span class="gf-option-title">
-              Wealth Management
-            </span>
-
-            <span class="gf-option-desc">
-              Long-term wealth principles
-            </span>
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- INTELLIGENCE -->
-      <div class="gf-nav-item">
-
-        <button class="gf-nav-btn" onclick="gfToggle(this)">
-          INTELLIGENCE
-          <span class="gf-arrow">▼</span>
-        </button>
-
-        <div class="gf-dropdown">
-
-          <button class="gf-option"
-                  onclick="gfOpen('Market Insights')">
-
-            <span class="gf-option-title">
-              Market Insights
-            </span>
-
-            <span class="gf-option-desc">
-              Financial market perspectives
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Economic Outlook')">
-
-            <span class="gf-option-title">
-              Economic Outlook
-            </span>
-
-            <span class="gf-option-desc">
-              Macro and economic themes
-            </span>
-
-          </button>
-
-          <button class="gf-option"
-                  onclick="gfOpen('Research & Reports')">
-
-            <span class="gf-option-title">
-              Research & Reports
-            </span>
-
-            <span class="gf-option-desc">
-              Research and financial reports
-            </span>
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </nav>
-
-
-    <!-- ACTIONS -->
-    <div class="gf-actions">
-
-      <button class="gf-search"
-              onclick="gfSearch()"
-              aria-label="Search">
-        ⌕
+    <div class="gf-mobile-section">
+
+      <button
+        class="gf-mobile-main"
+        onclick="gfMobileSection(this)">
+        TRADING
+        <span>＋</span>
       </button>
 
-      <button class="gf-subscribe"
-              onclick="gfSubscribe()">
-        SUBSCRIBE
+      <div class="gf-mobile-options">
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Trading Ideas')">
+          Trading Ideas
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Technical Analysis')">
+          Technical Analysis
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Trading Strategies')">
+          Trading Strategies
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="gf-mobile-section">
+
+      <button
+        class="gf-mobile-main"
+        onclick="gfMobileSection(this)">
+        INVESTING
+        <span>＋</span>
       </button>
 
-      <button class="gf-mobile"
-              onclick="gfMobile()">
-        ☰
+      <div class="gf-mobile-options">
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Investment Ideas')">
+          Investment Ideas
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Portfolio')">
+          Portfolio
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Wealth Management')">
+          Wealth Management
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="gf-mobile-section">
+
+      <button
+        class="gf-mobile-main"
+        onclick="gfMobileSection(this)">
+        INTELLIGENCE
+        <span>＋</span>
       </button>
+
+      <div class="gf-mobile-options">
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Market Insights')">
+          Market Insights
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Economic Outlook')">
+          Economic Outlook
+        </button>
+
+        <button
+          class="gf-mobile-option"
+          onclick="gfAction('Research & Reports')">
+          Research & Reports
+        </button>
+
+      </div>
 
     </div>
 
@@ -648,105 +1204,136 @@
 </header>
 
 
-<!-- MOBILE PANEL -->
+<!-- =========================================================
+     SEARCH
+========================================================= -->
 
-<div class="gf-mobile-panel" id="gfMobilePanel">
+<div
+  class="gf-search-panel"
+  id="gfSearchPanel">
 
-  <button class="gf-mobile-main"
-          onclick="gfOpen('Markets')">
-    MARKETS
-  </button>
+  <div class="gf-search-box">
 
-  <button class="gf-mobile-main"
-          onclick="gfOpen('Trading')">
-    TRADING
-  </button>
+    <div class="gf-search-title">
+      Search Global Finance
+    </div>
 
-  <button class="gf-mobile-main"
-          onclick="gfOpen('Investing')">
-    INVESTING
-  </button>
+    <input
+      class="gf-search-input"
+      type="search"
+      placeholder="Search markets, trading, investing..."
+      id="gfSearchInput">
 
-  <button class="gf-mobile-main"
-          onclick="gfOpen('Intelligence')">
-    INTELLIGENCE
-  </button>
+    <button
+      class="gf-search-close"
+      onclick="gfCloseSearch()">
+      Close
+    </button>
+
+  </div>
 
 </div>
 
 
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
 
-function gfToggle(button){
+/* =========================
+   DESKTOP DROPDOWN
+========================= */
 
-  const current=button.closest(".gf-nav-item");
+function gfToggleMenu(button){
+
+  const current =
+    button.closest(".gf-nav-item");
 
   document
     .querySelectorAll(".gf-nav-item")
-    .forEach(item=>{
-      if(item!==current){
-        item.classList.remove("open");
+    .forEach(function(item){
+
+      if(item !== current){
+
+        item.classList.remove("gf-active");
+
       }
+
     });
 
-  current.classList.toggle("open");
+  current.classList.toggle("gf-active");
+
 }
 
 
-document.addEventListener("click",function(e){
+/* =========================
+   CLOSE WHEN CLICK OUTSIDE
+========================= */
 
-  if(!e.target.closest(".gf-nav-item")){
+document.addEventListener(
+  "click",
+  function(event){
 
-    document
-      .querySelectorAll(".gf-nav-item")
-      .forEach(item=>{
-        item.classList.remove("open");
-      });
+    if(
+      !event.target.closest(".gf-nav-item") &&
+      !event.target.closest(".gf-mobile-menu-button")
+    ){
+
+      document
+        .querySelectorAll(".gf-nav-item")
+        .forEach(function(item){
+
+          item.classList.remove("gf-active");
+
+        });
+
+    }
 
   }
+);
 
-});
 
+/* =========================
+   OPTION CLICK
+========================= */
 
-function gfOpen(name){
+function gfAction(name){
 
   document
     .querySelectorAll(".gf-nav-item")
-    .forEach(item=>{
-      item.classList.remove("open");
+    .forEach(function(item){
+
+      item.classList.remove("gf-active");
+
     });
 
   document
     .getElementById("gfMobilePanel")
-    .classList.remove("show");
+    .classList.remove("gf-show");
 
   /*
-    यहाँ अभी demo action है।
-    बाद में इसी function में तुम्हारे
-    actual pages/routes connect होंगे।
+    अभी testing के लिए.
+    बाद में यहाँ actual page/route लगाया जाएगा.
   */
 
-  console.log("Opening:",name);
+  console.log(
+    "Global Finance:",
+    name
+  );
 
-  alert(name + " selected");
-}
-
-
-function gfSearch(){
-
-  alert("Global Finance Search");
-
-}
-
-
-function gfSubscribe(){
-
-  alert("Subscribe panel");
+  alert(
+    "Opening: " + name
+  );
 
 }
 
 
-function gfHome(){
+/* =========================
+   HOME
+========================= */
+
+function gfGoHome(){
 
   window.scrollTo({
     top:0,
@@ -756,31 +1343,114 @@ function gfHome(){
 }
 
 
-function gfMobile(){
+/* =========================
+   SUBSCRIBE
+========================= */
 
-  document
-    .getElementById("gfMobilePanel")
-    .classList.toggle("show");
+function gfSubscribe(){
+
+  alert(
+    "Subscribe panel will open here."
+  );
 
 }
 
 
-document.addEventListener("keydown",function(e){
+/* =========================
+   SEARCH
+========================= */
 
-  if(e.key==="Escape"){
+function gfOpenSearch(){
+
+  document
+    .getElementById("gfSearchPanel")
+    .classList.add("gf-show");
+
+  setTimeout(function(){
 
     document
-      .querySelectorAll(".gf-nav-item")
-      .forEach(item=>{
-        item.classList.remove("open");
-      });
+      .getElementById("gfSearchInput")
+      .focus();
 
-    document
-      .getElementById("gfMobilePanel")
-      .classList.remove("show");
+  },100);
+
+}
+
+function gfCloseSearch(){
+
+  document
+    .getElementById("gfSearchPanel")
+    .classList.remove("gf-show");
+
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function gfMobileToggle(){
+
+  document
+    .getElementById("gfMobilePanel")
+    .classList.toggle("gf-show");
+
+}
+
+
+/* =========================
+   MOBILE DROPDOWNS
+========================= */
+
+function gfMobileSection(button){
+
+  const section =
+    button.closest(".gf-mobile-section");
+
+  document
+    .querySelectorAll(".gf-mobile-section")
+    .forEach(function(item){
+
+      if(item !== section){
+
+        item.classList.remove("gf-open");
+
+      }
+
+    });
+
+  section.classList.toggle("gf-open");
+
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+
+      document
+        .querySelectorAll(".gf-nav-item")
+        .forEach(function(item){
+
+          item.classList.remove("gf-active");
+
+        });
+
+      document
+        .getElementById("gfMobilePanel")
+        .classList.remove("gf-show");
+
+      gfCloseSearch();
+
+    }
 
   }
-
-});
+);
 
 </script>
