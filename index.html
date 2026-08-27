@@ -1,704 +1,1998 @@
+<!--
+GLOBAL FINANCE
+Premium financial & trading website front-end
+
+GitHub usage:
+1. Save this file as index.html
+2. Create a GitHub repository
+3. Upload index.html
+4. Enable GitHub Pages from Settings -> Pages
+
+IMPORTANT:
+This is a front-end prototype. Market values are illustrative.
+Real trading requires a secure backend, regulated integrations,
+authentication, compliance, risk controls and live market-data licensing.
+-->
 <!DOCTYPE html>
-<html lang="hi-IN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dhan Setu — Financial Training, Investment aur Loans</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#050b14">
+<meta name="description" content="Global Finance — professional financial markets and trading platform.">
+<title>Global Finance — Professional Trading Platform</title>
+
 <style>
-  :root{
-    --navy:#0D1B2A;
-    --navy-2:#132437;
-    --paper:#F6F3EA;
-    --paper-2:#EFEADC;
-    --gold:#B8935F;
-    --gold-bright:#D4AF7A;
-    --teal:#1F4B4B;
-    --ink:#171B1F;
-    --ink-soft:#4B5563;
-    --line: rgba(23,27,31,0.12);
-    --line-dark: rgba(246,243,234,0.14);
-  }
+/* =========================================================
+   GLOBAL FINANCE — PREMIUM FINANCIAL WEBSITE
+   Single-file GitHub-ready implementation
+   ========================================================= */
 
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Inter', sans-serif;
-    color:var(--ink);
-    background:var(--paper);
-    line-height:1.5;
-    overflow-x:hidden;
-  }
-  ::selection{ background:var(--gold); color:var(--navy); }
+:root{
+  --bg:#030812;
+  --bg2:#07101d;
+  --panel:#0a1422;
+  --panel2:#0d1929;
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.14);
+  --text:#f5f8fc;
+  --muted:#8b9aaf;
+  --green:#16d66f;
+  --green2:#0ea956;
+  --red:#ff4d5e;
+  --yellow:#f4c84b;
+  --blue:#4e8cff;
+  --cyan:#26d9ff;
+  --shadow:0 24px 80px rgba(0,0,0,.35);
+  --radius:18px;
+  --max:1240px;
+}
 
-  h1,h2,h3,h4{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    line-height:1.08;
-    color:var(--navy);
-  }
-  .mono{ font-family:'IBM Plex Mono', monospace; }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:0.72rem;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--gold);
-    display:flex; align-items:center; gap:10px;
-  }
-  .eyebrow::before{
-    content:""; width:22px; height:1px; background:var(--gold);
-  }
-  a{ text-decoration:none; color:inherit; }
-  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
-  img,svg{ display:block; max-width:100%; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 80% 5%,rgba(22,214,111,.08),transparent 28%),
+    radial-gradient(circle at 5% 30%,rgba(78,140,255,.06),transparent 24%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer}
+img{max-width:100%;display:block}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+.hidden{display:none!important}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.bold{font-weight:700}
 
-  /* ===== Ledger grid texture ===== */
-  .ledger-bg{
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 42px 42px;
-  }
-  .ledger-bg-dark{
-    background-image:
-      linear-gradient(var(--line-dark) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
-    background-size: 42px 42px;
-  }
+.topbar{
+  height:32px;
+  border-bottom:1px solid var(--line);
+  background:rgba(3,8,18,.8);
+  color:#91a0b5;
+  font-size:11px;
+}
+.topbar .container{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.ticker-mini{display:flex;gap:24px;white-space:nowrap}
+.ticker-mini span{display:inline-flex;gap:5px}
 
-  /* ===== NAV ===== */
-  header{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(246,243,234,0.86);
-    backdrop-filter: blur(10px);
-    border-bottom:1px solid var(--line);
-    transition:.3s;
-  }
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    max-width:1180px; margin:0 auto; padding:18px 32px;
-  }
-  .logo{
-    font-family:'Fraunces', serif; font-weight:700; font-size:1.28rem;
-    color:var(--navy); display:flex; align-items:center; gap:9px;
-  }
-  .logo .mark{
-    width:30px; height:30px; border-radius:50%;
-    background:var(--navy);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .logo .mark svg{ width:15px; height:15px; }
-  .nav-links{ display:flex; gap:34px; }
-  .nav-links a{
-    font-size:0.92rem; font-weight:500; color:var(--ink);
-    position:relative; padding-bottom:3px;
-  }
-  .nav-links a::after{
-    content:""; position:absolute; left:0; bottom:0; width:0; height:1.5px;
-    background:var(--gold); transition:.25s;
-  }
-  .nav-links a:hover::after{ width:100%; }
-  .nav-cta{
-    background:var(--navy); color:var(--paper) !important;
-    padding:10px 20px; border-radius:2px; font-size:0.86rem; font-weight:600;
-  }
-  .nav-cta:hover{ background:var(--teal); }
-  .burger{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
-  .burger span{ width:24px; height:2px; background:var(--navy); }
+.nav{
+  height:76px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(22px);
+  background:rgba(3,8,18,.82);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:max-content}
+.brand-mark{
+  width:32px;height:32px;border-radius:9px;
+  display:grid;place-items:center;
+  color:#02130a;
+  background:linear-gradient(145deg,#25ed7e,#08a953);
+  font-size:18px;font-weight:950;
+  box-shadow:0 0 28px rgba(22,214,111,.25);
+}
+.brand-text{font-size:16px;font-weight:800;letter-spacing:-.4px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{
+  color:#aeb9c8;
+  font-size:13px;
+  transition:.2s;
+}
+.nav-links a:hover{color:#fff}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang{
+  border:0;background:transparent;color:#b7c2d1;padding:8px;
+}
+.btn{
+  border:1px solid var(--line2);
+  background:#0a1320;
+  color:#fff;
+  padding:11px 17px;
+  border-radius:9px;
+  font-weight:700;
+  font-size:13px;
+  transition:.2s;
+}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.25)}
+.btn-primary{
+  background:linear-gradient(135deg,#18d66d,#0aa852);
+  border-color:transparent;
+  color:#031109;
+  box-shadow:0 12px 30px rgba(22,214,111,.15);
+}
+.btn-primary:hover{box-shadow:0 14px 38px rgba(22,214,111,.28)}
+.btn-ghost{background:transparent}
+.menu-btn{display:none;background:none;border:0;color:#fff;font-size:24px}
 
-  /* ===== HERO ===== */
-  .hero{
-    padding:168px 0 90px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero .wrap{
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 4.6vw, 3.7rem);
-    margin:18px 0 22px;
-  }
-  .hero h1 em{
-    font-style:italic; color:var(--gold);
-    font-weight:500;
-  }
-  .hero p.lede{
-    font-size:1.08rem; color:var(--ink-soft); max-width:480px; margin-bottom:34px;
-  }
-  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:14px 26px; border-radius:2px; font-weight:600; font-size:0.92rem;
-    cursor:pointer; border:1px solid transparent; transition:.25s;
-  }
-  .btn-primary{ background:var(--navy); color:var(--paper); }
-  .btn-primary:hover{ background:var(--teal); transform:translateY(-1px); }
-  .btn-ghost{ border-color:var(--navy); color:var(--navy); }
-  .btn-ghost:hover{ background:var(--navy); color:var(--paper); }
+.hero{padding:78px 0 62px}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:52px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--green);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.eyebrow-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+.hero h1{
+  font-size:clamp(42px,5.2vw,68px);
+  line-height:1.01;
+  letter-spacing:-3.5px;
+  max-width:650px;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#15d86c,#54ee9b);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero-copy{
+  color:#94a3b7;
+  max-width:580px;
+  margin:24px 0 28px;
+  font-size:16px;
+}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.hero-metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  margin-top:36px;
+  max-width:650px;
+}
+.metric{
+  padding:0 18px;
+  border-left:1px solid var(--line);
+}
+.metric:first-child{padding-left:0;border-left:0}
+.metric strong{display:block;font-size:22px;letter-spacing:-1px}
+.metric span{font-size:11px;color:var(--muted)}
 
-  /* Signature: animated growth line chart */
-  .chart-card{
-    background:var(--navy); border-radius:4px; padding:28px 26px 22px;
-    position:relative; box-shadow:0 30px 60px -20px rgba(13,27,42,0.4);
-  }
-  .chart-card .cc-top{
-    display:flex; justify-content:space-between; align-items:baseline;
-    margin-bottom:6px; color:var(--paper);
-  }
-  .chart-card .cc-top .label{ font-size:0.78rem; color:rgba(246,243,234,0.55); font-family:'IBM Plex Mono',monospace; letter-spacing:.05em;}
-  .chart-card .cc-value{ font-family:'Fraunces', serif; font-size:2.1rem; color:var(--paper); font-weight:600; }
-  .chart-card .cc-delta{ color:#8FBF9F; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; }
-  #growthSvg{ width:100%; height:150px; margin-top:12px; }
-  #growthPath{
-    fill:none; stroke:var(--gold-bright); stroke-width:2.4;
-    stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray:600; stroke-dashoffset:600;
-    animation: draw 2.2s cubic-bezier(.4,0,.2,1) 0.4s forwards;
-  }
-  #growthFill{ opacity:0; animation: fadeIn 1s ease 1.6s forwards; }
-  @keyframes draw{ to{ stroke-dashoffset:0; } }
-  @keyframes fadeIn{ to{ opacity:1; } }
-  .chart-node{
-    opacity:0; animation: fadeIn 0.6s ease 2.3s forwards;
-  }
-  .chart-foot{
-    display:flex; justify-content:space-between; margin-top:6px;
-    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:rgba(246,243,234,0.4);
-  }
+.trader-card{
+  position:relative;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(14,27,44,.96),rgba(6,15,27,.94));
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.trader-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 20px 14px;
+}
+.symbol{font-size:13px;font-weight:800}
+.price{font-size:27px;font-weight:800;letter-spacing:-1px}
+.change{font-size:11px;color:var(--green)}
+.time-tabs{display:flex;gap:6px}
+.time-tabs button{
+  background:transparent;
+  border:0;
+  color:#718198;
+  padding:6px 9px;
+  font-size:10px;
+  border-radius:7px;
+}
+.time-tabs button.active{background:rgba(22,214,111,.1);color:var(--green)}
+.chart-wrap{height:270px;padding:4px 16px 0}
+#heroChart{width:100%;height:100%}
+.chart-grid-line{stroke:rgba(255,255,255,.055);stroke-width:1}
+.chart-area{fill:url(#areaGradient)}
+.chart-line{
+  fill:none;
+  stroke:#16d66f;
+  stroke-width:2.5;
+  stroke-linejoin:round;
+  stroke-linecap:round;
+}
+.chart-dot{fill:#16d66f;filter:drop-shadow(0 0 7px rgba(22,214,111,.7))}
+.chart-label{fill:#69788c;font-size:10px}
+.market-mini-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  padding:12px 16px 18px;
+}
+.market-mini{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:10px;
+  background:rgba(255,255,255,.018);
+}
+.market-mini-top{display:flex;justify-content:space-between;font-size:10px}
+.market-mini-price{font-size:12px;font-weight:700;margin:4px 0}
+.spark{height:25px;width:100%}
 
-  @media (prefers-reduced-motion: reduce){
-    #growthPath{ animation:none; stroke-dashoffset:0; }
-    #growthFill, .chart-node{ animation:none; opacity:1; }
-  }
+.trust-row{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:rgba(7,15,27,.65);
+}
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.trust-item{
+  display:flex;gap:14px;padding:25px 20px;
+  border-right:1px solid var(--line);
+}
+.trust-item:last-child{border-right:0}
+.trust-icon{
+  width:38px;height:38px;border-radius:50%;
+  flex:none;display:grid;place-items:center;
+  color:var(--green);
+  background:rgba(22,214,111,.08);
+  border:1px solid rgba(22,214,111,.13);
+}
+.trust-item h3{font-size:13px;margin-bottom:3px}
+.trust-item p{font-size:11px;color:var(--muted);line-height:1.5}
 
-  /* ===== TRUST BAR ===== */
-  .trustbar{
-    background:var(--navy); color:var(--paper); padding:38px 0;
-  }
-  .trustbar .wrap{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
-  }
-  .trust-item{ border-left:1px solid var(--line-dark); padding-left:20px; }
-  .trust-item:first-child{ border-left:none; padding-left:0; }
-  .trust-num{ font-family:'Fraunces',serif; font-size:2rem; color:var(--gold-bright); font-weight:600; }
-  .trust-label{ font-size:0.8rem; color:rgba(246,243,234,0.65); margin-top:2px; }
+.section{padding:78px 0}
+.section-head{
+  display:flex;align-items:end;justify-content:space-between;gap:20px;
+  margin-bottom:30px;
+}
+.kicker{
+  color:var(--green);
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:1px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.section h2{
+  font-size:34px;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+}
+.section-head p{color:var(--muted);font-size:13px;max-width:480px}
 
-  /* ===== SECTION shared ===== */
-  section{ padding:100px 0; }
-  .sec-head{ max-width:640px; margin-bottom:56px; }
-  .sec-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); margin-top:14px; }
-  .sec-head p{ color:var(--ink-soft); margin-top:14px; font-size:1.02rem; }
+.market-panel{
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  background:rgba(8,17,29,.72);
+}
+.market-tabs{
+  display:flex;gap:26px;padding:0 18px;
+  border-bottom:1px solid var(--line);
+}
+.market-tabs button{
+  border:0;background:transparent;color:#738297;
+  padding:16px 0;font-size:12px;position:relative;
+}
+.market-tabs button.active{color:var(--green)}
+.market-tabs button.active:after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--green)
+}
+.market-table{width:100%;border-collapse:collapse}
+.market-table th{
+  color:#66758a;text-align:left;font-size:10px;font-weight:600;
+  padding:13px 18px;border-bottom:1px solid var(--line);
+}
+.market-table td{
+  padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.045);
+  font-size:12px;
+}
+.market-table tr:last-child td{border-bottom:0}
+.instrument{display:flex;align-items:center;gap:10px;font-weight:700}
+.coin{
+  width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;font-size:10px;font-weight:900;
+  background:#142237;color:#fff;border:1px solid var(--line2);
+}
+.table-action{padding:7px 12px;font-size:10px}
 
-  /* ===== DESKS (services) ===== */
-  .desks{ background:var(--paper-2); }
-  .desk-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); }
-  .desk{
-    padding:40px 32px; border-right:1px solid var(--line);
-    background:var(--paper); transition:.3s;
-  }
-  .desk:last-child{ border-right:none; }
-  .desk:hover{ background:var(--navy); }
-  .desk:hover h3, .desk:hover .desk-tag{ color:var(--paper); }
-  .desk:hover p, .desk:hover li{ color:rgba(246,243,234,0.75); }
-  .desk:hover .desk-icon{ background:var(--gold); }
-  .desk:hover .desk-icon svg{ stroke:var(--navy); }
-  .desk-icon{
-    width:46px; height:46px; border-radius:50%; background:var(--navy-2);
-    display:flex; align-items:center; justify-content:center; margin-bottom:22px;
-    transition:.3s;
-  }
-  .desk-icon svg{ width:22px; height:22px; stroke:var(--gold-bright); fill:none; stroke-width:1.6; }
-  .desk-tag{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); transition:.3s; }
-  .desk h3{ font-size:1.4rem; margin:10px 0 14px; transition:.3s; }
-  .desk p{ color:var(--ink-soft); font-size:0.94rem; margin-bottom:18px; transition:.3s; }
-  .desk ul{ list-style:none; margin-bottom:24px; }
-  .desk li{ font-size:0.88rem; color:var(--ink-soft); padding:6px 0; border-top:1px solid var(--line); transition:.3s; }
-  .desk a.desk-link{ font-size:0.86rem; font-weight:600; color:var(--navy); display:inline-flex; align-items:center; gap:6px; transition:.3s; }
-  .desk:hover a.desk-link{ color:var(--gold-bright); }
+.platform-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:40px;align-items:center;
+}
+.phone{
+  width:275px;
+  height:545px;
+  margin:auto;
+  border-radius:40px;
+  border:8px solid #101923;
+  background:#050c15;
+  box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 0 0 1px #263344;
+  padding:16px 10px;
+  position:relative;
+}
+.phone:before{
+  content:"";
+  width:90px;height:20px;
+  background:#101923;border-radius:20px;
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+}
+.phone-screen{
+  height:100%;border-radius:27px;
+  background:linear-gradient(180deg,#0b1725,#050b13);
+  overflow:hidden;padding:24px 12px 12px;
+}
+.phone-top{display:flex;justify-content:space-between;font-size:9px;color:#8593a7}
+.phone-price{font-size:26px;font-weight:800;margin-top:18px}
+.phone-change{font-size:10px;color:var(--green)}
+.phone-chart{height:190px;margin-top:20px}
+.phone-bottom{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:4px;margin-top:20px;
+}
+.phone-bottom div{
+  padding:9px 2px;text-align:center;font-size:7px;color:#728198;
+  border-radius:7px;
+}
+.phone-bottom div:first-child{background:rgba(22,214,111,.09);color:var(--green)}
+.platform-copy h2{max-width:550px}
+.platform-copy>p{color:var(--muted);font-size:14px;max-width:580px;margin:18px 0}
+.feature-list{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin:24px 0 30px;
+}
+.feature{display:flex;gap:9px;align-items:center;font-size:12px;color:#bac5d4}
+.check{
+  width:17px;height:17px;border-radius:50%;display:grid;place-items:center;
+  color:var(--green);background:rgba(22,214,111,.09);font-size:10px;
+}
+.downloads{display:flex;gap:8px;flex-wrap:wrap}
 
-  /* ===== PROCESS ===== */
-  .process .wrap{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; }
-  .steps{ display:flex; flex-direction:column; }
-  .step{
-    display:grid; grid-template-columns:60px 1fr; gap:20px;
-    padding:26px 0; border-top:1px solid var(--line);
-  }
-  .step:last-child{ border-bottom:1px solid var(--line); }
-  .step-num{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:0.95rem; }
-  .step h4{ font-size:1.08rem; margin-bottom:6px; }
-  .step p{ color:var(--ink-soft); font-size:0.9rem; }
+.cta-card{
+  display:grid;grid-template-columns:1.25fr .75fr;gap:30px;
+  border:1px solid rgba(22,214,111,.13);
+  background:
+    radial-gradient(circle at 80% 20%,rgba(22,214,111,.11),transparent 35%),
+    linear-gradient(135deg,#091624,#07101c);
+  padding:48px;border-radius:20px;
+}
+.cta-card h2{font-size:38px;letter-spacing:-1.8px}
+.cta-card p{color:var(--muted);font-size:13px;margin:13px 0 22px;max-width:570px}
+.cta-list{display:grid;gap:11px}
+.cta-list div{font-size:12px;color:#b7c3d1}
+.cta-list span{color:var(--green);margin-right:7px}
+.cta-box{
+  border:1px solid var(--line);
+  border-radius:14px;background:rgba(2,8,15,.48);padding:22px;
+}
+.cta-box h3{font-size:16px;margin-bottom:7px}
+.cta-box p{font-size:11px;margin:0 0 16px}
+.cta-box .btn{width:100%;margin-bottom:10px}
 
-  /* ===== STATS/CALC strip ===== */
-  .calc{
-    background:var(--navy); color:var(--paper); border-radius:4px; padding:40px;
-  }
-  .calc h3{ color:var(--paper); font-size:1.3rem; margin-bottom:6px; }
-  .calc p{ color:rgba(246,243,234,0.6); font-size:0.9rem; margin-bottom:26px; }
-  .calc-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-  .calc-row label{ font-size:0.85rem; color:rgba(246,243,234,0.75); }
-  .calc-row output{ font-family:'IBM Plex Mono',monospace; color:var(--gold-bright); font-size:0.95rem; }
-  input[type=range]{
-    width:100%; margin-top:8px; accent-color:var(--gold-bright);
-  }
-  .calc-result{
-    margin-top:28px; padding-top:24px; border-top:1px solid var(--line-dark);
-    display:flex; justify-content:space-between; align-items:baseline;
-  }
-  .calc-result .r-label{ font-size:0.82rem; color:rgba(246,243,234,0.6); }
-  .calc-result .r-value{ font-family:'Fraunces',serif; font-size:1.9rem; color:var(--gold-bright); }
+.stats{
+  padding:34px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:#06101d;
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat strong{font-size:30px;letter-spacing:-1.5px}
+.stat p{font-size:11px;color:var(--muted)}
 
-  /* ===== TESTIMONIALS ===== */
-  .testimonials{ background:var(--paper-2); }
-  .t-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-  .t-card{ background:var(--paper); border:1px solid var(--line); padding:30px; border-radius:2px; }
-  .t-quote{ font-family:'Fraunces',serif; font-style:italic; font-size:1.06rem; color:var(--navy); margin-bottom:20px; line-height:1.5; }
-  .t-name{ font-weight:700; font-size:0.9rem; }
-  .t-role{ font-size:0.8rem; color:var(--ink-soft); }
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.price-card{
+  border:1px solid var(--line);border-radius:16px;
+  background:#091421;padding:28px;position:relative;
+}
+.price-card.featured{border-color:rgba(22,214,111,.35);box-shadow:0 20px 60px rgba(22,214,111,.06)}
+.badge{
+  position:absolute;top:16px;right:16px;
+  background:rgba(22,214,111,.1);color:var(--green);
+  border:1px solid rgba(22,214,111,.2);
+  padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800;
+}
+.price-card h3{font-size:18px}
+.price-card>p{font-size:11px;color:var(--muted);margin:5px 0 22px}
+.price-number{font-size:35px;font-weight:850;letter-spacing:-2px}
+.price-number span{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0}
+.price-card ul{list-style:none;margin:23px 0}
+.price-card li{font-size:11px;color:#b2bece;margin:12px 0}
+.price-card li:before{content:"✓";color:var(--green);margin-right:8px}
+.price-card .btn{width:100%}
 
-  /* ===== ABOUT ===== */
-  .about .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
-  .about-stats{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:30px;}
-  .about-stat{ background:var(--paper); padding:22px; }
-  .about-stat .n{ font-family:'Fraunces',serif; font-size:1.8rem; color:var(--gold); }
-  .about-stat .l{ font-size:0.8rem; color:var(--ink-soft); margin-top:2px; }
-  .about-visual{
-    aspect-ratio:1/1.05; background:var(--navy); border-radius:4px; position:relative; overflow:hidden;
-  }
-  .about-visual .ring{
-    position:absolute; border:1px solid rgba(212,175,122,0.3); border-radius:50%;
-  }
-  .r1{ width:70%; aspect-ratio:1; top:15%; left:15%; }
-  .r2{ width:46%; aspect-ratio:1; top:27%; left:27%; }
-  .about-visual .center-mark{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    color:var(--gold-bright); font-family:'Fraunces',serif; font-size:2.6rem;
-  }
+.insight-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
+.insight-main,.insight-side{
+  border:1px solid var(--line);border-radius:16px;background:#091421;overflow:hidden;
+}
+.insight-main{padding:26px}
+.insight-main h3{font-size:21px;letter-spacing:-.7px}
+.insight-main p{font-size:12px;color:var(--muted);margin:9px 0 20px}
+.news-list{display:grid;gap:10px}
+.news{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:13px;border:1px solid var(--line);border-radius:10px;
+}
+.news-title{font-size:11px;font-weight:700}
+.news-meta{font-size:9px;color:#65748a;margin-top:3px}
+.news-tag{font-size:9px;color:var(--green)}
+.insight-side{padding:26px}
+.insight-side h3{font-size:17px}
+.calendar{
+  margin-top:18px;display:grid;gap:9px
+}
+.calendar-row{
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--line);padding-bottom:9px;
+}
+.calendar-row span{font-size:10px;color:#8290a3}
+.calendar-row strong{font-size:10px}
 
-  /* ===== CONTACT ===== */
-  .contact{ background:var(--navy); color:var(--paper); }
-  .contact .sec-head h2{ color:var(--paper); }
-  .contact .sec-head p{ color:rgba(246,243,234,0.62); }
-  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
-  .form-row{ margin-bottom:20px; }
-  .form-row label{ display:block; font-size:0.82rem; color:rgba(246,243,234,0.65); margin-bottom:8px; }
-  .form-row input, .form-row select, .form-row textarea{
-    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line-dark);
-    color:var(--paper); font-family:'Inter',sans-serif; font-size:0.98rem; padding:10px 2px;
-    outline:none; transition:.2s;
-  }
-  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{ border-color:var(--gold-bright); }
-  .form-row select option{ color:var(--ink); }
-  .contact-info{ display:flex; flex-direction:column; gap:24px; }
-  .ci-item .l{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--gold-bright); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
-  .ci-item .v{ font-size:1.05rem; }
+.security{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.security-card{
+  border:1px solid var(--line);background:#091421;border-radius:14px;padding:23px;
+}
+.security-card .icon{
+  width:40px;height:40px;border-radius:10px;
+  display:grid;place-items:center;
+  color:var(--green);background:rgba(22,214,111,.08);
+  margin-bottom:17px;
+}
+.security-card h3{font-size:14px}
+.security-card p{font-size:11px;color:var(--muted);margin-top:7px}
 
-  /* ===== FOOTER ===== */
-  footer{ background:var(--navy-2); color:rgba(246,243,234,0.55); padding:44px 0 30px; }
-  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; padding-bottom:28px; border-bottom:1px solid var(--line-dark); margin-bottom:22px;}
-  .foot-links{ display:flex; gap:40px; flex-wrap:wrap; }
-  .foot-col h5{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:.08em; color:rgba(246,243,234,0.4); margin-bottom:12px; }
-  .foot-col a{ display:block; font-size:0.88rem; padding:4px 0; color:rgba(246,243,234,0.75); }
-  .foot-col a:hover{ color:var(--gold-bright); }
-  .disclaimer{ font-size:0.76rem; line-height:1.6; color:rgba(246,243,234,0.4); max-width:900px; }
-  .foot-bottom{ display:flex; justify-content:space-between; margin-top:20px; font-size:0.78rem; flex-wrap:wrap; gap:10px; }
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.faq{
+  border:1px solid var(--line);border-radius:11px;background:#091421;
+  overflow:hidden;
+}
+.faq button{
+  width:100%;display:flex;justify-content:space-between;gap:20px;
+  border:0;background:transparent;color:#dce4ed;text-align:left;
+  padding:17px;font-size:12px;font-weight:700;
+}
+.faq .answer{display:none;padding:0 17px 17px;color:var(--muted);font-size:11px}
+.faq.open .answer{display:block}
+.faq.open button{color:var(--green)}
 
-  /* focus visibility */
-  a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+.footer{
+  border-top:1px solid var(--line);
+  background:#020710;
+  padding:62px 0 24px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:38px;
+}
+.footer-brand p{font-size:11px;color:var(--muted);max-width:260px;margin:15px 0 20px}
+.socials{display:flex;gap:8px}
+.socials a{
+  width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;color:#8b99aa;font-size:10px;
+}
+.footer h4{font-size:11px;margin-bottom:16px}
+.footer ul{list-style:none}
+.footer li{margin:9px 0}
+.footer li a{font-size:10px;color:#718095}
+.footer li a:hover{color:#fff}
+.footer-bottom{
+  border-top:1px solid var(--line);margin-top:45px;padding-top:18px;
+  display:flex;justify-content:space-between;gap:20px;
+  color:#58677b;font-size:9px;
+}
+.risk{
+  margin-top:15px;padding:12px;border:1px solid rgba(255,77,94,.12);
+  background:rgba(255,77,94,.025);border-radius:8px;color:#77869a;font-size:9px;
+}
 
-  /* reveal on scroll */
-  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
-  .reveal.in{ opacity:1; transform:none; }
+.toast{
+  position:fixed;right:20px;bottom:20px;z-index:2000;
+  background:#0c1827;border:1px solid var(--line2);box-shadow:var(--shadow);
+  padding:13px 17px;border-radius:10px;font-size:11px;
+  transform:translateY(120px);opacity:0;transition:.3s;
+}
+.toast.show{transform:translateY(0);opacity:1}
 
-  @media (max-width:980px){
-    .hero .wrap{ grid-template-columns:1fr; }
-    .desk-grid{ grid-template-columns:1fr; }
-    .desk{ border-right:none; border-bottom:1px solid var(--line); }
-    .trustbar .wrap{ grid-template-columns:1fr 1fr; row-gap:24px; }
-    .trust-item{ border-left:none; padding-left:0; }
-    .process .wrap, .about .wrap, .contact-grid, .t-grid{ grid-template-columns:1fr; }
-    .t-grid{ gap:18px; }
-    .nav-links{ display:none; }
-    .burger{ display:flex; }
-  }
+.modal{
+  position:fixed;inset:0;z-index:1500;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(10px);
+  display:none;place-items:center;padding:20px;
+}
+.modal.show{display:grid}
+.modal-card{
+  width:min(440px,100%);background:#091421;border:1px solid var(--line2);
+  border-radius:16px;padding:28px;box-shadow:var(--shadow);
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.modal-head h3{font-size:19px}
+.close{
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
+  background:transparent;color:#91a0b4;
+}
+.form{display:grid;gap:12px}
+.form label{font-size:10px;color:#8997aa}
+.form input,.form select{
+  width:100%;background:#050c15;color:#fff;border:1px solid var(--line);
+  border-radius:9px;padding:11px 12px;outline:none;
+}
+.form input:focus{border-color:rgba(22,214,111,.5)}
+.form .btn{width:100%;margin-top:5px}
+.form-note{font-size:9px;color:#66758a;text-align:center}
+
+@media(max-width:1000px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .hero-grid{grid-template-columns:1fr}
+  .hero{padding-top:55px}
+  .trust-grid{grid-template-columns:1fr 1fr}
+  .trust-item:nth-child(2){border-right:0}
+  .platform-grid{grid-template-columns:1fr}
+  .phone{margin-bottom:10px}
+  .cta-card{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1.5fr 1fr 1fr}
+  .footer-grid>div:nth-child(4),
+  .footer-grid>div:nth-child(5){margin-top:10px}
+}
+@media(max-width:700px){
+  .container{width:min(var(--max),calc(100% - 24px))}
+  .topbar{display:none}
+  .nav{height:64px}
+  .nav-actions .btn:first-of-type{display:none}
+  .hero h1{font-size:43px;letter-spacing:-2.4px}
+  .hero-metrics{grid-template-columns:1fr 1fr;gap:18px}
+  .metric{padding:0;border:0}
+  .market-mini-grid{grid-template-columns:1fr 1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .trust-item{border-right:0;border-bottom:1px solid var(--line)}
+  .trust-item:last-child{border-bottom:0}
+  .section{padding:55px 0}
+  .section h2{font-size:29px}
+  .section-head{display:block}
+  .section-head p{margin-top:10px}
+  .market-panel{overflow-x:auto}
+  .market-table{min-width:680px}
+  .feature-list{grid-template-columns:1fr}
+  .cta-card{padding:28px}
+  .cta-card h2{font-size:29px}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:25px}
+  .stat:nth-child(2){border:0}
+  .pricing-grid,.security,.faq-grid,.insight-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-grid>div:first-child{grid-column:1/-1}
+  .footer-bottom{display:block}
+  .footer-bottom span{display:block;margin-top:6px}
+}
+
+@media(max-width:420px){
+  .brand-text{font-size:14px}
+  .hero h1{font-size:38px}
+  .hero-actions .btn{width:100%;text-align:center}
+  .hero-metrics{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-grid>div:first-child{grid-column:auto}
+}
 </style>
 </head>
+
 <body>
 
-<header>
-  <nav>
-    <a href="#home" class="logo">
-      <span class="mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF7A" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg>
-      </span>
-      Dhan Setu
-    </a>
-    <div class="nav-links">
-      <a href="#desks">Services</a>
-      <a href="#process">Process</a>
-      <a href="#about">About</a>
-      <a href="#testimonials">Reviews</a>
-      <a href="#contact">Contact</a>
+<div class="topbar">
+  <div class="container">
+    <div class="ticker-mini">
+      <span>EUR/USD <b class="green">+0.12%</b></span>
+      <span>GBP/USD <b class="green">+0.32%</b></span>
+      <span>BTC/USD <b class="red">-1.23%</b></span>
+      <span>XAU/USD <b class="green">+0.45%</b></span>
     </div>
-    <a href="#contact" class="nav-cta">Consultation Book Karein</a>
-    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </nav>
-</header>
-
-<section class="hero ledger-bg" id="home">
-  <div class="wrap">
-    <div class="reveal in">
-      <div class="eyebrow">FINANCIAL TRAINING · INVESTMENT · LOANS</div>
-      <h1>Aapke sapno aur aapke paise ke beech, ek <em>pul</em>.</h1>
-      <p class="lede">Dhan Setu par aap seekhte hain paisa kaise kaam karta hai, sahi jagah invest karte hain, aur zarurat padne par sahi loan chunte hain — sab ek hi jagah, ek hi team ke saath.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Free Consultation Book Karein</a>
-        <a href="#desks" class="btn btn-ghost">Services Dekhein</a>
-      </div>
-    </div>
-    <div class="chart-card reveal in">
-      <div class="cc-top">
-        <span class="label">SAMPLE SIP GROWTH · 10 YRS</span>
-      </div>
-      <div class="cc-value">₹24.6L <span class="cc-delta">▲ from ₹6L invested</span></div>
-      <svg id="growthSvg" viewBox="0 0 400 150" preserveAspectRatio="none">
-        <path id="growthFill" d="M0,130 L40,120 L80,122 L120,100 L160,95 L200,72 L240,68 L280,45 L320,30 L360,18 L400,10 L400,150 L0,150 Z" fill="url(#gradFill)" stroke="none"></path>
-        <defs>
-          <linearGradient id="gradFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#D4AF7A" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#D4AF7A" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path id="growthPath" d="M0,130 L40,120 L80,122 L120,100 L160,95 L200,72 L240,68 L280,45 L320,30 L360,18 L400,10"></path>
-        <circle class="chart-node" cx="400" cy="10" r="4.5" fill="#D4AF7A"></circle>
-      </svg>
-      <div class="chart-foot">
-        <span>YEAR 1</span><span>YEAR 5</span><span>YEAR 10</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="trustbar">
-  <div class="wrap">
-    <div class="trust-item"><div class="trust-num mono">4,200+</div><div class="trust-label">Students Trained</div></div>
-    <div class="trust-item"><div class="trust-num mono">₹85 Cr+</div><div class="trust-label">Investment Advised</div></div>
-    <div class="trust-item"><div class="trust-num mono">₹42 Cr+</div><div class="trust-label">Loans Facilitated</div></div>
-    <div class="trust-item"><div class="trust-num mono">11 Yrs</div><div class="trust-label">Market Experience</div></div>
+    <div>Markets open · Data for demonstration only</div>
   </div>
 </div>
 
-<section class="desks" id="desks">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">HAMARI SEVAYEIN</div>
-      <h2>Teen desks, ek chhat ke neeche.</h2>
-      <p>Chahe aap seekhna chahte hon, invest karna chahte hon, ya loan lena chahte hon — har desk ek expert dwara chalayi jaati hai.</p>
-    </div>
-    <div class="desk-grid">
-      <div class="desk reveal">
-        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></svg></div>
-        <div class="desk-tag">Desk 01</div>
-        <h3>Training Desk</h3>
-        <p>Personal finance, stock market basics, aur budgeting ke practical courses — beginners se lekar intermediate investors tak.</p>
-        <ul>
-          <li>Live weekend workshops</li>
-          <li>Stock market fundamentals</li>
-          <li>Budgeting & tax planning</li>
-          <li>1:1 mentorship sessions</li>
-        </ul>
-        <a href="#contact" class="desk-link">Course Batches Dekhein →</a>
-      </div>
-      <div class="desk reveal">
-        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
-        <div class="desk-tag">Desk 02</div>
-        <h3>Investment Desk</h3>
-        <p>Mutual funds, SIP, equity aur fixed income mein aapke goals ke hisaab se personalised portfolio planning.</p>
-        <ul>
-          <li>Goal-based SIP planning</li>
-          <li>Mutual fund advisory</li>
-          <li>Portfolio review & rebalancing</li>
-          <li>Retirement planning</li>
-        </ul>
-        <a href="#contact" class="desk-link">Portfolio Review Karayein →</a>
-      </div>
-      <div class="desk reveal">
-        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="1"/><path d="M3 10h18"/><path d="M7 14h4"/></svg></div>
-        <div class="desk-tag">Desk 03</div>
-        <h3>Loan Desk</h3>
-        <p>Personal, home, business aur education loans — multiple lenders se best rate dilwane mein madad.</p>
-        <ul>
-          <li>Personal & business loans</li>
-          <li>Home loan assistance</li>
-          <li>Education loan guidance</li>
-          <li>EMI & eligibility calculator</li>
-        </ul>
-        <a href="#contact" class="desk-link">Eligibility Check Karein →</a>
-      </div>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#">
+      <div class="brand-mark">GF</div>
+      <div class="brand-text">GLOBAL FINANCE</div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#markets">Markets</a>
+      <a href="#platform">Trading</a>
+      <a href="#platform">Platforms</a>
+      <a href="#insights">Analytics</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="lang">◎ EN</button>
+      <button class="btn btn-ghost" onclick="openModal('login')">Login</button>
+      <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
+      <button class="menu-btn" onclick="toggleMobile()">☰</button>
     </div>
   </div>
-</section>
+</header>
 
-<section class="process" id="process">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">HOW IT WORKS</div>
-      <h2 style="margin-top:14px; font-size:2rem;">Chaar step mein, aapki financial journey.</h2>
-      <p style="color:var(--ink-soft); margin-top:14px; max-width:380px;">Har client ke saath hum yehi structured process follow karte hain — chahe wo training ho, investment ho ya loan.</p>
-    </div>
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-num mono">01</div>
-        <div><h4>Free Consultation</h4><p>Aapke financial goals, current situation aur zaroorat ko samajhna — bina kisi charge ke.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num mono">02</div>
-        <div><h4>Personalised Plan</h4><p>Aapke liye specific training path, investment strategy ya loan options tayyar karna.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num mono">03</div>
-        <div><h4>Execution</h4><p>Course enrollment, investment execution ya loan application — hum saath khade rehte hain.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num mono">04</div>
-        <div><h4>Ongoing Review</h4><p>Regular check-ins taaki aapka plan market aur life changes ke saath adjust hota rahe.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+<main>
 
-<section id="calculator">
-  <div class="wrap">
-    <div class="calc reveal">
-      <h3>SIP Calculator</h3>
-      <p>Andaza lagayein ki aapka monthly investment kitna badh sakta hai.</p>
-      <div class="calc-row">
-        <label>Monthly Investment</label>
-        <output class="mono" id="sipAmountOut">₹5,000</output>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Professional Trading Platform</div>
+      <h1>Trade Global Markets <span>With Confidence</span></h1>
+      <p class="hero-copy">
+        Access global markets with a modern trading experience, advanced charting,
+        professional analytics and powerful risk-management tools — all in one platform.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="openModal('signup')">Start Trading Now →</button>
+        <button class="btn btn-ghost" onclick="openModal('demo')">Try Demo Account</button>
       </div>
-      <input type="range" id="sipAmount" min="500" max="50000" step="500" value="5000">
-      <div class="calc-row" style="margin-top:24px;">
-        <label>Time Period</label>
-        <output class="mono" id="sipYearsOut">10 Years</output>
+
+      <div class="hero-metrics">
+        <div class="metric"><strong>100+</strong><span>Markets</span></div>
+        <div class="metric"><strong>0.0</strong><span>Spreads from*</span></div>
+        <div class="metric"><strong>500:1</strong><span>Leverage up to*</span></div>
+        <div class="metric"><strong>24/7</strong><span>Support</span></div>
       </div>
-      <input type="range" id="sipYears" min="1" max="30" step="1" value="10">
-      <div class="calc-row" style="margin-top:24px;">
-        <label>Expected Annual Return</label>
-        <output class="mono" id="sipRateOut">12%</output>
-      </div>
-      <input type="range" id="sipRate" min="6" max="20" step="0.5" value="12">
-      <div class="calc-result">
+    </div>
+
+    <div class="trader-card">
+      <div class="trader-head">
         <div>
-          <div class="r-label">Total Invested</div>
-          <div class="r-value mono" id="sipInvested" style="font-size:1.2rem; color:var(--paper);">₹6,00,000</div>
+          <div class="symbol">EUR/USD <span class="green">●</span></div>
+          <div class="price" id="heroPrice">1.08524</div>
+          <div class="change" id="heroChange">+0.00125 (+0.12%)</div>
         </div>
-        <div>
-          <div class="r-label">Estimated Value</div>
-          <div class="r-value mono" id="sipFinal">₹11,61,695</div>
+        <div class="time-tabs">
+          <button class="active">1D</button>
+          <button>1W</button>
+          <button>1M</button>
+          <button>3M</button>
+          <button>1Y</button>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <svg id="heroChart" viewBox="0 0 700 270" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#16d66f" stop-opacity=".24"/>
+              <stop offset="100%" stop-color="#16d66f" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line class="chart-grid-line" x1="0" y1="55" x2="700" y2="55"/>
+          <line class="chart-grid-line" x1="0" y1="110" x2="700" y2="110"/>
+          <line class="chart-grid-line" x1="0" y1="165" x2="700" y2="165"/>
+          <line class="chart-grid-line" x1="0" y1="220" x2="700" y2="220"/>
+          <path id="heroArea" class="chart-area"></path>
+          <path id="heroLine" class="chart-line"></path>
+          <circle id="heroDot" class="chart-dot" r="4"></circle>
+          <text class="chart-label" x="5" y="258">00:00</text>
+          <text class="chart-label" x="175" y="258">06:00</text>
+          <text class="chart-label" x="350" y="258">12:00</text>
+          <text class="chart-label" x="525" y="258">18:00</text>
+          <text class="chart-label" x="660" y="258">24:00</text>
+        </svg>
+      </div>
+
+      <div class="market-mini-grid">
+        <div class="market-mini">
+          <div class="market-mini-top"><span>XAU/USD</span><span class="green">↗</span></div>
+          <div class="market-mini-price">2,023.45</div>
+          <svg class="spark" data-seed="2"></svg>
+        </div>
+        <div class="market-mini">
+          <div class="market-mini-top"><span>BTC/USD</span><span class="red">↘</span></div>
+          <div class="market-mini-price">43,250.00</div>
+          <svg class="spark" data-seed="4"></svg>
+        </div>
+        <div class="market-mini">
+          <div class="market-mini-top"><span>GBP/USD</span><span class="green">↗</span></div>
+          <div class="market-mini-price">1.26543</div>
+          <svg class="spark" data-seed="7"></svg>
+        </div>
+        <div class="market-mini">
+          <div class="market-mini-top"><span>USD/JPY</span><span class="red">↘</span></div>
+          <div class="market-mini-price">150.123</div>
+          <svg class="spark" data-seed="9"></svg>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="testimonials" id="testimonials">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">CLIENT KEHTE HAIN</div>
-      <h2>Bharosa, results ke saath.</h2>
+<section class="trust-row">
+  <div class="container trust-grid">
+    <div class="trust-item">
+      <div class="trust-icon">▣</div>
+      <div><h3>Institutional-Grade Security</h3><p>Modern encryption, account controls and segregated architecture.</p></div>
     </div>
-    <div class="t-grid">
-      <div class="t-card reveal">
-        <p class="t-quote">"Training desk ke workshop ke baad maine pehli baar khud apna SIP start kiya. Ab confidence hai ki main apne paiso ka decision khud le sakta hoon."</p>
-        <div class="t-name">Rohit Sharma</div>
-        <div class="t-role">Software Engineer, Pune</div>
+    <div class="trust-item">
+      <div class="trust-icon">✦</div>
+      <div><h3>Lightning Fast Execution</h3><p>Designed for responsive order handling and reliable uptime.</p></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">▥</div>
+      <div><h3>Advanced Trading Tools</h3><p>Professional charts, technical analysis and risk tools.</p></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">◈</div>
+      <div><h3>Multi-Asset Trading</h3><p>Explore forex, equities, crypto, commodities and indices.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="markets">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Markets</div>
+        <h2>Trade Popular Markets</h2>
       </div>
-      <div class="t-card reveal">
-        <p class="t-quote">"Home loan process itna smooth kabhi nahi laga. Dhan Setu ki team ne 3 banks compare karke best rate dilwaya."</p>
-        <div class="t-name">Priya Nair</div>
-        <div class="t-role">Business Owner, Kochi</div>
+      <p>Monitor instruments, compare prices and move from analysis to action in seconds.</p>
+    </div>
+
+    <div class="market-panel">
+      <div class="market-tabs">
+        <button class="active" onclick="filterMarkets('Forex',this)">Forex</button>
+        <button onclick="filterMarkets('Stocks',this)">Stocks</button>
+        <button onclick="filterMarkets('Commodities',this)">Commodities</button>
+        <button onclick="filterMarkets('Crypto',this)">Cryptocurrencies</button>
+        <button onclick="filterMarkets('Indices',this)">Indices</button>
       </div>
-      <div class="t-card reveal">
-        <p class="t-quote">"Investment desk ne mera portfolio pura restructure kiya. Ek saal mein hi returns clearly better dikhne lage."</p>
-        <div class="t-name">Anil Kapoor</div>
-        <div class="t-role">Retired Govt. Employee, Lucknow</div>
+
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>Instrument</th>
+            <th>Bid</th>
+            <th>Ask</th>
+            <th>Change</th>
+            <th>Chart</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="marketBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="platform">
+  <div class="container platform-grid">
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-price">1.08524</div>
+          <div class="phone-change">+0.00125 · +0.12%</div>
+          <div class="phone-chart">
+            <svg viewBox="0 0 240 190" width="100%" height="100%" preserveAspectRatio="none">
+              <polyline points="0,150 18,133 32,142 50,117 67,125 82,98 98,108 114,74 132,92 148,66 164,79 181,48 197,57 215,38 240,51"
+                        fill="none" stroke="#16d66f" stroke-width="2"/>
+              <polyline points="0,150 18,133 32,142 50,117 67,125 82,98 98,108 114,74 132,92 148,66 164,79 181,48 197,57 215,38 240,51 240,190 0,190"
+                        fill="url(#areaGradient)" opacity=".5"/>
+            </svg>
+          </div>
+          <div style="font-size:9px;color:#65758b">EUR/USD · 1D · Advanced Chart</div>
+          <div class="phone-bottom">
+            <div>Chart</div><div>Markets</div><div>Orders</div><div>Account</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-copy">
+      <div class="kicker">Trading Platform</div>
+      <h2>Professional Tools For Serious Traders</h2>
+      <p>
+        Analyze markets with real-time style interfaces, sophisticated charting,
+        watchlists and risk-management workflows designed around clarity.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature"><span class="check">✓</span>Advanced charting tools</div>
+        <div class="feature"><span class="check">✓</span>One-click trading interface</div>
+        <div class="feature"><span class="check">✓</span>Real-time market dashboard</div>
+        <div class="feature"><span class="check">✓</span>Portfolio risk monitoring</div>
+        <div class="feature"><span class="check">✓</span>Custom watchlists</div>
+        <div class="feature"><span class="check">✓</span>Economic calendar</div>
+      </div>
+
+      <div class="downloads">
+        <button class="btn btn-primary" onclick="toast('iOS download page coming soon')"> Download for iOS</button>
+        <button class="btn" onclick="toast('Android download page coming soon')">▣ Download for Android</button>
+        <button class="btn" onclick="toast('Opening Web Platform')">Web Platform →</button>
       </div>
     </div>
   </div>
 </section>
 
-<section class="about" id="about">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">HUMARE BAARE MEIN</div>
-      <h2 style="margin-top:14px; font-size:2.2rem;">Financial clarity, jargon ke bina.</h2>
-      <p style="color:var(--ink-soft); margin-top:16px;">2013 se Dhan Setu Tier-2 aur Tier-3 shehron ke logon ko financial literacy, investment aur credit access ke saath jodta aa raha hai. Hamari team mein certified financial planners, market analysts aur loan specialists shaamil hain, jo aapko simple bhasha mein sahi salaah dete hain.</p>
-      <div class="about-stats">
-        <div class="about-stat"><div class="n mono">18</div><div class="l">Certified Advisors</div></div>
-        <div class="about-stat"><div class="n mono">27</div><div class="l">Cities Covered</div></div>
-        <div class="about-stat"><div class="n mono">4.8/5</div><div class="l">Client Rating</div></div>
-        <div class="about-stat"><div class="n mono">96%</div><div class="l">Client Retention</div></div>
-      </div>
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><strong>$2.5B+</strong><p>Illustrative daily volume</p></div>
+    <div class="stat"><strong>500K+</strong><p>Illustrative active traders</p></div>
+    <div class="stat"><strong>100+</strong><p>Trading instruments</p></div>
+    <div class="stat"><strong>15+</strong><p>Years of market experience</p></div>
+  </div>
+</section>
+
+<section class="section" id="accounts">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Account Types</div><h2>Choose Your Trading Style</h2></div>
+      <p>Flexible account concepts for beginners, active traders and professionals.</p>
     </div>
-    <div class="about-visual reveal">
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="center-mark">₹</div>
+
+    <div class="pricing-grid">
+      <article class="price-card">
+        <h3>Standard</h3>
+        <p>Simple access for everyday market participants.</p>
+        <div class="price-number">$0 <span>/ platform fee</span></div>
+        <ul>
+          <li>100+ instruments</li>
+          <li>Web trading dashboard</li>
+          <li>Basic technical tools</li>
+          <li>Market watchlists</li>
+          <li>Educational resources</li>
+        </ul>
+        <button class="btn" onclick="openModal('signup')">Open Account</button>
+      </article>
+
+      <article class="price-card featured">
+        <span class="badge">MOST POPULAR</span>
+        <h3>Pro</h3>
+        <p>Advanced tools for active and experienced traders.</p>
+        <div class="price-number">$0 <span>/ platform fee</span></div>
+        <ul>
+          <li>Advanced charting</li>
+          <li>Professional analytics</li>
+          <li>Custom indicators</li>
+          <li>Portfolio risk dashboard</li>
+          <li>Priority support</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openModal('signup')">Choose Pro</button>
+      </article>
+
+      <article class="price-card">
+        <h3>Institutional</h3>
+        <p>Flexible infrastructure for professional workflows.</p>
+        <div class="price-number">Custom</div>
+        <ul>
+          <li>Dedicated solutions</li>
+          <li>Advanced reporting</li>
+          <li>API-ready architecture</li>
+          <li>Enterprise controls</li>
+          <li>Dedicated support</li>
+        </ul>
+        <button class="btn" onclick="toast('Our institutional team will contact you')">Contact Sales</button>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="eyebrow">SHURU KAREIN</div>
-      <h2>Apni free consultation book karein.</h2>
-      <p>Form bharein, hamari team 24 ghanton ke andar aapse contact karegi.</p>
+<section class="section" id="insights">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Research & Analytics</div><h2>Market Intelligence</h2></div>
+      <p>Give traders a clean place to understand catalysts, events and market structure.</p>
     </div>
-    <div class="contact-grid">
-      <form class="reveal" id="leadForm">
-        <div class="form-row">
-          <label>Poora Naam</label>
-          <input type="text" required placeholder="Aapka naam">
+
+    <div class="insight-grid">
+      <div class="insight-main">
+        <h3>Latest Market Briefings</h3>
+        <p>Illustrative content for your website prototype.</p>
+        <div class="news-list">
+          <div class="news"><div><div class="news-title">Dollar momentum remains in focus ahead of key data</div><div class="news-meta">Forex · 12 min ago</div></div><div class="news-tag">FX</div></div>
+          <div class="news"><div><div class="news-title">Gold watches rates as investors reassess risk</div><div class="news-meta">Commodities · 28 min ago</div></div><div class="news-tag">XAU</div></div>
+          <div class="news"><div><div class="news-title">Technology sector leads a broad market rotation</div><div class="news-meta">Equities · 41 min ago</div></div><div class="news-tag">STK</div></div>
+          <div class="news"><div><div class="news-title">Crypto volatility creates fresh technical levels</div><div class="news-meta">Digital assets · 1 hr ago</div></div><div class="news-tag">BTC</div></div>
         </div>
-        <div class="form-row">
-          <label>Phone Number</label>
-          <input type="tel" required placeholder="+91 00000 00000">
+      </div>
+
+      <aside class="insight-side">
+        <h3>Economic Calendar</h3>
+        <div class="calendar">
+          <div class="calendar-row"><span>08:30 · USD</span><strong class="yellow">High impact</strong></div>
+          <div class="calendar-row"><span>10:00 · EUR</span><strong>Medium</strong></div>
+          <div class="calendar-row"><span>12:30 · GBP</span><strong class="yellow">High impact</strong></div>
+          <div class="calendar-row"><span>15:00 · CAD</span><strong>Medium</strong></div>
+          <div class="calendar-row"><span>18:30 · JPY</span><strong>Low</strong></div>
         </div>
-        <div class="form-row">
-          <label>Aap kis desk mein interested hain?</label>
-          <select>
-            <option>Training Desk</option>
-            <option>Investment Desk</option>
-            <option>Loan Desk</option>
-            <option>Sab kuch janna hai</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label>Message (optional)</label>
-          <textarea rows="3" placeholder="Apni zaroorat batayein..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" style="margin-top:10px;">Consultation Request Bhejein</button>
-      </form>
-      <div class="contact-info reveal">
-        <div class="ci-item"><div class="l">Phone</div><div class="v">+91 98765 43210</div></div>
-        <div class="ci-item"><div class="l">Email</div><div class="v">hello@dhansetu.in</div></div>
-        <div class="ci-item"><div class="l">Office</div><div class="v">3rd Floor, Vinayak Complex, MG Road, Pune, Maharashtra</div></div>
-        <div class="ci-item"><div class="l">Office Hours</div><div class="v">Mon – Sat, 10:00 AM – 7:00 PM</div></div>
+        <button class="btn" style="width:100%;margin-top:18px" onclick="toast('Calendar opened')">View Full Calendar</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="security">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Security</div><h2>Built For Trust</h2></div>
+      <p>A premium finance brand should make security and transparency visible from the first screen.</p>
+    </div>
+
+    <div class="security">
+      <div class="security-card">
+        <div class="icon">♙</div>
+        <h3>Account Protection</h3>
+        <p>Use strong authentication, session controls and configurable account-security workflows.</p>
+      </div>
+      <div class="security-card">
+        <div class="icon">⌁</div>
+        <h3>Encrypted Sessions</h3>
+        <p>Design your production implementation around secure transport and protected user sessions.</p>
+      </div>
+      <div class="security-card">
+        <div class="icon">✓</div>
+        <h3>Transparent Controls</h3>
+        <p>Clearly explain fees, risks, execution policies and regulatory information to customers.</p>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-top">
-      <a href="#home" class="logo" style="color:var(--paper);">
-        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF7A" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg></span>
-        Dhan Setu
-      </a>
-      <div class="foot-links">
-        <div class="foot-col">
-          <h5>Services</h5>
-          <a href="#desks">Training</a>
-          <a href="#desks">Investment</a>
-          <a href="#desks">Loans</a>
-        </div>
-        <div class="foot-col">
-          <h5>Company</h5>
-          <a href="#about">About</a>
-          <a href="#testimonials">Reviews</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div class="foot-col">
-          <h5>Legal</h5>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Grievance</a>
+<section class="section">
+  <div class="container">
+    <div class="cta-card">
+      <div>
+        <div class="kicker">Start Your Journey</div>
+        <h2>Turn Market Ideas Into A Better Trading Workflow.</h2>
+        <p>
+          Build a modern financial experience with market discovery, analytics,
+          trading tools and account management in one premium interface.
+        </p>
+        <div class="cta-list">
+          <div><span>✓</span>Demo trading environment</div>
+          <div><span>✓</span>Advanced market dashboard</div>
+          <div><span>✓</span>Professional research tools</div>
+          <div><span>✓</span>Responsive desktop and mobile design</div>
         </div>
       </div>
+      <div class="cta-box">
+        <h3>Open Your Account</h3>
+        <p>Start with a demo workflow before connecting any real financial infrastructure.</p>
+        <button class="btn btn-primary" onclick="openModal('signup')">Open Live Account</button>
+        <button class="btn" onclick="openModal('demo')">Try Free Demo →</button>
+      </div>
     </div>
-    <p class="disclaimer">Disclaimer: Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Dhan Setu is an educational and advisory facilitation platform; loan approvals are at the sole discretion of partner lending institutions. Past performance shown in illustrations is not indicative of future returns. [SEBI/RBI registration details to be added here.]</p>
-    <div class="foot-bottom">
-      <span>© 2026 Dhan Setu. All rights reserved.</span>
-      <span>Made with care for financially confident India.</span>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="kicker">Support</div><h2>Frequently Asked Questions</h2></div>
+      <p>Common questions for the website prototype.</p>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq"><button onclick="toggleFaq(this)">Is this a real trading platform? <span>+</span></button><div class="answer">No. This GitHub version is a front-end prototype. Real trading requires a secure backend, broker/exchange integrations, authentication, compliance and regulated infrastructure.</div></div>
+      <div class="faq"><button onclick="toggleFaq(this)">Can I connect live market data? <span>+</span></button><div class="answer">Yes. Replace the demo JavaScript data layer with an approved market-data API or WebSocket provider and keep API credentials on the server.</div></div>
+      <div class="faq"><button onclick="toggleFaq(this)">Can users actually place trades? <span>+</span></button><div class="answer">The buttons here are demonstration interactions. Real orders should be handled by a secure backend and a properly authorized brokerage or exchange API.</div></div>
+      <div class="faq"><button onclick="toggleFaq(this)">Is it responsive? <span>+</span></button><div class="answer">Yes. The layout includes responsive breakpoints for desktop, tablet and mobile screens.</div></div>
+      <div class="faq"><button onclick="toggleFaq(this)">Can I change the brand name? <span>+</span></button><div class="answer">Yes. Search for GLOBAL FINANCE in this file and replace the text, logo initials, metadata and footer copy with your own brand.</div></div>
+      <div class="faq"><button onclick="toggleFaq(this)">Can I add a backend later? <span>+</span></button><div class="answer">Yes. The interface can be connected to a backend such as Node.js, Python or another server stack for authentication, users, portfolios and APIs.</div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#">
+          <div class="brand-mark">GF</div>
+          <div class="brand-text">GLOBAL FINANCE</div>
+        </a>
+        <p>Your premium front-end foundation for a global finance and trading website.</p>
+        <div class="socials">
+          <a href="#" aria-label="X">X</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" aria-label="Instagram">◎</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="#markets">Forex</a></li>
+          <li><a href="#markets">Stocks</a></li>
+          <li><a href="#markets">Commodities</a></li>
+          <li><a href="#markets">Crypto</a></li>
+          <li><a href="#markets">Indices</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Trading</h4>
+        <ul>
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#accounts">Account Types</a></li>
+          <li><a href="#markets">Spreads & Fees</a></li>
+          <li><a href="#insights">Economic Calendar</a></li>
+          <li><a href="#platform">Trading Tools</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#security">About Us</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#faq">Legal</a></li>
+          <li><a href="#faq">Contact</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#insights">Market Analysis</a></li>
+          <li><a href="#insights">Trading Guides</a></li>
+          <li><a href="#insights">Education</a></li>
+          <li><a href="#insights">Webinars</a></li>
+          <li><a href="#platform">Downloads</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="risk">
+      <strong>Risk Warning:</strong>
+      Trading financial instruments involves substantial risk and may result in loss of capital.
+      The market prices and statistics displayed on this prototype are illustrative and are not
+      investment advice, an offer, or a solicitation to trade.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Global Finance. All rights reserved.</span>
+      <span>Privacy · Terms · Risk Disclosure · Cookie Policy</span>
     </div>
   </div>
 </footer>
 
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="modalTitle">Create Account</h3>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <form class="form" onsubmit="submitDemo(event)">
+      <div>
+        <label>FULL NAME</label>
+        <input required placeholder="Your full name">
+      </div>
+      <div>
+        <label>EMAIL ADDRESS</label>
+        <input required type="email" placeholder="you@example.com">
+      </div>
+      <div id="passwordField">
+        <label>PASSWORD</label>
+        <input type="password" placeholder="Create a password">
+      </div>
+      <button class="btn btn-primary" type="submit" id="modalSubmit">Create Demo Account</button>
+      <div class="form-note">Prototype only — no real financial account is created.</div>
+    </form>
+  </div>
+</div>
+
 <script>
-  // Mobile nav toggle
-  const burger = document.getElementById('burger');
-  const navLinks = document.querySelector('.nav-links');
-  burger.addEventListener('click', () => {
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-    navLinks.style.flexDirection = 'column';
-    navLinks.style.position = 'absolute';
-    navLinks.style.top = '64px';
-    navLinks.style.left = '0';
-    navLinks.style.right = '0';
-    navLinks.style.background = 'var(--paper)';
-    navLinks.style.padding = '20px 32px';
-    navLinks.style.borderBottom = '1px solid var(--line)';
+/* =========================================================
+   MARKET DATA
+   Demo-only data layer
+   ========================================================= */
+
+const marketSets = {
+  Forex:[
+    ["🇺🇸","EUR/USD","1.08524","1.08526","+0.12%","up"],
+    ["🇬🇧","GBP/USD","1.26543","1.26546","+0.32%","up"],
+    ["🇺🇸","USD/JPY","150.123","150.125","-0.15%","down"],
+    ["🇺🇸","USD/CHF","0.87842","0.87845","+0.08%","up"],
+    ["🇨🇦","USD/CAD","1.35124","1.35128","-0.09%","down"]
+  ],
+  Stocks:[
+    ["A","APPLE","192.42","192.48","+1.21%","up"],
+    ["N","NVIDIA","735.22","735.80","+2.48%","up"],
+    ["T","TESLA","211.31","211.72","-0.83%","down"],
+    ["M","MICROSOFT","418.77","419.05","+0.56%","up"],
+    ["A","AMAZON","178.92","179.14","+0.94%","up"]
+  ],
+  Commodities:[
+    ["Au","XAU/USD","2,023.45","2,023.67","+0.45%","up"],
+    ["Ag","XAG/USD","22.74","22.79","+0.31%","up"],
+    ["O","WTI/USD","77.31","77.44","-0.62%","down"],
+    ["G","NATGAS","2.14","2.17","+1.04%","up"],
+    ["C","COPPER","3.82","3.84","+0.27%","up"]
+  ],
+  Crypto:[
+    ["₿","BTC/USD","43,250.00","43,255.00","-1.23%","down"],
+    ["Ξ","ETH/USD","2,310.22","2,314.14","+0.73%","up"],
+    ["S","SOL/USD","97.41","97.83","+2.19%","up"],
+    ["X","XRP/USD","0.521","0.524","-0.38%","down"],
+    ["D","DOGE/USD","0.082","0.083","+1.04%","up"]
+  ],
+  Indices:[
+    ["S","S&P 500","4,890.12","4,891.02","+0.68%","up"],
+    ["N","NASDAQ 100","17,540.42","17,542.88","+0.91%","up"],
+    ["D","DOW JONES","38,001.11","38,006.90","+0.34%","up"],
+    ["D","DAX 40","16,889.24","16,892.01","-0.12%","down"],
+    ["F","FTSE 100","7,642.21","7,645.88","+0.16%","up"]
+  ]
+};
+
+function renderMarkets(category="Forex"){
+  const body=document.getElementById("marketBody");
+  body.innerHTML="";
+  const rows=marketSets[category]||marketSets.Forex;
+
+  rows.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+    const trend=r[5]==="up";
+    tr.innerHTML=`
+      <td>
+        <div class="instrument">
+          <span class="coin">${r[0]}</span>
+          ${r[1]}
+        </div>
+      </td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
+      <td class="${trend?"green":"red"}">${r[4]}</td>
+      <td>
+        <svg class="spark" viewBox="0 0 130 30" preserveAspectRatio="none">
+          <polyline points="${sparkPoints(i,trend)}"
+            fill="none" stroke="${trend?"#16d66f":"#ff4d5e"}"
+            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </td>
+      <td>
+        <button class="btn table-action" onclick="trade('${r[1]}')">Trade Now</button>
+      </td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function sparkPoints(seed,up){
+  const arr=[];
+  let value=15+seed;
+  for(let i=0;i<12;i++){
+    value += (Math.sin(i*1.6+seed)*2)+(up?0.7:-0.35);
+    value=Math.max(4,Math.min(27,value));
+    arr.push(`${i*11.5},${30-value}`);
+  }
+  return arr.join(" ");
+}
+
+function filterMarkets(category,button){
+  document.querySelectorAll(".market-tabs button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  renderMarkets(category);
+}
+
+renderMarkets();
+
+/* =========================================================
+   HERO CHART
+   ========================================================= */
+
+let heroData=[
+  42,48,39,53,49,62,58,67,61,73,69,82,76,79,71,87,80,91,
+  85,88,77,70,75,66,72,64,71,79,74,82,88,81,94,89,101,
+  97,105,98,110,102,116,109,122,115,119,111,123
+];
+
+function drawHeroChart(){
+  const width=700;
+  const height=220;
+  const max=Math.max(...heroData)+10;
+  const min=Math.min(...heroData)-10;
+
+  const points=heroData.map((v,i)=>{
+    const x=i*(width/(heroData.length-1));
+    const y=height-((v-min)/(max-min))*height;
+    return [x,y];
   });
 
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => io.observe(el));
+  const line=points.map(p=>p.join(",")).join(" ");
+  const area=line+" "+width+","+height+" 0,"+height;
 
-  // SIP calculator
-  const amountEl = document.getElementById('sipAmount');
-  const yearsEl = document.getElementById('sipYears');
-  const rateEl = document.getElementById('sipRate');
-  const amountOut = document.getElementById('sipAmountOut');
-  const yearsOut = document.getElementById('sipYearsOut');
-  const rateOut = document.getElementById('sipRateOut');
-  const investedOut = document.getElementById('sipInvested');
-  const finalOut = document.getElementById('sipFinal');
+  document.getElementById("heroLine").setAttribute("d","M "+points.map(p=>p.join(" ")).join(" L "));
+  document.getElementById("heroArea").setAttribute("d","M "+points.map(p=>p.join(" ")).join(" L ")+" L "+width+" "+height+" L 0 "+height+" Z");
 
-  function formatINR(num){
-    return '₹' + Math.round(num).toLocaleString('en-IN');
+  const last=points[points.length-1];
+  document.getElementById("heroDot").setAttribute("cx",last[0]);
+  document.getElementById("heroDot").setAttribute("cy",last[1]);
+}
+
+drawHeroChart();
+
+/* =========================================================
+   LIVE-STYLE DEMO TICK
+   ========================================================= */
+
+let basePrice=1.08524;
+
+setInterval(()=>{
+  const movement=(Math.random()-.46)*0.00022;
+  basePrice+=movement;
+
+  const price=basePrice.toFixed(5);
+  const positive=movement>=0;
+  const percent=(movement/basePrice*100).toFixed(3);
+
+  document.getElementById("heroPrice").textContent=price;
+  document.getElementById("heroChange").textContent=
+    `${positive?"+":""}${movement.toFixed(5)} (${positive?"+":""}${percent}%)`;
+
+  heroData.push(heroData[heroData.length-1]+movement*200000);
+  if(heroData.length>48)heroData.shift();
+  drawHeroChart();
+},2500);
+
+/* =========================================================
+   MINI SPARKLINES
+   ========================================================= */
+
+document.querySelectorAll(".spark").forEach((svg)=>{
+  const seed=Number(svg.dataset.seed||1);
+  const up=seed%2===0;
+  const pts=[];
+  let y=15;
+
+  for(let i=0;i<14;i++){
+    y+=(Math.sin(i+seed)*2)+(up?.7:-.5);
+    y=Math.max(4,Math.min(26,y));
+    pts.push(`${i*7.6},${30-y}`);
   }
 
-  function calcSIP(){
-    const P = parseFloat(amountEl.value);
-    const years = parseFloat(yearsEl.value);
-    const annualRate = parseFloat(rateEl.value);
-    const n = years * 12;
-    const r = annualRate / 100 / 12;
-    const futureValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-    const invested = P * n;
+  svg.setAttribute("viewBox","0 0 100 30");
+  svg.innerHTML=`
+    <polyline points="${pts.join(" ")}"
+      fill="none"
+      stroke="${up?"#16d66f":"#ff4d5e"}"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+  `;
+});
 
-    amountOut.textContent = formatINR(P);
-    yearsOut.textContent = years + (years === 1 ? ' Year' : ' Years');
-    rateOut.textContent = annualRate + '%';
-    investedOut.textContent = formatINR(invested);
-    finalOut.textContent = formatINR(futureValue);
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+function openModal(type){
+  const modal=document.getElementById("modal");
+  const title=document.getElementById("modalTitle");
+  const submit=document.getElementById("modalSubmit");
+  const password=document.getElementById("passwordField");
+
+  if(type==="login"){
+    title.textContent="Welcome Back";
+    submit.textContent="Login to Dashboard";
+    password.classList.remove("hidden");
+  }else if(type==="demo"){
+    title.textContent="Try Demo Account";
+    submit.textContent="Launch Demo";
+    password.classList.add("hidden");
+  }else{
+    title.textContent="Create Your Account";
+    submit.textContent="Create Demo Account";
+    password.classList.remove("hidden");
   }
 
-  [amountEl, yearsEl, rateEl].forEach(el => el.addEventListener('input', calcSIP));
-  calcSIP();
+  modal.classList.add("show");
+}
 
-  // Lead form (demo — no backend wired up)
-  document.getElementById('leadForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    alert('Dhanyavaad! Aapki request receive ho gayi hai. Hamari team jald hi aapse sampark karegi.');
-    this.reset();
-    calcSIP();
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+}
+
+document.getElementById("modal").addEventListener("click",(e)=>{
+  if(e.target.id==="modal")closeModal();
+});
+
+function submitDemo(e){
+  e.preventDefault();
+  closeModal();
+  toast("Demo interaction completed — connect your backend here.");
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+function toast(message){
+  const box=document.getElementById("toast");
+  box.textContent=message;
+  box.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>box.classList.remove("show"),2800);
+}
+
+/* =========================================================
+   TRADING BUTTON
+   ========================================================= */
+
+function trade(symbol){
+  toast(`${symbol}: trade ticket opened (prototype mode).`);
+}
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+function toggleFaq(button){
+  const item=button.parentElement;
+  const wasOpen=item.classList.contains("open");
+
+  document.querySelectorAll(".faq").forEach(x=>x.classList.remove("open"));
+  document.querySelectorAll(".faq button span").forEach(x=>x.textContent="+");
+
+  if(!wasOpen){
+    item.classList.add("open");
+    button.querySelector("span").textContent="−";
+  }
+}
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+function toggleMobile(){
+  const links=document.querySelector(".nav-links");
+  const visible=links.style.display==="flex";
+
+  if(visible){
+    links.style.display="";
+    return;
+  }
+
+  links.style.display="flex";
+  links.style.position="absolute";
+  links.style.top="64px";
+  links.style.left="0";
+  links.style.right="0";
+  links.style.padding="20px";
+  links.style.flexDirection="column";
+  links.style.alignItems="flex-start";
+  links.style.background="#050c15";
+  links.style.borderBottom="1px solid rgba(255,255,255,.08)";
+}
+
+/* =========================================================
+   SMOOTH NAV CLICK
+   ========================================================= */
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    if(window.innerWidth<=1000){
+      document.querySelector(".nav-links").style.display="";
+    }
   });
+});
+
+/* =========================================================
+   KEYBOARD SUPPORT
+   ========================================================= */
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape")closeModal();
+});
+
+/* =========================================================
+   DEMO ACCESSIBILITY / UI BEHAVIOR
+   ========================================================= */
+
+document.querySelectorAll("button").forEach(button=>{
+  button.addEventListener("keydown",(e)=>{
+    if(e.key==="Enter")button.click();
+  });
+});
+
+/* =========================================================
+   FUTURE API PLACEHOLDERS
+   ========================================================= */
+
+const GlobalFinanceAPI={
+  async getMarketData(){
+    /*
+      Production example:
+      const response=await fetch("/api/markets");
+      if(!response.ok)throw new Error("Market API failed");
+      return response.json();
+    */
+    return marketSets;
+  },
+
+  async login(credentials){
+    /*
+      Production:
+      POST credentials to your secure backend.
+      Never place private API secrets in this browser file.
+    */
+    console.log("Demo login",credentials);
+    return {success:true};
+  },
+
+  async createAccount(data){
+    console.log("Demo account",data);
+    return {success:true};
+  },
+
+  async placeOrder(order){
+    /*
+      Production trading must be server-side and authenticated.
+      Validate symbol, side, quantity, price, account permissions,
+      risk limits and broker/exchange response.
+    */
+    console.log("Prototype order",order);
+    return {success:false,prototype:true};
+  }
+};
+
+/* =========================================================
+   END
+   ========================================================= */
 </script>
 
 </body>
 </html>
+
+<!-- ===================================================== -->
+<!-- PROJECT NOTES                                         -->
+<!-- ===================================================== -->
+<!--
+Recommended production structure:
+
+/
+  index.html
+  /assets
+    /images
+    /icons
+  /css
+    app.css
+    responsive.css
+  /js
+    app.js
+    markets.js
+    charts.js
+    auth.js
+  /api
+    markets
+    orders
+    account
+
+Suggested production stack:
+Frontend: React / Next.js or this HTML prototype
+Backend: Node.js / Python
+Database: PostgreSQL
+Realtime: WebSocket
+Authentication: secure server-side session or OAuth
+Deployment: GitHub + a production hosting provider
+
+Never expose:
+broker API secrets, database passwords, private keys,
+payment secrets or exchange credentials in client-side JavaScript.
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
