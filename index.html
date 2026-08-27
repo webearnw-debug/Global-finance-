@@ -1,1495 +1,704 @@
-<!-- =========================================================
-     GLOBAL FINANCE — PREMIUM LIGHT INTERNATIONAL HEADER
-     HEADER ONLY
-========================================================= -->
-
-<style>
-/* =========================
-   GLOBAL FINANCE VARIABLES
-========================= */
-
-.gf-premium-header{
-  --gf-white:#ffffff;
-  --gf-soft:#f7f8fa;
-  --gf-soft2:#f1f3f6;
-  --gf-text:#17202b;
-  --gf-text2:#4f5b68;
-  --gf-muted:#7b8794;
-  --gf-border:#e5e8ec;
-  --gf-blue:#173b67;
-  --gf-blue2:#24588f;
-  --gf-gold:#b38a3c;
-  --gf-shadow:0 12px 35px rgba(20,35,55,.10);
-
-  width:100%;
-  position:relative;
-  z-index:99999;
-  background:var(--gf-white);
-  color:var(--gf-text);
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-}
-
-/* =========================
-   TOP BRAND BAR
-========================= */
-
-.gf-topbar{
-  width:100%;
-  border-bottom:1px solid var(--gf-border);
-  background:#ffffff;
-}
-
-.gf-topbar-inner{
-  width:min(1440px,94%);
-  min-height:72px;
-  margin:auto;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
-}
-
-/* =========================
-   BRAND
-========================= */
-
-.gf-brand{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  cursor:pointer;
-  text-decoration:none;
-}
-
-.gf-logo{
-  width:45px;
-  height:45px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:11px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #173b67,
-      #285f95
-    );
-
-  color:#ffffff;
-
-  font-size:15px;
-  font-weight:900;
-  letter-spacing:-1px;
-
-  box-shadow:
-    0 7px 18px rgba(23,59,103,.16);
-}
-
-.gf-brand-text{
-  line-height:1.05;
-}
-
-.gf-brand-title{
-  color:#17202b;
-  font-size:16px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-
-.gf-brand-subtitle{
-  margin-top:5px;
-
-  color:var(--gf-gold);
-
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:2.5px;
-}
-
-/* =========================
-   TOP RIGHT
-========================= */
-
-.gf-top-actions{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.gf-small-button{
-  min-height:38px;
-  padding:0 13px;
-
-  border:1px solid var(--gf-border);
-  border-radius:9px;
-
-  background:#ffffff;
-  color:var(--gf-text2);
-
-  cursor:pointer;
-
-  font-size:11px;
-  font-weight:700;
-
-  transition:
-    background .2s ease,
-    border .2s ease,
-    color .2s ease,
-    transform .2s ease;
-}
-
-.gf-small-button:hover{
-  background:var(--gf-soft);
-  border-color:#cfd5dc;
-  color:var(--gf-blue);
-  transform:translateY(-1px);
-}
-
-.gf-subscribe{
-  min-height:38px;
-  padding:0 16px;
-
-  border:0;
-  border-radius:9px;
-
-  background:var(--gf-blue);
-  color:#ffffff;
-
-  cursor:pointer;
-
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.7px;
-
-  transition:.2s ease;
-}
-
-.gf-subscribe:hover{
-  background:var(--gf-blue2);
-  transform:translateY(-1px);
-}
-
-/* =========================
-   MAIN NAVIGATION
-========================= */
-
-.gf-navigation{
-  width:100%;
-  background:#ffffff;
-  border-bottom:1px solid var(--gf-border);
-}
-
-.gf-navigation-inner{
-  width:min(1440px,94%);
-  min-height:58px;
-  margin:auto;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* =========================
-   NAV ITEM
-========================= */
-
-.gf-nav-list{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-
-  list-style:none;
-  margin:0;
-  padding:0;
-}
-
-.gf-nav-item{
-  position:relative;
-}
-
-.gf-nav-button{
-  min-height:42px;
-
-  padding:0 18px;
-
-  border:1px solid transparent;
-  border-radius:9px;
-
-  background:transparent;
-
-  color:#34404d;
-
-  cursor:pointer;
-
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.7px;
-
-  transition:
-    background .2s ease,
-    color .2s ease,
-    border .2s ease;
-}
-
-.gf-nav-button:hover,
-.gf-nav-item.gf-active .gf-nav-button{
-  background:#f5f7f9;
-  border-color:#e5e8ec;
-  color:var(--gf-blue);
-}
-
-.gf-arrow{
-  display:inline-block;
-
-  margin-left:6px;
-
-  color:#7b8794;
-
-  font-size:8px;
-
-  transition:transform .2s ease;
-}
-
-.gf-nav-item.gf-active .gf-arrow{
-  transform:rotate(180deg);
-}
-
-/* =========================
-   DROPDOWN
-========================= */
-
-.gf-dropdown{
-  position:absolute;
-
-  top:calc(100% + 8px);
-  left:50%;
-
-  width:270px;
-
-  padding:8px;
-
-  transform:
-    translateX(-50%)
-    translateY(-6px);
-
-  background:#ffffff;
-
-  border:1px solid var(--gf-border);
-
-  border-radius:13px;
-
-  box-shadow:
-    0 18px 45px rgba(20,35,55,.13);
-
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-
-  transition:
-    opacity .18s ease,
-    transform .18s ease,
-    visibility .18s ease;
-}
-
-.gf-nav-item.gf-active .gf-dropdown{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
-}
-
-/* little top pointer */
-
-.gf-dropdown::before{
-  content:"";
-
-  position:absolute;
-
-  top:-6px;
-  left:50%;
-
-  width:10px;
-  height:10px;
-
-  background:#ffffff;
-
-  border-left:1px solid var(--gf-border);
-  border-top:1px solid var(--gf-border);
-
-  transform:
-    translateX(-50%)
-    rotate(45deg);
-}
-
-/* =========================
-   DROPDOWN OPTION
-========================= */
-
-.gf-option{
-  width:100%;
-
-  display:block;
-
-  padding:13px 12px;
-
-  border:0;
-  border-radius:9px;
-
-  background:#ffffff;
-
-  text-align:left;
-
-  cursor:pointer;
-
-  transition:
-    background .18s ease,
-    transform .18s ease;
-}
-
-.gf-option:hover{
-  background:#f5f7fa;
-  transform:translateX(2px);
-}
-
-.gf-option-title{
-  display:block;
-
-  color:#1b2734;
-
-  font-size:12px;
-  font-weight:800;
-}
-
-.gf-option-description{
-  display:block;
-
-  margin-top:4px;
-
-  color:#89939f;
-
-  font-size:9px;
-  line-height:1.4;
-}
-
-/* =========================
-   SEARCH BUTTON
-========================= */
-
-.gf-search-button{
-  width:39px;
-  height:39px;
-
-  margin-left:10px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border:1px solid var(--gf-border);
-  border-radius:9px;
-
-  background:#ffffff;
-
-  color:#45515e;
-
-  cursor:pointer;
-
-  font-size:18px;
-
-  transition:.2s ease;
-}
-
-.gf-search-button:hover{
-  background:#f5f7f9;
-  color:var(--gf-blue);
-}
-
-/* =========================
-   MOBILE MENU BUTTON
-========================= */
-
-.gf-mobile-menu-button{
-  display:none;
-
-  width:42px;
-  height:42px;
-
-  border:1px solid var(--gf-border);
-  border-radius:9px;
-
-  background:#ffffff;
-
-  color:#25313d;
-
-  cursor:pointer;
-
-  font-size:20px;
-}
-
-/* =========================
-   MOBILE PANEL
-========================= */
-
-.gf-mobile-panel{
-  display:none;
-
-  position:absolute;
-
-  top:100%;
-  left:3%;
-  right:3%;
-
-  padding:10px;
-
-  background:#ffffff;
-
-  border:1px solid var(--gf-border);
-
-  border-radius:14px;
-
-  box-shadow:
-    0 20px 50px rgba(20,35,55,.15);
-}
-
-.gf-mobile-panel.gf-show{
-  display:block;
-}
-
-.gf-mobile-section{
-  margin-bottom:7px;
-}
-
-.gf-mobile-main{
-  width:100%;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  padding:14px;
-
-  border:1px solid var(--gf-border);
-  border-radius:9px;
-
-  background:#ffffff;
-
-  color:#273440;
-
-  cursor:pointer;
-
-  font-size:12px;
-  font-weight:800;
-
-  text-align:left;
-}
-
-.gf-mobile-options{
-  display:none;
-
-  padding:5px 0 0 10px;
-}
-
-.gf-mobile-section.gf-open
-.gf-mobile-options{
-  display:block;
-}
-
-.gf-mobile-option{
-  width:100%;
-
-  padding:12px;
-
-  border:0;
-  border-bottom:1px solid #edf0f3;
-
-  background:#fafbfc;
-
-  color:#4b5663;
-
-  cursor:pointer;
-
-  text-align:left;
-
-  font-size:11px;
-}
-
-/* =========================
-   SEARCH PANEL
-========================= */
-
-.gf-search-panel{
-  position:fixed;
-
-  inset:0;
-
-  z-index:100000;
-
-  display:none;
-
-  align-items:flex-start;
-  justify-content:center;
-
-  padding:90px 20px;
-
-  background:rgba(255,255,255,.82);
-
-  backdrop-filter:blur(8px);
-}
-
-.gf-search-panel.gf-show{
-  display:flex;
-}
-
-.gf-search-box{
-  width:min(600px,100%);
-
-  padding:25px;
-
-  background:#ffffff;
-
-  border:1px solid var(--gf-border);
-
-  border-radius:16px;
-
-  box-shadow:
-    0 25px 70px rgba(20,35,55,.18);
-}
-
-.gf-search-title{
-  color:#18232f;
-
-  font-size:22px;
-  font-weight:800;
-
-  margin-bottom:15px;
-}
-
-.gf-search-input{
-  width:100%;
-
-  height:48px;
-
-  padding:0 14px;
-
-  border:1px solid var(--gf-border);
-  border-radius:9px;
-
-  outline:none;
-
-  color:#18232f;
-  background:#fafbfc;
-
-  font-size:14px;
-}
-
-.gf-search-input:focus{
-  border-color:#9eb1c6;
-  background:#ffffff;
-}
-
-.gf-search-close{
-  margin-top:12px;
-
-  padding:10px 15px;
-
-  border:1px solid var(--gf-border);
-  border-radius:8px;
-
-  background:#ffffff;
-
-  color:#4c5865;
-
-  cursor:pointer;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1050px){
-
-  .gf-navigation-inner{
-    justify-content:flex-end;
-  }
-
-  .gf-nav-list{
-    display:none;
-  }
-
-  .gf-mobile-menu-button{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-}
-
-@media(max-width:700px){
-
-  .gf-topbar-inner{
-    min-height:66px;
-
-    width:94%;
-
-    gap:10px;
-  }
-
-  .gf-logo{
-    width:40px;
-    height:40px;
-  }
-
-  .gf-brand-title{
-    font-size:12px;
-    letter-spacing:1.5px;
-  }
-
-  .gf-brand-subtitle{
-    font-size:6px;
-    letter-spacing:1.8px;
-  }
-
-  .gf-small-button{
-    display:none;
-  }
-
-  .gf-subscribe{
-    display:none;
-  }
-
-  .gf-search-button{
-    width:40px;
-    height:40px;
-    margin-left:0;
-  }
-
-  .gf-navigation-inner{
-    min-height:58px;
-  }
-
-}
-
-@media(max-width:430px){
-
-  .gf-topbar-inner{
-    width:92%;
-  }
-
-  .gf-brand{
-    gap:9px;
-  }
-
-  .gf-logo{
-    width:38px;
-    height:38px;
-    border-radius:9px;
-    font-size:13px;
-  }
-
-  .gf-brand-title{
-    font-size:11px;
-  }
-
-  .gf-brand-subtitle{
-    font-size:5px;
-  }
-
-}
-</style>
-
-
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
-<header class="gf-premium-header">
-
-  <!-- TOP BRAND -->
-  <div class="gf-topbar">
-
-    <div class="gf-topbar-inner">
-
-      <div class="gf-brand" onclick="gfGoHome()">
-
-        <div class="gf-logo">
-          GF
-        </div>
-
-        <div class="gf-brand-text">
-
-          <div class="gf-brand-title">
-            GLOBAL FINANCE
-          </div>
-
-          <div class="gf-brand-subtitle">
-            GLOBAL FINANCIAL INTELLIGENCE
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="gf-top-actions">
-
-        <button
-          class="gf-small-button"
-          onclick="gfAction('Markets')">
-          Markets
-        </button>
-
-        <button
-          class="gf-small-button"
-          onclick="gfAction('Watchlist')">
-          Watchlist
-        </button>
-
-        <button
-          class="gf-subscribe"
-          onclick="gfSubscribe()">
-          SUBSCRIBE
-        </button>
-
-        <button
-          class="gf-search-button"
-          onclick="gfOpenSearch()"
-          aria-label="Search">
-          ⌕
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- MAIN NAVIGATION -->
-
-  <div class="gf-navigation">
-
-    <div class="gf-navigation-inner">
-
-      <ul class="gf-nav-list">
-
-
-        <!-- MARKETS -->
-
-        <li class="gf-nav-item">
-
-          <button
-            class="gf-nav-button"
-            onclick="gfToggleMenu(this)">
-            MARKETS
-            <span class="gf-arrow">▼</span>
-          </button>
-
-          <div class="gf-dropdown">
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Global Markets')">
-
-              <span class="gf-option-title">
-                Global Markets
-              </span>
-
-              <span class="gf-option-description">
-                Global market overview
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Stocks & Indices')">
-
-              <span class="gf-option-title">
-                Stocks & Indices
-              </span>
-
-              <span class="gf-option-description">
-                Equities and benchmark markets
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Forex & Crypto')">
-
-              <span class="gf-option-title">
-                Forex & Crypto
-              </span>
-
-              <span class="gf-option-description">
-                Currency and digital asset markets
-              </span>
-
-            </button>
-
-          </div>
-
-        </li>
-
-
-        <!-- TRADING -->
-
-        <li class="gf-nav-item">
-
-          <button
-            class="gf-nav-button"
-            onclick="gfToggleMenu(this)">
-            TRADING
-            <span class="gf-arrow">▼</span>
-          </button>
-
-          <div class="gf-dropdown">
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Trading Ideas')">
-
-              <span class="gf-option-title">
-                Trading Ideas
-              </span>
-
-              <span class="gf-option-description">
-                Market setups and ideas
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Technical Analysis')">
-
-              <span class="gf-option-title">
-                Technical Analysis
-              </span>
-
-              <span class="gf-option-description">
-                Charts and indicators
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Trading Strategies')">
-
-              <span class="gf-option-title">
-                Trading Strategies
-              </span>
-
-              <span class="gf-option-description">
-                Trading methodology
-              </span>
-
-            </button>
-
-          </div>
-
-        </li>
-
-
-        <!-- INVESTING -->
-
-        <li class="gf-nav-item">
-
-          <button
-            class="gf-nav-button"
-            onclick="gfToggleMenu(this)">
-            INVESTING
-            <span class="gf-arrow">▼</span>
-          </button>
-
-          <div class="gf-dropdown">
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Investment Ideas')">
-
-              <span class="gf-option-title">
-                Investment Ideas
-              </span>
-
-              <span class="gf-option-description">
-                Long-term investment concepts
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Portfolio')">
-
-              <span class="gf-option-title">
-                Portfolio
-              </span>
-
-              <span class="gf-option-description">
-                Portfolio and allocation
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Wealth Management')">
-
-              <span class="gf-option-title">
-                Wealth Management
-              </span>
-
-              <span class="gf-option-description">
-                Long-term wealth planning
-              </span>
-
-            </button>
-
-          </div>
-
-        </li>
-
-
-        <!-- INTELLIGENCE -->
-
-        <li class="gf-nav-item">
-
-          <button
-            class="gf-nav-button"
-            onclick="gfToggleMenu(this)">
-            INTELLIGENCE
-            <span class="gf-arrow">▼</span>
-          </button>
-
-          <div class="gf-dropdown">
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Market Insights')">
-
-              <span class="gf-option-title">
-                Market Insights
-              </span>
-
-              <span class="gf-option-description">
-                Financial market perspectives
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Economic Outlook')">
-
-              <span class="gf-option-title">
-                Economic Outlook
-              </span>
-
-              <span class="gf-option-description">
-                Macro and economic themes
-              </span>
-
-            </button>
-
-            <button
-              class="gf-option"
-              onclick="gfAction('Research & Reports')">
-
-              <span class="gf-option-title">
-                Research & Reports
-              </span>
-
-              <span class="gf-option-description">
-                Research and financial reports
-              </span>
-
-            </button>
-
-          </div>
-
-        </li>
-
-
-        <!-- SEARCH -->
-
-        <li>
-
-          <button
-            class="gf-search-button"
-            onclick="gfOpenSearch()"
-            aria-label="Search">
-            ⌕
-          </button>
-
-        </li>
-
-      </ul>
-
-
-      <!-- MOBILE BUTTON -->
-
-      <button
-        class="gf-mobile-menu-button"
-        onclick="gfMobileToggle()"
-        aria-label="Open menu">
-        ☰
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- MOBILE PANEL -->
-
-  <div
-    class="gf-mobile-panel"
-    id="gfMobilePanel">
-
-
-    <div class="gf-mobile-section">
-
-      <button
-        class="gf-mobile-main"
-        onclick="gfMobileSection(this)">
-        MARKETS
-        <span>＋</span>
-      </button>
-
-      <div class="gf-mobile-options">
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Global Markets')">
-          Global Markets
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Stocks & Indices')">
-          Stocks & Indices
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Forex & Crypto')">
-          Forex & Crypto
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="gf-mobile-section">
-
-      <button
-        class="gf-mobile-main"
-        onclick="gfMobileSection(this)">
-        TRADING
-        <span>＋</span>
-      </button>
-
-      <div class="gf-mobile-options">
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Trading Ideas')">
-          Trading Ideas
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Technical Analysis')">
-          Technical Analysis
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Trading Strategies')">
-          Trading Strategies
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="gf-mobile-section">
-
-      <button
-        class="gf-mobile-main"
-        onclick="gfMobileSection(this)">
-        INVESTING
-        <span>＋</span>
-      </button>
-
-      <div class="gf-mobile-options">
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Investment Ideas')">
-          Investment Ideas
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Portfolio')">
-          Portfolio
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Wealth Management')">
-          Wealth Management
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="gf-mobile-section">
-
-      <button
-        class="gf-mobile-main"
-        onclick="gfMobileSection(this)">
-        INTELLIGENCE
-        <span>＋</span>
-      </button>
-
-      <div class="gf-mobile-options">
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Market Insights')">
-          Market Insights
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Economic Outlook')">
-          Economic Outlook
-        </button>
-
-        <button
-          class="gf-mobile-option"
-          onclick="gfAction('Research & Reports')">
-          Research & Reports
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</header>
-
-
-<!-- =========================================================
-     SEARCH
-========================================================= -->
-
-<div
-  class="gf-search-panel"
-  id="gfSearchPanel">
-
-  <div class="gf-search-box">
-
-    <div class="gf-search-title">
-      Search Global Finance
-    </div>
-
-    <input
-      class="gf-search-input"
-      type="search"
-      placeholder="Search markets, trading, investing..."
-      id="gfSearchInput">
-
-    <button
-      class="gf-search-close"
-      onclick="gfCloseSearch()">
-      Close
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
-<script>
-
-/* =========================
-   DESKTOP DROPDOWN
-========================= */
-
-function gfToggleMenu(button){
-
-  const current =
-    button.closest(".gf-nav-item");
-
-  document
-    .querySelectorAll(".gf-nav-item")
-    .forEach(function(item){
-
-      if(item !== current){
-
-        item.classList.remove("gf-active");
-
-      }
-
-    });
-
-  current.classList.toggle("gf-active");
-
-}
-
-
-/* =========================
-   CLOSE WHEN CLICK OUTSIDE
-========================= */
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    if(
-      !event.target.closest(".gf-nav-item") &&
-      !event.target.closest(".gf-mobile-menu-button")
-    ){
-
-      document
-        .querySelectorAll(".gf-nav-item")
-        .forEach(function(item){
-
-          item.classList.remove("gf-active");
-
-        });
-
-    }
-
-  }
-);
-
-
-/* =========================
-   OPTION CLICK
-========================= */
-
-function gfAction(name){
-
-  document
-    .querySelectorAll(".gf-nav-item")
-    .forEach(function(item){
-
-      item.classList.remove("gf-active");
-
-    });
-
-  document
-    .getElementById("gfMobilePanel")
-    .classList.remove("gf-show");
-
-  /*
-    अभी testing के लिए.
-    बाद में यहाँ actual page/route लगाया जाएगा.
-  */
-
-  console.log(
-    "Global Finance:",
-    name
-  );
-
-  alert(
-    "Opening: " + name
-  );
-
-}
-
-
-/* =========================
-   HOME
-========================= */
-
-function gfGoHome(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* =========================
-   SUBSCRIBE
-========================= */
-
-function gfSubscribe(){
-
-  alert(
-    "Subscribe panel will open here."
-  );
-
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function gfOpenSearch(){
-
-  document
-    .getElementById("gfSearchPanel")
-    .classList.add("gf-show");
-
-  setTimeout(function(){
-
-    document
-      .getElementById("gfSearchInput")
-      .focus();
-
-  },100);
-
-}
-
-function gfCloseSearch(){
-
-  document
-    .getElementById("gfSearchPanel")
-    .classList.remove("gf-show");
-
-}
-
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-function gfMobileToggle(){
-
-  document
-    .getElementById("gfMobilePanel")
-    .classList.toggle("gf-show");
-
-}
-
-
-/* =========================
-   MOBILE DROPDOWNS
-========================= */
-
-function gfMobileSection(button){
-
-  const section =
-    button.closest(".gf-mobile-section");
-
-  document
-    .querySelectorAll(".gf-mobile-section")
-    .forEach(function(item){
-
-      if(item !== section){
-
-        item.classList.remove("gf-open");
-
-      }
-
-    });
-
-  section.classList.toggle("gf-open");
-
-}
-
-
-/* =========================
-   ESC KEY
-========================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key === "Escape"){
-
-      document
-        .querySelectorAll(".gf-nav-item")
-        .forEach(function(item){
-
-          item.classList.remove("gf-active");
-
-        });
-
-      document
-        .getElementById("gfMobilePanel")
-        .classList.remove("gf-show");
-
-      gfCloseSearch();
-
-    }
-
-  }
-);
 <!DOCTYPE html>
-<html>
+<html lang="hi-IN">
 <head>
-<title>Cartoon Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhan Setu — Financial Training, Investment aur Loans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body { 
-  font-family: Arial; 
-  background: #fef6ff; 
-  text-align: center; 
-  padding: 20px;
-}
-.card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  max-width: 500px;
-  margin: auto;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-video {
-  width: 100%;
-  border-radius: 15px;
-}
+  :root{
+    --navy:#0D1B2A;
+    --navy-2:#132437;
+    --paper:#F6F3EA;
+    --paper-2:#EFEADC;
+    --gold:#B8935F;
+    --gold-bright:#D4AF7A;
+    --teal:#1F4B4B;
+    --ink:#171B1F;
+    --ink-soft:#4B5563;
+    --line: rgba(23,27,31,0.12);
+    --line-dark: rgba(246,243,234,0.14);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--gold); color:var(--navy); }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+    color:var(--navy);
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:""; width:22px; height:1px; background:var(--gold);
+  }
+  a{ text-decoration:none; color:inherit; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  img,svg{ display:block; max-width:100%; }
+
+  /* ===== Ledger grid texture ===== */
+  .ledger-bg{
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+  .ledger-bg-dark{
+    background-image:
+      linear-gradient(var(--line-dark) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(246,243,234,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:.3s;
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:1180px; margin:0 auto; padding:18px 32px;
+  }
+  .logo{
+    font-family:'Fraunces', serif; font-weight:700; font-size:1.28rem;
+    color:var(--navy); display:flex; align-items:center; gap:9px;
+  }
+  .logo .mark{
+    width:30px; height:30px; border-radius:50%;
+    background:var(--navy);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .logo .mark svg{ width:15px; height:15px; }
+  .nav-links{ display:flex; gap:34px; }
+  .nav-links a{
+    font-size:0.92rem; font-weight:500; color:var(--ink);
+    position:relative; padding-bottom:3px;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1.5px;
+    background:var(--gold); transition:.25s;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    background:var(--navy); color:var(--paper) !important;
+    padding:10px 20px; border-radius:2px; font-size:0.86rem; font-weight:600;
+  }
+  .nav-cta:hover{ background:var(--teal); }
+  .burger{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+  .burger span{ width:24px; height:2px; background:var(--navy); }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:168px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.6vw, 3.7rem);
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--gold);
+    font-weight:500;
+  }
+  .hero p.lede{
+    font-size:1.08rem; color:var(--ink-soft); max-width:480px; margin-bottom:34px;
+  }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; border-radius:2px; font-weight:600; font-size:0.92rem;
+    cursor:pointer; border:1px solid transparent; transition:.25s;
+  }
+  .btn-primary{ background:var(--navy); color:var(--paper); }
+  .btn-primary:hover{ background:var(--teal); transform:translateY(-1px); }
+  .btn-ghost{ border-color:var(--navy); color:var(--navy); }
+  .btn-ghost:hover{ background:var(--navy); color:var(--paper); }
+
+  /* Signature: animated growth line chart */
+  .chart-card{
+    background:var(--navy); border-radius:4px; padding:28px 26px 22px;
+    position:relative; box-shadow:0 30px 60px -20px rgba(13,27,42,0.4);
+  }
+  .chart-card .cc-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:6px; color:var(--paper);
+  }
+  .chart-card .cc-top .label{ font-size:0.78rem; color:rgba(246,243,234,0.55); font-family:'IBM Plex Mono',monospace; letter-spacing:.05em;}
+  .chart-card .cc-value{ font-family:'Fraunces', serif; font-size:2.1rem; color:var(--paper); font-weight:600; }
+  .chart-card .cc-delta{ color:#8FBF9F; font-family:'IBM Plex Mono',monospace; font-size:0.82rem; }
+  #growthSvg{ width:100%; height:150px; margin-top:12px; }
+  #growthPath{
+    fill:none; stroke:var(--gold-bright); stroke-width:2.4;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation: draw 2.2s cubic-bezier(.4,0,.2,1) 0.4s forwards;
+  }
+  #growthFill{ opacity:0; animation: fadeIn 1s ease 1.6s forwards; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadeIn{ to{ opacity:1; } }
+  .chart-node{
+    opacity:0; animation: fadeIn 0.6s ease 2.3s forwards;
+  }
+  .chart-foot{
+    display:flex; justify-content:space-between; margin-top:6px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:rgba(246,243,234,0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #growthPath{ animation:none; stroke-dashoffset:0; }
+    #growthFill, .chart-node{ animation:none; opacity:1; }
+  }
+
+  /* ===== TRUST BAR ===== */
+  .trustbar{
+    background:var(--navy); color:var(--paper); padding:38px 0;
+  }
+  .trustbar .wrap{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  }
+  .trust-item{ border-left:1px solid var(--line-dark); padding-left:20px; }
+  .trust-item:first-child{ border-left:none; padding-left:0; }
+  .trust-num{ font-family:'Fraunces',serif; font-size:2rem; color:var(--gold-bright); font-weight:600; }
+  .trust-label{ font-size:0.8rem; color:rgba(246,243,234,0.65); margin-top:2px; }
+
+  /* ===== SECTION shared ===== */
+  section{ padding:100px 0; }
+  .sec-head{ max-width:640px; margin-bottom:56px; }
+  .sec-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); margin-top:14px; }
+  .sec-head p{ color:var(--ink-soft); margin-top:14px; font-size:1.02rem; }
+
+  /* ===== DESKS (services) ===== */
+  .desks{ background:var(--paper-2); }
+  .desk-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); }
+  .desk{
+    padding:40px 32px; border-right:1px solid var(--line);
+    background:var(--paper); transition:.3s;
+  }
+  .desk:last-child{ border-right:none; }
+  .desk:hover{ background:var(--navy); }
+  .desk:hover h3, .desk:hover .desk-tag{ color:var(--paper); }
+  .desk:hover p, .desk:hover li{ color:rgba(246,243,234,0.75); }
+  .desk:hover .desk-icon{ background:var(--gold); }
+  .desk:hover .desk-icon svg{ stroke:var(--navy); }
+  .desk-icon{
+    width:46px; height:46px; border-radius:50%; background:var(--navy-2);
+    display:flex; align-items:center; justify-content:center; margin-bottom:22px;
+    transition:.3s;
+  }
+  .desk-icon svg{ width:22px; height:22px; stroke:var(--gold-bright); fill:none; stroke-width:1.6; }
+  .desk-tag{ font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); transition:.3s; }
+  .desk h3{ font-size:1.4rem; margin:10px 0 14px; transition:.3s; }
+  .desk p{ color:var(--ink-soft); font-size:0.94rem; margin-bottom:18px; transition:.3s; }
+  .desk ul{ list-style:none; margin-bottom:24px; }
+  .desk li{ font-size:0.88rem; color:var(--ink-soft); padding:6px 0; border-top:1px solid var(--line); transition:.3s; }
+  .desk a.desk-link{ font-size:0.86rem; font-weight:600; color:var(--navy); display:inline-flex; align-items:center; gap:6px; transition:.3s; }
+  .desk:hover a.desk-link{ color:var(--gold-bright); }
+
+  /* ===== PROCESS ===== */
+  .process .wrap{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; }
+  .steps{ display:flex; flex-direction:column; }
+  .step{
+    display:grid; grid-template-columns:60px 1fr; gap:20px;
+    padding:26px 0; border-top:1px solid var(--line);
+  }
+  .step:last-child{ border-bottom:1px solid var(--line); }
+  .step-num{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:0.95rem; }
+  .step h4{ font-size:1.08rem; margin-bottom:6px; }
+  .step p{ color:var(--ink-soft); font-size:0.9rem; }
+
+  /* ===== STATS/CALC strip ===== */
+  .calc{
+    background:var(--navy); color:var(--paper); border-radius:4px; padding:40px;
+  }
+  .calc h3{ color:var(--paper); font-size:1.3rem; margin-bottom:6px; }
+  .calc p{ color:rgba(246,243,234,0.6); font-size:0.9rem; margin-bottom:26px; }
+  .calc-row{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+  .calc-row label{ font-size:0.85rem; color:rgba(246,243,234,0.75); }
+  .calc-row output{ font-family:'IBM Plex Mono',monospace; color:var(--gold-bright); font-size:0.95rem; }
+  input[type=range]{
+    width:100%; margin-top:8px; accent-color:var(--gold-bright);
+  }
+  .calc-result{
+    margin-top:28px; padding-top:24px; border-top:1px solid var(--line-dark);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .calc-result .r-label{ font-size:0.82rem; color:rgba(246,243,234,0.6); }
+  .calc-result .r-value{ font-family:'Fraunces',serif; font-size:1.9rem; color:var(--gold-bright); }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials{ background:var(--paper-2); }
+  .t-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .t-card{ background:var(--paper); border:1px solid var(--line); padding:30px; border-radius:2px; }
+  .t-quote{ font-family:'Fraunces',serif; font-style:italic; font-size:1.06rem; color:var(--navy); margin-bottom:20px; line-height:1.5; }
+  .t-name{ font-weight:700; font-size:0.9rem; }
+  .t-role{ font-size:0.8rem; color:var(--ink-soft); }
+
+  /* ===== ABOUT ===== */
+  .about .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .about-stats{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:30px;}
+  .about-stat{ background:var(--paper); padding:22px; }
+  .about-stat .n{ font-family:'Fraunces',serif; font-size:1.8rem; color:var(--gold); }
+  .about-stat .l{ font-size:0.8rem; color:var(--ink-soft); margin-top:2px; }
+  .about-visual{
+    aspect-ratio:1/1.05; background:var(--navy); border-radius:4px; position:relative; overflow:hidden;
+  }
+  .about-visual .ring{
+    position:absolute; border:1px solid rgba(212,175,122,0.3); border-radius:50%;
+  }
+  .r1{ width:70%; aspect-ratio:1; top:15%; left:15%; }
+  .r2{ width:46%; aspect-ratio:1; top:27%; left:27%; }
+  .about-visual .center-mark{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    color:var(--gold-bright); font-family:'Fraunces',serif; font-size:2.6rem;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact{ background:var(--navy); color:var(--paper); }
+  .contact .sec-head h2{ color:var(--paper); }
+  .contact .sec-head p{ color:rgba(246,243,234,0.62); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .form-row{ margin-bottom:20px; }
+  .form-row label{ display:block; font-size:0.82rem; color:rgba(246,243,234,0.65); margin-bottom:8px; }
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line-dark);
+    color:var(--paper); font-family:'Inter',sans-serif; font-size:0.98rem; padding:10px 2px;
+    outline:none; transition:.2s;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{ border-color:var(--gold-bright); }
+  .form-row select option{ color:var(--ink); }
+  .contact-info{ display:flex; flex-direction:column; gap:24px; }
+  .ci-item .l{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--gold-bright); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+  .ci-item .v{ font-size:1.05rem; }
+
+  /* ===== FOOTER ===== */
+  footer{ background:var(--navy-2); color:rgba(246,243,234,0.55); padding:44px 0 30px; }
+  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; padding-bottom:28px; border-bottom:1px solid var(--line-dark); margin-bottom:22px;}
+  .foot-links{ display:flex; gap:40px; flex-wrap:wrap; }
+  .foot-col h5{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:.08em; color:rgba(246,243,234,0.4); margin-bottom:12px; }
+  .foot-col a{ display:block; font-size:0.88rem; padding:4px 0; color:rgba(246,243,234,0.75); }
+  .foot-col a:hover{ color:var(--gold-bright); }
+  .disclaimer{ font-size:0.76rem; line-height:1.6; color:rgba(246,243,234,0.4); max-width:900px; }
+  .foot-bottom{ display:flex; justify-content:space-between; margin-top:20px; font-size:0.78rem; flex-wrap:wrap; gap:10px; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (max-width:980px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .desk-grid{ grid-template-columns:1fr; }
+    .desk{ border-right:none; border-bottom:1px solid var(--line); }
+    .trustbar .wrap{ grid-template-columns:1fr 1fr; row-gap:24px; }
+    .trust-item{ border-left:none; padding-left:0; }
+    .process .wrap, .about .wrap, .contact-grid, .t-grid{ grid-template-columns:1fr; }
+    .t-grid{ gap:18px; }
+    .nav-links{ display:none; }
+    .burger{ display:flex; }
+  }
 </style>
 </head>
 <body>
 
-<div class="card">
-  <h2>Cartoon Time! 🎀</h2>
-  <img src="girl.png" alt="Girl" style="width:150px; border-radius:50%;">
-  <p>Ab dekho ye cute cartoon:</p>
-  
-  <video controls>
-    <source src="cartoon.mp4" type="video/mp4">
-    Aapka browser video support nahi karta.
-  </video>
+<header>
+  <nav>
+    <a href="#home" class="logo">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF7A" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg>
+      </span>
+      Dhan Setu
+    </a>
+    <div class="nav-links">
+      <a href="#desks">Services</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Consultation Book Karein</a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<section class="hero ledger-bg" id="home">
+  <div class="wrap">
+    <div class="reveal in">
+      <div class="eyebrow">FINANCIAL TRAINING · INVESTMENT · LOANS</div>
+      <h1>Aapke sapno aur aapke paise ke beech, ek <em>pul</em>.</h1>
+      <p class="lede">Dhan Setu par aap seekhte hain paisa kaise kaam karta hai, sahi jagah invest karte hain, aur zarurat padne par sahi loan chunte hain — sab ek hi jagah, ek hi team ke saath.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Free Consultation Book Karein</a>
+        <a href="#desks" class="btn btn-ghost">Services Dekhein</a>
+      </div>
+    </div>
+    <div class="chart-card reveal in">
+      <div class="cc-top">
+        <span class="label">SAMPLE SIP GROWTH · 10 YRS</span>
+      </div>
+      <div class="cc-value">₹24.6L <span class="cc-delta">▲ from ₹6L invested</span></div>
+      <svg id="growthSvg" viewBox="0 0 400 150" preserveAspectRatio="none">
+        <path id="growthFill" d="M0,130 L40,120 L80,122 L120,100 L160,95 L200,72 L240,68 L280,45 L320,30 L360,18 L400,10 L400,150 L0,150 Z" fill="url(#gradFill)" stroke="none"></path>
+        <defs>
+          <linearGradient id="gradFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D4AF7A" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#D4AF7A" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path id="growthPath" d="M0,130 L40,120 L80,122 L120,100 L160,95 L200,72 L240,68 L280,45 L320,30 L360,18 L400,10"></path>
+        <circle class="chart-node" cx="400" cy="10" r="4.5" fill="#D4AF7A"></circle>
+      </svg>
+      <div class="chart-foot">
+        <span>YEAR 1</span><span>YEAR 5</span><span>YEAR 10</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trustbar">
+  <div class="wrap">
+    <div class="trust-item"><div class="trust-num mono">4,200+</div><div class="trust-label">Students Trained</div></div>
+    <div class="trust-item"><div class="trust-num mono">₹85 Cr+</div><div class="trust-label">Investment Advised</div></div>
+    <div class="trust-item"><div class="trust-num mono">₹42 Cr+</div><div class="trust-label">Loans Facilitated</div></div>
+    <div class="trust-item"><div class="trust-num mono">11 Yrs</div><div class="trust-label">Market Experience</div></div>
+  </div>
 </div>
+
+<section class="desks" id="desks">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">HAMARI SEVAYEIN</div>
+      <h2>Teen desks, ek chhat ke neeche.</h2>
+      <p>Chahe aap seekhna chahte hon, invest karna chahte hon, ya loan lena chahte hon — har desk ek expert dwara chalayi jaati hai.</p>
+    </div>
+    <div class="desk-grid">
+      <div class="desk reveal">
+        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></svg></div>
+        <div class="desk-tag">Desk 01</div>
+        <h3>Training Desk</h3>
+        <p>Personal finance, stock market basics, aur budgeting ke practical courses — beginners se lekar intermediate investors tak.</p>
+        <ul>
+          <li>Live weekend workshops</li>
+          <li>Stock market fundamentals</li>
+          <li>Budgeting & tax planning</li>
+          <li>1:1 mentorship sessions</li>
+        </ul>
+        <a href="#contact" class="desk-link">Course Batches Dekhein →</a>
+      </div>
+      <div class="desk reveal">
+        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <div class="desk-tag">Desk 02</div>
+        <h3>Investment Desk</h3>
+        <p>Mutual funds, SIP, equity aur fixed income mein aapke goals ke hisaab se personalised portfolio planning.</p>
+        <ul>
+          <li>Goal-based SIP planning</li>
+          <li>Mutual fund advisory</li>
+          <li>Portfolio review & rebalancing</li>
+          <li>Retirement planning</li>
+        </ul>
+        <a href="#contact" class="desk-link">Portfolio Review Karayein →</a>
+      </div>
+      <div class="desk reveal">
+        <div class="desk-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="1"/><path d="M3 10h18"/><path d="M7 14h4"/></svg></div>
+        <div class="desk-tag">Desk 03</div>
+        <h3>Loan Desk</h3>
+        <p>Personal, home, business aur education loans — multiple lenders se best rate dilwane mein madad.</p>
+        <ul>
+          <li>Personal & business loans</li>
+          <li>Home loan assistance</li>
+          <li>Education loan guidance</li>
+          <li>EMI & eligibility calculator</li>
+        </ul>
+        <a href="#contact" class="desk-link">Eligibility Check Karein →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">HOW IT WORKS</div>
+      <h2 style="margin-top:14px; font-size:2rem;">Chaar step mein, aapki financial journey.</h2>
+      <p style="color:var(--ink-soft); margin-top:14px; max-width:380px;">Har client ke saath hum yehi structured process follow karte hain — chahe wo training ho, investment ho ya loan.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num mono">01</div>
+        <div><h4>Free Consultation</h4><p>Aapke financial goals, current situation aur zaroorat ko samajhna — bina kisi charge ke.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02</div>
+        <div><h4>Personalised Plan</h4><p>Aapke liye specific training path, investment strategy ya loan options tayyar karna.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03</div>
+        <div><h4>Execution</h4><p>Course enrollment, investment execution ya loan application — hum saath khade rehte hain.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num mono">04</div>
+        <div><h4>Ongoing Review</h4><p>Regular check-ins taaki aapka plan market aur life changes ke saath adjust hota rahe.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <div class="wrap">
+    <div class="calc reveal">
+      <h3>SIP Calculator</h3>
+      <p>Andaza lagayein ki aapka monthly investment kitna badh sakta hai.</p>
+      <div class="calc-row">
+        <label>Monthly Investment</label>
+        <output class="mono" id="sipAmountOut">₹5,000</output>
+      </div>
+      <input type="range" id="sipAmount" min="500" max="50000" step="500" value="5000">
+      <div class="calc-row" style="margin-top:24px;">
+        <label>Time Period</label>
+        <output class="mono" id="sipYearsOut">10 Years</output>
+      </div>
+      <input type="range" id="sipYears" min="1" max="30" step="1" value="10">
+      <div class="calc-row" style="margin-top:24px;">
+        <label>Expected Annual Return</label>
+        <output class="mono" id="sipRateOut">12%</output>
+      </div>
+      <input type="range" id="sipRate" min="6" max="20" step="0.5" value="12">
+      <div class="calc-result">
+        <div>
+          <div class="r-label">Total Invested</div>
+          <div class="r-value mono" id="sipInvested" style="font-size:1.2rem; color:var(--paper);">₹6,00,000</div>
+        </div>
+        <div>
+          <div class="r-label">Estimated Value</div>
+          <div class="r-value mono" id="sipFinal">₹11,61,695</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">CLIENT KEHTE HAIN</div>
+      <h2>Bharosa, results ke saath.</h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card reveal">
+        <p class="t-quote">"Training desk ke workshop ke baad maine pehli baar khud apna SIP start kiya. Ab confidence hai ki main apne paiso ka decision khud le sakta hoon."</p>
+        <div class="t-name">Rohit Sharma</div>
+        <div class="t-role">Software Engineer, Pune</div>
+      </div>
+      <div class="t-card reveal">
+        <p class="t-quote">"Home loan process itna smooth kabhi nahi laga. Dhan Setu ki team ne 3 banks compare karke best rate dilwaya."</p>
+        <div class="t-name">Priya Nair</div>
+        <div class="t-role">Business Owner, Kochi</div>
+      </div>
+      <div class="t-card reveal">
+        <p class="t-quote">"Investment desk ne mera portfolio pura restructure kiya. Ek saal mein hi returns clearly better dikhne lage."</p>
+        <div class="t-name">Anil Kapoor</div>
+        <div class="t-role">Retired Govt. Employee, Lucknow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">HUMARE BAARE MEIN</div>
+      <h2 style="margin-top:14px; font-size:2.2rem;">Financial clarity, jargon ke bina.</h2>
+      <p style="color:var(--ink-soft); margin-top:16px;">2013 se Dhan Setu Tier-2 aur Tier-3 shehron ke logon ko financial literacy, investment aur credit access ke saath jodta aa raha hai. Hamari team mein certified financial planners, market analysts aur loan specialists shaamil hain, jo aapko simple bhasha mein sahi salaah dete hain.</p>
+      <div class="about-stats">
+        <div class="about-stat"><div class="n mono">18</div><div class="l">Certified Advisors</div></div>
+        <div class="about-stat"><div class="n mono">27</div><div class="l">Cities Covered</div></div>
+        <div class="about-stat"><div class="n mono">4.8/5</div><div class="l">Client Rating</div></div>
+        <div class="about-stat"><div class="n mono">96%</div><div class="l">Client Retention</div></div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="center-mark">₹</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">SHURU KAREIN</div>
+      <h2>Apni free consultation book karein.</h2>
+      <p>Form bharein, hamari team 24 ghanton ke andar aapse contact karegi.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="reveal" id="leadForm">
+        <div class="form-row">
+          <label>Poora Naam</label>
+          <input type="text" required placeholder="Aapka naam">
+        </div>
+        <div class="form-row">
+          <label>Phone Number</label>
+          <input type="tel" required placeholder="+91 00000 00000">
+        </div>
+        <div class="form-row">
+          <label>Aap kis desk mein interested hain?</label>
+          <select>
+            <option>Training Desk</option>
+            <option>Investment Desk</option>
+            <option>Loan Desk</option>
+            <option>Sab kuch janna hai</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Message (optional)</label>
+          <textarea rows="3" placeholder="Apni zaroorat batayein..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:10px;">Consultation Request Bhejein</button>
+      </form>
+      <div class="contact-info reveal">
+        <div class="ci-item"><div class="l">Phone</div><div class="v">+91 98765 43210</div></div>
+        <div class="ci-item"><div class="l">Email</div><div class="v">hello@dhansetu.in</div></div>
+        <div class="ci-item"><div class="l">Office</div><div class="v">3rd Floor, Vinayak Complex, MG Road, Pune, Maharashtra</div></div>
+        <div class="ci-item"><div class="l">Office Hours</div><div class="v">Mon – Sat, 10:00 AM – 7:00 PM</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#home" class="logo" style="color:var(--paper);">
+        <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#D4AF7A" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg></span>
+        Dhan Setu
+      </a>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h5>Services</h5>
+          <a href="#desks">Training</a>
+          <a href="#desks">Investment</a>
+          <a href="#desks">Loans</a>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <a href="#about">About</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="foot-col">
+          <h5>Legal</h5>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Grievance</a>
+        </div>
+      </div>
+    </div>
+    <p class="disclaimer">Disclaimer: Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. Dhan Setu is an educational and advisory facilitation platform; loan approvals are at the sole discretion of partner lending institutions. Past performance shown in illustrations is not indicative of future returns. [SEBI/RBI registration details to be added here.]</p>
+    <div class="foot-bottom">
+      <span>© 2026 Dhan Setu. All rights reserved.</span>
+      <span>Made with care for financially confident India.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const burger = document.getElementById('burger');
+  const navLinks = document.querySelector('.nav-links');
+  burger.addEventListener('click', () => {
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '64px';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.background = 'var(--paper)';
+    navLinks.style.padding = '20px 32px';
+    navLinks.style.borderBottom = '1px solid var(--line)';
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // SIP calculator
+  const amountEl = document.getElementById('sipAmount');
+  const yearsEl = document.getElementById('sipYears');
+  const rateEl = document.getElementById('sipRate');
+  const amountOut = document.getElementById('sipAmountOut');
+  const yearsOut = document.getElementById('sipYearsOut');
+  const rateOut = document.getElementById('sipRateOut');
+  const investedOut = document.getElementById('sipInvested');
+  const finalOut = document.getElementById('sipFinal');
+
+  function formatINR(num){
+    return '₹' + Math.round(num).toLocaleString('en-IN');
+  }
+
+  function calcSIP(){
+    const P = parseFloat(amountEl.value);
+    const years = parseFloat(yearsEl.value);
+    const annualRate = parseFloat(rateEl.value);
+    const n = years * 12;
+    const r = annualRate / 100 / 12;
+    const futureValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+    const invested = P * n;
+
+    amountOut.textContent = formatINR(P);
+    yearsOut.textContent = years + (years === 1 ? ' Year' : ' Years');
+    rateOut.textContent = annualRate + '%';
+    investedOut.textContent = formatINR(invested);
+    finalOut.textContent = formatINR(futureValue);
+  }
+
+  [amountEl, yearsEl, rateEl].forEach(el => el.addEventListener('input', calcSIP));
+  calcSIP();
+
+  // Lead form (demo — no backend wired up)
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Dhanyavaad! Aapki request receive ho gayi hai. Hamari team jald hi aapse sampark karegi.');
+    this.reset();
+    calcSIP();
+  });
+</script>
 
 </body>
 </html>
-</script>
