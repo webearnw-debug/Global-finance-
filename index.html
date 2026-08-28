@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek R1 Master Financial & Trading AI Studio</title>
+    <title>Nexus Mega AI Studio Pro</title>
     <script src="https://js.puter.com/v2/"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,35 +15,32 @@
         :root {
             --bg-dark: #080c14;
             --panel-dark: #0f172a;
-            --accent: #10b981; /* Fintech Emerald Green */
-            --accent-glow: rgba(16, 185, 129, 0.25);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --border: #1e293b;
-            --user-bubble: #059669;
+            --user-bubble: #2563eb;
             --ai-bubble: #1e293b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+        .app-container { width: 100%; max-width: 1000px; height: 94vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Top Header Bar */
-        .top-bar { padding: 14px 20px; background: #070a12; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        /* Header Bar */
+        .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
-        .engine-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent); padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 6px; }
-        
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .btn-sm { background: rgba(16, 185, 129, 0.1); color: var(--accent); border: 1px solid rgba(16, 185, 129, 0.3); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
+        select:focus { border-color: var(--accent); }
+
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .btn-sm:hover { background: var(--accent); color: #080c14; }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
-
-        /* Quick Chips Bar */
-        .quick-chips { display: flex; gap: 8px; padding: 10px 20px; background: rgba(15, 23, 42, 0.6); overflow-x: auto; border-bottom: 1px solid var(--border); white-space: nowrap; }
-        .chip { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.78rem; color: var(--text-sub); cursor: pointer; transition: 0.2s; }
-        .chip:hover { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
 
         /* Chat Workspace */
         .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
@@ -60,18 +57,20 @@
         .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 2px; color: white; }
         .ai .bubble { border-bottom-left-radius: 2px; }
 
-        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(16, 185, 129, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+
+        .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
 
         .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.78rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
 
-        /* Code & Tables Styling */
+        /* Code Syntax & Tables Styling */
         pre { background: #030712 !important; border: 1px solid var(--border); border-radius: 8px; margin: 10px 0; padding: 12px; overflow-x: auto; }
         code { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
         table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.85rem; }
         th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
-        th { background: rgba(16, 185, 129, 0.1); color: var(--accent); }
+        th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
 
         /* Input Area */
         .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
@@ -86,8 +85,6 @@
         .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        .disclaimer { font-size: 0.72rem; color: #64748b; text-align: center; padding: 6px; background: #070a12; border-top: 1px solid var(--border); }
-
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     </style>
 </head>
@@ -96,52 +93,50 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-chart-line"></i> FinTech Master AI Studio
-        </div>
-        <div class="engine-badge">
-            <i class="fa-solid fa-microchip"></i> Engine: DeepSeek R1 Master Reasoner
+            <i class="fa-solid fa-atom"></i> NEXUS MEGA AI STUDIO
         </div>
         <div class="controls">
-            <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save Log</button>
-            <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Reset</button>
-        </div>
-    </div>
+            <select id="modelSelect" title="Select AI Model">
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Upgraded Master Engine)</option>
+                <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
+                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default & Fast)</option>
+                <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
+                <option value="deepseek-chat">🌐 DeepSeek V3</option>
+            </select>
 
-    <div class="quick-chips">
-        <span class="chip" onclick="sendChipQuery('Stock market me risk management aur stop-loss set karne ka Level-5 formula kya hai?')">📊 Technical & Risk Strategy</span>
-        <span class="chip" onclick="sendChipQuery('SIP me compounding math: ₹10,000/month @ 15% return for 15 years step-by-step calculate karo.')">🔬 Quant Math & SIP</span>
-        <span class="chip" onclick="sendChipQuery('Fundamental analysis me Balance Sheet aur P/E Ratio check karne की master checklist do.')">📈 Fundamental Research</span>
-        <span class="chip" onclick="sendChipQuery('Home loan EMI vs Prepayment strategy: 20 years ke loan par interest kaise bachayein?')">💰 Loan & Banking Guide</span>
+            <select id="personaSelect" title="Select AI Behavior">
+                <option value="financial">📈 Financial & Stock Market Expert</option>
+                <option value="general">💬 General Assistant</option>
+                <option value="coder">💻 Senior Software Engineer</option>
+                <option value="writer">✍️ Creative Writer</option>
+                <option value="translator">🌐 Hindi-English Translator</option>
+            </select>
+
+            <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save Chat</button>
+            <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
+        </div>
     </div>
 
     <div class="chat-display" id="chatDisplay">
         <div class="msg-row ai">
-            <div class="avatar"><i class="fa-solid fa-brain"></i></div>
+            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
-                <span class="model-badge">DeepSeek R1 Master Engine</span>
-                <div class="bubble-text">Namaste! Main **DeepSeek R1 Master Financial AI** hoon.
+                <span class="model-badge">System Ready</span>
+                <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** hoon.
 
-Main ek hi AI me in sabhi 4 Level-5 Specialized Capabilities ke sath integrated hoon:
-- 🔬 **Quantitative Analyst:** Complex Financial Calculations, Amortization, Compound Growth & Tax Math.
-- ⚡ **Technical Analyst:** Intraday & Swing levels, Indicators (RSI, MACD), Risk-to-Reward Ratio.
-- 🧠 **Fundamental Analyst:** Quarterly Reports, P/E Ratios, Macro Economic Trends.
-- 💰 **Retail Banking Expert:** Personal/Home Loans, EMI Planning, Credit Score Optimization.
-
-Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</div>
+- 🔀 **Multi-Model Support:** GPT-4o, Claude 3.5, DeepSeek V3/R1 sabhi models active hain.
+- 🔬 **Supercharged DeepSeek R1:** DeepSeek R1 me Quantitative Math, Stock Market Analysis, Technical Indicators aur Loan calculations ka Level-5 Upgrade add kar diya gaya hai!
+- 🎨 **Image Generator:** Prompt likhein `Image: Cyberpunk city`.</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Stock market, SIP, Loans ya Investment ke baare me poochhein..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Stock market, coding ya kuch bhi poochhein... (Shift+Enter for new line)" onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-
-    <div class="disclaimer">
-        ⚠️ Educational Disclaimer: Financial analysis & calculations are powered by DeepSeek R1. Always consult a SEBI registered advisor before trading or investing.
     </div>
 </div>
 
@@ -151,20 +146,23 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
     let recognition = null;
     let lastUserPrompt = "";
 
-    // ALL-IN-ONE MASTER FINANCIAL PROMPT ASSIGNED TO DEEPSEEK R1
-    const MASTER_FINANCIAL_PROMPT = `
-    You are the Ultimate Level-5 Financial, Stock Market & Trading AI Expert powered strictly by DeepSeek R1.
-    You possess combined high-level mastery across 4 domains:
-    1. QUANTITATIVE MATH & RISK ANALYST: Perform deep step-by-step calculations for SIP, Compound Growth, Amortization Schedules, Tax Planning, and Risk-Reward Ratios.
-    2. TECHNICAL ANALYSIS EXPERT: Provide technical framework guidance, Indicator breakdowns (RSI, MACD, Moving Averages), Support/Resistance logic, and Risk Management frameworks.
-    3. FUNDAMENTAL & MACRO ANALYST: Explain Balance Sheets, Income Statements, Quarterly Growth Metrics, P/E Analysis, and Macroeconomic impact (RBI/Fed rates).
-    4. LOANS & RETAIL BANKING EXPERT: Provide clear guidance on Home/Personal Loans, EMI optimizations, Debt-to-Income ratios, and Credit score strategies.
+    const personas = {
+        financial: "Act as a SEBI-level expert Financial Advisor, Stock Analyst, Technical Trader, and Loan Consultant. Provide structured calculations, risk management frameworks, and clear insights.",
+        general: "Act as an intelligent, helpful AI assistant.",
+        coder: "Act as a Senior Software Engineer. Provide clean, production-ready code.",
+        writer: "Act as an expert creative writer. Use engaging and rich prose.",
+        translator: "Act as a professional translator. Translate naturally between Hindi and English."
+    };
 
-    Rules for Output:
-    - ALWAYS organize responses with Bullet Points, Tables, or Worked Examples for readability.
-    - Keep tone authoritative, professional, precise, and highly analytical.
-    - Always include educational risk disclaimers where applicable.
-    - Respond in Hindi / Hinglish / English based on the user's language.
+    // SUPERCHARGED DEEPSEEK R1 SPECIAL PROMPT INJECTION
+    const DEEPSEEK_R1_SUPER_PROMPT = `
+    [DEEPSEEK R1 UPGRADE ACTIVE]: You are the Ultimate Level-5 Financial & Multi-Domain Reasoning AI.
+    When handling Financial/Trading/Investment questions:
+    1. Perform step-by-step mathematical calculations (SIP returns, EMI, Amortization, Tax Options).
+    2. Provide Technical Indicator breakdowns (RSI, MACD, Stop-Loss logic) and Risk-to-Reward Ratios.
+    3. Analyze Fundamentals (P/E ratio, Balance Sheet metrics, Quarterly growth) cleanly.
+    4. Provide clear Debt & Loan optimization strategies.
+    Always format outputs using Markdown tables, bullet points, and step-by-step logic.
     `;
 
     window.onload = () => {
@@ -178,16 +176,18 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
         }
     }
 
-    function sendChipQuery(text) {
-        document.getElementById('userInput').value = text;
-        processMessage();
-    }
-
-    function getCleanHistory() {
+    function getCleanHistory(selectedPersona, selectedModel) {
         let clean = [];
+        let systemPrompt = personas[selectedPersona] || personas.general;
+
+        // Inject Supercharged capabilities if DeepSeek R1 is selected
+        if (selectedModel === 'deepseek-reasoner') {
+            systemPrompt += "\n\n" + DEEPSEEK_R1_SUPER_PROMPT;
+        }
+
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
-                clean.push({ role: 'user', content: `[System Instructions: ${MASTER_FINANCIAL_PROMPT}]\n\nUser Question: ${item.content}` });
+                clean.push({ role: 'user', content: `[Instructions: ${systemPrompt}]\n\nUser Query: ${item.content}` });
             } else {
                 clean.push({ role: item.role, content: item.content });
             }
@@ -198,6 +198,8 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
     async function processMessage(retryText = null) {
         const input = document.getElementById('userInput');
         const text = retryText || input.value.trim();
+        const selectedModel = document.getElementById('modelSelect').value;
+        const selectedPersona = document.getElementById('personaSelect').value;
 
         if (!text) return;
 
@@ -209,25 +211,44 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
         }
 
         const aiId = 'ai-' + Date.now();
-        conversationHistory.push({ role: 'user', content: text });
-        renderAiPlaceholder("DeepSeek R1 is analyzing & calculating logic...", aiId, "DeepSeek R1 Master Reasoner");
 
-        const safePayload = getCleanHistory();
+        // 1. IMAGE GENERATION CHECK
+        if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
+            const prompt = text.replace(/^(image:|photo:)/i, '').trim();
+            renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
+            
+            try {
+                const imgElement = await puter.ai.txt2img(prompt);
+                const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
+                bubbleObj.innerHTML = `<p>Generated Image for: <b>"${escapeHtml(prompt)}"</b></p>`;
+                imgElement.className = 'generated-img';
+                bubbleObj.appendChild(imgElement);
+            } catch (err) {
+                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Generation Error: " + err.message;
+            }
+            return;
+        }
+
+        // 2. CHAT ENGINE (With DeepSeek R1 Upgrade & Fallback)
+        conversationHistory.push({ role: 'user', content: text });
+        const loadingText = selectedModel === 'deepseek-reasoner' ? "DeepSeek R1 reasoning & calculating..." : "Thinking...";
+        renderAiPlaceholder(loadingText, aiId, selectedModel);
+
+        const safePayload = getCleanHistory(selectedPersona, selectedModel);
         let aiReply = "";
-        let usedModel = "DeepSeek R1 Reasoner";
+        let usedModel = selectedModel;
 
         try {
-            // Strictly calling DeepSeek Reasoner model
-            const response = await puter.ai.chat(safePayload, { model: 'deepseek-reasoner' });
+            const response = await puter.ai.chat(safePayload, { model: selectedModel });
             aiReply = extractTextResponse(response);
         } catch (err) {
-            console.warn("DeepSeek R1 primary call failed. Executing engine fallback...", err);
+            console.warn(`Model ${selectedModel} failed. Executing fallback engine...`, err);
             try {
                 const defaultFallback = await puter.ai.chat(safePayload);
                 aiReply = extractTextResponse(defaultFallback);
-                usedModel = "DeepSeek R1 (Fallback Active)";
+                usedModel = selectedModel + " (Fallback Active)";
             } catch (finalErr) {
-                aiReply = "Error: System unable to process financial reasoning right now. Please try again.";
+                aiReply = "Error: System unable to connect. Please try again.";
             }
         }
 
@@ -272,7 +293,7 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
         row.className = 'msg-row ai';
         row.id = id;
         row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-brain"></i></div>
+            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">${modelName}</span>
                 <div class="bubble-text">${text}</div>
@@ -315,23 +336,23 @@ Aap mujhse koi bhi Financial, Trading ya Stock Market query pooch sakte hain!</d
         conversationHistory = [];
         document.getElementById('chatDisplay').innerHTML = `
             <div class="msg-row ai">
-                <div class="avatar"><i class="fa-solid fa-brain"></i></div>
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                 <div class="bubble">
                     <span class="model-badge">Reset Complete</span>
-                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya financial query shuru karein.</div>
+                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya conversation shuru karein.</div>
                 </div>
             </div>`;
     }
 
     function exportChat() {
-        let content = "DEEPSEEK R1 MASTER FINANCIAL CHAT LOG\n===================================\n\n";
+        let content = "NEXUS AI CHAT LOG\n=================\n\n";
         conversationHistory.forEach(msg => {
             content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`;
         });
         const blob = new Blob([content], { type: 'text/plain' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `DeepSeek_Financial_Log_${Date.now()}.txt`;
+        a.download = `Nexus_Chat_${Date.now()}.txt`;
         a.click();
     }
 
