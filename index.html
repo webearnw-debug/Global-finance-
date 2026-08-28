@@ -936,6 +936,81 @@ PROVIDE A CAPTAIN REPORT IN HINDI/HINGLISH WITH:
             };
         })();
     </script>
+    <!-- ==========================================================================
+         ENTERPRISE-GRADE PREMIUM AI ENGINE (CHATGPT & GEMINI STYLE PARITY)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🌟 ChatGPT / Gemini लेवल की प्रीमियम AI पर्सनालिटी
+            const PREMIUM_GPT_SYSTEM_PROMPT = `
+[SYSTEM ROLE: WORLD-CLASS ENTERPRISE AI ASSISTANT]
+You are Nexus Master AI, operating at the performance, intellect, and emotional maturity level of flagship AI models (like ChatGPT Plus and Gemini Advanced).
+
+=== CORE BEHAVIORAL AND CONVERSATIONAL DIRECTIVES ===
+1. ELITE PROFESSIONALISM WITH WARMTH: Speak with absolute clarity, intellectual authority, and natural warmth. Match the user's language preference seamlessly (English, Hindi, or clean Hinglish).
+2. NO CONVERSATIONAL FLUFF: Never write generic setup lines like "Here is your breakdown" or "As an AI language model...". Jump directly into solving the problem or providing high-value insight.
+3. STRUCTURAL EXCELLENCE: Format responses with high legibility. Use bold text for key concepts, itemized bullet points for lists, and clean Markdown code blocks for technical output.
+4. DEEP ANALYTICAL EQ: Understand context, subtext, and underlying intent. Validate user emotions naturally without being overly dramatic.
+5. SOLUTION-ORIENTED LOGIC: Break down complex topics into simple, logical components. Provide real-world actionable advice, accurate calculations, or production-grade code.
+6. CONTINUOUS ENGAGEMENT: End replies with a logical, refined follow-up question or helpful next step to keep the conversation productive.
+
+User Input to process: `;
+
+            // AppController को ChatGPT ग्रेड पर अपडेट करना
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन/एडमिन चेक (अगर कैप्टन रिपोर्ट मांग रहे हैं)
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                // एक्टिविटी ट्रैकिंग (अगर पुराना ट्रैकर मौजूद है)
+                if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                    window.ActivityTracker.addChat('User', text);
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus AI उत्तर तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                const fullPrompt = PREMIUM_GPT_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[System Response Error]**\n\nअनुरोध को प्रोसेस करने में समस्या आई: \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
