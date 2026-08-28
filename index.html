@@ -4384,27 +4384,7 @@ Act as a Master Universal Intelligence & Analytical Expert.
                 };
             }, 100);
         });
-    </script>  try {
-                        const response = await puter.ai.chat(systemPrompt);
-                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
-
-                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
-                        bubble.innerHTML = marked.parse(badge + replyText);
-                        
-                        // एक्शन बटन्स (Copy, Like, Dislike) जोड़ें
-                        renderActionBar(aiMsgId);
-
-                        hljs.highlightAll();
-                        StorageManager.saveLog('ai', replyText);
-                    } catch (err) {
-                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
-                    }
-                };
-            }, 100);
-        });
-    </script>
+    </script>  
 </body>
 </html>
 
