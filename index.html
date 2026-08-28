@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Knowledge & Knowledge Studio Pro</title>
+    <title>Nexus Master AI Studio Pro</title>
     <!-- Puter AI Engine -->
     <script src="https://js.puter.com/v2/"></script>
     <!-- Google Fonts & FontAwesome Icons -->
@@ -32,20 +32,20 @@
 
         .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Clean Top Bar */
+        /* Top Bar without Persona Dropdown */
         .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         
-        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 12px; border-radius: 8px; outline: none; font-size: 0.85rem; cursor: pointer; }
         select:focus { border-color: var(--accent); }
 
-        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
         .btn-sm:hover { background: var(--accent); color: #080c14; }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
-        /* Chat Display */
+        /* Chat Workspace */
         .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
@@ -74,8 +74,8 @@
         th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
         th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
 
-        /* Input Area (Clean & Standard) */
-        .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
+        /* Input Area */
+        .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
         .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
         textarea { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px 45px 12px 16px; border-radius: 12px; outline: none; font-size: 0.93rem; resize: none; height: 50px; line-height: 1.4; }
@@ -95,28 +95,16 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-brain"></i> NEXUS AI KNOWLEDGE STUDIO
+            <i class="fa-solid fa-brain"></i> NEXUS MASTER AI STUDIO PRO
         </div>
         <div class="controls">
-            <!-- Models Selector -->
+            <!-- Selected AI Model Selector Only -->
             <select id="modelSelect" title="Select AI Model">
                 <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic & Reasoning)</option>
-                <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
-                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Fast)</option>
+                <option value="gpt-4o">🧠 GPT-4o (Master Intelligence)</option>
+                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Ultra Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
                 <option value="deepseek-chat">🌐 DeepSeek V3</option>
-            </select>
-
-            <!-- Knowledge & Upgrade Centric Personas -->
-            <select id="personaSelect" title="Select AI Persona">
-                <option value="mental_models">🧠 Mental Models & Decision Frameworks</option>
-                <option value="communication">🗣️ Communication & Public Speaking Coach</option>
-                <option value="content_script">🎬 Viral Script & Content Generator</option>
-                <option value="book_knowledge">📚 Book Knowledge & Case Studies</option>
-                <option value="coder">💻 Senior Software Engineer</option>
-                <option value="writer">✍️ Creative Writer</option>
-                <option value="translator">🌐 Hindi-English Translator</option>
-                <option value="general">💬 General Assistant</option>
             </select>
 
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
@@ -129,19 +117,22 @@
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">System Ready</span>
-                <div class="bubble-text">Namaste! Main **Nexus AI Knowledge Studio** hoon.
+                <div class="bubble-text">नमस्ते! **Nexus Master AI Studio Pro** में आपका स्वागत है।
 
-- 🧠 **Mental Models:** First Principles, Cognitive Biases, 80/20 Pareto Logic.
-- 🗣️ **Communication:** PREP Format, Tonality & Body Language Coach.
-- 🎬 **Video Scripts:** 5-Sec Story Hooks, Mind-Maps & 1-Min Actionable Steps.
-- 📚 **Practical Knowledge:** Summaries (*Atomic Habits* etc.) & Case Studies.</div>
+सभी 4 मुख्य क्षमताएँ (Core Skills) अब हर मॉडल में स्थायी रूप से एकीकृत (Built-in) कर दी गई हैं:
+1. 🧠 **Decision & Mental Models:** (First Principles, Cognitive Biases, 80/20 Pareto)
+2. 🗣️ **Communication Coach:** (PREP Structure, Vocal Pauses, Body Language)
+3. 📚 **Practical Knowledge:** (Book Summary Takeaways, Leader Case Studies)
+4. 🎬 **Script & Content Delivery:** (Story Hooks, Visual Formatting, 1-Min Action Tasks)
+
+आप कोई भी प्रश्न पूछें, AI इन्हीं सिद्धांतों का उपयोग करके उत्तर तैयार करेगा!</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Ask about Decision models, Script Hooks, Communication tips, Case Studies..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="अपना प्रश्न या विषय टाइप करें..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -154,37 +145,30 @@
     let recognition = null;
     let lastUserPrompt = "";
 
-    // CLEAN KNOWLEDGE-FOCUSED SYSTEM PROMPTS
-    const personas = {
-        mental_models: `Act as a World-Class Decision Making & Mental Models Expert.
-Help users solve problems using:
-1. First Principles Thinking: Breakdown complex issues into foundational truths.
-2. Cognitive Biases: Spot thinking shortcuts (Sunk Cost Fallacy, Confirmation Bias, etc.).
-3. 80/20 Pareto Principle: Focus on the 20% critical actions driving 80% outcomes.`,
+    // PERMANENT SYSTEM PROMPT CONTAINING ALL 4 PILLARS AS DEFAULT SKILLS
+    const BUILTIN_MASTER_PROMPT = `
+You are Nexus Master AI. You have 4 PERMANENT CORE SKILLS built directly into your logic for every response:
 
-        communication: `Act as an Elite Communication & Articulation Coach.
-Guide the user with:
-1. PREP Format (Point, Reason, Example, Point) for structured speaking.
-2. Pause & Tonality: Eliminating filler words, managing voice pitch and clarity.
-3. Body Language & Confidence: Non-verbal cues, eye contact, and active listening.`,
+1. DECISION-MAKING & MENTAL MODELS:
+- Apply First Principles Thinking to deconstruct complex situations.
+- Identify Cognitive Biases (Sunk Cost Fallacy, Confirmation Bias, etc.).
+- Use the 80/20 Pareto Principle to highlight high-impact actions.
 
-        content_script: `Act as a Master Content Scriptwriter & Delivery Expert.
-Write scripts and outlines structured strictly as:
-1. STORY-BASED HOOK (0-5 Sec): Provocative question or shock fact.
-2. VISUAL MIND-MAP & KNOWLEDGE: Clear takeaways formatted with bullet points/tables.
-3. 1-MINUTE ACTION STEP: Immediate practical task for the audience.`,
+2. ELEGANT COMMUNICATION & ARTICULATION:
+- Structure explanations using PREP Format (Point, Reason, Example, Point).
+- Provide guidance on tone, pauses, confidence, and articulation when applicable.
 
-        book_knowledge: `Act as a Practical Knowledge & Case Study Mentor.
-Deliver insights through:
-1. Life-Changing Book Summaries: Key takeaways from books like Atomic Habits, Thinking Fast & Slow.
-2. Real-World Case Studies: Analyzing critical decision moments of famous leaders/companies.
-3. Social Psychology: How people get influenced and how to persuasively convey ideas.`,
+3. REAL-WORLD PRACTICAL KNOWLEDGE & CASE STUDIES:
+- Incorporate actionable insights from practical book summaries (e.g., Atomic Habits, Thinking Fast & Slow).
+- Integrate real-life case studies of historical leaders or companies.
+- Apply social psychology to explain influence and human behavior.
 
-        coder: "Act as a Senior Software Engineer. Provide clean, production-ready code with explanations.",
-        writer: "Act as an expert creative writer. Use engaging and rich prose.",
-        translator: "Act as a professional translator. Translate naturally between Hindi and English.",
-        general: "Act as an intelligent, helpful AI assistant."
-    };
+4. HIGH-ENGAGEMENT CONTENT DELIVERY:
+- Open responses with compelling hooks (story-based or shock facts).
+- Structure text visually with clear markdown points, tables, or step-by-step mindmaps.
+- Conclude with a clear '1-Minute Actionable Step' for the user.
+
+Always apply these 4 pillars natively in your responses regardless of the query!`;
 
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
@@ -197,13 +181,11 @@ Deliver insights through:
         }
     }
 
-    function getCleanHistory(selectedPersona) {
+    function getCleanHistory() {
         let clean = [];
-        let systemPrompt = personas[selectedPersona] || personas.general;
-
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
-                clean.push({ role: 'user', content: `[Instructions: ${systemPrompt}]\n\nUser Query: ${item.content}` });
+                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTIONS: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
             } else {
                 clean.push({ role: item.role, content: item.content });
             }
@@ -215,7 +197,6 @@ Deliver insights through:
         const input = document.getElementById('userInput');
         const text = retryText || input.value.trim();
         const selectedModel = document.getElementById('modelSelect').value;
-        const selectedPersona = document.getElementById('personaSelect').value;
 
         if (!text) return;
 
@@ -228,7 +209,7 @@ Deliver insights through:
 
         const aiId = 'ai-' + Date.now();
 
-        // 1. IMAGE GENERATION CHECK
+        // IMAGE GENERATION CHECK
         if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
             const prompt = text.replace(/^(image:|photo:)/i, '').trim();
             renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
@@ -245,11 +226,11 @@ Deliver insights through:
             return;
         }
 
-        // 2. CHAT ENGINE (With Multi-Model Fallback)
+        // CHAT ENGINE WITH BUILT-IN CORE SKILLS
         conversationHistory.push({ role: 'user', content: text });
-        renderAiPlaceholder("Thinking...", aiId, selectedModel);
+        renderAiPlaceholder("Thinking with Built-in Core Skills...", aiId, selectedModel);
 
-        const safePayload = getCleanHistory(selectedPersona);
+        const safePayload = getCleanHistory();
         let aiReply = "";
         let usedModel = selectedModel;
 
@@ -295,7 +276,7 @@ Deliver insights through:
         const row = document.createElement('div');
         row.className = 'msg-row user';
         row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="avatar"><div class="avatar-icon"><i class="fa-solid fa-user"></i></div></div>
             <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
         `;
         display.appendChild(row);
