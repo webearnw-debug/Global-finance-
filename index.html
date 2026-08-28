@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Ultra Pro AI (Zero Key)</title>
-    <!-- Puter AI Engine (Free & Unlimited) -->
+    <title>Nexus Mega AI Studio Pro</title>
+    <!-- Puter AI Engine (Free & Unlimited Multi-Model) -->
     <script src="https://js.puter.com/v2/"></script>
     <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
 
     <style>
         :root {
-            --bg-dark: #090d16;
-            --panel-dark: #111827;
+            --bg-dark: #080c14;
+            --panel-dark: #0f172a;
             --accent: #38bdf8;
             --accent-glow: rgba(56, 189, 248, 0.25);
             --text-main: #f8fafc;
@@ -30,92 +30,115 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        .app-container { width: 100%; max-width: 900px; height: 92vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); }
+        .app-container { width: 100%; max-width: 1000px; height: 94vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
         /* Header Bar */
-        .top-bar { padding: 16px 24px; background: #0f172a; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
-        .controls { display: flex; gap: 10px; align-items: center; }
+        .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         
-        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; outline: none; font-size: 0.85rem; cursor: pointer; }
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
+        select:focus { border-color: var(--accent); }
 
-        .btn-action { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .btn-action:hover { background: #ef4444; color: white; }
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-sm:hover { background: var(--accent); color: #080c14; }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background: #ef4444; color: white; }
 
         /* Chat Workspace */
-        .chat-display { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: var(--bg-dark); scroll-behavior: smooth; }
+        .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
 
-        .msg-row { display: flex; gap: 14px; max-width: 85%; }
+        .msg-row { display: flex; gap: 12px; max-width: 88%; }
         .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
         .msg-row.ai { align-self: flex-start; }
 
-        .avatar { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
         .user .avatar { background: var(--user-bubble); color: white; }
         .ai .avatar { background: var(--panel-dark); border: 1px solid var(--border); color: var(--accent); }
 
-        .bubble { background: var(--ai-bubble); padding: 16px 20px; border-radius: 16px; border: 1px solid var(--border); font-size: 0.95rem; line-height: 1.6; word-break: break-word; position: relative; }
-        .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 4px; color: white; }
-        .ai .bubble { border-bottom-left-radius: 4px; }
+        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.93rem; line-height: 1.6; word-break: break-word; position: relative; }
+        .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 2px; color: white; }
+        .ai .bubble { border-bottom-left-radius: 2px; }
 
-        .generated-img { width: 100%; max-width: 400px; border-radius: 12px; margin-top: 10px; border: 1px solid var(--border); }
+        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
-        .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; }
+        .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
+
+        .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.78rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
 
         /* Code Syntax Styling */
-        pre { background: #050811 !important; border: 1px solid var(--border); border-radius: 10px; margin: 12px 0; padding: 12px; overflow-x: auto; }
-        code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+        pre { background: #030712 !important; border: 1px solid var(--border); border-radius: 8px; margin: 10px 0; padding: 12px; overflow-x: auto; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
 
-        /* Input Bar */
-        .input-bar { padding: 18px 24px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: center; }
+        /* Input Area */
+        .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
         .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
-        input[type="text"] { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 16px 50px 16px 20px; border-radius: 12px; outline: none; font-size: 0.95rem; }
-        input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+        textarea { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px 45px 12px 16px; border-radius: 12px; outline: none; font-size: 0.93rem; resize: none; height: 50px; max-height: 150px; line-height: 1.4; }
+        textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
-        .mic-btn { position: absolute; right: 15px; background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; }
+        .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
         .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
 
-        .send-btn { background: var(--accent); color: #090d16; width: 52px; height: 52px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
 <div class="app-container">
+    <!-- Header Controls -->
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-brain"></i> NEXUS ULTRA AI PRO
+            <i class="fa-solid fa-atom"></i> NEXUS MEGA AI STUDIO
         </div>
         <div class="controls">
-            <select id="modelSelect">
-                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default)</option>
-                <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
-                <option value="deepseek-reasoner">🧠 DeepSeek Reasoner</option>
+            <!-- Model Switcher -->
+            <select id="modelSelect" title="Select AI Model">
+                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Fast & Smart)</option>
+                <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
+                <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet (Coding Pro)</option>
+                <option value="deepseek-reasoner">🔬 DeepSeek R1 (Reasoner)</option>
+                <option value="deepseek-chat">🌐 DeepSeek V3</option>
+                <option value="meta-llama/llama-3.3-70b-instruct">🦙 Llama 3.3 70B</option>
             </select>
-            <button class="btn-action" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear Memory</button>
+
+            <!-- Persona Switcher -->
+            <select id="personaSelect" title="Select AI Behavior">
+                <option value="general">💬 General Assistant</option>
+                <option value="coder">💻 Senior Software Engineer</option>
+                <option value="writer">✍️ Creative Writer</option>
+                <option value="translator">🌐 Hindi-English Translator</option>
+            </select>
+
+            <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save Chat</button>
+            <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
     </div>
 
+    <!-- Chat Screen -->
     <div class="chat-display" id="chatDisplay">
         <div class="msg-row ai">
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
-                <div class="bubble-text">Namaste! Main **Nexus Ultra AI Pro** hoon. 
+                <span class="model-badge">System Ready</span>
+                <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** hoon.
 
-- 💡 **Kuch bhi poochhein:** Coding, Essay, ya Business ideas.
-- 🎨 **Image Banayein:** Likhye `Image: A futuristic cyberpunk city` aur main photo bana doonga!
-- 🧠 **Full Memory:** Main purani baatein yaad rakh sakta hoon.</div>
+- 🔀 **Multi-Model Support:** Upar dropdown se GPT-4o, Claude 3.5, DeepSeek ya Llama select karein.
+- 🎨 **Image Generator:** Prompt likhein `Image: Futuristic Flying Car`.
+- 🗣️ **Voice & Speech:** Microphone se bolein ya answer sunein.</div>
             </div>
         </div>
     </div>
 
+    <!-- Input Bar -->
     <div class="input-bar">
         <div class="input-wrapper">
-            <input type="text" id="userInput" placeholder="Kuch poochhein ya likhein 'Image: ...' photo banane ke liye" onkeydown="if(event.key==='Enter') processMessage()">
+            <textarea id="userInput" placeholder="Kuch bhi poochhein... (Shift+Enter for new line)" onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -123,38 +146,55 @@
 </div>
 
 <script>
-    // Context Memory array to hold chat history
     let conversationHistory = [];
     let isListening = false;
     let recognition = null;
+    let lastUserPrompt = "";
 
-    window.onload = () => {
-        marked.setOptions({ highlight: (code, lang) => hljs.highlightAuto(code).value });
+    const personas = {
+        general: "You are a highly intelligent, polite, and helpful AI assistant.",
+        coder: "You are a Senior Full-Stack Software Engineer. Provide clean, efficient code with explanations.",
+        writer: "You are an expert creative writer. Use engaging, rich, and expressive language.",
+        translator: "You are a translation expert. Translate accurately between Hindi and English with natural fluency."
     };
 
-    async function processMessage() {
+    window.onload = () => {
+        marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
+    };
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            processMessage();
+        }
+    }
+
+    async function processMessage(retryText = null) {
         const input = document.getElementById('userInput');
-        const text = input.value.trim();
+        const text = retryText || input.value.trim();
         const selectedModel = document.getElementById('modelSelect').value;
+        const selectedPersona = document.getElementById('personaSelect').value;
 
         if (!text) return;
 
-        // User Message Render
-        renderUserMessage(text);
-        input.value = '';
+        lastUserPrompt = text;
+
+        if (!retryText) {
+            renderUserMessage(text);
+            input.value = '';
+        }
 
         const aiId = 'ai-' + Date.now();
 
         // 1. IMAGE GENERATION CHECK
         if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
             const prompt = text.replace(/^(image:|photo:)/i, '').trim();
-            renderAiPlaceholder("🎨 Generating AI Image...", aiId);
+            renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
             
             try {
-                // Call Puter.js Text-to-Image Engine
                 const imgElement = await puter.ai.txt2img(prompt);
                 const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
-                bubbleObj.innerHTML = `<p>Here is your generated image for: <b>"${escapeHtml(prompt)}"</b></p>`;
+                bubbleObj.innerHTML = `<p>Generated Image for: <b>"${escapeHtml(prompt)}"</b></p>`;
                 imgElement.className = 'generated-img';
                 bubbleObj.appendChild(imgElement);
             } catch (err) {
@@ -163,28 +203,28 @@
             return;
         }
 
-        // 2. TEXT CHAT WITH MEMORY
+        // 2. MULTI-MODEL TEXT CHAT WITH MEMORY & PERSONA
+        if (conversationHistory.length === 0) {
+            conversationHistory.push({ role: 'system', content: personas[selectedPersona] });
+        }
+
         conversationHistory.push({ role: 'user', content: text });
-        renderAiPlaceholder("Thinking...", aiId);
+        renderAiPlaceholder("Thinking...", aiId, selectedModel);
 
         try {
-            // Call Puter.js Multi-Model AI Engine
             const response = await puter.ai.chat(conversationHistory, { model: selectedModel });
-            const aiReply = response.message.content;
+            const aiReply = typeof response === 'string' ? response : (response.message?.content || response.text || JSON.stringify(response));
 
-            // Save AI reply to Memory
             conversationHistory.push({ role: 'assistant', content: aiReply });
 
-            // Render Markdown & Code Highlighting
             const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
             bubbleObj.innerHTML = marked.parse(aiReply);
             hljs.highlightAll();
 
-            // Append Copy & Speech buttons
             appendActions(document.getElementById(aiId).querySelector('.bubble'), aiReply);
 
         } catch (err) {
-            document.getElementById(aiId).querySelector('.bubble-text').innerText = "Network Error: Kripya dobara try karein.";
+            document.getElementById(aiId).querySelector('.bubble-text').innerText = "Model Error: System reload karke ya dusra model chun kar try karein.";
         }
 
         const chatDisplay = document.getElementById('chatDisplay');
@@ -203,14 +243,17 @@
         display.scrollTop = display.scrollHeight;
     }
 
-    function renderAiPlaceholder(text, id) {
+    function renderAiPlaceholder(text, id, modelName) {
         const display = document.getElementById('chatDisplay');
         const row = document.createElement('div');
         row.className = 'msg-row ai';
         row.id = id;
         row.innerHTML = `
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="bubble"><div class="bubble-text">${text}</div></div>
+            <div class="bubble">
+                <span class="model-badge">${modelName}</span>
+                <div class="bubble-text">${text}</div>
+            </div>
         `;
         display.appendChild(row);
         display.scrollTop = display.scrollHeight;
@@ -222,8 +265,15 @@
         actionsDiv.innerHTML = `
             <span class="action-btn" onclick="speakText(this)"><i class="fa-solid fa-volume-high"></i> Listen</span>
             <span class="action-btn" onclick="copyText(this)"><i class="fa-solid fa-copy"></i> Copy</span>
+            <span class="action-btn" onclick="regenerate()"><i class="fa-solid fa-rotate-right"></i> Retry</span>
         `;
         bubbleElement.appendChild(actionsDiv);
+    }
+
+    function regenerate() {
+        if (lastUserPrompt) {
+            processMessage(lastUserPrompt);
+        }
     }
 
     function speakText(btn) {
@@ -237,7 +287,7 @@
     function copyText(btn) {
         const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
         navigator.clipboard.writeText(text);
-        alert("Text copied to clipboard!");
+        alert("Copied to Clipboard!");
     }
 
     function clearMemory() {
@@ -245,8 +295,25 @@
         document.getElementById('chatDisplay').innerHTML = `
             <div class="msg-row ai">
                 <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble"><div class="bubble-text">Memory clear kar di gayi hai. Nayi chat shuru karein!</div></div>
+                <div class="bubble">
+                    <span class="model-badge">Reset Complete</span>
+                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya conversation shuru karein.</div>
+                </div>
             </div>`;
+    }
+
+    function exportChat() {
+        let content = "NEXUS AI CHAT LOG\n=================\n\n";
+        conversationHistory.forEach(msg => {
+            if (msg.role !== 'system') {
+                content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`;
+            }
+        });
+        const blob = new Blob([content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Nexus_Chat_${Date.now()}.txt`;
+        a.click();
     }
 
     // Voice Input Setup
@@ -262,7 +329,7 @@
 
     function toggleVoiceInput() {
         const btn = document.getElementById('micBtn');
-        if (!recognition) return alert("Speech Recognition supported nahi hai.");
+        if (!recognition) return alert("Browser voice speech support nahi karta.");
         if (isListening) {
             recognition.stop();
             btn.classList.remove('active');
