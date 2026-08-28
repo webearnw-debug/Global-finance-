@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Ultra Pro AI Studio</title>
+    <title>Nexus Ultra Pro AI (Zero Key)</title>
+    <!-- Puter AI Engine (Free & Unlimited) -->
     <script src="https://js.puter.com/v2/"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Markdown Parser & Code Syntax Highlighter -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
@@ -29,7 +32,7 @@
 
         .app-container { width: 100%; max-width: 900px; height: 92vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); }
 
-        /* Top Bar */
+        /* Header Bar */
         .top-bar { padding: 16px 24px; background: #0f172a; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 10px; align-items: center; }
@@ -39,7 +42,7 @@
         .btn-action { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         .btn-action:hover { background: #ef4444; color: white; }
 
-        /* Chat Display Area */
+        /* Chat Workspace */
         .chat-display { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 14px; max-width: 85%; }
@@ -60,7 +63,7 @@
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
 
-        /* Code Styling */
+        /* Code Syntax Styling */
         pre { background: #050811 !important; border: 1px solid var(--border); border-radius: 10px; margin: 12px 0; padding: 12px; overflow-x: auto; }
         code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
 
@@ -89,11 +92,11 @@
         </div>
         <div class="controls">
             <select id="modelSelect">
-                <option value="gpt-4o-mini">🤖 GPT-4o Mini</option>
+                <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
                 <option value="deepseek-reasoner">🧠 DeepSeek Reasoner</option>
             </select>
-            <button class="btn-action" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Reset Memory</button>
+            <button class="btn-action" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear Memory</button>
         </div>
     </div>
 
@@ -101,18 +104,18 @@
         <div class="msg-row ai">
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
-                <div class="bubble-text">नमस्ते! मैं **Nexus Ultra AI Pro** हूँ।
+                <div class="bubble-text">Namaste! Main **Nexus Ultra AI Pro** hoon. 
 
-- 💡 **कुछ भी पूछें:** कोडिंग, निबंध या सवाल।
-- 🎨 **फोटो बनाएं:** लिखें `Image: A flying luxury car` और मैं तुरंत फोटो बना दूँगा!
-- 🧠 **मेमोरी एक्टिव:** मैं आपकी पुरानी बातें याद रखता हूँ।</div>
+- 💡 **Kuch bhi poochhein:** Coding, Essay, ya Business ideas.
+- 🎨 **Image Banayein:** Likhye `Image: A futuristic cyberpunk city` aur main photo bana doonga!
+- 🧠 **Full Memory:** Main purani baatein yaad rakh sakta hoon.</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <input type="text" id="userInput" placeholder="सवाल लिखें या फोटो के लिए लिखें 'Image: ...'" onkeydown="if(event.key==='Enter') processMessage()">
+            <input type="text" id="userInput" placeholder="Kuch poochhein ya likhein 'Image: ...' photo banane ke liye" onkeydown="if(event.key==='Enter') processMessage()">
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -120,6 +123,7 @@
 </div>
 
 <script>
+    // Context Memory array to hold chat history
     let conversationHistory = [];
     let isListening = false;
     let recognition = null;
@@ -135,46 +139,52 @@
 
         if (!text) return;
 
+        // User Message Render
         renderUserMessage(text);
         input.value = '';
 
         const aiId = 'ai-' + Date.now();
 
-        // IMAGE GENERATION
+        // 1. IMAGE GENERATION CHECK
         if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
             const prompt = text.replace(/^(image:|photo:)/i, '').trim();
             renderAiPlaceholder("🎨 Generating AI Image...", aiId);
             
             try {
+                // Call Puter.js Text-to-Image Engine
                 const imgElement = await puter.ai.txt2img(prompt);
                 const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
-                bubbleObj.innerHTML = `<p>Photo generated for: <b>"${escapeHtml(prompt)}"</b></p>`;
+                bubbleObj.innerHTML = `<p>Here is your generated image for: <b>"${escapeHtml(prompt)}"</b></p>`;
                 imgElement.className = 'generated-img';
                 bubbleObj.appendChild(imgElement);
             } catch (err) {
-                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Error: " + err.message;
+                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Generation Error: " + err.message;
             }
             return;
         }
 
-        // CHAT WITH MEMORY
+        // 2. TEXT CHAT WITH MEMORY
         conversationHistory.push({ role: 'user', content: text });
         renderAiPlaceholder("Thinking...", aiId);
 
         try {
+            // Call Puter.js Multi-Model AI Engine
             const response = await puter.ai.chat(conversationHistory, { model: selectedModel });
             const aiReply = response.message.content;
 
+            // Save AI reply to Memory
             conversationHistory.push({ role: 'assistant', content: aiReply });
 
+            // Render Markdown & Code Highlighting
             const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
             bubbleObj.innerHTML = marked.parse(aiReply);
             hljs.highlightAll();
 
+            // Append Copy & Speech buttons
             appendActions(document.getElementById(aiId).querySelector('.bubble'), aiReply);
 
         } catch (err) {
-            document.getElementById(aiId).querySelector('.bubble-text').innerText = "Network Error: Kripya reload karke try karein.";
+            document.getElementById(aiId).querySelector('.bubble-text').innerText = "Network Error: Kripya dobara try karein.";
         }
 
         const chatDisplay = document.getElementById('chatDisplay');
@@ -208,4 +218,65 @@
 
     function appendActions(bubbleElement, textContent) {
         const actionsDiv = document.createElement('div');
-        actionsDiv.className = '
+        actionsDiv.className = 'bubble-actions';
+        actionsDiv.innerHTML = `
+            <span class="action-btn" onclick="speakText(this)"><i class="fa-solid fa-volume-high"></i> Listen</span>
+            <span class="action-btn" onclick="copyText(this)"><i class="fa-solid fa-copy"></i> Copy</span>
+        `;
+        bubbleElement.appendChild(actionsDiv);
+    }
+
+    function speakText(btn) {
+        const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'hi-IN';
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function copyText(btn) {
+        const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
+        navigator.clipboard.writeText(text);
+        alert("Text copied to clipboard!");
+    }
+
+    function clearMemory() {
+        conversationHistory = [];
+        document.getElementById('chatDisplay').innerHTML = `
+            <div class="msg-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble"><div class="bubble-text">Memory clear kar di gayi hai. Nayi chat shuru karein!</div></div>
+            </div>`;
+    }
+
+    // Voice Input Setup
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.onresult = (e) => {
+            document.getElementById('userInput').value = e.results[0][0].transcript;
+            toggleVoiceInput();
+        };
+        recognition.onerror = () => toggleVoiceInput();
+    }
+
+    function toggleVoiceInput() {
+        const btn = document.getElementById('micBtn');
+        if (!recognition) return alert("Speech Recognition supported nahi hai.");
+        if (isListening) {
+            recognition.stop();
+            btn.classList.remove('active');
+            isListening = false;
+        } else {
+            recognition.start();
+            btn.classList.add('active');
+            isListening = true;
+        }
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+</script>
+</body>
+</html>
