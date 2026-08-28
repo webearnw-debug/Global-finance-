@@ -477,7 +477,25 @@ User Raw Input: `;
     <main class="workspace">
         <header class="topbar">
             <div style="display:flex; align-items:center; gap:12px;">
-                
+                <div class="parnarav-header-brand">
+    <!-- Red & Blue Brain Logo + Title -->
+    <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 32px; height: 32px; vertical-align: middle;">
+        <defs>
+            <linearGradient id="leftRedBrain" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff4d4d" />
+                <stop offset="100%" stop-color="#b91c1c" />
+            </linearGradient>
+            <linearGradient id="rightBlueBrain" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="100%" stop-color="#1d4ed8" />
+            </linearGradient>
+        </defs>
+        <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftRedBrain)" />
+        <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBlueBrain)" />
+    </svg>
+    <span style="background: linear-gradient(135deg, #ff4d4d 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 20px; margin-left: 6px;">Parnarav AI</span>
+</div>
+
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
