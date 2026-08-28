@@ -2798,6 +2798,564 @@ const SURPRISE_PROMPTS = [
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Core Studio</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --chat-bg: #090d16;
+            --user-bubble: #2563eb;
+            --ai-bubble: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #38bdf8;
+            --border-color: #334155;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .app-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            background: var(--bg-color);
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 320px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .control-group textarea, 
+        .control-group input, 
+        .control-group select {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 0.9rem;
+            resize: none;
+        }
+
+        .control-group textarea:focus, 
+        .control-group input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        /* Main Chat Area */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--chat-bg);
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 18px 25px;
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        .chat-display {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .message-row {
+            display: flex;
+            gap: 15px;
+            max-width: 85%;
+        }
+
+        .message-row.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-row.ai {
+            align-self: flex-start;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user .avatar {
+            background: var(--user-bubble);
+            color: white;
+        }
+
+        .ai .avatar {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
+        .bubble {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            word-break: break-word;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .user .bubble {
+            background: var(--user-bubble);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .ai .bubble {
+            background: var(--ai-bubble);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 2px;
+        }
+
+        .bubble-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .action-icon {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .action-icon:hover {
+            color: var(--accent);
+        }
+
+        /* Input Bar */
+        .input-container {
+            padding: 20px;
+            background: var(--panel-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-box-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-input {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 14px 45px 14px 16px;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent);
+        }
+
+        .mic-btn {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .mic-btn.active {
+            color: var(--danger);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .send-btn {
+            background: var(--accent);
+            color: #0f172a;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: transform 0.1s ease;
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Sidebar Controls -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-brain"></i> AI Brain Control
+        </div>
+
+        <div class="control-group">
+            <label>API Key</label>
+            <input type="password" id="apiKeyInput" value="AQ.Ab8RN6KuLySLCV_ZX6OHA-H0b-_pJ1RWpf4L04u4mDdQ8uogaQ">
+        </div>
+
+        <div class="control-group">
+            <label>System Instruction (Persona)</label>
+            <textarea id="systemInstruction" rows="4"> तुम एक बेहद बुद्धिमान, सटीक और तेज़ AI असिस्टेंट हो। यूज़र के सवालों का स्पष्ट और तार्किक जवाब दो।</textarea>
+        </div>
+
+        <div class="control-group">
+            <label>Creativity (Temperature: <span id="tempVal">0.7</span>)</label>
+            <input type="range" id="tempSlider" min="0" max="1" step="0.1" value="0.7" oninput="document.getElementById('tempVal').innerText=this.value">
+        </div>
+
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+            <button class="btn btn-secondary" onclick="exportChat()"><i class="fa-solid fa-download"></i> Export Chat</button>
+            <button class="btn btn-danger" onclick="clearChat()"><i class="fa-solid fa-trash"></i> Clear Memory</button>
+        </div>
+    </div>
+
+    <!-- Main Chat Workspace -->
+    <div class="chat-main">
+        <div class="chat-header">
+            <div class="chat-status">
+                <div class="status-dot"></div>
+                <span>Gemini 1.5 Flash Core</span>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-sub);" id="tokenCount">History: 0 messages</span>
+        </div>
+
+        <div class="chat-display" id="chatDisplay">
+            <div class="message-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble">
+                    नमस्कार! मैं आपकी सेवा में तैयार हूँ। मुझसे कोई भी प्रश्न पूछें।
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-box-wrapper">
+                <input type="text" id="userInput" class="chat-input" placeholder="अपना संदेश यहाँ लिखें..." onkeydown="if(event.key==='Enter') processMessage()">
+                <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
+            </div>
+            <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Context Memory array to hold chat history
+    let conversationHistory = [];
+    let isListening = false;
+    let recognition = null;
+
+    // Speech Recognition Setup
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = 'hi-IN';
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('userInput').value = transcript;
+            toggleVoiceInput();
+        };
+
+        recognition.onerror = () => toggleVoiceInput();
+    }
+
+    function toggleVoiceInput() {
+        const micBtn = document.getElementById('micBtn');
+        if (!recognition) return alert('Speech recognition aapke browser me supported nahi hai.');
+
+        if (isListening) {
+            recognition.stop();
+            micBtn.classList.remove('active');
+            isListening = false;
+        } else {
+            recognition.start();
+            micBtn.classList.add('active');
+            isListening = true;
+        }
+    }
+
+    async function processMessage() {
+        const inputField = document.getElementById('userInput');
+        const text = inputField.value.trim();
+        const apiKey = document.getElementById('apiKeyInput').value.trim();
+        const systemPrompt = document.getElementById('systemInstruction').value.trim();
+        const temperature = parseFloat(document.getElementById('tempSlider').value);
+
+        if (!text) return;
+        if (!apiKey) return alert('Kripya API Key darj karein.');
+
+        // User Message UI
+        renderMessage(text, 'user');
+        inputField.value = '';
+
+        // Add to Context Memory
+        conversationHistory.push({ role: 'user', parts: [{ text: text }] });
+        updateTokenCounter();
+
+        // AI Thinking Placeholder UI
+        const aiMessageId = 'ai-' + Date.now();
+        renderMessage('सोच रहा हूँ...', 'ai', aiMessageId);
+
+        try {
+            // REST API Call to Gemini Engine
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: conversationHistory,
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: { temperature: temperature }
+            };
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                const aiReply = data.candidates[0].content.parts[0].text;
+                
+                // Update Message UI
+                document.getElementById(aiMessageId).querySelector('.bubble-text').innerText = aiReply;
+                
+                // Add AI reply to Context Memory
+                conversationHistory.push({ role: 'model', parts: [{ text: aiReply }] });
+                updateTokenCounter();
+            } else {
+                throw new Error(data.error?.message || 'Invalid Response structure');
+            }
+
+        } catch (error) {
+            document.getElementById(aiMessageId).querySelector('.bubble-text').innerText = 'त्रुटि (Error): ' + error.message;
+        }
+    }
+
+    function renderMessage(text, sender, id = null) {
+        const display = document.getElementById('chatDisplay');
+        const row = document.createElement('div');
+        row.className = `message-row ${sender}`;
+        if (id) row.id = id;
+
+        const iconClass = sender === 'user' ? 'fa-user' : 'fa-robot';
+        
+        row.innerHTML = `
+            <div class="avatar"><i class="fa-solid ${iconClass}"></i></div>
+            <div class="bubble">
+                <div class="bubble-text">${escapeHtml(text)}</div>
+                ${sender === 'ai' ? `
+                    <div class="bubble-actions">
+                        <i class="fa-solid fa-volume-high action-icon" onclick="speakText(this)"></i>
+                        <i class="fa-solid fa-copy action-icon" onclick="copyText(this)"></i>
+                    </div>` : ''}
+            </div>
+        `;
+
+        display.appendChild(row);
+        display.scrollTop = display.scrollHeight;
+    }
+
+    function speakText(icon) {
+        const text = icon.closest('.bubble').querySelector('.bubble-text').innerText;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'hi-IN';
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function copyText(icon) {
+        const text = icon.closest('.bubble').querySelector('.bubble-text').innerText;
+        navigator.clipboard.writeText(text);
+        alert('Text copied to clipboard!');
+    }
+
+    function clearChat() {
+        conversationHistory = [];
+        document.getElementById('chatDisplay').innerHTML = `
+            <div class="message-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble"><div class="bubble-text">मेमोरी साफ़ कर दी गई है। नया सेशन शुरू करें।</div></div>
+            </div>`;
+        updateTokenCounter();
+    }
+
+    function exportChat() {
+        let exportData = "=== AI Chat History ===\n\n";
+        conversationHistory.forEach(msg => {
+            exportData += `[${msg.role.toUpperCase()}]: ${msg.parts[0].text}\n\n`;
+        });
+
+        const blob = new Blob([exportData], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `chat-history-${Date.now()}.txt`;
+        a.click();
+    }
+
+    function updateTokenCounter() {
+        document.getElementById('tokenCount').innerText = `History: ${conversationHistory.length} messages`;
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+</script>
+</body>
+</html>
 
 </body>
 </html>
