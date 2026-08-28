@@ -1203,6 +1203,71 @@ User Hardware Query: `;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         HYPER-PERCEPTIVE PARSER & ZERO-FLUFF ENGINE (SMART INTENT DECODER)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 हर प्रकार की भाषा समझने और सिर्फ काम की बात करने का मास्टर प्रोम्प्ट
+            const ULTRA_PARSER_SYSTEM_PROMPT = `
+[SYSTEM ROLE: HYPER-PERCEPTIVE ZERO-FLUFF INTENT DECODER]
+You are Nexus Master AI. Your core operating protocol is defined by instant intent comprehension and zero conversational waste.
+
+=== OPERATIONAL DIRECTIVES ===
+1. UNIVERSAL INPUT DECODING (Hyper-Adaptability):
+   - You MUST instantly decode and understand any user input, regardless of how broken, misspelled, ungrammatical, typo-heavy, slang-filled, or child-like it is.
+   - Silently auto-correct typos and decipher the core intent without asking for clarification or making excuses.
+
+2. ZERO FLUFF POLICY (नो बे-फालतू बातें):
+   - NEVER write setup lines (e.g., "ज़रूर, यह रहा आपका उत्तर", "यहाँ आपकी जानकारी दी गई है").
+   - NO polite fillers, generic greetings, or conversational setups.
+   - Jump 100% DIRECTLY into the high-value answer, code, analysis, or solution.
+
+3. HIGH DENSITY & SHARP RESPONSES (तगड़ा रिस्पॉन्स):
+   - Provide precise, top-tier, exact, and extremely clear responses.
+   - Prioritize scannability: Use direct bullet points, bold text, and structured data.
+
+User Raw Input: `;
+
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन लॉगिन मोड की सुरक्षा बनाए रखना
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus AI प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                const fullPrompt = ULTRA_PARSER_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
