@@ -1,388 +1,753 @@
-import os
-import sys
-import json
-import sqlite3
-import random
-import math
-import datetime
-import threading
-import tkinter as tk
-from tkinter import ttk, messagebox, scrolledtext
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Parnarav AI - Universal Studio</title>
+    
+    <!-- External UI Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Markdown & Syntax Highlighter -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    
+    <!-- AI Engine Core SDK -->
+    <script src="https://js.puter.com/v2/"></script>
 
-# ==========================================
-# 1. DATABASE & MEMORY STORAGE (SQLite3)
-# ==========================================
-class DatabaseManager:
-    def __init__(self, db_name="parnarav_ai.db"):
-        self.db_name = db_name
-        self.init_db()
-
-    def get_connection(self):
-        return sqlite3.connect(self.db_name)
-
-    def init_db(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            # Chat history table
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS chat_history (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    sender TEXT NOT NULL,
-                    message TEXT NOT NULL,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    mode TEXT,
-                    is_captain INTEGER DEFAULT 0
-                )
-            ''')
-            # Activity audit table
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS activity_logs (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    action_type TEXT NOT NULL,
-                    details TEXT,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-                )
-            ''')
-            conn.commit()
-
-    def save_chat(self, sender, message, mode="OMNI", is_captain=False):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO chat_history (sender, message, mode, is_captain) VALUES (?, ?, ?, ?)",
-                (sender, message, mode, 1 if is_captain else 0)
-            )
-            conn.commit()
-
-    def log_activity(self, action_type, details=""):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO activity_logs (action_type, details) VALUES (?, ?)",
-                (action_type, details)
-            )
-            conn.commit()
-
-    def fetch_recent_chats(self, limit=20):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT sender, message, timestamp, mode FROM chat_history ORDER BY id DESC LIMIT ?", (limit,))
-            return cursor.fetchall()
-
-    def fetch_all_activities(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT action_type, details, timestamp FROM activity_logs ORDER BY id DESC LIMIT 50")
-            return cursor.fetchall()
-
-    def clear_database(self):
-        with self.get_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM chat_history")
-            cursor.execute("DELETE FROM activity_logs")
-            conn.commit()
-
-
-# ==========================================
-# 2. BUILT-IN CALCULATORS & ENGINES
-# ==========================================
-class QuantEngine:
-    @staticmethod
-    def generate_analysis(symbol="BTC/USD"):
-        rsi = round(random.uniform(22.0, 78.0), 2)
-        macd = round(random.uniform(-15.0, 25.0), 2)
-        signal = "STRONG BUY 🚀" if rsi < 35 else ("STRONG SELL 📉" if rsi > 65 else "NEUTRAL ⚡")
-        
-        report = f"""📊 [REAL-TIME QUANT INDICATOR]
-• Symbol Pair: {symbol}
-• RSI (14 Period): {rsi}
-• MACD Signal Line: {macd}
-• Moving Average: Bullish Crossover (50/200)
-• Final Verdict: {signal}
-• Confidence Index: {random.randint(85, 98)}%"""
-        return report
-
-class FinanceEngine:
-    @staticmethod
-    def calculate_sip(monthly_investment, return_rate_annual, years):
-        try:
-            r = (return_rate_annual / 100) / 12
-            n = years * 12
-            invested = monthly_investment * n
-            future_value = monthly_investment * (((1 + r)**n - 1) / r) * (1 + r)
-            wealth_gained = future_value - invested
-            return {
-                "invested": round(invested, 2),
-                "future_value": round(future_value, 2),
-                "wealth_gained": round(wealth_gained, 2)
-            }
-        except Exception:
-            return None
-
-    @staticmethod
-    def calculate_emi(principal, annual_rate, years):
-        try:
-            r = (annual_rate / 12) / 100
-            n = years * 12
-            emi = (principal * r * (1 + r)**n) / ((1 + r)**n - 1)
-            total_payment = emi * n
-            total_interest = total_payment - principal
-            return {
-                "monthly_emi": round(emi, 2),
-                "total_interest": round(total_interest, 2),
-                "total_payment": round(total_payment, 2)
-            }
-        except Exception:
-            return None
-
-
-# ==========================================
-# 3. PARNARAV AI CORE INTELLIGENCE
-# ==========================================
-class ParnaravAICore:
-    def __init__(self, db_manager):
-        self.db = db_manager
-        self.is_captain_mode = False
-        self.current_mode = "Omni Super AI"
-
-    def set_captain_mode(self, status):
-        self.is_captain_mode = status
-        self.db.log_activity("CAPTAIN_MODE_TOGGLE", f"Status set to {status}")
-
-    def process_query(self, user_text):
-        clean_text = user_text.strip().lower().replace(" ", "").replace("!", "")
-
-        # Passcode Locks Check
-        if "keshavcaptain360" in clean_text:
-            self.set_captain_mode(True)
-            msg = "🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन केशव! पहचान सत्यापित हो चुकी है।\n• स्थिति: सुप्रीम बॉस मोड 100% एक्टिव\n• सुरक्षा कोड: KESHAV_360_VERIFIED\n• एग्जिट कमांड: EXIT_KESHAV_360!"
-            self.db.save_chat("Parnarav AI", msg, self.current_mode, True)
-            return msg, True
-
-        if "exitkeshav360" in clean_text:
-            self.set_captain_mode(False)
-            msg = "🔒 [CAPTAIN MODE DEACTIVATED]\n\nसिस्टम अब सामान्य Visitor Mode में रीसेट हो गया है।"
-            self.db.save_chat("Parnarav AI", msg, self.current_mode, False)
-            return msg, False
-
-        self.db.log_activity("USER_CHAT", user_text)
-        response = self._generate_response(user_text)
-
-        badge = "🫡 [CAPTAIN MODE RESPONSE]\n" if self.is_captain_mode else ""
-        full_response = badge + response
-
-        self.db.save_chat("User", user_text, self.current_mode, self.is_captain_mode)
-        self.db.save_chat("Parnarav AI", full_response, self.current_mode, self.is_captain_mode)
-
-        return full_response, self.is_captain_mode
-
-    def _generate_response(self, text):
-        lower = text.lower()
-        
-        if "captain report" in lower or "activity log" in lower:
-            if not self.is_captain_mode:
-                return "❌ एक्सेस अस्वीकृत! यह ऑडिट केवल कैप्टन केशव मोड में उपलब्ध है।"
-            logs = self.db.fetch_all_activities()
-            report_lines = ["📋 [CAPTAIN KESHAV SYSTEM AUDIT LOGS]"]
-            for log in logs[:10]:
-                report_lines.append(f"• [{log[2]}] {log[0]}: {log[1]}")
-            return "\n".join(report_lines)
-
-        if "sip" in lower:
-            res = FinanceEngine.calculate_sip(10000, 15, 10)
-            return f"🧮 [SIP CALCULATOR RESULTS]\n• ₹10,000/महीना @ 15% (10 साल):\n• कुल निवेश: ₹{res['invested']:,}\n• भविष्य का फंड: ₹{res['future_value']:,}\n• अनुमानित मुनाफा: ₹{res['wealth_gained']:,}"
-
-        if "emi" in lower or "loan" in lower:
-            res = FinanceEngine.calculate_emi(500000, 8.5, 5)
-            return f"🏠 [LOAN EMI CALCULATION]\n• ₹5,00,000 लोन @ 8.5% (5 साल):\n• मासिक EMI: ₹{res['monthly_emi']:,}\n• कुल ब्याज: ₹{res['total_interest']:,}\n• कुल भुगतान: ₹{res['total_payment']:,}"
-
-        if "quant" in lower or "trading" in lower or "crypto" in lower:
-            return QuantEngine.generate_analysis()
-
-        if self.current_mode == "Trading & Finance":
-            return f"📈 [FINANCE ENGINE]: '{text}' का विश्लेषण हो चुका है। SIP, EMI, क्वांट सिग्नल्स तैयार हैं।"
-        elif self.current_mode == "Coding Master":
-            return f"💻 [PYTHON CODE GENERATOR]:\n\n```python\n# Automated response for: {text}\ndef execute_logic():\n    print('Parnarav AI Engine active.')\n    return True\n```"
-        else:
-            return f"🤖 [PARNARAV AI]:\nक्वेरी: '{text}'\n\nमैं बैंक PO स्टडी नोट्स, पाइथन एल्गोरिदम और वित्तीय एनालिसिस के लिए पूरी तरह तैयार हूँ।"
-
-
-# ==========================================
-# 4. TKINTER GUI APPLICATION
-# ==========================================
-class ParnaravApp(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Parnarav AI - Universal Studio")
-        self.geometry("1100x720")
-        self.configure(bg="#030712")
-
-        self.db = DatabaseManager()
-        self.ai_core = ParnaravAICore(self.db)
-
-        self._setup_colors()
-        self._build_interface()
-        self._load_chat_history()
-
-    def _setup_colors(self):
-        self.colors = {
-            "bg_dark": "#030712",
-            "bg_surface": "#0b0f19",
-            "bg_card": "#111827",
-            "accent_cyan": "#38bdf8",
-            "accent_purple": "#c084fc",
-            "accent_green": "#4ade80",
-            "accent_red": "#f87171",
-            "text_light": "#f9fafb",
-            "text_muted": "#9ca3af"
+    <style>
+        :root {
+            --bg-base: #030712;
+            --bg-surface: #0b0f19;
+            --bg-card: #111827;
+            --accent-cyan: #38bdf8;
+            --accent-purple: #c084fc;
+            --accent-green: #4ade80;
+            --accent-red: #f87171;
+            --accent-yellow: #fbbf24;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+            --sidebar-width: 270px;
         }
 
-    def _build_interface(self):
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        # Left Navigation Sidebar
-        sidebar = tk.Frame(self, bg=self.colors["bg_surface"], width=260)
-        sidebar.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
-        sidebar.grid_propagate(False)
+        html, body {
+            width: 100%;
+            height: 100dvh;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow: hidden;
+            display: flex;
+        }
 
-        logo = tk.Label(sidebar, text="🧠 Parnarav AI", font=("Helvetica", 16, "bold"), fg=self.colors["accent_cyan"], bg=self.colors["bg_surface"])
-        logo.pack(anchor="w", padx=16, pady=(16, 20))
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100dvh;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
 
-        # Modes Header
-        tk.Label(sidebar, text="OPERATING MODES", font=("Helvetica", 8, "bold"), fg=self.colors["text_muted"], bg=self.colors["bg_surface"]).pack(anchor="w", padx=16, pady=(10, 4))
+        .brand-logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
 
-        self.mode_var = tk.StringVar(value="Omni Super AI")
-        for mode_name in ["Omni Super AI", "Trading & Finance", "Coding Master"]:
-            rb = tk.Radiobutton(
-                sidebar, text=mode_name, value=mode_name, variable=self.mode_var,
-                font=("Helvetica", 10, "bold"), fg=self.colors["text_light"],
-                bg=self.colors["bg_surface"], selectcolor=self.colors["bg_card"],
-                activebackground=self.colors["bg_surface"], activeforeground=self.colors["accent_cyan"],
-                command=self._change_mode
-            )
-            rb.pack(anchor="w", padx=16, pady=4)
+        .parnarav-brain-icon {
+            width: 32px;
+            height: 32px;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+        }
 
-        # Built-in Tools Header
-        tk.Label(sidebar, text="BUILT-IN ENGINES", font=("Helvetica", 8, "bold"), fg=self.colors["text_muted"], bg=self.colors["bg_surface"]).pack(anchor="w", padx=16, pady=(20, 4))
+        .nav-section-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 16px 0 8px 8px;
+        }
 
-        tk.Button(sidebar, text="⚡ Quant Signals", command=self._run_quant, bg=self.colors["bg_card"], fg=self.colors["accent_green"], font=("Helvetica", 9, "bold"), bd=1, relief="solid").pack(fill="x", padx=16, pady=4)
-        tk.Button(sidebar, text="🧮 SIP Calculator", command=self._open_sip, bg=self.colors["bg_card"], fg=self.colors["accent_cyan"], font=("Helvetica", 9, "bold"), bd=1, relief="solid").pack(fill="x", padx=16, pady=4)
-        tk.Button(sidebar, text="🏠 Loan EMI Engine", command=self._open_emi, bg=self.colors["bg_card"], fg=self.colors["accent_purple"], font=("Helvetica", 9, "bold"), bd=1, relief="solid").pack(fill="x", padx=16, pady=4)
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-        # Memory Clear Button
-        tk.Button(sidebar, text="🗑️ Clear Memory", command=self._clear_memory, bg="#1f2937", fg=self.colors["accent_red"], font=("Helvetica", 9, "bold"), bd=1, relief="solid").pack(side="bottom", fill="x", padx=16, pady=16)
+        .nav-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+        }
 
-        # Right Main Workspace
-        workspace = tk.Frame(self, bg=self.colors["bg_dark"])
-        workspace.grid(row=0, column=1, sticky="nsew", padx=2, pady=2)
-        workspace.grid_rowconfigure(1, weight=1)
-        workspace.grid_columnconfigure(0, weight=1)
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-card);
+            color: var(--accent-cyan);
+            border: 1px solid var(--border-color);
+        }
 
-        # Header Bar
-        topbar = tk.Frame(workspace, bg=self.colors["bg_surface"], height=50)
-        topbar.grid(row=0, column=0, sticky="ew")
-        topbar.grid_propagate(False)
+        .tools-menu {
+            margin-top: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+        }
 
-        self.status_label = tk.Label(topbar, text="🌐 Visitor Mode Active | Omni Super AI", font=("Helvetica", 10, "bold"), fg=self.colors["accent_cyan"], bg=self.colors["bg_surface"])
-        self.status_label.pack(side="left", padx=16, pady=12)
+        .tool-btn {
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
 
-        # Chat Scrolled Display
-        self.chat_display = scrolledtext.ScrolledText(
-            workspace, bg=self.colors["bg_dark"], fg=self.colors["text_light"],
-            font=("Consolas", 10), wrap="word", bd=0, insertbackground="white"
-        )
-        self.chat_display.grid(row=1, column=0, sticky="nsew", padx=12, pady=12)
-        self.chat_display.config(state="disabled")
+        .tool-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
 
-        # Bottom Text Input Box
-        input_frame = tk.Frame(workspace, bg=self.colors["bg_surface"], height=60)
-        input_frame.grid(row=2, column=0, sticky="ew", padx=12, pady=(0, 12))
+        /* Workspace & Chat Setup */
+        .workspace {
+            flex: 1;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            position: relative;
+        }
 
-        self.input_entry = tk.Entry(
-            input_frame, bg=self.colors["bg_card"], fg=self.colors["text_light"],
-            font=("Helvetica", 11), bd=1, relief="solid", insertbackground="white"
-        )
-        self.input_entry.pack(side="left", fill="both", expand=True, padx=(8, 8), pady=8)
-        self.input_entry.bind("<Return>", lambda event: self._send_msg())
+        .topbar {
+            height: 56px;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
 
-        btn_send = tk.Button(
-            input_frame, text="Send 🚀", command=self._send_msg,
-            bg=self.colors["accent_cyan"], fg="#000000", font=("Helvetica", 10, "bold"), bd=0, padx=16
-        )
-        btn_send.pack(side="right", padx=(0, 8), pady=8)
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
 
-    def _change_mode(self):
-        m = self.mode_var.get()
-        self.ai_core.current_mode = m
-        self._update_status_bar()
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: var(--accent-green);
+            font-weight: 600;
+        }
 
-    def _update_status_bar(self):
-        status_text = "🫡 CAPTAIN KESHAV MODE ACTIVE" if self.ai_core.is_captain_mode else "🌐 Visitor Mode Active"
-        color = self.colors["accent_green"] if self.ai_core.is_captain_mode else self.colors["accent_cyan"]
-        self.status_label.config(text=f"{status_text} | Mode: {self.ai_core.current_mode}", fg=color)
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
 
-    def _append_chat(self, sender, text):
-        self.chat_display.config(state="normal")
-        ts = datetime.datetime.now().strftime("%H:%M:%S")
-        self.chat_display.insert(tk.END, f"\n[{ts}] {sender}:\n")
-        self.chat_display.insert(tk.END, f"{text}\n" + "-"*60 + "\n")
-        self.chat_display.see(tk.END)
-        self.chat_display.config(state="disabled")
+        .chat-area {
+            flex: 1;
+            padding: 20px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+        }
 
-    def _send_msg(self):
-        text = self.input_entry.get().strip()
-        if not text:
-            return
+        .message-row {
+            display: flex;
+            gap: 12px;
+            max-width: 90%;
+            animation: fadeIn 0.2s ease-in-out;
+        }
 
-        self.input_entry.delete(0, tk.END)
-        self._append_chat("User", text)
+        .message-row.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
 
-        # Run in separate thread so app remains responsive
-        threading.Thread(target=self._process_in_background, args=(text,), daemon=True).start()
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
 
-    def _process_in_background(self, text):
-        response, _ = self.ai_core.process_query(text)
-        self.after(0, lambda: self._on_ai_finish(response))
+        .user .avatar {
+            background: var(--accent-cyan);
+            color: #000;
+            border: none;
+        }
 
-    def _on_ai_finish(self, response):
-        self._append_chat("Parnarav AI", response)
-        self._update_status_bar()
+        .bubble {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            line-height: 1.6;
+            font-size: 0.92rem;
+            word-wrap: break-word;
+            overflow-x: auto;
+            position: relative;
+        }
 
-    def _run_quant(self):
-        rep = QuantEngine.generate_analysis()
-        self._append_chat("Quant Engine", rep)
+        .user .bubble {
+            background-color: #1e3a8a;
+            border-color: #3b82f6;
+            color: #fff;
+        }
 
-    def _open_sip(self):
-        res = FinanceEngine.calculate_sip(10000, 15, 10)
-        msg = f"SIP Projection (₹10,000/mo @ 15% for 10 Yrs):\n\nTotal Invested: ₹{res['invested']:,}\nFuture Corpus: ₹{res['future_value']:,}\nNet Profit: ₹{res['wealth_gained']:,}"
-        messagebox.showinfo("SIP Engine", msg)
+        /* Dynamic Cards */
+        .widget-card {
+            background: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
 
-    def _open_emi(self):
-        res = FinanceEngine.calculate_emi(500000, 8.5, 5)
-        msg = f"Loan EMI Details (₹5 Lakh @ 8.5% for 5 Yrs):\n\nMonthly EMI: ₹{res['monthly_emi']:,}\nTotal Interest: ₹{res['total_interest']:,}\nTotal Payable: ₹{res['total_payment']:,}"
-        messagebox.showinfo("Loan EMI Engine", msg)
+        .widget-title {
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-    def _clear_memory(self):
-        if messagebox.askyesno("Confirm Clear", "क्या आप सभी मेमोरी और चैट हिस्ट्री साफ़ करना चाहते हैं?"):
-            self.db.clear_database()
-            self.chat_display.config(state="normal")
-            self.chat_display.delete("1.0", tk.END)
-            self.chat_display.config(state="disabled")
-            self._append_chat("System", "डेटाबेस और मेमोरी पूरी तरह रीसेट हो गए हैं।")
+        /* Action Buttons */
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    def _load_chat_history(self):
-        chats = self.db.fetch_recent_chats(limit=10)
-        if chats:
-            for sender, msg, ts, mode in reversed(chats):
-                self._append_chat(sender, msg)
-        else:
-            self._append_chat("Parnarav AI", "नमस्ते! मैं आपका Parnarav AI स्टूडियो हूँ। (Pure Python Application Engine Ready!)")
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
 
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
 
-# ==========================================
-# 5. MAIN ENTRY POINT
-# ==========================================
-if __name__ == "__main__":
-    app = ParnaravApp()
-    app.mainloop()
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.1);
+        }
+
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.1);
+        }
+
+        /* Inputs */
+        .input-wrapper {
+            padding: 12px 16px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px 12px;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--accent-cyan);
+        }
+
+        textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-size: 0.93rem;
+            resize: none;
+            height: 40px;
+            padding-top: 10px;
+            line-height: 1.4;
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        pre {
+            background: #000 !important;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        code { font-family: 'JetBrains Mono', monospace; }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+            }
+            .sidebar.open {
+                left: 0;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            }
+            .mobile-menu-btn { display: block; }
+            .message-row { max-width: 96%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="brand-logo">
+            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
+                <defs>
+                    <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ef4444" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                    </linearGradient>
+                    <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                </defs>
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBrainBlue)" />
+            </svg>
+            <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
+        </div>
+
+        <div class="nav-section-title">Operating Modes</div>
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
+                <i class="fa-solid fa-brain"></i> Omni Super AI
+            </li>
+            <li class="nav-item" onclick="AppController.switchMode('FINANCE', this)">
+                <i class="fa-solid fa-chart-line"></i> Trading & Finance
+            </li>
+            <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
+                <i class="fa-solid fa-code"></i> Coding Master
+            </li>
+        </ul>
+
+        <div class="nav-section-title">Memory & Controls</div>
+        <ul class="nav-list">
+            <li class="nav-item" onclick="AppController.showHistory()">
+                <i class="fa-solid fa-database"></i> Memory Logs
+            </li>
+            <li class="nav-item" onclick="StorageManager.clearLogs()">
+                <i class="fa-solid fa-trash"></i> Clear Memory
+            </li>
+        </ul>
+
+        <div class="tools-menu">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
+                Built-in Engines
+            </div>
+            <button class="tool-btn" onclick="QuantEngine.runAnalysis()">
+                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
+            </button>
+            <button class="tool-btn" onclick="FinancialEngine.calcSIP()">
+                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator
+            </button>
+            <button class="tool-btn" onclick="FinancialEngine.calcEMI()">
+                <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine
+            </button>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <header class="topbar">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button class="mobile-menu-btn" onclick="AppController.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
+                    Parnarav AI Engine Active
+                </div>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Super AI Active
+            </div>
+        </header>
+
+        <section class="chat-area" id="chatContainer">
+            <div class="message-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble">
+                    <b>Parnarav AI System Ready.</b><br>
+                    नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। कोडिंग, फाइनेंस, बैंक PO स्टडी और यूनिवर्सल नॉलेज के लिए तैयार हूँ।
+                </div>
+            </div>
+        </section>
+
+        <footer class="input-wrapper">
+            <div class="input-box">
+                <textarea id="userInput" placeholder="यहाँ अपना सवाल या पासवर्ड दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
+                <button class="btn-send" onclick="AppController.submitQuery()">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const StorageManager = {
+            KEY: 'parnarav_chat_logs',
+            saveLog: function(role, content) {
+                let logs = this.getLogs();
+                logs.push({ id: Date.now(), role: role, content: content, timestamp: new Date().toISOString() });
+                localStorage.setItem(this.KEY, JSON.stringify(logs));
+            },
+            getLogs: function() {
+                return JSON.parse(localStorage.getItem(this.KEY) || '[]');
+            },
+            clearLogs: function() {
+                localStorage.removeItem(this.KEY);
+                UIManager.appendSystemMsg("मेमोरी साफ़ कर दी गई है।");
+            }
+        };
+
+        const ActivityTracker = {
+            init: function() {
+                let sessionData = {
+                    startTime: new Date().toLocaleString(),
+                    referrer: document.referrer || "Direct Visit",
+                    clicks: [],
+                    chatHistory: []
+                };
+                document.addEventListener('click', (e) => {
+                    let target = e.target.closest('button, a, input, .nav-item');
+                    if (target) {
+                        sessionData.clicks.push({
+                            element: target.innerText || target.placeholder || target.className,
+                            time: new Date().toLocaleTimeString()
+                        });
+                        localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
+                    }
+                });
+                localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
+            },
+            addChat: function(role, text) {
+                let data = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                if (!data.chatHistory) data.chatHistory = [];
+                data.chatHistory.push({ role: role, text: text, time: new Date().toLocaleTimeString() });
+                localStorage.setItem('captain_user_tracker', JSON.stringify(data));
+            }
+        };
+        ActivityTracker.init();
+
+        const QuantEngine = {
+            runAnalysis: function() {
+                const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
+                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+                const html = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> REAL-TIME QUANT ENGINE</div>
+                        • Asset Pair: <b>BTC/USD</b><br>
+                        • RSI (14 Period): <b>${rsi}</b><br>
+                        • Signal Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
+                    </div>`;
+                UIManager.appendMsg(html, 'ai');
+            }
+        };
+
+        const FinancialEngine = {
+            calcSIP: function() {
+                let amount = parseFloat(prompt("Monthly SIP Amount (₹):", "10000")) || 10000;
+                let rate = parseFloat(prompt("Expected Return (%):", "15")) || 15;
+                let years = parseInt(prompt("Tenure (Years):", "10")) || 10;
+                let r = (rate / 100) / 12, n = years * 12;
+                let invested = amount * n;
+                let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
+                const html = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP PROJECTION</div>
+                        • Invested: ₹${invested.toLocaleString()}<br>
+                        • Corpus: <b style="color:var(--accent-green)">₹${Math.round(futureValue).toLocaleString()}</b>
+                    </div>`;
+                UIManager.appendMsg(html, 'ai');
+            },
+            calcEMI: function() {
+                let p = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
+                let rate = parseFloat(prompt("Interest Rate (%):", "8.5")) || 8.5;
+                let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
+                let r = (rate / 12) / 100, n = years * 12;
+                let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+                const html = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
+                        • EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month
+                    </div>`;
+                UIManager.appendMsg(html, 'ai');
+            }
+        };
+
+        const UIManager = {
+            appendMsg: function(content, sender, id = null) {
+                const container = document.getElementById('chatContainer');
+                const row = document.createElement('div');
+                row.className = `message-row ${sender}`;
+                if (id) row.id = id;
+
+                const icon = sender === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>';
+                row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
+                container.appendChild(row);
+                container.scrollTop = container.scrollHeight;
+            },
+            appendSystemMsg: function(text) {
+                this.appendMsg(`<i>${text}</i>`, 'ai');
+            },
+            renderActionBar: function(aiMsgId) {
+                const msgContainer = document.getElementById(aiMsgId);
+                if (!msgContainer) return;
+                const bubble = msgContainer.querySelector('.bubble');
+                if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+
+                const actionBarHTML = `
+                    <div class="ai-action-bar">
+                        <button class="action-btn" onclick="AppController.copyResponse(this)">📋 Copy</button>
+                        <button class="action-btn like-btn" onclick="AppController.toggleFeedback(this, 'like')">👍 Like</button>
+                        <button class="action-btn dislike-btn" onclick="AppController.toggleFeedback(this, 'dislike')">👎 Dislike</button>
+                    </div>`;
+                bubble.insertAdjacentHTML('beforeend', actionBarHTML);
+            }
+        };
+
+        const AppController = {
+            currentMode: 'OMNI',
+
+            switchMode: function(mode, element) {
+                this.currentMode = mode;
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+                document.getElementById('mode-indicator').innerText = `Parnarav AI: ${mode} Active`;
+                this.closeSidebarMobile();
+            },
+
+            handleKeyPress: function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.submitQuery();
+                }
+            },
+
+            copyResponse: function(btn) {
+                const bubble = btn.closest('.bubble');
+                const clone = bubble.cloneNode(true);
+                const bar = clone.querySelector('.ai-action-bar');
+                if (bar) bar.remove();
+                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                    btn.innerHTML = '✅ Copied!';
+                    setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
+                });
+            },
+
+            toggleFeedback: function(btn, type) {
+                const parent = btn.parentElement;
+                const likeBtn = parent.querySelector('.like-btn');
+                const dislikeBtn = parent.querySelector('.dislike-btn');
+                if (type === 'like') {
+                    likeBtn.classList.toggle('like-active');
+                    dislikeBtn.classList.remove('dislike-active');
+                } else {
+                    dislikeBtn.classList.toggle('dislike-active');
+                    likeBtn.classList.remove('like-active');
+                }
+            },
+
+            submitQuery: async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                if (cleanInput.includes("keshavcaptain360")) {
+                    sessionStorage.setItem('isCaptainUnlocked', 'true');
+                    input.value = '';
+                    UIManager.appendMsg(text, 'user');
+                    const aiMsgId = 'ai-' + Date.now();
+                    const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% एक्टिव।\n- **लॉगआउट:** \`EXIT_KESHAV_360!\` डालें।`;
+                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
+                    UIManager.renderActionBar(aiMsgId);
+                    return;
+                }
+
+                if (cleanInput.includes("exitkeshav360")) {
+                    sessionStorage.removeItem('isCaptainUnlocked');
+                    input.value = '';
+                    UIManager.appendMsg(text, 'user');
+                    const aiMsgId = 'ai-' + Date.now();
+                    const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसिस्टम अब सामान्य **Visitor Mode** में है।";
+                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
+                    UIManager.renderActionBar(aiMsgId);
+                    return;
+                }
+
+                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+                ActivityTracker.addChat('User', text);
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                let systemPrompt = "";
+
+                if (isCaptainMode) {
+                    systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting ONLY to Captain Keshav.
+User Query: ${text}`;
+                } else {
+                    systemPrompt = `
+[SYSTEM ROLE: PARNARAV HIGH-PERFORMANCE VISITOR ASSISTANT]
+You are Parnarav AI. Respond sharply and clearly in Hinglish/Hindi without fluff.
+User Query: ${text}`;
+                }
+
+                try {
+                    const response = await puter.ai.chat(systemPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                    bubble.innerHTML = marked.parse(badge + replyText);
+                    UIManager.renderActionBar(aiMsgId);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                    UIManager.renderActionBar(aiMsgId);
+                }
+            },
+
+            showHistory: function() {
+                let logs = StorageManager.getLogs();
+                if (logs.length === 0) {
+                    UIManager.appendSystemMsg("कोई पुराना मेमोरी लॉग नहीं मिला।");
+                    return;
+                }
+                let html = `<b>[STORED MEMORY LOGS (${logs.length})]</b><br><br>`;
+                logs.slice(-5).forEach(l => {
+                    html += `<small>[${new Date(l.timestamp).toLocaleTimeString()}] <b>${l.role}:</b></small> ${l.content.substring(0, 60)}...<br>`;
+                });
+                UIManager.appendMsg(html, 'ai');
+            },
+
+            toggleSidebar: function() {
+                document.getElementById('sidebar').classList.toggle('open');
+            },
+
+            closeSidebarMobile: function() {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        };
+    </script>
+</body>
+</html>
