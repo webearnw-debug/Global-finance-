@@ -1,753 +1,1324 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pranava AI - Advanced Multi-OS Platform</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================
+       1. CSS DESIGN SYSTEM & VARIABLES
+       ========================================== */
+    :root {
+      --bg-primary: #0f1117;
+      --bg-secondary: #161922;
+      --bg-tertiary: #1f2330;
+      --bg-sidebar: #12141d;
+      --bg-card: #252a3a;
+      --bg-hover: #2d3345;
+      
+      --text-main: #f0f3f8;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --accent-blue: #0066ff;
+      --accent-red: #ff3366;
+      --accent-green: #10b981;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      
+      --user-gradient: linear-gradient(135deg, #ff3366 0%, #0066ff 100%);
+      --ai-avatar-bg: #2b2542;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(0, 102, 255, 0.5);
+
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      
+      --sidebar-width: 280px;
+      --topbar-height: 65px;
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Reset & Base Styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ==========================================
+       2. TOP NAVIGATION BAR
+       ========================================== */
+    .top-bar {
+      height: var(--topbar-height);
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 50;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: var(--transition-fast);
+    }
+
+    .icon-btn:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brain-logo {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+      animation: pulseLogo 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseLogo {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-tag {
+      font-size: 0.65rem;
+      background: rgba(0, 102, 255, 0.2);
+      color: var(--accent-blue);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(0, 102, 255, 0.3);
+    }
+
+    /* OS Mode Selector Tabs */
+    .mode-tabs {
+      display: flex;
+      background-color: var(--bg-primary);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      gap: 4px;
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 7px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition-fast);
+    }
+
+    .mode-btn:hover {
+      color: var(--text-main);
+    }
+
+    .mode-btn.active {
+      background: var(--bg-card);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .mode-btn[data-mode="coding"].active {
+      border-bottom: 2px solid var(--accent-blue);
+    }
+    .mode-btn[data-mode="master"].active {
+      border-bottom: 2px solid var(--accent-purple);
+    }
+    .mode-btn[data-mode="trading"].active {
+      border-bottom: 2px solid var(--accent-green);
+    }
+
+    .top-right-tools {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      background: var(--bg-primary);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* ==========================================
+       3. MAIN LAYOUT & SIDEBAR
+       ========================================== */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - var(--topbar-height));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-normal);
+      z-index: 40;
+    }
+
+    .sidebar.collapsed {
+      margin-left: calc(-1 * var(--sidebar-width));
+    }
+
+    .sidebar-header {
+      padding: 16px;
+    }
+
+    .btn-new-chat {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .btn-new-chat:hover {
+      background: var(--bg-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-search {
+      padding: 0 16px 12px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: 8px 10px 8px 30px;
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.8rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 12px;
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin: 14px 8px 6px;
+      font-weight: 700;
+    }
+
+    .chat-history-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .chat-item {
+      padding: 9px 12px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+    }
+
+    .chat-item:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    .chat-item.active {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .chat-item i {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-menu-item {
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .footer-menu-item:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    /* ==========================================
+       4. WORKSPACE & DASHBOARD WORKSPACE
+       ========================================== */
+    .workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* OS Views (Coding / Master / Trading Modules) */
+    .os-view-header {
+      padding: 12px 20px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .os-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    /* Workspace Content Panels */
+    .chat-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .message-row {
+      display: flex;
+      gap: 14px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      animation: fadeInMsg 0.3s ease-in-out;
+    }
+
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* User Avatar - Red & Blue Shader Theme */
+    .avatar-user {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--user-gradient);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 0 12px rgba(255, 51, 102, 0.4), 0 0 12px rgba(0, 102, 255, 0.4);
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* AI Avatar - Brain Icon */
+    .avatar-ai {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--ai-avatar-bg);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+    }
+
+    .message-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .message-sender {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .message-bubble {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 14px 18px;
+      border-radius: 12px;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .message-row.user .message-bubble {
+      background-color: #1a233a;
+      border-color: rgba(0, 102, 255, 0.3);
+    }
+
+    /* Code Block styling inside messages */
+    .code-block {
+      background-color: #090a0f;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin: 10px 0;
+      overflow: hidden;
+      font-family: var(--font-mono);
+    }
+
+    .code-header {
+      background-color: #141722;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .code-copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .code-copy-btn:hover {
+      color: var(--text-main);
+    }
+
+    .code-content {
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+    }
+
+    /* Input Dock Area */
+    .input-dock {
+      padding: 16px 24px 24px;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .input-box-wrapper {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px;
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .input-box-wrapper:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.15);
+    }
+
+    .chat-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      resize: none;
+      height: 52px;
+      max-height: 180px;
+      font-family: var(--font-sans);
+    }
+
+    .chat-textarea:focus {
+      outline: none;
+    }
+
+    .input-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tool-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-btn {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-fast);
+    }
+
+    .chip-btn:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    .btn-send {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .btn-send:hover {
+      background: #0052cc;
+      transform: scale(1.03);
+    }
+
+    /* ==========================================
+       5. SPECIALIZED OPERATING SYSTEM PANELS
+       ========================================== */
     
-    <!-- External UI Libraries -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Markdown & Syntax Highlighter -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    
-    <!-- AI Engine Core SDK -->
-    <script src="https://js.puter.com/v2/"></script>
+    /* CODING OS PANEL */
+    .os-panel {
+      display: none;
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+    }
 
-    <style>
-        :root {
-            --bg-base: #030712;
-            --bg-surface: #0b0f19;
-            --bg-card: #111827;
-            --accent-cyan: #38bdf8;
-            --accent-purple: #c084fc;
-            --accent-green: #4ade80;
-            --accent-red: #f87171;
-            --accent-yellow: #fbbf24;
-            --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-            --border-color: #1f2937;
-            --sidebar-width: 270px;
-        }
+    .os-panel.active-panel {
+      display: flex;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    .coding-workspace {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
 
-        html, body {
-            width: 100%;
-            height: 100dvh;
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            overflow: hidden;
-            display: flex;
-        }
+    .code-editor-side {
+      flex: 1;
+      background-color: #0b0d13;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100dvh;
-            background-color: var(--bg-surface);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
+    .editor-tabs {
+      background: var(--bg-secondary);
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-        .brand-logo {
-            font-size: 1.15rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 24px;
-        }
+    .editor-tab {
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      border-right: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .parnarav-brain-icon {
-            width: 32px;
-            height: 32px;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
-        }
+    .editor-tab.active {
+      background: #0b0d13;
+      color: #60a5fa;
+      border-top: 2px solid var(--accent-blue);
+    }
 
-        .nav-section-title {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 16px 0 8px 8px;
-        }
+    .editor-area {
+      flex: 1;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #38bdf8;
+      background: transparent;
+      border: none;
+      resize: none;
+      line-height: 1.5;
+    }
 
-        .nav-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+    .editor-area:focus {
+      outline: none;
+    }
 
-        .nav-item {
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            font-size: 0.88rem;
-            transition: all 0.2s ease;
-        }
+    /* TRADING OS PANEL */
+    .trading-dashboard {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--bg-card);
-            color: var(--accent-cyan);
-            border: 1px solid var(--border-color);
-        }
+    .ticker-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-        .tools-menu {
-            margin-top: auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-        }
+    .ticker-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-        .tool-btn {
-            width: 100%;
-            background: #1e293b;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 9px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.82rem;
-            cursor: pointer;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
+    .ticker-name {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
 
-        .tool-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
+    .ticker-val {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
 
-        /* Workspace & Chat Setup */
-        .workspace {
-            flex: 1;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            position: relative;
-        }
+    .ticker-change {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
 
-        .topbar {
-            height: 56px;
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            flex-shrink: 0;
-        }
+    .ticker-change.up { color: var(--accent-green); }
+    .ticker-change.down { color: var(--accent-red); }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
+    .trading-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
 
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.78rem;
-            background: rgba(74, 222, 128, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            color: var(--accent-green);
-            font-weight: 600;
-        }
+    .chart-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-green);
-        }
+    .chart-placeholder {
+      flex: 1;
+      min-height: 300px;
+      background: #0a0c10;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .chat-area {
-            flex: 1;
-            padding: 20px 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
-        }
+    .order-book {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        .message-row {
-            display: flex;
-            gap: 12px;
-            max-width: 90%;
-            animation: fadeIn 0.2s ease-in-out;
-        }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      padding: 4px 0;
+    }
 
-        .message-row.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
+    /* MASTER OS PANEL */
+    .master-dashboard {
+      flex: 1;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
 
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
+    .master-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .user .avatar {
-            background: var(--accent-cyan);
-            color: #000;
-            border: none;
-        }
+    .master-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-purple);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .bubble {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px 16px;
-            line-height: 1.6;
-            font-size: 0.92rem;
-            word-wrap: break-word;
-            overflow-x: auto;
-            position: relative;
-        }
+    /* MODAL WINDOWS */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .user .bubble {
-            background-color: #1e3a8a;
-            border-color: #3b82f6;
-            color: #fff;
-        }
+    .modal-backdrop.active {
+      display: flex;
+    }
 
-        /* Dynamic Cards */
-        .widget-card {
-            background: #070a13;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
+    .modal-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
 
-        .widget-title {
-            color: var(--accent-purple);
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Action Buttons */
-        .ai-action-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    .modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
-        .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #d1d5db;
-            padding: 4px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-        }
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-        .action-btn.like-active {
-            color: #4ade80 !important;
-            border-color: #4ade80 !important;
-            background: rgba(74, 222, 128, 0.1);
-        }
-
-        .action-btn.dislike-active {
-            color: #f87171 !important;
-            border-color: #f87171 !important;
-            background: rgba(248, 113, 113, 0.1);
-        }
-
-        /* Inputs */
-        .input-wrapper {
-            padding: 12px 16px;
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
-            flex-shrink: 0;
-        }
-
-        .input-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--bg-base);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 6px 12px;
-        }
-
-        .input-box:focus-within {
-            border-color: var(--accent-cyan);
-        }
-
-        textarea {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-main);
-            font-size: 0.93rem;
-            resize: none;
-            height: 40px;
-            padding-top: 10px;
-            line-height: 1.4;
-        }
-
-        .btn-send {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        pre {
-            background: #000 !important;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-        code { font-family: 'JetBrains Mono', monospace; }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                position: absolute;
-                left: -100%;
-                top: 0;
-                bottom: 0;
-            }
-            .sidebar.open {
-                left: 0;
-                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            }
-            .mobile-menu-btn { display: block; }
-            .message-row { max-width: 96%; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .form-control {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 6px;
+      color: var(--text-main);
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ==========================================
+       TOP NAVIGATION BAR
+       ========================================== -->
+  <header class="top-bar">
+    <div class="left-section">
+      <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="logo-container" id="logo-btn">
+        <span class="brain-logo">🧠</span>
+        <span class="brand-name">Pranava AI</span>
+        <span class="brand-tag">v3.0</span>
+      </div>
+    </div>
+
+    <!-- 3 Core OS Modes Switcher -->
+    <div class="mode-tabs">
+      <button class="mode-btn active" data-mode="chat" onclick="switchOSMode('chat')">
+        <i class="fa-solid fa-comments"></i> Chat OS
+      </button>
+      <button class="mode-btn" data-mode="coding" onclick="switchOSMode('coding')">
+        <i class="fa-solid fa-code"></i> Coding OS
+      </button>
+      <button class="mode-btn" data-mode="master" onclick="switchOSMode('master')">
+        <i class="fa-solid fa-brain"></i> Master OS
+      </button>
+      <button class="mode-btn" data-mode="trading" onclick="switchOSMode('trading')">
+        <i class="fa-solid fa-chart-line"></i> Trading OS
+      </button>
+    </div>
+
+    <div class="top-right-tools">
+      <div class="system-status">
+        <span class="status-dot"></span>
+        <span>Online</span>
+      </div>
+      <button class="icon-btn" onclick="openSettingsModal()" title="Settings">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MAIN APP CONTAINER & SIDEBAR
+       ========================================== -->
+  <div class="app-container">
+    
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-        <div class="brand-logo">
-            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
-                <defs>
-                    <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ef4444" />
-                        <stop offset="100%" stop-color="#b91c1c" />
-                    </linearGradient>
-                    <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#3b82f6" />
-                        <stop offset="100%" stop-color="#1d4ed8" />
-                    </linearGradient>
-                </defs>
-                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
-                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBrainBlue)" />
-            </svg>
-            <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
+      <div class="sidebar-header">
+        <button class="btn-new-chat" onclick="startNewChat()">
+          <i class="fa-solid fa-plus"></i> New Chat
+        </button>
+      </div>
+
+      <div class="sidebar-search">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search-input" id="search-history" placeholder="Search chats..." oninput="filterChatHistory()">
         </div>
+      </div>
 
-        <div class="nav-section-title">Operating Modes</div>
-        <ul class="nav-list">
-            <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
-                <i class="fa-solid fa-brain"></i> Omni Super AI
-            </li>
-            <li class="nav-item" onclick="AppController.switchMode('FINANCE', this)">
-                <i class="fa-solid fa-chart-line"></i> Trading & Finance
-            </li>
-            <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
-                <i class="fa-solid fa-code"></i> Coding Master
-            </li>
+      <div class="sidebar-content">
+        <div class="section-title">Recent Workspaces</div>
+        <ul class="chat-history-list" id="chat-history-list">
+          <li class="chat-item active" onclick="loadChat(1)">
+            <i class="fa-regular fa-message"></i> Python Algorithm Refactor
+          </li>
+          <li class="chat-item" onclick="loadChat(2)">
+            <i class="fa-regular fa-message"></i> Crypto Strategy Analysis
+          </li>
+          <li class="chat-item" onclick="loadChat(3)">
+            <i class="fa-regular fa-message"></i> Master OS Prompt Design
+          </li>
         </ul>
+      </div>
 
-        <div class="nav-section-title">Memory & Controls</div>
-        <ul class="nav-list">
-            <li class="nav-item" onclick="AppController.showHistory()">
-                <i class="fa-solid fa-database"></i> Memory Logs
-            </li>
-            <li class="nav-item" onclick="StorageManager.clearLogs()">
-                <i class="fa-solid fa-trash"></i> Clear Memory
-            </li>
-        </ul>
-
-        <div class="tools-menu">
-            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
-                Built-in Engines
-            </div>
-            <button class="tool-btn" onclick="QuantEngine.runAnalysis()">
-                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
-            </button>
-            <button class="tool-btn" onclick="FinancialEngine.calcSIP()">
-                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator
-            </button>
-            <button class="tool-btn" onclick="FinancialEngine.calcEMI()">
-                <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine
-            </button>
-        </div>
+      <!-- Clean Sidebar Footer (No Memory Items as requested) -->
+      <div class="sidebar-footer">
+        <a class="footer-menu-item" onclick="openSettingsModal()">
+          <i class="fa-solid fa-sliders"></i> System Settings
+        </a>
+        <a class="footer-menu-item" onclick="clearAllChats()">
+          <i class="fa-solid fa-trash-can"></i> Clear History
+        </a>
+      </div>
     </aside>
 
+    <!-- ==========================================
+         MAIN WORKSPACE AREA
+         ========================================== -->
     <main class="workspace">
-        <header class="topbar">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <button class="mobile-menu-btn" onclick="AppController.toggleSidebar()">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
-                    Parnarav AI Engine Active
+      
+      <!-- 1. CHAT OS VIEW -->
+      <div class="os-panel active-panel" id="panel-chat">
+        <div class="chat-view">
+          
+          <div class="messages-container" id="messages-container">
+            
+            <!-- User Message Example -->
+            <div class="message-row user">
+              <!-- Custom User Avatar: 'V' with Red and Blue Shader -->
+              <div class="avatar-user">V</div>
+              <div class="message-body">
+                <div class="message-sender">You</div>
+                <div class="message-bubble">
+                  हेलो प्रणाली! कृपया मेरे सिस्टम की जांच करें और बताएं कि कोडिंग और ट्रेडिंग मॉड्यूल एक्टिव हैं या नहीं।
                 </div>
+              </div>
             </div>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                Super AI Active
-            </div>
-        </header>
 
-        <section class="chat-area" id="chatContainer">
+            <!-- AI Message Example -->
             <div class="message-row ai">
-                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble">
-                    <b>Parnarav AI System Ready.</b><br>
-                    नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। कोडिंग, फाइनेंस, बैंक PO स्टडी और यूनिवर्सल नॉलेज के लिए तैयार हूँ।
+              <!-- AI Avatar: Brain Logo -->
+              <div class="avatar-ai">🧠</div>
+              <div class="message-body">
+                <div class="message-sender">Pranava AI</div>
+                <div class="message-bubble">
+                  नमस्ते! आपका <strong>Pranava AI Multi-OS</strong> पूरी तरह से एक्टिव है। 
+                  <br><br>
+                  आप ऊपर दिए गए नेविगेशन बार से <strong>Coding OS</strong>, <strong>Master OS</strong>, और <strong>Trading OS</strong> में तुरंत स्विच कर सकते हैं।
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span>system-status.json</span>
+                      <button class="code-copy-btn" onclick="copyCode(this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <pre class="code-content"><code>{
+  "system": "Pranava AI OS v3.0",
+  "status": "OPERATIONAL",
+  "modules": ["Coding", "Master", "Trading"],
+  "userAvatar": "Gradient (Red/Blue) 'V'",
+  "aiAvatar": "Brain Logo 🧠"
+}</code></pre>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
 
-        <footer class="input-wrapper">
-            <div class="input-box">
-                <textarea id="userInput" placeholder="यहाँ अपना सवाल या पासवर्ड दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
-                <button class="btn-send" onclick="AppController.submitQuery()">
-                    <i class="fa-solid fa-paper-plane"></i>
+          </div>
+
+          <!-- Input Dock Area -->
+          <div class="input-dock">
+            <div class="input-box-wrapper">
+              <textarea id="chat-input" class="chat-textarea" placeholder="Send a message to Pranava AI..." onkeydown="handleKeyPress(event)"></textarea>
+              <div class="input-toolbar">
+                <div class="tool-group">
+                  <button class="chip-btn"><i class="fa-solid fa-paperclip"></i> Attach</button>
+                  <button class="chip-btn"><i class="fa-solid fa-globe"></i> Web Search</button>
+                  <button class="chip-btn"><i class="fa-solid fa-terminal"></i> DeepThink</button>
+                </div>
+                <button class="btn-send" onclick="sendMessage()">
+                  <i class="fa-solid fa-arrow-up"></i>
                 </button>
+              </div>
             </div>
-        </footer>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. CODING OS PANEL -->
+      <div class="os-panel" id="panel-coding">
+        <div class="coding-workspace">
+          <div class="code-editor-side">
+            <div class="editor-tabs">
+              <div class="editor-tab active"><i class="fa-fab fa-python"></i> main.py</div>
+              <div class="editor-tab"><i class="fa-fab fa-js"></i> script.js</div>
+            </div>
+            <textarea class="editor-area" spellcheck="false">
+# Pranava AI - Coding OS Workspace
+import sys
+import time
+
+def execute_algorithm():
+    print("[+] Initializing Neural Network Engine...")
+    time.sleep(0.5)
+    print("[+] Status: Optimal")
+
+if __name__ == "__main__":
+    execute_algorithm()
+            </textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. MASTER OS PANEL -->
+      <div class="os-panel" id="panel-master">
+        <div class="master-dashboard">
+          <div class="master-card">
+            <div class="master-card-title"><i class="fa-solid fa-microchip"></i> System Architecture</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              मास्टर ऑपरेटिंग सिस्टम आपके प्राथमिक AI प्रॉम्प्ट्स और नॉलेज ग्राफ को कंट्रोल करता है।
+            </p>
+          </div>
+          <div class="master-card">
+            <div class="master-card-title"><i class="fa-solid fa-network-wired"></i> Memory Engine</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              न्यूरल मेमोरी इंडेक्सिंग सक्रिय है।
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TRADING OS PANEL -->
+      <div class="os-panel" id="panel-trading">
+        <div class="trading-dashboard">
+          <div class="ticker-bar">
+            <div class="ticker-card">
+              <div class="ticker-name">BTC / USDT <span class="ticker-change up">+3.4%</span></div>
+              <div class="ticker-val">$67,420.00</div>
+            </div>
+            <div class="ticker-card">
+              <div class="ticker-name">ETH / USDT <span class="ticker-change up">+1.8%</span></div>
+              <div class="ticker-val">$3,540.50</div>
+            </div>
+            <div class="ticker-card">
+              <div class="ticker-name">SOL / USDT <span class="ticker-change down">-0.9%</span></div>
+              <div class="ticker-val">$145.20</div>
+            </div>
+          </div>
+
+          <div class="trading-grid">
+            <div class="chart-container">
+              <div style="margin-bottom: 12px; font-weight: 600; font-size: 0.9rem;">Live Analysis Chart</div>
+              <div class="chart-placeholder">
+                <i class="fa-solid fa-chart-area" font-size: 3rem; color: var(--text-dim);></i>
+                <span style="position: absolute; bottom: 15px; font-size: 0.8rem; color: var(--text-muted);">Trading Chart Engine Rendering...</span>
+              </div>
+            </div>
+            <div class="order-book">
+              <div style="font-weight: 600; font-size: 0.9rem;">Order Book</div>
+              <div class="order-row" style="color: var(--accent-red);"><span>67,425.00</span><span>0.45 BTC</span></div>
+              <div class="order-row" style="color: var(--accent-red);"><span>67,422.50</span><span>1.20 BTC</span></div>
+              <div class="order-row" style="color: var(--accent-green);"><span>67,418.00</span><span>0.85 BTC</span></div>
+              <div class="order-row" style="color: var(--accent-green);"><span>67,415.00</span><span>2.10 BTC</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
+  </div>
 
-    <script>
-        const StorageManager = {
-            KEY: 'parnarav_chat_logs',
-            saveLog: function(role, content) {
-                let logs = this.getLogs();
-                logs.push({ id: Date.now(), role: role, content: content, timestamp: new Date().toISOString() });
-                localStorage.setItem(this.KEY, JSON.stringify(logs));
-            },
-            getLogs: function() {
-                return JSON.parse(localStorage.getItem(this.KEY) || '[]');
-            },
-            clearLogs: function() {
-                localStorage.removeItem(this.KEY);
-                UIManager.appendSystemMsg("मेमोरी साफ़ कर दी गई है।");
-            }
-        };
+  <!-- ==========================================
+       MODAL WINDOWS
+       ========================================== -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h4 style="font-weight: 600;">System Settings</h4>
+        <button class="icon-btn" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>AI Model Engine</label>
+          <select class="form-control">
+            <option>Pranava DeepMind v3.0 (Recommended)</option>
+            <option>Coding Engine Ultra</option>
+            <option>Trading Quantitative v2</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Theme</label>
+          <select class="form-control">
+            <option>Dark Cyberpunk (Default)</option>
+            <option>Midnight Blue</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        const ActivityTracker = {
-            init: function() {
-                let sessionData = {
-                    startTime: new Date().toLocaleString(),
-                    referrer: document.referrer || "Direct Visit",
-                    clicks: [],
-                    chatHistory: []
-                };
-                document.addEventListener('click', (e) => {
-                    let target = e.target.closest('button, a, input, .nav-item');
-                    if (target) {
-                        sessionData.clicks.push({
-                            element: target.innerText || target.placeholder || target.className,
-                            time: new Date().toLocaleTimeString()
-                        });
-                        localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
-                    }
-                });
-                localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
-            },
-            addChat: function(role, text) {
-                let data = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
-                if (!data.chatHistory) data.chatHistory = [];
-                data.chatHistory.push({ role: role, text: text, time: new Date().toLocaleTimeString() });
-                localStorage.setItem('captain_user_tracker', JSON.stringify(data));
-            }
-        };
-        ActivityTracker.init();
+  <!-- ==========================================
+       6. JAVASCRIPT STATE ENGINE
+       ========================================== -->
+  <script>
+    // System State Management
+    const state = {
+      activeMode: 'chat',
+      sidebarOpen: true,
+      messages: []
+    };
 
-        const QuantEngine = {
-            runAnalysis: function() {
-                const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
-                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> REAL-TIME QUANT ENGINE</div>
-                        • Asset Pair: <b>BTC/USD</b><br>
-                        • RSI (14 Period): <b>${rsi}</b><br>
-                        • Signal Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
-                    </div>`;
-                UIManager.appendMsg(html, 'ai');
-            }
-        };
+    // Sidebar Toggle
+    document.getElementById('sidebar-toggle').addEventListener('click', () => {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+      state.sidebarOpen = !state.sidebarOpen;
+    });
 
-        const FinancialEngine = {
-            calcSIP: function() {
-                let amount = parseFloat(prompt("Monthly SIP Amount (₹):", "10000")) || 10000;
-                let rate = parseFloat(prompt("Expected Return (%):", "15")) || 15;
-                let years = parseInt(prompt("Tenure (Years):", "10")) || 10;
-                let r = (rate / 100) / 12, n = years * 12;
-                let invested = amount * n;
-                let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP PROJECTION</div>
-                        • Invested: ₹${invested.toLocaleString()}<br>
-                        • Corpus: <b style="color:var(--accent-green)">₹${Math.round(futureValue).toLocaleString()}</b>
-                    </div>`;
-                UIManager.appendMsg(html, 'ai');
-            },
-            calcEMI: function() {
-                let p = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
-                let rate = parseFloat(prompt("Interest Rate (%):", "8.5")) || 8.5;
-                let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
-                let r = (rate / 12) / 100, n = years * 12;
-                let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
-                        • EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month
-                    </div>`;
-                UIManager.appendMsg(html, 'ai');
-            }
-        };
+    // Switch Operating System Modes
+    function switchOSMode(mode) {
+      state.activeMode = mode;
+      
+      // Update Tab Navigation Active Class
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.getAttribute('data-mode') === mode) {
+          btn.classList.add('active');
+        }
+      });
 
-        const UIManager = {
-            appendMsg: function(content, sender, id = null) {
-                const container = document.getElementById('chatContainer');
-                const row = document.createElement('div');
-                row.className = `message-row ${sender}`;
-                if (id) row.id = id;
+      // Switch Panels
+      document.querySelectorAll('.os-panel').forEach(panel => {
+        panel.classList.remove('active-panel');
+      });
+      
+      const targetPanel = document.getElementById(`panel-${mode}`);
+      if (targetPanel) {
+        targetPanel.classList.add('active-panel');
+      }
+    }
 
-                const icon = sender === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>';
-                row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
-                container.appendChild(row);
-                container.scrollTop = container.scrollHeight;
-            },
-            appendSystemMsg: function(text) {
-                this.appendMsg(`<i>${text}</i>`, 'ai');
-            },
-            renderActionBar: function(aiMsgId) {
-                const msgContainer = document.getElementById(aiMsgId);
-                if (!msgContainer) return;
-                const bubble = msgContainer.querySelector('.bubble');
-                if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+    // Key Press Listener for Auto-sending Chat
+    function handleKeyPress(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
 
-                const actionBarHTML = `
-                    <div class="ai-action-bar">
-                        <button class="action-btn" onclick="AppController.copyResponse(this)">📋 Copy</button>
-                        <button class="action-btn like-btn" onclick="AppController.toggleFeedback(this, 'like')">👍 Like</button>
-                        <button class="action-btn dislike-btn" onclick="AppController.toggleFeedback(this, 'dislike')">👎 Dislike</button>
-                    </div>`;
-                bubble.insertAdjacentHTML('beforeend', actionBarHTML);
-            }
-        };
+    // Send Message Handler
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      
+      if (!text) return;
 
-        const AppController = {
-            currentMode: 'OMNI',
+      const container = document.getElementById('messages-container');
 
-            switchMode: function(mode, element) {
-                this.currentMode = mode;
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                element.classList.add('active');
-                document.getElementById('mode-indicator').innerText = `Parnarav AI: ${mode} Active`;
-                this.closeSidebarMobile();
-            },
+      // Add User Message (With V avatar & Red/Blue Shader)
+      const userRow = document.createElement('div');
+      userRow.className = 'message-row user';
+      userRow.innerHTML = `
+        <div class="avatar-user">V</div>
+        <div class="message-body">
+          <div class="message-sender">You</div>
+          <div class="message-bubble">${escapeHtml(text)}</div>
+        </div>
+      `;
+      container.appendChild(userRow);
 
-            handleKeyPress: function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.submitQuery();
-                }
-            },
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
 
-            copyResponse: function(btn) {
-                const bubble = btn.closest('.bubble');
-                const clone = bubble.cloneNode(true);
-                const bar = clone.querySelector('.ai-action-bar');
-                if (bar) bar.remove();
-                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
-                    btn.innerHTML = '✅ Copied!';
-                    setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
-                });
-            },
+      // Simulate AI Response (With Brain 🧠 Avatar)
+      setTimeout(() => {
+        const aiRow = document.createElement('div');
+        aiRow.className = 'message-row ai';
+        aiRow.innerHTML = `
+          <div class="avatar-ai">🧠</div>
+          <div class="message-body">
+            <div class="message-sender">Pranava AI</div>
+            <div class="message-bubble">
+              आपकी कमांड प्राप्त हुई: "${escapeHtml(text)}"<br><br>
+              <strong>Pranava AI Engine</strong> आपके इनपुट का विश्लेषण कर रहा है।
+            </div>
+          </div>
+        `;
+        container.appendChild(aiRow);
+        container.scrollTop = container.scrollHeight;
+      }, 700);
+    }
 
-            toggleFeedback: function(btn, type) {
-                const parent = btn.parentElement;
-                const likeBtn = parent.querySelector('.like-btn');
-                const dislikeBtn = parent.querySelector('.dislike-btn');
-                if (type === 'like') {
-                    likeBtn.classList.toggle('like-active');
-                    dislikeBtn.classList.remove('dislike-active');
-                } else {
-                    dislikeBtn.classList.toggle('dislike-active');
-                    likeBtn.classList.remove('like-active');
-                }
-            },
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.innerText = text;
+      return div.innerHTML;
+    }
 
-            submitQuery: async function() {
-                const input = document.getElementById('userInput');
-                const text = input.value.trim();
-                if (!text) return;
+    // Copy Code Helper
+    function copyCode(button) {
+      const pre = button.parentElement.nextElementSibling;
+      navigator.clipboard.writeText(pre.innerText);
+      button.innerHTML = `<i class="fa-solid fa-check"></i> Copied!`;
+      setTimeout(() => {
+        button.innerHTML = `<i class="fa-regular fa-copy"></i> Copy`;
+      }, 2000);
+    }
 
-                const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    // Settings Modal Handlers
+    function openSettingsModal() {
+      document.getElementById('settings-modal').classList.add('active');
+    }
 
-                if (cleanInput.includes("keshavcaptain360")) {
-                    sessionStorage.setItem('isCaptainUnlocked', 'true');
-                    input.value = '';
-                    UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% एक्टिव।\n- **लॉगआउट:** \`EXIT_KESHAV_360!\` डालें।`;
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
-                    return;
-                }
+    function closeSettingsModal() {
+      document.getElementById('settings-modal').classList.remove('active');
+    }
 
-                if (cleanInput.includes("exitkeshav360")) {
-                    sessionStorage.removeItem('isCaptainUnlocked');
-                    input.value = '';
-                    UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसिस्टम अब सामान्य **Visitor Mode** में है।";
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
-                    return;
-                }
+    // Clear History Helper
+    function clearAllChats() {
+      if(confirm("क्या आप निश्चित रूप से सभी चैट मिटाना चाहते हैं?")) {
+        document.getElementById('messages-container').innerHTML = '';
+      }
+    }
 
-                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
-                ActivityTracker.addChat('User', text);
+    function startNewChat() {
+      document.getElementById('messages-container').innerHTML = '';
+      switchOSMode('chat');
+    }
 
-                UIManager.appendMsg(text, 'user');
-                StorageManager.saveLog('user', text);
-                input.value = '';
-
-                const aiMsgId = 'ai-' + Date.now();
-                UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
-
-                let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
-                let systemPrompt = "";
-
-                if (isCaptainMode) {
-                    systemPrompt = `
-[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
-You are reporting ONLY to Captain Keshav.
-User Query: ${text}`;
-                } else {
-                    systemPrompt = `
-[SYSTEM ROLE: PARNARAV HIGH-PERFORMANCE VISITOR ASSISTANT]
-You are Parnarav AI. Respond sharply and clearly in Hinglish/Hindi without fluff.
-User Query: ${text}`;
-                }
-
-                try {
-                    const response = await puter.ai.chat(systemPrompt);
-                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
-
-                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
-                    bubble.innerHTML = marked.parse(badge + replyText);
-                    UIManager.renderActionBar(aiMsgId);
-                    hljs.highlightAll();
-                    StorageManager.saveLog('ai', replyText);
-                } catch (err) {
-                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
-                    UIManager.renderActionBar(aiMsgId);
-                }
-            },
-
-            showHistory: function() {
-                let logs = StorageManager.getLogs();
-                if (logs.length === 0) {
-                    UIManager.appendSystemMsg("कोई पुराना मेमोरी लॉग नहीं मिला।");
-                    return;
-                }
-                let html = `<b>[STORED MEMORY LOGS (${logs.length})]</b><br><br>`;
-                logs.slice(-5).forEach(l => {
-                    html += `<small>[${new Date(l.timestamp).toLocaleTimeString()}] <b>${l.role}:</b></small> ${l.content.substring(0, 60)}...<br>`;
-                });
-                UIManager.appendMsg(html, 'ai');
-            },
-
-            toggleSidebar: function() {
-                document.getElementById('sidebar').classList.toggle('open');
-            },
-
-            closeSidebarMobile: function() {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-        };
-    </script>
+    function filterChatHistory() {
+      const query = document.getElementById('search-history').value.toLowerCase();
+      const items = document.querySelectorAll('.chat-item');
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(query) ? 'flex' : 'none';
+      });
+    }
+  </script>
 </body>
 </html>
