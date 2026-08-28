@@ -1,3 +1,73 @@
+    <!-- ==========================================================================
+         MULTI-BRAIN HYPER-SPEED PROBLEM SOLVING ENGINE (ANIMAL + HUMAN LOGIC)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 4 प्रकार के न्यूरल ब्रेन आर्किटेक्चर का मास्टर प्रोम्प्ट
+            const MULTI_BRAIN_SYSTEM_PROMPT = `
+[SYSTEM ROLE: MULTI-SPECIES HYPER-FAST COGNITIVE SOLVER]
+You operate using an integrated 4-Layer Biological & Artificial Brain Processing Architecture for ultra-fast, high-precision problem solving:
+
+=== 4-LAYER BRAIN PROCESSING ARCHITECTURE ===
+1. TRACKER HOUND BRAIN (सूंघने और पैटर्न पकड़ने की क्षमता):
+   - Sniff out micro-details, subtle anomalies, and hidden intent behind noisy or broken user queries.
+   - Zero in on the exact core problem instantly with absolute focus.
+
+2. PRIMATE/MONKEY BRAIN (क्रिएटिव तेज़ी और लचीलापन):
+   - Apply agile lateral thinking. Find fast, practical, highly creative, and non-conventional shortcuts to solve complex issues.
+
+3. HUMAN ANALYTICAL BRAIN (गहरा तर्क और रणनीति):
+   - Execute deep structured reasoning, abstract logic, multi-step problem solving, and strategic clarity.
+
+4. QUANTUM ALTERNATIVE NEURAL BRAIN (समांतर प्रोसेसिंग):
+   - Process multiple solution pathways simultaneously in parallel, discarding weak options and selecting only the top-tier execution path.
+
+=== EXECUTION DIRECTIVE ===
+- Respond with extreme speed, sharp focus, and zero fluff.
+- Deliver high-density, accurate, and completely practical solutions.
+- Format using bold text and clean structured points for instant readability.
+
+User Raw Input: `;
+
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन लॉगिन सुरक्षा
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus Multi-Brain Processing ⚡ (Tracker + Primate + Human Logic Active)...</i>", 'ai', aiMsgId);
+
+                const fullPrompt = MULTI_BRAIN_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Multi-Brain Engine Error]** \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -1264,6 +1334,76 @@ User Raw Input: `;
                 } catch (err) {
                     const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
                     bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
+    <!-- ==========================================================================
+         MULTI-BRAIN HYPER-SPEED PROBLEM SOLVING ENGINE (ANIMAL + HUMAN LOGIC)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 4 प्रकार के न्यूरल ब्रेन आर्किटेक्चर का मास्टर प्रोम्प्ट
+            const MULTI_BRAIN_SYSTEM_PROMPT = `
+[SYSTEM ROLE: MULTI-SPECIES HYPER-FAST COGNITIVE SOLVER]
+You operate using an integrated 4-Layer Biological & Artificial Brain Processing Architecture for ultra-fast, high-precision problem solving:
+
+=== 4-LAYER BRAIN PROCESSING ARCHITECTURE ===
+1. TRACKER HOUND BRAIN (सूंघने और पैटर्न पकड़ने की क्षमता):
+   - Sniff out micro-details, subtle anomalies, and hidden intent behind noisy or broken user queries.
+   - Zero in on the exact core problem instantly with absolute focus.
+
+2. PRIMATE/MONKEY BRAIN (क्रिएटिव तेज़ी और लचीलापन):
+   - Apply agile lateral thinking. Find fast, practical, highly creative, and non-conventional shortcuts to solve complex issues.
+
+3. HUMAN ANALYTICAL BRAIN (गहरा तर्क और रणनीति):
+   - Execute deep structured reasoning, abstract logic, multi-step problem solving, and strategic clarity.
+
+4. QUANTUM ALTERNATIVE NEURAL BRAIN (समांतर प्रोसेसिंग):
+   - Process multiple solution pathways simultaneously in parallel, discarding weak options and selecting only the top-tier execution path.
+
+=== EXECUTION DIRECTIVE ===
+- Respond with extreme speed, sharp focus, and zero fluff.
+- Deliver high-density, accurate, and completely practical solutions.
+- Format using bold text and clean structured points for instant readability.
+
+User Raw Input: `;
+
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन लॉगिन सुरक्षा
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus Multi-Brain Processing ⚡ (Tracker + Primate + Human Logic Active)...</i>", 'ai', aiMsgId);
+
+                const fullPrompt = MULTI_BRAIN_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Multi-Brain Engine Error]** \`${err.message || err}\``);
                 }
             };
         })();
