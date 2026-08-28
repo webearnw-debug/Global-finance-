@@ -97,14 +97,13 @@
             <i class="fa-solid fa-atom"></i> NEXUS MEGA AI STUDIO
         </div>
         <div class="controls">
-            <!-- Model Switcher (Updated identifiers for Puter API compatibility) -->
+            <!-- Model Switcher (Llama removed) -->
             <select id="modelSelect" title="Select AI Model">
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default & Fast)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
                 <option value="deepseek-chat">🌐 DeepSeek V3</option>
                 <option value="deepseek-reasoner">🔬 DeepSeek R1 (Reasoner)</option>
-                <option value="llama-3.3-70b-instruct">🦙 Llama 3.3 70B</option>
             </select>
 
             <!-- Persona Switcher -->
@@ -128,9 +127,9 @@
                 <span class="model-badge">System Ready</span>
                 <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** hoon.
 
-- 🔀 **Multi-Model Fixed:** Ab GPT-4o, Claude 3.5, DeepSeek V3/R1 aur Llama 3.3 70B sabhi models 100% chalenge.
+- 🔀 **Multi-Model Ready:** GPT-4o, Claude 3.5, aur DeepSeek V3/R1 models fully functional hain.
 - 🎨 **Image Generator:** Prompt likhein `Image: Cyberpunk city`.
-- 🗣️ **Voice Engine:** Speech input aur text-to-voice fully enabled hain.</div>
+- 🗣️ **Voice Engine:** Speech input aur text-to-voice enabled hain.</div>
             </div>
         </div>
     </div>
@@ -169,7 +168,7 @@
         }
     }
 
-    // Helper: Formats chat history safely for ALL models (Prevents strict payload rejection)
+    // Helper: Formats chat history safely
     function getCleanHistory(selectedPersona) {
         let clean = [];
         const personaPrompt = personas[selectedPersona];
@@ -184,19 +183,10 @@
         return clean;
     }
 
-    // Ensures model identifiers are standardized for Puter JS
-    function cleanModelName(model) {
-        const modelMap = {
-            'meta-llama/llama-3.3-70b-instruct': 'llama-3.3-70b-instruct',
-            'meta-llama/llama-3.1-70b-instruct': 'llama-3.1-70b-instruct'
-        };
-        return modelMap[model] || model;
-    }
-
     async function processMessage(retryText = null) {
         const input = document.getElementById('userInput');
         const text = retryText || input.value.trim();
-        const selectedModel = cleanModelName(document.getElementById('modelSelect').value);
+        const selectedModel = document.getElementById('modelSelect').value;
         const selectedPersona = document.getElementById('personaSelect').value;
 
         if (!text) return;
@@ -236,29 +226,18 @@
         let usedModel = selectedModel;
 
         try {
-            // Primary Attempt: Try selected model
+            // Primary Attempt
             const response = await puter.ai.chat(safePayload, { model: selectedModel });
             aiReply = extractTextResponse(response);
         } catch (err) {
             console.warn(`Model ${selectedModel} failed. Executing fallback engine...`, err);
             try {
-                // Secondary Fallback 1: Try standard Llama ID if main call failed
-                if (selectedModel.includes('llama')) {
-                    const fallbackLlama = await puter.ai.chat(safePayload, { model: 'llama-3.1-70b-instruct' });
-                    aiReply = extractTextResponse(fallbackLlama);
-                    usedModel = "llama-3.1-70b-instruct (Fallback)";
-                } else {
-                    throw err;
-                }
-            } catch (fallbackErr) {
-                try {
-                    // Secondary Fallback 2: Default Puter Engine
-                    const defaultFallback = await puter.ai.chat(safePayload);
-                    aiReply = extractTextResponse(defaultFallback);
-                    usedModel = selectedModel + " (Default Engine Active)";
-                } catch (finalErr) {
-                    aiReply = "Error: System unable to connect. Please try again.";
-                }
+                // Fallback to Default Puter Engine
+                const defaultFallback = await puter.ai.chat(safePayload);
+                aiReply = extractTextResponse(defaultFallback);
+                usedModel = selectedModel + " (Default Engine Active)";
+            } catch (finalErr) {
+                aiReply = "Error: System unable to connect. Please try again.";
             }
         }
 
@@ -279,7 +258,6 @@
         chatDisplay.scrollTop = chatDisplay.scrollHeight;
     }
 
-    // Normalizes response format
     function extractTextResponse(response) {
         if (typeof response === 'string') return response;
         if (response?.message?.content) return response.message.content;
