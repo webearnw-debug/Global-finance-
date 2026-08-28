@@ -626,7 +626,34 @@
                 }
             },
 
-            submitQuery: async function() {
+            submitQuery: async function() {submitQuery: async function() {
+    const input = document.getElementById('userInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    UIManager.appendMsg(text, 'user');
+    StorageManager.saveLog('user', text);
+    input.value = '';
+
+    const aiMsgId = 'ai-' + Date.now();
+    UIManager.appendMsg("<i>Nexus AI सोच रहा है...</i>", 'ai', aiMsgId);
+
+    try {
+        // 1. Puter AI का डिफॉल्ट वर्किंग मॉडल इस्तेमाल करें
+        const response = await puter.ai.chat(text);
+        const reply = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+        bubble.innerHTML = marked.parse(reply);
+        hljs.highlightAll();
+        StorageManager.saveLog('ai', reply);
+    } catch (err) {
+        // 2. एरर आने पर असली एरर मैसेज दिखाएगा ताकि पता चले
+        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+        bubble.innerHTML = marked.parse(`**[AI Response Error]**\n\nकनेक्शन में समस्या आई: \`${err.message || err}\`.\n\nकृपया दोबारा प्रयास करें।`);
+    }
+}
+
                 const input = document.getElementById('userInput');
                 const text = input.value.trim();
                 if (!text) return;
