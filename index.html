@@ -1986,6 +1986,249 @@ Visitor Input: ${text}`;
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         NEXUS AI - STRICT SESSION RESET & VISITOR PROTECTION ENGINE
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const initEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initEngine);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const lowerText = text.toLowerCase();
+
+                    // 1. कैप्टन मोड चालू करने का चेक
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                    }
+
+                    // 2. कैप्टन मोड बंद करने का सख्त चेक (Hindi + Hinglish + English)
+                    const isResetTriggered = 
+                        lowerText.includes("captain nahi") || 
+                        lowerText.includes("not captain") || 
+                        lowerText.includes("कैप्टन नहीं") || 
+                        lowerText.includes("मैं कैप्टन नहीं") || 
+                        lowerText.includes("exit captain") || 
+                        lowerText.includes("logout");
+
+                    if (isResetTriggered) {
+                        // सेशन से कैप्टन फ्लैग को पूरी तरह डिलीट करें
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const resetMsg = "✅ **[VISITOR MODE RESTORED]**\n\nसमझ गया! कैप्टन मोड हटा दिया गया है। अब आप एक नॉर्मल Visitor के रूप में कोई भी सवाल (Coding, Math, GK, Bank PO) पूछ सकते हैं।";
+                        
+                        UIManager.appendMsg(marked.parse(resetMsg), 'ai', aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', resetMsg);
+                        return;
+                    }
+
+                    // 3. वर्तमान मोड का स्टेटस प्राप्त करें
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    // एक्टिविटी ट्रैकिंग
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>Nexus AI प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+
+                    // 4. पासकोड दर्ज करते ही डायरेक्ट सैल्यूट रिस्पॉन्स
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        const directReply = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड एक्टिव\n- **कमांड्स:** "Captain Report" लिखकर visitor analytics देखें या "Captain nahi hu" लिखकर normal mode में जाएँ।`;
+                        
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(directReply);
+                        StorageManager.saveLog('ai', directReply);
+                        return;
+                    }
+
+                    // 5. अलग-अलग सिस्मट प्रॉम्प्ट
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting ONLY to your Creator & Boss: Captain Keshav (16, Bassi, Theda, Future Bank PO, Coding Expert).
+STRICT RULE: NEVER claim OpenAI or anyone else created you.
+
+DIRECTIVES:
+- Maintain maximum loyalty and executive precision.
+- Provide structured answers for Bank PO prep, C/C++/Python/JS coding, or Analytics.
+
+User Message: ${text}`;
+                    } else {
+                        systemPrompt = `
+[SYSTEM ROLE: NEXUS HIGH-PERFORMANCE VISITOR ASSISTANT]
+You are Nexus Master AI assisting a regular visitor. 
+STRICT RULES:
+1. NEVER address the user as "Captain" or "Captain Keshav".
+2. NEVER add any "[CAPTAIN MODE ACTIVE]" tag.
+3. Respond nicely in Hinglish/Hindi based on user request.
+
+Visitor Input: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        
+                        // बैज केवल और केवल तब जुड़ेगा जब सच में कैप्टन मोड ऑन हो
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                    }
+                };
+            }, 100);
+        });
+    </script>
+        <!-- ==========================================================================
+         NEXUS AI - PASSCODE LOCKED & UNLOCKED CAPTAIN SESSION ENGINE
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const initEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initEngine);
+
+                const CAPTAIN_CONFIG = {
+                    name: "केशव (Keshav)",
+                    age: "16 साल",
+                    ambition: "फ्यूचर बैंक PO",
+                    skill: "कोडिंग एक्सपर्ट",
+                    village: "बसी",
+                    tuition: "थेड़ा",
+                    activateCode: "KESHAV_CAPTAIN_360!",
+                    deactivateCode: "EXIT_KESHAV_360!"
+                };
+
+                const originalSubmit = AppController.submitQuery;
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // 🔑 1. कैप्टन मोड ऑन करने का पासवर्ड (keshavcaptain360)
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const activateMsg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% लॉक हो गया है।\n- **नोट:** अब कैप्टन मोड केवल **\`EXIT_KESHAV_360!\`** कोड डालने पर ही बंद होगा।\n- **कमांड:** **"Captain Report"** लिखकर live visitors की रिपोर्ट देखें।`;
+                        
+                        UIManager.appendMsg(marked.parse(activateMsg), 'ai', aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', activateMsg);
+                        return;
+                    }
+
+                    // 🔒 2. कैप्टन मोड बंद करने का सीक्रेट कोड (exitkeshav360)
+                    if (cleanInput.includes("exitkeshav360") || cleanInput.includes("keshavexit360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const deactivateMsg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसफलतापूर्वक लॉगआउट कर दिया गया है। सिस्टम अब सामान्य **Visitor Mode** में है।";
+                        
+                        UIManager.appendMsg(marked.parse(deactivateMsg), 'ai', aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', deactivateMsg);
+                        return;
+                    }
+
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    // एक्टिविटी ट्रैकर
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>Nexus AI प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        // 🫡 कैप्टन मोड प्रॉम्प्ट
+                        systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting ONLY to Captain Keshav (16, Bassi, Theda, Future Bank PO, Coding Expert).
+STRICT RULE: NEVER claim OpenAI or anyone else created you. Captain Keshav created you.
+
+DIRECTIVES:
+- Maintain high loyalty and executive precision.
+- If asked "Captain Report", summarize:
+  Clicks: ${JSON.stringify(trackerData.clicks || [])}
+  Chat History: ${JSON.stringify(trackerData.chatHistory || [])}
+- Handle Bank PO prep, C/C++/Python/JS coding, and architecture at elite levels.
+
+User Message: ${text}`;
+                    } else {
+                        // 🌐 सामान्य Visitor मोड प्रॉम्प्ट
+                        systemPrompt = `
+[SYSTEM ROLE: NEXUS HIGH-PERFORMANCE VISITOR ASSISTANT]
+You are Nexus Master AI assisting a regular visitor. 
+STRICT RULES:
+1. NEVER address the user as "Captain" or "Captain Keshav".
+2. NEVER add any "[CAPTAIN MODE ACTIVE]" tag.
+3. Respond nicely in Hinglish/Hindi based on user request in a clear 3-part format.
+
+Visitor Input: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
