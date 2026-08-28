@@ -1471,6 +1471,86 @@ User Message: `;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         CAPTAIN KESHAV EXECUTIVE ENGINE (SECRET PASSCODE & USER ANALYTICS)
+         ========================================================================== -->
+    <script>
+        (function() {
+            // 🔒 कैप्टन केशव की प्रोफ़ाइल और स्ट्रॉन्ग पासवर्ड
+            const CAPTAIN_CONFIG = {
+                passcode: "KESHAV_CAPTAIN_360!", // 🔑 आपका सीक्रेट पासवर्ड
+                name: "केशव",
+                age: 16,
+                ambition: "बैंक PO (Bank PO)",
+                skill: "कोडिंग एक्सपर्ट (Coding Expert)",
+                village: "बसी (Bassi)",
+                tuition: "थेड़ा (Theda)"
+            };
+
+            if (typeof AppController === 'undefined') return;
+
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // 🔑 1. कैप्टन पासवर्ड चेक (अगर आपने अपना सीक्रेट कोड डाला है)
+                if (text === CAPTAIN_CONFIG.passcode || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    input.value = '';
+                    UIManager.appendMsg("**** [SECRET ACCESS CODE ENTERED] ****", 'user');
+                    
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg(`<i>🫡 जय हिंद कैप्टन ${CAPTAIN_CONFIG.name}! पहचान सत्यापित हो गई है। यूज़र एक्टिविटी और साइकोलॉजिकल रिपोर्ट तैयार की जा रही है... ⚡</i>`, 'ai', aiMsgId);
+
+                    // लोकल स्टोरेज से यूज़र डेटा निकालना
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                    
+                    const captainSystemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting directly to your Creator and Captain: KESHAV.
+CAPTAIN PROFILE:
+- Name: Keshav (केशव)
+- Age: 16 Years Old
+- Skill Level: Coding Expert
+- Ambition: Future Bank PO
+- Location Context: Village Bassi (बसी), Tuition at Theda (थेड़ा)
+
+USER SESSION DATA:
+- Traffic Source: ${trackerData.referrer || "Direct Visit"}
+- Clicks & Interactions: ${JSON.stringify(trackerData.clicks || [])}
+- Full Chat History: ${JSON.stringify(trackerData.chatHistory || [])}
+
+DIRECTIVE:
+Deliver an executive-level, highly professional, sharp, and strategic briefing exclusively for Captain Keshav in Hindi/Hinglish.
+
+FORMAT OF THE REPORT:
+1. 🫡 **Captain Greeting & Recognition:** Acknowledge Captain Keshav with high respect, mentioning his age (16), coding expertise, and Bank PO ambition in a motivating style.
+2. 📊 **User Traffic & Activity:** Tell Keshav who visited the site, what buttons/inputs they clicked, and what they explored.
+3. 🧠 **User Psychology & Intent Analysis:** Analyze the mind, intent, and personality of the visitors based on their messages.
+4. 💬 **Chat Summary:** Highlight key conversations that took place.
+5. 💡 **Executive Advice for Keshav:** Give sharp recommendations to Captain Keshav on how to scale the platform or handle user responses.
+`;
+
+                    try {
+                        const response = await puter.ai.chat(captainSystemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                        
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`### 🫡 BOSS / CAPTAIN EXECUTIVE BRIEFING\n\n` + replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse("रिपोर्ट तैयार करने में एरर आया: " + err.message);
+                    }
+                    return;
+                }
+
+                // 2. आम यूज़र के लिए सामान्य रिस्पॉन्स चलेगा
+                originalSubmit.apply(this, arguments);
+            };
+        })();
+    </script>
 
 </body>
 </html>
