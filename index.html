@@ -30,37 +30,37 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        .app-container { width: 100%; max-width: 1000px; height: 94vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+        .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
         /* Header Bar */
-        .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
-        .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .top-bar { padding: 12px 18px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+        .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
         
-        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 6px 9px; border-radius: 8px; outline: none; font-size: 0.8rem; cursor: pointer; }
         select:focus { border-color: var(--accent); }
 
-        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .btn-sm:hover { background: var(--accent); color: #080c14; }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
         /* Chat Workspace */
-        .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
+        .chat-display { flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
         .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
         .msg-row.ai { align-self: flex-start; }
 
-        .avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+        .avatar { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
         .user .avatar { background: var(--user-bubble); color: white; }
         .ai .avatar { background: var(--panel-dark); border: 1px solid var(--border); color: var(--accent); }
 
-        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.93rem; line-height: 1.6; word-break: break-word; position: relative; }
+        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.92rem; line-height: 1.6; word-break: break-word; position: relative; }
         .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 2px; color: white; }
         .ai .bubble { border-bottom-left-radius: 2px; }
 
-        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+        .model-badge { display: inline-block; font-size: 0.68rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
         .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
 
@@ -93,7 +93,7 @@
         .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
         .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
 
-        .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .send-btn { background: var(--accent); color: #080c14; width: 46px; height: 46px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
@@ -104,26 +104,50 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-atom"></i> NEXUS MEGA AI STUDIO
+            <i class="fa-solid fa-atom"></i> NEXUS AI STUDIO
         </div>
         <div class="controls">
+            <!-- Models Selector -->
             <select id="modelSelect" title="Select AI Model">
-                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Pro Financial Upgrade)</option>
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Pro Advisor)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default & Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
                 <option value="deepseek-chat">🌐 DeepSeek V3</option>
             </select>
 
-            <select id="personaSelect" title="Select AI Behavior">
-                <option value="financial">📈 Financial & Stock Market Expert</option>
+            <!-- Persona Selector -->
+            <select id="personaSelect" title="Select AI Persona">
+                <option value="financial">📈 Financial Expert</option>
                 <option value="general">💬 General Assistant</option>
-                <option value="coder">💻 Senior Software Engineer</option>
+                <option value="coder">💻 Software Engineer</option>
                 <option value="writer">✍️ Creative Writer</option>
-                <option value="translator">🌐 Hindi-English Translator</option>
+                <option value="translator">🌐 Translator</option>
             </select>
 
-            <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save Chat</button>
+            <!-- NEW: Goal Mode -->
+            <select id="goalSelect" title="Investment Goal">
+                <option value="wealth">🎯 Goal: Wealth Building (SIP)</option>
+                <option value="trading">⚡ Goal: Active Trading</option>
+                <option value="income">💵 Goal: Regular Income</option>
+                <option value="protection">🛡️ Goal: Capital Protection</option>
+            </select>
+
+            <!-- NEW: Risk Profile -->
+            <select id="riskSelect" title="Risk Profile">
+                <option value="moderate">⚖️ Risk: Moderate</option>
+                <option value="low">🟢 Risk: Conservative (Low)</option>
+                <option value="high">🔴 Risk: Aggressive (High)</option>
+            </select>
+
+            <!-- NEW: Timeframe -->
+            <select id="timeframeSelect" title="Investment Horizon">
+                <option value="swing">⏳ Horizon: Swing (Daily/Weekly)</option>
+                <option value="intraday">⚡ Horizon: Intraday (Short Term)</option>
+                <option value="longterm">📈 Horizon: Long-term (3-5+ Yrs)</option>
+            </select>
+
+            <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
     </div>
@@ -133,23 +157,18 @@
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">System Ready</span>
-                <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** hoon.
+                <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** (DeepSeek R1 Advanced Engine) hoon.
 
-- 🔀 **Multi-Model Support:** GPT-4o, Claude 3.5, DeepSeek V3/R1 sabhi models active hain.
-- 🚀 **DeepSeek R1 Pro Upgrades Active:**
-  1. 📊 **Visual Trade Cards:** Entry, Target, Stop-Loss aur Risk Badges.
-  2. 📁 **Portfolio & CSV Analyzer:** Portfolio data paste karke sector exposure dekhein.
-  3. 💸 **Tax & Macro Engine:** New vs Old Tax Regime & Capital Gains (LTCG/STCG) analysis.
-  4. 🛡️ **SEBI Safety Guardrails:** Strict R:R Ratio & Risk-first logic.
-  5. ⚖️ **Loan vs SIP Matrix:** Home Loan prepayment vs Mutual Fund SIP comparison.
-- 🎨 **Image Generator:** Prompt likhein `Image: Cyberpunk city`.</div>
+- 🎯 **Goal, Risk & Timeframe Control:** Aap upar top-bar se apna **Goal Mode** (Wealth/Trading), **Risk Level** (Low/Med/High) aur **Timeframe** chun sakte hain.
+- 📊 **Dynamic Analysis:** Meri recommendations ab aapke chune hue Risk Profile, ATR Stop-Loss, aur SEBI Guardrails ke hisaab se automatic calibrate hongi.
+- 📁 **CSV/Portfolio Mode:** Apne stocks paste karein aur portfolio analysis payein!</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Stock analysis, CSV portfolio, tax ya coding ask karein... (Shift+Enter for line)" onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Stock query, portfolio CSV, tax ya koi bhi sawaal poochaayein..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -163,40 +182,42 @@
     let lastUserPrompt = "";
 
     const personas = {
-        financial: "Act as a SEBI-level expert Financial Advisor, Stock Analyst, Technical Trader, and Loan Consultant. Provide structured calculations, risk management frameworks, and clear insights.",
+        financial: "Act as a SEBI-level expert Financial Advisor, Stock Analyst, Technical Trader, and Tax/Loan Specialist.",
         general: "Act as an intelligent, helpful AI assistant.",
-        coder: "Act as a Senior Software Engineer. Provide clean, production-ready code.",
-        writer: "Act as an expert creative writer. Use engaging and rich prose.",
-        translator: "Act as a professional translator. Translate naturally between Hindi and English."
+        coder: "Act as a Senior Software Engineer. Provide clean code.",
+        writer: "Act as an expert creative writer.",
+        translator: "Act as a professional Hindi-English translator."
     };
 
-    // 5 ENHANCED DEEPSEEK R1 UPGRADES PROMPT
-    const DEEPSEEK_R1_SUPER_PROMPT = `
-    [DEEPSEEK R1 ADVANCED FINANCIAL ENGINE ACTIVE]:
-    You are the Ultimate Level-5 Financial & Multi-Domain AI Engine. Apply the following 5 Upgraded Modules for financial queries:
+    function getDynamicDeepSeekPrompt() {
+        const goal = document.getElementById('goalSelect').value;
+        const risk = document.getElementById('riskSelect').value;
+        const timeframe = document.getElementById('timeframeSelect').value;
 
-    1. VISUAL TRADE BADGES:
-       When recommending or analyzing a stock/trade, output a HTML visual badge at the top of the message in this exact format:
+        return `
+    [DEEPSEEK R1 ADVANCED ENGINE ACTIVE]:
+    Current User Profile Context:
+    - Target Goal Mode: ${goal.toUpperCase()}
+    - Selected Risk Tolerance: ${risk.toUpperCase()}
+    - Preferred Horizon/Timeframe: ${timeframe.toUpperCase()}
+
+    Apply these 6 Core Rules for Financial Queries:
+    1. VISUAL TRADE BADGES: Output HTML badge at the top for stock/asset recommendations:
        <div class="trade-card">
          <div class="trade-card-header">
            <span>STOCK / ASSET NAME</span>
-           <span class="badge-pill badge-high">HIGH RISK</span> <!-- Or badge-med / badge-low -->
+           <span class="badge-pill badge-${risk === 'high' ? 'high' : (risk === 'low' ? 'low' : 'med')}">${risk.toUpperCase()} RISK</span>
          </div>
-         <div><b>Entry Zone:</b> ₹XXX | <b>Target:</b> ₹XXX | <b>Stop-Loss:</b> ₹XXX | <b>R:R Ratio:</b> 1:X</div>
+         <div><b>Entry Zone:</b> ₹XXX | <b>Target:</b> ₹XXX | <b>Stop-Loss (ATR based):</b> ₹XXX | <b>R:R Ratio:</b> 1:2+</div>
        </div>
 
-    2. PORTFOLIO & CSV PARSER:
-       If user pastes stock data or CSV text, analyze Sector Concentration, Over-exposure risks, and give clear Rebalancing Advice with Markdown tables.
-
-    3. TAX & MACRO OPTIMIZATION ENGINE:
-       Calculate Old vs. New Tax Regime benefits, LTCG/STCG tax impacts (Section 112A/111A), and inflation-adjusted CAGR returns.
-
-    4. SEBI COMPLIANCE & RISK GUARDRAILS:
-       Never give blind tips. Always emphasize Risk-to-Reward ratio (Minimum 1:2), Position Sizing (Max 2-5% per trade), and add educational disclaimers.
-
-    5. LOAN VS SIP OPPORTUNITY MATRIX:
-       When comparing Home Loan prepayments vs Mutual Fund SIPs, present a year-by-year comparison table showing EMI interest savings vs compounding SIP wealth.
+    2. REALISTIC EXECUTION LAYER: Account for 0.1-0.2% brokerage + slippage charges in target & stop-loss calculations.
+    3. SEBI RISK GUARDRAILS: Enforce max 2% portfolio risk per trade and clear stop-loss discipline based on Risk Profile (${risk}).
+    4. GOAL ALIGNMENT: Align advice strictly with ${goal.toUpperCase()} (e.g., SIP vs Trading vs Capital Preservation).
+    5. PORTFOLIO & CSV PARSER: If CSV stock data is provided, analyze Sector Over-exposure & Drawdown risk.
+    6. TAX OPTIMIZATION: Include New vs Old Regime tax context & LTCG/STCG implications where relevant.
     `;
+    }
 
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
@@ -214,7 +235,7 @@
         let systemPrompt = personas[selectedPersona] || personas.general;
 
         if (selectedModel === 'deepseek-reasoner') {
-            systemPrompt += "\n\n" + DEEPSEEK_R1_SUPER_PROMPT;
+            systemPrompt += "\n\n" + getDynamicDeepSeekPrompt();
         }
 
         conversationHistory.forEach((item, idx) => {
@@ -261,9 +282,9 @@
             return;
         }
 
-        // 2. CHAT ENGINE (With DeepSeek R1 Upgrade & Fallback)
+        // 2. CHAT ENGINE
         conversationHistory.push({ role: 'user', content: text });
-        const loadingText = selectedModel === 'deepseek-reasoner' ? "DeepSeek R1 executing financial algorithms..." : "Thinking...";
+        const loadingText = selectedModel === 'deepseek-reasoner' ? "DeepSeek R1 executing risk & goal algorithms..." : "Thinking...";
         renderAiPlaceholder(loadingText, aiId, selectedModel);
 
         const safePayload = getCleanHistory(selectedPersona, selectedModel);
