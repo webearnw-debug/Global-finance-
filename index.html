@@ -3,290 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Supreme Omni-AI Enterprise Studio</title>
-    
-    <!-- External Libraries Loaded Directly via CDN (No Install Needed) -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script src="https://js.puter.com/v2/"></script>
-
+    <title>Nexus Master AI - Professional UI</title>
     <style>
-        :root {
-            --bg-base: #030712;
-            --bg-surface: #0b0f19;
-            --bg-card: #111827;
-            --accent-cyan: #38bdf8;
-            --accent-purple: #c084fc;
-            --accent-green: #4ade80;
-            --accent-red: #f87171;
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --border: #1f2937;
+        /* 1. Global Screen Dimension & Color Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg-base); color: var(--text-primary); height: 100vh; display: flex; overflow: hidden; }
+        body {
+            /* बॉडी की पूरी लंबाई और चौड़ाई */
+            width: 100vw;
+            height: 100vh;
+            background-color: #030712; /* मुख्य बैकग्राउंड कलर */
+            color: #f9fafb;
+            display: flex;
+            overflow: hidden; /* बाहरी स्क्रॉल बार बंद */
+        }
 
-        /* Left Navigation Sidebar */
-        .sidebar { width: 280px; background: var(--bg-surface); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
-        .brand { font-size: 1.2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
-        
-        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-        .nav-item { padding: 12px 16px; border-radius: 10px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
-        .nav-item:hover, .nav-item.active { background: var(--bg-card); color: var(--accent-cyan); border: 1px solid var(--border); }
+        /* 2. Left Sidebar Layout */
+        .sidebar {
+            width: 280px; /* फिक्स चौड़ाई */
+            height: 100vh; /* पूरी लंबाई */
+            background-color: #0b0f19; /* डार्क सर्फेस कलर */
+            border-right: 1px solid #1f2937;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+        }
 
-        .tools-card { background: var(--bg-card); border: 1px solid var(--border); padding: 16px; border-radius: 12px; margin-top: auto; }
-        .tools-title { font-size: 0.85rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 12px; text-transform: uppercase; }
-        .tool-btn { width: 100%; background: #1e293b; border: 1px solid var(--border); color: #fff; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; margin-bottom: 8px; text-align: left; display: flex; align-items: center; gap: 8px; }
-        .tool-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        /* 3. Main AI Workspace Layout */
+        .workspace {
+            flex: 1; /* बची हुई पूरी चौड़ाई ऑटो-कवर करेगा */
+            height: 100vh; /* पूरी लंबाई */
+            display: flex;
+            flex-direction: column;
+            background-color: #030712;
+        }
 
-        /* Main Workspace */
-        .workspace { flex: 1; display: flex; flex-direction: column; height: 100vh; }
-        .topbar { height: 64px; background: var(--bg-surface); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 24px; }
-        .status-badge { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; background: rgba(74, 222, 128, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(74, 222, 128, 0.3); color: var(--accent-green); }
-        .status-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 10px var(--accent-green); }
+        /* 4. Top Header Bar */
+        .topbar {
+            height: 64px; /* हेड की फिक्स लंबाई */
+            width: 100%;
+            background-color: #0b0f19;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
 
-        /* Streamed Chat Window */
-        .chat-area { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
-        .msg { display: flex; gap: 16px; max-width: 85%; }
-        .msg.user { align-self: flex-end; flex-direction: row-reverse; }
-        .avatar { width: 38px; height: 38px; border-radius: 10px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); font-weight: 700; flex-shrink: 0; }
-        .user .avatar { background: var(--accent-cyan); color: #000; }
-        .bubble { background: var(--bg-card); padding: 16px; border-radius: 14px; border: 1px solid var(--border); line-height: 1.6; font-size: 0.95rem; width: 100%; }
-        .user .bubble { background: #1e3a8a; border-color: #3b82f6; }
+        /* 5. Central Chat Area (Dynamic Scroll Height) */
+        .chat-container {
+            flex: 1; /* पूरी खाली लंबाई का उपयोग करेगा */
+            width: 100%;
+            max-width: 1100px; /* सेंटर अलाइनमेंट के लिए अधिकतम चौड़ाई */
+            margin: 0 auto;
+            padding: 24px;
+            overflow-y: auto; /* सिर्फ मैसेज एरिया स्क्रॉल होगा */
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-        /* Input Controls */
-        .input-wrapper { padding: 20px 24px; background: var(--bg-surface); border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: center; }
-        textarea { flex: 1; background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--text-primary); font-size: 0.95rem; outline: none; resize: none; height: 50px; font-family: inherit; }
-        textarea:focus { border-color: var(--accent-cyan); }
-        .btn-send { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); border: none; width: 50px; height: 50px; border-radius: 12px; color: #fff; font-size: 1.1rem; cursor: pointer; transition: 0.2s; }
-        .btn-send:hover { transform: scale(1.03); }
+        /* 6. User and AI Message Bubbles */
+        .chat-bubble-ai {
+            background-color: #111827; /* कार्ड बैकग्राउंड */
+            border: 1px solid #1f2937;
+            border-left: 4px solid #38bdf8; /* नीयन सयान हाइलाइट */
+            border-radius: 12px;
+            padding: 16px 20px;
+            max-width: 85%;
+            line-height: 1.6;
+        }
 
-        /* Dynamic Engine Widgets */
-        .widget-box { background: #070a13; border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
-        .quant-value { color: var(--accent-green); font-weight: bold; }
-        pre { background: #000 !important; border: 1px solid var(--border); padding: 14px; border-radius: 8px; margin: 10px 0; overflow-x: auto; }
-        code { font-family: 'JetBrains Mono', monospace; }
+        .chat-bubble-user {
+            background-color: #1e3a8a; /* यूज़र ब्लू बैकग्राउंड */
+            border-radius: 12px;
+            padding: 16px 20px;
+            max-width: 80%;
+            align-self: flex-end; /* राया साइड अलाइनमेंट */
+        }
+
+        /* 7. Bottom Input Box Wrapper */
+        .input-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px 24px 24px 24px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 56px; /* इनपुट बॉक्स की लंबाई */
+            background-color: #0b0f19;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
+
+        .input-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
+    <!-- बायां नेविगेशन पैनल -->
     <aside class="sidebar">
-        <div class="brand"><i class="fa-solid fa-microchip"></i> NEXUS OMNI AI</div>
-        
-        <ul class="nav-list">
-            <li class="nav-item active" onclick="switchTab('chat')"><i class="fa-solid fa-robot"></i> Universal AI Assistant</li>
-            <li class="nav-item" onclick="switchTab('quant')"><i class="fa-solid fa-chart-line"></i> Quant Engine</li>
-            <li class="nav-item" onclick="switchTab('db')"><i class="fa-solid fa-database"></i> Browser DB Logs</li>
-        </ul>
-
-        <div class="tools-card">
-            <div class="tools-title"><i class="fa-solid fa-calculator"></i> Quick Financial Tools</div>
-            <button class="tool-btn" onclick="runQuantEngine()"><i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Run Quant Analysis</button>
-            <button class="tool-btn" onclick="calcSIP()"><i class="fa-solid fa-coins" style="color:var(--accent-purple)"></i> SIP Wealth Calculator</button>
-            <button class="tool-btn" onclick="calcEMI()"><i class="fa-solid fa-house" style="color:var(--accent-cyan)"></i> Loan EMI Calculator</button>
-        </div>
+        <h2 style="color: #38bdf8; font-size: 1.2rem; margin-bottom: 20px;">NEXUS MASTER AI</h2>
+        <p style="color: #9ca3af; font-size: 0.9rem;">यूनिवर्सल AI स्टूडियो</p>
     </aside>
 
-    <!-- Main Workspace -->
+    <!-- मुख्य वर्कस्पेस -->
     <main class="workspace">
         <header class="topbar">
-            <div id="header-title" style="font-weight: 700; font-size: 1.05rem;">Agent: Universal Omni AI</div>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                Zero-Setup Browser Engine Ready
-            </div>
+            <span style="font-weight: 600;">Single Super AI Engine</span>
+            <span style="color: #4ade80; font-size: 0.85rem;">● Online</span>
         </header>
 
-        <!-- Chat Container -->
-        <section class="chat-area" id="chatContainer">
-            <div class="msg ai">
-                <div class="avatar"><i class="fa-solid fa-brain"></i></div>
-                <div class="bubble">
-                    <b>Nexus Supreme System Activated.</b><br>
-                    यह ऑल-इन-वन ऐप सीधे आपके ब्राउज़र में चल रहा है। आपको किसी बैकएंड या कमांड लाइन की आवश्यकता नहीं है। नीचे सवाल पूछें या साइडबार के वित्तीय टूल्स का इस्तेमाल करें!
-                </div>
+        <section class="chat-container">
+            <div class="chat-bubble-ai">
+                <b>Nexus Master AI:</b> नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। फाइनेंस, क्वांट ट्रेडिंग, कोडिंग और यूनिवर्सल ज्ञान में सहायता के लिए तैयार हूँ।
             </div>
         </section>
 
-        <!-- Input Area -->
         <footer class="input-wrapper">
-            <textarea id="userInput" placeholder="यहाँ प्रश्न या कोड दर्ज करें... (Enter दबाएं)" onkeydown="handleKeyPress(event)"></textarea>
-            <button class="btn-send" onclick="submitQuery()"><i class="fa-solid fa-paper-plane"></i></button>
+            <div class="input-box">
+                <input type="text" placeholder="अपना सवाल दर्ज करें...">
+            </div>
         </footer>
     </main>
 
-    <script>
-        // ----------------------------------------------------------------------
-        // 1. EMBEDDED LOCAL STORAGE DB ENGINE
-        // ----------------------------------------------------------------------
-        const DB = {
-            saveLog: function(role, text) {
-                let logs = JSON.parse(localStorage.getItem('nexus_logs') || '[]');
-                logs.push({ id: Date.now(), role: role, text: text, time: new Date().toLocaleTimeString() });
-                localStorage.setItem('nexus_logs', JSON.stringify(logs));
-            },
-            getLogs: function() {
-                return JSON.parse(localStorage.getItem('nexus_logs') || '[]');
-            }
-        };
-
-        // ----------------------------------------------------------------------
-        // 2. EMBEDDED QUANT TRADING ENGINE (RSI & Technical Signals)
-        // ----------------------------------------------------------------------
-        function runQuantEngine() {
-            const prices = [100.0, 101.5, 99.0, 98.2, 97.5, 96.0, 95.2, 94.0, 93.5, 92.0, 91.0, 90.0, 89.5, 88.0, 91.5, 93.2, 95.0, 97.8];
-            
-            // Calculate 14-period RSI
-            let gains = 0, losses = 0;
-            for (let i = prices.length - 14; i < prices.length; i++) {
-                let diff = prices[i] - prices[i - 1];
-                if (diff >= 0) gains += diff;
-                else losses -= diff;
-            }
-            let rs = (gains / 14) / (losses / 14 === 0 ? 1 : (losses / 14));
-            let rsi = (100 - (100 / (1 + rs))).toFixed(2);
-
-            let currentPrice = prices[prices.length - 1];
-            let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "HOLD");
-            let target = (currentPrice * (signal === "STRONG_BUY" ? 1.08 : 0.95)).toFixed(2);
-            let stopLoss = (currentPrice * (signal === "STRONG_BUY" ? 0.96 : 1.03)).toFixed(2);
-
-            const widgetHTML = `
-                <div class="widget-box">
-                    <b style="color:var(--accent-purple);">[QUANT TRADING SIGNAL ENGINE RESULT]</b><br><br>
-                    • Asset Symbol: <b>NEXUS_ALPHA_50</b><br>
-                    • 14-Period RSI: <span class="quant-value">${rsi}</span><br>
-                    • Quant Decision: <b style="color:${signal==='STRONG_BUY'?'var(--accent-green)':'var(--accent-red)'};">${signal}</b><br>
-                    • Current Price: ₹${currentPrice}<br>
-                    • Recommended Target: ₹${target}<br>
-                    • Stop Loss Guard: ₹${stopLoss}
-                </div>
-            `;
-            appendMessage(widgetHTML, 'ai');
-        }
-
-        // ----------------------------------------------------------------------
-        // 3. FINANCIAL CALCULATORS (SIP & LOAN EMI)
-        // ----------------------------------------------------------------------
-        function calcSIP() {
-            let amount = parseFloat(prompt("Monthly SIP Investment (₹):", "10000")) || 10000;
-            let rate = parseFloat(prompt("Expected Annual Return Rate (%):", "12")) || 12;
-            let years = parseInt(prompt("Investment Tenure (Years):", "10")) || 10;
-
-            let r = (rate / 100) / 12;
-            let n = years * 12;
-            let invested = amount * n;
-            let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
-            let wealthGain = futureValue - invested;
-
-            const html = `
-                <div class="widget-box">
-                    <b style="color:var(--accent-cyan);">[SIP WEALTH PROJECTION RESULT]</b><br><br>
-                    • Monthly Investment: ₹${amount.toLocaleString()}<br>
-                    • Total Money Invested: ₹${invested.toLocaleString()}<br>
-                    • Estimated Wealth Gained: <span class="quant-value">₹${Math.round(wealthGain).toLocaleString()}</span><br>
-                    • <b>Total Future Corpus Value: ₹${Math.round(futureValue).toLocaleString()}</b>
-                </div>
-            `;
-            appendMessage(html, 'ai');
-        }
-
-        function calcEMI() {
-            let principal = parseFloat(prompt("Loan Principal Amount (₹):", "500000")) || 500000;
-            let rate = parseFloat(prompt("Annual Interest Rate (%):", "8.5")) || 8.5;
-            let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
-
-            let r = (rate / 12) / 100;
-            let n = years * 12;
-            let emi = (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-            let totalPayable = emi * n;
-            let totalInterest = totalPayable - principal;
-
-            const html = `
-                <div class="widget-box">
-                    <b style="color:var(--accent-purple);">[LOAN EMI CALCULATOR RESULT]</b><br><br>
-                    • Monthly Loan EMI: <span class="quant-value">₹${Math.round(emi).toLocaleString()}</span><br>
-                    • Principal Amount: ₹${principal.toLocaleString()}<br>
-                    • Total Interest Payable: ₹${Math.round(totalInterest).toLocaleString()}<br>
-                    • Total Repayment Amount: ₹${Math.round(totalPayable).toLocaleString()}
-                </div>
-            `;
-            appendMessage(html, 'ai');
-        }
-
-        // ----------------------------------------------------------------------
-        // 4. CHAT SYSTEM & INTERFACE LOGIC
-        // ----------------------------------------------------------------------
-        function handleKeyPress(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                submitQuery();
-            }
-        }
-
-        async function submitQuery() {
-            const inputField = document.getElementById('userInput');
-            const text = inputField.value.trim();
-            if (!text) return;
-
-            appendMessage(text, 'user');
-            DB.saveLog('user', text);
-            inputField.value = '';
-
-            const aiMsgId = 'ai-res-' + Date.now();
-            appendMessage("<i>प्रोसेसिंग जारी है...</i>", 'ai', aiMsgId);
-
-            try {
-                // Connect to Cloud AI Engine
-                const response = await puter.ai.chat(text, { model: 'deepseek-reasoner' });
-                const content = typeof response === 'string' ? response : response.message.content;
-                
-                const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                bubble.innerHTML = marked.parse(content);
-                hljs.highlightAll();
-                DB.saveLog('ai', content);
-
-            } catch (err) {
-                // Fallback Engine
-                const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                bubble.innerHTML = marked.parse(`**[Processed via Browser Core Engine]**\n\nCommand received: \`${text}\`.\n\nEverything is operational!`);
-                hljs.highlightAll();
-            }
-        }
-
-        function appendMessage(text, sender, id = null) {
-            const container = document.getElementById('chatContainer');
-            const row = document.createElement('div');
-            row.className = `msg ${sender}`;
-            if (id) row.id = id;
-
-            const icon = sender === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-brain"></i>';
-            row.innerHTML = `
-                <div class="avatar">${icon}</div>
-                <div class="bubble">${text}</div>
-            `;
-            
-            container.appendChild(row);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function switchTab(tab) {
-            if (tab === 'quant') {
-                runQuantEngine();
-            } else if (tab === 'db') {
-                let logs = DB.getLogs();
-                let html = `<b>[Browser DB Stored Logs (${logs.length} items)]</b><br><br>`;
-                logs.forEach(l => {
-                    html += `<small>[${l.time}] ${l.role}:</small> ${l.text.substring(0, 60)}...<br>`;
-                });
-                appendMessage(html, 'ai');
-            }
-        }
-    </script>
 </body>
 </html>
