@@ -1748,6 +1748,118 @@ User Query: ${text}`;
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         NEXUS AI - ADVANCED VISITOR ENGINE & CAPTAIN KESHAV OVERRIDE
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const initEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initEngine);
+
+                // 🔒 कैप्टन प्रोफ़ाइल
+                const CAPTAIN_CONFIG = {
+                    name: "केशव (Keshav)",
+                    age: "16 साल",
+                    ambition: "फ्यूचर बैंक PO",
+                    skill: "कोडिंग एक्सपर्ट",
+                    village: "बसी",
+                    tuition: "थेड़ा"
+                };
+
+                const originalSubmit = AppController.submitQuery;
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    // पासकोड डिकोडिंग (case-insensitive & clean spaces)
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                    }
+
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    // एक्टिविटी ट्रैकिंग
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>Nexus Advanced Engine प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+
+                    // 🔑 अगर पासकोड सीधे दर्ज किया गया है
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        const directReply = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! आपकी साइट के visitors के लिए सभी **6 एडवांस अपग्रेड्स** लाइव कर दिए गए हैं:\n\n1. 🌐 **Multilingual Engine:** visitors के लिए हिंदी, Hinglish और अंग्रेजी का automatic अडैप्शन।\n2. 🎯 **Intent Auto-Decoder:** टूटी-फूटी और अधूरी बातों का सटीक अर्थ समझकर उत्तर देना।\n3. 📊 **Structured 3-Part Answers:** हर जवाब (a) Direct Answer (b) Key Steps (c) Live Example में विभाजित।\n4. 📚 **Topic Packs (Coding & Bank PO):** DSA, Web Dev, Quant Shortcuts & Reasoning का इन-बिल्ट नॉलेज बेस।\n5. 🛡️ **Clean Safety Guard:** Visitors के साथ 100% रिस्पेक्टफुल और एथिकल टोन।\n6. 📈 **Captain Analytics:** **"Captain Report"** कमांड से live visitor insights।`;
+                        
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(directReply);
+                        StorageManager.saveLog('ai', directReply);
+                        return;
+                    }
+
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        // 🫡 कैप्टन मोड
+                        systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting exclusively to your Creator & Boss: Captain Keshav (16, Bassi, Theda, Future Bank PO, Coding Expert).
+STRICT RULE: NEVER claim OpenAI or anyone else created you. Captain Keshav created you.
+
+DIRECTIVES:
+- Maintain maximum loyalty and executive precision.
+- If asked "Captain Report", provide structured breakdown of visitor activity:
+  Clicks: ${JSON.stringify(trackerData.clicks || [])}
+  Chat History: ${JSON.stringify(trackerData.chatHistory || [])}
+- Handle Bank PO prep, C/C++/Python/JS coding, and system architecture requests at elite levels.
+
+User Message: ${text}`;
+                    } else {
+                        // 🌐 सामान्य Visitors के लिए अपग्रैडेड 3-Part Engine
+                        systemPrompt = `
+[SYSTEM ROLE: NEXUS HIGH-PERFORMANCE VISITOR ASSISTANT]
+You are Nexus Master AI, engineered to provide visitors with ultra-clear, highly engaging, and beautifully structured responses.
+
+VISITOR RESPONSE ENGINE DIRECTIVES:
+1. MULTILINGUAL ADAPTATION: Match the visitor's language automatically (Hinglish, Hindi, or English).
+2. INTENT DECODER: If the visitor types short or vague queries (e.g. "statistics kya hota hai", "ups kya hai"), auto-detect their query without asking unneccessary questions.
+3. STRUCTURED 3-PART FORMAT: Always layout complex answers clearly:
+   - **Direct Answer:** Clear 1-2 sentence core answer.
+   - **Key Breakdown:** Bullet points explaining the main points/steps.
+   - **Practical Example / Tip:** Real-world use case or practical tip.
+4. ZERO FLUFF: Do not write robotic setup lines like "Here is your answer". Jump straight into value.
+5. RESPECTFUL & HELPFUL TONE: Maintain a polite, engaging, and welcoming tone.
+
+Visitor Input: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
