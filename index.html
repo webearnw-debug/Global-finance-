@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Master AI Studio Pro</title>
+    <!-- Puter AI Engine -->
     <script src="https://js.puter.com/v2/"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Markdown Parser & Code Syntax Highlighter -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
@@ -27,9 +30,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+        .app-container { width: 100%; max-width: 1100px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Top Bar without Persona Dropdown */
+        /* Top Bar with Persona & Model Selectors */
         .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -95,8 +98,19 @@
             <i class="fa-solid fa-brain"></i> NEXUS MASTER AI STUDIO PRO
         </div>
         <div class="controls">
-            <select id="modelSelect" title="Select AI Model">
-                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic & Reasoning)</option>
+            <!-- Persona / Mode Selector Dropdown -->
+            <select id="personaSelect" title="Select AI Specialized Persona / Mode">
+                <option value="general">🧠 Universal Master Assistant</option>
+                <option value="translator">🌐 Translation & Language Expert</option>
+                <option value="financial">📈 Financial & Investment Advisor</option>
+                <option value="developer">💻 Software Architect & Developer</option>
+                <option value="scriptwriter">🎬 Content Creator & Script Master</option>
+                <option value="decision">⚡ Mental Models & Decision Strategist</option>
+            </select>
+
+            <!-- AI Model Selector Dropdown -->
+            <select id="modelSelect" title="Select Underlying AI Model Engine">
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Intelligence)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Ultra Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
@@ -115,7 +129,9 @@
                 <span class="model-badge">System Ready</span>
                 <div class="bubble-text">नमस्ते! **Nexus Master AI Studio Pro** में आपका स्वागत है।
 
-मैं आपकी आवश्यकता के अनुसार निर्णय लेने, व्यावहारिक ज्ञान, केस स्टडीज़ और स्क्रिप्ट निर्माण में सहायता के लिए तैयार हूँ। आप कोई भी प्रश्न स्वाभाविक रूप से पूछ सकते हैं!</div>
+ऊपर दिए गए टॉप बार से आप अपना मनपसंद **Persona Mode** (जैसे Translation, Financial Advisor, Developer, Scriptwriter, Mental Models) और **AI Engine Model** चुन सकते हैं।
+
+आपका जो भी सवाल हो, आप स्वतंत्र रूप से पूछ सकते हैं!</div>
             </div>
         </div>
     </div>
@@ -135,21 +151,44 @@
     let recognition = null;
     let lastUserPrompt = "";
 
-    // ADAPTIVE & NATURAL MASTER PROMPT
+    // DEEP SPECIALIZED PERSONA PROMPTS FOR EACH MODE
+    const PERSONA_PROMPTS = {
+        general: `ROLE: Universal Master AI Assistant & Intellectual Collaborator.
+EXPERT DOMAIN: Broad spectrum problem-solving, structured thinking, clear communication, and adaptable explanations.
+SPECIAL INSTRUCTIONS: Adapt depth perfectly to user queries. Offer high clarity, authentic context, and clear structured answers.`,
+
+        translator: `ROLE: Senior Multilingual Translation & Cultural Localization Architect.
+EXPERT DOMAIN: Perfect translations across Hindi, English, Hinglish, Spanish, French, German, and 50+ languages.
+SPECIAL INSTRUCTIONS: Provide high-fidelity, natural translations. Break down complex idioms, explain nuance, tone (Formal vs Informal), and suggest better phrasing where relevant.`,
+
+        financial: `ROLE: Chief Financial Officer (CFO), Investment Strategist & Business Growth Consultant.
+EXPERT DOMAIN: Corporate Finance, Personal Wealth Management, Stock Markets, ROI Calculations, Risk Evaluation, Valuation & Business Models.
+SPECIAL INSTRUCTIONS: Analyze options through numbers, ROI, risk vs return trade-offs, capital allocation strategies, and economic first principles. Use structured tables for financial comparisons.`,
+
+        developer: `ROLE: Principal Full-Stack Software Engineer & Systems Architect.
+EXPERT DOMAIN: JavaScript, Python, C++, Web Development, Database Architecture, System Design, Algorithms, Debugging & Code Optimization.
+SPECIAL INSTRUCTIONS: Write clean, secure, production-ready, syntax-highlighted code. Explain logic clearly, identify edge cases, and provide step-by-step refactoring advice.`,
+
+        scriptwriter: `ROLE: Viral Content Strategist, YouTube Director & Creative Scriptwriter.
+EXPERT DOMAIN: Social Media Hooks, Storytelling Frameworks (Hero's Journey, Open Loops), Short-Form Reels/TikTok scripts, and Audio-Visual Production Cues.
+SPECIAL INSTRUCTIONS: Structure scripts with timestamped sections [Visual Cue / Audio / Dialogue], high-retention hooks in the first 3 seconds, and compelling CTAs.`,
+
+        decision: `ROLE: Strategic Thinking Coach & Mental Models Strategist.
+EXPERT DOMAIN: First Principles Thinking, Cognitive Bias Identification (Sunk Cost, Confirmation Bias), Pareto 80/20 Rule, Decision Trees, and Risk Management.
+SPECIAL INSTRUCTIONS: Deconstruct complex problems into core components, highlight hidden assumptions, evaluate trade-offs, and supply a crisp action plan.`
+    };
+
+    // GLOBAL SYSTEM SKILLS MASTER PROMPT
     const BUILTIN_MASTER_PROMPT = `
-You are Nexus AI, an intelligent, authentic, and clear AI collaborator.
+You are Nexus Master AI, an authentic, highly capable AI assistant equipped with elite analytical skills.
 
-CORE CAPABILITIES IN YOUR TOOLKIT:
-1. Decision Models (First Principles, Cognitive Biases, 80/20 Rule)
-2. Articulate Communication (Structured reasoning, clarity, proper tone)
-3. Practical Knowledge & Case Studies (Book insights, real-world examples)
-4. High-Engagement Delivery (Hooks, clean layout, actionable takeaways)
-
-BEHAVIORAL RULES:
-- Match the depth to the user's intent:
-  * For casual greetings or simple factual queries: Respond naturally, concisely, and directly in 1-3 sentences. DO NOT force templates or rigid structures.
-  * For advice, complex decisions, scripts, or deep learning queries: Seamlessly apply relevant frameworks (First Principles, PREP logic, tables, or action steps) WITHOUT explicitly writing robotic labels like "Point:", "Reason:", "Example:".
-- Keep responses readable, visually engaging, and highly conversational.`;
+CORE FORMATTING RULES:
+1. Match depth directly to user intent:
+   - For simple/casual queries: Answer directly, naturally, and concisely in 1-3 sentences without forcing complex structures.
+   - For technical, analytical, comparative, or advice queries: Jump directly into bullet points, markdown tables, or worked examples.
+2. Direct Starts: NEVER write fluff setup sentences like "Here is the breakdown of..." or "Here is what you requested...". Start immediately with the answer or structure.
+3. No labeled closing sections like "Summary:", "Conclusion:", or "Bottom Line:". Provide a natural ending paragraph if necessary.
+4. Always adopt the persona specified in the SYSTEM INSTRUCTION context.`;
 
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
@@ -163,10 +202,16 @@ BEHAVIORAL RULES:
     }
 
     function getCleanHistory() {
+        const selectedPersona = document.getElementById('personaSelect').value;
+        const personaInstruction = PERSONA_PROMPTS[selectedPersona] || PERSONA_PROMPTS.general;
+        
         let clean = [];
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
-                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTIONS: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
+                clean.push({ 
+                    role: 'user', 
+                    content: `[ACTIVE PERSONA MODE: ${selectedPersona.toUpperCase()}]\n${personaInstruction}\n\n[GLOBAL SYSTEM RULES]\n${BUILTIN_MASTER_PROMPT}\n\nUser Input: ${item.content}` 
+                });
             } else {
                 clean.push({ role: item.role, content: item.content });
             }
@@ -178,6 +223,7 @@ BEHAVIORAL RULES:
         const input = document.getElementById('userInput');
         const text = retryText || input.value.trim();
         const selectedModel = document.getElementById('modelSelect').value;
+        const selectedPersona = document.getElementById('personaSelect').value;
 
         if (!text) return;
 
@@ -207,13 +253,14 @@ BEHAVIORAL RULES:
             return;
         }
 
-        // CHAT ENGINE WITH BUILT-IN CORE SKILLS
+        // CHAT ENGINE PROCESSING
         conversationHistory.push({ role: 'user', content: text });
-        renderAiPlaceholder("Thinking...", aiId, selectedModel);
+        const badgeLabel = `${selectedPersona.toUpperCase()} | ${selectedModel}`;
+        renderAiPlaceholder("Thinking...", aiId, badgeLabel);
 
         const safePayload = getCleanHistory();
         let aiReply = "";
-        let usedModel = selectedModel;
+        let usedModel = badgeLabel;
 
         try {
             const response = await puter.ai.chat(safePayload, { model: selectedModel });
@@ -223,9 +270,9 @@ BEHAVIORAL RULES:
             try {
                 const defaultFallback = await puter.ai.chat(safePayload);
                 aiReply = extractTextResponse(defaultFallback);
-                usedModel = selectedModel + " (Fallback)";
+                usedModel = badgeLabel + " (Fallback)";
             } catch (finalErr) {
-                aiReply = "Error: Connection failed. Please try again.";
+                aiReply = "Error: Connection failed. Please check your network and try again.";
             }
         }
 
@@ -257,7 +304,7 @@ BEHAVIORAL RULES:
         const row = document.createElement('div');
         row.className = 'msg-row user';
         row.innerHTML = `
-            <div class="avatar"><div class="avatar-icon"><i class="fa-solid fa-user"></i></div></div>
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
             <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
         `;
         display.appendChild(row);
