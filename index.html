@@ -50,7 +50,6 @@
             display: flex;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             height: 100dvh;
@@ -145,7 +144,6 @@
             color: var(--accent-cyan);
         }
 
-        /* Workspace & Chat Setup */
         .workspace {
             flex: 1;
             height: 100dvh;
@@ -231,7 +229,6 @@
             flex-shrink: 0;
         }
 
-        /* User Avatar Red & Blue Gradient with V */
         .user .avatar {
             background: linear-gradient(135deg, #ef4444, #3b82f6);
             color: #ffffff;
@@ -259,7 +256,6 @@
             color: #fff;
         }
 
-        /* Dynamic Cards */
         .widget-card {
             background: #070a13;
             border: 1px solid var(--border-color);
@@ -279,7 +275,6 @@
             gap: 6px;
         }
 
-        /* Action Buttons */
         .ai-action-bar {
             display: flex;
             align-items: center;
@@ -320,7 +315,6 @@
             background: rgba(248, 113, 113, 0.1);
         }
 
-        /* Inputs */
         .input-wrapper {
             padding: 12px 16px;
             background: var(--bg-surface);
@@ -484,8 +478,13 @@
                     </svg>
                 </div>
                 <div class="bubble">
-                    <b>Parnarav AI System Ready.</b><br>
-                    नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। कोडिंग, फाइनेंस, बैंक PO स्टडी और यूनिवर्सल नॉलेज के लिए तैयार हूँ।
+                    <b>🧠 Omni Super AI Engine Active!</b><br>
+                    नमस्ते! मैं आपका ऑल-इन-वन यूनिवर्सल AI हूँ।<br><br>
+                    <b>मैं इस मोड में आपकी ये मदद कर सकता हूँ:</b><br>
+                    • **General Knowledge:** विज्ञान, इतिहास और सामयिक विषयों पर पूरी जानकारी।<br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br>
+                    • **Content Creation:** लेख, ईमेल और आइडियाज जनरेट करना।<br><br>
+                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>
                 </div>
             </div>
         </section>
@@ -616,9 +615,6 @@
                 container.appendChild(row);
                 container.scrollTop = container.scrollHeight;
             },
-            appendSystemMsg: function(text) {
-                this.appendMsg(`<i>${text}</i>`, 'ai');
-            },
             renderActionBar: function(aiMsgId) {
                 const msgContainer = document.getElementById(aiMsgId);
                 if (!msgContainer) return;
@@ -639,15 +635,53 @@
             currentMode: 'OMNI',
 
             switchMode: function(mode, element) {
+                if (this.currentMode === mode) return;
                 this.currentMode = mode;
+                
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
                 
                 let titleName = "Omni Super AI Active";
-                if(mode === 'FINANCE') titleName = "Trading & Finance Active";
-                if(mode === 'DEV') titleName = "Coding Master Active";
+                let welcomeText = "";
+
+                if (mode === 'FINANCE') {
+                    titleName = "Trading & Finance Active";
+                    welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका एक्सपर्ट **फाइनेंस & ट्रेडिंग AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **Stock & Crypto:** मार्केट एनालिसिस और ट्रेंड प्रिडिक्शन।<br>
+                    • **Trading Strategies:** रिस्क मैनेजमेंट और क्वांट सिग्नल्स।<br>
+                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का हिसाब।<br>
+                    • **Personal Finance:** वेल्थ बिल्ड-अप और टैक्स सेविंग टिप्स।<br><br>
+                    <i>अपना फाइनेंस या ट्रेडिंग से जुड़ा सवाल यहाँ पूछें!</i>`;
+                } else if (mode === 'DEV') {
+                    titleName = "Coding Master Active";
+                    welcomeText = `<b>💻 Coding Master Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका **सॉफ्टवेयर इंजीनियर & कोडिंग AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **Code Generation:** HTML, CSS, JS, Python, C++, React का पूरा कोड।<br>
+                    • **Bug Fixing & Debugging:** आपके कोड के एरर खोजना और ठीक करना।<br>
+                    • **System Architecture:** डेटाबेस डिजाइन और API इंटीग्रेशन।<br>
+                    • **Code Optimization:** कोड की स्पीड और परफॉर्मेंस बेहतर करना।<br><br>
+                    <i>अपना कोड पेस्ट करें या कोई भी प्रोग्रामिंग सवाल पूछें!</i>`;
+                } else {
+                    titleName = "Omni Super AI Active";
+                    welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका **यूनिवर्सल ऑल-इन-वन AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **General Knowledge:** विज्ञान, दुनिया भर की जानकारी और रिसर्च।<br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश की तैयारी।<br>
+                    • **Writing & Creativity:** आर्टिकल्स, ईमेल्स और स्टोरीज जनरेट करना।<br><br>
+                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>`;
+                }
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+                
+                // Mode switcher automatic greeting message
+                const aiMsgId = 'ai-mode-' + Date.now();
+                UIManager.appendMsg(welcomeText, 'ai', aiMsgId);
+                UIManager.renderActionBar(aiMsgId);
+
                 this.closeSidebarMobile();
             },
 
@@ -721,7 +755,6 @@
                 const aiMsgId = 'ai-' + Date.now();
                 UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
 
-                // Specific Operating Mode System Prompts
                 let modePrompt = "";
                 if (this.currentMode === 'FINANCE') {
                     modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics. Respond strictly from a financial/trading perspective with deep analysis.";
