@@ -878,6 +878,79 @@ document.querySelectorAll('.tool-btn').forEach(button => {
         }
     });
 });
+// 🧠 OMNI SUPER AI DEEP INTERNAL KNOWLEDGE & REASONING ENGINE
+// (बिना UI/मेन्यू बदले Omni AI की अंदरूनी सोचने की क्षमता का अपग्रेड)
+
+const OmniInternalBrain = {
+    // 1. सवाल की कैटेगरी अपने आप पहचानना (Auto-Detection Engine)
+    detectCategory: function(query) {
+        const q = query.toLowerCase();
+        if (q.match(/math|solve|equation|reasoning|triangle|angle|speed|percentage|profit|loss|calculus|algebra|आयतन|क्षेत्रफल|गणित|हिसाब/)) {
+            return 'MATH_REASONING';
+        } else if (q.match(/history|geography|science|physics|chemistry|biology|space|planet|constitution|upsc|ssc|gk|इतिहास|विज्ञान|भूगोल|संविधान/)) {
+            return 'ACADEMIC_GK';
+        } else if (q.match(/essay|letter|email|story|script|summary|अनुच्छेद|पत्र|कहानी|निबंध/)) {
+            return 'CREATIVE_WRITING';
+        }
+        return 'UNIVERSAL_EXPERT';
+    },
+
+    // 2. कैटेगरी के आधार पर अंदरूनी नॉलेज और प्रॉम्प्ट को अपग्रेड करना
+    enhancePrompt: function(userQuery) {
+        const category = this.detectCategory(userQuery);
+        let internalKnowledge = "";
+
+        switch(category) {
+            case 'MATH_REASONING':
+                internalKnowledge = `\n[DEEP BRAIN MODE: MATHEMATICAL & LOGICAL REASONING SOLVER]
+                - Problem Type Identified: Math / Logical Reasoning.
+                - INSTRUCTION: Break down the problem systematically step-by-step.
+                - Show formula used, complete calculation steps, and highlight the FINAL ANSWER clearly in bold.
+                - Include a 1-line quick cross-check/verification method at the end.`;
+                break;
+
+            case 'ACADEMIC_GK':
+                internalKnowledge = `\n[DEEP BRAIN MODE: HIGH-LEVEL ACADEMIC & RESEARCH KNOWLEDGE]
+                - Domain Identified: Science / History / Geography / Competitive Exam Prep.
+                - INSTRUCTION: Provide comprehensive, highly accurate, and deeply researched facts.
+                - Format using bold subheadings, key bullet points, timelines, or fundamental principles.
+                - Add real-world applications or key exam points.`;
+                break;
+
+            case 'CREATIVE_WRITING':
+                internalKnowledge = `\n[DEEP BRAIN MODE: ADVANCED WRITING & CONTENT ARCHITECT]
+                - Domain Identified: Creative / Professional Writing.
+                - INSTRUCTION: Use refined vocabulary, flawless structure, and compelling tone.
+                - Format clearly with introduction, structured body, and clean conclusion.`;
+                break;
+
+            default:
+                internalKnowledge = `\n[DEEP BRAIN MODE: UNIVERSAL OMNI KNOWLEDGE ENGINE]
+                - INSTRUCTION: Provide an exhaustive, deeply informative, and clear answer.
+                - Cover the 'Why', 'How', and practical aspects of the topic.`;
+        }
+
+        return internalKnowledge;
+    }
+};
+
+// 3. AppController में Omni AI का अंदरूनी सिस्टम अपग्रेड करना Hook
+(function upgradeOmniEngine() {
+    const originalSubmit = AppController.submitQuery;
+    
+    AppController.submitQuery = async function() {
+        if (this.currentMode === 'OMNI') {
+            const inputEl = document.getElementById('userInput');
+            const queryText = inputEl ? inputEl.value.trim() : "";
+            
+            if (queryText) {
+                // ऑटोमैटिक अंदरूनी नॉलेज जोड़ना
+                this._omniDeepContext = OmniInternalBrain.enhancePrompt(queryText);
+            }
+        }
+        return originalSubmit.apply(this, arguments);
+    };
+})();
 
     </script>
     
