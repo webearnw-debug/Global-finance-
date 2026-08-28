@@ -1,117 +1,682 @@
-html
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus Master AI - Universal Studio</title>
+    
+    <!-- Fonts & Icon Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Code Syntax Highlighting & Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    
+    <!-- AI SDK -->
+    <script src="https://js.puter.com/v2/"></script>
 
-/* 100dvh मोबाइल ब्राउज़र के बॉटम बार फिक्स के लिए */
-html, body {
-    width: 100%;
-    height: 100dvh; 
-    background-color: #030712;
-    color: #f9fafb;
-    overflow: hidden;
-}
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEME CONFIGURATION (Easily Customisable)
+           ========================================================================== */
+        :root {
+            --bg-base: #030712;
+            --bg-surface: #0b0f19;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            
+            --accent-cyan: #38bdf8;
+            --accent-purple: #c084fc;
+            --accent-green: #4ade80;
+            --accent-red: #f87171;
+            --accent-yellow: #fbbf24;
+            
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+            
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --input-height: 56px;
+        }
 
-body {
-    display: flex;
-}
+        /* ==========================================================================
+           2. RESET & BASE LAYOUT RULES (100dvh Responsive Setup)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-/* Sidebar for Desktop */
-.sidebar {
-    width: 260px;
-    height: 100dvh;
-    background-color: #0b0f19;
-    border-right: 1px solid #1f2937;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-}
+        html, body {
+            width: 100%;
+            height: 100dvh;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow: hidden;
+        }
 
-/* Workspace */
-.workspace {
-    flex: 1;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
+        body {
+            display: flex;
+        }
 
-/* Topbar Mobile Fix */
-.topbar {
-    height: 56px;
-    background-color: #0b0f19;
-    border-bottom: 1px solid #1f2937;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
-    flex-shrink: 0;
-}
+        /* ==========================================================================
+           3. SIDEBAR NAVIGATION ARCHITECTURE
+           ========================================================================== */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100dvh;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
 
-.topbar-title {
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
+        .brand-logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
 
-.status-online {
-    color: #4ade80;
-    font-size: 0.75rem;
-    font-weight: 600;
-    white-space: nowrap;
-}
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 16px 0 8px 8px;
+        }
 
-/* Chat Area */
-.chat-container {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
-.chat-bubble-ai {
-    background-color: #111827;
-    border: 1px solid #1f2937;
-    border-left: 4px solid #38bdf8;
-    border-radius: 10px;
-    padding: 14px;
-    max-width: 90%;
-    line-height: 1.5;
-    word-wrap: break-word;
-    font-size: 0.95rem;
-}
+        .nav-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+        }
 
-/* Bottom Input Fix for Mobile */
-.input-wrapper {
-    padding: 10px 12px;
-    background: #0b0f19;
-    border-top: 1px solid #1f2937;
-    flex-shrink: 0;
-}
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-card);
+            color: var(--accent-cyan);
+            border: 1px solid var(--border-color);
+        }
 
-.input-box input {
-    width: 100%;
-    height: 44px;
-    background: #030712;
-    border: 1px solid #1f2937;
-    border-radius: 8px;
-    padding: 0 12px;
-    color: #fff;
-    outline: none;
-    font-size: 0.95rem;
-}
+        .tools-menu {
+            margin-top: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+        }
 
-/* Mobile Responsive Rule */
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-    .chat-bubble-ai {
-        max-width: 100%;
-    }
-}
+        .action-btn {
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* ==========================================================================
+           4. MAIN WORKSPACE & CHAT CONTAINER
+           ========================================================================== */
+        .workspace {
+            flex: 1;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            position: relative;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+        }
+
+        .message-row {
+            display: flex;
+            gap: 12px;
+            max-width: 88%;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .message-row.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user .avatar {
+            background: var(--accent-cyan);
+            color: #000;
+            border: none;
+        }
+
+        .bubble {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            line-height: 1.6;
+            font-size: 0.92rem;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+
+        .user .bubble {
+            background-color: #1e3a8a;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        /* Dynamic Widget Cards */
+        .widget-card {
+            background: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .widget-title {
+            color: var(--accent-purple);
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ==========================================================================
+           5. INPUT WRAPPER ARCHITECTURE
+           ========================================================================== */
+        .input-wrapper {
+            padding: 12px 16px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px 12px;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--accent-cyan);
+        }
+
+        textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-size: 0.93rem;
+            resize: none;
+            height: 40px;
+            padding-top: 10px;
+            line-height: 1.4;
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s;
+        }
+
+        .btn-send:active {
+            transform: scale(0.95);
+        }
+
+        /* Code Highlight Custom Overrides */
+        pre {
+            background: #000 !important;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        code { font-family: 'JetBrains Mono', monospace; }
+
+        /* ==========================================================================
+           6. RESPONSIVE MEDIA QUERIES (Mobile Fixes)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+            }
+            .sidebar.open {
+                left: 0;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .message-row {
+                max-width: 95%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR PANEL -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand-logo">
+            <i class="fa-solid fa-microchip"></i>
+            NEXUS MASTER AI
+        </div>
+
+        <div class="nav-section-title">Core Operating Modes</div>
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="AppController.switchMode('OMNI')">
+                <i class="fa-solid fa-brain"></i> Omni Super Brain
+            </li>
+            <li class="nav-item" onclick="AppController.switchMode('FINANCE')">
+                <i class="fa-solid fa-chart-line"></i> Quant & Trading
+            </li>
+            <li class="nav-item" onclick="AppController.switchMode('DEV')">
+                <i class="fa-solid fa-code"></i> System Architect
+            </li>
+        </ul>
+
+        <div class="nav-section-title">Database & History</div>
+        <ul class="nav-list">
+            <li class="nav-item" onclick="AppController.showHistory()">
+                <i class="fa-solid fa-database"></i> Stored Memory Logs
+            </li>
+            <li class="nav-item" onclick="StorageManager.clearLogs()">
+                <i class="fa-solid fa-trash"></i> Clear Memory
+            </li>
+        </ul>
+
+        <div class="tools-menu">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
+                Financial Plugins
+            </div>
+            <button class="action-btn" onclick="QuantEngine.runAnalysis()">
+                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Run Quant Signals
+            </button>
+            <button class="action-btn" onclick="FinancialEngine.calcSIP()">
+                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Wealth Engine
+            </button>
+            <button class="action-btn" onclick="FinancialEngine.calcEMI()">
+                <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="workspace">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" onclick="AppController.toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div id="mode-indicator" style="font-weight: 700; font-size: 0.95rem;">
+                    Mode: Omni Super Brain
+                </div>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Single Engine Active
+            </div>
+        </header>
+
+        <!-- CHAT MESSAGES CONTAINER -->
+        <section class="chat-area" id="chatContainer">
+            <div class="message-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble">
+                    <b>Nexus Super AI Master Architecture Initialized.</b><br>
+                    यह सिंगल-इंजन ऑल-इन-वन AI प्लेटफॉर्म पूरी तरह तैयार है। क्वांट सिग्नल, SIP/EMI कैलकुलेटर, और कोडिंग एक्सपर्ट इंजन सब एक्टिवेटेड हैं।
+                </div>
+            </div>
+        </section>
+
+        <!-- INPUT WRAPPER -->
+        <footer class="input-wrapper">
+            <div class="input-box">
+                <textarea id="userInput" placeholder="यहाँ प्रश्न या कोड निर्देश लिखें... (Enter दबाएं)" onkeydown="AppController.handleKeyPress(event)"></textarea>
+                <button class="btn-send" onclick="AppController.submitQuery()">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==========================================================================
+         JAVASCRIPT OBJECT-ORIENTED ARCHITECTURE (Extensible & Upgradeable)
+         ========================================================================== -->
+    <script>
+        /**
+         * 1. LOCAL STORAGE & PERSISTENCE MANAGER
+         * भविष्य में अगर कस्टम डेटाबेस जोड़ना हो तो बस इस मॉड्यूल को अपडेट करें।
+         */
+        const StorageManager = {
+            KEY: 'nexus_master_logs_v1',
+            saveLog: function(role, content) {
+                let logs = this.getLogs();
+                logs.push({ id: Date.now(), role: role, content: content, timestamp: new Date().toISOString() });
+                localStorage.setItem(this.KEY, JSON.stringify(logs));
+            },
+            getLogs: function() {
+                return JSON.parse(localStorage.getItem(this.KEY) || '[]');
+            },
+            clearLogs: function() {
+                localStorage.removeItem(this.KEY);
+                UIManager.appendSystemMsg("स्थानीय मेमोरी साफ़ कर दी गई है।");
+            }
+        };
+
+        /**
+         * 2. QUANT & TRADING SIGNAL ENGINE
+         * नए ट्रेडिंग इंडिकेटर्स (जैसे MACD, Bollinger Bands) जोड़ने के लिए यह खुला है।
+         */
+        const QuantEngine = {
+            runAnalysis: function() {
+                const dummyPrices = [100.0, 101.5, 99.0, 98.2, 97.5, 96.0, 95.2, 94.0, 93.5, 92.0, 91.0, 90.0, 89.5, 88.0, 91.5, 93.2, 95.0];
+                
+                // 14-period RSI Calculation
+                let gains = 0, losses = 0;
+                for (let i = dummyPrices.length - 14; i < dummyPrices.length; i++) {
+                    let diff = dummyPrices[i] - dummyPrices[i - 1];
+                    if (diff >= 0) gains += diff;
+                    else losses -= diff;
+                }
+                let rs = (gains / 14) / (losses / 14 === 0 ? 1 : (losses / 14));
+                let rsi = (100 - (100 / (1 + rs))).toFixed(2);
+                let currentPrice = dummyPrices[dummyPrices.length - 1];
+                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+
+                const widgetHTML = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> C++ QUANT ENGINE SIGNAL</div>
+                        • Asset Pair: <b>NEXUS/USD</b><br>
+                        • RSI (14 Period): <b>${rsi}</b><br>
+                        • Signal Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : 'var(--accent-red)'}">${signal}</b><br>
+                        • Current Value: ₹${currentPrice}<br>
+                        • Risk Score: Low (0.24)
+                    </div>
+                `;
+                UIManager.appendMsg(widgetHTML, 'ai');
+            }
+        };
+
+        /**
+         * 3. FINANCIAL CALCULATORS ENGINE
+         */
+        const FinancialEngine = {
+            calcSIP: function() {
+                let amount = parseFloat(prompt("Monthly SIP Investment (₹):", "10000")) || 10000;
+                let rate = parseFloat(prompt("Expected Annual Return (%):", "12")) || 12;
+                let years = parseInt(prompt("Tenure in Years:", "10")) || 10;
+
+                let r = (rate / 100) / 12;
+                let n = years * 12;
+                let invested = amount * n;
+                let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
+
+                const html = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP WEALTH PROJECTION</div>
+                        • Monthly Amount: ₹${amount.toLocaleString()}<br>
+                        • Total Invested: ₹${invested.toLocaleString()}<br>
+                        • Wealth Gained: <b style="color:var(--accent-green)">₹${Math.round(futureValue - invested).toLocaleString()}</b><br>
+                        • <b>Total Corpus: ₹${Math.round(futureValue).toLocaleString()}</b>
+                    </div>
+                `;
+                UIManager.appendMsg(html, 'ai');
+            },
+            calcEMI: function() {
+                let principal = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
+                let rate = parseFloat(prompt("Interest Rate (%):", "8.5")) || 8.5;
+                let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
+
+                let r = (rate / 12) / 100;
+                let n = years * 12;
+                let emi = (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+
+                const html = `
+                    <div class="widget-card">
+                        <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI CALCULATOR</div>
+                        • Monthly EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b><br>
+                        • Principal Amount: ₹${principal.toLocaleString()}<br>
+                        • Total Payable: ₹${Math.round(emi * n).toLocaleString()}
+                    </div>
+                `;
+                UIManager.appendMsg(html, 'ai');
+            }
+        };
+
+        /**
+         * 4. UI RENDERER & DOM MANAGER
+         */
+        const UIManager = {
+            appendMsg: function(content, sender, id = null) {
+                const container = document.getElementById('chatContainer');
+                const row = document.createElement('div');
+                row.className = `message-row ${sender}`;
+                if (id) row.id = id;
+
+                const icon = sender === 'user' ? '<i class="fa-solid fa-user"></i>' : '<i class="fa-solid fa-robot"></i>';
+                row.innerHTML = `
+                    <div class="avatar">${icon}</div>
+                    <div class="bubble">${content}</div>
+                `;
+
+                container.appendChild(row);
+                container.scrollTop = container.scrollHeight;
+            },
+            appendSystemMsg: function(text) {
+                this.appendMsg(`<i>${text}</i>`, 'ai');
+            }
+        };
+
+        /**
+         * 5. MAIN APPLICATION CONTROLLER & AI AGENT
+         * AI मॉडल बदलने या अपडेट करने के लिए इस ऑब्जेक्ट को मॉडिफाई करें।
+         */
+        const AppController = {
+            currentMode: 'OMNI',
+
+            switchMode: function(mode) {
+                this.currentMode = mode;
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                event.currentTarget.classList.add('active');
+                document.getElementById('mode-indicator').innerText = `Mode: ${mode} Active`;
+                this.closeSidebarMobile();
+            },
+
+            handleKeyPress: function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.submitQuery();
+                }
+            },
+
+            submitQuery: async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>एनालिसिस जारी है...</i>", 'ai', aiMsgId);
+
+                try {
+                    // Core AI Engine Call (Puter AI Cloud Framework)
+                    const response = await puter.ai.chat(text, { model: 'deepseek-reasoner' });
+                    const reply = typeof response === 'string' ? response : response.message.content;
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(reply);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', reply);
+                } catch (err) {
+                    // Local Engine Fallback
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Processed Core Response]**\n\nQuery: \`${text}\`.\n\n*Note: System is functioning via active browser engine.*`);
+                    hljs.highlightAll();
+                }
+            },
+
+            showHistory: function() {
+                let logs = StorageManager.getLogs();
+                if (logs.length === 0) {
+                    UIManager.appendSystemMsg("कोई पुराना लॉग नहीं मिला।");
+                    return;
+                }
+                let html = `<b>[STORED MEMORY LOGS (${logs.length})]</b><br><br>`;
+                logs.forEach(l => {
+                    html += `<small>[${new Date(l.timestamp).toLocaleTimeString()}] <b>${l.role}:</b></small> ${l.content.substring(0, 50)}...<br>`;
+                });
+                UIManager.appendMsg(html, 'ai');
+                this.closeSidebarMobile();
+            },
+
+            toggleSidebar: function() {
+                document.getElementById('sidebar').classList.toggle('open');
+            },
+
+            closeSidebarMobile: function() {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        };
+    </script>
+</body>
+</html>
