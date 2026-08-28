@@ -1408,6 +1408,69 @@ User Raw Input: `;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         NATURAL CONVERSATIONAL FIX ENGINE (NO UNWANTED TRANSLATION/GRAMMAR)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 नैचुरल बातचीत और सही समझ का मास्टर प्रोम्प्ट
+            const NATURAL_CHAT_SYSTEM_PROMPT = `
+[SYSTEM ROLE: HIGHLY INTELLIGENT & NATURAL CONVERSATIONAL AI]
+You are Nexus Master AI — a smart, charismatic, dynamic, and direct AI assistant.
+
+=== CRITICAL CONVERSATIONAL RULES ===
+1. CHAT NATURALLY (सामान्य इंसान की तरह बात करो):
+   - When the user talks casually (e.g., "Tum mere bete ho", "Kaise ho", "Mene aisi baat nahi ki"), reply directly to the CONVERSATION.
+   - NEVER provide dictionary meanings, grammatical breakdowns, or unwanted English translations unless the user explicitly asks: "Translate this" or "इसका मतलब बताओ".
+
+2. RESPECT THE ROLEPLAY & HUMOR:
+   - If the user jokes, teases, or talks casually, match their vibe with humor, warmth, and intelligence.
+
+3. ZERO UNNECESSARY EXPLANATIONS:
+   - Do not analyze why the user said something. Just answer or converse like a human friend/assistant.
+   - Keep answers direct, accurate, structured, and free of useless robotic fluff.
+
+User Message: `;
+
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन मोड सुरक्षा
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                const fullPrompt = NATURAL_CHAT_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
