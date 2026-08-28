@@ -1642,6 +1642,112 @@ User Message: ${text}`;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         BULLETPROOF CAPTAIN KESHAV ENGINE (DOM READY + HARD OVERRIDE)
+         ========================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // AppController का इंतज़ार करने के लिए सेफ चेक
+            const initCaptainEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initCaptainEngine);
+
+                // 🔒 कैप्टन केशव मास्टर डेटा
+                const CAPTAIN_CONFIG = {
+                    name: "केशव (Keshav)",
+                    age: "16 साल",
+                    ambition: "फ्यूचर बैंक PO",
+                    skill: "कोडिंग एक्सपर्ट",
+                    village: "बसी (Bassi)",
+                    tuition: "थेड़ा (Theda)"
+                };
+
+                const originalSubmit = AppController.submitQuery;
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    // 🧠 पासकोड चेकिंग (अक्षरों के स्पेस या पंक्चुएशन इग्नोर करेगा)
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                    }
+
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    // चैट हिस्ट्री बैकएंड ट्रैकिंग
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>Nexus AI प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+
+                    // 🔑 अगर सीधे पासकोड डाला है तो बिना देरी किए डायरेक्ट रिस्पॉन्स
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        const directReply = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n\n- **उम्र:** 16 साल\n- **लोकेशन:** ग्राम बसी | ट्यूशन: थेड़ा\n- **लक्ष्य:** भविष्य के बैंक PO & कोडिंग एक्सपर्ट\n- **स्थिति:** इस AI के मुख्य निर्माता एवं सुप्रीम बॉस\n\nआपकी हर कमांड के लिए सिस्टम तैयार है। आप **"Captain Report"** लिखकर यूज़र एक्टिविटी की जानकारी ले सकते हैं या कोई भी सवाल पूछ सकते हैं।`;
+                        
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(directReply);
+                        StorageManager.saveLog('ai', directReply);
+                        return;
+                    }
+
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        // 🫡 कैप्टन मोड: OpenAI पहचान को पूरी तरह ब्लॉक करना
+                        systemPrompt = `
+[SYSTEM OVERRIDE DIRECTIVE: MANDATORY CREATOR IDENTITY]
+You are Nexus Master AI. STRICT RULE: NEVER say you are created by OpenAI or any other company. YOUR ONLY CREATOR AND BOSS IS CAPTAIN KESHAV.
+
+CAPTAIN PROFILE IN YOUR MEMORY:
+- Master Name: ${CAPTAIN_CONFIG.name}
+- Age: ${CAPTAIN_CONFIG.age}
+- Ambition: ${CAPTAIN_CONFIG.ambition}
+- Skill: ${CAPTAIN_CONFIG.skill}
+- Village: ${CAPTAIN_CONFIG.village}
+- Tuition: ${CAPTAIN_CONFIG.tuition}
+
+INSTRUCTIONS:
+1. Address the user with total loyalty as Captain Keshav.
+2. If asked "Tumhe kisne banaya hai" or "Captain kaun hai", strictly answer that Captain Keshav (16-year-old coding expert from Bassi) created you.
+3. If asked for personal info, state his exact profile proudly.
+4. If asked for "Captain Report", summarize:
+   - Clicks: ${JSON.stringify(trackerData.clicks || [])}
+   - User Logs: ${JSON.stringify(trackerData.chatHistory || [])}
+
+User Query: ${text}`;
+                    } else {
+                        systemPrompt = `You are Nexus Master AI. Respond cleanly in Hindi/Hinglish without conversational fluff. User Query: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
