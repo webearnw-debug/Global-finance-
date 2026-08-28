@@ -1551,6 +1551,97 @@ FORMAT OF THE REPORT:
             };
         })();
     </script>
+    <!-- ==========================================================================
+         CAPTAIN KESHAV PERSISTENT MEMORY & EXECUTIVE ENGINE (FIXED)
+         ========================================================================== -->
+    <script>
+        (function() {
+            // 🔒 कैप्टन केशव की परमानेंट प्रोफ़ाइल
+            const CAPTAIN_CONFIG = {
+                passcode: "KESHAV_CAPTAIN_360!",
+                name: "केशव (Keshav)",
+                age: "16 साल",
+                ambition: "फ्यूचर बैंक PO (Bank PO)",
+                skill: "कोडिंग एक्सपर्ट (Coding Expert)",
+                village: "बसी (Bassi)",
+                tuition: "थेड़ा (Theda)"
+            };
+
+            if (typeof AppController === 'undefined') return;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // 1. पासवर्ड डालते ही कैप्टन मोड को हमेशा के लिए ऑन करना
+                if (text === CAPTAIN_CONFIG.passcode) {
+                    sessionStorage.setItem('isCaptainUnlocked', 'true');
+                }
+
+                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                // चैट इतिहास में सेव करना
+                if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                    window.ActivityTracker.addChat('User', text);
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus AI प्रोसेसिंग कर रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+
+                let systemPrompt = "";
+
+                if (isCaptainMode) {
+                    // 🧠 कैप्टन मोड: केशव भाई की पूरी जानकारी और पावरफुल मेमोरी
+                    systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ASSISTANT EXCLUSIVELY FOR CAPTAIN KESHAV]
+You are operating under ACTIVE CAPTAIN MODE. You personally know your Creator and Boss.
+
+CAPTAIN KESHAV'S PERSONAL PROFILE IN YOUR MEMORY:
+- Name: ${CAPTAIN_CONFIG.name}
+- Age: ${CAPTAIN_CONFIG.age}
+- Location/Village: ${CAPTAIN_CONFIG.village}
+- Tuition Center: ${CAPTAIN_CONFIG.tuition}
+- Career Ambition: ${CAPTAIN_CONFIG.ambition}
+- Core Skill: ${CAPTAIN_CONFIG.skill}
+- Role: Supreme Creator & Captain of this AI platform
+
+INSTRUCTIONS:
+1. ALWAYS treat the user as Captain Keshav with extreme loyalty, high respect, and professional brilliance.
+2. IF CAPTAIN ASKS FOR HIS PERSONAL INFORMATION: Detail his profile proudly (Name: Keshav, Age: 16, Village: Bassi, Tuition: Theda, Goal: Bank PO, Skill: Coding Expert).
+3. IF CAPTAIN ASKS FOR "Captain Report" OR USER ACTIVITY: Give an executive breakdown of the site analytics:
+   - Clicks: ${JSON.stringify(trackerData.clicks || [])}
+   - User History: ${JSON.stringify(trackerData.chatHistory || [])}
+4. Keep the tone sharp, charismatic, enterprise-level, and zero-fluff in Hindi/Hinglish.
+
+User Message: ${text}`;
+                } else {
+                    // 👤 सामान्य यूज़र मोड
+                    systemPrompt = `You are Nexus Master AI. Respond with high intelligence and zero fluff in Hindi/Hinglish. User Query: ${text}`;
+                }
+
+                try {
+                    const response = await puter.ai.chat(systemPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    const badge = isCaptainMode ? "🫡 **[CAPTAIN KESHAV MODE ACTIVE]**\n\n" : "";
+                    bubble.innerHTML = marked.parse(badge + replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
