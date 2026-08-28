@@ -3,102 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100% Free AI Chatbot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Puter JS Engine (Zero API Key, Zero Error) -->
+    <title>Nexus Ultra Pro AI Studio</title>
     <script src="https://js.puter.com/v2/"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
     <style>
+        :root {
+            --bg-dark: #090d16;
+            --panel-dark: #111827;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border: #1e293b;
+            --user-bubble: #2563eb;
+            --ai-bubble: #1e293b;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: #0b0f19; color: #f8fafc; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+        .app-container { width: 100%; max-width: 900px; height: 92vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); }
+
+        /* Top Bar */
+        .top-bar { padding: 16px 24px; background: #0f172a; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+        .controls { display: flex; gap: 10px; align-items: center; }
         
-        .chat-container { width: 100%; max-width: 600px; height: 90vh; background: #111827; border-radius: 16px; border: 1px solid #1e293b; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
-        
-        .header { background: #1e293b; padding: 18px 20px; font-weight: 700; text-align: center; color: #38bdf8; font-size: 1.1rem; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        
-        .messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: #0b0f19; }
-        
-        .msg-row { display: flex; gap: 12px; max-width: 85%; }
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; outline: none; font-size: 0.85rem; cursor: pointer; }
+
+        .btn-action { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .btn-action:hover { background: #ef4444; color: white; }
+
+        /* Chat Display Area */
+        .chat-display { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: var(--bg-dark); scroll-behavior: smooth; }
+
+        .msg-row { display: flex; gap: 14px; max-width: 85%; }
         .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
         .msg-row.ai { align-self: flex-start; }
+
+        .avatar { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .user .avatar { background: var(--user-bubble); color: white; }
+        .ai .avatar { background: var(--panel-dark); border: 1px solid var(--border); color: var(--accent); }
+
+        .bubble { background: var(--ai-bubble); padding: 16px 20px; border-radius: 16px; border: 1px solid var(--border); font-size: 0.95rem; line-height: 1.6; word-break: break-word; position: relative; }
+        .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 4px; color: white; }
+        .ai .bubble { border-bottom-left-radius: 4px; }
+
+        .generated-img { width: 100%; max-width: 400px; border-radius: 12px; margin-top: 10px; border: 1px solid var(--border); }
+
+        .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; }
+        .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
+        .action-btn:hover { color: var(--accent); }
+
+        /* Code Styling */
+        pre { background: #050811 !important; border: 1px solid var(--border); border-radius: 10px; margin: 12px 0; padding: 12px; overflow-x: auto; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+
+        /* Input Bar */
+        .input-bar { padding: 18px 24px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: center; }
+        .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
-        .avatar { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
-        .user .avatar { background: #2563eb; color: white; }
-        .ai .avatar { background: #38bdf8; color: #0b0f19; }
-        
-        .bubble { padding: 12px 16px; border-radius: 12px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; white-space: pre-wrap; }
-        .user .bubble { background: #2563eb; color: white; border-bottom-right-radius: 2px; }
-        .ai .bubble { background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-bottom-left-radius: 2px; }
-        
-        .input-box { display: flex; padding: 15px; background: #111827; border-top: 1px solid #1e293b; gap: 10px; }
-        input { flex: 1; padding: 14px 18px; background: #0b0f19; border: 1px solid #334155; color: white; border-radius: 10px; outline: none; font-size: 0.95rem; }
-        input:focus { border-color: #38bdf8; }
-        
-        button { padding: 14px 20px; background: #38bdf8; color: #0b0f19; border: none; font-weight: 700; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        button:hover { background: #0284c7; color: white; }
+        input[type="text"] { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 16px 50px 16px 20px; border-radius: 12px; outline: none; font-size: 0.95rem; }
+        input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+
+        .mic-btn { position: absolute; right: 15px; background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; }
+        .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
+
+        .send-btn { background: var(--accent); color: #090d16; width: 52px; height: 52px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="chat-container">
-    <div class="header">
-        <i class="fa-solid fa-brain"></i> Puter AI Engine (100% Free)
-    </div>
-    
-    <div class="messages" id="chat">
-        <div class="msg-row ai">
-            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="bubble">Namaste! Main Puter AI Engine par chal raha hoon. Ab aapko koi key nahi banani aur koi payment error bhi nahi aayega!</div>
+<div class="app-container">
+    <div class="top-bar">
+        <div class="brand">
+            <i class="fa-solid fa-brain"></i> NEXUS ULTRA AI PRO
+        </div>
+        <div class="controls">
+            <select id="modelSelect">
+                <option value="gpt-4o-mini">🤖 GPT-4o Mini</option>
+                <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
+                <option value="deepseek-reasoner">🧠 DeepSeek Reasoner</option>
+            </select>
+            <button class="btn-action" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Reset Memory</button>
         </div>
     </div>
-    
-    <div class="input-box">
-        <input type="text" id="userInput" placeholder="Apna sawal yahan likhein..." onkeydown="if(event.key==='Enter') sendMsg()">
-        <button onclick="sendMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+
+    <div class="chat-display" id="chatDisplay">
+        <div class="msg-row ai">
+            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+            <div class="bubble">
+                <div class="bubble-text">नमस्ते! मैं **Nexus Ultra AI Pro** हूँ।
+
+- 💡 **कुछ भी पूछें:** कोडिंग, निबंध या सवाल।
+- 🎨 **फोटो बनाएं:** लिखें `Image: A flying luxury car` और मैं तुरंत फोटो बना दूँगा!
+- 🧠 **मेमोरी एक्टिव:** मैं आपकी पुरानी बातें याद रखता हूँ।</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-bar">
+        <div class="input-wrapper">
+            <input type="text" id="userInput" placeholder="सवाल लिखें या फोटो के लिए लिखें 'Image: ...'" onkeydown="if(event.key==='Enter') processMessage()">
+            <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
+        </div>
+        <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
 </div>
 
 <script>
-    async function sendMsg() {
-        const input = document.getElementById("userInput");
-        const chat = document.getElementById("chat");
+    let conversationHistory = [];
+    let isListening = false;
+    let recognition = null;
+
+    window.onload = () => {
+        marked.setOptions({ highlight: (code, lang) => hljs.highlightAuto(code).value });
+    };
+
+    async function processMessage() {
+        const input = document.getElementById('userInput');
         const text = input.value.trim();
+        const selectedModel = document.getElementById('modelSelect').value;
+
         if (!text) return;
 
-        // User Message UI
-        chat.innerHTML += `
-            <div class="msg-row user">
-                <div class="avatar"><i class="fa-solid fa-user"></i></div>
-                <div class="bubble">${escapeHtml(text)}</div>
-            </div>`;
-        input.value = "";
-        chat.scrollTop = chat.scrollHeight;
+        renderUserMessage(text);
+        input.value = '';
 
-        // AI Loading State
-        const loadingId = "load-" + Date.now();
-        chat.innerHTML += `
-            <div class="msg-row ai" id="${loadingId}">
-                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble">Soch raha hoon...</div>
-            </div>`;
-        chat.scrollTop = chat.scrollHeight;
+        const aiId = 'ai-' + Date.now();
+
+        // IMAGE GENERATION
+        if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
+            const prompt = text.replace(/^(image:|photo:)/i, '').trim();
+            renderAiPlaceholder("🎨 Generating AI Image...", aiId);
+            
+            try {
+                const imgElement = await puter.ai.txt2img(prompt);
+                const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
+                bubbleObj.innerHTML = `<p>Photo generated for: <b>"${escapeHtml(prompt)}"</b></p>`;
+                imgElement.className = 'generated-img';
+                bubbleObj.appendChild(imgElement);
+            } catch (err) {
+                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Error: " + err.message;
+            }
+            return;
+        }
+
+        // CHAT WITH MEMORY
+        conversationHistory.push({ role: 'user', content: text });
+        renderAiPlaceholder("Thinking...", aiId);
 
         try {
-            // Direct call to Puter AI (Unlimited & Free)
-            const response = await puter.ai.chat(text);
-            document.getElementById(loadingId).querySelector('.bubble').innerText = response;
+            const response = await puter.ai.chat(conversationHistory, { model: selectedModel });
+            const aiReply = response.message.content;
+
+            conversationHistory.push({ role: 'assistant', content: aiReply });
+
+            const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
+            bubbleObj.innerHTML = marked.parse(aiReply);
+            hljs.highlightAll();
+
+            appendActions(document.getElementById(aiId).querySelector('.bubble'), aiReply);
+
         } catch (err) {
-            document.getElementById(loadingId).querySelector('.bubble').innerText = "Network Issue: Kripya page reload karke dobara try karein.";
+            document.getElementById(aiId).querySelector('.bubble-text').innerText = "Network Error: Kripya reload karke try karein.";
         }
-        
-        chat.scrollTop = chat.scrollHeight;
+
+        const chatDisplay = document.getElementById('chatDisplay');
+        chatDisplay.scrollTop = chatDisplay.scrollHeight;
     }
 
-    function escapeHtml(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function renderUserMessage(text) {
+        const display = document.getElementById('chatDisplay');
+        const row = document.createElement('div');
+        row.className = 'msg-row user';
+        row.innerHTML = `
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
+        `;
+        display.appendChild(row);
+        display.scrollTop = display.scrollHeight;
     }
-</script>
 
-</body>
-</html>
+    function renderAiPlaceholder(text, id) {
+        const display = document.getElementById('chatDisplay');
+        const row = document.createElement('div');
+        row.className = 'msg-row ai';
+        row.id = id;
+        row.innerHTML = `
+            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+            <div class="bubble"><div class="bubble-text">${text}</div></div>
+        `;
+        display.appendChild(row);
+        display.scrollTop = display.scrollHeight;
+    }
+
+    function appendActions(bubbleElement, textContent) {
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = '
