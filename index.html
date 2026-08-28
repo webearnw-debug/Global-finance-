@@ -450,7 +450,7 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
-                    Parnarav AI Engine Active
+                    Parnarav AI: Omni Super AI Active
                 </div>
             </div>
             <div class="status-badge">
@@ -641,6 +641,9 @@
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
                 
+                // पुरानी स्क्रीन साफ़ करना (ताकि कार्ड्स एक के नीचे एक न जुड़ें)
+                document.getElementById('chatContainer').innerHTML = '';
+
                 let titleName = "Omni Super AI Active";
                 let welcomeText = "";
 
@@ -677,7 +680,6 @@
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
                 
-                // Mode switcher automatic greeting message
                 const aiMsgId = 'ai-mode-' + Date.now();
                 UIManager.appendMsg(welcomeText, 'ai', aiMsgId);
                 UIManager.renderActionBar(aiMsgId);
