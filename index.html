@@ -3,132 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Master AI - Professional UI</title>
+    <title>Nexus Master AI</title>
     <style>
-        /* 1. Global Screen Dimension & Color Setup */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            /* बॉडी की पूरी लंबाई और चौड़ाई */
             width: 100vw;
             height: 100vh;
-            background-color: #030712; /* मुख्य बैकग्राउंड कलर */
+            background-color: #030712;
             color: #f9fafb;
             display: flex;
-            overflow: hidden; /* बाहरी स्क्रॉल बार बंद */
+            overflow: hidden;
         }
 
-        /* 2. Left Sidebar Layout */
+        /* Desktop Sidebar */
         .sidebar {
-            width: 280px; /* फिक्स चौड़ाई */
-            height: 100vh; /* पूरी लंबाई */
-            background-color: #0b0f19; /* डार्क सर्फेस कलर */
+            width: 260px;
+            height: 100vh;
+            background-color: #0b0f19;
             border-right: 1px solid #1f2937;
-            padding: 24px 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
-        /* 3. Main AI Workspace Layout */
+        /* Workspace */
         .workspace {
-            flex: 1; /* बची हुई पूरी चौड़ाई ऑटो-कवर करेगा */
-            height: 100vh; /* पूरी लंबाई */
+            flex: 1;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: #030712;
+            min-width: 0; /* Text wrap fix */
         }
 
-        /* 4. Top Header Bar */
         .topbar {
-            height: 64px; /* हेड की फिक्स लंबाई */
-            width: 100%;
+            height: 60px;
             background-color: #0b0f19;
             border-bottom: 1px solid #1f2937;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
+            padding: 0 16px;
+            flex-shrink: 0;
         }
 
-        /* 5. Central Chat Area (Dynamic Scroll Height) */
         .chat-container {
-            flex: 1; /* पूरी खाली लंबाई का उपयोग करेगा */
-            width: 100%;
-            max-width: 1100px; /* सेंटर अलाइनमेंट के लिए अधिकतम चौड़ाई */
-            margin: 0 auto;
-            padding: 24px;
-            overflow-y: auto; /* सिर्फ मैसेज एरिया स्क्रॉल होगा */
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
-        /* 6. User and AI Message Bubbles */
         .chat-bubble-ai {
-            background-color: #111827; /* कार्ड बैकग्राउंड */
+            background-color: #111827;
             border: 1px solid #1f2937;
-            border-left: 4px solid #38bdf8; /* नीयन सयान हाइलाइट */
-            border-radius: 12px;
-            padding: 16px 20px;
+            border-left: 4px solid #38bdf8;
+            border-radius: 10px;
+            padding: 14px;
             max-width: 85%;
-            line-height: 1.6;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
 
-        .chat-bubble-user {
-            background-color: #1e3a8a; /* यूज़र ब्लू बैकग्राउंड */
-            border-radius: 12px;
-            padding: 16px 20px;
-            max-width: 80%;
-            align-self: flex-end; /* राया साइड अलाइनमेंट */
-        }
-
-        /* 7. Bottom Input Box Wrapper */
         .input-wrapper {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 16px 24px 24px 24px;
-        }
-
-        .input-box {
-            width: 100%;
-            height: 56px; /* इनपुट बॉक्स की लंबाई */
-            background-color: #0b0f19;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
+            padding: 12px 16px;
+            background: #0b0f19;
+            border-top: 1px solid #1f2937;
+            flex-shrink: 0;
         }
 
         .input-box input {
             width: 100%;
-            background: transparent;
-            border: none;
+            height: 44px;
+            background: #030712;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 0 12px;
+            color: #fff;
             outline: none;
-            color: #ffffff;
-            font-size: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* --- MOBILE RESPONSIVE FIX --- */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none; /* मोबाइल पर साइडबार ऑटो-हाइड हो जाएगा */
+            }
+            .chat-bubble-ai {
+                max-width: 95%; /* मोबाइल पर मैसेज पूरा चौड़ा दिखेगा */
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- बायां नेविगेशन पैनल -->
     <aside class="sidebar">
-        <h2 style="color: #38bdf8; font-size: 1.2rem; margin-bottom: 20px;">NEXUS MASTER AI</h2>
-        <p style="color: #9ca3af; font-size: 0.9rem;">यूनिवर्सल AI स्टूडियो</p>
+        <h2 style="color: #38bdf8; font-size: 1.1rem;">NEXUS MASTER AI</h2>
+        <p style="color: #9ca3af; font-size: 0.85rem; margin-top: 5px;">यूनिवर्सल AI स्टूडियो</p>
     </aside>
 
-    <!-- मुख्य वर्कस्पेस -->
     <main class="workspace">
         <header class="topbar">
-            <span style="font-weight: 600;">Single Super AI Engine</span>
-            <span style="color: #4ade80; font-size: 0.85rem;">● Online</span>
+            <span style="font-weight: 600; font-size: 0.95rem;">Nexus Super AI Engine</span>
+            <span style="color: #4ade80; font-size: 0.8rem;">● Online</span>
         </header>
 
         <section class="chat-container">
