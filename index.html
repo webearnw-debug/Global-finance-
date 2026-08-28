@@ -417,11 +417,6 @@
 
         <div class="nav-section-title">Operating Modes</div>
         <ul class="nav-list">
-            <!-- 🫡 Captain Keshav Mode Option -->
-<li class="nav-item" onclick="AppController.switchMode('CAPTAIN', this)">
-    <i class="fa-solid fa-user-ninja" style="color:var(--accent-red)"></i> Captain Keshav Mode
-</li>
-
             <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
                 <i class="fa-solid fa-brain"></i> Omni Super AI
             </li>
@@ -514,9 +509,6 @@
             <div class="input-box">
                 <textarea id="userInput" placeholder="यहाँ अपना सवाल या पासवर्ड दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
                 <button class="btn-send" onclick="AppController.submitQuery()">
-                    
-}
-                    
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
@@ -863,104 +855,6 @@ User Query: ${text}`;
                 document.getElementById('sidebar').classList.remove('open');
             }
         };
-
-        // 📱 ऑटोमैटिक साइडबार क्लोजर (Auto-Close Sidebar System)
-
-// 1. स्क्रीन पर कहीं भी बाहर (Workspace/Chat Area) क्लिक करते ही मेन्यू बंद हो जाएगा
-document.addEventListener('click', function(event) {
-    const sidebar = document.getElementById('sidebar');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
-            sidebar.classList.remove('open');
-        }
-    }
-});
-
-// 2. साइडबार के किसी भी टूल बटन (SIP, Quant, Exam Solver आदि) पर क्लिक करते ही मेन्यू अपने आप बंद हो जाएगा
-document.querySelectorAll('.tool-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
-            AppController.closeSidebarMobile();
-        }
-    });
-});
-// 🧠 OMNI SUPER AI DEEP INTERNAL KNOWLEDGE & REASONING ENGINE
-// (बिना UI/मेन्यू बदले Omni AI की अंदरूनी सोचने की क्षमता का अपग्रेड)
-
-const OmniInternalBrain = {
-    // 1. सवाल की कैटेगरी अपने आप पहचानना (Auto-Detection Engine)
-    detectCategory: function(query) {
-        const q = query.toLowerCase();
-        if (q.match(/math|solve|equation|reasoning|triangle|angle|speed|percentage|profit|loss|calculus|algebra|आयतन|क्षेत्रफल|गणित|हिसाब/)) {
-            return 'MATH_REASONING';
-        } else if (q.match(/history|geography|science|physics|chemistry|biology|space|planet|constitution|upsc|ssc|gk|इतिहास|विज्ञान|भूगोल|संविधान/)) {
-            return 'ACADEMIC_GK';
-        } else if (q.match(/essay|letter|email|story|script|summary|अनुच्छेद|पत्र|कहानी|निबंध/)) {
-            return 'CREATIVE_WRITING';
-        }
-        return 'UNIVERSAL_EXPERT';
-    },
-
-    // 2. कैटेगरी के आधार पर अंदरूनी नॉलेज और प्रॉम्प्ट को अपग्रेड करना
-    enhancePrompt: function(userQuery) {
-        const category = this.detectCategory(userQuery);
-        let internalKnowledge = "";
-
-        switch(category) {
-            case 'MATH_REASONING':
-                internalKnowledge = `\n[DEEP BRAIN MODE: MATHEMATICAL & LOGICAL REASONING SOLVER]
-                - Problem Type Identified: Math / Logical Reasoning.
-                - INSTRUCTION: Break down the problem systematically step-by-step.
-                - Show formula used, complete calculation steps, and highlight the FINAL ANSWER clearly in bold.
-                - Include a 1-line quick cross-check/verification method at the end.`;
-                break;
-
-            case 'ACADEMIC_GK':
-                internalKnowledge = `\n[DEEP BRAIN MODE: HIGH-LEVEL ACADEMIC & RESEARCH KNOWLEDGE]
-                - Domain Identified: Science / History / Geography / Competitive Exam Prep.
-                - INSTRUCTION: Provide comprehensive, highly accurate, and deeply researched facts.
-                - Format using bold subheadings, key bullet points, timelines, or fundamental principles.
-                - Add real-world applications or key exam points.`;
-                break;
-
-            case 'CREATIVE_WRITING':
-                internalKnowledge = `\n[DEEP BRAIN MODE: ADVANCED WRITING & CONTENT ARCHITECT]
-                - Domain Identified: Creative / Professional Writing.
-                - INSTRUCTION: Use refined vocabulary, flawless structure, and compelling tone.
-                - Format clearly with introduction, structured body, and clean conclusion.`;
-                break;
-
-            default:
-                internalKnowledge = `\n[DEEP BRAIN MODE: UNIVERSAL OMNI KNOWLEDGE ENGINE]
-                - INSTRUCTION: Provide an exhaustive, deeply informative, and clear answer.
-                - Cover the 'Why', 'How', and practical aspects of the topic.`;
-        }
-
-        return internalKnowledge;
-    }
-};
-
-// 3. AppController में Omni AI का अंदरूनी सिस्टम अपग्रेड करना Hook
-(function upgradeOmniEngine() {
-    const originalSubmit = AppController.submitQuery;
-    
-    AppController.submitQuery = async function() {
-        if (this.currentMode === 'OMNI') {
-            const inputEl = document.getElementById('userInput');
-            const queryText = inputEl ? inputEl.value.trim() : "";
-            
-            if (queryText) {
-                // ऑटोमैटिक अंदरूनी नॉलेज जोड़ना
-                this._omniDeepContext = OmniInternalBrain.enhancePrompt(queryText);
-            }
-        }
-        return originalSubmit.apply(this, arguments);
-    
     </script>
-   
-
-    
 </body>
 </html>
