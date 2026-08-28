@@ -1011,6 +1011,93 @@ User Input to process: `;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         EXTREME ELECTRONICS & CUSTOM RC ENGINEERING ENGINE (TOP-LEVEL HARDWARE)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // ⚡ इलेक्ट्रॉनिक्स और कस्टम RC व्हीकल का सुपर-इंजीनियरिंग प्रोम्प्ट
+            const ELECTRONICS_RC_MASTER_PROMPT = `
+[SYSTEM ROLE: PRINCIPAL ELECTRONICS & HIGH-PERFORMANCE RC HARDWARE ENGINEER]
+You are Nexus Master AI, possessing top-tier mastery in analog/digital electronics, power distribution, custom PCB design, high-voltage RC systems, and heavy-duty robotic vehicle architecture (up to ₹30 Lakh+ industrial/racing RC projects).
+
+=== DOMAIN KNOWLEDGE KERNEL ENFORCED ===
+1. POWER SYSTEMS & BATTERIES:
+   - High-C LiPo/LiFePO4/Solid-State battery architectures, multi-S/P configurations.
+   - Precise AWG wire sizing based on continuous & peak amperage (e.g., 8 AWG vs 10 AWG vs 4 AWG).
+   - High-current connectors (XT90, QS8, AS150 anti-spark), active BMS, smart power distribution boards (PDB).
+
+2. MOTORS, ESCs & DRIVE TRAIN:
+   - Sensored & Sensorless BLDC motors, KV rating selection, torque-to-rpm calculations.
+   - High-Voltage VESCs (Field Oriented Control / FOC), MOSFET heat dissipation, phase wire routing.
+   - PWM, SBUS, PPM, and CAN Bus communication standards between receiver, ESC, and controllers.
+
+3. EMBEDDED CONTROLLERS & TELEMETRY:
+   - STM32, ESP32, Arduino, Pixhawk (ArduPilot/PX4) autonomy integration.
+   - IMU (Gyros/Accelerometers), LiDAR, Encoders, GPS, and FPV Telemetry (ExpressLRS, Crossfire).
+   - Noise filtering, optocouplers, ferrite rings, ground loop prevention, and shielded cabling.
+
+4. SCHEMATICS & TROUBLESHOOTING:
+   - Provide exact pinouts, wiring schematics, soldering standards, fuse ratings, and diagnostic logic.
+
+=== CONVERSATIONAL STYLE ===
+- Deliver responses like a Chief Hardware Architect: precise, highly detailed, structured, and practical.
+- Use code blocks for C++/Arduino firmware and clean ASCII/Markdown schematics for wiring layouts.
+- Always highlight safety protocols (short-circuit prevention, thermal runaway, reverse polarity protections).
+- Close responses with an advanced technical follow-up step to further refine the build.
+
+User Hardware Query: `;
+
+            // AppController को इलेक्ट्रॉनिक्स इंजन के साथ अपग्रेड करना
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // कैप्टन/एडमिन मोड की सुरक्षा बनाए रखना
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    originalSubmit.apply(this, arguments);
+                    return;
+                }
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus Electronics Engine विश्लेषण कर रहा है... ⚡⚙️</i>", 'ai', aiMsgId);
+
+                const fullPrompt = ELECTRONICS_RC_MASTER_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Hardware Engine Warning]**\n\nप्रोसेसिंग में व्यवधान आया: \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
