@@ -2229,6 +2229,218 @@ Visitor Input: ${text}`;
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         NEXUS AI - ACTION BUTTONS (LIKE, DISLIKE, COPY) + CAPTAIN ENGINE
+         ========================================================================== -->
+    <style>
+        /* एक्शन बटन्स की स्टाइलिंग */
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            user-select: none;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.1);
+        }
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.1);
+        }
+    </style>
+
+    <script>
+        // Copy functionality
+        window.copyAiResponse = function(btn) {
+            const bubble = btn.closest('.bubble');
+            if (!bubble) return;
+            
+            // एक्शन बार टेक्स्ट को छोड़कर केवल मैसेज कॉपी करें
+            const clone = bubble.cloneNode(true);
+            const bar = clone.querySelector('.ai-action-bar');
+            if (bar) bar.remove();
+            
+            const textToCopy = clone.innerText.trim();
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                btn.style.borderColor = '#4ade80';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.borderColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        };
+
+        // Like / Dislike functionality
+        window.toggleAiFeedback = function(btn, type) {
+            const parent = btn.parentElement;
+            const likeBtn = parent.querySelector('.like-btn');
+            const dislikeBtn = parent.querySelector('.dislike-btn');
+            
+            if (type === 'like') {
+                likeBtn.classList.toggle('like-active');
+                dislikeBtn.classList.remove('dislike-active');
+            } else if (type === 'dislike') {
+                dislikeBtn.classList.toggle('dislike-active');
+                likeBtn.classList.remove('like-active');
+            }
+        };
+
+        // Helper function to append action bar
+        function renderActionBar(aiMsgId) {
+            const msgContainer = document.getElementById(aiMsgId);
+            if (!msgContainer) return;
+            const bubble = msgContainer.querySelector('.bubble');
+            if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+
+            const actionBarHTML = `
+                <div class="ai-action-bar">
+                    <button class="action-btn copy-btn" onclick="copyAiResponse(this)">📋 Copy</button>
+                    <button class="action-btn like-btn" onclick="toggleAiFeedback(this, 'like')">👍 Like</button>
+                    <button class="action-btn dislike-btn" onclick="toggleAiFeedback(this, 'dislike')">👎 Dislike</button>
+                </div>
+            `;
+            bubble.insertAdjacentHTML('beforeend', actionBarHTML);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const initEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initEngine);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // 🔑 1. कैप्टन मोड ऑन (KESHAV_CAPTAIN_360!)
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const activateMsg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% लॉक हो गया है।\n- **नोट:** कैप्टन मोड केवल **\`EXIT_KESHAV_360!\`** कोड डालने पर ही बंद होगा।\n- **कमांड:** **"Captain Report"** लिखकर live visitors की रिपोर्ट देखें।`;
+                        
+                        UIManager.appendMsg(marked.parse(activateMsg), 'ai', aiMsgId);
+                        renderActionBar(aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', activateMsg);
+                        return;
+                    }
+
+                    // 🔒 2. कैप्टन मोड ऑफ (EXIT_KESHAV_360!)
+                    if (cleanInput.includes("exitkeshav360") || cleanInput.includes("keshavexit360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const deactivateMsg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसफलतापूर्वक लॉगआउट कर दिया गया है। सिस्टम अब सामान्य **Visitor Mode** में है।";
+                        
+                        UIManager.appendMsg(marked.parse(deactivateMsg), 'ai', aiMsgId);
+                        renderActionBar(aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', deactivateMsg);
+                        return;
+                    }
+
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>Nexus AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
+You are reporting ONLY to Captain Keshav (16, Bassi, Theda, Future Bank PO, Coding Expert).
+STRICT RULE: NEVER claim OpenAI or anyone else created you. Captain Keshav created you.
+
+DIRECTIVES:
+- Maintain high loyalty and executive precision.
+- If asked "Captain Report", summarize:
+  Clicks: ${JSON.stringify(trackerData.clicks || [])}
+  Chat History: ${JSON.stringify(trackerData.chatHistory || [])}
+- Handle Bank PO prep, C/C++/Python/JS coding, and architecture at elite levels.
+
+User Message: ${text}`;
+                    } else {
+                        systemPrompt = `
+[SYSTEM ROLE: NEXUS HIGH-PERFORMANCE VISITOR ASSISTANT]
+You are Nexus Master AI assisting a regular visitor. 
+STRICT RULES:
+1. NEVER address the user as "Captain" or "Captain Keshav".
+2. NEVER add any "[CAPTAIN MODE ACTIVE]" tag.
+3. Respond nicely in Hinglish/Hindi based on user request in a clear 3-part format.
+
+Visitor Input: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        
+                        // एक्शन बटन्स जोड़ें
+                        renderActionBar(aiMsgId);
+
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                        renderActionBar(aiMsgId);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
