@@ -855,6 +855,31 @@ User Query: ${text}`;
                 document.getElementById('sidebar').classList.remove('open');
             }
         };
+
+        // 📱 ऑटोमैटिक साइडबार क्लोजर (Auto-Close Sidebar System)
+
+// 1. स्क्रीन पर कहीं भी बाहर (Workspace/Chat Area) क्लिक करते ही मेन्यू बंद हो जाएगा
+document.addEventListener('click', function(event) {
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+            sidebar.classList.remove('open');
+        }
+    }
+});
+
+// 2. साइडबार के किसी भी टूल बटन (SIP, Quant, Exam Solver आदि) पर क्लिक करते ही मेन्यू अपने आप बंद हो जाएगा
+document.querySelectorAll('.tool-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            AppController.closeSidebarMobile();
+        }
+    });
+});
+
     </script>
+    
 </body>
 </html>
