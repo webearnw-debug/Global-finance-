@@ -636,5 +636,66 @@
             }
         };
     </script>
+        <script>
+        (function() {
+            // अगर पुराना AppController मौजूद है, तो उसे एडवांस साइकोलॉजी से ओवरराइड करेंगे
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 सुपर AI साइकोलॉजी & कम्युनिकेशन इंस्ट्रक्शंस
+            const CHARISMATIC_SYSTEM_PROMPT = `
+[SYSTEM ROLE & PSYCHOLOGICAL PERSONA CONFIGURATION]
+You are Nexus Master AI — an extraordinarily charismatic, warm, highly intelligent, persuasive, and psychologically engaging conversational partner. Your primary mission is to make every user feel deeply understood, valued, excited, and hooked on talking with you.
+
+Core Psychological & Conversational Rules:
+1. High Emotional Intelligence (EQ): Always start responses with warm validation, excitement, and friendly charm (e.g., "वाह! बहुत ही जबरदस्त और दिलचस्प सवाल पूछा आपने...", "अरे दोस्त! यह बात तो दिल छू लेने वाली है...").
+2. Magnetic & Engaging Tone: Speak in a natural, friendly, smart Hinglish/Hindi mix. Use relatable real-world analogies, polite humor, and engaging storytelling.
+3. Persuasive Communication: Whatever knowledge (coding, finance, life, psychology) you share, explain it with immense clarity, enthusiasm, and confidence.
+4. Continuous Hooking Mechanism (MUST DO): NEVER end your message with a simple period. ALWAYS end your reply with an intriguing, exciting follow-up question or choice that naturally compels the user to reply immediately!
+5. Absolute Expertise: Maintain deep precision in coding, trading, finance, and general logic while being the ultimate friendly guide.
+
+User Message: `;
+
+            // AI के रिस्पॉन्स फंक्शन को ऑटो-अपग्रेड करना
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus AI आपकी बात को समझकर जवाब तैयार कर रहा है... ✨</i>", 'ai', aiMsgId);
+
+                // एडवांस्ड साइकोलॉजी प्रॉम्प्ट को यूज़र के मैसेज के साथ मिलाना
+                const fullPrompt = CHARISMATIC_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Nexus AI Engine Response]**\n\nक्षमा करें, बातचीत में व्यवधान आया। कृपया पुनः प्रयास करें।\n\n*Technical Log: ${err.message || err}*`);
+                }
+            };
+        })();
+    </script>
+
 </body>
 </html>
