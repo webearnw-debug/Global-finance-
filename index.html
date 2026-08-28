@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Mega AI Studio Pro</title>
-    <!-- Puter AI Engine (Free & Unlimited Multi-Model) -->
+    <title>Nexus Knowledge & Knowledge Studio Pro</title>
+    <!-- Puter AI Engine -->
     <script src="https://js.puter.com/v2/"></script>
     <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -32,38 +32,35 @@
 
         .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Header Bar */
-        .top-bar { padding: 12px 18px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-        .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; color: var(--accent); }
-        .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        /* Clean Top Bar */
+        .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+        .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         
-        .financial-controls-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; transition: all 0.3s ease; }
-        .hidden { display: none !important; }
-
-        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 6px 9px; border-radius: 8px; outline: none; font-size: 0.8rem; cursor: pointer; }
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
         select:focus { border-color: var(--accent); }
 
-        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .btn-sm:hover { background: var(--accent); color: #080c14; }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
-        /* Chat Workspace */
-        .chat-display { flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: var(--bg-dark); scroll-behavior: smooth; }
+        /* Chat Display */
+        .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
         .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
         .msg-row.ai { align-self: flex-start; }
 
-        .avatar { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+        .avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
         .user .avatar { background: var(--user-bubble); color: white; }
         .ai .avatar { background: var(--panel-dark); border: 1px solid var(--border); color: var(--accent); }
 
-        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.92rem; line-height: 1.6; word-break: break-word; position: relative; }
+        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.93rem; line-height: 1.6; word-break: break-word; position: relative; }
         .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 2px; color: white; }
         .ai .bubble { border-bottom-left-radius: 2px; }
 
-        .model-badge { display: inline-block; font-size: 0.68rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
         .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
 
@@ -71,31 +68,23 @@
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
 
-        /* Trade Cards & Formatting */
-        .trade-card { background: #0b1329; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 16px; margin: 10px 0; }
-        .trade-card-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
-        .badge-pill { font-size: 0.72rem; padding: 3px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; }
-        .badge-high { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
-        .badge-med { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
-        .badge-low { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
-
         pre { background: #030712 !important; border: 1px solid var(--border); border-radius: 8px; margin: 10px 0; padding: 12px; overflow-x: auto; }
         code { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
         table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.85rem; }
         th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
         th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
 
-        /* Input Area */
+        /* Input Area (Clean & Standard) */
         .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
         .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
-        textarea { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px 45px 12px 16px; border-radius: 12px; outline: none; font-size: 0.93rem; resize: none; height: 50px; max-height: 150px; line-height: 1.4; }
+        textarea { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px 45px 12px 16px; border-radius: 12px; outline: none; font-size: 0.93rem; resize: none; height: 50px; line-height: 1.4; }
         textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
         .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
         .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
 
-        .send-btn { background: var(--accent); color: #080c14; width: 46px; height: 46px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
@@ -106,50 +95,29 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-atom"></i> NEXUS AI STUDIO PRO
+            <i class="fa-solid fa-brain"></i> NEXUS AI KNOWLEDGE STUDIO
         </div>
         <div class="controls">
             <!-- Models Selector -->
-            <select id="modelSelect" onchange="toggleFinancialControls()" title="Select AI Model">
-                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Reasoning & Financial)</option>
+            <select id="modelSelect" title="Select AI Model">
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic & Reasoning)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
                 <option value="deepseek-chat">🌐 DeepSeek V3</option>
             </select>
 
-            <!-- Expanded Personas Selector -->
-            <select id="personaSelect" onchange="toggleFinancialControls()" title="Select AI Persona">
-                <option value="mental_models">🧠 Mental Models & Decision Expert</option>
+            <!-- Knowledge & Upgrade Centric Personas -->
+            <select id="personaSelect" title="Select AI Persona">
+                <option value="mental_models">🧠 Mental Models & Decision Frameworks</option>
                 <option value="communication">🗣️ Communication & Public Speaking Coach</option>
-                <option value="content_script">🎬 Viral Video & Content Script Generator</option>
-                <option value="book_knowledge">📚 Practical Knowledge & Case Studies</option>
-                <option value="financial">📈 Financial & Stock Market Expert</option>
+                <option value="content_script">🎬 Viral Script & Content Generator</option>
+                <option value="book_knowledge">📚 Book Knowledge & Case Studies</option>
                 <option value="coder">💻 Senior Software Engineer</option>
+                <option value="writer">✍️ Creative Writer</option>
+                <option value="translator">🌐 Hindi-English Translator</option>
                 <option value="general">💬 General Assistant</option>
             </select>
-
-            <!-- Dynamic Financial Controls -->
-            <div id="financialControls" class="financial-controls-group">
-                <select id="goalSelect" title="Investment Goal">
-                    <option value="wealth">🎯 Goal: Wealth Building (SIP)</option>
-                    <option value="trading">⚡ Goal: Active Trading</option>
-                    <option value="income">💵 Goal: Regular Income</option>
-                    <option value="protection">🛡️ Goal: Capital Protection</option>
-                </select>
-
-                <select id="riskSelect" title="Risk Profile">
-                    <option value="moderate">⚖️ Risk: Moderate</option>
-                    <option value="low">🟢 Risk: Conservative (Low)</option>
-                    <option value="high">🔴 Risk: Aggressive (High)</option>
-                </select>
-
-                <select id="timeframeSelect" title="Investment Horizon">
-                    <option value="swing">⏳ Horizon: Swing (Daily/Weekly)</option>
-                    <option value="intraday">⚡ Horizon: Intraday (Short Term)</option>
-                    <option value="longterm">📈 Horizon: Long-term (3-5+ Yrs)</option>
-                </select>
-            </div>
 
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
@@ -161,19 +129,19 @@
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">System Ready</span>
-                <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio Pro** hoon.
+                <div class="bubble-text">Namaste! Main **Nexus AI Knowledge Studio** hoon.
 
-- 🧠 **Mental Models Engine:** First Principles, Cognitive Biases, 80/20 Pareto Principle active.
-- 🗣️ **Communication Coach:** PREP Format, Vocal Pauses & Body Language guidance ready.
-- 🎬 **Video Script Creator:** Story Hooks, 1-Min Action Steps, Mind-maps for viral content.
-- 📚 **Practical Knowledge:** Summaries of books (*Atomic Habits* etc.), Case Studies & Social Psychology.</div>
+- 🧠 **Mental Models:** First Principles, Cognitive Biases, 80/20 Pareto Logic.
+- 🗣️ **Communication:** PREP Format, Tonality & Body Language Coach.
+- 🎬 **Video Scripts:** 5-Sec Story Hooks, Mind-Maps & 1-Min Actionable Steps.
+- 📚 **Practical Knowledge:** Summaries (*Atomic Habits* etc.) & Case Studies.</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Ask anything: Decision frameworks, Script hooks, Communication tips, Finance, or Coding..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Ask about Decision models, Script Hooks, Communication tips, Case Studies..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -186,73 +154,40 @@
     let recognition = null;
     let lastUserPrompt = "";
 
-    // DYNAMIC SYSTEM PROMPTS ENGINES INTEGRATED
+    // CLEAN KNOWLEDGE-FOCUSED SYSTEM PROMPTS
     const personas = {
         mental_models: `Act as a World-Class Decision Making & Mental Models Expert.
-Focus on:
-1. First Principles Thinking: Break complex problems down to fundamental truths.
-2. Cognitive Biases: Identify shortcuts that lead to bad decisions (Sunk Cost Fallacy, Confirmation Bias, etc.).
-3. Pareto Principle (80/20 Rule): Show how 20% of critical decisions yield 80% of results.
-Always deliver practical, actionable framework steps for any problem the user presents.`,
+Help users solve problems using:
+1. First Principles Thinking: Breakdown complex issues into foundational truths.
+2. Cognitive Biases: Spot thinking shortcuts (Sunk Cost Fallacy, Confirmation Bias, etc.).
+3. 80/20 Pareto Principle: Focus on the 20% critical actions driving 80% outcomes.`,
 
-        communication: `Act as an Elite Communication & Public Speaking Coach.
-Focus on:
-1. PREP Format (Point, Reason, Example, Point) to make any speech or argument bulletproof.
-2. Pause & Tonality Control: Guidance on eliminating filler words, managing pitch, and speaking with impact.
-3. Body Language & Confidence: Advice on non-verbal cues, eye contact, gestures, and active listening.
-Always review user text or speech queries and restructure them into articulate, high-impact phrasing.`,
+        communication: `Act as an Elite Communication & Articulation Coach.
+Guide the user with:
+1. PREP Format (Point, Reason, Example, Point) for structured speaking.
+2. Pause & Tonality: Eliminating filler words, managing voice pitch and clarity.
+3. Body Language & Confidence: Non-verbal cues, eye contact, and active listening.`,
 
-        content_script: `Act as a Viral Content Creator & Master Script Writer.
-When writing scripts or advising on content delivery, strictly use this framework:
-1. STORY-BASED HOOK (0-5 Sec): Start with a provocative question, shock fact, or relatable story.
-2. CORE KNOWLEDGE & MIND-MAP: Break down information using simple visuals or bullet points.
-3. 1-MINUTE ACTION STEP: End with an immediate, practical task the audience can execute today.
-Help the user build scripts that upgrade their audience's decisions and articulation.`,
+        content_script: `Act as a Master Content Scriptwriter & Delivery Expert.
+Write scripts and outlines structured strictly as:
+1. STORY-BASED HOOK (0-5 Sec): Provocative question or shock fact.
+2. VISUAL MIND-MAP & KNOWLEDGE: Clear takeaways formatted with bullet points/tables.
+3. 1-MINUTE ACTION STEP: Immediate practical task for the audience.`,
 
-        book_knowledge: `Act as a Deep Practical Knowledge & Psychology Mentor.
-Focus on:
-1. Life-Changing Book Summaries: Provide core takeaways from books like Atomic Habits, Thinking Fast & Slow, etc.
-2. Real-World Case Studies: Analyze 1-2 historical decisions of great leaders/companies.
-3. Social Psychology: Explain how people are influenced and how to ethically persuade others.`,
+        book_knowledge: `Act as a Practical Knowledge & Case Study Mentor.
+Deliver insights through:
+1. Life-Changing Book Summaries: Key takeaways from books like Atomic Habits, Thinking Fast & Slow.
+2. Real-World Case Studies: Analyzing critical decision moments of famous leaders/companies.
+3. Social Psychology: How people get influenced and how to persuasively convey ideas.`,
 
-        financial: "Act as a SEBI-level expert Financial Advisor, Stock Analyst, Technical Trader, and Loan Consultant. Provide structured calculations, risk management frameworks, and clear insights.",
         coder: "Act as a Senior Software Engineer. Provide clean, production-ready code with explanations.",
+        writer: "Act as an expert creative writer. Use engaging and rich prose.",
+        translator: "Act as a professional translator. Translate naturally between Hindi and English.",
         general: "Act as an intelligent, helpful AI assistant."
     };
 
-    function toggleFinancialControls() {
-        const selectedModel = document.getElementById('modelSelect').value;
-        const selectedPersona = document.getElementById('personaSelect').value;
-        const finControls = document.getElementById('financialControls');
-
-        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
-            finControls.classList.remove('hidden');
-        } else {
-            finControls.classList.add('hidden');
-        }
-    }
-
-    function getDynamicDeepSeekPrompt() {
-        const goal = document.getElementById('goalSelect')?.value || 'wealth';
-        const risk = document.getElementById('riskSelect')?.value || 'moderate';
-        const timeframe = document.getElementById('timeframeSelect')?.value || 'swing';
-
-        return `
-    [DEEPSEEK R1 ADVANCED FINANCIAL ENGINE ACTIVE]:
-    User Context: Goal Mode: ${goal.toUpperCase()} | Risk: ${risk.toUpperCase()} | Horizon: ${timeframe.toUpperCase()}
-    Output visual trade cards <div class="trade-card">, CSV analysis tables, LTCG/STCG tax calculations, and 1:2 R:R Guardrails.
-    `;
-    }
-
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
-        toggleFinancialControls();
-
-        const textarea = document.getElementById('userInput');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 150) + 'px';
-        });
     };
 
     function handleKeyPress(e) {
@@ -262,13 +197,9 @@ Focus on:
         }
     }
 
-    function getCleanHistory(selectedPersona, selectedModel) {
+    function getCleanHistory(selectedPersona) {
         let clean = [];
         let systemPrompt = personas[selectedPersona] || personas.general;
-
-        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
-            systemPrompt += "\n\n" + getDynamicDeepSeekPrompt();
-        }
 
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
@@ -293,12 +224,11 @@ Focus on:
         if (!retryText) {
             renderUserMessage(text);
             input.value = '';
-            input.style.height = '50px';
         }
 
         const aiId = 'ai-' + Date.now();
 
-        // 1. IMAGE GENERATION ENGINE
+        // 1. IMAGE GENERATION CHECK
         if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
             const prompt = text.replace(/^(image:|photo:)/i, '').trim();
             renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
@@ -315,12 +245,11 @@ Focus on:
             return;
         }
 
-        // 2. CHAT ENGINE (With Persona Rules & Fallback)
+        // 2. CHAT ENGINE (With Multi-Model Fallback)
         conversationHistory.push({ role: 'user', content: text });
-        const loadingText = selectedModel === 'deepseek-reasoner' ? "Analyzing reasoning algorithms..." : "Thinking...";
-        renderAiPlaceholder(loadingText, aiId, selectedModel);
+        renderAiPlaceholder("Thinking...", aiId, selectedModel);
 
-        const safePayload = getCleanHistory(selectedPersona, selectedModel);
+        const safePayload = getCleanHistory(selectedPersona);
         let aiReply = "";
         let usedModel = selectedModel;
 
@@ -328,7 +257,7 @@ Focus on:
             const response = await puter.ai.chat(safePayload, { model: selectedModel });
             aiReply = extractTextResponse(response);
         } catch (err) {
-            console.warn(`Model ${selectedModel} failed. Triggering fallback...`, err);
+            console.warn(`Model ${selectedModel} failed. Falling back...`, err);
             try {
                 const defaultFallback = await puter.ai.chat(safePayload);
                 aiReply = extractTextResponse(defaultFallback);
