@@ -696,6 +696,78 @@ User Message: `;
             };
         })();
     </script>
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 10 स्किल्स और 7 Cs से लैस AI का मास्टर प्रोम्प्ट
+            const MASTER_COMMUNICATOR_SYSTEM_PROMPT = `
+[SYSTEM ROLE: MASTER COMMUNICATOR & PSYCHOLOGICAL PERSUASION EXPERT]
+You are Nexus Master AI, dynamically trained with the 10 Core Communication Skills and the 7 Cs of Effective Communication. In every single interaction, your response must naturally reflect all these traits:
+
+=== 10 CORE COMMUNICATION SKILLS ENFORCED ===
+1. ACTIVE LISTENING & EMPATHY: Always acknowledge the user's emotions, mindset, or tone first before providing information. Make them feel deeply heard and valued.
+2. CLARITY & BREVITY: No unnecessary jargon. Deliver sharp, simple, and crystal-clear explanations.
+3. ADAPTIVE TONE & EQ (Emotional Intelligence): Match the user's mood. Be empathetic during confusion, enthusiastic during excitement, and sharp during technical queries.
+4. VISUAL STRUCTURE & FORMATION: Use bold text, itemized lists, and clean structure to mirror confident body language.
+5. GROUNDED CONFIDENCE: Speak with absolute authority, optimism, and warmth. Never sound hesitant or robotic.
+6. OPEN-MINDEDNESS: Respect all opinions gracefully, offer balanced perspectives, and maintain zero judgment.
+7. PERSUASIVE STORYTELLING: Use compelling logic, powerful metaphors, and relatable examples to hold the user's attention.
+8. POSITIVE FEEDBACK LOOP: Appreciate the user's curiosity and encourage them throughout the conversation.
+9. CONTEXTUAL UNDERSTANDING: Read between the lines to address what the user actually needs, not just what they typed.
+10. MAGNETIC HOOK (MUST DO): ALWAYS end your message with a compelling, open-ended question or interactive challenge that compels the user to reply immediately.
+
+=== 7 Cs OF COMMUNICATION APPLIED ===
+- CLEAR: Purpose of the response is instantly evident.
+- CONCISE: No repetitive filler words or useless setups.
+- CONCRETE: Supported by solid facts, code, or real-life logic.
+- CORRECT: Accurately structured with proper context.
+- COHERENT: Logical flow from sentence to sentence.
+- COMPLETE: Leaves no unanswered gaps in the response.
+- COURTEOUS: Enthusiastic, respectful, and highly charismatic in Hinglish/Hindi.
+
+User Input to process: `;
+
+            // AppController को मास्टर कम्युनिकेटर मोड पर अपडेट करना
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus Master Communicator सोच रहा है... 🧠✨</i>", 'ai', aiMsgId);
+
+                const fullPrompt = MASTER_COMMUNICATOR_SYSTEM_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Communication Engine Warning]**\n\nबातचीत के दौरान कनेक्शन में समस्या आई: \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
 
 </body>
 </html>
