@@ -3616,6 +3616,301 @@ Act as a Master Universal Intelligence & Analytical Expert.
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         PARNARAV AI - 100% WORKING 3-MODE INTERCEPTOR ENGINE
+         ========================================================================== -->
+    <style>
+        .parnarav-brain-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5));
+        }
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.15);
+        }
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.15);
+        }
+        .mode-active-glow {
+            background: rgba(59, 130, 246, 0.25) !important;
+            border-left: 3px solid #3b82f6 !important;
+        }
+    </style>
+
+    <script>
+        // Red & Blue Brain SVG Icon
+        function getParnaravBrainSVG() {
+            return `
+            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="leftRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4d4d" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                    </linearGradient>
+                    <linearGradient id="rightBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                </defs>
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftRed)" />
+                <path d="M22 22C19 22 17 24 18 27C19 30 22 30 20 34C18 38 23 40 25 38" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBlue)" />
+                <path d="M42 22C45 22 47 24 46 27C45 30 42 30 44 34C46 38 41 40 39 38" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+            </svg>`;
+        }
+
+        // Action Bar Handlers (Copy/Like/Dislike)
+        window.copyAiResponse = function(btn) {
+            const bubble = btn.closest('.bubble');
+            if (!bubble) return;
+            const clone = bubble.cloneNode(true);
+            const bar = clone.querySelector('.ai-action-bar');
+            if (bar) bar.remove();
+            
+            navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                const old = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                setTimeout(() => btn.innerHTML = old, 2000);
+            });
+        };
+
+        window.toggleAiFeedback = function(btn, type) {
+            const bar = btn.parentElement;
+            const l = bar.querySelector('.like-btn');
+            const d = bar.querySelector('.dislike-btn');
+            if (type === 'like') { l.classList.toggle('like-active'); d.classList.remove('dislike-active'); }
+            if (type === 'dislike') { d.classList.toggle('dislike-active'); l.classList.remove('like-active'); }
+        };
+
+        function addActionButtons(aiMsgId) {
+            const msg = document.getElementById(aiMsgId);
+            if (!msg) return;
+            const bubble = msg.querySelector('.bubble');
+            if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+
+            bubble.insertAdjacentHTML('beforeend', `
+                <div class="ai-action-bar">
+                    <button class="action-btn copy-btn" onclick="copyAiResponse(this)">📋 Copy</button>
+                    <button class="action-btn like-btn" onclick="toggleAiFeedback(this, 'like')">👍 Like</button>
+                    <button class="action-btn dislike-btn" onclick="toggleAiFeedback(this, 'dislike')">👎 Dislike</button>
+                </div>
+            `);
+        }
+
+        // Sidebar Auto-Close Trigger
+        function closeSidebarMenu() {
+            const sidebar = document.querySelector('.sidebar, #sidebar, .drawer, .nav-menu');
+            const overlay = document.querySelector('.overlay, .sidebar-overlay, .backdrop');
+            
+            if (sidebar) sidebar.classList.remove('active', 'open', 'show', 'visible');
+            if (overlay) {
+                overlay.classList.remove('active', 'open', 'show', 'visible');
+                overlay.style.display = 'none';
+            }
+
+            const hamburger = document.querySelector('.menu-toggle, #menuToggle, .hamburger, [data-toggle="sidebar"]');
+            if (hamburger && sidebar && (sidebar.classList.contains('active') || sidebar.classList.contains('open'))) {
+                try { hamburger.click(); } catch(e){}
+            }
+        }
+
+        // Mode Switching Engine
+        window.currentParnaravMode = sessionStorage.getItem('activeParnaravMode') || 'omni';
+
+        function switchParnaravMode(modeTarget) {
+            if (window.currentParnaravMode === modeTarget && sessionStorage.getItem('activeParnaravMode')) {
+                closeSidebarMenu();
+                return;
+            }
+
+            window.currentParnaravMode = modeTarget;
+            sessionStorage.setItem('activeParnaravMode', modeTarget);
+
+            // Update Top Green Status Badge Immediately
+            updateTopBadgeUI();
+
+            // Auto Close Menu
+            closeSidebarMenu();
+
+            const modeNames = {
+                'omni': 'Omni Super AI (यूनिवर्सल रीजनिंग, GK & Bank PO)',
+                'finance': 'Trading & Finance (मार्केट एनालिस्ट, Risk & Quant)',
+                'coding': 'Coding Master (सीनियर कोडिंग & सॉफ्टवेयर आर्किटेक्ट)'
+            };
+            
+            const aiMsgId = 'ai-' + Date.now();
+            UIManager.appendMsg(marked.parse(`⚡ **[MODE ACTIVATED]**\n\n**Parnarav AI** अब **${modeNames[modeTarget]}** मोड पर सफलतापूर्वक स्विच हो गया है!`), 'ai', aiMsgId);
+            addActionButtons(aiMsgId);
+        }
+
+        function updateTopBadgeUI() {
+            // Update Top Title Header
+            const titleEls = document.querySelectorAll('.header-title, .title, h1, h2');
+            titleEls.forEach(el => {
+                if (el.innerText.includes('Nexus') || el.innerText.includes('Engine') || el.innerText.includes('Master')) {
+                    el.innerHTML = `${getParnaravBrainSVG()} <span>Parnarav AI Engine</span>`;
+                }
+            });
+
+            // Update Top Right Status Badge
+            const badges = document.querySelectorAll('.badge, .status-badge, .status, #superAiStatus');
+            const badgeLabels = {
+                'omni': '🟢 Omni Super AI Active',
+                'finance': '🟢 Trading & Finance Active',
+                'coding': '🟢 Coding Master Active'
+            };
+
+            badges.forEach(b => {
+                if (b.innerText.includes('Active') || b.innerText.includes('Super AI') || b.innerText.includes('Trading')) {
+                    b.innerText = badgeLabels[window.currentParnaravMode] || '🟢 Parnarav Active';
+                }
+            });
+        }
+
+        // Global High-Priority Click Interceptor (Guarantees every mode click works)
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('li, button, a, div, span');
+            if (!target) return;
+
+            const text = (target.innerText || "").toLowerCase().trim();
+
+            if (text.includes('omni super ai') || (text.includes('omni') && text.includes('ai'))) {
+                e.stopPropagation();
+                switchParnaravMode('omni');
+            } else if (text.includes('trading & finance') || text.includes('trading') || text.includes('finance')) {
+                e.stopPropagation();
+                switchParnaravMode('finance');
+            } else if (text.includes('coding master') || text.includes('coding')) {
+                e.stopPropagation();
+                switchParnaravMode('coding');
+            }
+        }, true); // Capture phase ensures bypass of broken click listeners
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTopBadgeUI();
+            setInterval(updateTopBadgeUI, 500);
+
+            // Click outside to dismiss menu
+            document.addEventListener('click', function(e) {
+                const sidebar = document.querySelector('.sidebar, #sidebar, .drawer');
+                const hamburger = document.querySelector('.menu-toggle, #menuToggle, .hamburger');
+                if (sidebar && (sidebar.classList.contains('open') || sidebar.classList.contains('active'))) {
+                    if (!sidebar.contains(e.target) && (!hamburger || !hamburger.contains(e.target))) {
+                        closeSidebarMenu();
+                    }
+                }
+            });
+
+            const initInterval = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initInterval);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // Captain Login
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! **Parnarav AI Engine** सक्रिय है।`;
+                        UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    // Captain Exit
+                    if (cleanInput.includes("exitkeshav360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\n**Parnarav AI** सामान्य मोड में वापस आ गया है।";
+                        UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    const isCaptain = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    UIManager.appendMsg(text, 'user');
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg(`<i>${getParnaravBrainSVG()} Parnarav AI सोच रहा है... ⚡</i>`, 'ai', aiMsgId);
+
+                    // Dynamic Prompts for each Mode
+                    let modeInstruction = "";
+                    if (window.currentParnaravMode === 'finance') {
+                        modeInstruction = `[MODE: TRADING & QUANT FINANCE EXPERT] Act as a Financial Analyst. Address stocks, risk, SIP calculations, EMI, and trading strategies directly.`;
+                    } else if (window.currentParnaravMode === 'coding') {
+                        modeInstruction = `[MODE: SENIOR CODING MASTER] Act as a Principal Software Engineer. Provide production-ready C++, Python, JavaScript code, optimize algorithms, and debug errors.`;
+                    } else {
+                        modeInstruction = `[MODE: OMNI SUPER AI] Act as a Universal Intelligence. Answer reasoning, general knowledge, Bank PO prep, and complex questions cleanly.`;
+                    }
+
+                    const captainPersona = isCaptain ? 
+                        `You are reporting EXCLUSIVELY to Captain Keshav.` :
+                        `Assist the visitor naturally in Hinglish/Hindi without robotic templates.`;
+
+                    const finalPrompt = `${modeInstruction}\n${captainPersona}\n\nUser Question: ${text}`;
+
+                    try {
+                        const response = await puter.ai.chat(finalPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptain ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        
+                        addActionButtons(aiMsgId);
+                        if (window.hljs) hljs.highlightAll();
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[Parnarav AI Error]** \`${err.message || err}\``);
+                        addActionButtons(aiMsgId);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
