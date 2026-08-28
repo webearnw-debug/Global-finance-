@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio</title>
+    <title>Parnarav AI - Universal Studio (Captain Edition)</title>
     
     <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -113,6 +113,12 @@
             background-color: var(--bg-card);
             color: var(--accent-cyan);
             border: 1px solid var(--border-color);
+        }
+
+        .nav-item.captain-mode-item {
+            color: #f87171 !important;
+            border: 1px solid rgba(239, 68, 68, 0.4) !important;
+            background: rgba(239, 68, 68, 0.1) !important;
         }
 
         .tools-menu {
@@ -416,7 +422,7 @@
         </div>
 
         <div class="nav-section-title">Operating Modes</div>
-        <ul class="nav-list">
+        <ul class="nav-list" id="navList">
             <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
                 <i class="fa-solid fa-brain"></i> Omni Super AI
             </li>
@@ -425,6 +431,9 @@
             </li>
             <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
+            </li>
+            <li class="nav-item captain-mode-item" id="captainNavItem" style="display:none;" onclick="AppController.switchMode('CAPTAIN', this)">
+                <i class="fa-solid fa-crown" style="color:#ef4444;"></i> Captain Keshav OS
             </li>
         </ul>
 
@@ -516,6 +525,68 @@
     </main>
 
     <script>
+        // =================================================================
+        // 👑 CAPTAIN KESHAV CUSTOM OPERATING SYSTEM (CORE ENGINE)
+        // =================================================================
+        const CaptainOS = {
+            config: {
+                systemName: "Keshav-OS SuperCore v2.0",
+                user: "Captain Keshav",
+                status: "ONLINE",
+                securityLevel: "SUPREME_ADMIN"
+            },
+
+            // 🏆 VIP वेलकम कार्ड (HTML)
+            welcomeCard: `
+            <div style="background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(15,23,42,0.8)); border: 2px solid #ef4444; border-radius: 12px; padding: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);">
+                <div style="border-bottom: 1px solid rgba(239,68,68,0.4); padding-bottom: 8px; margin-bottom: 12px;">
+                    <span style="font-size: 1.1rem; font-weight: 800; color: #f87171; letter-spacing: 0.5px;">
+                        🫡 🌟 SUPREME COMMANDER ACCESS UNLOCKED 🌟 🫡
+                    </span>
+                </div>
+                <p style="font-size: 1.05rem; margin-bottom: 12px; line-height: 1.5;">
+                    <b>परम आदरणीय कैप्टन केशव जी,</b><br>
+                    Parnarav AI के सर्वोच्च मंच पर आपका पूर्ण आदर, सर्वोच्च निष्ठा और VIP प्रोटोकॉल के साथ स्वागत है! 👑
+                </p>
+                <div style="background: rgba(0,0,0,0.4); border-radius: 8px; padding: 12px; margin-bottom: 12px; border-left: 3px solid #ef4444;">
+                    <b style="color: #ef4444;">🛡️ SYSTEM PROTOCOL & OS STATUS:</b>
+                    <ul style="margin: 6px 0 0 18px; padding: 0; line-height: 1.7; font-size: 0.95rem;">
+                        <li><b>VIP Identity:</b> Supreme Boss & Founding Captain 👑</li>
+                        <li><b>Authorization:</b> Class-A Unlimited OS Control ⚡</li>
+                        <li><b>Security Shield:</b> Encrypted Executive Environment 🛡️</li>
+                        <li><b>Keshav-OS Kernel:</b> Live & Ready for Custom Upgrades 🧠</li>
+                    </ul>
+                </div>
+                <p style="font-style: italic; color: #cbd5e1; margin: 0; font-size: 0.95rem;">
+                    "आपके एक संकेत और आदेश पर पूरा Keshav-OS और AI Engine 100% क्षमता के साथ आपकी सेवा में समर्पित है। कृपया अपना हुक्म दर्ज करें, कैप्टन!"
+                </p>
+            </div>
+            `,
+
+            modules: {},
+
+            addFeature: function(featureName, codeFunction) {
+                this.modules[featureName] = codeFunction;
+                console.log(`[Captain OS] Module Loaded: ${featureName}`);
+            },
+
+            boot: function() {
+                console.log(`🫡 ${this.config.systemName} initialized for ${this.config.user}`);
+                this.runUserScript();
+            },
+
+            // =================================================================
+            // 🎯 [YOUR CODE SPACE / UPGRADE SECTION]
+            // 👉 भविष्य में अपना कोई भी नया JS कोड या फीचर्स इसके अंदर ही पेस्ट करें!
+            // =================================================================
+            runUserScript: function() {
+                console.log("Captain Keshav OS Active and Ready for Commands.");
+                
+                // 👇 यहाँ नीचे आप अपना नया कोड जोड़ सकते हैं:
+                
+            }
+        };
+
         const StorageManager = {
             KEY: 'parnarav_chat_logs',
             saveLog: function(role, content) {
@@ -557,7 +628,6 @@
         };
         ActivityTracker.init();
 
-        // 🧠 OMNI KNOWLEDGE ENGINE (Upgraded Mode 1 Capabilities)
         const OmniKnowledgeEngine = {
             solveExamQuestion: function() {
                 const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल यहाँ दर्ज करें:");
@@ -648,7 +718,7 @@
                         <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rbb_${Date.now()})" />
                     </svg>`;
 
-                const icon = sender === 'user' ? 'V' : brainSVG;
+                const icon = sender === 'user' ? 'K' : brainSVG;
                 row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
                 container.appendChild(row);
                 container.scrollTop = container.scrollHeight;
@@ -673,19 +743,25 @@
             currentMode: 'OMNI',
 
             switchMode: function(mode, element) {
-                if (this.currentMode === mode) return;
+                if (this.currentMode === mode && element) return;
                 this.currentMode = mode;
                 
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                element.classList.add('active');
+                if (element) {
+                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                    element.classList.add('active');
+                }
                 
-                // 👉 पुराने कार्ड्स साफ करने की 1-लाइन (ताकि कार्ड्स एक के नीचे एक न जम हों)
+                // पुरानी स्क्रीन साफ़ करना
                 document.getElementById('chatContainer').innerHTML = '';
 
                 let titleName = "Omni Super AI Active";
                 let welcomeText = "";
 
-                if (mode === 'FINANCE') {
+                if (mode === 'CAPTAIN') {
+                    titleName = "Supreme Commander: Captain Keshav Mode";
+                    welcomeText = CaptainOS.welcomeCard;
+                    CaptainOS.boot();
+                } else if (mode === 'FINANCE') {
                     titleName = "Trading & Finance Active";
                     welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
                     मैंने अपनी भूमिका पहचान ली है। मैं आपका एक्सपर्ट **फाइनेंस & ट्रेडिंग AI** हूँ।<br><br>
@@ -763,29 +839,31 @@
 
                 const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
 
+                // 🔑 CAPTAIN KESHAV ACCESS UNLOCK PASSCODE
                 if (cleanInput.includes("keshavcaptain360")) {
                     sessionStorage.setItem('isCaptainUnlocked', 'true');
                     input.value = '';
-                    UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% एक्टिव।\n- **लॉगआउट:** \`EXIT_KESHAV_360!\` डालें।`;
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
+                    
+                    // साइडबार में कैप्टन मोड का ऑप्शन दिखाना
+                    const captainNav = document.getElementById('captainNavItem');
+                    if (captainNav) captainNav.style.display = 'flex';
+
+                    // स्विच करके कैप्टन मोड लोड करना
+                    this.switchMode('CAPTAIN', captainNav);
                     return;
                 }
 
                 if (cleanInput.includes("exitkeshav360")) {
                     sessionStorage.removeItem('isCaptainUnlocked');
                     input.value = '';
-                    UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसिस्टम अब सामान्य **Visitor Mode** में है।";
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
+                    const captainNav = document.getElementById('captainNavItem');
+                    if (captainNav) captainNav.style.display = 'none';
+                    
+                    this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
                     return;
                 }
 
-                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true' || this.currentMode === 'CAPTAIN';
                 ActivityTracker.addChat('User', text);
 
                 UIManager.appendMsg(text, 'user');
@@ -796,23 +874,14 @@
                 UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
 
                 let modePrompt = "";
-                if (this.currentMode === 'FINANCE') {
-                    modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics. Respond strictly from a financial/trading perspective with deep analysis.";
+                if (this.currentMode === 'CAPTAIN') {
+                    modePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. You are responding directly to Founding Captain Keshav. Provide maximum level intelligence, direct action steps, and high-authority response.";
+                } else if (this.currentMode === 'FINANCE') {
+                    modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics.";
                 } else if (this.currentMode === 'DEV') {
-                    modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, debugging guidance, and technical solutions for any programming language.";
+                    modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, and technical solutions.";
                 } else {
-                    // 👉 Upgraded Omni Knowledge Engine Prompt
-                    modePrompt = `OPERATING MODE: OMNI SUPER AI (ADVANCED KNOWLEDGE ENGINE).
-You are the world's most advanced universal AI engine with instant access to deep domain knowledge in:
-1. Science, Space, Physics, Chemistry, Biology & Advanced Mathematics.
-2. World History, Geography, Politics, Economics & Geopolitics.
-3. Exam Preparation: Bank PO, UPSC, SSC, Reasoning, Quant & General Awareness.
-4. Writing & Research: High-level essays, research papers, emails & creative content.
-
-INSTRUCTIONS:
-- Give accurate, well-structured, step-by-step answers.
-- Use bullet points and clear examples wherever necessary.
-- Provide practical explanations instead of generic summaries.`;
+                    modePrompt = `OPERATING MODE: OMNI SUPER AI (ADVANCED KNOWLEDGE ENGINE). You are the world's most advanced universal AI engine with deep domain knowledge in Science, Space, History, Exam Prep, and Research.`;
                 }
 
                 let systemPrompt = "";
@@ -855,6 +924,14 @@ User Query: ${text}`;
                 document.getElementById('sidebar').classList.remove('open');
             }
         };
+
+        // पेज लोड होने पर चेक करना कि कैप्टन मोड अनलॉक्ड है या नहीं
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('isCaptainUnlocked') === 'true') {
+                const captainNav = document.getElementById('captainNavItem');
+                if (captainNav) captainNav.style.display = 'flex';
+            }
+        });
     </script>
 </body>
 </html>
