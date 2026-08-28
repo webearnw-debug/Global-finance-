@@ -37,6 +37,10 @@
         .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; color: var(--accent); }
         .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
         
+        /* Dynamic Financial Controls Wrapper */
+        .financial-controls-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; transition: all 0.3s ease; }
+        .hidden { display: none !important; }
+
         select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 6px 9px; border-radius: 8px; outline: none; font-size: 0.8rem; cursor: pointer; }
         select:focus { border-color: var(--accent); }
 
@@ -108,7 +112,7 @@
         </div>
         <div class="controls">
             <!-- Models Selector -->
-            <select id="modelSelect" title="Select AI Model">
+            <select id="modelSelect" onchange="toggleFinancialControls()" title="Select AI Model">
                 <option value="deepseek-reasoner">🔥 DeepSeek R1 (Pro Advisor)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default & Fast)</option>
@@ -117,7 +121,7 @@
             </select>
 
             <!-- Persona Selector -->
-            <select id="personaSelect" title="Select AI Persona">
+            <select id="personaSelect" onchange="toggleFinancialControls()" title="Select AI Persona">
                 <option value="financial">📈 Financial Expert</option>
                 <option value="general">💬 General Assistant</option>
                 <option value="coder">💻 Software Engineer</option>
@@ -125,27 +129,30 @@
                 <option value="translator">🌐 Translator</option>
             </select>
 
-            <!-- NEW: Goal Mode -->
-            <select id="goalSelect" title="Investment Goal">
-                <option value="wealth">🎯 Goal: Wealth Building (SIP)</option>
-                <option value="trading">⚡ Goal: Active Trading</option>
-                <option value="income">💵 Goal: Regular Income</option>
-                <option value="protection">🛡️ Goal: Capital Protection</option>
-            </select>
+            <!-- CONDITIONAL FINANCIAL CONTROLS GROUP (Show only for DeepSeek R1 / Financial Expert) -->
+            <div id="financialControls" class="financial-controls-group">
+                <!-- Goal Mode -->
+                <select id="goalSelect" title="Investment Goal">
+                    <option value="wealth">🎯 Goal: Wealth Building (SIP)</option>
+                    <option value="trading">⚡ Goal: Active Trading</option>
+                    <option value="income">💵 Goal: Regular Income</option>
+                    <option value="protection">🛡️ Goal: Capital Protection</option>
+                </select>
 
-            <!-- NEW: Risk Profile -->
-            <select id="riskSelect" title="Risk Profile">
-                <option value="moderate">⚖️ Risk: Moderate</option>
-                <option value="low">🟢 Risk: Conservative (Low)</option>
-                <option value="high">🔴 Risk: Aggressive (High)</option>
-            </select>
+                <!-- Risk Profile -->
+                <select id="riskSelect" title="Risk Profile">
+                    <option value="moderate">⚖️ Risk: Moderate</option>
+                    <option value="low">🟢 Risk: Conservative (Low)</option>
+                    <option value="high">🔴 Risk: Aggressive (High)</option>
+                </select>
 
-            <!-- NEW: Timeframe -->
-            <select id="timeframeSelect" title="Investment Horizon">
-                <option value="swing">⏳ Horizon: Swing (Daily/Weekly)</option>
-                <option value="intraday">⚡ Horizon: Intraday (Short Term)</option>
-                <option value="longterm">📈 Horizon: Long-term (3-5+ Yrs)</option>
-            </select>
+                <!-- Timeframe -->
+                <select id="timeframeSelect" title="Investment Horizon">
+                    <option value="swing">⏳ Horizon: Swing (Daily/Weekly)</option>
+                    <option value="intraday">⚡ Horizon: Intraday (Short Term)</option>
+                    <option value="longterm">📈 Horizon: Long-term (3-5+ Yrs)</option>
+                </select>
+            </div>
 
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
@@ -159,16 +166,15 @@
                 <span class="model-badge">System Ready</span>
                 <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** (DeepSeek R1 Advanced Engine) hoon.
 
-- 🎯 **Goal, Risk & Timeframe Control:** Aap upar top-bar se apna **Goal Mode** (Wealth/Trading), **Risk Level** (Low/Med/High) aur **Timeframe** chun sakte hain.
-- 📊 **Dynamic Analysis:** Meri recommendations ab aapke chune hue Risk Profile, ATR Stop-Loss, aur SEBI Guardrails ke hisaab se automatic calibrate hongi.
-- 📁 **CSV/Portfolio Mode:** Apne stocks paste karein aur portfolio analysis payein!</div>
+- 🎯 **Smart Financial Controls:** Jab aap Financial Mode chunenge, tabhi top-bar me Goal, Risk aur Timeframe ऑप्शन्स सामने दिखेंगे।
+- 📊 **Dynamic Analysis:** Meri recommendations ab aapke chune hue Risk Profile, ATR Stop-Loss, aur SEBI Guardrails ke hisaab se automatic calibrate hongi.</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Stock query, portfolio CSV, tax ya koi bhi sawaal poochaayein..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Ask anything, code, stock query, portfolio CSV..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -188,6 +194,19 @@
         writer: "Act as an expert creative writer.",
         translator: "Act as a professional Hindi-English translator."
     };
+
+    // Smart Function: Dynamically Show/Hide Financial Controls
+    function toggleFinancialControls() {
+        const selectedModel = document.getElementById('modelSelect').value;
+        const selectedPersona = document.getElementById('personaSelect').value;
+        const finControls = document.getElementById('financialControls');
+
+        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
+            finControls.classList.remove('hidden');
+        } else {
+            finControls.classList.add('hidden');
+        }
+    }
 
     function getDynamicDeepSeekPrompt() {
         const goal = document.getElementById('goalSelect').value;
@@ -221,6 +240,7 @@
 
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
+        toggleFinancialControls(); // Execute initial check on load
     };
 
     function handleKeyPress(e) {
@@ -234,7 +254,7 @@
         let clean = [];
         let systemPrompt = personas[selectedPersona] || personas.general;
 
-        if (selectedModel === 'deepseek-reasoner') {
+        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
             systemPrompt += "\n\n" + getDynamicDeepSeekPrompt();
         }
 
