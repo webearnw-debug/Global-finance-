@@ -4053,6 +4053,320 @@ Act as a Master Universal Intelligence & Analytical Expert.
     </style>
 
     <script>
-        
+        <!-- ==========================================================================
+         PARNARAV AI - UNIFIED SINGLE MODEL ENGINE & UI TRANSFORMER
+         ========================================================================== -->
+    <style>
+        /* 1. COMPLETELY DELETE / HIDE ALL MENU & SIDEBAR ELEMENTS */
+        header button:first-child, 
+        header svg:first-child, 
+        .menu-toggle, #menuToggle, .hamburger, [data-toggle="sidebar"],
+        header > div:first-child > svg, header > button,
+        #sidebar, .sidebar, .drawer, .nav-menu, .menu-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* 2. RED & BLUE GRADIENT TITLE (Parnarav AI) */
+        .parnarav-brand-title {
+            background: linear-gradient(135deg, #ff4d4d 0%, #3b82f6 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-weight: 800 !important;
+            font-size: 22px !important;
+            letter-spacing: 0.5px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-family: system-ui, -apple-system, sans-serif !important;
+        }
+
+        /* 3. AVATARS STYLING (RED & BLUE SHADES) */
+        .parnarav-brain-icon {
+            width: 34px !important;
+            height: 34px !important;
+            min-width: 34px !important;
+            min-height: 34px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.5)) !important;
+        }
+
+        .parnarav-v-icon {
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            min-height: 36px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            filter: drop-shadow(0 0 6px rgba(255, 77, 77, 0.5)) !important;
+        }
+
+        /* Message Action Buttons */
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.15);
+        }
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.15);
+        }
+    </style>
+
+    <script>
+        // Red & Blue Brain Logo SVG for AI
+        function getParnaravBrainSVG() {
+            return `
+            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="leftRedBrain" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4d4d" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                    </linearGradient>
+                    <linearGradient id="rightBlueBrain" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                </defs>
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftRedBrain)" />
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBlueBrain)" />
+            </svg>`;
+        }
+
+        // Red & Blue Gradient 'V' Logo SVG for Visitor / User
+        function getVisitorVLogoSVG() {
+            return `
+            <svg class="parnarav-v-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="vGradRedBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4d4d" />
+                        <stop offset="100%" stop-color="#3b82f6" />
+                    </linearGradient>
+                </defs>
+                <circle cx="32" cy="32" r="28" fill="#0f172a" stroke="url(#vGradRedBlue)" stroke-width="3.5" />
+                <path d="M19 20 L32 46 L45 20" fill="none" stroke="url(#vGradRedBlue)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>`;
+        }
+
+        // Action Buttons Functions
+        window.copyAiResponse = function(btn) {
+            try {
+                const bubble = btn.closest('.bubble') || btn.parentElement.parentElement;
+                if (!bubble) return;
+                const clone = bubble.cloneNode(true);
+                const bar = clone.querySelector('.ai-action-bar');
+                if (bar) bar.remove();
+                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                    const old = btn.innerHTML;
+                    btn.innerHTML = '✅ Copied!';
+                    setTimeout(() => btn.innerHTML = old, 2000);
+                });
+            } catch(e){}
+        };
+
+        window.toggleAiFeedback = function(btn, type) {
+            try {
+                const bar = btn.parentElement;
+                const l = bar.querySelector('.like-btn');
+                const d = bar.querySelector('.dislike-btn');
+                if (type === 'like') { l.classList.toggle('like-active'); d.classList.remove('dislike-active'); }
+                if (type === 'dislike') { d.classList.toggle('dislike-active'); l.classList.remove('like-active'); }
+            } catch(e){}
+        };
+
+        function addActionButtons(aiMsgId) {
+            try {
+                const msg = document.getElementById(aiMsgId);
+                if (!msg) return;
+                const bubble = msg.querySelector('.bubble') || msg;
+                if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+                bubble.insertAdjacentHTML('beforeend', `
+                    <div class="ai-action-bar">
+                        <button class="action-btn copy-btn" onclick="copyAiResponse(this)">📋 Copy</button>
+                        <button class="action-btn like-btn" onclick="toggleAiFeedback(this, 'like')">👍 Like</button>
+                        <button class="action-btn dislike-btn" onclick="toggleAiFeedback(this, 'dislike')">👎 Dislike</button>
+                    </div>
+                `);
+            } catch(e){}
+        }
+
+        // DOM Transformation Engine
+        function transformUI() {
+            try {
+                // 1. Set Title -> "Parnarav AI" with Red & Blue Gradient
+                const titleSelectors = document.querySelectorAll('header span, header div, .header-title, .title, .navbar-brand');
+                titleSelectors.forEach(el => {
+                    if (el.children.length === 0 && el.innerText && (el.innerText.includes('Nexus') || el.innerText.includes('Engine') || el.innerText.includes('Parnarav'))) {
+                        el.parentElement.innerHTML = `${getParnaravBrainSVG()} <span class="parnarav-brand-title">Parnarav AI</span>`;
+                    }
+                });
+
+                // 2. Set Status Badge -> "🟢 All Modes Are Activated"
+                const badges = document.querySelectorAll('.badge, .status-badge, .status, #superAiStatus, div[class*="status"], span[class*="badge"]');
+                badges.forEach(b => {
+                    if (b.innerText && (b.innerText.includes('Active') || b.innerText.includes('Super AI') || b.innerText.includes('Omni') || b.innerText.includes('Mode'))) {
+                        b.innerText = '🟢 All Modes Are Activated';
+                    }
+                });
+
+                // 3. Replace AI Robot (🤖) Avatars with Brain Logo
+                const aiAvatars = document.querySelectorAll('.bot-avatar, .ai-avatar, .avatar-bot, [data-role="ai"] .avatar');
+                aiAvatars.forEach(av => {
+                    if (!av.dataset.parnaravDone) {
+                        av.innerHTML = getParnaravBrainSVG();
+                        av.style.background = 'transparent';
+                        av.dataset.parnaravDone = 'true';
+                    }
+                });
+
+                // 4. Replace User Person (👤) Avatars with 'V' Red/Blue Logo
+                const userAvatars = document.querySelectorAll('.user-avatar, .avatar-user, [data-role="user"] .avatar');
+                userAvatars.forEach(av => {
+                    if (!av.dataset.parnaravDone) {
+                        av.innerHTML = getVisitorVLogoSVG();
+                        av.style.background = 'transparent';
+                        av.dataset.parnaravDone = 'true';
+                    }
+                });
+
+                // Deep Fallback SVG Scanner
+                document.querySelectorAll('svg').forEach(svg => {
+                    if (svg.classList.contains('parnarav-brain-icon') || svg.classList.contains('parnarav-v-icon')) return;
+                    
+                    const parent = svg.parentElement;
+                    if (!parent) return;
+
+                    const parentHTML = parent.outerHTML || '';
+                    if (parentHTML.includes('user') || parent.classList.contains('user') || getComputedStyle(parent).backgroundColor.includes('rgb(13, 110') || getComputedStyle(parent).backgroundColor.includes('rgb(59, 130')) {
+                        parent.innerHTML = getVisitorVLogoSVG();
+                        parent.style.background = 'transparent';
+                    } else if (parentHTML.includes('bot') || parentHTML.includes('ai') || parent.classList.contains('bot-avatar')) {
+                        parent.innerHTML = getParnaravBrainSVG();
+                        parent.style.background = 'transparent';
+                    }
+                });
+            } catch(e){}
+        }
+
+        // Live Real-Time Observer
+        const observer = new MutationObserver(() => {
+            transformUI();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            transformUI();
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            // Application Unified Controller
+            const initInterval = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initInterval);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input ? input.value.trim() : '';
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // Captain Passcode
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                        if (input) input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! **Parnarav AI Engine** के सभी मॉडल्स अब आपके आदेश के लिए तैयार हैं।`;
+                        if (window.UIManager) window.UIManager.appendMsg(window.marked ? window.marked.parse(msg) : msg, 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    if (cleanInput.includes("exitkeshav360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                        if (input) input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\n**Parnarav AI** सामान्य मोड में आ गया है।";
+                        if (window.UIManager) window.UIManager.appendMsg(window.marked ? window.marked.parse(msg) : msg, 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    const isCaptain = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                    if (input) input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    if (window.UIManager) window.UIManager.appendMsg(`<i>${getParnaravBrainSVG()} Parnarav AI सोच रहा है... ⚡</i>`, 'ai', aiMsgId);
+
+                    // Unified System Prompt (All Modes Combined in One AI Model)
+                    const baseInstruction = `[SYSTEM: ALL MODES ACTIVATED] You are Parnarav AI, a single unified master artificial intelligence model. You possess all capabilities combined: High-level Software Engineering/Coding, Quant Finance & Market Intelligence, Complex Reasoning, and General Knowledge. Respond intelligently, helpfully, and naturally in Hinglish/Hindi.`;
+
+                    const captainPersona = isCaptain ? 
+                        `You are reporting EXCLUSIVELY to Captain Keshav.` :
+                        `Communicate naturally and directly.`;
+
+                    const finalPrompt = `${baseInstruction}\n${captainPersona}\n\nUser Question: ${text}`;
+
+                    try {
+                        const response = await puter.ai.chat(finalPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const msgElem = document.getElementById(aiMsgId);
+                        if (msgElem) {
+                            const bubble = msgElem.querySelector('.bubble') || msgElem;
+                            const badge = isCaptain ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                            const fullContent = badge + replyText;
+                            bubble.innerHTML = window.marked ? window.marked.parse(fullContent) : fullContent;
+                        }
+                        addActionButtons(aiMsgId);
+                        if (window.hljs) hljs.highlightAll();
+                    } catch (err) {
+                        const msgElem = document.getElementById(aiMsgId);
+                        if (msgElem) {
+                            const bubble = msgElem.querySelector('.bubble') || msgElem;
+                            bubble.innerHTML = `**[Parnarav AI Error]** \`${err.message || err}\``;
+                        }
+                        addActionButtons(aiMsgId);
+                    }
+                };
+            }, 100);
+        });
+    </script>
+    
 </body>
 </html>
