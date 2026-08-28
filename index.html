@@ -1,1998 +1,1788 @@
-<!--
-GLOBAL FINANCE
-Premium financial & trading website front-end
-
-GitHub usage:
-1. Save this file as index.html
-2. Create a GitHub repository
-3. Upload index.html
-4. Enable GitHub Pages from Settings -> Pages
-
-IMPORTANT:
-This is a front-end prototype. Market values are illustrative.
-Real trading requires a secure backend, regulated integrations,
-authentication, compliance, risk controls and live market-data licensing.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050b14">
-<meta name="description" content="Global Finance — professional financial markets and trading platform.">
-<title>Global Finance — Professional Trading Platform</title>
-
+<title>Ledgerline — Markets, Portfolio &amp; Trading Desk</title>
+<meta name="description" content="Live crypto prices, a demo portfolio tracker, a paper-money trading desk, and market notes — all in your browser, no account needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,560;0,9..144,680;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* =========================================================
-   GLOBAL FINANCE — PREMIUM FINANCIAL WEBSITE
-   Single-file GitHub-ready implementation
-   ========================================================= */
+/* ==========================================================================
+   Ledgerline — style.css
+   Design tokens: ink navy + parchment paper, gold accent, gain/loss colors.
+   Type: Fraunces (display serif) / IBM Plex Sans (body) / IBM Plex Mono (data)
+   ========================================================================== */
 
-:root{
-  --bg:#030812;
-  --bg2:#07101d;
-  --panel:#0a1422;
-  --panel2:#0d1929;
-  --line:rgba(255,255,255,.08);
-  --line2:rgba(255,255,255,.14);
-  --text:#f5f8fc;
-  --muted:#8b9aaf;
-  --green:#16d66f;
-  --green2:#0ea956;
-  --red:#ff4d5e;
-  --yellow:#f4c84b;
-  --blue:#4e8cff;
-  --cyan:#26d9ff;
-  --shadow:0 24px 80px rgba(0,0,0,.35);
-  --radius:18px;
-  --max:1240px;
-}
+:root {
+  /* Color */
+  --ink:        #0B1220;
+  --ink-panel:  #121B2E;
+  --ink-line:   #24314A;
+  --paper:      #F2ECDD;
+  --paper-line: #DDD3B4;
+  --paper-panel:#FFFDF6;
+  --gold:       #C9A227;
+  --gold-dim:   #8E7420;
+  --gain:       #2FBF71;
+  --loss:       #E4572E;
+  --text-light: #ECE8DC;
+  --text-dim:   #97A3B6;
+  --text-ink:   #1B1A17;
+  --text-ink-dim: #5B564A;
 
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:
-    radial-gradient(circle at 80% 5%,rgba(22,214,111,.08),transparent 28%),
-    radial-gradient(circle at 5% 30%,rgba(78,140,255,.06),transparent 24%),
-    var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  overflow-x:hidden;
-}
-a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-button{cursor:pointer}
-img{max-width:100%;display:block}
-.container{width:min(var(--max),calc(100% - 40px));margin:auto}
-.hidden{display:none!important}
-.green{color:var(--green)}
-.red{color:var(--red)}
-.muted{color:var(--muted)}
-.small{font-size:12px}
-.bold{font-weight:700}
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
 
-.topbar{
-  height:32px;
-  border-bottom:1px solid var(--line);
-  background:rgba(3,8,18,.8);
-  color:#91a0b5;
-  font-size:11px;
-}
-.topbar .container{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.ticker-mini{display:flex;gap:24px;white-space:nowrap}
-.ticker-mini span{display:inline-flex;gap:5px}
-
-.nav{
-  height:76px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  backdrop-filter:blur(22px);
-  background:rgba(3,8,18,.82);
-  border-bottom:1px solid var(--line);
-}
-.nav-inner{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:28px;
-}
-.brand{display:flex;align-items:center;gap:10px;min-width:max-content}
-.brand-mark{
-  width:32px;height:32px;border-radius:9px;
-  display:grid;place-items:center;
-  color:#02130a;
-  background:linear-gradient(145deg,#25ed7e,#08a953);
-  font-size:18px;font-weight:950;
-  box-shadow:0 0 28px rgba(22,214,111,.25);
-}
-.brand-text{font-size:16px;font-weight:800;letter-spacing:-.4px}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{
-  color:#aeb9c8;
-  font-size:13px;
-  transition:.2s;
-}
-.nav-links a:hover{color:#fff}
-.nav-actions{display:flex;align-items:center;gap:10px}
-.lang{
-  border:0;background:transparent;color:#b7c2d1;padding:8px;
-}
-.btn{
-  border:1px solid var(--line2);
-  background:#0a1320;
-  color:#fff;
-  padding:11px 17px;
-  border-radius:9px;
-  font-weight:700;
-  font-size:13px;
-  transition:.2s;
-}
-.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.25)}
-.btn-primary{
-  background:linear-gradient(135deg,#18d66d,#0aa852);
-  border-color:transparent;
-  color:#031109;
-  box-shadow:0 12px 30px rgba(22,214,111,.15);
-}
-.btn-primary:hover{box-shadow:0 14px 38px rgba(22,214,111,.28)}
-.btn-ghost{background:transparent}
-.menu-btn{display:none;background:none;border:0;color:#fff;font-size:24px}
-
-.hero{padding:78px 0 62px}
-.hero-grid{
-  display:grid;
-  grid-template-columns:1fr 1.05fr;
-  gap:52px;
-  align-items:center;
-}
-.eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  color:var(--green);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.8px;
-  text-transform:uppercase;
-  margin-bottom:20px;
-}
-.eyebrow-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 12px var(--green);
-}
-.hero h1{
-  font-size:clamp(42px,5.2vw,68px);
-  line-height:1.01;
-  letter-spacing:-3.5px;
-  max-width:650px;
-}
-.hero h1 span{
-  background:linear-gradient(90deg,#15d86c,#54ee9b);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-.hero-copy{
-  color:#94a3b7;
-  max-width:580px;
-  margin:24px 0 28px;
-  font-size:16px;
-}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.hero-metrics{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  margin-top:36px;
-  max-width:650px;
-}
-.metric{
-  padding:0 18px;
-  border-left:1px solid var(--line);
-}
-.metric:first-child{padding-left:0;border-left:0}
-.metric strong{display:block;font-size:22px;letter-spacing:-1px}
-.metric span{font-size:11px;color:var(--muted)}
-
-.trader-card{
-  position:relative;
-  border:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(14,27,44,.96),rgba(6,15,27,.94));
-  border-radius:15px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-.trader-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:20px 20px 14px;
-}
-.symbol{font-size:13px;font-weight:800}
-.price{font-size:27px;font-weight:800;letter-spacing:-1px}
-.change{font-size:11px;color:var(--green)}
-.time-tabs{display:flex;gap:6px}
-.time-tabs button{
-  background:transparent;
-  border:0;
-  color:#718198;
-  padding:6px 9px;
-  font-size:10px;
-  border-radius:7px;
-}
-.time-tabs button.active{background:rgba(22,214,111,.1);color:var(--green)}
-.chart-wrap{height:270px;padding:4px 16px 0}
-#heroChart{width:100%;height:100%}
-.chart-grid-line{stroke:rgba(255,255,255,.055);stroke-width:1}
-.chart-area{fill:url(#areaGradient)}
-.chart-line{
-  fill:none;
-  stroke:#16d66f;
-  stroke-width:2.5;
-  stroke-linejoin:round;
-  stroke-linecap:round;
-}
-.chart-dot{fill:#16d66f;filter:drop-shadow(0 0 7px rgba(22,214,111,.7))}
-.chart-label{fill:#69788c;font-size:10px}
-.market-mini-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  padding:12px 16px 18px;
-}
-.market-mini{
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:10px;
-  background:rgba(255,255,255,.018);
-}
-.market-mini-top{display:flex;justify-content:space-between;font-size:10px}
-.market-mini-price{font-size:12px;font-weight:700;margin:4px 0}
-.spark{height:25px;width:100%}
-
-.trust-row{
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  background:rgba(7,15,27,.65);
-}
-.trust-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-.trust-item{
-  display:flex;gap:14px;padding:25px 20px;
-  border-right:1px solid var(--line);
-}
-.trust-item:last-child{border-right:0}
-.trust-icon{
-  width:38px;height:38px;border-radius:50%;
-  flex:none;display:grid;place-items:center;
-  color:var(--green);
-  background:rgba(22,214,111,.08);
-  border:1px solid rgba(22,214,111,.13);
-}
-.trust-item h3{font-size:13px;margin-bottom:3px}
-.trust-item p{font-size:11px;color:var(--muted);line-height:1.5}
-
-.section{padding:78px 0}
-.section-head{
-  display:flex;align-items:end;justify-content:space-between;gap:20px;
-  margin-bottom:30px;
-}
-.kicker{
-  color:var(--green);
-  text-transform:uppercase;
-  font-size:10px;
-  letter-spacing:1px;
-  font-weight:800;
-  margin-bottom:8px;
-}
-.section h2{
-  font-size:34px;
-  letter-spacing:-1.5px;
-  line-height:1.1;
-}
-.section-head p{color:var(--muted);font-size:13px;max-width:480px}
-
-.market-panel{
-  border:1px solid var(--line);
-  border-radius:14px;
-  overflow:hidden;
-  background:rgba(8,17,29,.72);
-}
-.market-tabs{
-  display:flex;gap:26px;padding:0 18px;
-  border-bottom:1px solid var(--line);
-}
-.market-tabs button{
-  border:0;background:transparent;color:#738297;
-  padding:16px 0;font-size:12px;position:relative;
-}
-.market-tabs button.active{color:var(--green)}
-.market-tabs button.active:after{
-  content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--green)
-}
-.market-table{width:100%;border-collapse:collapse}
-.market-table th{
-  color:#66758a;text-align:left;font-size:10px;font-weight:600;
-  padding:13px 18px;border-bottom:1px solid var(--line);
-}
-.market-table td{
-  padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.045);
-  font-size:12px;
-}
-.market-table tr:last-child td{border-bottom:0}
-.instrument{display:flex;align-items:center;gap:10px;font-weight:700}
-.coin{
-  width:27px;height:27px;border-radius:50%;
-  display:grid;place-items:center;font-size:10px;font-weight:900;
-  background:#142237;color:#fff;border:1px solid var(--line2);
-}
-.table-action{padding:7px 12px;font-size:10px}
-
-.platform-grid{
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:40px;align-items:center;
-}
-.phone{
-  width:275px;
-  height:545px;
-  margin:auto;
-  border-radius:40px;
-  border:8px solid #101923;
-  background:#050c15;
-  box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 0 0 1px #263344;
-  padding:16px 10px;
-  position:relative;
-}
-.phone:before{
-  content:"";
-  width:90px;height:20px;
-  background:#101923;border-radius:20px;
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-}
-.phone-screen{
-  height:100%;border-radius:27px;
-  background:linear-gradient(180deg,#0b1725,#050b13);
-  overflow:hidden;padding:24px 12px 12px;
-}
-.phone-top{display:flex;justify-content:space-between;font-size:9px;color:#8593a7}
-.phone-price{font-size:26px;font-weight:800;margin-top:18px}
-.phone-change{font-size:10px;color:var(--green)}
-.phone-chart{height:190px;margin-top:20px}
-.phone-bottom{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:4px;margin-top:20px;
-}
-.phone-bottom div{
-  padding:9px 2px;text-align:center;font-size:7px;color:#728198;
-  border-radius:7px;
-}
-.phone-bottom div:first-child{background:rgba(22,214,111,.09);color:var(--green)}
-.platform-copy h2{max-width:550px}
-.platform-copy>p{color:var(--muted);font-size:14px;max-width:580px;margin:18px 0}
-.feature-list{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin:24px 0 30px;
-}
-.feature{display:flex;gap:9px;align-items:center;font-size:12px;color:#bac5d4}
-.check{
-  width:17px;height:17px;border-radius:50%;display:grid;place-items:center;
-  color:var(--green);background:rgba(22,214,111,.09);font-size:10px;
-}
-.downloads{display:flex;gap:8px;flex-wrap:wrap}
-
-.cta-card{
-  display:grid;grid-template-columns:1.25fr .75fr;gap:30px;
-  border:1px solid rgba(22,214,111,.13);
-  background:
-    radial-gradient(circle at 80% 20%,rgba(22,214,111,.11),transparent 35%),
-    linear-gradient(135deg,#091624,#07101c);
-  padding:48px;border-radius:20px;
-}
-.cta-card h2{font-size:38px;letter-spacing:-1.8px}
-.cta-card p{color:var(--muted);font-size:13px;margin:13px 0 22px;max-width:570px}
-.cta-list{display:grid;gap:11px}
-.cta-list div{font-size:12px;color:#b7c3d1}
-.cta-list span{color:var(--green);margin-right:7px}
-.cta-box{
-  border:1px solid var(--line);
-  border-radius:14px;background:rgba(2,8,15,.48);padding:22px;
-}
-.cta-box h3{font-size:16px;margin-bottom:7px}
-.cta-box p{font-size:11px;margin:0 0 16px}
-.cta-box .btn{width:100%;margin-bottom:10px}
-
-.stats{
-  padding:34px 0;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  background:#06101d;
-}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.stat{text-align:center;border-right:1px solid var(--line)}
-.stat:last-child{border:0}
-.stat strong{font-size:30px;letter-spacing:-1.5px}
-.stat p{font-size:11px;color:var(--muted)}
-
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.price-card{
-  border:1px solid var(--line);border-radius:16px;
-  background:#091421;padding:28px;position:relative;
-}
-.price-card.featured{border-color:rgba(22,214,111,.35);box-shadow:0 20px 60px rgba(22,214,111,.06)}
-.badge{
-  position:absolute;top:16px;right:16px;
-  background:rgba(22,214,111,.1);color:var(--green);
-  border:1px solid rgba(22,214,111,.2);
-  padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800;
-}
-.price-card h3{font-size:18px}
-.price-card>p{font-size:11px;color:var(--muted);margin:5px 0 22px}
-.price-number{font-size:35px;font-weight:850;letter-spacing:-2px}
-.price-number span{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0}
-.price-card ul{list-style:none;margin:23px 0}
-.price-card li{font-size:11px;color:#b2bece;margin:12px 0}
-.price-card li:before{content:"✓";color:var(--green);margin-right:8px}
-.price-card .btn{width:100%}
-
-.insight-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
-.insight-main,.insight-side{
-  border:1px solid var(--line);border-radius:16px;background:#091421;overflow:hidden;
-}
-.insight-main{padding:26px}
-.insight-main h3{font-size:21px;letter-spacing:-.7px}
-.insight-main p{font-size:12px;color:var(--muted);margin:9px 0 20px}
-.news-list{display:grid;gap:10px}
-.news{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:13px;border:1px solid var(--line);border-radius:10px;
-}
-.news-title{font-size:11px;font-weight:700}
-.news-meta{font-size:9px;color:#65748a;margin-top:3px}
-.news-tag{font-size:9px;color:var(--green)}
-.insight-side{padding:26px}
-.insight-side h3{font-size:17px}
-.calendar{
-  margin-top:18px;display:grid;gap:9px
-}
-.calendar-row{
-  display:flex;justify-content:space-between;align-items:center;
-  border-bottom:1px solid var(--line);padding-bottom:9px;
-}
-.calendar-row span{font-size:10px;color:#8290a3}
-.calendar-row strong{font-size:10px}
-
-.security{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
-}
-.security-card{
-  border:1px solid var(--line);background:#091421;border-radius:14px;padding:23px;
-}
-.security-card .icon{
-  width:40px;height:40px;border-radius:10px;
-  display:grid;place-items:center;
-  color:var(--green);background:rgba(22,214,111,.08);
-  margin-bottom:17px;
-}
-.security-card h3{font-size:14px}
-.security-card p{font-size:11px;color:var(--muted);margin-top:7px}
-
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.faq{
-  border:1px solid var(--line);border-radius:11px;background:#091421;
-  overflow:hidden;
-}
-.faq button{
-  width:100%;display:flex;justify-content:space-between;gap:20px;
-  border:0;background:transparent;color:#dce4ed;text-align:left;
-  padding:17px;font-size:12px;font-weight:700;
-}
-.faq .answer{display:none;padding:0 17px 17px;color:var(--muted);font-size:11px}
-.faq.open .answer{display:block}
-.faq.open button{color:var(--green)}
-
-.footer{
-  border-top:1px solid var(--line);
-  background:#020710;
-  padding:62px 0 24px;
-}
-.footer-grid{
-  display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:38px;
-}
-.footer-brand p{font-size:11px;color:var(--muted);max-width:260px;margin:15px 0 20px}
-.socials{display:flex;gap:8px}
-.socials a{
-  width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
-  display:grid;place-items:center;color:#8b99aa;font-size:10px;
-}
-.footer h4{font-size:11px;margin-bottom:16px}
-.footer ul{list-style:none}
-.footer li{margin:9px 0}
-.footer li a{font-size:10px;color:#718095}
-.footer li a:hover{color:#fff}
-.footer-bottom{
-  border-top:1px solid var(--line);margin-top:45px;padding-top:18px;
-  display:flex;justify-content:space-between;gap:20px;
-  color:#58677b;font-size:9px;
-}
-.risk{
-  margin-top:15px;padding:12px;border:1px solid rgba(255,77,94,.12);
-  background:rgba(255,77,94,.025);border-radius:8px;color:#77869a;font-size:9px;
+  /* Layout */
+  --max-w: 1180px;
+  --radius: 3px;
+  --header-h: 64px;
+  --ticker-h: 40px;
 }
 
-.toast{
-  position:fixed;right:20px;bottom:20px;z-index:2000;
-  background:#0c1827;border:1px solid var(--line2);box-shadow:var(--shadow);
-  padding:13px 17px;border-radius:10px;font-size:11px;
-  transform:translateY(120px);opacity:0;transition:.3s;
+/* -------------------------------------------------------------------------
+   Reset
+   ------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
-.toast.show{transform:translateY(0);opacity:1}
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text-light);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 560; margin: 0; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+button, input, select { font-family: inherit; font-size: inherit; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; top: -40px; left: 0; background: var(--gold); color: var(--ink);
+  padding: 10px 16px; z-index: 1000; transition: top .15s ease;
+}
+.skip-link:focus { top: 0; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-.modal{
-  position:fixed;inset:0;z-index:1500;
-  background:rgba(0,0,0,.72);backdrop-filter:blur(10px);
-  display:none;place-items:center;padding:20px;
+/* -------------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(11, 18, 32, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ink-line);
 }
-.modal.show{display:grid}
-.modal-card{
-  width:min(440px,100%);background:#091421;border:1px solid var(--line2);
-  border-radius:16px;padding:28px;box-shadow:var(--shadow);
+.header-inner {
+  max-width: var(--max-w); margin: 0 auto; height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
 }
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.modal-head h3{font-size:19px}
-.close{
-  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);
-  background:transparent;color:#91a0b4;
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand-mark { color: var(--gold); display: flex; }
+.brand-word { font-family: var(--font-display); font-weight: 680; font-size: 1.25rem; letter-spacing: 0.01em; }
+.main-nav { display: flex; gap: 28px; }
+.main-nav a {
+  font-size: 0.9rem; color: var(--text-dim); font-weight: 500;
+  position: relative; padding: 6px 0;
+  transition: color .15s ease;
 }
-.form{display:grid;gap:12px}
-.form label{font-size:10px;color:#8997aa}
-.form input,.form select{
-  width:100%;background:#050c15;color:#fff;border:1px solid var(--line);
-  border-radius:9px;padding:11px 12px;outline:none;
+.main-nav a:hover, .main-nav a:focus-visible { color: var(--text-light); }
+.main-nav a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+  background: var(--gold); transition: right .2s ease;
 }
-.form input:focus{border-color:rgba(22,214,111,.5)}
-.form .btn{width:100%;margin-top:5px}
-.form-note{font-size:9px;color:#66758a;text-align:center}
+.main-nav a:hover::after { right: 0; }
+.header-actions { display: flex; align-items: center; gap: 16px; }
+.balance-chip {
+  display: flex; flex-direction: column; align-items: flex-end;
+  border-left: 1px solid var(--ink-line); padding-left: 16px;
+}
+.balance-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-dim); }
+.balance-value { font-family: var(--font-mono); font-size: 0.95rem; color: var(--gold); }
+.nav-toggle {
+  display: none; flex-direction: column; justify-content: center; gap: 4px;
+  width: 32px; height: 32px; background: none; border: none; cursor: pointer;
+}
+.nav-toggle span { display: block; width: 100%; height: 2px; background: var(--text-light); }
 
-@media(max-width:1000px){
-  .nav-links{display:none}
-  .menu-btn{display:block}
-  .hero-grid{grid-template-columns:1fr}
-  .hero{padding-top:55px}
-  .trust-grid{grid-template-columns:1fr 1fr}
-  .trust-item:nth-child(2){border-right:0}
-  .platform-grid{grid-template-columns:1fr}
-  .phone{margin-bottom:10px}
-  .cta-card{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1.5fr 1fr 1fr}
-  .footer-grid>div:nth-child(4),
-  .footer-grid>div:nth-child(5){margin-top:10px}
+/* Ticker rail — signature scrolling element */
+.ticker-rail {
+  height: var(--ticker-h);
+  background: var(--ink-panel);
+  border-top: 1px solid var(--ink-line);
+  overflow: hidden;
+  position: relative;
 }
-@media(max-width:700px){
-  .container{width:min(var(--max),calc(100% - 24px))}
-  .topbar{display:none}
-  .nav{height:64px}
-  .nav-actions .btn:first-of-type{display:none}
-  .hero h1{font-size:43px;letter-spacing:-2.4px}
-  .hero-metrics{grid-template-columns:1fr 1fr;gap:18px}
-  .metric{padding:0;border:0}
-  .market-mini-grid{grid-template-columns:1fr 1fr}
-  .trust-grid{grid-template-columns:1fr}
-  .trust-item{border-right:0;border-bottom:1px solid var(--line)}
-  .trust-item:last-child{border-bottom:0}
-  .section{padding:55px 0}
-  .section h2{font-size:29px}
-  .section-head{display:block}
-  .section-head p{margin-top:10px}
-  .market-panel{overflow-x:auto}
-  .market-table{min-width:680px}
-  .feature-list{grid-template-columns:1fr}
-  .cta-card{padding:28px}
-  .cta-card h2{font-size:29px}
-  .stats-grid{grid-template-columns:1fr 1fr;gap:25px}
-  .stat:nth-child(2){border:0}
-  .pricing-grid,.security,.faq-grid,.insight-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .footer-grid>div:first-child{grid-column:1/-1}
-  .footer-bottom{display:block}
-  .footer-bottom span{display:block;margin-top:6px}
+.ticker-rail::before, .ticker-rail::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 40px; z-index: 2;
+}
+.ticker-rail::before { left: 0; background: linear-gradient(90deg, var(--ink-panel), transparent); }
+.ticker-rail::after { right: 0; background: linear-gradient(270deg, var(--ink-panel), transparent); }
+.ticker-track {
+  display: inline-flex; align-items: center; height: var(--ticker-h);
+  white-space: nowrap; animation: ticker-scroll 42s linear infinite;
+  padding-left: 100%;
+}
+.ticker-rail:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+.ticker-item {
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);
+  padding: 0 22px; border-right: 1px solid var(--ink-line);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.ticker-item .sym { color: var(--text-light); font-weight: 600; }
+.ticker-item .up { color: var(--gain); }
+.ticker-item .down { color: var(--loss); }
+.ticker-loading { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); padding: 0 22px; }
+
+/* -------------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 13px 26px; border-radius: var(--radius); border: 1px solid transparent;
+  font-weight: 600; font-size: 0.92rem; cursor: pointer; transition: all .15s ease;
+}
+.btn-primary { background: var(--gold); color: var(--ink); }
+.btn-primary:hover { background: #DDB233; transform: translateY(-1px); }
+.btn-ghost { border-color: var(--ink-line); color: var(--text-light); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-block { width: 100%; }
+.btn-text { background: none; border: none; color: var(--text-dim); font-size: 0.82rem; text-decoration: underline; cursor: pointer; padding: 8px 0; }
+.btn-text:hover { color: var(--text-light); }
+.btn-sell-row { background: none; border: 1px solid var(--ink-line); color: var(--text-dim); font-size: .75rem; padding: 5px 10px; border-radius: var(--radius); cursor: pointer; }
+.btn-sell-row:hover { border-color: var(--loss); color: var(--loss); }
+
+/* -------------------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------------------- */
+.hero {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 88px 24px 96px;
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center;
+}
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold-dim); margin-bottom: 18px; display: block;
+}
+.eyebrow-light { color: var(--gold); }
+.hero-title {
+  font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -0.01em;
+  color: var(--text-light);
+}
+.hero-title em { font-style: italic; color: var(--gold); font-weight: 500; }
+.hero-sub {
+  margin-top: 26px; max-width: 46ch; color: var(--text-dim); font-size: 1.05rem;
+}
+.hero-actions { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+.hero-stats {
+  display: flex; gap: 40px; margin-top: 56px; padding-top: 28px;
+  border-top: 1px solid var(--ink-line);
+}
+.hero-stats dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); margin-bottom: 6px; }
+.hero-stats dd { margin: 0; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-light); }
+
+.hero-panel { display: flex; justify-content: center; }
+.ledger-card {
+  background: var(--ink-panel); border: 1px solid var(--ink-line); border-radius: 6px;
+  padding: 26px; width: 100%; max-width: 340px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+}
+.ledger-card-head, .ledger-card-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  font-family: var(--font-mono); font-size: 0.85rem;
+}
+.ledger-card-head { color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase; letter-spacing: .05em; padding-bottom: 12px; border-bottom: 1px solid var(--ink-line); }
+.ledger-card-row { padding: 12px 0; border-bottom: 1px dashed var(--ink-line); color: var(--text-light); }
+.ledger-card-row .up { color: var(--gain); text-align: right; }
+.ledger-card-row .down { color: var(--loss); text-align: right; }
+.ledger-card-row span:nth-child(2) { text-align: center; color: var(--text-dim); }
+.ledger-card-foot { font-size: 0.72rem; color: var(--text-dim); margin-top: 16px; }
+
+/* -------------------------------------------------------------------------
+   Sections (shared)
+   ------------------------------------------------------------------------- */
+.section { padding: 96px 0; }
+.section-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.section-dark { background: var(--ink); }
+.section-paper { background: var(--paper); color: var(--text-ink); }
+.section-head { max-width: 60ch; margin-bottom: 48px; }
+.section-head h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); color: var(--text-light); }
+.section-head h2.ink { color: var(--text-ink); }
+.section-sub { margin-top: 14px; color: var(--text-dim); font-size: 1.02rem; }
+.section-sub.ink-dim { color: var(--text-ink-dim); }
+
+/* -------------------------------------------------------------------------
+   Board / tables (Markets, Portfolio, Desk)
+   ------------------------------------------------------------------------- */
+.board-controls { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.search-wrap input {
+  background: var(--ink-panel); border: 1px solid var(--ink-line); color: var(--text-light);
+  padding: 11px 14px; border-radius: var(--radius); width: 260px;
+}
+.section-paper .search-wrap input { background: var(--paper-panel); border-color: var(--paper-line); color: var(--text-ink); }
+.board-sort { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-dim); }
+.board-sort select {
+  background: var(--ink-panel); border: 1px solid var(--ink-line); color: var(--text-light);
+  padding: 10px 12px; border-radius: var(--radius);
+}
+.board-status { margin-left: auto; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); }
+
+.board-table-wrap { overflow-x: auto; border: 1px solid var(--ink-line); border-radius: 6px; }
+.section-paper .board-table-wrap { border-color: var(--paper-line); }
+.board-table { width: 100%; border-collapse: collapse; min-width: 720px; }
+.board-table th {
+  text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-dim); padding: 14px 18px; background: var(--ink-panel);
+  border-bottom: 1px solid var(--ink-line); font-weight: 600;
+}
+.section-paper .board-table th { background: var(--paper-panel); border-color: var(--paper-line); color: var(--text-ink-dim); }
+.board-table td {
+  padding: 14px 18px; border-bottom: 1px solid var(--ink-line); font-size: 0.92rem;
+  vertical-align: middle;
+}
+.section-paper .board-table td { border-color: var(--paper-line); }
+.board-table tbody tr:last-child td { border-bottom: none; }
+.board-table tbody tr:hover { background: rgba(201,162,39,0.05); }
+.asset-cell { display: flex; align-items: center; gap: 10px; }
+.asset-cell img { width: 26px; height: 26px; border-radius: 50%; }
+.asset-name { font-weight: 600; }
+.asset-sym { color: var(--text-dim); font-size: 0.78rem; font-family: var(--font-mono); text-transform: uppercase; }
+.mono { font-family: var(--font-mono); }
+.up { color: var(--gain); }
+.down { color: var(--loss); }
+.sparkline { display: block; }
+.row-action-btn {
+  background: none; border: 1px solid var(--ink-line); color: var(--gold);
+  font-size: 0.75rem; padding: 7px 12px; border-radius: var(--radius); cursor: pointer;
+  white-space: nowrap; font-weight: 600;
+}
+.row-action-btn:hover { background: var(--gold); color: var(--ink); }
+.empty-row td, .board-skeleton-row td { text-align: center; color: var(--text-dim); padding: 32px 18px; }
+.board-disclaimer { margin-top: 14px; font-size: 0.78rem; color: var(--text-dim); }
+
+/* -------------------------------------------------------------------------
+   Portfolio
+   ------------------------------------------------------------------------- */
+.portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+.portfolio-form, .portfolio-summary {
+  background: var(--paper-panel); border: 1px solid var(--paper-line); border-radius: 8px; padding: 28px;
+}
+.portfolio-form h3 { font-size: 1.15rem; margin-bottom: 20px; color: var(--text-ink); }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: 0.78rem; color: var(--text-ink-dim); margin-bottom: 6px; font-weight: 500; }
+.form-row input, .form-row select {
+  width: 100%; padding: 11px 13px; border: 1px solid var(--paper-line); border-radius: var(--radius);
+  background: #fff; color: var(--text-ink);
+}
+.section-dark .form-row input, .section-dark .form-row select {
+  background: var(--ink); border-color: var(--ink-line); color: var(--text-light);
+}
+.form-row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-hint { font-size: 0.8rem; margin-top: 10px; min-height: 1.2em; color: var(--text-ink-dim); }
+.section-dark .form-hint { color: var(--text-dim); }
+
+.portfolio-summary { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.summary-card { margin-bottom: 12px; }
+.summary-label { display: block; font-size: 0.78rem; color: var(--text-ink-dim); text-transform: uppercase; letter-spacing: .05em; }
+.summary-value { display: block; font-family: var(--font-mono); font-size: 2.1rem; color: var(--text-ink); margin-top: 4px; }
+.summary-delta { display: inline-block; font-family: var(--font-mono); font-size: 0.9rem; margin-top: 4px; }
+
+/* -------------------------------------------------------------------------
+   Trading desk
+   ------------------------------------------------------------------------- */
+.desk-grid { display: grid; grid-template-columns: 340px 1fr; gap: 32px; align-items: start; }
+.desk-ticket { background: var(--ink-panel); border: 1px solid var(--ink-line); border-radius: 8px; padding: 24px; position: sticky; top: calc(var(--header-h) + var(--ticker-h) + 24px); }
+.ticket-tabs { display: flex; border: 1px solid var(--ink-line); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+.ticket-tab { flex: 1; padding: 11px; background: none; border: none; color: var(--text-dim); cursor: pointer; font-weight: 600; font-size: 0.88rem; }
+.ticket-tab.active[data-side="buy"] { background: rgba(47,191,113,0.15); color: var(--gain); }
+.ticket-tab.active[data-side="sell"] { background: rgba(228,87,46,0.15); color: var(--loss); }
+.ticket-meta { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; padding: 16px; background: var(--ink); border-radius: var(--radius); border: 1px solid var(--ink-line); }
+.ticket-meta div { display: flex; justify-content: space-between; font-size: 0.85rem; }
+.ticket-meta span { color: var(--text-dim); }
+.ticket-meta strong { font-family: var(--font-mono); font-weight: 600; }
+
+.desk-positions-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.desk-positions-head h3 { color: var(--text-light); font-size: 1.15rem; }
+.desk-positions-head span { font-family: var(--font-mono); font-size: 0.85rem; color: var(--gold); }
+.desk-positions h4 { color: var(--text-light); font-size: 0.95rem; margin: 28px 0 12px; font-family: var(--font-body); font-weight: 600; }
+.trade-history { display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; }
+.trade-history li {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-family: var(--font-mono); font-size: 0.8rem; padding: 10px 14px;
+  background: var(--ink-panel); border: 1px solid var(--ink-line); border-radius: var(--radius);
+}
+.trade-history .side-buy { color: var(--gain); }
+.trade-history .side-sell { color: var(--loss); }
+.empty-row-li { color: var(--text-dim); justify-content: center !important; }
+
+/* -------------------------------------------------------------------------
+   Journal / blog
+   ------------------------------------------------------------------------- */
+.journal-filters { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+.filter-chip {
+  padding: 9px 18px; border-radius: 999px; border: 1px solid var(--paper-line);
+  background: transparent; color: var(--text-ink-dim); cursor: pointer; font-size: 0.85rem; font-weight: 500;
+  transition: all .15s ease;
+}
+.filter-chip.active, .filter-chip:hover { background: var(--text-ink); color: var(--paper); border-color: var(--text-ink); }
+.journal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.journal-card {
+  background: var(--paper-panel); border: 1px solid var(--paper-line); border-radius: 8px;
+  padding: 26px; display: flex; flex-direction: column; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.journal-card:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -18px rgba(27,26,23,0.25); }
+.journal-card-tag { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--gold-dim); margin-bottom: 12px; }
+.journal-card h3 { font-size: 1.2rem; color: var(--text-ink); line-height: 1.3; margin-bottom: 10px; }
+.journal-card p { color: var(--text-ink-dim); font-size: 0.92rem; flex: 1; }
+.journal-card-meta { display: flex; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--paper-line); font-size: 0.76rem; color: var(--text-ink-dim); font-family: var(--font-mono); }
+
+/* Journal modal */
+.journal-modal-backdrop {
+  position: fixed; inset: 0; background: rgba(11,18,32,0.7); z-index: 200;
+  display: flex; align-items: flex-start; justify-content: center; padding: 60px 20px;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.journal-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+.journal-modal {
+  background: var(--paper-panel); color: var(--text-ink); max-width: 640px; width: 100%;
+  border-radius: 10px; padding: 40px; max-height: 82vh; overflow-y: auto;
+  transform: translateY(12px); transition: transform .2s ease;
+}
+.journal-modal-backdrop.open .journal-modal { transform: translateY(0); }
+.journal-modal-close { float: right; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-ink-dim); line-height: 1; }
+.journal-modal h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.journal-modal-meta { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-ink-dim); margin-bottom: 22px; }
+.journal-modal-body p { margin-bottom: 16px; color: var(--text-ink); line-height: 1.7; }
+
+/* -------------------------------------------------------------------------
+   Newsletter strip
+   ------------------------------------------------------------------------- */
+.section-ink-strip { background: var(--ink-panel); border-top: 1px solid var(--ink-line); border-bottom: 1px solid var(--ink-line); }
+.strip-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.strip-inner h2 { font-size: 1.8rem; margin-top: 6px; }
+.strip-inner .section-sub { max-width: 42ch; }
+.subscribe-form { display: flex; gap: 10px; }
+.subscribe-form input {
+  background: var(--ink); border: 1px solid var(--ink-line); color: var(--text-light);
+  padding: 13px 16px; border-radius: var(--radius); width: 240px;
 }
 
-@media(max-width:420px){
-  .brand-text{font-size:14px}
-  .hero h1{font-size:38px}
-  .hero-actions .btn{width:100%;text-align:center}
-  .hero-metrics{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .footer-grid>div:first-child{grid-column:auto}
+/* -------------------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------------------- */
+.site-footer { background: var(--ink); padding: 64px 0 0; }
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 24px 48px;
+  display: flex; justify-content: space-between; gap: 60px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--ink-line);
 }
+.footer-brand p { color: var(--text-dim); margin-top: 12px; max-width: 32ch; font-size: 0.9rem; }
+.footer-cols { display: flex; gap: 60px; }
+.footer-cols h5 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); margin-bottom: 14px; }
+.footer-cols a { display: block; color: var(--text-light); font-size: 0.9rem; margin-bottom: 10px; }
+.footer-cols a:hover { color: var(--gold); }
+.footer-bottom { max-width: var(--max-w); margin: 0 auto; padding: 24px; }
+.footer-bottom p { color: var(--text-dim); font-size: 0.78rem; }
+
+/* -------------------------------------------------------------------------
+   Toast
+   ------------------------------------------------------------------------- */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--text-ink); color: var(--paper); padding: 14px 22px; border-radius: 6px;
+  font-size: 0.88rem; z-index: 300; opacity: 0; pointer-events: none; transition: all .25s ease;
+  box-shadow: 0 16px 32px -14px rgba(0,0,0,0.4);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* -------------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------------- */
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; padding: 64px 24px 72px; }
+  .hero-panel { order: -1; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .desk-grid { grid-template-columns: 1fr; }
+  .desk-ticket { position: static; }
+  .journal-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .main-nav { position: fixed; top: var(--header-h); left: 0; right: 0; background: var(--ink);
+    flex-direction: column; padding: 16px 24px; border-bottom: 1px solid var(--ink-line);
+    transform: translateY(-140%); transition: transform .2s ease; gap: 4px; }
+  .main-nav.open { transform: translateY(0); }
+  .main-nav a { padding: 12px 0; border-bottom: 1px solid var(--ink-line); }
+  .nav-toggle { display: flex; }
+  .balance-chip { border-left: none; padding-left: 0; align-items: flex-start; }
+  .hero-stats { flex-wrap: wrap; row-gap: 20px; }
+  .journal-grid { grid-template-columns: 1fr; }
+  .strip-inner { flex-direction: column; align-items: flex-start; }
+  .subscribe-form { width: 100%; }
+  .subscribe-form input { flex: 1; width: auto; }
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="topbar">
-  <div class="container">
-    <div class="ticker-mini">
-      <span>EUR/USD <b class="green">+0.12%</b></span>
-      <span>GBP/USD <b class="green">+0.32%</b></span>
-      <span>BTC/USD <b class="red">-1.23%</b></span>
-      <span>XAU/USD <b class="green">+0.45%</b></span>
-    </div>
-    <div>Markets open · Data for demonstration only</div>
-  </div>
-</div>
+<!-- ============ SKIP LINK ============ -->
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header class="nav">
-  <div class="container nav-inner">
-    <a class="brand" href="#">
-      <div class="brand-mark">GF</div>
-      <div class="brand-text">GLOBAL FINANCE</div>
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="26" height="26">
+          <polyline points="2,24 10,14 16,19 30,4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="22,4 30,4 30,12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-word">Ledgerline</span>
     </a>
 
-    <nav class="nav-links">
+    <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="#markets">Markets</a>
-      <a href="#platform">Trading</a>
-      <a href="#platform">Platforms</a>
-      <a href="#insights">Analytics</a>
-      <a href="#security">Security</a>
-      <a href="#faq">FAQ</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#desk">Trading Desk</a>
+      <a href="#journal">Journal</a>
     </nav>
 
-    <div class="nav-actions">
-      <button class="lang">◎ EN</button>
-      <button class="btn btn-ghost" onclick="openModal('login')">Login</button>
-      <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
-      <button class="menu-btn" onclick="toggleMobile()">☰</button>
+    <div class="header-actions">
+      <span class="balance-chip" id="headerBalance" title="Demo cash balance">
+        <span class="balance-label">Paper cash</span>
+        <span class="balance-value" id="headerBalanceValue">$0.00</span>
+      </span>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Signature element: the ticker rail -->
+  <div class="ticker-rail" id="tickerRail" aria-label="Live price ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-loading">Fetching live prices…</span>
     </div>
   </div>
 </header>
 
-<main>
+<main id="main">
 
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Professional Trading Platform</div>
-      <h1>Trade Global Markets <span>With Confidence</span></h1>
-      <p class="hero-copy">
-        Access global markets with a modern trading experience, advanced charting,
-        professional analytics and powerful risk-management tools — all in one platform.
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <p class="eyebrow">Vol. 01 — No account, no risk, real prices</p>
+      <h1 class="hero-title">
+        Read the market<br>
+        like a <em>ledger</em>,<br>
+        not a rumor.
+      </h1>
+      <p class="hero-sub">
+        Ledgerline pulls live crypto prices into your browser, gives you $25,000 in
+        paper money to trade with, and keeps a running record of every position —
+        entirely on your device. Nothing to sign up for, nothing to lose.
       </p>
-
       <div class="hero-actions">
-        <button class="btn btn-primary" onclick="openModal('signup')">Start Trading Now →</button>
-        <button class="btn btn-ghost" onclick="openModal('demo')">Try Demo Account</button>
+        <a href="#desk" class="btn btn-primary">Open the trading desk</a>
+        <a href="#markets" class="btn btn-ghost">See live markets</a>
       </div>
-
-      <div class="hero-metrics">
-        <div class="metric"><strong>100+</strong><span>Markets</span></div>
-        <div class="metric"><strong>0.0</strong><span>Spreads from*</span></div>
-        <div class="metric"><strong>500:1</strong><span>Leverage up to*</span></div>
-        <div class="metric"><strong>24/7</strong><span>Support</span></div>
-      </div>
+      <dl class="hero-stats">
+        <div><dt>Starting balance</dt><dd>$25,000.00</dd></div>
+        <div><dt>Assets tracked</dt><dd id="heroAssetCount">—</dd></div>
+        <div><dt>Data refresh</dt><dd>Every 60s</dd></div>
+      </dl>
     </div>
-
-    <div class="trader-card">
-      <div class="trader-head">
-        <div>
-          <div class="symbol">EUR/USD <span class="green">●</span></div>
-          <div class="price" id="heroPrice">1.08524</div>
-          <div class="change" id="heroChange">+0.00125 (+0.12%)</div>
+    <div class="hero-panel" aria-hidden="true">
+      <div class="ledger-card">
+        <div class="ledger-card-head">
+          <span>Position</span><span>Qty</span><span>P/L</span>
         </div>
-        <div class="time-tabs">
-          <button class="active">1D</button>
-          <button>1W</button>
-          <button>1M</button>
-          <button>3M</button>
-          <button>1Y</button>
-        </div>
-      </div>
-
-      <div class="chart-wrap">
-        <svg id="heroChart" viewBox="0 0 700 270" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#16d66f" stop-opacity=".24"/>
-              <stop offset="100%" stop-color="#16d66f" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <line class="chart-grid-line" x1="0" y1="55" x2="700" y2="55"/>
-          <line class="chart-grid-line" x1="0" y1="110" x2="700" y2="110"/>
-          <line class="chart-grid-line" x1="0" y1="165" x2="700" y2="165"/>
-          <line class="chart-grid-line" x1="0" y1="220" x2="700" y2="220"/>
-          <path id="heroArea" class="chart-area"></path>
-          <path id="heroLine" class="chart-line"></path>
-          <circle id="heroDot" class="chart-dot" r="4"></circle>
-          <text class="chart-label" x="5" y="258">00:00</text>
-          <text class="chart-label" x="175" y="258">06:00</text>
-          <text class="chart-label" x="350" y="258">12:00</text>
-          <text class="chart-label" x="525" y="258">18:00</text>
-          <text class="chart-label" x="660" y="258">24:00</text>
-        </svg>
-      </div>
-
-      <div class="market-mini-grid">
-        <div class="market-mini">
-          <div class="market-mini-top"><span>XAU/USD</span><span class="green">↗</span></div>
-          <div class="market-mini-price">2,023.45</div>
-          <svg class="spark" data-seed="2"></svg>
-        </div>
-        <div class="market-mini">
-          <div class="market-mini-top"><span>BTC/USD</span><span class="red">↘</span></div>
-          <div class="market-mini-price">43,250.00</div>
-          <svg class="spark" data-seed="4"></svg>
-        </div>
-        <div class="market-mini">
-          <div class="market-mini-top"><span>GBP/USD</span><span class="green">↗</span></div>
-          <div class="market-mini-price">1.26543</div>
-          <svg class="spark" data-seed="7"></svg>
-        </div>
-        <div class="market-mini">
-          <div class="market-mini-top"><span>USD/JPY</span><span class="red">↘</span></div>
-          <div class="market-mini-price">150.123</div>
-          <svg class="spark" data-seed="9"></svg>
-        </div>
+        <div class="ledger-card-row"><span>BTC</span><span>0.14</span><span class="up">+4.2%</span></div>
+        <div class="ledger-card-row"><span>ETH</span><span>2.30</span><span class="up">+1.8%</span></div>
+        <div class="ledger-card-row"><span>SOL</span><span>18.0</span><span class="down">−2.1%</span></div>
+        <div class="ledger-card-foot">Illustrative — your positions appear on the desk below</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="trust-row">
-  <div class="container trust-grid">
-    <div class="trust-item">
-      <div class="trust-icon">▣</div>
-      <div><h3>Institutional-Grade Security</h3><p>Modern encryption, account controls and segregated architecture.</p></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">✦</div>
-      <div><h3>Lightning Fast Execution</h3><p>Designed for responsive order handling and reliable uptime.</p></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">▥</div>
-      <div><h3>Advanced Trading Tools</h3><p>Professional charts, technical analysis and risk tools.</p></div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">◈</div>
-      <div><h3>Multi-Asset Trading</h3><p>Explore forex, equities, crypto, commodities and indices.</p></div>
-    </div>
-  </div>
-</section>
+  <!-- ============ MARKETS / PRICE TRACKER ============ -->
+  <section class="section section-dark" id="markets">
+    <div class="section-inner">
+      <header class="section-head">
+        <p class="eyebrow eyebrow-light">I — Markets</p>
+        <h2>The board</h2>
+        <p class="section-sub">Live prices from CoinGecko's public API. Click a row to chart it or send it straight to the desk.</p>
+      </header>
 
-<section class="section" id="markets">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Markets</div>
-        <h2>Trade Popular Markets</h2>
-      </div>
-      <p>Monitor instruments, compare prices and move from analysis to action in seconds.</p>
-    </div>
-
-    <div class="market-panel">
-      <div class="market-tabs">
-        <button class="active" onclick="filterMarkets('Forex',this)">Forex</button>
-        <button onclick="filterMarkets('Stocks',this)">Stocks</button>
-        <button onclick="filterMarkets('Commodities',this)">Commodities</button>
-        <button onclick="filterMarkets('Crypto',this)">Cryptocurrencies</button>
-        <button onclick="filterMarkets('Indices',this)">Indices</button>
+      <div class="board-controls">
+        <div class="search-wrap">
+          <input type="search" id="boardSearch" placeholder="Filter by name or symbol…" aria-label="Filter markets">
+        </div>
+        <div class="board-sort">
+          <label for="boardSort">Sort by</label>
+          <select id="boardSort">
+            <option value="rank">Market rank</option>
+            <option value="gainers">Top gainers (24h)</option>
+            <option value="losers">Top losers (24h)</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+        <span class="board-status" id="boardStatus">Loading…</span>
       </div>
 
-      <table class="market-table">
-        <thead>
-          <tr>
-            <th>Instrument</th>
-            <th>Bid</th>
-            <th>Ask</th>
-            <th>Change</th>
-            <th>Chart</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="marketBody"></tbody>
-      </table>
+      <div class="board-table-wrap">
+        <table class="board-table" id="boardTable">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Asset</th>
+              <th scope="col">Price</th>
+              <th scope="col">24h</th>
+              <th scope="col">7d chart</th>
+              <th scope="col">Market cap</th>
+              <th scope="col"><span class="sr-only">Action</span></th>
+            </tr>
+          </thead>
+          <tbody id="boardBody">
+            <tr class="board-skeleton-row"><td colspan="7">Fetching live prices from CoinGecko…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="board-disclaimer">Prices are for information only and may be delayed. Not investment advice.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section" id="platform">
-  <div class="container platform-grid">
-    <div>
-      <div class="phone">
-        <div class="phone-screen">
-          <div class="phone-top"><span>9:41</span><span>● ● ●</span></div>
-          <div class="phone-price">1.08524</div>
-          <div class="phone-change">+0.00125 · +0.12%</div>
-          <div class="phone-chart">
-            <svg viewBox="0 0 240 190" width="100%" height="100%" preserveAspectRatio="none">
-              <polyline points="0,150 18,133 32,142 50,117 67,125 82,98 98,108 114,74 132,92 148,66 164,79 181,48 197,57 215,38 240,51"
-                        fill="none" stroke="#16d66f" stroke-width="2"/>
-              <polyline points="0,150 18,133 32,142 50,117 67,125 82,98 98,108 114,74 132,92 148,66 164,79 181,48 197,57 215,38 240,51 240,190 0,190"
-                        fill="url(#areaGradient)" opacity=".5"/>
-            </svg>
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="section section-paper" id="portfolio">
+    <div class="section-inner">
+      <header class="section-head">
+        <p class="eyebrow">II — Portfolio</p>
+        <h2 class="ink">Your holdings, on paper</h2>
+        <p class="section-sub ink-dim">Log real positions you hold elsewhere — or paper ones — and watch the running value update with the live board above. Stored only in this browser.</p>
+      </header>
+
+      <div class="portfolio-grid">
+        <form class="portfolio-form" id="portfolioForm">
+          <h3>Add a holding</h3>
+          <div class="form-row">
+            <label for="pfAsset">Asset</label>
+            <select id="pfAsset" required></select>
           </div>
-          <div style="font-size:9px;color:#65758b">EUR/USD · 1D · Advanced Chart</div>
-          <div class="phone-bottom">
-            <div>Chart</div><div>Markets</div><div>Orders</div><div>Account</div>
+          <div class="form-row form-row-split">
+            <div>
+              <label for="pfQty">Quantity</label>
+              <input type="number" id="pfQty" min="0" step="any" placeholder="0.00" required>
+            </div>
+            <div>
+              <label for="pfCost">Avg. buy price ($)</label>
+              <input type="number" id="pfCost" min="0" step="any" placeholder="0.00" required>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <button type="submit" class="btn btn-primary btn-block">Add to portfolio</button>
+          <p class="form-hint" id="portfolioHint"></p>
+        </form>
 
-    <div class="platform-copy">
-      <div class="kicker">Trading Platform</div>
-      <h2>Professional Tools For Serious Traders</h2>
-      <p>
-        Analyze markets with real-time style interfaces, sophisticated charting,
-        watchlists and risk-management workflows designed around clarity.
-      </p>
-
-      <div class="feature-list">
-        <div class="feature"><span class="check">✓</span>Advanced charting tools</div>
-        <div class="feature"><span class="check">✓</span>One-click trading interface</div>
-        <div class="feature"><span class="check">✓</span>Real-time market dashboard</div>
-        <div class="feature"><span class="check">✓</span>Portfolio risk monitoring</div>
-        <div class="feature"><span class="check">✓</span>Custom watchlists</div>
-        <div class="feature"><span class="check">✓</span>Economic calendar</div>
-      </div>
-
-      <div class="downloads">
-        <button class="btn btn-primary" onclick="toast('iOS download page coming soon')"> Download for iOS</button>
-        <button class="btn" onclick="toast('Android download page coming soon')">▣ Download for Android</button>
-        <button class="btn" onclick="toast('Opening Web Platform')">Web Platform →</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="stats">
-  <div class="container stats-grid">
-    <div class="stat"><strong>$2.5B+</strong><p>Illustrative daily volume</p></div>
-    <div class="stat"><strong>500K+</strong><p>Illustrative active traders</p></div>
-    <div class="stat"><strong>100+</strong><p>Trading instruments</p></div>
-    <div class="stat"><strong>15+</strong><p>Years of market experience</p></div>
-  </div>
-</section>
-
-<section class="section" id="accounts">
-  <div class="container">
-    <div class="section-head">
-      <div><div class="kicker">Account Types</div><h2>Choose Your Trading Style</h2></div>
-      <p>Flexible account concepts for beginners, active traders and professionals.</p>
-    </div>
-
-    <div class="pricing-grid">
-      <article class="price-card">
-        <h3>Standard</h3>
-        <p>Simple access for everyday market participants.</p>
-        <div class="price-number">$0 <span>/ platform fee</span></div>
-        <ul>
-          <li>100+ instruments</li>
-          <li>Web trading dashboard</li>
-          <li>Basic technical tools</li>
-          <li>Market watchlists</li>
-          <li>Educational resources</li>
-        </ul>
-        <button class="btn" onclick="openModal('signup')">Open Account</button>
-      </article>
-
-      <article class="price-card featured">
-        <span class="badge">MOST POPULAR</span>
-        <h3>Pro</h3>
-        <p>Advanced tools for active and experienced traders.</p>
-        <div class="price-number">$0 <span>/ platform fee</span></div>
-        <ul>
-          <li>Advanced charting</li>
-          <li>Professional analytics</li>
-          <li>Custom indicators</li>
-          <li>Portfolio risk dashboard</li>
-          <li>Priority support</li>
-        </ul>
-        <button class="btn btn-primary" onclick="openModal('signup')">Choose Pro</button>
-      </article>
-
-      <article class="price-card">
-        <h3>Institutional</h3>
-        <p>Flexible infrastructure for professional workflows.</p>
-        <div class="price-number">Custom</div>
-        <ul>
-          <li>Dedicated solutions</li>
-          <li>Advanced reporting</li>
-          <li>API-ready architecture</li>
-          <li>Enterprise controls</li>
-          <li>Dedicated support</li>
-        </ul>
-        <button class="btn" onclick="toast('Our institutional team will contact you')">Contact Sales</button>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="insights">
-  <div class="container">
-    <div class="section-head">
-      <div><div class="kicker">Research & Analytics</div><h2>Market Intelligence</h2></div>
-      <p>Give traders a clean place to understand catalysts, events and market structure.</p>
-    </div>
-
-    <div class="insight-grid">
-      <div class="insight-main">
-        <h3>Latest Market Briefings</h3>
-        <p>Illustrative content for your website prototype.</p>
-        <div class="news-list">
-          <div class="news"><div><div class="news-title">Dollar momentum remains in focus ahead of key data</div><div class="news-meta">Forex · 12 min ago</div></div><div class="news-tag">FX</div></div>
-          <div class="news"><div><div class="news-title">Gold watches rates as investors reassess risk</div><div class="news-meta">Commodities · 28 min ago</div></div><div class="news-tag">XAU</div></div>
-          <div class="news"><div><div class="news-title">Technology sector leads a broad market rotation</div><div class="news-meta">Equities · 41 min ago</div></div><div class="news-tag">STK</div></div>
-          <div class="news"><div><div class="news-title">Crypto volatility creates fresh technical levels</div><div class="news-meta">Digital assets · 1 hr ago</div></div><div class="news-tag">BTC</div></div>
+        <div class="portfolio-summary">
+          <div class="summary-card">
+            <span class="summary-label">Portfolio value</span>
+            <span class="summary-value" id="pfTotalValue">$0.00</span>
+            <span class="summary-delta" id="pfTotalDelta">—</span>
+          </div>
+          <canvas id="pfChart" width="320" height="220" aria-label="Portfolio allocation chart" role="img"></canvas>
         </div>
       </div>
 
-      <aside class="insight-side">
-        <h3>Economic Calendar</h3>
-        <div class="calendar">
-          <div class="calendar-row"><span>08:30 · USD</span><strong class="yellow">High impact</strong></div>
-          <div class="calendar-row"><span>10:00 · EUR</span><strong>Medium</strong></div>
-          <div class="calendar-row"><span>12:30 · GBP</span><strong class="yellow">High impact</strong></div>
-          <div class="calendar-row"><span>15:00 · CAD</span><strong>Medium</strong></div>
-          <div class="calendar-row"><span>18:30 · JPY</span><strong>Low</strong></div>
+      <div class="board-table-wrap">
+        <table class="board-table board-table-paper" id="portfolioTable">
+          <thead>
+            <tr>
+              <th scope="col">Asset</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Avg. cost</th>
+              <th scope="col">Current price</th>
+              <th scope="col">Value</th>
+              <th scope="col">P/L</th>
+              <th scope="col"><span class="sr-only">Remove</span></th>
+            </tr>
+          </thead>
+          <tbody id="portfolioBody">
+            <tr class="empty-row"><td colspan="7">No holdings yet — add one on the left.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRADING DESK ============ -->
+  <section class="section section-dark" id="desk">
+    <div class="section-inner">
+      <header class="section-head">
+        <p class="eyebrow eyebrow-light">III — Trading Desk</p>
+        <h2>Paper trading, real prices</h2>
+        <p class="section-sub">Practice buying and selling at live market prices with a $25,000 demo balance. Every fill is simulated — no real funds ever move.</p>
+      </header>
+
+      <div class="desk-grid">
+        <div class="desk-ticket">
+          <div class="ticket-tabs" role="tablist" aria-label="Order side">
+            <button class="ticket-tab active" data-side="buy" role="tab" aria-selected="true">Buy</button>
+            <button class="ticket-tab" data-side="sell" role="tab" aria-selected="false">Sell</button>
+          </div>
+          <form id="tradeForm">
+            <div class="form-row">
+              <label for="tradeAsset">Asset</label>
+              <select id="tradeAsset" required></select>
+            </div>
+            <div class="form-row">
+              <label for="tradeAmount">Amount (USD)</label>
+              <input type="number" id="tradeAmount" min="1" step="any" placeholder="1000">
+            </div>
+            <div class="ticket-meta">
+              <div><span>Market price</span><strong id="ticketPrice">—</strong></div>
+              <div><span>Est. quantity</span><strong id="ticketQty">—</strong></div>
+              <div><span>Available cash</span><strong id="ticketCash">$0.00</strong></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="ticketSubmit">Buy at market</button>
+            <p class="form-hint" id="ticketHint"></p>
+          </form>
+          <button class="btn btn-text" id="resetDeskBtn" type="button">Reset demo account</button>
         </div>
-        <button class="btn" style="width:100%;margin-top:18px" onclick="toast('Calendar opened')">View Full Calendar</button>
-      </aside>
-    </div>
-  </div>
-</section>
 
-<section class="section" id="security">
-  <div class="container">
-    <div class="section-head">
-      <div><div class="kicker">Security</div><h2>Built For Trust</h2></div>
-      <p>A premium finance brand should make security and transparency visible from the first screen.</p>
-    </div>
-
-    <div class="security">
-      <div class="security-card">
-        <div class="icon">♙</div>
-        <h3>Account Protection</h3>
-        <p>Use strong authentication, session controls and configurable account-security workflows.</p>
-      </div>
-      <div class="security-card">
-        <div class="icon">⌁</div>
-        <h3>Encrypted Sessions</h3>
-        <p>Design your production implementation around secure transport and protected user sessions.</p>
-      </div>
-      <div class="security-card">
-        <div class="icon">✓</div>
-        <h3>Transparent Controls</h3>
-        <p>Clearly explain fees, risks, execution policies and regulatory information to customers.</p>
+        <div class="desk-positions">
+          <div class="desk-positions-head">
+            <h3>Open positions</h3>
+            <span id="deskEquity">Equity: $25,000.00</span>
+          </div>
+          <div class="board-table-wrap">
+            <table class="board-table" id="deskTable">
+              <thead>
+                <tr><th>Asset</th><th>Qty</th><th>Avg. entry</th><th>Mark</th><th>Unrealized P/L</th><th></th></tr>
+              </thead>
+              <tbody id="deskBody">
+                <tr class="empty-row"><td colspan="6">No open positions. Place your first trade.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>Trade history</h4>
+          <ul class="trade-history" id="tradeHistory">
+            <li class="empty-row-li">No trades yet.</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section">
-  <div class="container">
-    <div class="cta-card">
+  <!-- ============ BLOG / JOURNAL ============ -->
+  <section class="section section-paper" id="journal">
+    <div class="section-inner">
+      <header class="section-head">
+        <p class="eyebrow">IV — Journal</p>
+        <h2 class="ink">Notes from the desk</h2>
+        <p class="section-sub ink-dim">Short, plain-language explainers — not signals, not calls. Filter by topic.</p>
+      </header>
+
+      <div class="journal-filters" id="journalFilters">
+        <button class="filter-chip active" data-cat="all">All</button>
+        <button class="filter-chip" data-cat="basics">Basics</button>
+        <button class="filter-chip" data-cat="risk">Risk</button>
+        <button class="filter-chip" data-cat="crypto">Crypto</button>
+        <button class="filter-chip" data-cat="strategy">Strategy</button>
+      </div>
+
+      <div class="journal-grid" id="journalGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER / CTA ============ -->
+  <section class="section section-ink-strip">
+    <div class="section-inner strip-inner">
       <div>
-        <div class="kicker">Start Your Journey</div>
-        <h2>Turn Market Ideas Into A Better Trading Workflow.</h2>
-        <p>
-          Build a modern financial experience with market discovery, analytics,
-          trading tools and account management in one premium interface.
-        </p>
-        <div class="cta-list">
-          <div><span>✓</span>Demo trading environment</div>
-          <div><span>✓</span>Advanced market dashboard</div>
-          <div><span>✓</span>Professional research tools</div>
-          <div><span>✓</span>Responsive desktop and mobile design</div>
-        </div>
+        <p class="eyebrow eyebrow-light">V — Stay posted</p>
+        <h2>One page, updated in place.</h2>
+        <p class="section-sub">This is a static demo — the form below doesn't send anywhere. Wire it to your own newsletter provider when you deploy.</p>
       </div>
-      <div class="cta-box">
-        <h3>Open Your Account</h3>
-        <p>Start with a demo workflow before connecting any real financial infrastructure.</p>
-        <button class="btn btn-primary" onclick="openModal('signup')">Open Live Account</button>
-        <button class="btn" onclick="openModal('demo')">Try Free Demo →</button>
-      </div>
+      <form class="subscribe-form" id="subscribeForm">
+        <label for="subEmail" class="sr-only">Email address</label>
+        <input type="email" id="subEmail" placeholder="you@domain.com" required>
+        <button type="submit" class="btn btn-primary">Notify me</button>
+      </form>
     </div>
-  </div>
-</section>
-
-<section class="section" id="faq">
-  <div class="container">
-    <div class="section-head">
-      <div><div class="kicker">Support</div><h2>Frequently Asked Questions</h2></div>
-      <p>Common questions for the website prototype.</p>
-    </div>
-
-    <div class="faq-grid">
-      <div class="faq"><button onclick="toggleFaq(this)">Is this a real trading platform? <span>+</span></button><div class="answer">No. This GitHub version is a front-end prototype. Real trading requires a secure backend, broker/exchange integrations, authentication, compliance and regulated infrastructure.</div></div>
-      <div class="faq"><button onclick="toggleFaq(this)">Can I connect live market data? <span>+</span></button><div class="answer">Yes. Replace the demo JavaScript data layer with an approved market-data API or WebSocket provider and keep API credentials on the server.</div></div>
-      <div class="faq"><button onclick="toggleFaq(this)">Can users actually place trades? <span>+</span></button><div class="answer">The buttons here are demonstration interactions. Real orders should be handled by a secure backend and a properly authorized brokerage or exchange API.</div></div>
-      <div class="faq"><button onclick="toggleFaq(this)">Is it responsive? <span>+</span></button><div class="answer">Yes. The layout includes responsive breakpoints for desktop, tablet and mobile screens.</div></div>
-      <div class="faq"><button onclick="toggleFaq(this)">Can I change the brand name? <span>+</span></button><div class="answer">Yes. Search for GLOBAL FINANCE in this file and replace the text, logo initials, metadata and footer copy with your own brand.</div></div>
-      <div class="faq"><button onclick="toggleFaq(this)">Can I add a backend later? <span>+</span></button><div class="answer">Yes. The interface can be connected to a backend such as Node.js, Python or another server stack for authentication, users, portfolios and APIs.</div></div>
-    </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="#">
-          <div class="brand-mark">GF</div>
-          <div class="brand-text">GLOBAL FINANCE</div>
-        </a>
-        <p>Your premium front-end foundation for a global finance and trading website.</p>
-        <div class="socials">
-          <a href="#" aria-label="X">X</a>
-          <a href="#" aria-label="LinkedIn">in</a>
-          <a href="#" aria-label="YouTube">▶</a>
-          <a href="#" aria-label="Instagram">◎</a>
-        </div>
-      </div>
-
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-word">Ledgerline</span>
+      <p>Built as a static site — HTML, CSS and vanilla JS only. Prices via the CoinGecko public API.</p>
+    </div>
+    <div class="footer-cols">
       <div>
-        <h4>Markets</h4>
-        <ul>
-          <li><a href="#markets">Forex</a></li>
-          <li><a href="#markets">Stocks</a></li>
-          <li><a href="#markets">Commodities</a></li>
-          <li><a href="#markets">Crypto</a></li>
-          <li><a href="#markets">Indices</a></li>
-        </ul>
+        <h5>Site</h5>
+        <a href="#markets">Markets</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#desk">Trading desk</a>
+        <a href="#journal">Journal</a>
       </div>
-
       <div>
-        <h4>Trading</h4>
-        <ul>
-          <li><a href="#platform">Platform</a></li>
-          <li><a href="#accounts">Account Types</a></li>
-          <li><a href="#markets">Spreads & Fees</a></li>
-          <li><a href="#insights">Economic Calendar</a></li>
-          <li><a href="#platform">Trading Tools</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#security">About Us</a></li>
-          <li><a href="#security">Security</a></li>
-          <li><a href="#faq">Legal</a></li>
-          <li><a href="#faq">Contact</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="#insights">Market Analysis</a></li>
-          <li><a href="#insights">Trading Guides</a></li>
-          <li><a href="#insights">Education</a></li>
-          <li><a href="#insights">Webinars</a></li>
-          <li><a href="#platform">Downloads</a></li>
-        </ul>
+        <h5>Legal</h5>
+        <a href="#" id="disclaimerLink">Disclaimer</a>
+        <a href="#" id="privacyLink">Privacy</a>
       </div>
     </div>
-
-    <div class="risk">
-      <strong>Risk Warning:</strong>
-      Trading financial instruments involves substantial risk and may result in loss of capital.
-      The market prices and statistics displayed on this prototype are illustrative and are not
-      investment advice, an offer, or a solicitation to trade.
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 Global Finance. All rights reserved.</span>
-      <span>Privacy · Terms · Risk Disclosure · Cookie Policy</span>
-    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Ledgerline. Demo project — not a real brokerage. Not investment advice.</p>
   </div>
 </footer>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="modal" id="modal">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3 id="modalTitle">Create Account</h3>
-      <button class="close" onclick="closeModal()">×</button>
-    </div>
-    <form class="form" onsubmit="submitDemo(event)">
-      <div>
-        <label>FULL NAME</label>
-        <input required placeholder="Your full name">
-      </div>
-      <div>
-        <label>EMAIL ADDRESS</label>
-        <input required type="email" placeholder="you@example.com">
-      </div>
-      <div id="passwordField">
-        <label>PASSWORD</label>
-        <input type="password" placeholder="Create a password">
-      </div>
-      <button class="btn btn-primary" type="submit" id="modalSubmit">Create Demo Account</button>
-      <div class="form-note">Prototype only — no real financial account is created.</div>
-    </form>
-  </div>
-</div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-/* =========================================================
-   MARKET DATA
-   Demo-only data layer
-   ========================================================= */
+/* ==========================================================================
+   data.js
+   Static content for the Journal section, plus the coin list used to seed
+   the Markets board, Portfolio form and Trading Desk. Editing this file is
+   the easiest way to change what the site shows without touching app.js.
+   ========================================================================== */
 
-const marketSets = {
-  Forex:[
-    ["🇺🇸","EUR/USD","1.08524","1.08526","+0.12%","up"],
-    ["🇬🇧","GBP/USD","1.26543","1.26546","+0.32%","up"],
-    ["🇺🇸","USD/JPY","150.123","150.125","-0.15%","down"],
-    ["🇺🇸","USD/CHF","0.87842","0.87845","+0.08%","up"],
-    ["🇨🇦","USD/CAD","1.35124","1.35128","-0.09%","down"]
-  ],
-  Stocks:[
-    ["A","APPLE","192.42","192.48","+1.21%","up"],
-    ["N","NVIDIA","735.22","735.80","+2.48%","up"],
-    ["T","TESLA","211.31","211.72","-0.83%","down"],
-    ["M","MICROSOFT","418.77","419.05","+0.56%","up"],
-    ["A","AMAZON","178.92","179.14","+0.94%","up"]
-  ],
-  Commodities:[
-    ["Au","XAU/USD","2,023.45","2,023.67","+0.45%","up"],
-    ["Ag","XAG/USD","22.74","22.79","+0.31%","up"],
-    ["O","WTI/USD","77.31","77.44","-0.62%","down"],
-    ["G","NATGAS","2.14","2.17","+1.04%","up"],
-    ["C","COPPER","3.82","3.84","+0.27%","up"]
-  ],
-  Crypto:[
-    ["₿","BTC/USD","43,250.00","43,255.00","-1.23%","down"],
-    ["Ξ","ETH/USD","2,310.22","2,314.14","+0.73%","up"],
-    ["S","SOL/USD","97.41","97.83","+2.19%","up"],
-    ["X","XRP/USD","0.521","0.524","-0.38%","down"],
-    ["D","DOGE/USD","0.082","0.083","+1.04%","up"]
-  ],
-  Indices:[
-    ["S","S&P 500","4,890.12","4,891.02","+0.68%","up"],
-    ["N","NASDAQ 100","17,540.42","17,542.88","+0.91%","up"],
-    ["D","DOW JONES","38,001.11","38,006.90","+0.34%","up"],
-    ["D","DAX 40","16,889.24","16,892.01","-0.12%","down"],
-    ["F","FTSE 100","7,642.21","7,645.88","+0.16%","up"]
-  ]
-};
-
-function renderMarkets(category="Forex"){
-  const body=document.getElementById("marketBody");
-  body.innerHTML="";
-  const rows=marketSets[category]||marketSets.Forex;
-
-  rows.forEach((r,i)=>{
-    const tr=document.createElement("tr");
-    const trend=r[5]==="up";
-    tr.innerHTML=`
-      <td>
-        <div class="instrument">
-          <span class="coin">${r[0]}</span>
-          ${r[1]}
-        </div>
-      </td>
-      <td>${r[2]}</td>
-      <td>${r[3]}</td>
-      <td class="${trend?"green":"red"}">${r[4]}</td>
-      <td>
-        <svg class="spark" viewBox="0 0 130 30" preserveAspectRatio="none">
-          <polyline points="${sparkPoints(i,trend)}"
-            fill="none" stroke="${trend?"#16d66f":"#ff4d5e"}"
-            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </td>
-      <td>
-        <button class="btn table-action" onclick="trade('${r[1]}')">Trade Now</button>
-      </td>
-    `;
-    body.appendChild(tr);
-  });
-}
-
-function sparkPoints(seed,up){
-  const arr=[];
-  let value=15+seed;
-  for(let i=0;i<12;i++){
-    value += (Math.sin(i*1.6+seed)*2)+(up?0.7:-0.35);
-    value=Math.max(4,Math.min(27,value));
-    arr.push(`${i*11.5},${30-value}`);
-  }
-  return arr.join(" ");
-}
-
-function filterMarkets(category,button){
-  document.querySelectorAll(".market-tabs button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  renderMarkets(category);
-}
-
-renderMarkets();
-
-/* =========================================================
-   HERO CHART
-   ========================================================= */
-
-let heroData=[
-  42,48,39,53,49,62,58,67,61,73,69,82,76,79,71,87,80,91,
-  85,88,77,70,75,66,72,64,71,79,74,82,88,81,94,89,101,
-  97,105,98,110,102,116,109,122,115,119,111,123
+/* Coins requested from CoinGecko. Add/remove ids to change the board. */
+const COIN_IDS = [
+  "bitcoin", "ethereum", "solana", "ripple", "cardano",
+  "dogecoin", "polkadot", "chainlink", "litecoin", "avalanche-2",
+  "polygon", "tron"
 ];
 
-function drawHeroChart(){
-  const width=700;
-  const height=220;
-  const max=Math.max(...heroData)+10;
-  const min=Math.min(...heroData)-10;
+/* Journal / blog posts. category must match a data-cat value in index.html */
+const JOURNAL_POSTS = [
+  {
+    id: "what-is-market-cap",
+    category: "basics",
+    tag: "Basics",
+    title: "Market cap isn't the price of the whole company",
+    date: "2026-08-02",
+    read: "4 min",
+    excerpt: "Market capitalization is a shorthand, not a valuation. Here's what it actually measures, and the two ways it commonly misleads people.",
+    body: `Market capitalization is calculated by multiplying the current price of one
+    unit — a share, a coin, a token — by the total number of units in circulation.
+    It's a useful, quick way to rank assets by size, which is why it shows up on
+    every board and ticker.
 
-  const points=heroData.map((v,i)=>{
-    const x=i*(width/(heroData.length-1));
-    const y=height-((v-min)/(max-min))*height;
-    return [x,y];
-  });
+    It is not, however, a statement about how much cash you'd get if you tried to
+    sell the whole thing at once. Price is set at the margin, by the last trade,
+    and large sell orders move price down as they execute. A ten-billion-dollar
+    market cap does not mean ten billion dollars would change hands smoothly.
 
-  const line=points.map(p=>p.join(",")).join(" ");
-  const area=line+" "+width+","+height+" 0,"+height;
+    The second common mix-up is treating market cap as a measure of a project's
+    usage or revenue. It measures none of that directly — it's a function of price
+    and supply, both of which can be influenced by factors that have little to do
+    with adoption. Circulating supply itself is worth checking before comparing
+    two assets: a lower price with a much larger supply is not automatically
+    "cheaper."`
+  },
+  {
+    id: "dollar-cost-averaging",
+    category: "strategy",
+    tag: "Strategy",
+    title: "Dollar-cost averaging: the boring strategy that's hard to beat",
+    date: "2026-07-21",
+    read: "5 min",
+    excerpt: "Buying a fixed amount on a fixed schedule won't ever get you the best possible price. That's sort of the point.",
+    body: `Dollar-cost averaging means investing a fixed dollar amount at regular
+    intervals — weekly, monthly — regardless of price. When price is high, your
+    fixed amount buys fewer units; when it's low, it buys more. Over time, your
+    average cost tends to land somewhere in the middle of the range, without you
+    having to predict where that middle is.
 
-  document.getElementById("heroLine").setAttribute("d","M "+points.map(p=>p.join(" ")).join(" L "));
-  document.getElementById("heroArea").setAttribute("d","M "+points.map(p=>p.join(" ")).join(" L ")+" L "+width+" "+height+" L 0 "+height+" Z");
+    The appeal isn't that it maximizes returns. A lump sum invested at the exact
+    bottom will always outperform a drawn-out schedule — but nobody can reliably
+    identify the bottom in advance, and the cost of guessing wrong is asymmetric:
+    a large purchase right before a drop can be discouraging enough to make
+    someone stop investing altogether.
 
-  const last=points[points.length-1];
-  document.getElementById("heroDot").setAttribute("cx",last[0]);
-  document.getElementById("heroDot").setAttribute("cy",last[1]);
-}
+    What dollar-cost averaging actually buys you is a plan you can stick to
+    without watching the market every day, and a way to reduce the influence of
+    any single bad-timing decision. It works best paired with a schedule you
+    genuinely intend to keep for years, not weeks.`
+  },
+  {
+    id: "position-sizing",
+    category: "risk",
+    tag: "Risk",
+    title: "Position sizing matters more than picking winners",
+    date: "2026-07-09",
+    read: "6 min",
+    excerpt: "Two traders with the same win rate can have wildly different outcomes based on how much they put behind each trade.",
+    body: `It's tempting to think that trading results come mostly from being right
+    about direction — will this asset go up or down. In practice, how much you
+    risk on each idea shapes the outcome just as much, if not more.
 
-drawHeroChart();
+    Consider a simple rule some traders use: never risk more than one to two
+    percent of total capital on a single position. With that rule, a string of
+    losing trades is uncomfortable but survivable, because no single mistake can
+    do lasting damage. Without a sizing rule, a trader can be right more often
+    than wrong and still be wiped out, because the one time they were wrong they
+    were also oversized.
 
-/* =========================================================
-   LIVE-STYLE DEMO TICK
-   ========================================================= */
+    Position sizing also interacts with volatility. A highly volatile asset
+    reaching the same dollar loss will do so faster and with wider swings along
+    the way, which is worth accounting for separately from the sizing rule
+    itself. None of this guarantees a profitable outcome — it simply controls
+    how much any single decision can cost.`
+  },
+  {
+    id: "stablecoins-explained",
+    category: "crypto",
+    tag: "Crypto",
+    title: "What a stablecoin is actually pegged to",
+    date: "2026-06-28",
+    read: "4 min",
+    excerpt: "'Stable' describes the goal, not a guarantee. The mechanism behind the peg is what determines how it can fail.",
+    body: `A stablecoin is a token designed to track the value of another asset, most
+    commonly the US dollar, so that one unit is intended to always trade near one
+    dollar. How that tracking is achieved varies a lot between projects, and the
+    mechanism is the part worth understanding before holding one.
 
-let basePrice=1.08524;
+    Fiat-backed stablecoins hold reserves — cash and short-term instruments —
+    roughly equal to the tokens in circulation, redeemable through the issuer.
+    Their stability depends on the quality and transparency of those reserves.
+    Crypto-collateralized stablecoins instead lock up other crypto assets as
+    collateral, over-collateralized to absorb price swings in what's backing
+    them. Algorithmic designs try to hold the peg through supply adjustments
+    alone, without a reserve asset behind each token.
 
-setInterval(()=>{
-  const movement=(Math.random()-.46)*0.00022;
-  basePrice+=movement;
+    Each design has a different failure mode: reserve stablecoins can fail if
+    the reserves turn out to be lower quality or less liquid than claimed;
+    collateralized ones can fail if the collateral's value drops faster than
+    positions can be unwound; algorithmic ones have historically been the least
+    tested under stress. "Stable" is a design goal, not a property that holds
+    under all conditions.`
+  },
+  {
+    id: "reading-a-candlestick-chart",
+    category: "basics",
+    tag: "Basics",
+    title: "The four numbers behind every candlestick",
+    date: "2026-06-14",
+    read: "3 min",
+    excerpt: "Open, high, low, close. Once those four numbers click, most chart reading is pattern recognition on top of them.",
+    body: `A single candlestick on a price chart summarizes trading over one time
+    period using four numbers: the opening price, the highest price reached, the
+    lowest price reached, and the closing price. The thick body of the candle
+    spans open to close; the thin lines above and below, often called wicks or
+    shadows, mark the high and low.
 
-  const price=basePrice.toFixed(5);
-  const positive=movement>=0;
-  const percent=(movement/basePrice*100).toFixed(3);
+    Color convention shows direction: in most charting tools, a candle where the
+    close is higher than the open is shaded one color, and a candle where the
+    close is lower than the open is shaded another. The body's length shows how
+    far price moved net of the period; the wick lengths show how far it moved
+    and reversed within that same period.
 
-  document.getElementById("heroPrice").textContent=price;
-  document.getElementById("heroChange").textContent=
-    `${positive?"+":""}${movement.toFixed(5)} (${positive?"+":""}${percent}%)`;
+    Reading a single candle tells you about one period. Reading a sequence of
+    them — where bodies and wicks sit relative to each other across many periods
+    — is what most chart-pattern analysis is actually built on, and it's worth
+    learning the four underlying numbers before learning the pattern names.`
+  },
+  {
+    id: "gas-fees-explained",
+    category: "crypto",
+    tag: "Crypto",
+    title: "Why the same transaction can cost $0.01 or $30",
+    date: "2026-05-30",
+    read: "4 min",
+    excerpt: "Network fees track demand for block space, not the size of your transfer. Here's what actually moves the number.",
+    body: `On most blockchains, sending a transaction requires paying a fee to the
+    network, often called "gas" on account-based chains. That fee generally has
+    little to do with how much value you're moving — sending one dollar and
+    sending one million dollars can cost the same fee if the transaction data is
+    similar in size and complexity.
 
-  heroData.push(heroData[heroData.length-1]+movement*200000);
-  if(heroData.length>48)heroData.shift();
-  drawHeroChart();
-},2500);
+    What the fee tracks instead is demand for limited block space. Each block
+    can only include so many transactions, and when more people want to transact
+    than there is room for, they effectively bid against each other by offering
+    higher fees to be included sooner. During quiet periods, fees can drop close
+    to negligible; during periods of high activity, they can spike sharply.
 
-/* =========================================================
-   MINI SPARKLINES
-   ========================================================= */
+    This is also why the same action — say, a token swap — can cost very
+    different amounts on different networks: each has its own capacity, its own
+    current demand, and its own fee market design. Comparing fees across chains
+    only makes sense at a specific point in time, not as a fixed property of the
+    chain.`
+  },
+  {
+    id: "diversification-limits",
+    category: "risk",
+    tag: "Risk",
+    title: "Diversification has a ceiling",
+    date: "2026-05-18",
+    read: "5 min",
+    excerpt: "Spreading across more assets reduces one kind of risk and does nothing for another. Knowing the difference matters.",
+    body: `Diversification is often summarized as "don't put all your eggs in one
+    basket," and the core idea holds up: holding many assets whose prices don't
+    move in lockstep reduces the impact of any single asset's bad outcome on
+    your total portfolio.
 
-document.querySelectorAll(".spark").forEach((svg)=>{
-  const seed=Number(svg.dataset.seed||1);
-  const up=seed%2===0;
-  const pts=[];
-  let y=15;
+    Where the idea has a ceiling is in distinguishing two kinds of risk.
+    Asset-specific risk — a single company's product failing, a single project's
+    smart contract getting exploited — is exactly what diversification reduces,
+    because it's unlikely to hit every holding at once. Market-wide risk — a
+    broad downturn affecting an entire asset class or the economy generally — is
+    not reduced by holding more assets within that same class, because they tend
+    to move together when that kind of event happens.
 
-  for(let i=0;i<14;i++){
-    y+=(Math.sin(i+seed)*2)+(up?.7:-.5);
-    y=Math.max(4,Math.min(26,y));
-    pts.push(`${i*7.6},${30-y}`);
+    This is why holding twenty different tokens within one sector isn't nearly
+    as diversifying as it might feel; the correlation between them during a
+    sector-wide event can be high even if their day-to-day price action looks
+    independent. True diversification usually means spreading across asset
+    types and return drivers, not just across ticker symbols.`
+  },
+  {
+    id: "order-types",
+    category: "strategy",
+    tag: "Strategy",
+    title: "Market orders, limit orders, and the price you actually get",
+    date: "2026-05-04",
+    read: "4 min",
+    excerpt: "The order type you choose decides which of two things you're prioritizing: certainty of execution, or certainty of price.",
+    body: `A market order tells an exchange to fill your trade immediately at
+    whatever price is currently available. It prioritizes speed and certainty of
+    execution over price — you're accepting the best price on offer right now,
+    which on a fast-moving or thinly traded asset can differ noticeably from the
+    price you saw a moment before submitting.
+
+    A limit order instead specifies the exact price you're willing to accept.
+    It prioritizes price over certainty: the order only fills if the market
+    reaches your specified level, which means it might not fill at all if price
+    never gets there. The trade-off is straightforward once framed this way —
+    market orders answer "I want in or out now," limit orders answer "I want
+    this price or better, whenever that happens."
+
+    Most trading platforms build further order types on top of these two ideas
+    — stop orders that turn into market or limit orders once a trigger price is
+    hit, for instance — but nearly all of them are variations on the same
+    underlying trade-off between execution certainty and price certainty.`
   }
+];
 
-  svg.setAttribute("viewBox","0 0 100 30");
-  svg.innerHTML=`
-    <polyline points="${pts.join(" ")}"
-      fill="none"
-      stroke="${up?"#16d66f":"#ff4d5e"}"
-      stroke-width="1.6"
-      stroke-linecap="round"
-      stroke-linejoin="round"/>
-  `;
-});
 
-/* =========================================================
-   MODALS
-   ========================================================= */
+/* ==========================================================================
+   Ledgerline — app.js
+   Vanilla JS, no build step. Sections below:
+     1. Utilities & state
+     2. Toast + misc UI chrome (nav, year, subscribe)
+     3. Market data (CoinGecko fetch, ticker rail, board table)
+     4. Portfolio tracker (localStorage)
+     5. Trading desk (paper trading simulator, localStorage)
+     6. Journal (blog) rendering + modal
+     7. Init
+   ========================================================================== */
 
-function openModal(type){
-  const modal=document.getElementById("modal");
-  const title=document.getElementById("modalTitle");
-  const submit=document.getElementById("modalSubmit");
-  const password=document.getElementById("passwordField");
+(function () {
+  "use strict";
 
-  if(type==="login"){
-    title.textContent="Welcome Back";
-    submit.textContent="Login to Dashboard";
-    password.classList.remove("hidden");
-  }else if(type==="demo"){
-    title.textContent="Try Demo Account";
-    submit.textContent="Launch Demo";
-    password.classList.add("hidden");
-  }else{
-    title.textContent="Create Your Account";
-    submit.textContent="Create Demo Account";
-    password.classList.remove("hidden");
-  }
+  /* ------------------------------------------------------------------ *
+   * 1. Utilities & shared state
+   * ------------------------------------------------------------------ */
 
-  modal.classList.add("show");
-}
+  const CG_API = "https://api.coingecko.com/api/v3";
+  const REFRESH_MS = 60000;
+  const STARTING_CASH = 25000;
 
-function closeModal(){
-  document.getElementById("modal").classList.remove("show");
-}
+  const LS_KEYS = {
+    portfolio: "ledgerline.portfolio.v1",
+    desk: "ledgerline.desk.v1"
+  };
 
-document.getElementById("modal").addEventListener("click",(e)=>{
-  if(e.target.id==="modal")closeModal();
-});
+  /** In-memory cache of the latest market data, keyed by coin id. */
+  let marketData = {};      // { btc: {id, symbol, name, image, current_price, ...} }
+  let marketOrder = [];     // array of ids in current sort order
+  let boardSortMode = "rank";
+  let boardFilterText = "";
 
-function submitDemo(e){
-  e.preventDefault();
-  closeModal();
-  toast("Demo interaction completed — connect your backend here.");
-}
+  const fmtUSD = (n, opts = {}) => {
+    if (n === null || n === undefined || Number.isNaN(n)) return "—";
+    const digits = opts.digits !== undefined ? opts.digits
+      : Math.abs(n) < 1 ? 4 : 2;
+    return n.toLocaleString("en-US", {
+      style: "currency", currency: "USD",
+      minimumFractionDigits: digits, maximumFractionDigits: digits
+    });
+  };
 
-/* =========================================================
-   TOAST
-   ========================================================= */
+  const fmtPct = (n) => {
+    if (n === null || n === undefined || Number.isNaN(n)) return "—";
+    const sign = n > 0 ? "+" : "";
+    return `${sign}${n.toFixed(2)}%`;
+  };
 
-let toastTimer;
+  const fmtCompact = (n) => {
+    if (n === null || n === undefined) return "—";
+    return n.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 2 });
+  };
 
-function toast(message){
-  const box=document.getElementById("toast");
-  box.textContent=message;
-  box.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>box.classList.remove("show"),2800);
-}
+  const qs = (sel, ctx) => (ctx || document).querySelector(sel);
+  const qsa = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
 
-/* =========================================================
-   TRADING BUTTON
-   ========================================================= */
-
-function trade(symbol){
-  toast(`${symbol}: trade ticket opened (prototype mode).`);
-}
-
-/* =========================================================
-   FAQ
-   ========================================================= */
-
-function toggleFaq(button){
-  const item=button.parentElement;
-  const wasOpen=item.classList.contains("open");
-
-  document.querySelectorAll(".faq").forEach(x=>x.classList.remove("open"));
-  document.querySelectorAll(".faq button span").forEach(x=>x.textContent="+");
-
-  if(!wasOpen){
-    item.classList.add("open");
-    button.querySelector("span").textContent="−";
-  }
-}
-
-/* =========================================================
-   MOBILE NAVIGATION
-   ========================================================= */
-
-function toggleMobile(){
-  const links=document.querySelector(".nav-links");
-  const visible=links.style.display==="flex";
-
-  if(visible){
-    links.style.display="";
-    return;
-  }
-
-  links.style.display="flex";
-  links.style.position="absolute";
-  links.style.top="64px";
-  links.style.left="0";
-  links.style.right="0";
-  links.style.padding="20px";
-  links.style.flexDirection="column";
-  links.style.alignItems="flex-start";
-  links.style.background="#050c15";
-  links.style.borderBottom="1px solid rgba(255,255,255,.08)";
-}
-
-/* =========================================================
-   SMOOTH NAV CLICK
-   ========================================================= */
-
-document.querySelectorAll(".nav-links a").forEach(link=>{
-  link.addEventListener("click",()=>{
-    if(window.innerWidth<=1000){
-      document.querySelector(".nav-links").style.display="";
+  function readLS(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) {
+      console.warn("Ledgerline: failed to read", key, e);
+      return fallback;
     }
-  });
-});
-
-/* =========================================================
-   KEYBOARD SUPPORT
-   ========================================================= */
-
-document.addEventListener("keydown",(e)=>{
-  if(e.key==="Escape")closeModal();
-});
-
-/* =========================================================
-   DEMO ACCESSIBILITY / UI BEHAVIOR
-   ========================================================= */
-
-document.querySelectorAll("button").forEach(button=>{
-  button.addEventListener("keydown",(e)=>{
-    if(e.key==="Enter")button.click();
-  });
-});
-
-/* =========================================================
-   FUTURE API PLACEHOLDERS
-   ========================================================= */
-
-const GlobalFinanceAPI={
-  async getMarketData(){
-    /*
-      Production example:
-      const response=await fetch("/api/markets");
-      if(!response.ok)throw new Error("Market API failed");
-      return response.json();
-    */
-    return marketSets;
-  },
-
-  async login(credentials){
-    /*
-      Production:
-      POST credentials to your secure backend.
-      Never place private API secrets in this browser file.
-    */
-    console.log("Demo login",credentials);
-    return {success:true};
-  },
-
-  async createAccount(data){
-    console.log("Demo account",data);
-    return {success:true};
-  },
-
-  async placeOrder(order){
-    /*
-      Production trading must be server-side and authenticated.
-      Validate symbol, side, quantity, price, account permissions,
-      risk limits and broker/exchange response.
-    */
-    console.log("Prototype order",order);
-    return {success:false,prototype:true};
   }
-};
 
-/* =========================================================
-   END
-   ========================================================= */
+  function writeLS(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.warn("Ledgerline: failed to write", key, e);
+    }
+  }
+
+  /* ------------------------------------------------------------------ *
+   * 2. Toast + misc UI chrome
+   * ------------------------------------------------------------------ */
+
+  let toastTimer = null;
+  function showToast(message) {
+    const el = qs("#toast");
+    if (!el) return;
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+  }
+
+  function initChrome() {
+    const yearEl = qs("#year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const navToggle = qs("#navToggle");
+    const mainNav = qs("#mainNav");
+    if (navToggle && mainNav) {
+      navToggle.addEventListener("click", () => {
+        const open = mainNav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(open));
+      });
+      qsa("a", mainNav).forEach((a) =>
+        a.addEventListener("click", () => {
+          mainNav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        })
+      );
+    }
+
+    const subscribeForm = qs("#subscribeForm");
+    if (subscribeForm) {
+      subscribeForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = qs("#subEmail", subscribeForm).value.trim();
+        if (!email) return;
+        showToast(`Thanks — this demo form doesn't actually send ${email} anywhere yet.`);
+        subscribeForm.reset();
+      });
+    }
+
+    // Placeholder legal links so they don't jump to a dead "#"
+    ["disclaimerLink", "privacyLink"].forEach((id) => {
+      const el = qs("#" + id);
+      if (el) {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          showToast(id === "disclaimerLink"
+            ? "Demo project — not real financial advice or a real brokerage."
+            : "All data on this site — portfolio, trades — stays in your browser's local storage.");
+        });
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
+   * 3. Market data — CoinGecko fetch, ticker rail, board table
+   * ------------------------------------------------------------------ */
+
+  async function fetchMarketData() {
+    const url = `${CG_API}/coins/markets?vs_currency=usd&ids=${COIN_IDS.join(",")}` +
+      `&order=market_cap_desc&sparkline=true&price_change_percentage=24h`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`CoinGecko responded ${res.status}`);
+    const list = await res.json();
+    marketData = {};
+    list.forEach((coin) => { marketData[coin.id] = coin; });
+    marketOrder = list.map((c) => c.id);
+    return list;
+  }
+
+  function renderTicker() {
+    const track = qs("#tickerTrack");
+    if (!track) return;
+    const ids = marketOrder.length ? marketOrder : COIN_IDS;
+    const items = ids.map((id) => {
+      const c = marketData[id];
+      if (!c) return "";
+      const dir = (c.price_change_percentage_24h || 0) >= 0 ? "up" : "down";
+      const arrow = dir === "up" ? "▲" : "▼";
+      return `<span class="ticker-item">
+        <span class="sym">${c.symbol.toUpperCase()}</span>
+        <span>${fmtUSD(c.current_price)}</span>
+        <span class="${dir}">${arrow} ${fmtPct(c.price_change_percentage_24h)}</span>
+      </span>`;
+    }).join("");
+    // Duplicate content so the scroll loop has no visible seam.
+    track.innerHTML = items + items;
+  }
+
+  function sparklinePath(prices, width, height) {
+    if (!prices || prices.length < 2) return "";
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    const range = max - min || 1;
+    const step = width / (prices.length - 1);
+    return prices.map((p, i) => {
+      const x = (i * step).toFixed(1);
+      const y = (height - ((p - min) / range) * height).toFixed(1);
+      return `${i === 0 ? "M" : "L"}${x},${y}`;
+    }).join(" ");
+  }
+
+  function sparklineSVG(coin) {
+    const prices = coin.sparkline_in_7d && coin.sparkline_in_7d.price;
+    if (!prices || prices.length < 2) return "";
+    const w = 96, h = 32;
+    const up = (coin.price_change_percentage_24h || 0) >= 0;
+    const path = sparklinePath(prices, w, h);
+    const color = up ? "var(--gain)" : "var(--loss)";
+    return `<svg class="sparkline" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <path d="${path}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+
+  function sortedCoinList() {
+    let list = marketOrder.map((id) => marketData[id]).filter(Boolean);
+    if (boardFilterText) {
+      const q = boardFilterText.toLowerCase();
+      list = list.filter((c) => c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q));
+    }
+    switch (boardSortMode) {
+      case "gainers":
+        list = [...list].sort((a, b) => (b.price_change_percentage_24h || 0) - (a.price_change_percentage_24h || 0));
+        break;
+      case "losers":
+        list = [...list].sort((a, b) => (a.price_change_percentage_24h || 0) - (b.price_change_percentage_24h || 0));
+        break;
+      case "name":
+        list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      default:
+        list = [...list].sort((a, b) => (a.market_cap_rank || 999) - (b.market_cap_rank || 999));
+    }
+    return list;
+  }
+
+  function renderBoard() {
+    const body = qs("#boardBody");
+    const status = qs("#boardStatus");
+    if (!body) return;
+    const list = sortedCoinList();
+
+    if (!list.length) {
+      body.innerHTML = `<tr class="empty-row"><td colspan="7">No assets match “${boardFilterText}”.</td></tr>`;
+    } else {
+      body.innerHTML = list.map((c) => {
+        const dir = (c.price_change_percentage_24h || 0) >= 0 ? "up" : "down";
+        return `<tr data-id="${c.id}">
+          <td class="mono">${c.market_cap_rank ?? "—"}</td>
+          <td>
+            <div class="asset-cell">
+              <img src="${c.image}" alt="" loading="lazy" width="26" height="26">
+              <div>
+                <div class="asset-name">${c.name}</div>
+                <div class="asset-sym">${c.symbol}</div>
+              </div>
+            </div>
+          </td>
+          <td class="mono">${fmtUSD(c.current_price)}</td>
+          <td class="mono ${dir}">${fmtPct(c.price_change_percentage_24h)}</td>
+          <td>${sparklineSVG(c)}</td>
+          <td class="mono">${fmtCompact(c.market_cap)}</td>
+          <td><button class="row-action-btn" data-action="trade" data-id="${c.id}">Trade</button></td>
+        </tr>`;
+      }).join("");
+    }
+
+    if (status) status.textContent = `${list.length} of ${marketOrder.length} assets · updated ${new Date().toLocaleTimeString()}`;
+    const heroCount = qs("#heroAssetCount");
+    if (heroCount) heroCount.textContent = marketOrder.length || "—";
+  }
+
+  function populateAssetSelects() {
+    const selects = [qs("#pfAsset"), qs("#tradeAsset")].filter(Boolean);
+    const options = marketOrder.map((id) => {
+      const c = marketData[id];
+      return `<option value="${id}">${c.name} (${c.symbol.toUpperCase()})</option>`;
+    }).join("");
+    selects.forEach((sel) => {
+      const prev = sel.value;
+      sel.innerHTML = options;
+      if (prev && marketData[prev]) sel.value = prev;
+    });
+  }
+
+  function wireBoardControls() {
+    const search = qs("#boardSearch");
+    const sort = qs("#boardSort");
+    if (search) {
+      search.addEventListener("input", (e) => {
+        boardFilterText = e.target.value.trim();
+        renderBoard();
+      });
+    }
+    if (sort) {
+      sort.addEventListener("change", (e) => {
+        boardSortMode = e.target.value;
+        renderBoard();
+      });
+    }
+    const body = qs("#boardBody");
+    if (body) {
+      body.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-action='trade']");
+        if (!btn) return;
+        const id = btn.dataset.id;
+        const tradeAsset = qs("#tradeAsset");
+        if (tradeAsset) {
+          tradeAsset.value = id;
+          tradeAsset.dispatchEvent(new Event("change"));
+        }
+        document.getElementById("desk").scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  }
+
+  async function refreshMarketData(isFirstLoad) {
+    const status = qs("#boardStatus");
+    try {
+      await fetchMarketData();
+      renderTicker();
+      renderBoard();
+      if (isFirstLoad) populateAssetSelects();
+      else populateAssetSelects(); // keep names in sync without losing selection
+      Portfolio.render();
+      Desk.refreshPricesOnly();
+    } catch (err) {
+      console.error(err);
+      if (status) status.textContent = "Live data unavailable right now — retrying shortly.";
+      const track = qs("#tickerTrack");
+      if (track && isFirstLoad) {
+        track.innerHTML = `<span class="ticker-loading">Live prices unavailable — check your connection.</span>`;
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------ *
+   * 4. Portfolio tracker
+   * ------------------------------------------------------------------ */
+
+  const Portfolio = (function () {
+    let holdings = readLS(LS_KEYS.portfolio, []); // [{id, qty, cost}]
+    let chart = null;
+
+    function save() { writeLS(LS_KEYS.portfolio, holdings); }
+
+    function add(id, qty, cost) {
+      const existing = holdings.find((h) => h.id === id);
+      if (existing) {
+        const totalQty = existing.qty + qty;
+        existing.cost = ((existing.cost * existing.qty) + (cost * qty)) / totalQty;
+        existing.qty = totalQty;
+      } else {
+        holdings.push({ id, qty, cost });
+      }
+      save();
+      render();
+    }
+
+    function remove(id) {
+      holdings = holdings.filter((h) => h.id !== id);
+      save();
+      render();
+    }
+
+    function render() {
+      const body = qs("#portfolioBody");
+      if (!body) return;
+
+      if (!holdings.length) {
+        body.innerHTML = `<tr class="empty-row"><td colspan="7">No holdings yet — add one on the left.</td></tr>`;
+        setSummary(0, 0, 0);
+        renderChart([]);
+        return;
+      }
+
+      let totalValue = 0, totalCost = 0;
+      const rows = holdings.map((h) => {
+        const coin = marketData[h.id];
+        const price = coin ? coin.current_price : null;
+        const value = price !== null ? price * h.qty : null;
+        const costBasis = h.cost * h.qty;
+        const pl = value !== null ? value - costBasis : null;
+        const plPct = value !== null && costBasis ? (pl / costBasis) * 100 : null;
+        if (value !== null) totalValue += value;
+        totalCost += costBasis;
+
+        return `<tr data-id="${h.id}">
+          <td>
+            <div class="asset-cell">
+              ${coin ? `<img src="${coin.image}" alt="" width="26" height="26">` : ""}
+              <div>
+                <div class="asset-name">${coin ? coin.name : h.id}</div>
+                <div class="asset-sym">${coin ? coin.symbol : ""}</div>
+              </div>
+            </div>
+          </td>
+          <td class="mono">${h.qty}</td>
+          <td class="mono">${fmtUSD(h.cost)}</td>
+          <td class="mono">${price !== null ? fmtUSD(price) : "—"}</td>
+          <td class="mono">${value !== null ? fmtUSD(value) : "—"}</td>
+          <td class="mono ${pl >= 0 ? "up" : "down"}">${pl !== null ? `${fmtUSD(pl)} (${fmtPct(plPct)})` : "—"}</td>
+          <td><button class="btn-sell-row" data-action="remove" data-id="${h.id}">Remove</button></td>
+        </tr>`;
+      }).join("");
+
+      body.innerHTML = rows;
+      const totalPl = totalValue - totalCost;
+      const totalPlPct = totalCost ? (totalPl / totalCost) * 100 : 0;
+      setSummary(totalValue, totalPl, totalPlPct);
+      renderChart(holdings);
+    }
+
+    function setSummary(value, pl, plPct) {
+      const valueEl = qs("#pfTotalValue");
+      const deltaEl = qs("#pfTotalDelta");
+      if (valueEl) valueEl.textContent = fmtUSD(value);
+      if (deltaEl) {
+        if (!value) {
+          deltaEl.textContent = "—";
+          deltaEl.className = "summary-delta";
+        } else {
+          deltaEl.textContent = `${fmtUSD(pl)} (${fmtPct(plPct)}) all-time`;
+          deltaEl.className = "summary-delta " + (pl >= 0 ? "up" : "down");
+        }
+      }
+    }
+
+    function renderChart(hs) {
+      const canvas = qs("#pfChart");
+      if (!canvas || typeof Chart === "undefined") return;
+      const labels = hs.map((h) => (marketData[h.id] ? marketData[h.id].symbol.toUpperCase() : h.id));
+      const values = hs.map((h) => (marketData[h.id] ? marketData[h.id].current_price * h.qty : 0));
+      const palette = ["#C9A227", "#2FBF71", "#E4572E", "#5B7FBF", "#9B6BC7", "#3FA7A0", "#C97757", "#8E7420"];
+
+      if (chart) { chart.destroy(); chart = null; }
+      if (!hs.length) return;
+
+      chart = new Chart(canvas.getContext("2d"), {
+        type: "doughnut",
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: labels.map((_, i) => palette[i % palette.length]),
+            borderColor: "#FFFDF6",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { position: "bottom", labels: { color: "#1B1A17", font: { family: "IBM Plex Sans", size: 11 }, boxWidth: 10 } }
+          },
+          cutout: "62%"
+        }
+      });
+    }
+
+    function wire() {
+      const form = qs("#portfolioForm");
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const id = qs("#pfAsset").value;
+          const qty = parseFloat(qs("#pfQty").value);
+          const cost = parseFloat(qs("#pfCost").value);
+          const hint = qs("#portfolioHint");
+          if (!id || !qty || qty <= 0 || !(cost >= 0)) {
+            if (hint) hint.textContent = "Enter a valid quantity and cost.";
+            return;
+          }
+          add(id, qty, cost);
+          form.reset();
+          if (hint) hint.textContent = "Added. Values update with live prices above.";
+          showToast(`Added ${qty} ${marketData[id] ? marketData[id].symbol.toUpperCase() : id} to your portfolio.`);
+        });
+      }
+      const body = qs("#portfolioBody");
+      if (body) {
+        body.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-action='remove']");
+          if (!btn) return;
+          remove(btn.dataset.id);
+          showToast("Holding removed.");
+        });
+      }
+    }
+
+    return { add, remove, render, wire };
+  })();
+
+  /* ------------------------------------------------------------------ *
+   * 5. Trading desk — paper trading simulator
+   * ------------------------------------------------------------------ */
+
+  const Desk = (function () {
+    let state = readLS(LS_KEYS.desk, null) || { cash: STARTING_CASH, positions: [], history: [] };
+    let side = "buy";
+
+    function save() { writeLS(LS_KEYS.desk, state); }
+
+    function resetAccount() {
+      state = { cash: STARTING_CASH, positions: [], history: [] };
+      save();
+      renderAll();
+      showToast("Demo account reset to $25,000.00.");
+    }
+
+    function currentCoin() {
+      const sel = qs("#tradeAsset");
+      return sel && marketData[sel.value] ? marketData[sel.value] : null;
+    }
+
+    function updateTicket() {
+      const coin = currentCoin();
+      const priceEl = qs("#ticketPrice");
+      const qtyEl = qs("#ticketQty");
+      const cashEl = qs("#ticketCash");
+      const amountInput = qs("#tradeAmount");
+      const submitBtn = qs("#ticketSubmit");
+      const hint = qs("#ticketHint");
+
+      if (cashEl) cashEl.textContent = fmtUSD(state.cash);
+      if (!coin) {
+        if (priceEl) priceEl.textContent = "—";
+        if (qtyEl) qtyEl.textContent = "—";
+        return;
+      }
+      if (priceEl) priceEl.textContent = fmtUSD(coin.current_price);
+      const amount = parseFloat(amountInput && amountInput.value) || 0;
+      const qty = amount > 0 ? amount / coin.current_price : 0;
+      if (qtyEl) qtyEl.textContent = qty ? `${qty.toFixed(6)} ${coin.symbol.toUpperCase()}` : "—";
+
+      if (submitBtn) submitBtn.textContent = side === "buy" ? "Buy at market" : "Sell at market";
+      if (hint) hint.textContent = "";
+    }
+
+    function placeOrder(e) {
+      e.preventDefault();
+      const coin = currentCoin();
+      const hint = qs("#ticketHint");
+      const amount = parseFloat(qs("#tradeAmount").value);
+
+      if (!coin) { if (hint) hint.textContent = "Choose an asset first."; return; }
+      if (!(amount > 0)) { if (hint) hint.textContent = "Enter an amount greater than zero."; return; }
+
+      const qty = amount / coin.current_price;
+
+      if (side === "buy") {
+        if (amount > state.cash) {
+          if (hint) hint.textContent = `Not enough paper cash — you have ${fmtUSD(state.cash)}.`;
+          return;
+        }
+        state.cash -= amount;
+        const pos = state.positions.find((p) => p.id === coin.id);
+        if (pos) {
+          const totalQty = pos.qty + qty;
+          pos.avg = ((pos.avg * pos.qty) + (coin.current_price * qty)) / totalQty;
+          pos.qty = totalQty;
+        } else {
+          state.positions.push({ id: coin.id, qty, avg: coin.current_price });
+        }
+        logTrade("buy", coin, qty, amount);
+      } else {
+        const pos = state.positions.find((p) => p.id === coin.id);
+        const heldQty = pos ? pos.qty : 0;
+        if (qty > heldQty + 1e-9) {
+          if (hint) hint.textContent = `You only hold ${heldQty.toFixed(6)} ${coin.symbol.toUpperCase()}.`;
+          return;
+        }
+        pos.qty -= qty;
+        if (pos.qty <= 1e-9) state.positions = state.positions.filter((p) => p.id !== coin.id);
+        state.cash += amount;
+        logTrade("sell", coin, qty, amount);
+      }
+
+      save();
+      qs("#tradeForm").reset();
+      renderAll();
+      showToast(`${side === "buy" ? "Bought" : "Sold"} ${fmtUSD(amount)} of ${coin.symbol.toUpperCase()}.`);
+    }
+
+    function logTrade(tradeSide, coin, qty, amount) {
+      state.history.unshift({
+        side: tradeSide, id: coin.id, symbol: coin.symbol.toUpperCase(),
+        qty, amount, price: coin.current_price, time: Date.now()
+      });
+      state.history = state.history.slice(0, 30);
+    }
+
+    function renderPositions() {
+      const body = qs("#deskBody");
+      const equityEl = qs("#deskEquity");
+      if (!body) return;
+
+      if (!state.positions.length) {
+        body.innerHTML = `<tr class="empty-row"><td colspan="6">No open positions. Place your first trade.</td></tr>`;
+      } else {
+        body.innerHTML = state.positions.map((p) => {
+          const coin = marketData[p.id];
+          const mark = coin ? coin.current_price : p.avg;
+          const value = mark * p.qty;
+          const cost = p.avg * p.qty;
+          const pl = value - cost;
+          const plPct = cost ? (pl / cost) * 100 : 0;
+          return `<tr>
+            <td>${coin ? coin.name : p.id}</td>
+            <td class="mono">${p.qty.toFixed(6)}</td>
+            <td class="mono">${fmtUSD(p.avg)}</td>
+            <td class="mono">${fmtUSD(mark)}</td>
+            <td class="mono ${pl >= 0 ? "up" : "down"}">${fmtUSD(pl)} (${fmtPct(plPct)})</td>
+            <td><button class="btn-sell-row" data-action="close" data-id="${p.id}">Close</button></td>
+          </tr>`;
+        }).join("");
+      }
+
+      const posValue = state.positions.reduce((sum, p) => {
+        const coin = marketData[p.id];
+        return sum + (coin ? coin.current_price : p.avg) * p.qty;
+      }, 0);
+      const equity = state.cash + posValue;
+      if (equityEl) equityEl.textContent = `Equity: ${fmtUSD(equity)}`;
+
+      const headerBalance = qs("#headerBalanceValue");
+      if (headerBalance) headerBalance.textContent = fmtUSD(state.cash);
+    }
+
+    function renderHistory() {
+      const list = qs("#tradeHistory");
+      if (!list) return;
+      if (!state.history.length) {
+        list.innerHTML = `<li class="empty-row-li">No trades yet.</li>`;
+        return;
+      }
+      list.innerHTML = state.history.map((t) => {
+        const time = new Date(t.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        return `<li>
+          <span class="side-${t.side}">${t.side.toUpperCase()}</span>
+          <span>${t.symbol}</span>
+          <span>${t.qty.toFixed(4)} @ ${fmtUSD(t.price)}</span>
+          <span>${time}</span>
+        </li>`;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderPositions();
+      renderHistory();
+      updateTicket();
+    }
+
+    function refreshPricesOnly() {
+      renderPositions();
+      updateTicket();
+    }
+
+    function wire() {
+      qsa(".ticket-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          side = tab.dataset.side;
+          qsa(".ticket-tab").forEach((t) => {
+            t.classList.toggle("active", t === tab);
+            t.setAttribute("aria-selected", String(t === tab));
+          });
+          updateTicket();
+        });
+      });
+
+      const assetSel = qs("#tradeAsset");
+      if (assetSel) assetSel.addEventListener("change", updateTicket);
+
+      const amountInput = qs("#tradeAmount");
+      if (amountInput) amountInput.addEventListener("input", updateTicket);
+
+      const form = qs("#tradeForm");
+      if (form) form.addEventListener("submit", placeOrder);
+
+      const resetBtn = qs("#resetDeskBtn");
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          if (confirm("Reset your demo balance and close all open positions?")) resetAccount();
+        });
+      }
+
+      const body = qs("#deskBody");
+      if (body) {
+        body.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-action='close']");
+          if (!btn) return;
+          const pos = state.positions.find((p) => p.id === btn.dataset.id);
+          const coin = marketData[btn.dataset.id];
+          if (!pos || !coin) return;
+          const amount = pos.qty * coin.current_price;
+          state.cash += amount;
+          logTrade("sell", coin, pos.qty, amount);
+          state.positions = state.positions.filter((p) => p.id !== btn.dataset.id);
+          save();
+          renderAll();
+          showToast(`Closed ${coin.symbol.toUpperCase()} position.`);
+        });
+      }
+    }
+
+    return { wire, renderAll, refreshPricesOnly, get state() { return state; } };
+  })();
+
+  /* ------------------------------------------------------------------ *
+   * 6. Journal (blog) rendering + modal
+   * ------------------------------------------------------------------ */
+
+  const Journal = (function () {
+    let activeCat = "all";
+
+    function cardHTML(post) {
+      const date = new Date(post.date).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      return `<article class="journal-card" data-id="${post.id}" tabindex="0" role="button" aria-label="Read: ${post.title}">
+        <span class="journal-card-tag">${post.tag}</span>
+        <h3>${post.title}</h3>
+        <p>${post.excerpt}</p>
+        <div class="journal-card-meta"><span>${date}</span><span>${post.read} read</span></div>
+      </article>`;
+    }
+
+    function render() {
+      const grid = qs("#journalGrid");
+      if (!grid) return;
+      const posts = JOURNAL_POSTS.filter((p) => activeCat === "all" || p.category === activeCat);
+      grid.innerHTML = posts.map(cardHTML).join("") ||
+        `<p style="color:var(--text-ink-dim)">No posts in this category yet.</p>`;
+    }
+
+    function openModal(id) {
+      const post = JOURNAL_POSTS.find((p) => p.id === id);
+      if (!post) return;
+      let backdrop = qs("#journalModalBackdrop");
+      if (!backdrop) {
+        backdrop = document.createElement("div");
+        backdrop.id = "journalModalBackdrop";
+        backdrop.className = "journal-modal-backdrop";
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener("click", (e) => {
+          if (e.target === backdrop) closeModal();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeModal();
+        });
+      }
+      const date = new Date(post.date).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+      const paragraphs = post.body.trim().split(/\n\s*\n/).map((p) => `<p>${p.trim().replace(/\s+/g, " ")}</p>`).join("");
+      backdrop.innerHTML = `<div class="journal-modal" role="dialog" aria-modal="true" aria-label="${post.title}">
+        <button class="journal-modal-close" aria-label="Close">&times;</button>
+        <p class="journal-modal-meta">${post.tag} · ${date} · ${post.read} read</p>
+        <h2>${post.title}</h2>
+        <div class="journal-modal-body">${paragraphs}</div>
+      </div>`;
+      backdrop.classList.add("open");
+      qs(".journal-modal-close", backdrop).addEventListener("click", closeModal);
+    }
+
+    function closeModal() {
+      const backdrop = qs("#journalModalBackdrop");
+      if (backdrop) backdrop.classList.remove("open");
+    }
+
+    function wire() {
+      const filters = qs("#journalFilters");
+      if (filters) {
+        filters.addEventListener("click", (e) => {
+          const chip = e.target.closest(".filter-chip");
+          if (!chip) return;
+          activeCat = chip.dataset.cat;
+          qsa(".filter-chip", filters).forEach((c) => c.classList.toggle("active", c === chip));
+          render();
+        });
+      }
+      const grid = qs("#journalGrid");
+      if (grid) {
+        grid.addEventListener("click", (e) => {
+          const card = e.target.closest(".journal-card");
+          if (card) openModal(card.dataset.id);
+        });
+        grid.addEventListener("keydown", (e) => {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          const card = e.target.closest(".journal-card");
+          if (card) { e.preventDefault(); openModal(card.dataset.id); }
+        });
+      }
+    }
+
+    return { render, wire };
+  })();
+
+  /* ------------------------------------------------------------------ *
+   * 7. Init
+   * ------------------------------------------------------------------ */
+
+  async function init() {
+    initChrome();
+    Portfolio.wire();
+    Desk.wire();
+    Journal.wire();
+    Journal.render();
+    wireBoardControls();
+
+    await refreshMarketData(true);
+    Desk.renderAll();
+
+    setInterval(() => refreshMarketData(false), REFRESH_MS);
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+
 </script>
-
 </body>
 </html>
-
-<!-- ===================================================== -->
-<!-- PROJECT NOTES                                         -->
-<!-- ===================================================== -->
-<!--
-Recommended production structure:
-
-/
-  index.html
-  /assets
-    /images
-    /icons
-  /css
-    app.css
-    responsive.css
-  /js
-    app.js
-    markets.js
-    charts.js
-    auth.js
-  /api
-    markets
-    orders
-    account
-
-Suggested production stack:
-Frontend: React / Next.js or this HTML prototype
-Backend: Node.js / Python
-Database: PostgreSQL
-Realtime: WebSocket
-Authentication: secure server-side session or OAuth
-Deployment: GitHub + a production hosting provider
-
-Never expose:
-broker API secrets, database passwords, private keys,
-payment secrets or exchange credentials in client-side JavaScript.
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
