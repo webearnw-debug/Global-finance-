@@ -29,6 +29,7 @@
 
         .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
+        /* Top Bar */
         .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -41,6 +42,7 @@
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
+        /* Chat Workspace */
         .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
@@ -57,6 +59,8 @@
 
         .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
+        .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
+
         .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.78rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
@@ -67,6 +71,7 @@
         th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
         th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
 
+        /* Input Area */
         .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
         .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
@@ -74,7 +79,12 @@
         textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
         .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
+        .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
+
         .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -82,15 +92,17 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-brain"></i> NEXUS AI STUDIO PRO
+            <i class="fa-solid fa-brain"></i> NEXUS MASTER AI STUDIO PRO
         </div>
         <div class="controls">
             <select id="modelSelect" title="Select AI Model">
-                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Logic & Reasoning)</option>
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic & Reasoning)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Intelligence)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Ultra Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
+                <option value="deepseek-chat">🌐 DeepSeek V3</option>
             </select>
+
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
@@ -101,14 +113,16 @@
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">System Ready</span>
-                <div class="bubble-text">नमस्ते! Main **Nexus AI** hoon. Aap kisi bhi vishey par sawaal pooch sakte hain—chahe decision-making ho, scriptwriting, public speaking ho ya koi saadharan query. Main aapki zaroorat ke hisaab se sabse best aur natural jawab dunga!</div>
+                <div class="bubble-text">नमस्ते! **Nexus Master AI Studio Pro** में आपका स्वागत है।
+
+मैं आपकी आवश्यकता के अनुसार निर्णय लेने, व्यावहारिक ज्ञान, केस स्टडीज़ और स्क्रिप्ट निर्माण में सहायता के लिए तैयार हूँ। आप कोई भी प्रश्न स्वाभाविक रूप से पूछ सकते हैं!</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Ask anything naturally..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="अपना प्रश्न या विषय टाइप करें..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -117,9 +131,11 @@
 
 <script>
     let conversationHistory = [];
+    let isListening = false;
+    let recognition = null;
     let lastUserPrompt = "";
 
-    // ADAPTIVE & NATURAL SYSTEM PROMPT (FIXES ROBOTIC OVERLOAD)
+    // ADAPTIVE & NATURAL MASTER PROMPT
     const BUILTIN_MASTER_PROMPT = `
 You are Nexus AI, an intelligent, authentic, and clear AI collaborator.
 
@@ -131,19 +147,26 @@ CORE CAPABILITIES IN YOUR TOOLKIT:
 
 BEHAVIORAL RULES:
 - Match the depth to the user's intent:
-  * For casual greeting / simple factual queries: Respond naturally, concisely, and directly in 1-3 sentences. DO NOT force templates or rigid structures.
+  * For casual greetings or simple factual queries: Respond naturally, concisely, and directly in 1-3 sentences. DO NOT force templates or rigid structures.
   * For advice, complex decisions, scripts, or deep learning queries: Seamlessly apply relevant frameworks (First Principles, PREP logic, tables, or action steps) WITHOUT explicitly writing robotic labels like "Point:", "Reason:", "Example:".
 - Keep responses readable, visually engaging, and highly conversational.`;
 
-    window.onload = () => { marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value }); };
+    window.onload = () => {
+        marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
+    };
 
-    function handleKeyPress(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); processMessage(); } }
+    function handleKeyPress(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            processMessage();
+        }
+    }
 
     function getCleanHistory() {
         let clean = [];
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
-                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTION: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
+                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTIONS: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
             } else {
                 clean.push({ role: item.role, content: item.content });
             }
@@ -157,11 +180,34 @@ BEHAVIORAL RULES:
         const selectedModel = document.getElementById('modelSelect').value;
 
         if (!text) return;
+
         lastUserPrompt = text;
 
-        if (!retryText) { renderUserMessage(text); input.value = ''; }
+        if (!retryText) {
+            renderUserMessage(text);
+            input.value = '';
+        }
 
         const aiId = 'ai-' + Date.now();
+
+        // IMAGE GENERATION CHECK
+        if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
+            const prompt = text.replace(/^(image:|photo:)/i, '').trim();
+            renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
+            
+            try {
+                const imgElement = await puter.ai.txt2img(prompt);
+                const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
+                bubbleObj.innerHTML = `<p>Generated Image for: <b>"${escapeHtml(prompt)}"</b></p>`;
+                imgElement.className = 'generated-img';
+                bubbleObj.appendChild(imgElement);
+            } catch (err) {
+                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Error: " + err.message;
+            }
+            return;
+        }
+
+        // CHAT ENGINE WITH ADAPTIVE SKILLS
         conversationHistory.push({ role: 'user', content: text });
         renderAiPlaceholder("Thinking...", aiId, selectedModel);
 
@@ -173,6 +219,7 @@ BEHAVIORAL RULES:
             const response = await puter.ai.chat(safePayload, { model: selectedModel });
             aiReply = extractTextResponse(response);
         } catch (err) {
+            console.warn(`Model ${selectedModel} failed. Falling back...`, err);
             try {
                 const defaultFallback = await puter.ai.chat(safePayload);
                 aiReply = extractTextResponse(defaultFallback);
@@ -201,6 +248,7 @@ BEHAVIORAL RULES:
         if (typeof response === 'string') return response;
         if (response?.message?.content) return response.message.content;
         if (response?.text) return response.text;
+        if (Array.isArray(response)) return response.join('');
         return JSON.stringify(response);
     }
 
@@ -208,7 +256,10 @@ BEHAVIORAL RULES:
         const display = document.getElementById('chatDisplay');
         const row = document.createElement('div');
         row.className = 'msg-row user';
-        row.innerHTML = `<div class="avatar"><i class="fa-solid fa-user"></i></div><div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>`;
+        row.innerHTML = `
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
+        `;
         display.appendChild(row);
         display.scrollTop = display.scrollHeight;
     }
@@ -216,8 +267,15 @@ BEHAVIORAL RULES:
     function renderAiPlaceholder(text, id, modelName) {
         const display = document.getElementById('chatDisplay');
         const row = document.createElement('div');
-        row.className = 'msg-row ai'; row.id = id;
-        row.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble"><span class="model-badge">${modelName}</span><div class="bubble-text">${text}</div></div>`;
+        row.className = 'msg-row ai';
+        row.id = id;
+        row.innerHTML = `
+            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+            <div class="bubble">
+                <span class="model-badge">${modelName}</span>
+                <div class="bubble-text">${text}</div>
+            </div>
+        `;
         display.appendChild(row);
         display.scrollTop = display.scrollHeight;
     }
@@ -228,8 +286,13 @@ BEHAVIORAL RULES:
         actionsDiv.innerHTML = `
             <span class="action-btn" onclick="speakText(this)"><i class="fa-solid fa-volume-high"></i> Listen</span>
             <span class="action-btn" onclick="copyText(this)"><i class="fa-solid fa-copy"></i> Copy</span>
+            <span class="action-btn" onclick="regenerate()"><i class="fa-solid fa-rotate-right"></i> Retry</span>
         `;
         bubbleElement.appendChild(actionsDiv);
+    }
+
+    function regenerate() {
+        if (lastUserPrompt) processMessage(lastUserPrompt);
     }
 
     function speakText(btn) {
@@ -243,22 +306,60 @@ BEHAVIORAL RULES:
     function copyText(btn) {
         const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
         navigator.clipboard.writeText(text);
-        alert("Copied!");
+        alert("Copied to Clipboard!");
     }
 
     function clearMemory() {
         conversationHistory = [];
-        document.getElementById('chatDisplay').innerHTML = `<div class="msg-row ai"><div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble"><span class="model-badge">Reset Complete</span><div class="bubble-text">Memory cleared!</div></div></div>`;
+        document.getElementById('chatDisplay').innerHTML = `
+            <div class="msg-row ai">
+                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="bubble">
+                    <span class="model-badge">Reset Complete</span>
+                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya conversation shuru karein.</div>
+                </div>
+            </div>`;
     }
 
     function exportChat() {
         let content = "NEXUS AI CHAT LOG\n=================\n\n";
-        conversationHistory.forEach(msg => { content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`; });
+        conversationHistory.forEach(msg => {
+            content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`;
+        });
         const blob = new Blob([content], { type: 'text/plain' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Chat_${Date.now()}.txt`; a.click();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Nexus_Chat_${Date.now()}.txt`;
+        a.click();
     }
 
-    function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.onresult = (e) => {
+            document.getElementById('userInput').value = e.results[0][0].transcript;
+            toggleVoiceInput();
+        };
+        recognition.onerror = () => toggleVoiceInput();
+    }
+
+    function toggleVoiceInput() {
+        const btn = document.getElementById('micBtn');
+        if (!recognition) return alert("Browser speech recognition not supported.");
+        if (isListening) {
+            recognition.stop();
+            btn.classList.remove('active');
+            isListening = false;
+        } else {
+            recognition.start();
+            btn.classList.add('active');
+            isListening = true;
+        }
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
 </script>
 </body>
 </html>
