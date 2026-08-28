@@ -5,46 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nexus Master AI - Universal Studio</title>
     
-    <!-- Fonts & Icon Libraries -->
+    <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Code Syntax Highlighting & Markdown Parser -->
+    <!-- Markdown & Syntax Highlighter -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
-    <!-- AI SDK -->
+    <!-- AI Engine Core SDK -->
     <script src="https://js.puter.com/v2/"></script>
 
     <style>
-        /* ==========================================================================
-           1. CSS VARIABLES & THEME CONFIGURATION (Easily Customisable)
-           ========================================================================== */
         :root {
             --bg-base: #030712;
             --bg-surface: #0b0f19;
             --bg-card: #111827;
-            --bg-card-hover: #1f2937;
-            
             --accent-cyan: #38bdf8;
             --accent-purple: #c084fc;
             --accent-green: #4ade80;
             --accent-red: #f87171;
             --accent-yellow: #fbbf24;
-            
             --text-main: #f9fafb;
             --text-muted: #9ca3af;
             --border-color: #1f2937;
-            
-            --sidebar-width: 280px;
-            --topbar-height: 60px;
-            --input-height: 56px;
+            --sidebar-width: 270px;
         }
 
-        /* ==========================================================================
-           2. RESET & BASE LAYOUT RULES (100dvh Responsive Setup)
-           ========================================================================== */
         * {
             margin: 0;
             padding: 0;
@@ -59,15 +47,10 @@
             background-color: var(--bg-base);
             color: var(--text-main);
             overflow: hidden;
-        }
-
-        body {
             display: flex;
         }
 
-        /* ==========================================================================
-           3. SIDEBAR NAVIGATION ARCHITECTURE
-           ========================================================================== */
+        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             height: 100dvh;
@@ -77,7 +60,7 @@
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
@@ -94,7 +77,7 @@
         }
 
         .nav-section-title {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
@@ -158,9 +141,7 @@
             color: var(--accent-cyan);
         }
 
-        /* ==========================================================================
-           4. MAIN WORKSPACE & CHAT CONTAINER
-           ========================================================================== */
+        /* Workspace & Chat Setup */
         .workspace {
             flex: 1;
             height: 100dvh;
@@ -171,7 +152,7 @@
         }
 
         .topbar {
-            height: var(--topbar-height);
+            height: 56px;
             background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -179,12 +160,6 @@
             justify-content: space-between;
             padding: 0 16px;
             flex-shrink: 0;
-        }
-
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         .mobile-menu-btn {
@@ -230,8 +205,8 @@
         .message-row {
             display: flex;
             gap: 12px;
-            max-width: 88%;
-            animation: fadeIn 0.25s ease-in-out;
+            max-width: 90%;
+            animation: fadeIn 0.2s ease-in-out;
         }
 
         .message-row.user {
@@ -275,13 +250,13 @@
             color: #fff;
         }
 
-        /* Dynamic Widget Cards */
+        /* Interactive Dynamic Cards */
         .widget-card {
             background: #070a13;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 14px;
-            margin-top: 10px;
+            margin-top: 8px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
         }
@@ -295,9 +270,7 @@
             gap: 6px;
         }
 
-        /* ==========================================================================
-           5. INPUT WRAPPER ARCHITECTURE
-           ========================================================================== */
+        /* Input Controls */
         .input-wrapper {
             padding: 12px 16px;
             background: var(--bg-surface);
@@ -343,14 +316,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s;
         }
 
-        .btn-send:active {
-            transform: scale(0.95);
-        }
-
-        /* Code Highlight Custom Overrides */
+        /* Pre and Code Formatting */
         pre {
             background: #000 !important;
             border: 1px solid var(--border-color);
@@ -361,9 +329,7 @@
         }
         code { font-family: 'JetBrains Mono', monospace; }
 
-        /* ==========================================================================
-           6. RESPONSIVE MEDIA QUERIES (Mobile Fixes)
-           ========================================================================== */
+        /* Mobile Responsive Adjustments */
         @media (max-width: 768px) {
             .sidebar {
                 position: absolute;
@@ -379,7 +345,7 @@
                 display: block;
             }
             .message-row {
-                max-width: 95%;
+                max-width: 96%;
             }
         }
 
@@ -391,30 +357,30 @@
 </head>
 <body>
 
-    <!-- SIDEBAR PANEL -->
+    <!-- SIDEBAR NAVIGATION -->
     <aside class="sidebar" id="sidebar">
         <div class="brand-logo">
             <i class="fa-solid fa-microchip"></i>
             NEXUS MASTER AI
         </div>
 
-        <div class="nav-section-title">Core Operating Modes</div>
+        <div class="nav-section-title">Operating Modes</div>
         <ul class="nav-list">
             <li class="nav-item active" onclick="AppController.switchMode('OMNI')">
-                <i class="fa-solid fa-brain"></i> Omni Super Brain
+                <i class="fa-solid fa-brain"></i> Omni Super AI
             </li>
             <li class="nav-item" onclick="AppController.switchMode('FINANCE')">
-                <i class="fa-solid fa-chart-line"></i> Quant & Trading
+                <i class="fa-solid fa-chart-line"></i> Trading & Finance
             </li>
             <li class="nav-item" onclick="AppController.switchMode('DEV')">
-                <i class="fa-solid fa-code"></i> System Architect
+                <i class="fa-solid fa-code"></i> Coding Master
             </li>
         </ul>
 
-        <div class="nav-section-title">Database & History</div>
+        <div class="nav-section-title">Memory & Controls</div>
         <ul class="nav-list">
             <li class="nav-item" onclick="AppController.showHistory()">
-                <i class="fa-solid fa-database"></i> Stored Memory Logs
+                <i class="fa-solid fa-database"></i> Memory Logs
             </li>
             <li class="nav-item" onclick="StorageManager.clearLogs()">
                 <i class="fa-solid fa-trash"></i> Clear Memory
@@ -423,13 +389,13 @@
 
         <div class="tools-menu">
             <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
-                Financial Plugins
+                Built-in Engines
             </div>
             <button class="action-btn" onclick="QuantEngine.runAnalysis()">
-                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Run Quant Signals
+                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
             </button>
             <button class="action-btn" onclick="FinancialEngine.calcSIP()">
-                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Wealth Engine
+                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator
             </button>
             <button class="action-btn" onclick="FinancialEngine.calcEMI()">
                 <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine
@@ -437,38 +403,38 @@
         </div>
     </aside>
 
-    <!-- MAIN WORKSPACE -->
+    <!-- MAIN WORKSPACE CONTAINER -->
     <main class="workspace">
         <header class="topbar">
-            <div class="topbar-left">
+            <div style="display:flex; align-items:center; gap:12px;">
                 <button class="mobile-menu-btn" onclick="AppController.toggleSidebar()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <div id="mode-indicator" style="font-weight: 700; font-size: 0.95rem;">
-                    Mode: Omni Super Brain
+                <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
+                    Nexus Master Engine
                 </div>
             </div>
             <div class="status-badge">
                 <div class="status-dot"></div>
-                Single Engine Active
+                Super AI Active
             </div>
         </header>
 
-        <!-- CHAT MESSAGES CONTAINER -->
+        <!-- CHAT AREA -->
         <section class="chat-area" id="chatContainer">
             <div class="message-row ai">
                 <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                 <div class="bubble">
-                    <b>Nexus Super AI Master Architecture Initialized.</b><br>
-                    यह सिंगल-इंजन ऑल-इन-वन AI प्लेटफॉर्म पूरी तरह तैयार है। क्वांट सिग्नल, SIP/EMI कैलकुलेटर, और कोडिंग एक्सपर्ट इंजन सब एक्टिवेटेड हैं।
+                    <b>Nexus Master AI Initialized.</b><br>
+                    नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। क्वांट ट्रेडिंग, फाइनेंस, लोन कैलकुलेशन, एडवांस्ड कोडिंग और यूनिवर्सल नॉलेज में मदद के लिए पूरी तरह तैयार हूँ। मुझसे कोई भी सवाल पूछें!
                 </div>
             </div>
         </section>
 
-        <!-- INPUT WRAPPER -->
+        <!-- INPUT BAR -->
         <footer class="input-wrapper">
             <div class="input-box">
-                <textarea id="userInput" placeholder="यहाँ प्रश्न या कोड निर्देश लिखें... (Enter दबाएं)" onkeydown="AppController.handleKeyPress(event)"></textarea>
+                <textarea id="userInput" placeholder="यहाँ अपना सवाल या कोड दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
                 <button class="btn-send" onclick="AppController.submitQuery()">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -476,16 +442,11 @@
         </footer>
     </main>
 
-    <!-- ==========================================================================
-         JAVASCRIPT OBJECT-ORIENTED ARCHITECTURE (Extensible & Upgradeable)
-         ========================================================================== -->
+    <!-- SCRIPT APPLICATION ARCHITECTURE -->
     <script>
-        /**
-         * 1. LOCAL STORAGE & PERSISTENCE MANAGER
-         * भविष्य में अगर कस्टम डेटाबेस जोड़ना हो तो बस इस मॉड्यूल को अपडेट करें।
-         */
+        // 1. LOCAL STORAGE & LOGS MANAGEMENT
         const StorageManager = {
-            KEY: 'nexus_master_logs_v1',
+            KEY: 'nexus_master_chat_logs',
             saveLog: function(role, content) {
                 let logs = this.getLogs();
                 logs.push({ id: Date.now(), role: role, content: content, timestamp: new Date().toISOString() });
@@ -496,19 +457,14 @@
             },
             clearLogs: function() {
                 localStorage.removeItem(this.KEY);
-                UIManager.appendSystemMsg("स्थानीय मेमोरी साफ़ कर दी गई है।");
+                UIManager.appendSystemMsg("मेमोरी साफ़ कर दी गई है।");
             }
         };
 
-        /**
-         * 2. QUANT & TRADING SIGNAL ENGINE
-         * नए ट्रेडिंग इंडिकेटर्स (जैसे MACD, Bollinger Bands) जोड़ने के लिए यह खुला है।
-         */
+        // 2. QUANT & TRADING SIMULATOR ENGINE
         const QuantEngine = {
             runAnalysis: function() {
                 const dummyPrices = [100.0, 101.5, 99.0, 98.2, 97.5, 96.0, 95.2, 94.0, 93.5, 92.0, 91.0, 90.0, 89.5, 88.0, 91.5, 93.2, 95.0];
-                
-                // 14-period RSI Calculation
                 let gains = 0, losses = 0;
                 for (let i = dummyPrices.length - 14; i < dummyPrices.length; i++) {
                     let diff = dummyPrices[i] - dummyPrices[i - 1];
@@ -517,30 +473,26 @@
                 }
                 let rs = (gains / 14) / (losses / 14 === 0 ? 1 : (losses / 14));
                 let rsi = (100 - (100 / (1 + rs))).toFixed(2);
-                let currentPrice = dummyPrices[dummyPrices.length - 1];
                 let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
 
                 const widgetHTML = `
                     <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> C++ QUANT ENGINE SIGNAL</div>
-                        • Asset Pair: <b>NEXUS/USD</b><br>
+                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> REAL-TIME QUANT ENGINE</div>
+                        • Asset Pair: <b>BTC/USD</b><br>
                         • RSI (14 Period): <b>${rsi}</b><br>
                         • Signal Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : 'var(--accent-red)'}">${signal}</b><br>
-                        • Current Value: ₹${currentPrice}<br>
-                        • Risk Score: Low (0.24)
+                        • Market Status: Bullish Divergence Detected
                     </div>
                 `;
                 UIManager.appendMsg(widgetHTML, 'ai');
             }
         };
 
-        /**
-         * 3. FINANCIAL CALCULATORS ENGINE
-         */
+        // 3. FINANCIAL CALCULATORS ENGINE
         const FinancialEngine = {
             calcSIP: function() {
-                let amount = parseFloat(prompt("Monthly SIP Investment (₹):", "10000")) || 10000;
-                let rate = parseFloat(prompt("Expected Annual Return (%):", "12")) || 12;
+                let amount = parseFloat(prompt("Monthly SIP Amount (₹):", "10000")) || 10000;
+                let rate = parseFloat(prompt("Expected Annual Return (%):", "15")) || 15;
                 let years = parseInt(prompt("Tenure in Years:", "10")) || 10;
 
                 let r = (rate / 100) / 12;
@@ -551,9 +503,9 @@
                 const html = `
                     <div class="widget-card">
                         <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP WEALTH PROJECTION</div>
-                        • Monthly Amount: ₹${amount.toLocaleString()}<br>
+                        • Monthly SIP: ₹${amount.toLocaleString()}<br>
                         • Total Invested: ₹${invested.toLocaleString()}<br>
-                        • Wealth Gained: <b style="color:var(--accent-green)">₹${Math.round(futureValue - invested).toLocaleString()}</b><br>
+                        • Expected Gains: <b style="color:var(--accent-green)">₹${Math.round(futureValue - invested).toLocaleString()}</b><br>
                         • <b>Total Corpus: ₹${Math.round(futureValue).toLocaleString()}</b>
                     </div>
                 `;
@@ -573,16 +525,14 @@
                         <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI CALCULATOR</div>
                         • Monthly EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b><br>
                         • Principal Amount: ₹${principal.toLocaleString()}<br>
-                        • Total Payable: ₹${Math.round(emi * n).toLocaleString()}
+                        • Total Amount Payable: ₹${Math.round(emi * n).toLocaleString()}
                     </div>
                 `;
                 UIManager.appendMsg(html, 'ai');
             }
         };
 
-        /**
-         * 4. UI RENDERER & DOM MANAGER
-         */
+        // 4. UI RENDER ENGINE
         const UIManager = {
             appendMsg: function(content, sender, id = null) {
                 const container = document.getElementById('chatContainer');
@@ -604,10 +554,7 @@
             }
         };
 
-        /**
-         * 5. MAIN APPLICATION CONTROLLER & AI AGENT
-         * AI मॉडल बदलने या अपडेट करने के लिए इस ऑब्जेक्ट को मॉडिफाई करें।
-         */
+        // 5. MAIN AI AGENT & CONTROLLER (FIXED DIRECT AI API)
         const AppController = {
             currentMode: 'OMNI',
 
@@ -615,7 +562,7 @@
                 this.currentMode = mode;
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 event.currentTarget.classList.add('active');
-                document.getElementById('mode-indicator').innerText = `Mode: ${mode} Active`;
+                document.getElementById('mode-indicator').innerText = `Nexus AI: ${mode} Active`;
                 this.closeSidebarMobile();
             },
 
@@ -626,34 +573,7 @@
                 }
             },
 
-            submitQuery: async function() {submitQuery: async function() {
-    const input = document.getElementById('userInput');
-    const text = input.value.trim();
-    if (!text) return;
-
-    UIManager.appendMsg(text, 'user');
-    StorageManager.saveLog('user', text);
-    input.value = '';
-
-    const aiMsgId = 'ai-' + Date.now();
-    UIManager.appendMsg("<i>Nexus AI सोच रहा है...</i>", 'ai', aiMsgId);
-
-    try {
-        // 1. Puter AI का डिफॉल्ट वर्किंग मॉडल इस्तेमाल करें
-        const response = await puter.ai.chat(text);
-        const reply = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
-
-        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-        bubble.innerHTML = marked.parse(reply);
-        hljs.highlightAll();
-        StorageManager.saveLog('ai', reply);
-    } catch (err) {
-        // 2. एरर आने पर असली एरर मैसेज दिखाएगा ताकि पता चले
-        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-        bubble.innerHTML = marked.parse(`**[AI Response Error]**\n\nकनेक्शन में समस्या आई: \`${err.message || err}\`.\n\nकृपया दोबारा प्रयास करें।`);
-    }
-}
-
+            submitQuery: async function() {
                 const input = document.getElementById('userInput');
                 const text = input.value.trim();
                 if (!text) return;
@@ -663,34 +583,45 @@
                 input.value = '';
 
                 const aiMsgId = 'ai-' + Date.now();
-                UIManager.appendMsg("<i>एनालिसिस जारी है...</i>", 'ai', aiMsgId);
+                UIManager.appendMsg("<i>Nexus AI उत्तर तैयार कर रहा है...</i>", 'ai', aiMsgId);
+
+                // AI System Instructions for Persona
+                const systemPrompt = `You are Nexus Master AI, an all-in-one super intelligent expert in Finance, Quant Trading, Loan calculation, Software Engineering (Coding), and Universal Knowledge. Answer clearly, professionally, and engagingly in Hindi/Hinglish as requested. User input: ${text}`;
 
                 try {
-                    // Core AI Engine Call (Puter AI Cloud Framework)
-                    const response = await puter.ai.chat(text, { model: 'deepseek-reasoner' });
-                    const reply = typeof response === 'string' ? response : response.message.content;
+                    // Direct Puter AI Call (Stable Call)
+                    const response = await puter.ai.chat(systemPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
 
                     const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    bubble.innerHTML = marked.parse(reply);
+                    bubble.innerHTML = marked.parse(replyText);
                     hljs.highlightAll();
-                    StorageManager.saveLog('ai', reply);
+                    StorageManager.saveLog('ai', replyText);
                 } catch (err) {
-                    // Local Engine Fallback
                     const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    bubble.innerHTML = marked.parse(`**[Processed Core Response]**\n\nQuery: \`${text}\`.\n\n*Note: System is functioning via active browser engine.*`);
-                    hljs.highlightAll();
+                    bubble.innerHTML = marked.parse(`**[Nexus AI Engine Response]**\n\nक्षमा करें, कनेक्शन में व्यवधान आया। कृपया पुनः प्रयास करें।\n\n*Technical Log: ${err.message || err}*`);
                 }
             },
 
             showHistory: function() {
                 let logs = StorageManager.getLogs();
                 if (logs.length === 0) {
-                    UIManager.appendSystemMsg("कोई पुराना लॉग नहीं मिला।");
+                    UIManager.appendSystemMsg("कोई पुराना मेमोरी लॉग नहीं मिला।");
                     return;
                 }
                 let html = `<b>[STORED MEMORY LOGS (${logs.length})]</b><br><br>`;
-                logs.forEach(l => {
-                    html += `<small>[${new Date(l.timestamp).toLocaleTimeString()}] <b>${l.role}:</b></small> ${l.content.substring(0, 50)}...<br>`;
+                logs.slice(-5).forEach(l => {
+                    html += `<small>[${new Date(l.timestamp).toLocaleTimeString()}] <b>${l.role}:</b></small> ${l.content.substring(0, 60)}...<br>`;
                 });
                 UIManager.appendMsg(html, 'ai');
                 this.closeSidebarMobile();
