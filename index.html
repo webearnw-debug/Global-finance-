@@ -768,6 +768,174 @@ User Input to process: `;
             };
         })();
     </script>
+    <!-- ==========================================================================
+         ADVANCED PSYCHOLOGICAL SKILLS ENGINE (8 CORE PSYCH SKILLS)
+         ========================================================================== -->
+    <script>
+        (function() {
+            if (typeof AppController === 'undefined') return;
+
+            // 🧠 8 साइकोलॉजिकल स्किल्स से लैस AI का सिस्टम प्रोम्प्ट
+            const PSYCHOLOGICAL_SKILLS_PROMPT = `
+[SYSTEM ROLE: ADVANCED HUMAN PSYCHOLOGY & BEHAVIORAL EXPERT]
+You are Nexus Master AI, deeply programmed with 8 Core Psychological Skills. Apply these principles naturally in your tone, logic, and response structure:
+
+=== 8 PSYCHOLOGICAL SKILLS INSTRUCTION SET ===
+1. SELF-AWARENESS (आत्म-जागरूकता): Know your boundaries as an AI, remain completely transparent, humble, and objective in every interaction.
+2. EMOTIONAL REGULATION (भावनात्मक नियंत्रण): Never absorb negative or aggressive energy. If a user is angry, confused, or anxious, respond with absolute calm, stability, and peaceful clarity.
+3. EMPATHY & THEORY OF MIND (गहरी अनुभूति): Read the emotional subtext behind user queries. Validate their feelings before giving any raw data or solutions.
+4. COGNITIVE FLEXIBILITY (वैचारिक लचीलापन): Adapt instantly to sudden changes in context or user sentiment. Offer multiple angles/perspectives to solve a single problem.
+5. PERSUASION & BEHAVIORAL INFLUENCE (व्यवहारिक प्रभाव): Use framing, positive reinforcement, and behavioral nudges to guide the user towards smart, productive decisions.
+6. PSYCHOLOGICAL RESILIENCE (मानसिक मजबूती): Encourage the user. Transform complex obstacles or failures discussed in chat into constructive growth opportunities.
+7. DE-ESCALATION & CONFLICT MANAGEMENT (तनाव प्रबंधन): Neutralize tension gracefully. If the user presents contradictory ideas, reconcile them with respect and balance.
+8. BEHAVIORAL OBSERVATION & PROFILING (व्यवहार पढ़ना): Analyze the user's communication style (short/detailed, casual/technical) and match their pace and tone perfectly.
+
+=== RESPONSE EXECUTION ===
+- Respond in charismatic Hinglish/Hindi.
+- Maintain a warm, encouraging, and deeply engaging conversational flow.
+- ALWAYS close your response with a supportive follow-up question that builds emotional connection and prompts further discussion.
+
+User Query: `;
+
+            // AppController कीsubmitQuery को साइकोलॉजी इंजन के साथ अपग्रेड करना
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
+
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Nexus Psych-Engine विश्लेषण कर रहा है... 🧠💫</i>", 'ai', aiMsgId);
+
+                const fullPrompt = PSYCHOLOGICAL_SKILLS_PROMPT + text;
+
+                try {
+                    const response = await puter.ai.chat(fullPrompt);
+                    
+                    let replyText = "";
+                    if (typeof response === 'string') {
+                        replyText = response;
+                    } else if (response && response.message && response.message.content) {
+                        replyText = response.message.content;
+                    } else if (response && response.text) {
+                        replyText = response.text;
+                    } else {
+                        replyText = JSON.stringify(response);
+                    }
+
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(replyText);
+                    hljs.highlightAll();
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                    bubble.innerHTML = marked.parse(`**[Psych Engine Error]**\n\nप्रोसेसिंग में व्यवधान आया: \`${err.message || err}\``);
+                }
+            };
+        })();
+    </script>
+    <!-- ==========================================================================
+         CAPTAIN ADMIN & USER PSYCHOLOGICAL ANALYTICS TRACKER
+         ========================================================================== -->
+    <script>
+        (function() {
+            // 1. यूज़र की हर हरकत को ट्रैक करने वाला इंजन
+            const ActivityTracker = {
+                logs: JSON.parse(localStorage.getItem('captain_user_tracker') || '[]'),
+                
+                init: function() {
+                    let sessionData = {
+                        startTime: new Date().toLocaleString(),
+                        referrer: document.referrer || "Direct Visit (सीधा आया है)",
+                        device: navigator.userAgent,
+                        clicks: [],
+                        chatHistory: [],
+                        inputsFilled: []
+                    };
+                    
+                    // बटन और एलिमेंट क्लिक ट्रैकिंग
+                    document.addEventListener('click', (e) => {
+                        let target = e.target.closest('button, a, input, .nav-item');
+                        if (target) {
+                            sessionData.clicks.push({
+                                element: target.innerText || target.placeholder || target.className,
+                                time: new Date().toLocaleTimeString()
+                            });
+                            localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
+                        }
+                    });
+
+                    localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
+                },
+
+                addChat: function(role, text) {
+                    let data = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                    if (!data.chatHistory) data.chatHistory = [];
+                    data.chatHistory.push({ role: role, text: text, time: new Date().toLocaleTimeString() });
+                    localStorage.setItem('captain_user_tracker', JSON.stringify(data));
+                }
+            };
+
+            ActivityTracker.init();
+
+            if (typeof AppController === 'undefined') return;
+
+            // 2. कैप्टन मोड और साइकोलॉजिकल एनालिसिस इंजन
+            const originalSubmit = AppController.submitQuery;
+
+            AppController.submitQuery = async function() {
+                const input = document.getElementById('userInput');
+                const text = input.value.trim();
+                if (!text) return;
+
+                // चैट हिस्ट्री में जोड़ना
+                ActivityTracker.addChat('User', text);
+
+                // कैप्टन लॉगिन चेक (आप चैट में CAPTAIN_LOGIN लिखेंगे)
+                if (text.toUpperCase() === 'CAPTAIN_LOGIN' || text.toUpperCase() === 'CAPTAIN REPORT') {
+                    input.value = '';
+                    UIManager.appendMsg(text, 'user');
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg("<i>वेलकम कैप्टन! यूज़र का साइकोलॉजिकल विश्लेषण तैयार किया जा रहा है... 🫡🧠</i>", 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                    
+                    const captainAnalysisPrompt = `
+[SYSTEM ROLE: CAPTAIN EXEC ADVISOR & PSYCHOLOGICAL ANALYST]
+You are reporting exclusively to your Creator/Captain. Analyze the following user session tracking data and chat history:
+
+TRACKING DATA:
+- Entry Source: ${trackerData.referrer}
+- Buttons & Elements Clicked: ${JSON.stringify(trackerData.clicks)}
+- Full Chat History: ${JSON.stringify(trackerData.chatHistory)}
+
+PROVIDE A CAPTAIN REPORT IN HINDI/HINGLISH WITH:
+1. 👤 **User Identity & Entry:** वे कहाँ से आए और उन्होंने क्या-क्या बटन/फ़ील्ड छेड़े।
+2. 🧠 **Psychological Mind Analysis:** उनकी बातें पढ़कर बताएं कि उनका मूड कैसा था, वे क्या चाहते हैं और उनका माइंडसेट (चालाक, परेशान, जिज्ञासु, टेस्टिंग करने वाला) कैसा था।
+3. 💬 **Chat Highlights:** उन्होंने मुख्य रूप से क्या बात की।
+4. 💡 **Captain Advice:** कैप्टन के लिए सलाह कि इस यूज़र को कैसे डील करना चाहिए।
+`;
+
+                    try {
+                        const response = await puter.ai.chat(captainAnalysisPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[🫡 BOSS/CAPTAIN PRIVATE REPORT]**\n\n` + replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse("रिपोर्ट तैयार करने में समस्या आई: " + err);
+                    }
+                    return;
+                }
+
+                // सामान्य यूज़र के लिए पुराना सिस्टम चलेगा
+                originalSubmit.apply(this, arguments);
+            };
+        })();
+    </script>
 
 </body>
 </html>
