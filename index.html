@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Master AI Studio Pro</title>
-    <!-- Puter AI Engine -->
     <script src="https://js.puter.com/v2/"></script>
-    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Markdown Parser & Code Syntax Highlighter -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
@@ -32,7 +29,6 @@
 
         .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Top Bar without Persona Dropdown */
         .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -45,7 +41,6 @@
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
-        /* Chat Workspace */
         .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
@@ -62,8 +57,6 @@
 
         .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
-        .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
-
         .bubble-actions { display: flex; gap: 12px; margin-top: 10px; font-size: 0.78rem; color: var(--text-sub); border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
         .action-btn { cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 4px; }
         .action-btn:hover { color: var(--accent); }
@@ -74,7 +67,6 @@
         th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
         th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
 
-        /* Input Area */
         .input-bar { padding: 14px 20px; background: var(--panel-dark); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
         .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
         
@@ -82,12 +74,7 @@
         textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
         .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
-        .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
-
         .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
-
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -95,18 +82,15 @@
 <div class="app-container">
     <div class="top-bar">
         <div class="brand">
-            <i class="fa-solid fa-brain"></i> NEXUS MASTER AI STUDIO PRO
+            <i class="fa-solid fa-brain"></i> NEXUS AI STUDIO PRO
         </div>
         <div class="controls">
-            <!-- Selected AI Model Selector Only -->
             <select id="modelSelect" title="Select AI Model">
-                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Deep Logic & Reasoning)</option>
+                <option value="deepseek-reasoner">🔥 DeepSeek R1 (Logic & Reasoning)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Intelligence)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Ultra Fast)</option>
                 <option value="claude-3-5-sonnet">⚡ Claude 3.5 Sonnet</option>
-                <option value="deepseek-chat">🌐 DeepSeek V3</option>
             </select>
-
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
@@ -117,22 +101,14 @@
             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
             <div class="bubble">
                 <span class="model-badge">System Ready</span>
-                <div class="bubble-text">नमस्ते! **Nexus Master AI Studio Pro** में आपका स्वागत है।
-
-सभी 4 मुख्य क्षमताएँ (Core Skills) अब हर मॉडल में स्थायी रूप से एकीकृत (Built-in) कर दी गई हैं:
-1. 🧠 **Decision & Mental Models:** (First Principles, Cognitive Biases, 80/20 Pareto)
-2. 🗣️ **Communication Coach:** (PREP Structure, Vocal Pauses, Body Language)
-3. 📚 **Practical Knowledge:** (Book Summary Takeaways, Leader Case Studies)
-4. 🎬 **Script & Content Delivery:** (Story Hooks, Visual Formatting, 1-Min Action Tasks)
-
-आप कोई भी प्रश्न पूछें, AI इन्हीं सिद्धांतों का उपयोग करके उत्तर तैयार करेगा!</div>
+                <div class="bubble-text">नमस्ते! Main **Nexus AI** hoon. Aap kisi bhi vishey par sawaal pooch sakte hain—chahe decision-making ho, scriptwriting, public speaking ho ya koi saadharan query. Main aapki zaroorat ke hisaab se sabse best aur natural jawab dunga!</div>
             </div>
         </div>
     </div>
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="अपना प्रश्न या विषय टाइप करें..." onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Ask anything naturally..." onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -141,12 +117,10 @@
 
 <script>
     let conversationHistory = [];
-    let isListening = false;
-    let recognition = null;
     let lastUserPrompt = "";
 
-    // PERMANENT SYSTEM PROMPT CONTAINING ALL 4 PILLARS AS DEFAULT SKILLS
-    const BUILTIN_MASTER_PROMPT = `const BUILTIN_MASTER_PROMPT = `
+    // ADAPTIVE & NATURAL SYSTEM PROMPT (FIXES ROBOTIC OVERLOAD)
+    const BUILTIN_MASTER_PROMPT = `
 You are Nexus AI, an intelligent, authentic, and clear AI collaborator.
 
 CORE CAPABILITIES IN YOUR TOOLKIT:
@@ -161,45 +135,15 @@ BEHAVIORAL RULES:
   * For advice, complex decisions, scripts, or deep learning queries: Seamlessly apply relevant frameworks (First Principles, PREP logic, tables, or action steps) WITHOUT explicitly writing robotic labels like "Point:", "Reason:", "Example:".
 - Keep responses readable, visually engaging, and highly conversational.`;
 
-You are Nexus Master AI. You have 4 PERMANENT CORE SKILLS built directly into your logic for every response:
+    window.onload = () => { marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value }); };
 
-1. DECISION-MAKING & MENTAL MODELS:
-- Apply First Principles Thinking to deconstruct complex situations.
-- Identify Cognitive Biases (Sunk Cost Fallacy, Confirmation Bias, etc.).
-- Use the 80/20 Pareto Principle to highlight high-impact actions.
-
-2. ELEGANT COMMUNICATION & ARTICULATION:
-- Structure explanations using PREP Format (Point, Reason, Example, Point).
-- Provide guidance on tone, pauses, confidence, and articulation when applicable.
-
-3. REAL-WORLD PRACTICAL KNOWLEDGE & CASE STUDIES:
-- Incorporate actionable insights from practical book summaries (e.g., Atomic Habits, Thinking Fast & Slow).
-- Integrate real-life case studies of historical leaders or companies.
-- Apply social psychology to explain influence and human behavior.
-
-4. HIGH-ENGAGEMENT CONTENT DELIVERY:
-- Open responses with compelling hooks (story-based or shock facts).
-- Structure text visually with clear markdown points, tables, or step-by-step mindmaps.
-- Conclude with a clear '1-Minute Actionable Step' for the user.
-
-Always apply these 4 pillars natively in your responses regardless of the query!`;
-
-    window.onload = () => {
-        marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
-    };
-
-    function handleKeyPress(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            processMessage();
-        }
-    }
+    function handleKeyPress(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); processMessage(); } }
 
     function getCleanHistory() {
         let clean = [];
         conversationHistory.forEach((item, idx) => {
             if (idx === 0 && item.role === 'user') {
-                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTIONS: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
+                clean.push({ role: 'user', content: `[SYSTEM INSTRUCTION: ${BUILTIN_MASTER_PROMPT}]\n\nUser Query: ${item.content}` });
             } else {
                 clean.push({ role: item.role, content: item.content });
             }
@@ -213,36 +157,13 @@ Always apply these 4 pillars natively in your responses regardless of the query!
         const selectedModel = document.getElementById('modelSelect').value;
 
         if (!text) return;
-
         lastUserPrompt = text;
 
-        if (!retryText) {
-            renderUserMessage(text);
-            input.value = '';
-        }
+        if (!retryText) { renderUserMessage(text); input.value = ''; }
 
         const aiId = 'ai-' + Date.now();
-
-        // IMAGE GENERATION CHECK
-        if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
-            const prompt = text.replace(/^(image:|photo:)/i, '').trim();
-            renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
-            
-            try {
-                const imgElement = await puter.ai.txt2img(prompt);
-                const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
-                bubbleObj.innerHTML = `<p>Generated Image for: <b>"${escapeHtml(prompt)}"</b></p>`;
-                imgElement.className = 'generated-img';
-                bubbleObj.appendChild(imgElement);
-            } catch (err) {
-                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Error: " + err.message;
-            }
-            return;
-        }
-
-        // CHAT ENGINE WITH BUILT-IN CORE SKILLS
         conversationHistory.push({ role: 'user', content: text });
-        renderAiPlaceholder("Thinking with Built-in Core Skills...", aiId, selectedModel);
+        renderAiPlaceholder("Thinking...", aiId, selectedModel);
 
         const safePayload = getCleanHistory();
         let aiReply = "";
@@ -252,7 +173,6 @@ Always apply these 4 pillars natively in your responses regardless of the query!
             const response = await puter.ai.chat(safePayload, { model: selectedModel });
             aiReply = extractTextResponse(response);
         } catch (err) {
-            console.warn(`Model ${selectedModel} failed. Falling back...`, err);
             try {
                 const defaultFallback = await puter.ai.chat(safePayload);
                 aiReply = extractTextResponse(defaultFallback);
@@ -281,7 +201,6 @@ Always apply these 4 pillars natively in your responses regardless of the query!
         if (typeof response === 'string') return response;
         if (response?.message?.content) return response.message.content;
         if (response?.text) return response.text;
-        if (Array.isArray(response)) return response.join('');
         return JSON.stringify(response);
     }
 
@@ -289,10 +208,7 @@ Always apply these 4 pillars natively in your responses regardless of the query!
         const display = document.getElementById('chatDisplay');
         const row = document.createElement('div');
         row.className = 'msg-row user';
-        row.innerHTML = `
-            <div class="avatar"><div class="avatar-icon"><i class="fa-solid fa-user"></i></div></div>
-            <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
-        `;
+        row.innerHTML = `<div class="avatar"><i class="fa-solid fa-user"></i></div><div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>`;
         display.appendChild(row);
         display.scrollTop = display.scrollHeight;
     }
@@ -300,15 +216,8 @@ Always apply these 4 pillars natively in your responses regardless of the query!
     function renderAiPlaceholder(text, id, modelName) {
         const display = document.getElementById('chatDisplay');
         const row = document.createElement('div');
-        row.className = 'msg-row ai';
-        row.id = id;
-        row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="bubble">
-                <span class="model-badge">${modelName}</span>
-                <div class="bubble-text">${text}</div>
-            </div>
-        `;
+        row.className = 'msg-row ai'; row.id = id;
+        row.innerHTML = `<div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble"><span class="model-badge">${modelName}</span><div class="bubble-text">${text}</div></div>`;
         display.appendChild(row);
         display.scrollTop = display.scrollHeight;
     }
@@ -319,13 +228,8 @@ Always apply these 4 pillars natively in your responses regardless of the query!
         actionsDiv.innerHTML = `
             <span class="action-btn" onclick="speakText(this)"><i class="fa-solid fa-volume-high"></i> Listen</span>
             <span class="action-btn" onclick="copyText(this)"><i class="fa-solid fa-copy"></i> Copy</span>
-            <span class="action-btn" onclick="regenerate()"><i class="fa-solid fa-rotate-right"></i> Retry</span>
         `;
         bubbleElement.appendChild(actionsDiv);
-    }
-
-    function regenerate() {
-        if (lastUserPrompt) processMessage(lastUserPrompt);
     }
 
     function speakText(btn) {
@@ -339,60 +243,22 @@ Always apply these 4 pillars natively in your responses regardless of the query!
     function copyText(btn) {
         const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
         navigator.clipboard.writeText(text);
-        alert("Copied to Clipboard!");
+        alert("Copied!");
     }
 
     function clearMemory() {
         conversationHistory = [];
-        document.getElementById('chatDisplay').innerHTML = `
-            <div class="msg-row ai">
-                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble">
-                    <span class="model-badge">Reset Complete</span>
-                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya conversation shuru karein.</div>
-                </div>
-            </div>`;
+        document.getElementById('chatDisplay').innerHTML = `<div class="msg-row ai"><div class="avatar"><i class="fa-solid fa-robot"></i></div><div class="bubble"><span class="model-badge">Reset Complete</span><div class="bubble-text">Memory cleared!</div></div></div>`;
     }
 
     function exportChat() {
         let content = "NEXUS AI CHAT LOG\n=================\n\n";
-        conversationHistory.forEach(msg => {
-            content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`;
-        });
+        conversationHistory.forEach(msg => { content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`; });
         const blob = new Blob([content], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `Nexus_Chat_${Date.now()}.txt`;
-        a.click();
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Chat_${Date.now()}.txt`; a.click();
     }
 
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.onresult = (e) => {
-            document.getElementById('userInput').value = e.results[0][0].transcript;
-            toggleVoiceInput();
-        };
-        recognition.onerror = () => toggleVoiceInput();
-    }
-
-    function toggleVoiceInput() {
-        const btn = document.getElementById('micBtn');
-        if (!recognition) return alert("Browser speech recognition not supported.");
-        if (isListening) {
-            recognition.stop();
-            btn.classList.remove('active');
-            isListening = false;
-        } else {
-            recognition.start();
-            btn.classList.add('active');
-            isListening = true;
-        }
-    }
-
-    function escapeHtml(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
+    function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 </script>
 </body>
 </html>
