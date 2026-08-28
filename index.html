@@ -61,6 +61,7 @@
             flex-shrink: 0;
             transition: all 0.3s ease;
             z-index: 100;
+            overflow-y: auto;
         }
 
         .brand-logo {
@@ -115,7 +116,7 @@
         }
 
         .tools-menu {
-            margin-top: auto;
+            margin-top: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -428,8 +429,23 @@
         </ul>
 
         <div class="tools-menu">
-            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
-                Built-in Engines
+            <!-- Omni Super AI Knowledge Engine Tools -->
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-cyan); margin-bottom:8px; text-transform:uppercase;">
+                Omni Knowledge Tools
+            </div>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.solveExamQuestion()">
+                <i class="fa-solid fa-graduation-cap" style="color:var(--accent-purple)"></i> Exam Solver
+            </button>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.deepResearch()">
+                <i class="fa-solid fa-book-open" style="color:var(--accent-cyan)"></i> Deep Research
+            </button>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.summarizeText()">
+                <i class="fa-solid fa-file-contract" style="color:var(--accent-yellow)"></i> AI Summarizer
+            </button>
+
+            <!-- Finance & Quant Tools -->
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">
+                Finance Tools
             </div>
             <button class="tool-btn" onclick="QuantEngine.runAnalysis()">
                 <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
@@ -541,6 +557,28 @@
         };
         ActivityTracker.init();
 
+        // 🧠 OMNI KNOWLEDGE ENGINE (Upgraded Mode 1 Capabilities)
+        const OmniKnowledgeEngine = {
+            solveExamQuestion: function() {
+                const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल यहाँ दर्ज करें:");
+                if (!q) return;
+                document.getElementById('userInput').value = `[Exam Solver]: इस सवाल का step-by-step हल और सही उत्तर बताएँ:\n${q}`;
+                AppController.submitQuery();
+            },
+            deepResearch: function() {
+                const topic = prompt("किस विषय पर डीप रिसर्च या विस्तार से नोट्स चाहिए?");
+                if (!topic) return;
+                document.getElementById('userInput').value = `[Deep Research]: '${topic}' विषय पर विस्तृत नोट्स, मुख्य तथ्य और महत्वपूर्ण बिंदु (Bullet Points में) लिखें।`;
+                AppController.submitQuery();
+            },
+            summarizeText: function() {
+                const text = prompt("जिस आर्टिकल या टेक्स्ट को छोटा (Summary) करना है, उसे यहाँ पेस्ट करें:");
+                if (!text) return;
+                document.getElementById('userInput').value = `[AI Summarizer]: नीचे दिए गए पैराग्राफ या आर्टिकल के मुख्य बिंदु और सार (Key Takeaways) सरल भाषा में बताएँ:\n${text}`;
+                AppController.submitQuery();
+            }
+        };
+
         const QuantEngine = {
             runAnalysis: function() {
                 const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
@@ -641,7 +679,7 @@
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
                 
-                // पुरानी स्क्रीन साफ़ करना (ताकि कार्ड्स एक के नीचे एक न जुड़ें)
+                // 👉 पुराने कार्ड्स साफ करने की 1-लाइन (ताकि कार्ड्स एक के नीचे एक न जम हों)
                 document.getElementById('chatContainer').innerHTML = '';
 
                 let titleName = "Omni Super AI Active";
@@ -672,9 +710,9 @@
                     welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
                     मैंने अपनी भूमिका पहचान ली है। मैं आपका **यूनिवर्सल ऑल-इन-वन AI** हूँ।<br><br>
                     <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
-                    • **General Knowledge:** विज्ञान, दुनिया भर की जानकारी और रिसर्च।<br>
-                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश की तैयारी।<br>
-                    • **Writing & Creativity:** आर्टिकल्स, ईमेल्स और स्टोरीज जनरेट करना।<br><br>
+                    • **General Knowledge:** विज्ञान, इतिहास और सामयिक विषयों पर पूरी जानकारी।<br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br>
+                    • **Content Creation:** लेख, ईमेल और आइडियाज जनरेट करना।<br><br>
                     <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>`;
                 }
 
@@ -763,7 +801,18 @@
                 } else if (this.currentMode === 'DEV') {
                     modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, debugging guidance, and technical solutions for any programming language.";
                 } else {
-                    modePrompt = "OPERATING MODE: OMNI SUPER AI. You possess comprehensive universal knowledge about everything in the world, down to the smallest detail. Answer clearly, sharply, and with absolute precision on any general or scientific topic.";
+                    // 👉 Upgraded Omni Knowledge Engine Prompt
+                    modePrompt = `OPERATING MODE: OMNI SUPER AI (ADVANCED KNOWLEDGE ENGINE).
+You are the world's most advanced universal AI engine with instant access to deep domain knowledge in:
+1. Science, Space, Physics, Chemistry, Biology & Advanced Mathematics.
+2. World History, Geography, Politics, Economics & Geopolitics.
+3. Exam Preparation: Bank PO, UPSC, SSC, Reasoning, Quant & General Awareness.
+4. Writing & Research: High-level essays, research papers, emails & creative content.
+
+INSTRUCTIONS:
+- Give accurate, well-structured, step-by-step answers.
+- Use bullet points and clear examples wherever necessary.
+- Provide practical explanations instead of generic summaries.`;
                 }
 
                 let systemPrompt = "";
