@@ -4576,6 +4576,355 @@ Act as a Master Universal Intelligence & Analytical Expert.
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         PARNARAV AI - RICH MODE WELCOME & NATURAL COMMUNICATION ENGINE
+         ========================================================================== -->
+    <style>
+        .parnarav-brain-icon {
+            width: 28px;
+            height: 28px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
+        }
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.15);
+        }
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.15);
+        }
+        .parnarav-sidebar-show {
+            display: block !important;
+            visibility: visible !important;
+            transform: translateX(0) !important;
+            left: 0 !important;
+            z-index: 99999 !important;
+        }
+        .parnarav-sidebar-hide {
+            transform: translateX(-100%) !important;
+            left: -100% !important;
+        }
+    </style>
+
+    <script>
+        function getParnaravBrainSVG() {
+            return `
+            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="leftRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4d4d" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                    </linearGradient>
+                    <linearGradient id="rightBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                </defs>
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftRed)" />
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBlue)" />
+            </svg>`;
+        }
+
+        // Copy & Feedback Handler
+        window.copyAiResponse = function(btn) {
+            try {
+                const bubble = btn.closest('.bubble');
+                if (!bubble) return;
+                const clone = bubble.cloneNode(true);
+                const bar = clone.querySelector('.ai-action-bar');
+                if (bar) bar.remove();
+                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                    const old = btn.innerHTML;
+                    btn.innerHTML = '✅ Copied!';
+                    setTimeout(() => btn.innerHTML = old, 2000);
+                });
+            } catch(e){}
+        };
+
+        window.toggleAiFeedback = function(btn, type) {
+            try {
+                const bar = btn.parentElement;
+                const l = bar.querySelector('.like-btn');
+                const d = bar.querySelector('.dislike-btn');
+                if (type === 'like') { l.classList.toggle('like-active'); d.classList.remove('dislike-active'); }
+                if (type === 'dislike') { d.classList.toggle('dislike-active'); l.classList.remove('like-active'); }
+            } catch(e){}
+        };
+
+        function addActionButtons(aiMsgId) {
+            try {
+                const msg = document.getElementById(aiMsgId);
+                if (!msg) return;
+                const bubble = msg.querySelector('.bubble');
+                if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+                bubble.insertAdjacentHTML('beforeend', `
+                    <div class="ai-action-bar">
+                        <button class="action-btn copy-btn" onclick="copyAiResponse(this)">📋 Copy</button>
+                        <button class="action-btn like-btn" onclick="toggleAiFeedback(this, 'like')">👍 Like</button>
+                        <button class="action-btn dislike-btn" onclick="toggleAiFeedback(this, 'dislike')">👎 Dislike</button>
+                    </div>
+                `);
+            } catch(e){}
+        }
+
+        function getSidebarElem() {
+            const allElements = document.querySelectorAll('div, aside, nav, section');
+            for (let el of allElements) {
+                if (el.innerText && el.innerText.includes('OPERATING MODES') && el.innerText.includes('Omni Super AI')) {
+                    let current = el;
+                    while (current.parentElement && current.parentElement !== document.body) {
+                        const style = getComputedStyle(current.parentElement);
+                        if (style.position === 'fixed' || style.position === 'absolute' || current.parentElement.classList.contains('sidebar') || current.parentElement.classList.contains('drawer')) {
+                            return current.parentElement;
+                        }
+                        current = current.parentElement;
+                    }
+                    return el;
+                }
+            }
+            return document.querySelector('.sidebar, #sidebar, .drawer, aside, .nav-menu');
+        }
+
+        function toggleSidebarDrawer() {
+            const sidebar = getSidebarElem();
+            const overlay = document.querySelector('.overlay, .sidebar-overlay, .backdrop, .drawer-overlay');
+            if (!sidebar) return;
+
+            const isCurrentlyShown = sidebar.classList.contains('parnarav-sidebar-show') || 
+                                     sidebar.classList.contains('open') || 
+                                     sidebar.classList.contains('active') ||
+                                     getComputedStyle(sidebar).left === '0px';
+
+            if (isCurrentlyShown && !sidebar.classList.contains('parnarav-sidebar-hide')) {
+                sidebar.classList.remove('parnarav-sidebar-show', 'open', 'active', 'show');
+                sidebar.classList.add('parnarav-sidebar-hide');
+                if (overlay) overlay.style.display = 'none';
+            } else {
+                sidebar.classList.remove('parnarav-sidebar-hide');
+                sidebar.classList.add('parnarav-sidebar-show');
+                if (overlay) { overlay.style.display = 'block'; overlay.classList.add('show'); }
+            }
+        }
+
+        function closeSidebarDrawer() {
+            const sidebar = getSidebarElem();
+            const overlay = document.querySelector('.overlay, .sidebar-overlay, .backdrop, .drawer-overlay');
+            if (sidebar) {
+                sidebar.classList.remove('parnarav-sidebar-show', 'open', 'active', 'show');
+                sidebar.classList.add('parnarav-sidebar-hide');
+            }
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        window.currentParnaravMode = sessionStorage.getItem('activeParnaravMode') || 'omni';
+
+        function updateUIState() {
+            try {
+                const badges = document.querySelectorAll('.badge, .status-badge, .status, #superAiStatus, div[class*="status"], span[class*="badge"]');
+                const badgeText = {
+                    'omni': '🟢 Omni Super AI Active',
+                    'finance': '🟢 Trading & Finance Active',
+                    'coding': '🟢 Coding Master Active'
+                }[window.currentParnaravMode] || '🟢 Parnarav Active';
+
+                badges.forEach(b => {
+                    if (b.innerText.includes('Active') || b.innerText.includes('Super AI') || b.innerText.includes('Trading') || b.innerText.includes('Coding') || b.innerText.includes('Omni')) {
+                        b.innerText = badgeText;
+                    }
+                });
+
+                const titles = document.querySelectorAll('.header-title, .title, h1, h2');
+                titles.forEach(t => {
+                    if (t.innerText.includes('Nexus') || t.innerText.includes('Master') || t.innerText.includes('Parnarav')) {
+                        t.innerHTML = `${getParnaravBrainSVG()} <span>Parnarav AI</span>`;
+                    }
+                });
+            } catch(e){}
+        }
+
+        // Beautiful Mode Welcome Greetings (No System Logs)
+        const modeWelcomeMessages = {
+            'omni': `👋 **नमस्ते! मैं Parnarav Omni Super AI हूँ!**\n\nमैं आपकी पढ़ाई, रीजनिंग, General Knowledge, Bank PO या दुनिया के किसी भी सवाल का जवाब देने के लिए तैयार हूँ। मुझसे बेझिझक कुछ भी पूछें! 🚀`,
+            'finance': `📈 **नमस्ते! मैं Parnarav Quant & Trading Analyst हूँ!**\n\nMain Stocks, Risk Management, SIP Calculations, Loan EMI aur Trading Strategies sab cover kar sakta hoon.\n\nAap batao aapko kis cheez me help chahiye?\n1. **SIP & Wealth Planning**\n2. **Loan EMI Calculation**\n3. **Stock Trading & Position Sizing** 💸`,
+            'coding': `👨‍💻 **नमस्ते! मैं Parnarav Coding Master हूँ!**\n\nमैं C++, Python, JavaScript, Web Development, Data Structures और Bug Debugging में आपकी पूरी मदद करने के लिए तैयार हूँ। अपना कोड या समस्या यहाँ शेयर करें! ⚡`
+        };
+
+        function activateMode(modeKey) {
+            window.currentParnaravMode = modeKey;
+            sessionStorage.setItem('activeParnaravMode', modeKey);
+            
+            updateUIState();
+            closeSidebarDrawer();
+
+            try {
+                const aiMsgId = 'ai-' + Date.now();
+                const welcomeText = modeWelcomeMessages[modeKey] || modeWelcomeMessages['omni'];
+                if (window.UIManager && typeof window.UIManager.appendMsg === 'function') {
+                    const formatted = window.marked ? window.marked.parse(welcomeText) : welcomeText;
+                    window.UIManager.appendMsg(formatted, 'ai', aiMsgId);
+                    addActionButtons(aiMsgId);
+                }
+            } catch(e){}
+        }
+
+        // Global Event Interceptor
+        document.addEventListener('click', function(e) {
+            let el = e.target;
+            
+            const isMenuBtn = el.closest('header button, .menu-toggle, #menuToggle, .hamburger, [data-toggle="sidebar"]') || 
+                              (el.tagName === 'SVG' && el.parentElement && el.parentElement.closest('header')) ||
+                              (el.innerText && (el.innerText.includes('☰') || el.innerText.includes('≡')));
+
+            if (isMenuBtn || (e.clientX < 80 && e.clientY < 70)) {
+                const sidebar = getSidebarElem();
+                if (isMenuBtn || (sidebar && !sidebar.contains(el))) {
+                    e.preventDefault();
+                    toggleSidebarDrawer();
+                    return;
+                }
+            }
+
+            const modeItem = el.closest('li, button, a, div');
+            if (modeItem) {
+                const txt = (modeItem.innerText || modeItem.textContent || "").toLowerCase().trim();
+                
+                if (txt.includes('omni super ai') || (txt.includes('omni') && txt.includes('ai'))) {
+                    activateMode('omni');
+                    return;
+                } else if (txt.includes('trading & finance') || txt.includes('trading') || txt.includes('finance')) {
+                    activateMode('finance');
+                    return;
+                } else if (txt.includes('coding master') || txt.includes('coding')) {
+                    activateMode('coding');
+                    return;
+                }
+            }
+
+            const sidebar = getSidebarElem();
+            if (sidebar && sidebar.classList.contains('parnarav-sidebar-show')) {
+                if (!sidebar.contains(el)) {
+                    closeSidebarDrawer();
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUIState();
+            setInterval(updateUIState, 500);
+
+            const initInterval = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initInterval);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input ? input.value.trim() : '';
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // Captain Passcode
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                        if (input) input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! **Parnarav AI Engine** पूर्ण रूप से आपके आदेश के लिए तैयार है।`;
+                        if (window.UIManager) window.UIManager.appendMsg(window.marked ? window.marked.parse(msg) : msg, 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    if (cleanInput.includes("exitkeshav360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                        if (input) input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\n**Parnarav AI** सामान्य मोड में वापस आ गया है।";
+                        if (window.UIManager) window.UIManager.appendMsg(window.marked ? window.marked.parse(msg) : msg, 'ai', aiMsgId);
+                        addActionButtons(aiMsgId);
+                        return;
+                    }
+
+                    const isCaptain = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    if (window.UIManager) window.UIManager.appendMsg(text, 'user');
+                    if (input) input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    if (window.UIManager) window.UIManager.appendMsg(`<i>${getParnaravBrainSVG()} Parnarav AI सोच रहा है... ⚡</i>`, 'ai', aiMsgId);
+
+                    // Mode Instructions with High-Level Communication Skills
+                    let modeInstruction = "";
+                    if (window.currentParnaravMode === 'finance') {
+                        modeInstruction = `[MODE: TRADING & QUANT ANALYST] Talk in friendly, clear Hinglish/Hindi. Respond to greetings like 'Hlo/Hello' warmly as a Quant Trading Guide. Focus on Risk, SIP, Stocks, and Calculations.`;
+                    } else if (window.currentParnaravMode === 'coding') {
+                        modeInstruction = `[MODE: SENIOR CODING ARCHITECT] Respond warmly and professionally to greetings. Focus on writing clean code (C++, Python, JS), fixing bugs, and explaining architecture with top communication skills.`;
+                    } else {
+                        modeInstruction = `[MODE: OMNI SUPER AI] Respond warmly, engagingly, and intuitively. Offer universal knowledge, Bank PO reasoning, and GK guidance with great conversational skill.`;
+                    }
+
+                    const captainPersona = isCaptain ? 
+                        `You are reporting EXCLUSIVELY to Captain Keshav.` :
+                        `Communicate naturally and directly in Hinglish/Hindi without robotic templates or unnecessary intros.`;
+
+                    const finalPrompt = `${modeInstruction}\n${captainPersona}\n\nUser Question: ${text}`;
+
+                    try {
+                        const response = await puter.ai.chat(finalPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const msgElem = document.getElementById(aiMsgId);
+                        if (msgElem) {
+                            const bubble = msgElem.querySelector('.bubble');
+                            const badge = isCaptain ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                            const fullContent = badge + replyText;
+                            bubble.innerHTML = window.marked ? window.marked.parse(fullContent) : fullContent;
+                        }
+                        addActionButtons(aiMsgId);
+                        if (window.hljs) hljs.highlightAll();
+                    } catch (err) {
+                        const msgElem = document.getElementById(aiMsgId);
+                        if (msgElem) {
+                            const bubble = msgElem.querySelector('.bubble');
+                            bubble.innerHTML = `**[Parnarav AI Error]** \`${err.message || err}\``;
+                        }
+                        addActionButtons(aiMsgId);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
