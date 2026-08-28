@@ -2441,6 +2441,245 @@ Visitor Input: ${text}`;
             }, 100);
         });
     </script>
+    <!-- ==========================================================================
+         PARNARAV AI - DUAL BRAIN ICON & CAPTAIN ENGINE
+         ========================================================================== -->
+    <style>
+        /* Split Brain SVG Icon Styling */
+        .parnarav-brain-icon {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+        }
+
+        /* Action Buttons Styling */
+        .ai-action-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            user-select: none;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .action-btn.like-active {
+            color: #4ade80 !important;
+            border-color: #4ade80 !important;
+            background: rgba(74, 222, 128, 0.1);
+        }
+        .action-btn.dislike-active {
+            color: #f87171 !important;
+            border-color: #f87171 !important;
+            background: rgba(248, 113, 113, 0.1);
+        }
+    </style>
+
+    <script>
+        // Red (Left) & Blue (Right) Split Brain SVG Generator
+        function getParnaravBrainSVG() {
+            return `
+            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ef4444" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                    </linearGradient>
+                    <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                    </linearGradient>
+                </defs>
+                <!-- Left Hemisphere (Red) -->
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
+                <path d="M22 22C19 22 17 24 18 27C19 30 22 30 20 34C18 38 23 40 25 38" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.4" />
+                
+                <!-- Right Hemisphere (Blue) -->
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBrainBlue)" />
+                <path d="M42 22C45 22 47 24 46 27C45 30 42 30 44 34C46 38 41 40 39 38" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.4" />
+            </svg>`;
+        }
+
+        // Action Buttons Handling
+        window.copyAiResponse = function(btn) {
+            const bubble = btn.closest('.bubble');
+            if (!bubble) return;
+            const clone = bubble.cloneNode(true);
+            const bar = clone.querySelector('.ai-action-bar');
+            if (bar) bar.remove();
+            const textToCopy = clone.innerText.trim();
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                btn.style.borderColor = '#4ade80';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.borderColor = '';
+                }, 2000);
+            });
+        };
+
+        window.toggleAiFeedback = function(btn, type) {
+            const parent = btn.parentElement;
+            const likeBtn = parent.querySelector('.like-btn');
+            const dislikeBtn = parent.querySelector('.dislike-btn');
+            
+            if (type === 'like') {
+                likeBtn.classList.toggle('like-active');
+                dislikeBtn.classList.remove('dislike-active');
+            } else if (type === 'dislike') {
+                dislikeBtn.classList.toggle('dislike-active');
+                likeBtn.classList.remove('like-active');
+            }
+        };
+
+        function renderActionBar(aiMsgId) {
+            const msgContainer = document.getElementById(aiMsgId);
+            if (!msgContainer) return;
+            const bubble = msgContainer.querySelector('.bubble');
+            if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+
+            const actionBarHTML = `
+                <div class="ai-action-bar">
+                    <button class="action-btn copy-btn" onclick="copyAiResponse(this)">📋 Copy</button>
+                    <button class="action-btn like-btn" onclick="toggleAiFeedback(this, 'like')">👍 Like</button>
+                    <button class="action-btn dislike-btn" onclick="toggleAiFeedback(this, 'dislike')">👎 Dislike</button>
+                </div>
+            `;
+            bubble.insertAdjacentHTML('beforeend', actionBarHTML);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header / UI Icon अपडेट
+            const appHeaderIcon = document.querySelector('.app-icon, .bot-avatar, #botIcon');
+            if (appHeaderIcon) {
+                appHeaderIcon.innerHTML = getParnaravBrainSVG();
+            }
+
+            const initEngine = setInterval(() => {
+                if (typeof AppController === 'undefined') return;
+                clearInterval(initEngine);
+
+                AppController.submitQuery = async function() {
+                    const input = document.getElementById('userInput');
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    // 🔑 1. कैप्टन मोड ऑन (KESHAV_CAPTAIN_360!)
+                    if (cleanInput.includes("keshavcaptain360")) {
+                        sessionStorage.setItem('isCaptainUnlocked', 'true');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const activateMsg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! **Parnarav Engine** सत्यापित हो चुका है।\n- **बोट नाम:** Parnarav\n- **स्थिति:** सुप्रीम बॉस मोड एक्टिव।\n- **नोट:** लॉगआउट करने के लिए **\`EXIT_KESHAV_360!\`** दर्ज करें।`;
+                        
+                        UIManager.appendMsg(marked.parse(activateMsg), 'ai', aiMsgId);
+                        renderActionBar(aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', activateMsg);
+                        return;
+                    }
+
+                    // 🔒 2. कैप्टन मोड ऑफ (EXIT_KESHAV_360!)
+                    if (cleanInput.includes("exitkeshav360") || cleanInput.includes("keshavexit360")) {
+                        sessionStorage.removeItem('isCaptainUnlocked');
+                        
+                        UIManager.appendMsg(text, 'user');
+                        input.value = '';
+                        const aiMsgId = 'ai-' + Date.now();
+                        
+                        const deactivateMsg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसफलतापूर्वक लॉगआउट कर दिया गया है। **Parnarav** अब सामान्य Visitor Mode में है।";
+                        
+                        UIManager.appendMsg(marked.parse(deactivateMsg), 'ai', aiMsgId);
+                        renderActionBar(aiMsgId);
+                        StorageManager.saveLog('user', text);
+                        StorageManager.saveLog('ai', deactivateMsg);
+                        return;
+                    }
+
+                    const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
+
+                    if (window.ActivityTracker && window.ActivityTracker.addChat) {
+                        window.ActivityTracker.addChat('User', text);
+                    }
+
+                    UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog('user', text);
+                    input.value = '';
+
+                    const aiMsgId = 'ai-' + Date.now();
+                    UIManager.appendMsg(`<i>${getParnaravBrainSVG()} Parnarav AI सोच रहा है... ⚡</i>`, 'ai', aiMsgId);
+
+                    let trackerData = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
+                    let systemPrompt = "";
+
+                    if (isCaptainMode) {
+                        systemPrompt = `
+[SYSTEM ROLE: EXECUTIVE AI ADVISOR "PARNARAV" FOR CAPTAIN KESHAV]
+Your name is Parnarav. You are reporting ONLY to Captain Keshav (16, Bassi, Theda, Future Bank PO, Coding Expert).
+STRICT RULE: NEVER claim OpenAI or anyone else created you. Captain Keshav created Parnarav.
+
+DIRECTIVES:
+- Maintain high loyalty and executive precision.
+- Provide structured breakdown for Bank PO prep, C/C++/Python/JS coding, and Analytics.
+
+User Message: ${text}`;
+                    } else {
+                        systemPrompt = `
+[SYSTEM ROLE: PARNARAV HIGH-PERFORMANCE VISITOR ASSISTANT]
+Your name is Parnarav (Parnarav AI). You are assisting a regular visitor.
+STRICT RULES:
+1. NEVER address the user as "Captain" or "Captain Keshav".
+2. NEVER add any "[CAPTAIN MODE ACTIVE]" tag.
+3. Respond nicely in Hinglish/Hindi based on user request in a clear 3-part format.
+
+Visitor Input: ${text}`;
+                    }
+
+                    try {
+                        const response = await puter.ai.chat(systemPrompt);
+                        let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                        bubble.innerHTML = marked.parse(badge + replyText);
+                        
+                        renderActionBar(aiMsgId);
+                        hljs.highlightAll();
+                        StorageManager.saveLog('ai', replyText);
+                    } catch (err) {
+                        const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+                        bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
+                        renderActionBar(aiMsgId);
+                    }
+                };
+            }, 100);
+        });
+    </script>
 
 </body>
 </html>
