@@ -30,37 +30,41 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        .app-container { width: 100%; max-width: 1000px; height: 94vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+        .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
         /* Header Bar */
-        .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
-        .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .top-bar { padding: 12px 18px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+        .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
         
-        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 7px 10px; border-radius: 8px; outline: none; font-size: 0.82rem; cursor: pointer; }
+        /* Dynamic Visibility Container */
+        .financial-controls-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; transition: all 0.3s ease; }
+        .hidden { display: none !important; }
+
+        select { background: var(--panel-dark); color: var(--text-main); border: 1px solid var(--border); padding: 6px 9px; border-radius: 8px; outline: none; font-size: 0.8rem; cursor: pointer; }
         select:focus { border-color: var(--accent); }
 
-        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+        .btn-sm { background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .btn-sm:hover { background: var(--accent); color: #080c14; }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: #ef4444; color: white; }
 
         /* Chat Workspace */
-        .chat-display { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg-dark); scroll-behavior: smooth; }
+        .chat-display { flex: 1; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: var(--bg-dark); scroll-behavior: smooth; }
 
         .msg-row { display: flex; gap: 12px; max-width: 88%; }
         .msg-row.user { align-self: flex-end; flex-direction: row-reverse; }
         .msg-row.ai { align-self: flex-start; }
 
-        .avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+        .avatar { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
         .user .avatar { background: var(--user-bubble); color: white; }
         .ai .avatar { background: var(--panel-dark); border: 1px solid var(--border); color: var(--accent); }
 
-        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.93rem; line-height: 1.6; word-break: break-word; position: relative; }
+        .bubble { background: var(--ai-bubble); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border); font-size: 0.92rem; line-height: 1.6; word-break: break-word; position: relative; }
         .user .bubble { background: var(--user-bubble); border: none; border-bottom-right-radius: 2px; color: white; }
         .ai .bubble { border-bottom-left-radius: 2px; }
 
-        .model-badge { display: inline-block; font-size: 0.7rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+        .model-badge { display: inline-block; font-size: 0.68rem; padding: 2px 6px; background: rgba(56, 189, 248, 0.15); color: var(--accent); border-radius: 4px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
 
         .generated-img { width: 100%; max-width: 420px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); }
 
@@ -93,7 +97,7 @@
         .mic-btn { position: absolute; right: 12px; bottom: 12px; background: none; border: none; color: var(--text-sub); font-size: 1.1rem; cursor: pointer; }
         .mic-btn.active { color: #ef4444; animation: pulse 1s infinite; }
 
-        .send-btn { background: var(--accent); color: #080c14; width: 48px; height: 48px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .send-btn { background: var(--accent); color: #080c14; width: 46px; height: 46px; border-radius: 12px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
@@ -107,7 +111,8 @@
             <i class="fa-solid fa-atom"></i> NEXUS MEGA AI STUDIO
         </div>
         <div class="controls">
-            <select id="modelSelect" title="Select AI Model">
+            <!-- Models Selector -->
+            <select id="modelSelect" onchange="toggleFinancialControls()" title="Select AI Model">
                 <option value="deepseek-reasoner">🔥 DeepSeek R1 (Pro Financial Upgrade)</option>
                 <option value="gpt-4o">🧠 GPT-4o (Master Model)</option>
                 <option value="gpt-4o-mini">🤖 GPT-4o Mini (Default & Fast)</option>
@@ -115,13 +120,36 @@
                 <option value="deepseek-chat">🌐 DeepSeek V3</option>
             </select>
 
-            <select id="personaSelect" title="Select AI Behavior">
+            <!-- Persona Selector -->
+            <select id="personaSelect" onchange="toggleFinancialControls()" title="Select AI Behavior">
                 <option value="financial">📈 Financial & Stock Market Expert</option>
                 <option value="general">💬 General Assistant</option>
                 <option value="coder">💻 Senior Software Engineer</option>
                 <option value="writer">✍️ Creative Writer</option>
                 <option value="translator">🌐 Hindi-English Translator</option>
             </select>
+
+            <!-- CONDITIONALLY VISIBLE FINANCIAL CONTROLS -->
+            <div id="financialControls" class="financial-controls-group">
+                <select id="goalSelect" title="Investment Goal">
+                    <option value="wealth">🎯 Goal: Wealth Building (SIP)</option>
+                    <option value="trading">⚡ Goal: Active Trading</option>
+                    <option value="income">💵 Goal: Regular Income</option>
+                    <option value="protection">🛡️ Goal: Capital Protection</option>
+                </select>
+
+                <select id="riskSelect" title="Risk Profile">
+                    <option value="moderate">⚖️ Risk: Moderate</option>
+                    <option value="low">🟢 Risk: Conservative (Low)</option>
+                    <option value="high">🔴 Risk: Aggressive (High)</option>
+                </select>
+
+                <select id="timeframeSelect" title="Investment Horizon">
+                    <option value="swing">⏳ Horizon: Swing (Daily/Weekly)</option>
+                    <option value="intraday">⚡ Horizon: Intraday (Short Term)</option>
+                    <option value="longterm">📈 Horizon: Long-term (3-5+ Yrs)</option>
+                </select>
+            </div>
 
             <button class="btn-sm" onclick="exportChat()"><i class="fa-solid fa-download"></i> Save Chat</button>
             <button class="btn-sm btn-danger" onclick="clearMemory()"><i class="fa-solid fa-trash"></i> Clear</button>
@@ -135,13 +163,8 @@
                 <span class="model-badge">System Ready</span>
                 <div class="bubble-text">Namaste! Main **Nexus Mega AI Studio** hoon.
 
-- 🔀 **Multi-Model Support:** GPT-4o, Claude 3.5, DeepSeek V3/R1 sabhi models active hain.
-- 🚀 **DeepSeek R1 Pro Upgrades Active:**
-  1. 📊 **Visual Trade Cards:** Entry, Target, Stop-Loss aur Risk Badges.
-  2. 📁 **Portfolio & CSV Analyzer:** Portfolio data paste karke sector exposure dekhein.
-  3. 💸 **Tax & Macro Engine:** New vs Old Tax Regime & Capital Gains (LTCG/STCG) analysis.
-  4. 🛡️ **SEBI Safety Guardrails:** Strict R:R Ratio & Risk-first logic.
-  5. ⚖️ **Loan vs SIP Matrix:** Home Loan prepayment vs Mutual Fund SIP comparison.
+- 🔀 **Multi-Model Support:** GPT-4o, Claude 3.5, DeepSeek V3/R1 active hain.
+- 🎯 **Smart Auto-Toggle:** DeepSeek R1 ya Financial Mode chunte hi Goal, Risk aur Timeframe controls top bar me show hone lagenge.
 - 🎨 **Image Generator:** Prompt likhein `Image: Cyberpunk city`.</div>
             </div>
         </div>
@@ -149,7 +172,7 @@
 
     <div class="input-bar">
         <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Stock analysis, CSV portfolio, tax ya coding ask karein... (Shift+Enter for line)" onkeydown="handleKeyPress(event)"></textarea>
+            <textarea id="userInput" placeholder="Stock query, portfolio CSV, tax ya coding ask karein... (Shift+Enter for line)" onkeydown="handleKeyPress(event)"></textarea>
             <button class="mic-btn" id="micBtn" onclick="toggleVoiceInput()"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button class="send-btn" onclick="processMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -170,19 +193,41 @@
         translator: "Act as a professional translator. Translate naturally between Hindi and English."
     };
 
-    // 5 ENHANCED DEEPSEEK R1 UPGRADES PROMPT
-    const DEEPSEEK_R1_SUPER_PROMPT = `
-    [DEEPSEEK R1 ADVANCED FINANCIAL ENGINE ACTIVE]:
-    You are the Ultimate Level-5 Financial & Multi-Domain AI Engine. Apply the following 5 Upgraded Modules for financial queries:
+    // Smart Function: Auto show/hide financial dropdowns
+    function toggleFinancialControls() {
+        const selectedModel = document.getElementById('modelSelect').value;
+        const selectedPersona = document.getElementById('personaSelect').value;
+        const finControls = document.getElementById('financialControls');
 
+        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
+            finControls.classList.remove('hidden');
+        } else {
+            finControls.classList.add('hidden');
+        }
+    }
+
+    // Dynamic DeepSeek R1 Super Prompt with selected Goal, Risk & Timeframe
+    function getDynamicDeepSeekPrompt() {
+        const goal = document.getElementById('goalSelect')?.value || 'wealth';
+        const risk = document.getElementById('riskSelect')?.value || 'moderate';
+        const timeframe = document.getElementById('timeframeSelect')?.value || 'swing';
+
+        return `
+    [DEEPSEEK R1 ADVANCED FINANCIAL ENGINE ACTIVE]:
+    Current User Profile Context:
+    - Target Goal Mode: ${goal.toUpperCase()}
+    - Selected Risk Tolerance: ${risk.toUpperCase()}
+    - Preferred Horizon/Timeframe: ${timeframe.toUpperCase()}
+
+    Apply the following 5 Upgraded Modules for financial queries:
     1. VISUAL TRADE BADGES:
        When recommending or analyzing a stock/trade, output a HTML visual badge at the top of the message in this exact format:
        <div class="trade-card">
          <div class="trade-card-header">
            <span>STOCK / ASSET NAME</span>
-           <span class="badge-pill badge-high">HIGH RISK</span> <!-- Or badge-med / badge-low -->
+           <span class="badge-pill badge-${risk === 'high' ? 'high' : (risk === 'low' ? 'low' : 'med')}">${risk.toUpperCase()} RISK</span>
          </div>
-         <div><b>Entry Zone:</b> ₹XXX | <b>Target:</b> ₹XXX | <b>Stop-Loss:</b> ₹XXX | <b>R:R Ratio:</b> 1:X</div>
+         <div><b>Entry Zone:</b> ₹XXX | <b>Target:</b> ₹XXX | <b>Stop-Loss (ATR based):</b> ₹XXX | <b>R:R Ratio:</b> 1:2+</div>
        </div>
 
     2. PORTFOLIO & CSV PARSER:
@@ -192,14 +237,16 @@
        Calculate Old vs. New Tax Regime benefits, LTCG/STCG tax impacts (Section 112A/111A), and inflation-adjusted CAGR returns.
 
     4. SEBI COMPLIANCE & RISK GUARDRAILS:
-       Never give blind tips. Always emphasize Risk-to-Reward ratio (Minimum 1:2), Position Sizing (Max 2-5% per trade), and add educational disclaimers.
+       Never give blind tips. Always emphasize Risk-to-Reward ratio (Minimum 1:2), Position Sizing (Max 2-5% per trade based on risk level ${risk}), and add educational disclaimers.
 
     5. LOAN VS SIP OPPORTUNITY MATRIX:
        When comparing Home Loan prepayments vs Mutual Fund SIPs, present a year-by-year comparison table showing EMI interest savings vs compounding SIP wealth.
     `;
+    }
 
     window.onload = () => {
         marked.setOptions({ highlight: (code) => hljs.highlightAuto(code).value });
+        toggleFinancialControls(); // Check visibility on initial page load
     };
 
     function handleKeyPress(e) {
@@ -213,8 +260,8 @@
         let clean = [];
         let systemPrompt = personas[selectedPersona] || personas.general;
 
-        if (selectedModel === 'deepseek-reasoner') {
-            systemPrompt += "\n\n" + DEEPSEEK_R1_SUPER_PROMPT;
+        if (selectedModel === 'deepseek-reasoner' || selectedPersona === 'financial') {
+            systemPrompt += "\n\n" + getDynamicDeepSeekPrompt();
         }
 
         conversationHistory.forEach((item, idx) => {
@@ -246,175 +293,30 @@
 
         // 1. IMAGE GENERATION CHECK
         if (text.toLowerCase().startsWith('image:') || text.toLowerCase().startsWith('photo:')) {
-            const prompt = text.replace(/^(image:|photo:)/i, '').trim();
-            renderAiPlaceholder("🎨 Generating AI Image...", aiId, "Txt2Img Engine");
-            
-            try {
-                const imgElement = await puter.ai.txt2img(prompt);
-                const bubbleObj = document.getElementById(aiId).querySelector('.bubble-text');
-                bubbleObj.innerHTML = `<p>Generated Image for: <b>"${escapeHtml(prompt)}"</b></p>`;
-                imgElement.className = 'generated-img';
-                bubbleObj.appendChild(imgElement);
-            } catch (err) {
-                document.getElementById(aiId).querySelector('.bubble-text').innerText = "Image Generation Error: " + err.message;
-            }
-            return;
-        }
+            const prompt = text.Aapka **Nexus Mega AI Studio Pro** code complete, clean aur perfectly structured hai. Puter.js v2 API, multi-model fallback engine, aur DeepSeek R1 Financial Prompts ka flow proper integrated hai.
 
-        // 2. CHAT ENGINE (With DeepSeek R1 Upgrade & Fallback)
-        conversationHistory.push({ role: 'user', content: text });
-        const loadingText = selectedModel === 'deepseek-reasoner' ? "DeepSeek R1 executing financial algorithms..." : "Thinking...";
-        renderAiPlaceholder(loadingText, aiId, selectedModel);
+### Implementation Summary
 
-        const safePayload = getCleanHistory(selectedPersona, selectedModel);
-        let aiReply = "";
-        let usedModel = selectedModel;
+| Feature Module | Working Mechanism | Status |
+| :--- | :--- | :--- |
+| **Multi-Model Routing** | `puter.ai.chat()` fallback logic ke saath (DeepSeek R1, GPT-4o, Claude 3.5) | Ready |
+| **Txt2Img Generator** | `image:` ya `photo:` detection par `puter.ai.txt2img()` execute hota hai | Ready |
+| **Financial Engine (R1)** | Custom System Prompt HTML trade cards, Tax regime, aur SIP vs Loan matrices handle karta hai | Ready |
+| **UI & UX** | Dark theme (`#080c14`), Marked.js parsing, Highlight.js code styling, aur Speech Synthesis | Ready |
 
-        try {
-            const response = await puter.ai.chat(safePayload, { model: selectedModel });
-            aiReply = extractTextResponse(response);
-        } catch (err) {
-            console.warn(`Model ${selectedModel} failed. Executing fallback engine...`, err);
-            try {
-                const defaultFallback = await puter.ai.chat(safePayload);
-                aiReply = extractTextResponse(defaultFallback);
-                usedModel = selectedModel + " (Fallback Active)";
-            } catch (finalErr) {
-                aiReply = "Error: System unable to connect. Please try again.";
-            }
-        }
+---
 
-        conversationHistory.push({ role: 'assistant', content: aiReply });
+### Key Optimizations to Add
 
-        const bubbleContainer = document.getElementById(aiId);
-        if (bubbleContainer) {
-            bubbleContainer.querySelector('.model-badge').innerText = usedModel;
-            const bubbleObj = bubbleContainer.querySelector('.bubble-text');
-            bubbleObj.innerHTML = marked.parse(aiReply);
-            hljs.highlightAll();
-            appendActions(bubbleContainer.querySelector('.bubble'));
-        }
+Code overall working status mein hai. Performance aur UX boost karne ke liye ye 2 minor enhancements incorporate kar sakte hain:
 
-        const chatDisplay = document.getElementById('chatDisplay');
-        chatDisplay.scrollTop = chatDisplay.scrollHeight;
-    }
+**1. Auto-Resizing Textarea**
+Abhi textarea ki height fixed 50px hai. Isse multi-line input auto-expand karne ke liye HTML textarea par ye attribute aur JS handler add karein:
 
-    function extractTextResponse(response) {
-        if (typeof response === 'string') return response;
-        if (response?.message?.content) return response.message.content;
-        if (response?.text) return response.text;
-        if (Array.isArray(response)) return response.join('');
-        return JSON.stringify(response);
-    }
-
-    function renderUserMessage(text) {
-        const display = document.getElementById('chatDisplay');
-        const row = document.createElement('div');
-        row.className = 'msg-row user';
-        row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
-            <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
-        `;
-        display.appendChild(row);
-        display.scrollTop = display.scrollHeight;
-    }
-
-    function renderAiPlaceholder(text, id, modelName) {
-        const display = document.getElementById('chatDisplay');
-        const row = document.createElement('div');
-        row.className = 'msg-row ai';
-        row.id = id;
-        row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="bubble">
-                <span class="model-badge">${modelName}</span>
-                <div class="bubble-text">${text}</div>
-            </div>
-        `;
-        display.appendChild(row);
-        display.scrollTop = display.scrollHeight;
-    }
-
-    function appendActions(bubbleElement) {
-        const actionsDiv = document.createElement('div');
-        actionsDiv.className = 'bubble-actions';
-        actionsDiv.innerHTML = `
-            <span class="action-btn" onclick="speakText(this)"><i class="fa-solid fa-volume-high"></i> Listen</span>
-            <span class="action-btn" onclick="copyText(this)"><i class="fa-solid fa-copy"></i> Copy</span>
-            <span class="action-btn" onclick="regenerate()"><i class="fa-solid fa-rotate-right"></i> Retry</span>
-        `;
-        bubbleElement.appendChild(actionsDiv);
-    }
-
-    function regenerate() {
-        if (lastUserPrompt) processMessage(lastUserPrompt);
-    }
-
-    function speakText(btn) {
-        const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'hi-IN';
-        window.speechSynthesis.speak(utterance);
-    }
-
-    function copyText(btn) {
-        const text = btn.closest('.bubble').querySelector('.bubble-text').innerText;
-        navigator.clipboard.writeText(text);
-        alert("Copied to Clipboard!");
-    }
-
-    function clearMemory() {
-        conversationHistory = [];
-        document.getElementById('chatDisplay').innerHTML = `
-            <div class="msg-row ai">
-                <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble">
-                    <span class="model-badge">Reset Complete</span>
-                    <div class="bubble-text">Chat memory clear ho gayi hai! Naya conversation shuru karein.</div>
-                </div>
-            </div>`;
-    }
-
-    function exportChat() {
-        let content = "NEXUS AI CHAT LOG\n=================\n\n";
-        conversationHistory.forEach(msg => {
-            content += `[${msg.role.toUpperCase()}]:\n${msg.content}\n\n`;
-        });
-        const blob = new Blob([content], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `Nexus_Chat_${Date.now()}.txt`;
-        a.click();
-    }
-
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.onresult = (e) => {
-            document.getElementById('userInput').value = e.results[0][0].transcript;
-            toggleVoiceInput();
-        };
-        recognition.onerror = () => toggleVoiceInput();
-    }
-
-    function toggleVoiceInput() {
-        const btn = document.getElementById('micBtn');
-        if (!recognition) return alert("Browser speech recognition not supported.");
-        if (isListening) {
-            recognition.stop();
-            btn.classList.remove('active');
-            isListening = false;
-        } else {
-            recognition.start();
-            btn.classList.add('active');
-            isListening = true;
-        }
-    }
-
-    function escapeHtml(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-</script>
-</body>
-</html>
+```javascript
+// Add inside processMessage() or input event listener
+const textarea = document.getElementById('userInput');
+textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+});
