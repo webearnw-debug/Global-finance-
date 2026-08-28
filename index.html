@@ -29,7 +29,7 @@
 
         .app-container { width: 100%; max-width: 1050px; height: 95vh; background: var(--panel-dark); border-radius: 20px; border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
 
-        /* Top Bar */
+        /* Top Bar without Persona Dropdown */
         .top-bar { padding: 14px 20px; background: #0b1120; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
         .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -207,7 +207,7 @@ BEHAVIORAL RULES:
             return;
         }
 
-        // CHAT ENGINE WITH ADAPTIVE SKILLS
+        // CHAT ENGINE WITH BUILT-IN CORE SKILLS
         conversationHistory.push({ role: 'user', content: text });
         renderAiPlaceholder("Thinking...", aiId, selectedModel);
 
@@ -257,7 +257,7 @@ BEHAVIORAL RULES:
         const row = document.createElement('div');
         row.className = 'msg-row user';
         row.innerHTML = `
-            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="avatar"><div class="avatar-icon"><i class="fa-solid fa-user"></i></div></div>
             <div class="bubble"><div class="bubble-text">${escapeHtml(text)}</div></div>
         `;
         display.appendChild(row);
