@@ -959,9 +959,69 @@ const OmniInternalBrain = {
         return originalSubmit.apply(this, arguments);
     };
 })();
+/ =================================================================
+// 👑 CAPTAIN KESHAV CUSTOM OPERATING SYSTEM (CORE ENGINE)
+// =================================================================
 
+const CaptainOS = {
+    // OS की बेसिक प्रोफाइल जानकारी
+    config: {
+        systemName: "Keshav-OS SuperCore",
+        user: "Captain Keshav",
+        status: "ONLINE",
+        securityLevel: "SUPREME_ADMIN"
+    },
+
+    // 1. 🛠️ कस्टम मॉड्यूल्स स्टोरेज (जहाँ आपके फीचर्स सेव होंगे)
+    modules: {},
+
+    // 2. ⚡ नया कोड/फीचर जोड़ने का आसान तरीका
+    addFeature: function(featureName, codeFunction) {
+        this.modules[featureName] = codeFunction;
+        console.log(`[Captain OS] New Module Loaded: ${featureName}`);
+    },
+
+    // 3. 🚀 कस्टम कोड रनर (Dynamically किसी भी JS कोड को चलाने के लिए)
+    runCustomCode: function(jsCode) {
+        try {
+            console.log("[Captain OS] Executing custom code...");
+            const execute = new Function(jsCode);
+            return execute();
+        } catch (err) {
+            console.error("[Captain OS Error]:", err.message);
+            return "Execution Error: " + err.message;
+        }
+    },
+
+    // 4. 👑 कैप्टन मोड का मुख्य ऑपरेटिंग लॉजिक
+    boot: function() {
+        console.log(`🫡 ${this.config.systemName} initialized for ${this.config.user}`);
+        this.runUserScript();
+    },
+
+    // =================================================================
+    // 🎯 [YOUR CODE SPACE] - आगे का सारा कोड इसके अंदर पेस्ट करें
+    // =================================================================
+    runUserScript: function() {
+        // 👇 यहाँ नीचे आप अपना कोई भी नया JS कोड लिख सकते हैं:
+        
+        console.log("Captain Keshav OS active and ready for commands.");
+
+        // उदाहरण: 
+        // alert("Captain OS Online!");
+        
+    }
+};
+
+// कैप्टन मोड एक्टिवेट होने पर OS को स्टार्ट करने का हुक
+if (typeof CaptainKeshavEngine !== 'undefined') {
+    CaptainKeshavEngine.initCaptainFeatures = function() {
+        CaptainOS.boot();
+    };
+}
         
     </script>
-    
+   
+ 
 </body>
 </html>
