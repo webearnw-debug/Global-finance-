@@ -680,7 +680,7 @@
         };
 
         // =================================================================
-        // 2. ISOLATED STORAGE ENGINE (NO CROSS-MODE MEMORY LEAK)
+        // 2. ZERO STORAGE ENGINE (NO PERSISTENT MEMORY / COMPLETELY STATELESS)
         // =================================================================
         const StorageManager = {
             getStorageKey: function(mode) {
@@ -688,24 +688,21 @@
             },
 
             saveLog: function(mode, role, content) {
-                let logs = this.getLogs(mode);
-                logs.push({ role, content, timestamp: new Date().toISOString() });
-                if (logs.length > 30) logs.shift(); // 30 Messages Limit Per Mode
-                localStorage.setItem(this.getStorageKey(mode), JSON.stringify(logs));
+                // STORAGE DISABLED: No memory saved to browser storage
             },
 
             getLogs: function(mode) {
-                try {
-                    return JSON.parse(localStorage.getItem(this.getStorageKey(mode))) || [];
-                } catch (e) {
-                    return [];
-                }
+                // STORAGE DISABLED: Always returns empty logs on load or refresh
+                return [];
             },
 
             clearModeStorage: function(mode) {
-                localStorage.removeItem(this.getStorageKey(mode));
+                // No-op
             }
         };
+
+        // Clear any old stored data on load
+        localStorage.clear();
 
         // =================================================================
         // 3. SPECIALIZED KNOWLEDGE ENGINES
@@ -866,7 +863,7 @@
         };
 
         // =================================================================
-        // 5. MAIN APP CONTROLLER (STRICT ISOLATED OPERATING SYSTEM ENGINES)
+        // 5. MAIN APP CONTROLLER
         // =================================================================
         const AppController = {
             currentMode: 'OMNI',
@@ -885,7 +882,7 @@
                 }
                 
                 const chatContainer = document.getElementById('chatContainer');
-                chatContainer.innerHTML = ''; // 🧹 Clear DOM Area
+                chatContainer.innerHTML = ''; // Clear DOM Area
 
                 let titleName = "Omni Super AI Active";
 
@@ -895,7 +892,6 @@
                     
                     if (this.isCaptainUnlocked) {
                         this.renderUnlockedCaptainScreen();
-                        this.loadModeHistory('CAPTAIN');
                     } else {
                         this.renderLockedCaptainScreen();
                     }
@@ -909,30 +905,8 @@
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
 
-                // 📦 Load ONLY Current Mode's History
-                const logs = StorageManager.getLogs(mode);
-                if (logs.length > 0) {
-                    logs.forEach(msg => {
-                        let avatar = msg.role === 'user' ? '👤' : (mode === 'FINANCE' ? '📈' : (mode === 'DEV' ? '💻' : '🧠'));
-                        let id = 'hist-' + Date.now() + Math.random();
-                        UIManager.appendMsg(msg.content, msg.role, id, avatar);
-                        if (msg.role === 'ai') UIManager.renderActionBar(id);
-                    });
-                } else {
-                    this.renderDefaultWelcome(mode);
-                }
-
+                this.renderDefaultWelcome(mode);
                 this.closeSidebarMobile();
-            },
-
-            loadModeHistory: function(mode) {
-                const logs = StorageManager.getLogs(mode);
-                logs.forEach(msg => {
-                    let avatar = msg.role === 'user' ? '👤' : '🫡';
-                    let id = 'hist-' + Date.now() + Math.random();
-                    UIManager.appendMsg(msg.content, msg.role, id, avatar);
-                    if (msg.role === 'ai') UIManager.renderActionBar(id);
-                });
             },
 
             renderDefaultWelcome: function(mode) {
@@ -961,7 +935,6 @@
                 const aiMsgId = 'ai-welcome-' + Date.now();
                 UIManager.appendMsg(welcomeText, 'ai', aiMsgId, avatarIcon);
                 UIManager.renderActionBar(aiMsgId);
-                StorageManager.saveLog(mode, 'ai', welcomeText);
             },
 
             renderLockedCaptainScreen: function() {
@@ -1037,7 +1010,6 @@
                     this.currentMode = 'CAPTAIN';
                     document.getElementById('chatContainer').innerHTML = '';
                     this.renderUnlockedCaptainScreen();
-                    this.loadModeHistory('CAPTAIN');
                 } else {
                     alert("⚠️ गलत पासवर्ड! कृपया सही सुरक्षा कोड दर्ज करें।");
                 }
@@ -1094,7 +1066,6 @@
                     const armorObj = ArmorFleet[`Armor_${armorNum}`];
 
                     UIManager.appendMsg(text, 'user');
-                    StorageManager.saveLog(mode, 'user', text);
                     input.value = '';
 
                     const aiMsgId = 'armor-' + Date.now();
@@ -1108,22 +1079,16 @@
                         bubble.innerHTML = marked.parse(armorReport);
                         UIManager.renderActionBar(aiMsgId);
                     }
-                    StorageManager.saveLog(mode, 'ai', armorReport);
                     VoiceEngine.speak(`${armorObj.codeName} की रिपोर्ट तैयार है।`);
                     return;
                 }
 
                 // 3. AI Query Processing via Puter SDK
                 UIManager.appendMsg(text, 'user');
-                StorageManager.saveLog(mode, 'user', text); // 💾 Saved to CURRENT MODE local key only
                 input.value = '';
 
                 const aiMsgId = 'ai-' + Date.now();
                 UIManager.appendMsg("<i>Parnarav AI जवाब तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId);
-
-                // 🔒 STRICT CONTEXT ISOLATION: Fetch history ONLY for current active mode
-                const recentLogs = StorageManager.getLogs(mode).slice(-6);
-                const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
 
                 // System Role & Identity Guidelines Per Mode
                 let systemRolePrompt = "";
@@ -1161,9 +1126,6 @@ System Instruction: ${systemRolePrompt}
 
 Language Constraint: Respond directly in natural Hindi / Hinglish with crisp markdown formatting and clean layout.
 
-[ISOLATED MODE HISTORY - ${mode}]
-${historyContext}
-
 [USER INPUT]
 User: ${text}`;
 
@@ -1180,7 +1142,6 @@ User: ${text}`;
                         UIManager.renderActionBar(aiMsgId);
                         if (window.hljs) hljs.highlightAll();
                     }
-                    StorageManager.saveLog(mode, 'ai', replyText); // 💾 AI reply saved to CURRENT MODE only
                     VoiceEngine.speak(replyText);
                 } catch (err) {
                     const bubbleElement = document.getElementById(aiMsgId);
