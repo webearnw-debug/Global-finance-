@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio (Captain Supreme Edition)</title>
+    <title>Parnarav AI - Universal Studio (Supreme Edition)</title>
     
     <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
-    <!-- AI Engine Core SDK -->
+    <!-- Puter AI Engine Core SDK (Pure Client-side JS) -->
     <script src="https://js.puter.com/v2/"></script>
 
     <style>
@@ -644,6 +644,10 @@
             CREATOR_INFO: "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।"
         };
 
+        // Backend Deployment Base URL (अगर Render/FastAPI पर होस्ट करते हैं तो यहाँ लिखें)
+        // यदि खाली रहेगा तो यह सीधा Puter Client-Side SDK से काम करेगा!
+        const OPTIONAL_BACKEND_URL = ""; // Example: "https://your-fastapi-app.onrender.com/api/v1"
+
         // =================================================================
         // 🎙️ VOICE ENGINE (TEXT-TO-SPEECH)
         // =================================================================
@@ -680,7 +684,7 @@
         };
 
         // =================================================================
-        // 2. ISOLATED STORAGE ENGINE (NO CROSS-MODE MEMORY LEAK)
+        // 2. ISOLATED STORAGE ENGINE (STRICT NO CROSS-MODE MEMORY LEAK)
         // =================================================================
         const StorageManager = {
             getStorageKey: function(mode) {
@@ -866,7 +870,7 @@
         };
 
         // =================================================================
-        // 5. MAIN APP CONTROLLER (STRICT ISOLATED OPERATING SYSTEM ENGINES)
+        // 5. MAIN APP CONTROLLER (HYBRID EXECUTION & MODE ISOLATION)
         // =================================================================
         const AppController = {
             currentMode: 'OMNI',
@@ -885,7 +889,7 @@
                 }
                 
                 const chatContainer = document.getElementById('chatContainer');
-                chatContainer.innerHTML = ''; // 🧹 Clear DOM Area
+                chatContainer.innerHTML = ''; // 🧹 Clear Current DOM View
 
                 let titleName = "Omni Super AI Active";
 
@@ -909,7 +913,7 @@
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
 
-                // 📦 Load ONLY Current Mode's History
+                // 📦 Load ONLY Current Mode's Isolated History
                 const logs = StorageManager.getLogs(mode);
                 if (logs.length > 0) {
                     logs.forEach(msg => {
@@ -1039,7 +1043,7 @@
                     this.renderUnlockedCaptainScreen();
                     this.loadModeHistory('CAPTAIN');
                 } else {
-                    alert("⚠️ गलत पासवर्ड! कृपया सही सुरक्षा कोड दर्ज करें।");
+                    alert("⚠️ गलत पासवर्ड! कृपया सही सुरक्षा कोड (360) दर्ज करें।");
                 }
             },
 
@@ -1079,7 +1083,7 @@
 
                 const mode = this.currentMode;
 
-                // 🔒 1. Captain Mode Lock Check
+                // 🔒 1. Captain Mode Lock Guard
                 if (mode === 'CAPTAIN' && !this.isCaptainUnlocked) {
                     UIManager.appendMsg(text, 'user');
                     input.value = '';
@@ -1113,9 +1117,9 @@
                     return;
                 }
 
-                // 3. AI Query Processing via Puter SDK
+                // 3. AI Query Processing (Hybrid API / Puter SDK Engine)
                 UIManager.appendMsg(text, 'user');
-                StorageManager.saveLog(mode, 'user', text); // 💾 Saved to CURRENT MODE local key only
+                StorageManager.saveLog(mode, 'user', text);
                 input.value = '';
 
                 const aiMsgId = 'ai-' + Date.now();
@@ -1156,20 +1160,29 @@
 4. FOCUS: Answer competitive exam questions, general knowledge, reasoning, and any casual user prompts.`;
                 }
 
-                const masterPrompt = `
-System Instruction: ${systemRolePrompt}
-
-Language Constraint: Respond directly in natural Hindi / Hinglish with crisp markdown formatting and clean layout.
-
-[ISOLATED MODE HISTORY - ${mode}]
-${historyContext}
-
-[USER INPUT]
-User: ${text}`;
-
                 try {
-                    const response = await puter.ai.chat(masterPrompt);
-                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                    let replyText = "";
+
+                    // If custom FastAPI backend URL is set, fetch from Backend Engine
+                    if (OPTIONAL_BACKEND_URL) {
+                        const targetEndpoint = mode === 'CAPTAIN' ? `${OPTIONAL_BACKEND_URL}/captain` : (mode === 'FINANCE' ? `${OPTIONAL_BACKEND_URL}/finance` : `${OPTIONAL_BACKEND_URL}/omni`);
+                        const payload = mode === 'CAPTAIN' 
+                            ? { passcode: CAPTAIN_CONFIG.PASSWORD, prompt: text, target_url: ArmorFleet.targetUrl } 
+                            : { prompt: text, target_url: ArmorFleet.targetUrl };
+
+                        const response = await fetch(targetEndpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const data = await response.json();
+                        replyText = data.reply;
+                    } else {
+                        // Direct Client-Side Execution via Puter AI SDK
+                        const masterPrompt = `System Instruction: ${systemRolePrompt}\n\nLanguage Constraint: Respond directly in natural Hindi / Hinglish with crisp markdown formatting and clean layout.\n\n[ISOLATED MODE HISTORY - ${mode}]\n${historyContext}\n\n[USER INPUT]\nUser: ${text}`;
+                        const response = await puter.ai.chat(masterPrompt);
+                        replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                    }
 
                     const bubbleElement = document.getElementById(aiMsgId);
                     if (bubbleElement) {
@@ -1180,7 +1193,7 @@ User: ${text}`;
                         UIManager.renderActionBar(aiMsgId);
                         if (window.hljs) hljs.highlightAll();
                     }
-                    StorageManager.saveLog(mode, 'ai', replyText); // 💾 AI reply saved to CURRENT MODE only
+                    StorageManager.saveLog(mode, 'ai', replyText);
                     VoiceEngine.speak(replyText);
                 } catch (err) {
                     const bubbleElement = document.getElementById(aiMsgId);
