@@ -946,6 +946,9 @@ const ArmorFleet = {
                     </button>
                 </div>`;
                 UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card');
+                // renderUnlockedCaptainScreen फ़ंक्शन के सबसे नीचे यह लाइन जोड़ें:
+setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
+                
             },
 
             verifyCaptainPass: function(inputPass) {
