@@ -944,10 +944,12 @@
                 }
 
                 const systemPrompt = `
+${KeshavUserProfile.getSystemContext()}
 [SYSTEM ROLE: PARNARAV AI ASSISTANT]
 ${modePrompt}
 Respond sharply and clearly in Hinglish/Hindi without fluff.
 User Query: ${text}`;
+
 
                 try {
                     const response = await puter.ai.chat(systemPrompt);
