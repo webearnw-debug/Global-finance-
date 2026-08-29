@@ -658,6 +658,48 @@
         // 🚀 OMNI AI ENGINE MODULE
         // =================================================================
         const GeminiOmniEngine = {
+    chatHistory: [],
+
+    resetMemory: function() {
+        this.chatHistory = [];
+        console.log("[GeminiOmniEngine]: Conversation memory cleared.");
+    },
+
+    processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+        if (this.chatHistory.length === 0 && systemInstruction) {
+            this.chatHistory.push({ role: "system", content: systemInstruction });
+        }
+        
+        this.chatHistory.push({ role: "user", content: userPrompt });
+
+        try {
+            const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
+
+            let fullReply = "";
+            for await (const part of responseStream) {
+                if (part?.text) {
+                    fullReply += part.text;
+                    if (onChunkCallback) onChunkCallback(fullReply);
+                }
+            }
+
+            this.chatHistory.push({ role: "assistant", content: fullReply });
+            return fullReply;
+
+        } catch (err) {
+            console.error("[GeminiOmniEngine Error]:", err);
+            const response = await puter.ai.chat(this.chatHistory);
+            const textResponse = typeof response === 'string' 
+                ? response 
+                : (response?.message?.content || response?.text || "Error processing request.");
+
+            this.chatHistory.push({ role: "assistant", content: textResponse });
+            if (onChunkCallback) onChunkCallback(textResponse);
+            return textResponse;
+        }
+    }
+};
+        
             
 
             generateStructuredData: async function(prompt) {
