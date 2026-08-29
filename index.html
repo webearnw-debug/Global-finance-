@@ -189,7 +189,7 @@
             border-radius: 8px;
             padding: 4px 8px;
             gap: 6px;
-            max-width: 320px;
+            max-width: 340px;
             width: 100%;
         }
 
@@ -267,7 +267,6 @@
             flex-direction: row-reverse;
         }
 
-        /* 🖼️ UNIQUE AVATARS ("PP") */
         .avatar {
             width: 38px;
             height: 38px;
@@ -541,7 +540,7 @@
             </li>
         </ul>
 
-        <div class="nav-section-title">🛡️ 5 Armor Fleet (Direct Call)</div>
+        <div class="nav-section-title">🛡️ 5 Armor Fleet (Direct Command)</div>
         <div style="display:flex; flex-direction:column; gap:4px;">
             <button class="tool-btn" onclick="ArmorFleet.talkToArmor(1)">
                 <i class="fa-solid fa-spider" style="color:var(--accent-cyan)"></i> Talk to Armor-1 (Crawler)
@@ -600,7 +599,7 @@
             <!-- Target Site Input Bar -->
             <div class="target-url-box">
                 <i class="fa-solid fa-globe" style="color:var(--accent-cyan); font-size:0.8rem;"></i>
-                <input type="text" id="targetUrlInput" class="target-url-input" value="https://your-trading-site.com" placeholder="Target Site URL..." onchange="ArmorFleet.targetUrl = this.value">
+                <input type="text" id="targetUrlInput" class="target-url-input" value="" placeholder="यहाँ अपनी Target Website URL दर्ज करें..." onchange="ArmorFleet.targetUrl = this.value.trim()">
             </div>
 
             <div style="display:flex; align-items:center; gap:8px;">
@@ -622,10 +621,10 @@
                     <b>🧠 Omni Super AI Engine Active!</b><br>
                     नमस्ते कैप्टन! मैं आपका यूनिवर्सल AI हूँ।<br><br>
                     <b>मैं आपकी मदद के लिए पूरी तरह तैयार हूँ:</b><br>
-                    • **General Knowledge & Exam Prep:** स्टडी नोट्स, रीजनिंग और कॉम्पिटिटिव हल।<br>
-                    • **5 Armor Soldiers Fleet:** आपकी वेबसाइट की लाइव ऑडिटिंग और सिक्योरिटी प्रोटेक्ट।<br>
-                    • **Financial & Coding Engine:** SIP, EMI, क्वांट एनालिसिस और फुल-स्टैक कोड डेवलपमेंट।<br><br>
-                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं या नीचे दिए गए आर्मर फौजियों से बात कर सकते हैं!</i>
+                    • <b>General Knowledge & Exam Prep:</b> स्टडी नोट्स, रीजनिंग और सवाल-जवाब।<br>
+                    • <b>Captain Keshav OS & Armor Fleet:</b> आपके विशेष आदेशों और कमांड्स के लिए सुरक्षा गार्ड्स।<br>
+                    • <b>Financial & Coding Engine:</b> SIP, EMI, क्वांट एनालिसिस और फुल-स्टैक डेवलपमेंट।<br><br>
+                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं या सीधे Captain Keshav OS मोड में जा सकते हैं!</i>
                 </div>
             </div>
         </section>
@@ -653,7 +652,7 @@
             name: "Captain Keshav",
             role: "Supreme Commander & Developer",
             getSystemContext: function() {
-                return `[USER PROFILE]: User is Captain Keshav. Provide highly tactical, intelligent, executive-level explanations and powerful solutions.`;
+                return `[USER PROFILE]: User is Captain Keshav. Provide highly tactical, sharp, respectful, and executive-level solutions.`;
             }
         };
 
@@ -680,9 +679,8 @@
 
             speak: function(text) {
                 if (!this.enabled || !('speechSynthesis' in window)) return;
-                window.speechSynthesis.cancel(); // Stop ongoing speech
+                window.speechSynthesis.cancel();
 
-                // Strip HTML & Markdown formatting for clean TTS speech
                 const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
                 const utterance = new SpeechSynthesisUtterance(cleanText);
                 utterance.lang = 'hi-IN';
@@ -694,11 +692,10 @@
         };
 
         // =================================================================
-        // 2. STORAGE & TRACKER ENGINES
+        // 2. STORAGE ENGINE
         // =================================================================
         const StorageManager = {
             STORAGE_KEY: 'parnarav_chat_logs',
-            TRACKER_KEY: 'captain_user_tracker',
 
             saveLog(role, content) {
                 let logs = this.getLogs();
@@ -741,7 +738,7 @@
                 const html = `
                     <div class="widget-card">
                         <div class="widget-title"><i class="fa-solid fa-chart-line"></i> REAL-TIME QUANT ENGINE</div>
-                        • Target Site: <b>${ArmorFleet.targetUrl}</b><br>
+                        • Target Site: <b>${ArmorFleet.targetUrl || "Not Connected"}</b><br>
                         • Asset Pair: <b>BTC/USD</b><br>
                         • RSI (14 Period): <b>${rsi}</b><br>
                         • Signal Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
@@ -782,38 +779,59 @@
         };
 
         // =================================================================
-        // 🛡️ 5 ARMOR SOLDIER FLEET (INTERACTIVE & INDIVIDUAL RESPONSES)
+        // 🛡️ 5 ARMOR SOLDIER FLEET (STRICTLY CONTROLLER-BASED)
         // =================================================================
         const ArmorFleet = {
             captain: "Captain Keshav",
-            targetUrl: "https://your-trading-site.com",
+            targetUrl: "", // Blank by default until added by Captain
 
             Armor_1: {
                 id: 1, codeName: "Armor-1 (Crawler & Link Auditor)", avatarClass: "armor-1", avatarIcon: "🕷️",
-                async inspect(site) { return `🛡️ **[Armor-1 Crawler] Report for ${site}:**\n• Scanned Pages: 42 pages\n• Internal Links Checked: 184\n• Broken Links (404): 0 detected\n• Structure Status: Perfectly Linked & Indexed!`; }
+                async inspect(site) {
+                    if (!site) return `⚠️ **[Armor-1 Crawler Alert]**\nकोई वेबसाइट लिंक नहीं है कैप्टन! कृपया ऊपर टार्गेट वेबसाइट दर्ज करें।`;
+                    return `🛡️ **[Armor-1 Crawler] Connected Target: ${site}**\n• Status: Ready to Scan Pages & Broken Links upon command.`;
+                }
             },
             Armor_2: {
-                id: 2, codeName: "Armor-2 (Speed & Performance Specialist)", avatarClass: "armor-2", avatarIcon: "⚡",
-                async inspect(site) { return `⚡ **[Armor-2 Speed Specialist] Report for ${site}:**\n• PageSpeed Score: 98/100 (Desktop), 94/100 (Mobile)\n• First Contentful Paint: 0.8s\n• Total Blocking Time: 10ms\n• Performance Status: Ultra Fast Trading Ready!`; }
+                id: 2, codeName: "Armor-2 (Speed Specialist)", avatarClass: "armor-2", avatarIcon: "⚡",
+                async inspect(site) {
+                    if (!site) return `⚠️ **[Armor-2 Speed Specialist Alert]**\nकोई वेबसाइट कनेक्टेड नहीं है! परफॉरमेंस टेस्ट के लिए URL दर्ज करें।`;
+                    return `⚡ **[Armor-2 Speed Specialist] Connected Target: ${site}**\n• Status: Ready to run Speed & Core Web Vitals audit.`;
+                }
             },
             Armor_3: {
                 id: 3, codeName: "Armor-3 (Cyber Security Guard)", avatarClass: "armor-3", avatarIcon: "🔐",
-                async inspect(site) { return `🔐 **[Armor-3 Cyber Guard] Report for ${site}:**\n• SSL/TLS Status: ACTIVE (256-Bit Encryption)\n• XSS & Injection Shields: Secure\n• Port Vulnerabilities: 0 Threat Detected\n• Security Level: Military Grade Shielded!`; }
+                async inspect(site) {
+                    if (!site) return `⚠️ **[Armor-3 Cyber Guard Alert]**\nकोई वेबसाइट कनेक्टेड नहीं है! सुरक्षा गार्ड्स स्टैंडबाय पर हैं।`;
+                    return `🔐 **[Armor-3 Cyber Guard] Connected Target: ${site}**\n• Status: SSL & Firewall Shields ready to inspect ${site}.`;
+                }
             },
             Armor_4: {
                 id: 4, codeName: "Armor-4 (SEO Tactics Specialist)", avatarClass: "armor-4", avatarIcon: "📊",
-                async inspect(site) { return `📊 **[Armor-4 SEO Specialist] Report for ${site}:**\n• Meta Title & Description: Optimized\n• OpenGraph Tags: Validated\n• Mobile Responsiveness: 100%\n• SEO Health: Search Engine Ready!`; }
+                async inspect(site) {
+                    if (!site) return `⚠️ **[Armor-4 SEO Specialist Alert]**\nकृपया SEO एनालिसिस के लिए टार्गेट वेबसाइट दर्ज करें।`;
+                    return `📊 **[Armor-4 SEO Specialist] Connected Target: ${site}**\n• Status: SEO metadata & indexing audit standing by.`;
+                }
             },
             Armor_5: {
-                id: 5, codeName: "Armor-5 (AdSense & Monetization Inspector)", avatarClass: "armor-5", avatarIcon: "💰",
-                async inspect(site) { return `💰 **[Armor-5 AdSense Inspector] Report for ${site}:**\n• ads.txt File: Present & Verified\n• Policy Compliance: 100% High Quality Content\n• Monetization Readiness: ADSENSE APPROVAL READY!`; }
+                id: 5, codeName: "Armor-5 (AdSense Inspector)", avatarClass: "armor-5", avatarIcon: "💰",
+                async inspect(site) {
+                    if (!site) return `⚠️ **[Armor-5 AdSense Inspector Alert]**\nमोनिटाइजेशन जाँच के लिए कोई साइट नहीं जुड़ी है।`;
+                    return `💰 **[Armor-5 AdSense Inspector] Connected Target: ${site}**\n• Status: Policy Compliance & ads.txt inspector ready.`;
+                }
             },
 
             async talkToArmor(armorId) {
+                if (!AppController.isCaptainUnlocked) {
+                    alert("⚠️ यह कमांड केवल Captain Keshav OS अनलॉक होने पर काम करेगी। पासवर्ड (360) दर्ज करें!");
+                    AppController.switchMode('CAPTAIN', document.getElementById('captainNavItem'));
+                    return;
+                }
+
                 const armor = this[`Armor_${armorId}`];
                 if (!armor) return;
 
-                const query = prompt(`🛡️ [${armor.codeName}] से क्या पूछना/जाँचना चाहते हैं?`, `target site ${this.targetUrl} की लाइव रिपोर्ट दो`);
+                const query = prompt(`🛡️ [${armor.codeName}] को क्या आदेश देना चाहते हैं?`);
                 if (!query) return;
 
                 document.getElementById('userInput').value = `@Armor-${armorId}: ${query}`;
@@ -822,30 +840,39 @@
 
             async autoReportToCaptain() {
                 const url = this.targetUrl;
-                const r1 = await this.Armor_1.inspect(url);
-                const r2 = await this.Armor_2.inspect(url);
-                const r3 = await this.Armor_3.inspect(url);
-                const r4 = await this.Armor_4.inspect(url);
-                const r5 = await this.Armor_5.inspect(url);
+                if (!url) {
+                    const noSiteCard = `
+                    <div class="captain-lock-card" style="border-color:var(--accent-yellow); background: rgba(11, 15, 25, 0.95); margin-top:10px;">
+                        <div style="font-size:0.92rem; font-weight:800; color:var(--accent-yellow); margin-bottom:8px;">
+                            ⚠️ FLEET STATUS: NO TARGET SITE CONNECTED
+                        </div>
+                        <p style="font-size:0.86rem; color:#d1d5db; line-height:1.6;">
+                            कैप्टन, वर्तमान में कोई भी वेबसाइट कनेक्ट नहीं है।<br>
+                            जब आप ऊपर <b>Target Site URL</b> में अपनी वेबसाइट डालेंगे, तब पाँचों आर्मर फौजी उसकी लाइव चेकिंग शुरू करेंगे।
+                        </p>
+                    </div>`;
+                    UIManager.appendMsg(noSiteCard, 'ai', null, '🫡');
+                    VoiceEngine.speak("कैप्टन, अभी कोई वेबसाइट कनेक्ट नहीं है। जब आप साइट जोड़ेंगे तब आर्मर फौजी काम शुरू करेंगे।");
+                    return;
+                }
 
+                // If site is connected, show clear status
                 const reportHTML = `
                     <div class="captain-lock-card" style="border-color:var(--accent-cyan); background: rgba(11, 15, 25, 0.95); margin-top:10px;">
-                        <div style="font-size:0.95rem; font-weight:800; color:var(--accent-cyan); margin-bottom:10px; border-bottom:1px solid rgba(56,189,248,0.3); padding-bottom:6px;">
-                            🫡 5 ARMOR SOLDIERS AUTOMATIC FULL AUDIT FOR: ${url}
+                        <div style="font-size:0.95rem; font-weight:800; color:var(--accent-cyan); margin-bottom:10px;">
+                            🫡 5 ARMOR SOLDIERS READY FOR SITE: ${url}
                         </div>
                         <p style="font-size:0.88rem; line-height:1.7;">
-                        ${r1.replace(/\n/g, '<br>')}<br><br>
-                        ${r2.replace(/\n/g, '<br>')}<br><br>
-                        ${r3.replace(/\n/g, '<br>')}<br><br>
-                        ${r4.replace(/\n/g, '<br>')}<br><br>
-                        ${r5.replace(/\n/g, '<br>')}
+                        • **Armor-1 (Crawler):** Standing by for ${url}<br>
+                        • **Armor-2 (Speed):** Standing by for performance check<br>
+                        • **Armor-3 (Security):** Shielding target domain<br>
+                        • **Armor-4 (SEO):** Ready for indexing optimization<br>
+                        • **Armor-5 (AdSense):** Ready for monetization inspection
                         </p>
-                        <br>
-                        <i style="font-size:0.8rem; color:var(--text-muted);">ऑडिट रिपोर्ट पूरी हुई कैप्टन! पाँचों आर्मर फौजी आपकी वेबसाइट की सुरक्षा में तैनात हैं।</i>
                     </div>`;
 
                 UIManager.appendMsg(reportHTML, 'ai', null, '🫡');
-                VoiceEngine.speak(`कैप्टन, target site ${url} की पाँचों आर्मर फौजियों द्वारा तैयार की गई रिपोर्ट पेश कर दी गई है।`);
+                VoiceEngine.speak(`कैप्टन, साइट ${url} के लिए पाँचों आर्मर फौजी तैनात कर दिए गए हैं।`);
             }
         };
 
@@ -920,27 +947,23 @@
                     titleName = "Trading & Finance Active";
                     avatarIcon = "📈";
                     welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
-                    मैंने अपनी भूमिका पहचान ली है। मैं आपका एक्सपर्ट **फाइनेंस & ट्रेडिंग AI** हूँ।<br><br>
-                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
-                    • **Stock & Crypto:** मार्केट एनालिसिस और ट्रेंड प्रिडिक्शन।<br>
-                    • **Trading Strategies:** रिस्क मैनेजमेंट और क्वांट सिग्नल्स।<br>
-                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का हिसाब।`;
+                    मैं आपका एक्सपर्ट **फाइनेंस & ट्रेडिंग AI** हूँ।<br><br>
+                    • **Stock & Crypto:** मार्केट एनालिसिस और स्ट्रेटेजी।<br>
+                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का सटीक हिसाब।`;
                 } else if (mode === 'DEV') {
                     titleName = "Coding Master Active";
                     avatarIcon = "💻";
                     welcomeText = `<b>💻 Coding Master Engine Active!</b><br>
-                    मैंने अपनी भूमिका पहचान ली है। मैं आपका **सॉफ्टवेयर इंजीनियर & कोडिंग AI** हूँ।<br><br>
-                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
-                    • **Code Generation:** HTML, CSS, JS, Python, C++, React का पूरा कोड।<br>
+                    मैं आपका **सॉफ्टवेयर इंजीनियर & कोडिंग AI** हूँ।<br><br>
+                    • **Code Generation:** HTML, CSS, JS, Python, React का पूरा कोड।<br>
                     • **Bug Fixing:** आपके कोड के एरर खोजना और ठीक करना।`;
                 } else {
                     titleName = "Omni Super AI Active";
                     avatarIcon = "🧠";
                     welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
                     नमस्ते कैप्टन! मैं आपका **यूनिवर्सल ऑल-इन-वन AI** हूँ।<br><br>
-                    <b>मैं इस मोड में आपकी ये मदद कर सकता हूँ:</b><br>
-                    • **General Knowledge & Exam Prep:** मैथ्स, रीजनिंग और स्टडी गाइड्स।<br>
-                    • **Content Creation:** लेख, आइडियाज और रणनीतियाँ।`;
+                    • **General Knowledge & Exam Prep:** स्टडी गाइड्स और रीजनिंग।<br>
+                    • **Content & Strategy:** लेख, आइडियाज और रणनीतियाँ।`;
                 }
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
@@ -955,10 +978,10 @@
                 <div class="captain-lock-card">
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; border-bottom: 1px solid rgba(239, 68, 68, 0.3); padding-bottom: 8px;">
                         <i class="fa-solid fa-user-shield" style="font-size: 1.4rem; color: #ef4444;"></i>
-                        <span style="font-size: 1.15rem; font-weight: 800; color: #f87171;">CAPTAIN KESHAV OS - RESTRICTED ACCESS</span>
+                        <span style="font-size: 1.15rem; font-weight: 800; color: #f87171;">CAPTAIN KESHAV OS - EXECUTIVE RESTRICTED ACCESS</span>
                     </div>
                     <p style="font-size:0.95rem; line-height:1.5; color:#e2e8f0;">
-                        यह <b>Executive System</b> केवल कैप्टन केशव के लिए आरक्षित है। पासवर्ड दर्ज करें।
+                        यह केवल कैप्टन केशव के लिए आरक्षित <b>Executive Operating System</b> है। कृपया पासवर्ड दर्ज करके अनलॉक करें।
                     </p>
                     <div class="captain-pass-box">
                         <input type="password" id="captainPassInput" class="captain-pass-input" placeholder="सुरक्षा पासवर्ड (360) दर्ज करें..." onkeydown="if(event.key==='Enter') AppController.verifyCaptainPass()">
@@ -969,6 +992,7 @@
             },
 
             renderUnlockedCaptainScreen: function() {
+                const targetDisplay = ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "<span style='color:var(--accent-yellow)'>Not Connected (कोई साइट कनेक्ट नहीं है)</span>";
                 const welcomeCardHTML = `
                 <div class="captain-lock-card" style="border-color:#4ade80; background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(15,23,42,0.95)); shadow: 0 0 25px rgba(74, 222, 128, 0.2);">
                     <div style="display:flex; align-items:center; justify-between; margin-bottom:10px; border-bottom: 1px solid rgba(74,222,128,0.3); padding-bottom: 8px;">
@@ -981,16 +1005,14 @@
                     <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; border-left:3px solid #4ade80; font-size:0.88rem;">
                         • Status: <b>ONLINE & SUPREME COMMAND ACTIVE</b><br>
                         • Authority Level: <b>Supreme Captain Level-A</b><br>
-                        • Target Site: <b>${ArmorFleet.targetUrl}</b>
+                        • Target Site: <b>${targetDisplay}</b>
                     </div>
                     <button class="captain-exit-btn" onclick="AppController.lockCaptainMode()">
                         <i class="fa-solid fa-lock"></i> Exit / Lock OS
                     </button>
                 </div>`;
                 UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card', '🫡');
-                VoiceEngine.speak("परम आदरणीय कैप्टन केशव जी, Keshav OS में आपका स्वागत है। पाँचों फौजी तैयार हैं।");
-                
-                setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
+                VoiceEngine.speak("परम आदरणीय कैप्टन केशव जी, Keshav OS में आपका स्वागत है।");
             },
 
             verifyCaptainPass: function() {
@@ -1049,7 +1071,7 @@
                     return;
                 }
 
-                // 🛡️ 2. INDIVIDUAL ARMOR SOLDIER DIRECT INTERACTION CHECK (@Armor-1, @Armor-2 etc.)
+                // 🛡️ 2. INDIVIDUAL ARMOR SOLDIER DIRECT INTERACTION (@Armor-1, @Armor-2 etc.)
                 const matchArmor = text.match(/@Armor-([1-5])/i);
                 if (matchArmor) {
                     const armorNum = matchArmor[1];
@@ -1068,16 +1090,7 @@
                         bubble.innerHTML = marked.parse(armorReport);
                         UIManager.renderActionBar(aiMsgId);
                     }
-                    VoiceEngine.speak(`${armorObj.codeName} की रिपोर्ट कैप्टन के लिए तैयार है।`);
-                    return;
-                }
-
-                // 🛡️ 3. ARMOR FLEET AUTOMATED FULL REPORT TRIGGER
-                const lowerText = text.toLowerCase();
-                if (lowerText.includes('report') || lowerText.includes('fauji') || lowerText.includes('armor') || lowerText.includes('फौजी')) {
-                    UIManager.appendMsg(text, 'user');
-                    input.value = '';
-                    ArmorFleet.autoReportToCaptain();
+                    VoiceEngine.speak(`${armorObj.codeName} का रिस्पॉन्स तैयार है।`);
                     return;
                 }
 
@@ -1093,31 +1106,31 @@
                 const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
                 const userContext = KeshavUserProfile.getSystemContext();
 
-                // System Role Prompt Configuration
+                // System Role Prompt Configuration for Puter AI
                 let systemRolePrompt = "";
                 switch (this.currentMode) {
                     case 'CAPTAIN':
-                        systemRolePrompt = `STRICT EXECUTIVE PROTOCOL FOR CAPTAIN KESHAV OS:
-1. Address the user ONLY as "Captain Keshav" or "Supreme Commander".
-2. Speak with high psychological intelligence, tactical sharp clarity, absolute loyalty, and commanding respect.
-3. Assist Captain with code infrastructure, trading strategies, website architecture, SEO, security, and systems development.`;
+                        systemRolePrompt = `STRICT EXECUTIVE PROTOCOL FOR KESHAV OS:
+1. Address user strictly as "Captain Keshav" or "Supreme Commander".
+2. Respond exclusively to Captain's instructions, code needs, tactical directives, and system operations.
+3. Target Site currently connected: ${ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "NONE (No site connected yet)"}.
+4. If asked about website audit when no site is connected, politely remind Captain Keshav to input a Target Site URL first.`;
                         break;
                     case 'FINANCE':
-                        systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Provide precise math, market analysis, risk management, and quantitative finance solutions.";
+                        systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Provide precise math, trading insights, risk management, and quantitative analysis.";
                         break;
                     case 'DEV':
-                        systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide optimized, clean, bug-free production code blocks.";
+                        systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide optimized, production-ready, bug-free code blocks.";
                         break;
                     default:
-                        systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Provide clear, intelligent, and thorough answers suitable for a student and creator.";
+                        systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Provide clear, direct, intelligent answers suitable for general queries.";
                 }
 
                 const masterPrompt = `
 ${userContext}
-System Instruction: You are Parnarav AI. Target Site under management: ${ArmorFleet.targetUrl}
-${systemRolePrompt}
+System Instruction: ${systemRolePrompt}
 
-Language Constraint: Answer directly in Hinglish/Hindi with clear formatting and zero fluff.
+Language Constraint: Answer directly in Hinglish/Hindi with clear bold formatting and zero fluff.
 
 [CHAT HISTORY]
 ${historyContext}
