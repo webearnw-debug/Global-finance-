@@ -886,99 +886,126 @@ const ActivityTracker = {
             handleKeyPress: function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                    this.submitQuery();
-                }
-            },
+                   // ==========================================
+// 2. APP CONTROLLER ENGINE (Lines 744-978)
+// ==========================================
+const AppController = {
+    currentMode: 'OMNI',
+    isCaptainUnlocked: false,
 
-            copyResponse: function(btn) {
-                const bubble = btn.closest('.bubble');
-                const clone = bubble.cloneNode(true);
-                const bar = clone.querySelector('.ai-action-bar');
-                if (bar) bar.remove();
-                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
-                    btn.innerHTML = '✅ Copied!';
-                    setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
-                });
-            },
+    setMode(mode) {
+        this.currentMode = mode;
+        console.log(`Operating Mode Changed To: ${mode}`);
+    },
 
-            toggleFeedback: function(btn, type) {
-                const parent = btn.parentElement;
-                const likeBtn = parent.querySelector('.like-btn');
-                const dislikeBtn = parent.querySelector('.dislike-btn');
-                if (type === 'like') {
-                    likeBtn.classList.toggle('like-active');
-                    dislikeBtn.classList.remove('dislike-active');
-                } else {
-                    dislikeBtn.classList.toggle('dislike-active');
-                    likeBtn.classList.remove('like-active');
-                }
-            },
+    verifyCaptainPass(inputPass) {
+        const pass = inputPass || document.getElementById('captainPassInput')?.value.trim();
+        if (pass === "360") {
+            this.isCaptainUnlocked = true;
+            this.currentMode = 'CAPTAIN';
+            if (window.UIManager) UIManager.appendMsg("🫡 SUPREME COMMANDER ACCESS UNLOCKED", 'ai');
+            return true;
+        }
+        if (window.UIManager) UIManager.appendMsg("❌ गलत पासवर्ड!", 'ai');
+        return false;
+    },
 
-            submitQuery: async function() {
-                const input = document.getElementById('userInput');
-                const text = input.value.trim();
-                if (!text) return;
+    async submitQuery() {
+        const input = document.getElementById('userInput');
+        if (!input) return;
 
-                // यदि कैप्टन मोड एक्टिव है लेकिन पासवर्ड से अनलॉक्ड नहीं है -> नो रिस्पॉन्स
-                if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
-                    UIManager.appendMsg(text, 'user');
-                    input.value = '';
-                    UIManager.appendMsg("🔒 <b>[Access Denied]</b> कैप्टन मोड लॉक्ड है! कृपया ऊपर दिए गए बॉक्स में सही पासवर्ड दर्ज करके अनलॉक करें।", 'ai');
-                    return;
-                }
+        const text = input.value.trim();
+        if (!text) return;
 
-                ActivityTracker.addChat('User', text);
-                UIManager.appendMsg(text, 'user');
-                StorageManager.saveLog('user', text);
-                input.value = '';
+        // Captain OS Guard Check
+        if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
+            if (window.UIManager) UIManager.appendMsg(text, 'user');
+            input.value = '';
+            if (window.UIManager) UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! कृपया पासवर्ड '360' दर्ज करें।", 'ai');
+            return;
+        }
 
-                const aiMsgId = 'ai-' + Date.now();
-                UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+        ActivityTracker.addChat('User', text);
+        if (window.UIManager) UIManager.appendMsg(text, 'user');
+        StorageManager.saveLog('user', text);
+        input.value = '';
 
-                let modePrompt = "";
-                if (this.currentMode === 'CAPTAIN') {
-                    modePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. You are responding directly to Founding Captain Keshav. Provide maximum level intelligence, executive authority, and precise answers.";
-                } else if (this.currentMode === 'FINANCE') {
-                    modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics.";
-                } else if (this.currentMode === 'DEV') {
-                    modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, and technical solutions.";
-                } else {
-                    modePrompt = `OPERATING MODE: OMNI SUPER AI (ADVANCED KNOWLEDGE ENGINE). You are the world's most advanced universal AI engine with deep domain knowledge in Science, Space, History, Exam Prep, and Research.`;
-                }
+        const aiMsgId = 'ai-' + Date.now();
+        if (window.UIManager) UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
 
-                const systemPrompt = `
-${KeshavUserProfile.getSystemContext()}
-[SYSTEM ROLE: PARNARAV AI ASSISTANT]
-${modePrompt}
-Respond sharply and clearly in Hinglish/Hindi without fluff.
-User Query: ${text}`;
+        // 🧠 Chat Memory Integration (आखरी 6 चैट्स का संदर्भ)
+        const recentLogs = StorageManager.getLogs().slice(-6);
+        const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
 
+        // 📊 LocalStorage Tracker Injection
+        let trackerDataInject = "";
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker") || lowerText.includes("report")) {
+            trackerDataInject = `\n[SYSTEM LOCALSTORAGE TRACKER DATA]:\n${StorageManager.getTrackerData()}\n`;
+        }
 
-                try {
-                    const response = await puter.ai.chat(systemPrompt);
-                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+        // Fetch User Context
+        const userContext = (window.KeshavUserProfile && typeof KeshavUserProfile.getSystemContext === 'function')
+            ? KeshavUserProfile.getSystemContext()
+            : "User: Captain Keshav";
 
-                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
-                    bubble.innerHTML = marked.parse(badge + replyText);
-                    UIManager.renderActionBar(aiMsgId);
-                    hljs.highlightAll();
-                    StorageManager.saveLog('ai', replyText);
-                } catch (err) {
-                    const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    bubble.innerHTML = marked.parse(`**[System Error]** \`${err.message || err}\``);
-                    UIManager.renderActionBar(aiMsgId);
-                }
-            },
+        let systemRolePrompt = "";
+        switch (this.currentMode) {
+            case 'CAPTAIN':
+                systemRolePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. Address user directly as Captain Keshav or Supreme Commander. Keep response sharp, clean, fluff-free.";
+                break;
+            case 'FINANCE':
+                systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Focus on math, calculations, and exact facts.";
+                break;
+            case 'DEV':
+                systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide clean code blocks and logic fixes.";
+                break;
+            default:
+                systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Simple explanations suitable for a student.";
+        }
 
-            toggleSidebar: function() {
-                document.getElementById('sidebar').classList.toggle('open');
-            },
+        const masterPrompt = `
+${userContext}
+System Instruction: You are Parnarav AI.
+${systemRolePrompt}
 
-            closeSidebarMobile: function() {
-                document.getElementById('sidebar').classList.remove('open');
+Language Constraint: Answer strictly in direct Hinglish/Hindi without generic setups or conversational fluff.
+
+[RECENT CHAT HISTORY (FOR CONTEXT)]
+${historyContext}
+${trackerDataInject}
+
+[CURRENT USER INPUT]
+User: ${text}
+
+Instruction: Read the Chat History above. If user inputs options like "1" or "2", understand which option they selected from previous messages and answer accordingly.`;
+
+        try {
+            const response = await puter.ai.chat(masterPrompt);
+            let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+            const bubbleElement = document.getElementById(aiMsgId);
+            if (bubbleElement) {
+                const bubble = bubbleElement.querySelector('.bubble');
+                const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
+
+                if (window.marked) bubble.innerHTML = marked.parse(badge + replyText);
+                else bubble.innerText = replyText;
+
+                if (window.UIManager && UIManager.renderActionBar) UIManager.renderActionBar(aiMsgId);
+                if (window.hljs) hljs.highlightAll();
             }
-        };
+            StorageManager.saveLog('ai', replyText);
+        } catch (err) {
+            const bubbleElement = document.getElementById(aiMsgId);
+            if (bubbleElement) {
+                const bubble = bubbleElement.querySelector('.bubble');
+                bubble.innerHTML = `**[System Error]** AI Connect Error: \`${err.message || err}\``;
+            }
+        }
+    }
+};
+ 
         // =================================================================
 // 👤 KESHAV PERSONAL PROFILE & APP TRACKER MODULE
 // =================================================================
