@@ -658,6 +658,97 @@
         // 🚀 OMNI AI ENGINE MODULE
         // =================================================================
         const GeminiOmniEngine = {
+            <script>
+    // =================================================================
+    // 1. GEMINI OMNI ENGINE (Is purane engine ko naye wale se badal dein)
+    // =================================================================
+    const GeminiOmniEngine = {
+        chatHistory: [],
+
+        resetMemory: function() {
+            this.chatHistory = [];
+            console.log("[GeminiOmniEngine]: Conversation memory cleared.");
+        },
+
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            if (this.chatHistory.length === 0 && systemInstruction) {
+                this.chatHistory.push({ role: "system", content: systemInstruction });
+            }
+            
+            this.chatHistory.push({ role: "user", content: userPrompt });
+
+            try {
+                const responseStream = await puter.ai.chat(this.chatHistory, {
+                    stream: true
+                });
+
+                let fullReply = "";
+                for await (const part of responseStream) {
+                    if (part?.text) {
+                        fullReply += part.text;
+                        if (onChunkCallback) onChunkCallback(fullReply);
+                    }
+                }
+
+                this.chatHistory.push({ role: "assistant", content: fullReply });
+                return fullReply;
+
+            } catch (err) {
+                console.error("[GeminiOmniEngine Error]:", err);
+                const response = await puter.ai.chat(this.chatHistory);
+                const textResponse = typeof response === 'string' 
+                    ? response 
+                    : (response?.message?.content || response?.text || "Error processing request.");
+
+                this.chatHistory.push({ role: "assistant", content: textResponse });
+                if (onChunkCallback) onChunkCallback(textResponse);
+                return textResponse;
+            }
+        }
+    };
+
+    // =================================================================
+    // 2. APP CONTROLLER (Isme submitQuery ko update karein)
+    // =================================================================
+    const AppController = {
+        submitQuery: async function() {
+            const input = document.getElementById('userInput');
+            if (!input) return;
+
+            const text = input.value.trim();
+            if (!text) return;
+
+            UIManager.appendMsg(text, 'user');
+            input.value = '';
+
+            const aiMsgId = 'ai-' + Date.now();
+            UIManager.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, '🧠');
+
+            const bubbleElement = document.getElementById(aiMsgId);
+            const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
+
+            // Gemini Omni Engine streaming call
+            await GeminiOmniEngine.processChat(
+                text,
+                "You are Parnarav AI, a highly intelligent assistant.",
+                (streamedText) => {
+                    if (bubble) {
+                        bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
+                        if (window.hljs) hljs.highlightAll();
+                    }
+                }
+            );
+
+            if (bubbleElement) {
+                UIManager.renderActionBar(aiMsgId);
+            }
+        }
+    };
+
+    // 🔴 ISKE NICHE APNA BAKI SABHI CODE (UIManager, Event Listeners, etc.) RAHO BEJHIJAK REHNE DEIN
+    // USME SE KUCH BHI MAT HATAYEIN.
+</script>
+
             generateStructuredData: async function(prompt) {
                 const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
                 return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
