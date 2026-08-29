@@ -911,7 +911,160 @@
                 }
             },
 
-           
+           // ==========================================
+// 1. STORAGE & TRACKER ENGINE
+// ==========================================
+const StorageManager = {
+    STORAGE_KEY: 'parnarav_chat_logs',
+    TRACKER_KEY: 'captain_user_tracker',
+
+    saveLog(role, content) {
+        let logs = this.getLogs();
+        logs.push({ role, content, timestamp: new Date().toISOString() });
+        if (logs.length > 20) logs.shift(); // 20 मैसेज की मेमोरी सीमित रखी गई है
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(logs));
+    },
+
+    getLogs() {
+        try {
+            return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+        } catch (e) {
+            return [];
+        }
+    },
+
+    getTrackerData() {
+        return localStorage.getItem(this.TRACKER_KEY) || JSON.stringify({
+            status: "ACTIVE",
+            user: "Captain Keshav",
+            level: "Level-A Supreme",
+            totalChats: this.getLogs().length,
+            lastLogin: new Date().toLocaleString()
+        }, null, 2);
+    }
+};
+
+const ActivityTracker = {
+    addChat(role, text) {
+        let tracker = JSON.parse(localStorage.getItem(StorageManager.TRACKER_KEY) || '{}');
+        tracker.lastAction = text;
+        tracker.lastTimestamp = new Date().toLocaleString();
+        tracker.totalClicks = (tracker.totalClicks || 0) + 1;
+        localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(tracker));
+    }
+};
+
+// ==========================================
+// 2. COMPLETE APP CONTROLLER MODULE
+// ==========================================
+const AppController = {
+    currentMode: 'OMNI', // Options: 'OMNI', 'FINANCE', 'DEV', 'CAPTAIN'
+    isCaptainUnlocked: false,
+
+    setMode(mode) {
+        this.currentMode = mode;
+        console.log(`Operating Mode Changed To: ${mode}`);
+    },
+
+    unlockCaptain(password) {
+        if (password === '360') {
+            this.isCaptainUnlocked = true;
+            this.currentMode = 'CAPTAIN';
+            return true;
+        }
+        return false;
+    },
+
+    async submitQuery() {
+        const input = document.getElementById('userInput');
+        if (!input) return;
+
+        const text = input.value.trim();
+        if (!text) return;
+
+        // Captain Mode Password Guardrail
+        if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
+            UIManager.appendMsg(text, 'user');
+            input.value = '';
+            UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! कृपया पासवर्ड '360' दर्ज करें।", 'ai');
+            return;
+        }
+
+        // Action Logging & UI Update
+        ActivityTracker.addChat('User', text);
+        UIManager.appendMsg(text, 'user');
+        StorageManager.saveLog('user', text);
+        input.value = '';
+
+        const aiMsgId = 'ai-' + Date.now();
+        UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+
+        // 🧠 MEMORY ENGINE: आखरी 6 चैट्स की हिस्ट्री निकालना
+        const recentLogs = StorageManager.getLogs().slice(-6);
+        const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
+
+        // 📊 TRACKER ENGINE: अगर 'tracker', 'report' या 'captain_user_tracker' पूछा जाए
+        let trackerDataInject = "";
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker") || lowerText.includes("report")) {
+            trackerDataInject = `\n[SYSTEM LOCALSTORAGE TRACKER DATA]:\n${StorageManager.getTrackerData()}\n`;
+        }
+
+        // Mode-Specific Instructions
+        let systemRolePrompt = "";
+        switch (this.currentMode) {
+            case 'CAPTAIN':
+                systemRolePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. Address the user strictly as 'Captain Keshav' or 'Supreme Commander'. Keep response sharp, high-level, directly actionable, with zero fluff.";
+                break;
+            case 'FINANCE':
+                systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Provide accurate math, SIP calculations, EMI details, or stock/crypto market breakdowns sharply.";
+                break;
+            case 'DEV':
+                systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide clean, production-ready code blocks with detailed bug fixes.";
+                break;
+            default:
+                systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Provide simple, easy-to-understand educational explanations suitable for a student.";
+        }
+
+        // Consolidated Master Prompt Construction
+        const masterPrompt = `
+System Instruction: You are Parnarav AI. 
+${systemRolePrompt}
+
+Language Constraint: Answer strictly in direct Hinglish/Hindi without preamble or generic greetings. Never say "Sure, here is your answer".
+
+[RECENT CHAT HISTORY (CRITICAL FOR CONTINUITY)]
+${historyContext}
+${trackerDataInject}
+
+[CURRENT USER INPUT]
+User: ${text}
+
+Instruction: 
+1. Read the Chat History above to retain context. If the user replies with a simple choice like "1", "2", "yes", or "no", connect it directly to your previous question from the Chat History.
+2. If the user asks about tracker/captain_user_tracker, extract and explain the system log details provided in system data.`;
+
+        try {
+            // Puter.js SDK Call
+            const response = await puter.ai.chat(masterPrompt);
+            let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+
+            const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+            const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
+            
+            bubble.innerHTML = marked.parse(badge + replyText);
+            UIManager.renderActionBar(aiMsgId);
+            if (window.hljs) hljs.highlightAll();
+            
+            StorageManager.saveLog('ai', replyText);
+        } catch (err) {
+            const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
+            bubble.innerHTML = marked.parse(`**[System Failure]** AI से कनेक्ट करने में समस्या आई: \`${err.message || err}\``);
+            UIManager.renderActionBar(aiMsgId);
+        }
+    }
+};
+
 
                 // यदि कैप्टन मोड एक्टिव है लेकिन पासवर्ड से अनलॉक्ड नहीं है -> नो रिस्पॉन्स
                 if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
