@@ -974,24 +974,71 @@ User Query: ${text}`;
                 document.getElementById('sidebar').classList.remove('open');
             }
         };
-    </script>
-    // === System Error & Health Reporter ===
-window.addEventListener('error', function(e) {
-    const chatContainer = document.getElementById('chatContainer');
-    if (chatContainer) {
-        const errorMsg = `
-            <div class="widget-card" style="border-color: #f87171;">
-                <div class="widget-title" style="color: #f87171;"><i class="fa-solid fa-bug"></i> System Diagnostic Report</div>
-                • Issue Detected: <b>${e.message}</b><br>
-                • File Line: Line ${e.lineno}<br>
-                • Status: Needs Code Correction
-            </div>`;
-        const row = document.createElement('div');
-        row.className = 'message-row ai';
-        row.innerHTML = `<div class="avatar">⚠️</div><div class="bubble">${errorMsg}</div>`;
-        chatContainer.appendChild(row);
+        // =================================================================
+// 👤 KESHAV PERSONAL PROFILE & APP TRACKER MODULE
+// =================================================================
+
+const KeshavUserProfile = {
+    name: "Keshav",
+    age: 16,
+    role: "Student",
+    // AI के लिए पर्सनल निर्देश
+    getSystemContext: function() {
+        return `[USER PROFILE]: User is ${this.name}, a ${this.age}-year-old student. Provide responses tailored for clear learning, exam/study guidance, coding, and simplified explanations suitable for a student.`;
+    }
+};
+
+const ComprehensiveAppTracker = {
+    logs: [],
+    
+    // गतिविधि रिकॉर्ड करना
+    logAction: function(category, details) {
+        const entry = {
+            timestamp: new Date().toLocaleTimeString(),
+            category: category,
+            details: details
+        };
+        this.logs.push(entry);
+        console.log("📊 [System Log]:", entry);
+    },
+
+    // स्क्रीन पर लाइव रिपोर्ट दिखाना
+    generateReport: function() {
+        let reportHTML = `<div class="widget-card" style="border-color: var(--accent-cyan);">
+            <div class="widget-title" style="color: var(--accent-cyan);"><i class="fa-solid fa-list-check"></i> WEB APP SYSTEM REPORT</div>
+            <b>User:</b> ${KeshavUserProfile.name} (${KeshavUserProfile.age} yrs)<br>
+            <b>Total Logged Events:</b> ${this.logs.length}<br><br>
+            <b>Recent Activity Logs:</b><br>`;
+        
+        const recent = this.logs.slice(-5);
+        recent.forEach(log => {
+            reportHTML += `• [${log.timestamp}] <b>${log.category}:</b> ${log.details}<br>`;
+        });
+        
+        reportHTML += `</div>`;
+        
+        if (typeof UIManager !== 'undefined') {
+            UIManager.appendMsg(reportHTML, 'ai');
+        }
+    }
+};
+
+// क्लिक और बटन ट्रैकिंग स्वचालित रूप से चालू करें
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('button, a, .nav-item');
+    if (target) {
+        const label = target.innerText.trim() || target.className;
+        ComprehensiveAppTracker.logAction("UI Click", `Button clicked: "${label}"`);
     }
 });
+
+// ऐप की एरर (गड़बड़ी) को ट्रैक करें
+window.addEventListener('error', function(e) {
+    ComprehensiveAppTracker.logAction("System Error", `${e.message} at line ${e.lineno}`);
+});
+
+    </script>
+    
     
 </body>
 </html>
