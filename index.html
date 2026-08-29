@@ -1258,5 +1258,54 @@
             AppController.init();
         });
     </script>
+    <!-- </body> टैग से ठीक पहले नीचे दिया गया पूरा कोड पेस्ट करें -->
+<script>
+  // 1. Skills Data Object (वेबसाइट/पोर्टफोलियो में यूज़ करने के लिए)
+  const myProfileSkills = {
+    omnichannelCX: {
+      category: "Omnichannel (Marketing, Retail & CX)",
+      skills: [
+        "Customer Journey Mapping",
+        "CRM & CDP Integration (Salesforce, HubSpot, Segment)",
+        "Omnichannel Analytics (Google Analytics 4)",
+        "Supply Chain & OMS (Unified Inventory Management)"
+      ]
+    },
+    nvidiaOmniverse: {
+      category: "NVIDIA Omniverse (3D & Digital Twins)",
+      skills: [
+        "OpenUSD (Universal Scene Description)",
+        "Digital Twin & Simulation (Isaac Sim, PhysX)",
+        "3D Pipeline Integration (Blender, Maya, Unreal Engine)",
+        "Real-time RTX Rendering (MDL & Shading)"
+      ]
+    }
+  };
+
+  // 2. SEO Structured Data Injector (Search Engines के लिए)
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "knowsAbout": [
+      "Customer Journey Mapping",
+      "CRM & CDP Integration",
+      "Omnichannel Analytics",
+      "Supply Chain & OMS",
+      "OpenUSD",
+      "Digital Twin & Simulation",
+      "3D Pipeline Integration",
+      "Real-time RTX Rendering"
+    ]
+  };
+
+  // ऑटोमैटिक Head में Schema डेटा जोड़ने के लिए
+  const schemaScript = document.createElement('script');
+  schemaScript.type = 'application/ld+json';
+  schemaScript.text = JSON.stringify(personSchema);
+  document.head.appendChild(schemaScript);
+
+  console.log("Omni Skills Profile Loaded Successfully!");
+</script>
+
 </body>
 </html>
