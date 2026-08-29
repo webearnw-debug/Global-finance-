@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio</title>
+    <title>Parnarav AI - Universal Studio (Captain Edition)</title>
     
     <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -50,7 +50,6 @@
             display: flex;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             height: 100dvh;
@@ -62,6 +61,7 @@
             flex-shrink: 0;
             transition: all 0.3s ease;
             z-index: 100;
+            overflow-y: auto;
         }
 
         .brand-logo {
@@ -115,8 +115,14 @@
             border: 1px solid var(--border-color);
         }
 
+        .nav-item.captain-mode-item {
+            color: #f87171 !important;
+            border: 1px solid rgba(239, 68, 68, 0.4) !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+        }
+
         .tools-menu {
-            margin-top: auto;
+            margin-top: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -145,7 +151,6 @@
             color: var(--accent-cyan);
         }
 
-        /* Workspace & Chat Setup */
         .workspace {
             flex: 1;
             height: 100dvh;
@@ -231,7 +236,6 @@
             flex-shrink: 0;
         }
 
-        /* User Avatar Red & Blue Gradient with V */
         .user .avatar {
             background: linear-gradient(135deg, #ef4444, #3b82f6);
             color: #ffffff;
@@ -259,7 +263,6 @@
             color: #fff;
         }
 
-        /* Dynamic Cards */
         .widget-card {
             background: #070a13;
             border: 1px solid var(--border-color);
@@ -279,7 +282,6 @@
             gap: 6px;
         }
 
-        /* Action Buttons */
         .ai-action-bar {
             display: flex;
             align-items: center;
@@ -308,19 +310,72 @@
             color: #ffffff;
         }
 
-        .action-btn.like-active {
-            color: #4ade80 !important;
-            border-color: #4ade80 !important;
-            background: rgba(74, 222, 128, 0.1);
+        /* Captain Auth Styling */
+        .captain-lock-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(15, 23, 42, 0.95));
+            border: 2px solid #ef4444;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
         }
 
-        .action-btn.dislike-active {
-            color: #f87171 !important;
-            border-color: #f87171 !important;
-            background: rgba(248, 113, 113, 0.1);
+        .captain-pass-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
         }
 
-        /* Inputs */
+        .captain-pass-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .captain-pass-input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+        }
+
+        .captain-unlock-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .captain-unlock-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .captain-exit-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #f87171;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .captain-exit-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+        }
+
         .input-wrapper {
             padding: 12px 16px;
             background: var(--bg-surface);
@@ -421,7 +476,7 @@
         </div>
 
         <div class="nav-section-title">Operating Modes</div>
-        <ul class="nav-list">
+        <ul class="nav-list" id="navList">
             <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
                 <i class="fa-solid fa-brain"></i> Omni Super AI
             </li>
@@ -431,11 +486,30 @@
             <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
             </li>
+            <!-- Captain Keshav OS Button (Always Visible in Menu) -->
+            <li class="nav-item captain-mode-item" id="captainNavItem" onclick="AppController.switchMode('CAPTAIN', this)">
+                <i class="fa-solid fa-crown" style="color:#ef4444;"></i> Captain Keshav OS
+            </li>
         </ul>
 
         <div class="tools-menu">
-            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin-bottom:8px; text-transform:uppercase;">
-                Built-in Engines
+            <!-- Omni Super AI Knowledge Engine Tools -->
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-cyan); margin-bottom:8px; text-transform:uppercase;">
+                Omni Knowledge Tools
+            </div>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.solveExamQuestion()">
+                <i class="fa-solid fa-graduation-cap" style="color:var(--accent-purple)"></i> Exam Solver
+            </button>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.deepResearch()">
+                <i class="fa-solid fa-book-open" style="color:var(--accent-cyan)"></i> Deep Research
+            </button>
+            <button class="tool-btn" onclick="OmniKnowledgeEngine.summarizeText()">
+                <i class="fa-solid fa-file-contract" style="color:var(--accent-yellow)"></i> AI Summarizer
+            </button>
+
+            <!-- Finance & Quant Tools -->
+            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">
+                Finance Tools
             </div>
             <button class="tool-btn" onclick="QuantEngine.runAnalysis()">
                 <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
@@ -456,7 +530,7 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <div id="mode-indicator" style="font-weight: 700; font-size: 0.9rem;">
-                    Parnarav AI Engine Active
+                    Parnarav AI: Omni Super AI Active
                 </div>
             </div>
             <div class="status-badge">
@@ -484,15 +558,20 @@
                     </svg>
                 </div>
                 <div class="bubble">
-                    <b>Parnarav AI System Ready.</b><br>
-                    नमस्ते! मैं आपका ऑल-इन-वन सुपर AI हूँ। कोडिंग, फाइनेंस, बैंक PO स्टडी और यूनिवर्सल नॉलेज के लिए तैयार हूँ।
+                    <b>🧠 Omni Super AI Engine Active!</b><br>
+                    नमस्ते! मैं आपका ऑल-इन-वन यूनिवर्सल AI हूँ।<br><br>
+                    <b>मैं इस मोड में आपकी ये मदद कर सकता हूँ:</b><br>
+                    • **General Knowledge:** विज्ञान, इतिहास और सामयिक विषयों पर पूरी जानकारी।<br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br>
+                    • **Content Creation:** लेख, ईमेल और आइडियाज जनरेट करना।<br><br>
+                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>
                 </div>
             </div>
         </section>
 
         <footer class="input-wrapper">
             <div class="input-box">
-                <textarea id="userInput" placeholder="यहाँ अपना सवाल या पासवर्ड दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
+                <textarea id="userInput" placeholder="यहाँ अपना सवाल दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
                 <button class="btn-send" onclick="AppController.submitQuery()">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -501,6 +580,15 @@
     </main>
 
     <script>
+        // =================================================================
+        // 🔑 CONFIGURATION & SECURITY
+        // =================================================================
+        const CAPTAIN_CONFIG = {
+            // 👇 यहाँ अपना मनपसंद पासवर्ड सेट करें:
+            PASSWORD: "360",
+            SYSTEM_NAME: "Keshav-OS Executive Core v3.0"
+        };
+
         const StorageManager = {
             KEY: 'parnarav_chat_logs',
             saveLog: function(role, content) {
@@ -541,6 +629,27 @@
             }
         };
         ActivityTracker.init();
+
+        const OmniKnowledgeEngine = {
+            solveExamQuestion: function() {
+                const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल यहाँ दर्ज करें:");
+                if (!q) return;
+                document.getElementById('userInput').value = `[Exam Solver]: इस सवाल का step-by-step हल और सही उत्तर बताएँ:\n${q}`;
+                AppController.submitQuery();
+            },
+            deepResearch: function() {
+                const topic = prompt("किस विषय पर डीप रिसर्च या विस्तार से नोट्स चाहिए?");
+                if (!topic) return;
+                document.getElementById('userInput').value = `[Deep Research]: '${topic}' विषय पर विस्तृत नोट्स, मुख्य तथ्य और महत्वपूर्ण बिंदु (Bullet Points में) लिखें।`;
+                AppController.submitQuery();
+            },
+            summarizeText: function() {
+                const text = prompt("जिस आर्टिकल या टेक्स्ट को छोटा (Summary) करना है, उसे यहाँ पेस्ट करें:");
+                if (!text) return;
+                document.getElementById('userInput').value = `[AI Summarizer]: नीचे दिए गए पैराग्राफ या आर्टिकल के मुख्य बिंदु और सार (Key Takeaways) सरल भाषा में बताएँ:\n${text}`;
+                AppController.submitQuery();
+            }
+        };
 
         const QuantEngine = {
             runAnalysis: function() {
@@ -611,13 +720,10 @@
                         <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rbb_${Date.now()})" />
                     </svg>`;
 
-                const icon = sender === 'user' ? 'V' : brainSVG;
+                const icon = sender === 'user' ? 'K' : brainSVG;
                 row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
                 container.appendChild(row);
                 container.scrollTop = container.scrollHeight;
-            },
-            appendSystemMsg: function(text) {
-                this.appendMsg(`<i>${text}</i>`, 'ai');
             },
             renderActionBar: function(aiMsgId) {
                 const msgContainer = document.getElementById(aiMsgId);
@@ -637,18 +743,141 @@
 
         const AppController = {
             currentMode: 'OMNI',
+            isCaptainUnlocked: false,
 
             switchMode: function(mode, element) {
+                if (this.currentMode === mode && element) return;
                 this.currentMode = mode;
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                element.classList.add('active');
                 
+                if (element) {
+                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                    element.classList.add('active');
+                }
+                
+                // स्क्रीन साफ़ करना
+                document.getElementById('chatContainer').innerHTML = '';
+
                 let titleName = "Omni Super AI Active";
-                if(mode === 'FINANCE') titleName = "Trading & Finance Active";
-                if(mode === 'DEV') titleName = "Coding Master Active";
+
+                if (mode === 'CAPTAIN') {
+                    titleName = "Captain Keshav OS (Restricted)";
+                    document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+                    
+                    if (this.isCaptainUnlocked) {
+                        this.renderUnlockedCaptainScreen();
+                    } else {
+                        this.renderLockedCaptainScreen();
+                    }
+                    this.closeSidebarMobile();
+                    return;
+                }
+
+                if (mode === 'FINANCE') {
+                    titleName = "Trading & Finance Active";
+                    welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका एक्सपर्ट **फाइनेंस & ट्रेडिंग AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **Stock & Crypto:** मार्केट एनालिसिस और ट्रेंड प्रिडिक्शन।<br>
+                    • **Trading Strategies:** रिस्क मैनेजमेंट और क्वांट सिग्नल्स।<br>
+                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का हिसाब।<br>
+                    • **Personal Finance:** वेल्थ बिल्ड-अप और टैक्स सेविंग टिप्स।<br><br>
+                    <i>अपना फाइनेंस या ट्रेडिंग से जुड़ा सवाल यहाँ पूछें!</i>`;
+                } else if (mode === 'DEV') {
+                    titleName = "Coding Master Active";
+                    welcomeText = `<b>💻 Coding Master Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका **सॉफ्टवेयर इंजीनियर & कोडिंग AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **Code Generation:** HTML, CSS, JS, Python, C++, React का पूरा कोड।<br>
+                    • **Bug Fixing & Debugging:** आपके कोड के एरर खोजना और ठीक करना।<br>
+                    • **System Architecture:** डेटाबेस डिजाइन और API इंटीग्रेशन।<br>
+                    • **Code Optimization:** कोड की स्पीड और परफॉर्मेंस बेहतर करना।<br><br>
+                    <i>अपना कोड पेस्ट करें या कोई भी प्रोग्रामिंग सवाल पूछें!</i>`;
+                } else {
+                    titleName = "Omni Super AI Active";
+                    welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
+                    मैंने अपनी भूमिका पहचान ली है। मैं आपका **यूनिवर्सल ऑल-इन-वन AI** हूँ।<br><br>
+                    <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
+                    • **General Knowledge:** विज्ञान, इतिहास और सामयिक विषयों पर पूरी जानकारी।<br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br>
+                    • **Content Creation:** लेख, ईमेल और आइडियाज जनरेट करना।<br><br>
+                    <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>`;
+                }
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+                
+                const aiMsgId = 'ai-mode-' + Date.now();
+                UIManager.appendMsg(welcomeText, 'ai', aiMsgId);
+                UIManager.renderActionBar(aiMsgId);
+
                 this.closeSidebarMobile();
+            },
+
+            // 🔒 locked स्क्रीन
+            renderLockedCaptainScreen: function() {
+                const lockCardHTML = `
+                <div class="captain-lock-card">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; border-bottom: 1px solid rgba(239, 68, 68, 0.3); padding-bottom: 8px;">
+                        <i class="fa-solid fa-user-shield" style="font-size: 1.4rem; color: #ef4444;"></i>
+                        <span style="font-size: 1.15rem; font-weight: 800; color: #f87171;">CAPTAIN KESHAV OS - RESTRICTED ACCESS</span>
+                    </div>
+                    <p style="font-size:0.95rem; line-height:1.5; color:#e2e8f0;">
+                        यह <b>Executive System</b> केवल कैप्टन केशव के लिए आरक्षित है। बिना अधिकृत पासवर्ड के बातचीत शुरू नहीं की जा सकती।
+                    </p>
+                    <div class="captain-pass-box">
+                        <input type="password" id="captainPassInput" class="captain-pass-input" placeholder="सुरक्षा पासवर्ड दर्ज करें..." onkeydown="if(event.key==='Enter') AppController.verifyCaptainPass()">
+                        <button class="captain-unlock-btn" onclick="AppController.verifyCaptainPass()">अनलॉक करें 🔓</button>
+                    </div>
+                    <div id="passErrorMsg" style="color:#f87171; font-size:0.85rem; margin-top:8px; display:none; font-weight:600;">
+                        ⚠️ गलत पासवर्ड! कृपया सही पासवर्ड दर्ज करें।
+                    </div>
+                </div>`;
+                
+                UIManager.appendMsg(lockCardHTML, 'ai', 'locked-captain-card');
+            },
+
+            // 🔓 unlocked स्क्रीन
+            renderUnlockedCaptainScreen: function() {
+                const welcomeCardHTML = `
+                <div class="captain-lock-card" style="border-color:#4ade80; background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(15,23,42,0.95)); shadow: 0 0 25px rgba(74, 222, 128, 0.2);">
+                    <div style="display:flex; align-items:center; justify-between; margin-bottom:10px; border-bottom: 1px solid rgba(74,222,128,0.3); padding-bottom: 8px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-size: 1.15rem; font-weight: 800; color: #4ade80;">🫡 SUPREME COMMANDER ACCESS UNLOCKED</span>
+                        </div>
+                    </div>
+                    <p style="font-size:1.05rem; line-height:1.5; color:#f8fafc; margin-bottom:12px;">
+                        <b>परम आदरणीय कैप्टन केशव जी,</b><br>
+                        VIP प्रोटोकॉल और 100% Supreme Control के साथ आपका स्वागत है! Keshav-OS अब सक्रिय है।
+                    </p>
+                    <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; border-left:3px solid #4ade80; font-size:0.88rem;">
+                        • Status: <b>ONLINE & FULL ACTIVE</b><br>
+                        • Authority Level: <b>Supreme Captain Level-A</b>
+                    </div>
+                    <button class="captain-exit-btn" onclick="AppController.lockCaptainMode()">
+                        <i class="fa-solid fa-lock"></i> Exit / Lock OS
+                    </button>
+                </div>`;
+
+                UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card');
+            },
+
+            verifyCaptainPass: function() {
+                const input = document.getElementById('captainPassInput');
+                const error = document.getElementById('passErrorMsg');
+                if (!input) return;
+
+                if (input.value.trim() === CAPTAIN_CONFIG.PASSWORD) {
+                    this.isCaptainUnlocked = true;
+                    document.getElementById('chatContainer').innerHTML = '';
+                    this.renderUnlockedCaptainScreen();
+                } else {
+                    if (error) error.style.display = 'block';
+                    input.value = '';
+                }
+            },
+
+            lockCaptainMode: function() {
+                this.isCaptainUnlocked = false;
+                this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
             },
 
             handleKeyPress: function(e) {
@@ -687,33 +916,15 @@
                 const text = input.value.trim();
                 if (!text) return;
 
-                const cleanInput = text.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-                if (cleanInput.includes("keshavcaptain360")) {
-                    sessionStorage.setItem('isCaptainUnlocked', 'true');
-                    input.value = '';
+                // यदि कैप्टन मोड एक्टिव है लेकिन पासवर्ड से अनलॉक्ड नहीं है -> नो रिस्पॉन्स
+                if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
                     UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = `### 🫡 [CAPTAIN KESHAV MODE ACTIVATED]\n\nजय हिंद कैप्टन **केशव**! पहचान सत्यापित हो चुकी है।\n- **स्थिति:** सुप्रीम बॉस मोड 100% एक्टिव।\n- **लॉगआउट:** \`EXIT_KESHAV_360!\` डालें।`;
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
+                    input.value = '';
+                    UIManager.appendMsg("🔒 <b>[Access Denied]</b> कैप्टन मोड लॉक्ड है! कृपया ऊपर दिए गए बॉक्स में सही पासवर्ड दर्ज करके अनलॉक करें।", 'ai');
                     return;
                 }
 
-                if (cleanInput.includes("exitkeshav360")) {
-                    sessionStorage.removeItem('isCaptainUnlocked');
-                    input.value = '';
-                    UIManager.appendMsg(text, 'user');
-                    const aiMsgId = 'ai-' + Date.now();
-                    const msg = "🔒 **[CAPTAIN MODE DEACTIVATED]**\n\nसिस्टम अब सामान्य **Visitor Mode** में है।";
-                    UIManager.appendMsg(marked.parse(msg), 'ai', aiMsgId);
-                    UIManager.renderActionBar(aiMsgId);
-                    return;
-                }
-
-                const isCaptainMode = sessionStorage.getItem('isCaptainUnlocked') === 'true';
                 ActivityTracker.addChat('User', text);
-
                 UIManager.appendMsg(text, 'user');
                 StorageManager.saveLog('user', text);
                 input.value = '';
@@ -721,37 +932,29 @@
                 const aiMsgId = 'ai-' + Date.now();
                 UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
 
-                // Specific Operating Mode System Prompts
                 let modePrompt = "";
-                if (this.currentMode === 'FINANCE') {
-                    modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics. Respond strictly from a financial/trading perspective with deep analysis.";
+                if (this.currentMode === 'CAPTAIN') {
+                    modePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. You are responding directly to Founding Captain Keshav. Provide maximum level intelligence, executive authority, and precise answers.";
+                } else if (this.currentMode === 'FINANCE') {
+                    modePrompt = "OPERATING MODE: TRADING & FINANCE. You are a strictly specialized expert in Finance, Stock Markets, Crypto, Trading, SIP, Loan EMIs, and Global Economics.";
                 } else if (this.currentMode === 'DEV') {
-                    modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, debugging guidance, and technical solutions for any programming language.";
+                    modePrompt = "OPERATING MODE: CODING MASTER. You are a world-class Full-Stack Software Engineer and System Architect. Provide complete code, syntax explanations, and technical solutions.";
                 } else {
-                    modePrompt = "OPERATING MODE: OMNI SUPER AI. You possess comprehensive universal knowledge about everything in the world, down to the smallest detail. Answer clearly, sharply, and with absolute precision on any general or scientific topic.";
+                    modePrompt = `OPERATING MODE: OMNI SUPER AI (ADVANCED KNOWLEDGE ENGINE). You are the world's most advanced universal AI engine with deep domain knowledge in Science, Space, History, Exam Prep, and Research.`;
                 }
 
-                let systemPrompt = "";
-                if (isCaptainMode) {
-                    systemPrompt = `
-[SYSTEM ROLE: EXECUTIVE AI ADVISOR FOR CAPTAIN KESHAV]
-${modePrompt}
-You are reporting ONLY to Captain Keshav. Respond sharply in Hinglish/Hindi.
-User Query: ${text}`;
-                } else {
-                    systemPrompt = `
-[SYSTEM ROLE: PARNARAV HIGH-PERFORMANCE VISITOR ASSISTANT]
+                const systemPrompt = `
+[SYSTEM ROLE: PARNARAV AI ASSISTANT]
 ${modePrompt}
 Respond sharply and clearly in Hinglish/Hindi without fluff.
 User Query: ${text}`;
-                }
 
                 try {
                     const response = await puter.ai.chat(systemPrompt);
                     let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
 
                     const bubble = document.getElementById(aiMsgId).querySelector('.bubble');
-                    const badge = isCaptainMode ? "🫡 **[CAPTAIN MODE ACTIVE]**\n\n" : "";
+                    const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
                     bubble.innerHTML = marked.parse(badge + replyText);
                     UIManager.renderActionBar(aiMsgId);
                     hljs.highlightAll();
