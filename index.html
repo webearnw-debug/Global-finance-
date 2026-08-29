@@ -621,18 +621,7 @@
         </header>
 
         <section class="chat-area" id="chatContainer">
-            <div class="message-row ai">
-                <div class="avatar">🧠</div>
-                <div class="bubble">
-                    <b>🧠 Omni Super AI Engine Active!</b><br>
-                    नमस्ते! मैं आपका यूनिवर्सल एआई असिस्टेंट हूँ।<br><br>
-                    <b>मेरी क्षमताएँ:</b><br>
-                    • <b>General Knowledge & Exam Prep:</b> किसी भी परीक्षा, सवाल या विषय का सरल व सटीक समाधान।<br>
-                    • <b>Financial & Coding Master:</b> ट्रेडिंग रणनीतियाँ, गणितीय गणनाएँ एवं सॉफ्टवेयर डेवलपमेंट।<br>
-                    • <b>Captain Keshav OS:</b> वेबसाइट सुरक्षा व सिस्टम ऑडिट हेतु विशेष कंट्रोल सिस्टम।<br><br>
-                    <i>आप मुझसे किसी भी भाषा में सवाल पूछ सकते हैं!</i>
-                </div>
-            </div>
+            <!-- Dynamic Messages Loaded Here -->
         </section>
 
         <footer class="input-wrapper">
@@ -647,7 +636,7 @@
 
     <script>
         // =================================================================
-        // 1. CONFIG & SYSTEM IDENTITY (CAPTAIN KESHAV OS)
+        // 1. CONFIG & SYSTEM IDENTITY
         // =================================================================
         const CAPTAIN_CONFIG = {
             PASSWORD: "360",
@@ -691,24 +680,30 @@
         };
 
         // =================================================================
-        // 2. STORAGE ENGINE
+        // 2. ISOLATED STORAGE ENGINE (NO CROSS-MODE MEMORY LEAK)
         // =================================================================
         const StorageManager = {
-            STORAGE_KEY: 'parnarav_chat_logs',
-
-            saveLog(role, content) {
-                let logs = this.getLogs();
-                logs.push({ role, content, timestamp: new Date().toISOString() });
-                if (logs.length > 25) logs.shift();
-                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(logs));
+            getStorageKey: function(mode) {
+                return `parnarav_chat_${mode || 'OMNI'}`;
             },
 
-            getLogs() {
+            saveLog: function(mode, role, content) {
+                let logs = this.getLogs(mode);
+                logs.push({ role, content, timestamp: new Date().toISOString() });
+                if (logs.length > 30) logs.shift(); // 30 Messages Limit Per Mode
+                localStorage.setItem(this.getStorageKey(mode), JSON.stringify(logs));
+            },
+
+            getLogs: function(mode) {
                 try {
-                    return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+                    return JSON.parse(localStorage.getItem(this.getStorageKey(mode))) || [];
                 } catch (e) {
                     return [];
                 }
+            },
+
+            clearModeStorage: function(mode) {
+                localStorage.removeItem(this.getStorageKey(mode));
             }
         };
 
@@ -778,7 +773,7 @@
         };
 
         // =================================================================
-        // 🛡️ 5 ARMOR FLEET (CAPTAIN OS EXCLUSIVE COMMANDS)
+        // 🛡️ 5 ARMOR FLEET (CAPTAIN KESHAV OS EXCLUSIVE COMMANDS)
         // =================================================================
         const ArmorFleet = {
             targetUrl: "",
@@ -871,14 +866,17 @@
         };
 
         // =================================================================
-        // 5. MAIN APP CONTROLLER
+        // 5. MAIN APP CONTROLLER (STRICT ISOLATED OPERATING SYSTEM ENGINES)
         // =================================================================
         const AppController = {
             currentMode: 'OMNI',
             isCaptainUnlocked: false,
 
+            init: function() {
+                this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
+            },
+
             switchMode: function(mode, element) {
-                if (this.currentMode === mode && element) return;
                 this.currentMode = mode;
                 
                 if (element) {
@@ -886,7 +884,9 @@
                     element.classList.add('active');
                 }
                 
-                document.getElementById('chatContainer').innerHTML = '';
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.innerHTML = ''; // 🧹 Clear DOM Area
+
                 let titleName = "Omni Super AI Active";
 
                 if (mode === 'CAPTAIN') {
@@ -895,6 +895,7 @@
                     
                     if (this.isCaptainUnlocked) {
                         this.renderUnlockedCaptainScreen();
+                        this.loadModeHistory('CAPTAIN');
                     } else {
                         this.renderLockedCaptainScreen();
                     }
@@ -902,36 +903,65 @@
                     return;
                 }
 
+                if (mode === 'FINANCE') titleName = "Trading & Finance Active";
+                else if (mode === 'DEV') titleName = "Coding Master Active";
+                else titleName = "Omni Super AI Active";
+
+                document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+
+                // 📦 Load ONLY Current Mode's History
+                const logs = StorageManager.getLogs(mode);
+                if (logs.length > 0) {
+                    logs.forEach(msg => {
+                        let avatar = msg.role === 'user' ? '👤' : (mode === 'FINANCE' ? '📈' : (mode === 'DEV' ? '💻' : '🧠'));
+                        let id = 'hist-' + Date.now() + Math.random();
+                        UIManager.appendMsg(msg.content, msg.role, id, avatar);
+                        if (msg.role === 'ai') UIManager.renderActionBar(id);
+                    });
+                } else {
+                    this.renderDefaultWelcome(mode);
+                }
+
+                this.closeSidebarMobile();
+            },
+
+            loadModeHistory: function(mode) {
+                const logs = StorageManager.getLogs(mode);
+                logs.forEach(msg => {
+                    let avatar = msg.role === 'user' ? '👤' : '🫡';
+                    let id = 'hist-' + Date.now() + Math.random();
+                    UIManager.appendMsg(msg.content, msg.role, id, avatar);
+                    if (msg.role === 'ai') UIManager.renderActionBar(id);
+                });
+            },
+
+            renderDefaultWelcome: function(mode) {
                 let welcomeText = "";
                 let avatarIcon = "🧠";
                 if (mode === 'FINANCE') {
-                    titleName = "Trading & Finance Active";
                     avatarIcon = "📈";
                     welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
                     नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।<br><br>
-                    • **बाजार विश्लेषण:** ट्रेडिंग रणनीतियाँ, रिस्क मैनेजमेंट एवं मार्केट ट्रेंड्स।<br>
-                    • **फाइनेंशियल टूल्स:** SIP, EMI एवं क्वांट सिग्नल कैलकुलेटर उपलब्ध।`;
+                    • <b>बाजार विश्लेषण:</b> ट्रेडिंग रणनीतियाँ, रिस्क मैनेजमेंट एवं मार्केट ट्रेंड्स।<br>
+                    • <b>फाइनेंशियल टूल्स:</b> SIP, EMI एवं क्वांट सिग्नल कैलकुलेटर उपलब्ध।`;
                 } else if (mode === 'DEV') {
-                    titleName = "Coding Master Active";
                     avatarIcon = "💻";
                     welcomeText = `<b>💻 Coding Master Engine Active!</b><br>
                     नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।<br><br>
-                    • **कोड जनरेशन:** किसी भी भाषा में ऑप्टिमाइज्ड, प्रोडक्शन-रेडी कोड व डिबगिंग।<br>
-                    • **प्रौद्योगिकी सलाह:** टेक-स्टैक चयन और सॉफ्टवेयर आर्किटेक्चर समाधान।`;
+                    • <b>कोड जनरेशन:</b> किसी भी भाषा में ऑप्टिमाइज्ड, प्रोडक्शन-रेडी कोड व डिबगिंग।<br>
+                    • <b>प्रौद्योगिकी सलाह:</b> टेक-स्टैक चयन और सॉफ्टवेयर आर्किटेक्चर समाधान।`;
                 } else {
-                    titleName = "Omni Super AI Active";
                     avatarIcon = "🧠";
                     welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
                     नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ।<br><br>
-                    • **सामान्य प्रश्न व परीक्षा तैयारी:** कठिन से कठिन विषयों का सरल विश्लेषण।<br>
-                    • **टूटी-फूटी भाषा समझ:** आप किसी भी शैली या भाषा में बेझिझक सवाल पूछ सकते हैं।`;
+                    • <b>सामान्य प्रश्न व परीक्षा तैयारी:</b> कठिन से कठिन विषयों का सरल विश्लेषण।<br>
+                    • <b>टूटी-फूटी भाषा समझ:</b> आप किसी भी शैली या भाषा में बेझिझक सवाल पूछ सकते हैं।`;
                 }
 
-                document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
-                const aiMsgId = 'ai-mode-' + Date.now();
+                const aiMsgId = 'ai-welcome-' + Date.now();
                 UIManager.appendMsg(welcomeText, 'ai', aiMsgId, avatarIcon);
                 UIManager.renderActionBar(aiMsgId);
-                this.closeSidebarMobile();
+                StorageManager.saveLog(mode, 'ai', welcomeText);
             },
 
             renderLockedCaptainScreen: function() {
@@ -1007,6 +1037,7 @@
                     this.currentMode = 'CAPTAIN';
                     document.getElementById('chatContainer').innerHTML = '';
                     this.renderUnlockedCaptainScreen();
+                    this.loadModeHistory('CAPTAIN');
                 } else {
                     alert("⚠️ गलत पासवर्ड! कृपया सही सुरक्षा कोड दर्ज करें।");
                 }
@@ -1046,21 +1077,24 @@
                 const text = input.value.trim();
                 if (!text) return;
 
+                const mode = this.currentMode;
+
                 // 🔒 1. Captain Mode Lock Check
-                if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
+                if (mode === 'CAPTAIN' && !this.isCaptainUnlocked) {
                     UIManager.appendMsg(text, 'user');
                     input.value = '';
                     UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! सही सुरक्षा कोड (360) दर्ज करें।", 'ai', null, '🔒');
                     return;
                 }
 
-                // 🛡️ 2. INDIVIDUAL ARMOR SOLDIER DIRECT INTERACTION
+                // 🛡️ 2. ARMOR FLEET COMMANDS (ONLY CAPTAIN MODE)
                 const matchArmor = text.match(/@Armor-([1-5])/i);
                 if (matchArmor) {
                     const armorNum = matchArmor[1];
                     const armorObj = ArmorFleet[`Armor_${armorNum}`];
 
                     UIManager.appendMsg(text, 'user');
+                    StorageManager.saveLog(mode, 'user', text);
                     input.value = '';
 
                     const aiMsgId = 'armor-' + Date.now();
@@ -1074,24 +1108,26 @@
                         bubble.innerHTML = marked.parse(armorReport);
                         UIManager.renderActionBar(aiMsgId);
                     }
+                    StorageManager.saveLog(mode, 'ai', armorReport);
                     VoiceEngine.speak(`${armorObj.codeName} की रिपोर्ट तैयार है।`);
                     return;
                 }
 
                 // 3. AI Query Processing via Puter SDK
                 UIManager.appendMsg(text, 'user');
-                StorageManager.saveLog('user', text);
+                StorageManager.saveLog(mode, 'user', text); // 💾 Saved to CURRENT MODE local key only
                 input.value = '';
 
                 const aiMsgId = 'ai-' + Date.now();
                 UIManager.appendMsg("<i>Parnarav AI जवाब तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId);
 
-                const recentLogs = StorageManager.getLogs().slice(-6);
+                // 🔒 STRICT CONTEXT ISOLATION: Fetch history ONLY for current active mode
+                const recentLogs = StorageManager.getLogs(mode).slice(-6);
                 const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
 
-                // System Role & Identity Guidelines
+                // System Role & Identity Guidelines Per Mode
                 let systemRolePrompt = "";
-                if (this.currentMode === 'CAPTAIN' && this.isCaptainUnlocked) {
+                if (mode === 'CAPTAIN' && this.isCaptainUnlocked) {
                     systemRolePrompt = `STRICT EXECUTIVE PROTOCOL FOR KESHAV OS (CAPTAIN MODE):
 1. ADDRESSING RULE: You MUST strictly address the user as "कैप्टन" or "कैप्टन केशव".
 2. CREATOR / IDENTITY RULE: If asked who created you ("किसने बनाया", "creator", "owner"), reply strictly: "${CAPTAIN_CONFIG.CREATOR_INFO}".
@@ -1100,12 +1136,24 @@
    - If user asks general questions, exam solver, stories, etc., reply politely:
      "प्रणाम कैप्टन! कैप्टन ओएस केवल वेबसाइट सुरक्षा और आर्मर सिस्टम तक सीमित है। सामान्य प्रश्नों के लिए कृपया Omni, Dev या Finance मोड पर स्विच करें।"
 4. LANGUAGE FLEXIBILITY: Effortlessly comprehend broken Hindi, Hinglish, typos, slang, local dialects ("टूटी-फूटी भाषा") or informal inputs.`;
+                } else if (mode === 'FINANCE') {
+                    systemRolePrompt = `PUBLIC OPERATING MODE (TRADING & FINANCE):
+1. ROLE: You are a Quantitative & Financial Trading AI Specialist.
+2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain" or "कैप्टन". Treat user as Visitor/Client.
+3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".
+4. FOCUS: Provide expert advice on stocks, crypto, trading strategies, SIP, risk management, and financial math.`;
+                } else if (mode === 'DEV') {
+                    systemRolePrompt = `PUBLIC OPERATING MODE (CODING MASTER):
+1. ROLE: You are a Senior Software Architect and Master Programmer.
+2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain" or "कैप्टन". Treat user as Developer/User.
+3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".
+4. FOCUS: Provide clean, bug-free, modular, production-ready code, debugging help, and technical architecture advice.`;
                 } else {
-                    systemRolePrompt = `PUBLIC OPERATING MODE (${this.currentMode}):
-1. ADDRESSING RULE (STRICT): DO NOT call the user "Captain" or "कैप्टन". Treat the user as a normal Visitor/User ("आप" / "यूजर्स").
-2. CREATOR RULE: If asked who created you, say: "${CAPTAIN_CONFIG.CREATOR_INFO}".
-3. LANGUAGE FLEXIBILITY: Effortlessly comprehend broken Hindi, Hinglish, typos, slang, local dialects ("टूटी-फूटी भाषा"), or informal phrasing. Understand the core intent immediately.
-4. Provide helpful, accurate, and concise markdown answers.`;
+                    systemRolePrompt = `PUBLIC OPERATING MODE (OMNI SUPER AI):
+1. ROLE: Universal General Knowledge, Exam Solver, and Everyday Assistant.
+2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain" or "कैप्टन". Treat user as Visitor/User.
+3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".
+4. FOCUS: Answer competitive exam questions, general knowledge, reasoning, and any casual user prompts.`;
                 }
 
                 const masterPrompt = `
@@ -1113,7 +1161,7 @@ System Instruction: ${systemRolePrompt}
 
 Language Constraint: Respond directly in natural Hindi / Hinglish with crisp markdown formatting and clean layout.
 
-[CHAT HISTORY]
+[ISOLATED MODE HISTORY - ${mode}]
 ${historyContext}
 
 [USER INPUT]
@@ -1132,7 +1180,7 @@ User: ${text}`;
                         UIManager.renderActionBar(aiMsgId);
                         if (window.hljs) hljs.highlightAll();
                     }
-                    StorageManager.saveLog('ai', replyText);
+                    StorageManager.saveLog(mode, 'ai', replyText); // 💾 AI reply saved to CURRENT MODE only
                     VoiceEngine.speak(replyText);
                 } catch (err) {
                     const bubbleElement = document.getElementById(aiMsgId);
@@ -1151,6 +1199,11 @@ User: ${text}`;
                 document.getElementById('sidebar').classList.remove('open');
             }
         };
+
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            AppController.init();
+        });
     </script>
 </body>
 </html>
