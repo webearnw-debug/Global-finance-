@@ -975,5 +975,23 @@ User Query: ${text}`;
             }
         };
     </script>
+    // === System Error & Health Reporter ===
+window.addEventListener('error', function(e) {
+    const chatContainer = document.getElementById('chatContainer');
+    if (chatContainer) {
+        const errorMsg = `
+            <div class="widget-card" style="border-color: #f87171;">
+                <div class="widget-title" style="color: #f87171;"><i class="fa-solid fa-bug"></i> System Diagnostic Report</div>
+                • Issue Detected: <b>${e.message}</b><br>
+                • File Line: Line ${e.lineno}<br>
+                • Status: Needs Code Correction
+            </div>`;
+        const row = document.createElement('div');
+        row.className = 'message-row ai';
+        row.innerHTML = `<div class="avatar">⚠️</div><div class="bubble">${errorMsg}</div>`;
+        chatContainer.appendChild(row);
+    }
+});
+    
 </body>
 </html>
