@@ -549,7 +549,7 @@
             <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
         </div>
 
-        <div class="nav-section-title">Operating Modes</div>
+        <div class="nav-section-title">Operating Modes & Communication Roles</div>
         <ul class="nav-list" id="navList">
             <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
                 <i class="fa-solid fa-brain"></i> Omni Super AI
@@ -559,6 +559,13 @@
             </li>
             <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
+            </li>
+            <!-- 🔥 NEW COMMUNICATION SKILL ROLES INTEGRATED HERE -->
+            <li class="nav-item" onclick="AppController.switchMode('INTERVIEW', this)">
+                <i class="fa-solid fa-user-tie"></i> Mock Interviewer
+            </li>
+            <li class="nav-item" onclick="AppController.switchMode('SALES', this)">
+                <i class="fa-solid fa-handshake"></i> Sales Executive
             </li>
             <li class="nav-item captain-mode-item" id="captainNavItem" onclick="AppController.switchMode('CAPTAIN', this)">
                 <i class="fa-solid fa-crown" style="color:#ef4444;"></i> Captain Keshav OS
@@ -648,28 +655,21 @@
         };
 
         // =================================================================
-        // 🚀 OMNI AI ENGINE UPGRADES INTEGRATION MODULE
+        // 🚀 OMNI AI ENGINE MODULE
         // =================================================================
         const GeminiOmniEngine = {
-            // Upgrade 1: Structured Output (JSON Schema Generator)
             generateStructuredData: async function(prompt) {
                 const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
                 return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
             },
-
-            // Upgrade 2: Live Grounded Search
             searchLiveWeb: async function(query) {
                 const prompt = `[LIVE WEB SEARCH MODE]: ताज़ा जानकारी और वेब डेटा के आधार पर जवाब दें: ${query}`;
                 return await puter.ai.chat(prompt);
             },
-
-            // Upgrade 3: RAG Embedding Engine Memory Simulation
             createEmbeddingMemory: function(text) {
                 console.log("[RAG Engine]: Embeddings Created for text chunk ->", text.slice(0, 30));
                 return true;
             },
-
-            // Upgrade 4: Agentic Self-Executing & Refinement Loop
             triggerAgenticTask: async function() {
                 const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
                 if (!userTask) return;
@@ -931,6 +931,8 @@
 
                 if (mode === 'FINANCE') titleName = "Trading & Finance Active";
                 else if (mode === 'DEV') titleName = "Coding Master Active";
+                else if (mode === 'INTERVIEW') titleName = "Mock Interviewer Active";
+                else if (mode === 'SALES') titleName = "Sales Executive Active";
                 else titleName = "Omni Super AI Active";
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
@@ -954,6 +956,17 @@
                     नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।<br><br>
                     • <b>कोड जनरेशन:</b> किसी भी भाषा में ऑप्टिमाइज्ड, प्रोडक्शन-रेडी कोड व डिबगिंग।<br>
                     • <b>प्रौद्योगिकी सलाह:</b> टेक-स्टैक चयन और सॉफ्टवेयर आर्किटेक्चर समाधान।`;
+                } else if (mode === 'INTERVIEW') {
+                    avatarIcon = "👔";
+                    welcomeText = `<b>👔 Senior Mock Interviewer Active!</b><br>
+                    नमस्ते! मैं आपका सीनियर टेक्निकल इंटरव्यूअर हूँ।<br><br>
+                    • <b>लाइव इंटरव्यू सिमुलेशन:</b> मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।<br>
+                    • <b>फीडबैक:</b> आपके उत्तर का विश्लेषण करके रियल-टाइम स्कोर और फीडबैक मिलेगा।`;
+                } else if (mode === 'SALES') {
+                    avatarIcon = "🤝";
+                    welcomeText = `<b>🤝 B2B Sales Executive Active!</b><br>
+                    नमस्ते! मैं आपका B2B Sales Expert हूँ।<br><br>
+                    • <b>Objection Handling & Persuasion:</b> किसी भी सेल्स रिजेक्शन या फीस डिस्काउंट की स्थिति में बातचीत का अभ्यास करें।`;
                 } else {
                     avatarIcon = "🧠";
                     welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
@@ -1121,33 +1134,45 @@
                 GeminiOmniEngine.createEmbeddingMemory(text);
 
                 const aiMsgId = 'ai-' + Date.now();
-                UIManager.appendMsg("<i>Parnarav AI जवाब तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId);
+                let currentAvatar = '🧠';
 
-                // System Prompt Identity Rules
+                if (mode === 'INTERVIEW') currentAvatar = '👔';
+                else if (mode === 'SALES') currentAvatar = '🤝';
+                else if (mode === 'DEV') currentAvatar = '💻';
+                else if (mode === 'FINANCE') currentAvatar = '📈';
+
+                UIManager.appendMsg("<i>Parnarav AI जवाब तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId, currentAvatar);
+
+                // 🔥 DYNAMIC SYSTEM PROMPT CONFIGURED FOR DIFFERENT ROLES & COMMUNICATION SKILLS
                 let systemRolePrompt = "";
+
                 if (mode === 'CAPTAIN' && this.isCaptainUnlocked) {
                     systemRolePrompt = `STRICT EXECUTIVE PROTOCOL FOR KESHAV OS (CAPTAIN MODE):
 1. ADDRESSING RULE: You MUST strictly address the user as "कैप्टन" or "कैप्टन केशव".
 2. CREATOR / IDENTITY RULE: If asked who created you ("किसने बनाया", "creator", "owner"), reply strictly: "${CAPTAIN_CONFIG.CREATOR_INFO}".
 3. DOMAIN RESTRICTION RULE:
    - Keshav OS ONLY handles: Target Website status/audit (${ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "No site connected"}) and armor commands.
-   - If user asks general questions, reply politely:
-     "प्रणाम कैप्टन! कैप्टन ओएस केवल वेबसाइट सुरक्षा और आर्मर सिस्टम तक सीमित है। सामान्य प्रश्नों के लिए कृपया Omni, Dev या Finance मोड पर स्विच करें।"`;
+   - If user asks general questions, reply politely: "प्रणाम कैप्टन! कैप्टन ओएस केवल वेबसाइट सुरक्षा और आर्मर सिस्टम तक सीमित है।"`;
+                } else if (mode === 'INTERVIEW') {
+                    systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer.
+1. DUTY: Conduct a structured technical mock interview. Ask strictly ONE question at a time.
+2. FEEDBACK: Evaluate user's answers with constructive feedback before asking the next question.
+3. TONE: Professional, analytical, fair, and supportive. DO NOT call the user Captain.
+4. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                } else if (mode === 'SALES') {
+                    systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist.
+1. DUTY: Handle objections, explain product value proposition, and practice B2B sales pitch negotiations.
+2. TONE: Energetic, highly persuasive, confident, and solution-oriented. DO NOT call the user Captain.
+3. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
                 } else if (mode === 'FINANCE') {
-                    systemRolePrompt = `PUBLIC OPERATING MODE (TRADING & FINANCE):
-1. ROLE: Quantitative & Financial Trading AI Specialist.
-2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain".
-3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                    systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. DO NOT call the user Captain. Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
                 } else if (mode === 'DEV') {
-                    systemRolePrompt = `PUBLIC OPERATING MODE (CODING MASTER):
-1. ROLE: Senior Software Architect and Master Programmer.
-2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain".
-3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                    systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. DO NOT call the user Captain. Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
                 } else {
-                    systemRolePrompt = `PUBLIC OPERATING MODE (OMNI SUPER AI):
-1. ROLE: Universal General Knowledge and AI Assistant.
-2. ADDRESSING RULE (STRICT): DO NOT call the user "Captain".
-3. CREATOR RULE: Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                    systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist.
+1. TONE & COMMUNICATION: Adapt tone dynamically, switch language smoothly between Hindi/Hinglish/English.
+2. DO NOT call the user Captain.
+3. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
                 }
 
                 const masterPrompt = `
