@@ -560,7 +560,6 @@
             <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
             </li>
-            <!-- 🔥 NEW COMMUNICATION SKILL ROLES INTEGRATED HERE -->
             <li class="nav-item" onclick="AppController.switchMode('INTERVIEW', this)">
                 <i class="fa-solid fa-user-tie"></i> Mock Interviewer
             </li>
@@ -655,65 +654,65 @@
         };
 
         // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE
+        // 🚀 OMNI AI ENGINE MODULE (FIXED & FULLY INTEGRATED)
         // =================================================================
         const GeminiOmniEngine = {
-    chatHistory: [],
+            chatHistory: [],
 
-    resetMemory: function() {
-        this.chatHistory = [];
-        console.log("[GeminiOmniEngine]: Conversation memory cleared.");
-    },
+            resetMemory: function() {
+                this.chatHistory = [];
+                console.log("[GeminiOmniEngine]: Conversation memory cleared.");
+            },
 
-    processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-        if (this.chatHistory.length === 0 && systemInstruction) {
-            this.chatHistory.push({ role: "system", content: systemInstruction });
-        }
-        
-        this.chatHistory.push({ role: "user", content: userPrompt });
-
-        try {
-            const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
-
-            let fullReply = "";
-            for await (const part of responseStream) {
-                if (part?.text) {
-                    fullReply += part.text;
-                    if (onChunkCallback) onChunkCallback(fullReply);
+            processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+                if (this.chatHistory.length === 0 && systemInstruction) {
+                    this.chatHistory.push({ role: "system", content: systemInstruction });
                 }
-            }
+                
+                this.chatHistory.push({ role: "user", content: userPrompt });
 
-            this.chatHistory.push({ role: "assistant", content: fullReply });
-            return fullReply;
+                try {
+                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
 
-        } catch (err) {
-            console.error("[GeminiOmniEngine Error]:", err);
-            const response = await puter.ai.chat(this.chatHistory);
-            const textResponse = typeof response === 'string' 
-                ? response 
-                : (response?.message?.content || response?.text || "Error processing request.");
+                    let fullReply = "";
+                    for await (const part of responseStream) {
+                        if (part?.text) {
+                            fullReply += part.text;
+                            if (onChunkCallback) onChunkCallback(fullReply);
+                        }
+                    }
 
-            this.chatHistory.push({ role: "assistant", content: textResponse });
-            if (onChunkCallback) onChunkCallback(textResponse);
-            return textResponse;
-        }
-    }
-};
-        
-            
+                    this.chatHistory.push({ role: "assistant", content: fullReply });
+                    return fullReply;
+
+                } catch (err) {
+                    console.error("[GeminiOmniEngine Error]:", err);
+                    const response = await puter.ai.chat(this.chatHistory);
+                    const textResponse = typeof response === 'string' 
+                        ? response 
+                        : (response?.message?.content || response?.text || "Error processing request.");
+
+                    this.chatHistory.push({ role: "assistant", content: textResponse });
+                    if (onChunkCallback) onChunkCallback(textResponse);
+                    return textResponse;
+                }
+            },
 
             generateStructuredData: async function(prompt) {
                 const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
                 return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
             },
+
             searchLiveWeb: async function(query) {
                 const prompt = `[LIVE WEB SEARCH MODE]: ताज़ा जानकारी और वेब डेटा के आधार पर जवाब दें: ${query}`;
                 return await puter.ai.chat(prompt);
             },
+
             createEmbeddingMemory: function(text) {
                 console.log("[RAG Engine]: Embeddings Created for text chunk ->", text.slice(0, 30));
                 return true;
             },
+
             triggerAgenticTask: async function() {
                 const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
                 if (!userTask) return;
@@ -933,7 +932,6 @@
                 this.setupOutsideClickListener();
             },
 
-            // 📱 AUTO-CLOSE SIDEBAR WHEN CLICKING OUTSIDE ON MOBILE
             setupOutsideClickListener: function() {
                 document.addEventListener('click', (event) => {
                     const sidebar = document.getElementById('sidebar');
@@ -1163,7 +1161,7 @@
                     const bubbleElement = document.getElementById(aiMsgId);
                     if (bubbleElement) {
                         const bubble = bubbleElement.querySelector('.bubble');
-                        bubble.innerHTML = marked.parse(armorReport);
+                        bubble.innerHTML = window.marked ? marked.parse(armorReport) : armorReport;
                         UIManager.renderActionBar(aiMsgId);
                     }
                     VoiceEngine.speak(`${armorObj.codeName} की रिपोर्ट तैयार है।`);
@@ -1185,9 +1183,9 @@
                 else if (mode === 'DEV') currentAvatar = '💻';
                 else if (mode === 'FINANCE') currentAvatar = '📈';
 
-                UIManager.appendMsg("<i>Parnarav AI जवाब तैयार कर रहा है... ⚡</i>", 'ai', aiMsgId, currentAvatar);
+                UIManager.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, currentAvatar);
 
-                // 🔥 DYNAMIC SYSTEM PROMPT CONFIGURED FOR DIFFERENT ROLES & COMMUNICATION SKILLS
+                // DYNAMIC SYSTEM PROMPT CONFIGURED FOR DIFFERENT ROLES
                 let systemRolePrompt = "";
 
                 if (mode === 'CAPTAIN' && this.isCaptainUnlocked) {
@@ -1219,32 +1217,27 @@
 3. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
                 }
 
-                const masterPrompt = `
-System Instruction: ${systemRolePrompt}
-
-Language Constraint: Respond directly in natural Hindi / Hinglish with crisp markdown formatting and clean layout.
-
-[USER INPUT]
-User: ${text}`;
+                const bubbleElement = document.getElementById(aiMsgId);
+                const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
 
                 try {
-                    const response = await puter.ai.chat(masterPrompt);
-                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                    const finalReply = await GeminiOmniEngine.processChat(
+                        text,
+                        systemRolePrompt,
+                        (streamedText) => {
+                            if (bubble) {
+                                bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
+                                if (window.hljs) hljs.highlightAll();
+                            }
+                        }
+                    );
 
-                    const bubbleElement = document.getElementById(aiMsgId);
                     if (bubbleElement) {
-                        const bubble = bubbleElement.querySelector('.bubble');
-                        if (window.marked) bubble.innerHTML = marked.parse(replyText);
-                        else bubble.innerText = replyText;
-
                         UIManager.renderActionBar(aiMsgId);
-                        if (window.hljs) hljs.highlightAll();
                     }
-                    VoiceEngine.speak(replyText);
+                    VoiceEngine.speak(finalReply);
                 } catch (err) {
-                    const bubbleElement = document.getElementById(aiMsgId);
-                    if (bubbleElement) {
-                        const bubble = bubbleElement.querySelector('.bubble');
+                    if (bubble) {
                         bubble.innerHTML = `**[System Error]** AI Connection Error: \`${err.message || err}\``;
                     }
                 }
