@@ -589,46 +589,49 @@
             SYSTEM_NAME: "Keshav-OS Executive Core v3.0"
         };
 
-        const StorageManager = {
-            KEY: 'parnarav_chat_logs',
-            saveLog: function(role, content) {
-                let logs = this.getLogs();
-                logs.push({ id: Date.now(), role: role, content: content, timestamp: new Date().toISOString() });
-                localStorage.setItem(this.KEY, JSON.stringify(logs));
-            },
-            getLogs: function() {
-                return JSON.parse(localStorage.getItem(this.KEY) || '[]');
-            }
-        };
+  // ==========================================
+// 1. STORAGE & TRACKER ENGINE (Lines 592-631)
+// ==========================================
+const StorageManager = {
+    STORAGE_KEY: 'parnarav_chat_logs',
+    TRACKER_KEY: 'captain_user_tracker',
 
-        const ActivityTracker = {
-            init: function() {
-                let sessionData = {
-                    startTime: new Date().toLocaleString(),
-                    referrer: document.referrer || "Direct Visit",
-                    clicks: [],
-                    chatHistory: []
-                };
-                document.addEventListener('click', (e) => {
-                    let target = e.target.closest('button, a, input, .nav-item');
-                    if (target) {
-                        sessionData.clicks.push({
-                            element: target.innerText || target.placeholder || target.className,
-                            time: new Date().toLocaleTimeString()
-                        });
-                        localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
-                    }
-                });
-                localStorage.setItem('captain_user_tracker', JSON.stringify(sessionData));
-            },
-            addChat: function(role, text) {
-                let data = JSON.parse(localStorage.getItem('captain_user_tracker') || '{}');
-                if (!data.chatHistory) data.chatHistory = [];
-                data.chatHistory.push({ role: role, text: text, time: new Date().toLocaleTimeString() });
-                localStorage.setItem('captain_user_tracker', JSON.stringify(data));
-            }
-        };
-        ActivityTracker.init();
+    saveLog(role, content) {
+        let logs = this.getLogs();
+        logs.push({ role, content, timestamp: new Date().toISOString() });
+        if (logs.length > 20) logs.shift();
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(logs));
+    },
+
+    getLogs() {
+        try {
+            return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+        } catch (e) {
+            return [];
+        }
+    },
+
+    getTrackerData() {
+        return localStorage.getItem(this.TRACKER_KEY) || JSON.stringify({
+            status: "ACTIVE",
+            user: "Captain Keshav",
+            level: "Level-A Supreme",
+            totalChats: this.getLogs().length,
+            lastLogin: new Date().toLocaleString()
+        }, null, 2);
+    }
+};
+
+const ActivityTracker = {
+    addChat(role, text) {
+        let tracker = JSON.parse(localStorage.getItem(StorageManager.TRACKER_KEY) || '{}');
+        tracker.lastAction = text;
+        tracker.lastTimestamp = new Date().toLocaleString();
+        tracker.totalClicks = (tracker.totalClicks || 0) + 1;
+        localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(tracker));
+    }
+};
+      
 
         const OmniKnowledgeEngine = {
             solveExamQuestion: function() {
