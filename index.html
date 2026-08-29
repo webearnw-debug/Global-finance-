@@ -754,41 +754,42 @@
                 UIManager.appendMsg(html, 'ai');
             }
         };
-// =================================================================
-// 🛡️ ARMOR SOLDIER FLEET (AUTOMATIC FOR CAPTAIN KESHAV)
-// =================================================================
-const ArmorFleet = {
-    captain: "Captain Keshav",
 
-    Armor_1: { codeName: "Armor-1 (Crawler & Link Auditor)", async runTask() { return { scannedPages: 30, brokenLinks: 0 }; } },
-    Armor_2: { codeName: "Armor-2 (Speed & Performance)", async runTask() { return { loadTime: "1.1s", score: "98/100" }; } },
-    Armor_3: { codeName: "Armor-3 (Security Guard)", async runTask() { return { ssl: "ACTIVE", vulnerabilities: 0 }; } },
-    Armor_4: { codeName: "Armor-4 (SEO Specialist)", async runTask() { return { metaTags: "HEALTHY", status: "INDEXABLE" }; } },
-    Armor_5: { codeName: "Armor-5 (AdSense Inspector)", async runTask() { return { status: "ADSENSE_READY" }; } },
+        // =================================================================
+        // 🛡️ ARMOR SOLDIER FLEET (AUTOMATIC FOR CAPTAIN KESHAV)
+        // =================================================================
+        const ArmorFleet = {
+            captain: "Captain Keshav",
 
-    async autoReportToCaptain() {
-        const r1 = await this.Armor_1.runTask();
-        const r2 = await this.Armor_2.runTask();
-        const r3 = await this.Armor_3.runTask();
-        const r4 = await this.Armor_4.runTask();
-        const r5 = await this.Armor_5.runTask();
+            Armor_1: { codeName: "Armor-1 (Crawler & Link Auditor)", async runTask() { return { scannedPages: 30, brokenLinks: 0 }; } },
+            Armor_2: { codeName: "Armor-2 (Speed & Performance)", async runTask() { return { loadTime: "1.1s", score: "98/100" }; } },
+            Armor_3: { codeName: "Armor-3 (Security Guard)", async runTask() { return { ssl: "ACTIVE", vulnerabilities: 0 }; } },
+            Armor_4: { codeName: "Armor-4 (SEO Specialist)", async runTask() { return { metaTags: "HEALTHY", status: "INDEXABLE" }; } },
+            Armor_5: { codeName: "Armor-5 (AdSense Inspector)", async runTask() { return { status: "ADSENSE_READY" }; } },
 
-        const reportHTML = `
-            <div class="captain-lock-card" style="border-color:var(--accent-cyan); background: rgba(11, 15, 25, 0.95); margin-top:10px;">
-                <div style="font-size:0.95rem; font-weight:800; color:var(--accent-cyan); margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.3); padding-bottom:6px;">
-                    🫡 5 ARMOR SOLDIERS AUTOMATIC DAILY REPORT FOR CAPTAIN KESHAV
-                </div>
-                • 🛡️ <b>${this.Armor_1.codeName}:</b> ${r1.scannedPages} पेज जाँच किए, टूटे लिंक: ${r1.brokenLinks}<br>
-                • ⚡ <b>${this.Armor_2.codeName}:</b> लोड स्पीड: ${r2.loadTime} (स्कोर: ${r2.score})<br>
-                • 🔐 <b>${this.Armor_3.codeName}:</b> SSL स्टेटस: ${r3.ssl} (थ्रेट्स: ${r3.vulnerabilities})<br>
-                • 📊 <b>${this.Armor_4.codeName}:</b> SEO हेल्थ: ${r4.status}<br>
-                • 💰 <b>${this.Armor_5.codeName}:</b> एडसेंस अप्रूवल: <b style="color:var(--accent-green);">${r5.status}</b><br><br>
-                <i style="font-size:0.8rem; color:var(--text-muted);">रिपोर्ट तैयार है कैप्टन! पाँचों आर्मर फौजी आपके अगले आदेश का इंतजार कर रहे हैं।</i>
-            </div>`;
+            async autoReportToCaptain() {
+                const r1 = await this.Armor_1.runTask();
+                const r2 = await this.Armor_2.runTask();
+                const r3 = await this.Armor_3.runTask();
+                const r4 = await this.Armor_4.runTask();
+                const r5 = await this.Armor_5.runTask();
 
-        UIManager.appendMsg(reportHTML, 'ai');
-    }
-};
+                const reportHTML = `
+                    <div class="captain-lock-card" style="border-color:var(--accent-cyan); background: rgba(11, 15, 25, 0.95); margin-top:10px;">
+                        <div style="font-size:0.95rem; font-weight:800; color:var(--accent-cyan); margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.3); padding-bottom:6px;">
+                            🫡 5 ARMOR SOLDIERS AUTOMATIC DAILY REPORT FOR CAPTAIN KESHAV
+                        </div>
+                        • 🛡️ <b>${this.Armor_1.codeName}:</b> ${r1.scannedPages} पेज जाँच किए, टूटे लिंक: ${r1.brokenLinks}<br>
+                        • ⚡ <b>${this.Armor_2.codeName}:</b> लोड स्पीड: ${r2.loadTime} (स्कोर: ${r2.score})<br>
+                        • 🔐 <b>${this.Armor_3.codeName}:</b> SSL स्टेटस: ${r3.ssl} (थ्रेट्स: ${r3.vulnerabilities})<br>
+                        • 📊 <b>${this.Armor_4.codeName}:</b> SEO हेल्थ: ${r4.status}<br>
+                        • 💰 <b>${this.Armor_5.codeName}:</b> एडसेंस अप्रूवल: <b style="color:var(--accent-green);">${r5.status}</b><br><br>
+                        <i style="font-size:0.8rem; color:var(--text-muted);">रिपोर्ट तैयार है कैप्टन! पाँचों आर्मर फौजी आपके अगले आदेश का इंतजार कर रहे हैं।</i>
+                    </div>`;
+
+                UIManager.appendMsg(reportHTML, 'ai');
+            }
+        };
 
         // =================================================================
         // 4. UI MANAGER
@@ -946,9 +947,9 @@ const ArmorFleet = {
                     </button>
                 </div>`;
                 UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card');
-                // renderUnlockedCaptainScreen फ़ंक्शन के सबसे नीचे यह लाइन जोड़ें:
-setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
                 
+                // अनलॉक होते ही फौजियों की ऑटोमैटिक रिपोर्ट ट्रिगर होगी
+                setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
             },
 
             verifyCaptainPass: function(inputPass) {
@@ -1012,6 +1013,7 @@ setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
                 const text = input.value.trim();
                 if (!text) return;
 
+                // 🔒 1. Captain Mode Lock Check
                 if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
                     UIManager.appendMsg(text, 'user');
                     input.value = '';
@@ -1019,6 +1021,22 @@ setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
                     return;
                 }
 
+                // 🛡️ 2. ARMOR SOLDIERS TRIGGER CHECK (लोकल ऑटोमेशन ट्रिगर)
+                const lowerText = text.toLowerCase();
+                if (this.currentMode === 'CAPTAIN' && (
+                    lowerText.includes('report') || 
+                    lowerText.includes('fauji') || 
+                    lowerText.includes('armor') || 
+                    lowerText.includes('status') || 
+                    lowerText.includes('फौजी')
+                )) {
+                    UIManager.appendMsg(text, 'user');
+                    input.value = '';
+                    ArmorFleet.autoReportToCaptain();
+                    return; // AI API पर जाने से रोकेगा और लोकल रिपोर्ट पेश करेगा
+                }
+
+                // 3. Normal AI Processing
                 ActivityTracker.addChat('User', text);
                 UIManager.appendMsg(text, 'user');
                 StorageManager.saveLog('user', text);
@@ -1031,20 +1049,25 @@ setTimeout(() => { ArmorFleet.autoReportToCaptain(); }, 800);
                 const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
 
                 let trackerDataInject = "";
-                const lowerText = text.toLowerCase();
-                if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker") || lowerText.includes("report")) {
+                if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker")) {
                     trackerDataInject = `\n[SYSTEM LOCALSTORAGE TRACKER DATA]:\n${StorageManager.getTrackerData()}\n`;
                 }
 
                 const userContext = KeshavUserProfile.getSystemContext();
 
+                // 🎯 Strict Role Prompting
                 let systemRolePrompt = "";
                 switch (this.currentMode) {
                     case 'CAPTAIN':
-                        systemRolePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. Address user directly as Captain Keshav or Supreme Commander. Keep response sharp, clean, fluff-free.";
+                        systemRolePrompt = `STRICT INSTRUCTIONS FOR CAPTAIN KESHAV OS MODE:
+1. You are strictly the Executive Assistant and Operations Manager for Supreme Commander Captain Keshav.
+2. Address the user ONLY as "Captain Keshav" or "Supreme Commander".
+3. YOU ARE ONLY PERMITTED TO DISCUSS: Website technical architecture, Armor Fleet operations (Armor-1 to Armor-5), AdSense approval readiness, website speed, SEO auditing, code bug fixes, and system upgrades.
+4. IF USER ASKS ABOUT ANYTHING ELSE (general knowledge, games, movies, random topics, personal questions): You must strictly refuse and state: "कैप्टन! मैं केवल आपके वेबसाइट इंफ्रास्ट्रक्चर और 5 आर्मर फौजियों के संचालन के लिए प्रोग्राम्ड हूँ। कृपया वेबसाइट ऑडिट या सिस्टम अपग्रेड का आदेश दें।"
+5. Maintain a sharp, executive, military-grade command tone at all times.`;
                         break;
                     case 'FINANCE':
-                        systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Focus on math, calculations, and exact facts.";
+                        systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Focus on math, calculations, and exact financial facts.";
                         break;
                     case 'DEV':
                         systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide clean code blocks and logic fixes.";
@@ -1058,16 +1081,14 @@ ${userContext}
 System Instruction: You are Parnarav AI.
 ${systemRolePrompt}
 
-Language Constraint: Answer strictly in direct Hinglish/Hindi without generic setups or conversational fluff.
+Language Constraint: Answer directly in Hinglish/Hindi without generic setups or fluff.
 
 [RECENT CHAT HISTORY (FOR CONTEXT)]
 ${historyContext}
 ${trackerDataInject}
 
 [CURRENT USER INPUT]
-User: ${text}
-
-Instruction: Read the Chat History above. If user inputs options like "1" or "2", understand which option they selected from previous messages and answer accordingly.`;
+User: ${text}`;
 
                 try {
                     const response = await puter.ai.chat(masterPrompt);
