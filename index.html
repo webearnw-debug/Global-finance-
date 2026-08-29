@@ -310,7 +310,6 @@
             color: #ffffff;
         }
 
-        /* Captain Auth Styling */
         .captain-lock-card {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(15, 23, 42, 0.95));
             border: 2px solid #ef4444;
@@ -486,14 +485,12 @@
             <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
             </li>
-            <!-- Captain Keshav OS Button (Always Visible in Menu) -->
             <li class="nav-item captain-mode-item" id="captainNavItem" onclick="AppController.switchMode('CAPTAIN', this)">
                 <i class="fa-solid fa-crown" style="color:#ef4444;"></i> Captain Keshav OS
             </li>
         </ul>
 
         <div class="tools-menu">
-            <!-- Omni Super AI Knowledge Engine Tools -->
             <div style="font-size:0.75rem; font-weight:700; color:var(--accent-cyan); margin-bottom:8px; text-transform:uppercase;">
                 Omni Knowledge Tools
             </div>
@@ -507,7 +504,6 @@
                 <i class="fa-solid fa-file-contract" style="color:var(--accent-yellow)"></i> AI Summarizer
             </button>
 
-            <!-- Finance & Quant Tools -->
             <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">
                 Finance Tools
             </div>
@@ -581,58 +577,117 @@
 
     <script>
         // =================================================================
-        // 🔑 CONFIGURATION & SECURITY
+        // 1. GLOBAL CONFIG & USER PROFILE
         // =================================================================
         const CAPTAIN_CONFIG = {
-            // 👇 यहाँ अपना मनपसंद पासवर्ड सेट करें:
             PASSWORD: "360",
             SYSTEM_NAME: "Keshav-OS Executive Core v3.0"
         };
 
-  // ==========================================
-// 1. STORAGE & TRACKER ENGINE (Lines 592-631)
-// ==========================================
-const StorageManager = {
-    STORAGE_KEY: 'parnarav_chat_logs',
-    TRACKER_KEY: 'captain_user_tracker',
+        const KeshavUserProfile = {
+            name: "Keshav",
+            age: 16,
+            role: "Student",
+            getSystemContext: function() {
+                return `[USER PROFILE]: User is ${this.name}, a ${this.age}-year-old student. Provide responses tailored for clear learning, exam/study guidance, coding, and simplified explanations suitable for a student.`;
+            }
+        };
 
-    saveLog(role, content) {
-        let logs = this.getLogs();
-        logs.push({ role, content, timestamp: new Date().toISOString() });
-        if (logs.length > 20) logs.shift();
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(logs));
-    },
+        // =================================================================
+        // 2. STORAGE & TRACKER ENGINES (MODULAR DATA LAYER)
+        // =================================================================
+        const StorageManager = {
+            STORAGE_KEY: 'parnarav_chat_logs',
+            TRACKER_KEY: 'captain_user_tracker',
 
-    getLogs() {
-        try {
-            return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
-        } catch (e) {
-            return [];
-        }
-    },
+            saveLog(role, content) {
+                let logs = this.getLogs();
+                logs.push({ role, content, timestamp: new Date().toISOString() });
+                if (logs.length > 20) logs.shift();
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(logs));
+            },
 
-    getTrackerData() {
-        return localStorage.getItem(this.TRACKER_KEY) || JSON.stringify({
-            status: "ACTIVE",
-            user: "Captain Keshav",
-            level: "Level-A Supreme",
-            totalChats: this.getLogs().length,
-            lastLogin: new Date().toLocaleString()
-        }, null, 2);
-    }
-};
+            getLogs() {
+                try {
+                    return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || [];
+                } catch (e) {
+                    return [];
+                }
+            },
 
-const ActivityTracker = {
-    addChat(role, text) {
-        let tracker = JSON.parse(localStorage.getItem(StorageManager.TRACKER_KEY) || '{}');
-        tracker.lastAction = text;
-        tracker.lastTimestamp = new Date().toLocaleString();
-        tracker.totalClicks = (tracker.totalClicks || 0) + 1;
-        localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(tracker));
-    }
-};
-      
+            getTrackerData() {
+                return localStorage.getItem(this.TRACKER_KEY) || JSON.stringify({
+                    status: "ACTIVE",
+                    user: "Captain Keshav",
+                    level: "Level-A Supreme",
+                    totalChats: this.getLogs().length,
+                    lastLogin: new Date().toLocaleString()
+                }, null, 2);
+            }
+        };
 
+        const ActivityTracker = {
+            init: function() {
+                let sessionData = {
+                    startTime: new Date().toLocaleString(),
+                    referrer: document.referrer || "Direct Visit",
+                    clicks: [],
+                    chatHistory: []
+                };
+                document.addEventListener('click', (e) => {
+                    let target = e.target.closest('button, a, input, .nav-item');
+                    if (target) {
+                        sessionData.clicks.push({
+                            element: target.innerText || target.placeholder || target.className,
+                            time: new Date().toLocaleTimeString()
+                        });
+                        localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(sessionData));
+                    }
+                });
+                if (!localStorage.getItem(StorageManager.TRACKER_KEY)) {
+                    localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(sessionData));
+                }
+            },
+            addChat: function(role, text) {
+                let data = JSON.parse(localStorage.getItem(StorageManager.TRACKER_KEY) || '{}');
+                if (!data.chatHistory) data.chatHistory = [];
+                data.chatHistory.push({ role: role, text: text, time: new Date().toLocaleTimeString() });
+                localStorage.setItem(StorageManager.TRACKER_KEY, JSON.stringify(data));
+            }
+        };
+        ActivityTracker.init();
+
+        const ComprehensiveAppTracker = {
+            logs: [],
+            logAction: function(category, details) {
+                const entry = { timestamp: new Date().toLocaleTimeString(), category: category, details: details };
+                this.logs.push(entry);
+                console.log("📊 [System Log]:", entry);
+            },
+            generateReport: function() {
+                let reportHTML = `<div class="widget-card" style="border-color: var(--accent-cyan);">
+                    <div class="widget-title" style="color: var(--accent-cyan);"><i class="fa-solid fa-list-check"></i> WEB APP SYSTEM REPORT</div>
+                    <b>User:</b> ${KeshavUserProfile.name} (${KeshavUserProfile.age} yrs)<br>
+                    <b>Total Logged Events:</b> ${this.logs.length}<br><br>
+                    <b>Recent Activity Logs:</b><br>`;
+                
+                const recent = this.logs.slice(-5);
+                recent.forEach(log => {
+                    reportHTML += `• [${log.timestamp}] <b>${log.category}:</b> ${log.details}<br>`;
+                });
+                reportHTML += `</div>`;
+                
+                if (typeof UIManager !== 'undefined') UIManager.appendMsg(reportHTML, 'ai');
+            }
+        };
+
+        window.addEventListener('error', function(e) {
+            ComprehensiveAppTracker.logAction("System Error", `${e.message} at line ${e.lineno}`);
+        });
+
+        // =================================================================
+        // 3. SPECIALIZED KNOWLEDGE ENGINES
+        // =================================================================
         const OmniKnowledgeEngine = {
             solveExamQuestion: function() {
                 const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल यहाँ दर्ज करें:");
@@ -700,6 +755,9 @@ const ActivityTracker = {
             }
         };
 
+        // =================================================================
+        // 4. UI MANAGER
+        // =================================================================
         const UIManager = {
             appendMsg: function(content, sender, id = null) {
                 const container = document.getElementById('chatContainer');
@@ -744,6 +802,9 @@ const ActivityTracker = {
             }
         };
 
+        // =================================================================
+        // 5. MAIN APP CONTROLLER
+        // =================================================================
         const AppController = {
             currentMode: 'OMNI',
             isCaptainUnlocked: false,
@@ -757,9 +818,7 @@ const ActivityTracker = {
                     element.classList.add('active');
                 }
                 
-                // स्क्रीन साफ़ करना
                 document.getElementById('chatContainer').innerHTML = '';
-
                 let titleName = "Omni Super AI Active";
 
                 if (mode === 'CAPTAIN') {
@@ -775,6 +834,7 @@ const ActivityTracker = {
                     return;
                 }
 
+                let welcomeText = "";
                 if (mode === 'FINANCE') {
                     titleName = "Trading & Finance Active";
                     welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
@@ -782,8 +842,7 @@ const ActivityTracker = {
                     <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
                     • **Stock & Crypto:** मार्केट एनालिसिस और ट्रेंड प्रिडिक्शन।<br>
                     • **Trading Strategies:** रिस्क मैनेजमेंट और क्वांट सिग्नल्स।<br>
-                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का हिसाब।<br>
-                    • **Personal Finance:** वेल्थ बिल्ड-अप और टैक्स सेविंग टिप्स।<br><br>
+                    • **Calculations:** SIP रिटर्न और बैंक लोन EMI का हिसाब।<br><br>
                     <i>अपना फाइनेंस या ट्रेडिंग से जुड़ा सवाल यहाँ पूछें!</i>`;
                 } else if (mode === 'DEV') {
                     titleName = "Coding Master Active";
@@ -791,9 +850,7 @@ const ActivityTracker = {
                     मैंने अपनी भूमिका पहचान ली है। मैं आपका **सॉफ्टवेयर इंजीनियर & कोडिंग AI** हूँ।<br><br>
                     <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
                     • **Code Generation:** HTML, CSS, JS, Python, C++, React का पूरा कोड।<br>
-                    • **Bug Fixing & Debugging:** आपके कोड के एरर खोजना और ठीक करना।<br>
-                    • **System Architecture:** डेटाबेस डिजाइन और API इंटीग्रेशन।<br>
-                    • **Code Optimization:** कोड की स्पीड और परफॉर्मेंस बेहतर करना।<br><br>
+                    • **Bug Fixing & Debugging:** आपके कोड के एरर खोजना और ठीक करना।<br><br>
                     <i>अपना कोड पेस्ट करें या कोई भी प्रोग्रामिंग सवाल पूछें!</i>`;
                 } else {
                     titleName = "Omni Super AI Active";
@@ -801,21 +858,17 @@ const ActivityTracker = {
                     मैंने अपनी भूमिका पहचान ली है। मैं आपका **यूनिवर्सल ऑल-इन-वन AI** हूँ।<br><br>
                     <b>इस मोड में मैं आपकी ये मदद करूँगा:</b><br>
                     • **General Knowledge:** विज्ञान, इतिहास और सामयिक विषयों पर पूरी जानकारी।<br>
-                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br>
-                    • **Content Creation:** लेख, ईमेल और आइडियाज जनरेट करना।<br><br>
+                    • **Bank PO & Exam Prep:** मैथ्स, रीजनिंग, इंग्लिश और स्टडी टिप्स।<br><br>
                     <i>आप मुझसे कोई भी सवाल पूछ सकते हैं!</i>`;
                 }
 
                 document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
-                
                 const aiMsgId = 'ai-mode-' + Date.now();
                 UIManager.appendMsg(welcomeText, 'ai', aiMsgId);
                 UIManager.renderActionBar(aiMsgId);
-
                 this.closeSidebarMobile();
             },
 
-            // 🔒 locked स्क्रीन
             renderLockedCaptainScreen: function() {
                 const lockCardHTML = `
                 <div class="captain-lock-card">
@@ -834,11 +887,9 @@ const ActivityTracker = {
                         ⚠️ गलत पासवर्ड! कृपया सही पासवर्ड दर्ज करें।
                     </div>
                 </div>`;
-                
                 UIManager.appendMsg(lockCardHTML, 'ai', 'locked-captain-card');
             },
 
-            // 🔓 unlocked स्क्रीन
             renderUnlockedCaptainScreen: function() {
                 const welcomeCardHTML = `
                 <div class="captain-lock-card" style="border-color:#4ade80; background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(15,23,42,0.95)); shadow: 0 0 25px rgba(74, 222, 128, 0.2);">
@@ -859,22 +910,24 @@ const ActivityTracker = {
                         <i class="fa-solid fa-lock"></i> Exit / Lock OS
                     </button>
                 </div>`;
-
                 UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card');
             },
 
-            verifyCaptainPass: function() {
+            verifyCaptainPass: function(inputPass) {
                 const input = document.getElementById('captainPassInput');
                 const error = document.getElementById('passErrorMsg');
-                if (!input) return;
+                const pass = inputPass || input?.value.trim();
 
-                if (input.value.trim() === CAPTAIN_CONFIG.PASSWORD) {
+                if (pass === CAPTAIN_CONFIG.PASSWORD) {
                     this.isCaptainUnlocked = true;
+                    this.currentMode = 'CAPTAIN';
                     document.getElementById('chatContainer').innerHTML = '';
                     this.renderUnlockedCaptainScreen();
+                    return true;
                 } else {
                     if (error) error.style.display = 'block';
-                    input.value = '';
+                    if (input) input.value = '';
+                    return false;
                 }
             },
 
@@ -886,85 +939,83 @@ const ActivityTracker = {
             handleKeyPress: function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                   // ==========================================
-// 2. APP CONTROLLER ENGINE (Lines 744-978)
-// ==========================================
-const AppController = {
-    currentMode: 'OMNI',
-    isCaptainUnlocked: false,
+                    this.submitQuery();
+                }
+            },
 
-    setMode(mode) {
-        this.currentMode = mode;
-        console.log(`Operating Mode Changed To: ${mode}`);
-    },
+            copyResponse: function(btn) {
+                const bubble = btn.closest('.bubble');
+                const clone = bubble.cloneNode(true);
+                const bar = clone.querySelector('.ai-action-bar');
+                if (bar) bar.remove();
+                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                    btn.innerHTML = '✅ Copied!';
+                    setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
+                });
+            },
 
-    verifyCaptainPass(inputPass) {
-        const pass = inputPass || document.getElementById('captainPassInput')?.value.trim();
-        if (pass === "360") {
-            this.isCaptainUnlocked = true;
-            this.currentMode = 'CAPTAIN';
-            if (window.UIManager) UIManager.appendMsg("🫡 SUPREME COMMANDER ACCESS UNLOCKED", 'ai');
-            return true;
-        }
-        if (window.UIManager) UIManager.appendMsg("❌ गलत पासवर्ड!", 'ai');
-        return false;
-    },
+            toggleFeedback: function(btn, type) {
+                const parent = btn.parentElement;
+                const likeBtn = parent.querySelector('.like-btn');
+                const dislikeBtn = parent.querySelector('.dislike-btn');
+                if (type === 'like') {
+                    likeBtn.classList.toggle('like-active');
+                    dislikeBtn.classList.remove('dislike-active');
+                } else {
+                    dislikeBtn.classList.toggle('dislike-active');
+                    likeBtn.classList.remove('like-active');
+                }
+            },
 
-    async submitQuery() {
-        const input = document.getElementById('userInput');
-        if (!input) return;
+            submitQuery: async function() {
+                const input = document.getElementById('userInput');
+                if (!input) return;
 
-        const text = input.value.trim();
-        if (!text) return;
+                const text = input.value.trim();
+                if (!text) return;
 
-        // Captain OS Guard Check
-        if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
-            if (window.UIManager) UIManager.appendMsg(text, 'user');
-            input.value = '';
-            if (window.UIManager) UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! कृपया पासवर्ड '360' दर्ज करें।", 'ai');
-            return;
-        }
+                if (this.currentMode === 'CAPTAIN' && !this.isCaptainUnlocked) {
+                    UIManager.appendMsg(text, 'user');
+                    input.value = '';
+                    UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! कृपया पासवर्ड '360' दर्ज करें।", 'ai');
+                    return;
+                }
 
-        ActivityTracker.addChat('User', text);
-        if (window.UIManager) UIManager.appendMsg(text, 'user');
-        StorageManager.saveLog('user', text);
-        input.value = '';
+                ActivityTracker.addChat('User', text);
+                UIManager.appendMsg(text, 'user');
+                StorageManager.saveLog('user', text);
+                input.value = '';
 
-        const aiMsgId = 'ai-' + Date.now();
-        if (window.UIManager) UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
+                const aiMsgId = 'ai-' + Date.now();
+                UIManager.appendMsg("<i>Parnarav AI सोच रहा है... ⚡</i>", 'ai', aiMsgId);
 
-        // 🧠 Chat Memory Integration (आखरी 6 चैट्स का संदर्भ)
-        const recentLogs = StorageManager.getLogs().slice(-6);
-        const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
+                const recentLogs = StorageManager.getLogs().slice(-6);
+                const historyContext = recentLogs.map(l => `${l.role.toUpperCase()}: ${l.content}`).join("\n");
 
-        // 📊 LocalStorage Tracker Injection
-        let trackerDataInject = "";
-        const lowerText = text.toLowerCase();
-        if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker") || lowerText.includes("report")) {
-            trackerDataInject = `\n[SYSTEM LOCALSTORAGE TRACKER DATA]:\n${StorageManager.getTrackerData()}\n`;
-        }
+                let trackerDataInject = "";
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes("captain_user_tracker") || lowerText.includes("tracker") || lowerText.includes("report")) {
+                    trackerDataInject = `\n[SYSTEM LOCALSTORAGE TRACKER DATA]:\n${StorageManager.getTrackerData()}\n`;
+                }
 
-        // Fetch User Context
-        const userContext = (window.KeshavUserProfile && typeof KeshavUserProfile.getSystemContext === 'function')
-            ? KeshavUserProfile.getSystemContext()
-            : "User: Captain Keshav";
+                const userContext = KeshavUserProfile.getSystemContext();
 
-        let systemRolePrompt = "";
-        switch (this.currentMode) {
-            case 'CAPTAIN':
-                systemRolePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. Address user directly as Captain Keshav or Supreme Commander. Keep response sharp, clean, fluff-free.";
-                break;
-            case 'FINANCE':
-                systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Focus on math, calculations, and exact facts.";
-                break;
-            case 'DEV':
-                systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide clean code blocks and logic fixes.";
-                break;
-            default:
-                systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Simple explanations suitable for a student.";
-        }
+                let systemRolePrompt = "";
+                switch (this.currentMode) {
+                    case 'CAPTAIN':
+                        systemRolePrompt = "OPERATING MODE: CAPTAIN KESHAV SUPREME OS. Address user directly as Captain Keshav or Supreme Commander. Keep response sharp, clean, fluff-free.";
+                        break;
+                    case 'FINANCE':
+                        systemRolePrompt = "OPERATING MODE: TRADING & FINANCE MASTER. Focus on math, calculations, and exact facts.";
+                        break;
+                    case 'DEV':
+                        systemRolePrompt = "OPERATING MODE: CODING MASTER. Provide clean code blocks and logic fixes.";
+                        break;
+                    default:
+                        systemRolePrompt = "OPERATING MODE: OMNI SUPER AI. Simple explanations suitable for a student.";
+                }
 
-        const masterPrompt = `
+                const masterPrompt = `
 ${userContext}
 System Instruction: You are Parnarav AI.
 ${systemRolePrompt}
@@ -980,97 +1031,39 @@ User: ${text}
 
 Instruction: Read the Chat History above. If user inputs options like "1" or "2", understand which option they selected from previous messages and answer accordingly.`;
 
-        try {
-            const response = await puter.ai.chat(masterPrompt);
-            let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
+                try {
+                    const response = await puter.ai.chat(masterPrompt);
+                    let replyText = typeof response === 'string' ? response : (response.message ? response.message.content : JSON.stringify(response));
 
-            const bubbleElement = document.getElementById(aiMsgId);
-            if (bubbleElement) {
-                const bubble = bubbleElement.querySelector('.bubble');
-                const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
+                    const bubbleElement = document.getElementById(aiMsgId);
+                    if (bubbleElement) {
+                        const bubble = bubbleElement.querySelector('.bubble');
+                        const badge = this.currentMode === 'CAPTAIN' ? "🫡 **[CAPTAIN EXECUTIVE ACTIVE]**\n\n" : "";
 
-                if (window.marked) bubble.innerHTML = marked.parse(badge + replyText);
-                else bubble.innerText = replyText;
+                        if (window.marked) bubble.innerHTML = marked.parse(badge + replyText);
+                        else bubble.innerText = replyText;
 
-                if (window.UIManager && UIManager.renderActionBar) UIManager.renderActionBar(aiMsgId);
-                if (window.hljs) hljs.highlightAll();
+                        UIManager.renderActionBar(aiMsgId);
+                        if (window.hljs) hljs.highlightAll();
+                    }
+                    StorageManager.saveLog('ai', replyText);
+                } catch (err) {
+                    const bubbleElement = document.getElementById(aiMsgId);
+                    if (bubbleElement) {
+                        const bubble = bubbleElement.querySelector('.bubble');
+                        bubble.innerHTML = `**[System Error]** AI Connect Error: \`${err.message || err}\``;
+                    }
+                }
+            },
+
+            toggleSidebar: function() {
+                document.getElementById('sidebar').classList.toggle('open');
+            },
+
+            closeSidebarMobile: function() {
+                document.getElementById('sidebar').classList.remove('open');
             }
-            StorageManager.saveLog('ai', replyText);
-        } catch (err) {
-            const bubbleElement = document.getElementById(aiMsgId);
-            if (bubbleElement) {
-                const bubble = bubbleElement.querySelector('.bubble');
-                bubble.innerHTML = `**[System Error]** AI Connect Error: \`${err.message || err}\``;
-            }
-        }
-    }
-};
- 
-        // =================================================================
-// 👤 KESHAV PERSONAL PROFILE & APP TRACKER MODULE
-// =================================================================
-
-const KeshavUserProfile = {
-    name: "Keshav",
-    age: 16,
-    role: "Student",
-    // AI के लिए पर्सनल निर्देश
-    getSystemContext: function() {
-        return `[USER PROFILE]: User is ${this.name}, a ${this.age}-year-old student. Provide responses tailored for clear learning, exam/study guidance, coding, and simplified explanations suitable for a student.`;
-    }
-};
-
-const ComprehensiveAppTracker = {
-    logs: [],
-    
-    // गतिविधि रिकॉर्ड करना
-    logAction: function(category, details) {
-        const entry = {
-            timestamp: new Date().toLocaleTimeString(),
-            category: category,
-            details: details
         };
-        this.logs.push(entry);
-        console.log("📊 [System Log]:", entry);
-    },
-
-    // स्क्रीन पर लाइव रिपोर्ट दिखाना
-    generateReport: function() {
-        let reportHTML = `<div class="widget-card" style="border-color: var(--accent-cyan);">
-            <div class="widget-title" style="color: var(--accent-cyan);"><i class="fa-solid fa-list-check"></i> WEB APP SYSTEM REPORT</div>
-            <b>User:</b> ${KeshavUserProfile.name} (${KeshavUserProfile.age} yrs)<br>
-            <b>Total Logged Events:</b> ${this.logs.length}<br><br>
-            <b>Recent Activity Logs:</b><br>`;
-        
-        const recent = this.logs.slice(-5);
-        recent.forEach(log => {
-            reportHTML += `• [${log.timestamp}] <b>${log.category}:</b> ${log.details}<br>`;
-        });
-        
-        reportHTML += `</div>`;
-        
-        if (typeof UIManager !== 'undefined') {
-            UIManager.appendMsg(reportHTML, 'ai');
-        }
-    }
-};
-
-// क्लिक और बटन ट्रैकिंग स्वचालित रूप से चालू करें
-document.addEventListener('click', function(e) {
-    const target = e.target.closest('button, a, .nav-item');
-    if (target) {
-        const label = target.innerText.trim() || target.className;
-        ComprehensiveAppTracker.logAction("UI Click", `Button clicked: "${label}"`);
-    }
-});
-
-// ऐप की एरर (गड़बड़ी) को ट्रैक करें
-window.addEventListener('error', function(e) {
-    ComprehensiveAppTracker.logAction("System Error", `${e.message} at line ${e.lineno}`);
-});
-
     </script>
-    
-    
 </body>
-</html>  
+</html>
