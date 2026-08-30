@@ -554,8 +554,8 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-        // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
+                // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (GROQ INTEGRATION)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -572,78 +572,46 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
+                // === Groq Free API Code ===
+                const API_KEY = "gsk_YoZNb28g5PYPQtego+THoWGdyb3FYipG55vYJujkA08Vog4FSO7YS"; // Quotes me band kar diya hai
 
-// === Groq Free API Code ===
-const API_KEY = gsk_YoZNb28g5PYPQtego+THoWGdyb3FYipG55vYJujkA08Vog4FSO7YS
+                const lastUserMsg = this.chatHistory ? this.chatHistory[this.chatHistory.length - 1]?.content || "" : "";
 
-const lastUserMsg = this.chatHistory ? this.chatHistory[this.chatHistory.length - 1]?.content || "" : "";
+                try {
+                    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${API_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: "llama-3.3-70b-versatile",
+                            messages: [{ role: "user", content: lastUserMsg }]
+                        })
+                    });
 
-try {
-    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${API_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            model: "llama-3.3-70b-versatile",
-            messages: [{ role: "user", content: lastUserMsg }]
-        })
-    });
+                    const data = await apiResponse.json();
+                    
+                    if (data && data.choices && data.choices[0]) {
+                        const fullReply = data.choices[0].message.content;
+                        
+                        // History me AI reply add karein
+                        this.chatHistory.push({ role: "assistant", content: fullReply });
 
-    const data = await apiResponse.json();
-    const fullReply = data.choices[0].message.content;
-
-    if (onChunkCallback) {
-        onChunkCallback(fullReply);
-    }
-} catch (error) {
-    console.error("API Error:", error);
-    if (onChunkCallback) {
-        onChunkCallback("API Connection me koi error aaya.");
-    }
-}
-
-
-        // =================================================================
-        // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
-        // =================================================================
-        const VoiceEngine = {
-            enabled: false,
-
-            toggleVoice: function() {
-                this.enabled = !this.enabled;
-                const btn = document.getElementById('voiceToggleBtn');
-                const txt = document.getElementById('voiceStatusText');
-                if (this.enabled) {
-                    btn.classList.add('active');
-                    txt.innerText = "Voice ON";
-                    this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
-                } else {
-                    btn.classList.remove('active');
-                    txt.innerText = "Voice OFF";
-                    window.speechSynthesis.cancel();
+                        if (onChunkCallback) {
+                            onChunkCallback(fullReply);
+                        }
+                        return fullReply;
+                    }
+                } catch (error) {
+                    console.error("API Error:", error);
+                    if (onChunkCallback) {
+                        onChunkCallback("API Connection me koi error aaya.");
+                    }
                 }
-            },
-
-            speak: function(text) {
-                if (!this.enabled || !('speechSynthesis' in window)) return;
-                window.speechSynthesis.cancel();
-
-                const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
-                const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'hi-IN';
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-
-                window.speechSynthesis.speak(utterance);
             }
         };
 
-        // =================================================================
-        // 🎙️ VOICE STT ENGINE (SPEECH-TO-TEXT / MICROPHONE)
-        // =================================================================
-        const VoiceInputEngine = {
             recognition: null,
             isListening: false,
 
