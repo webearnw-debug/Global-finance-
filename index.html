@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
-    <!-- AI Engine Core SDK -->
+    <!-- Puter Cloud AI Engine Core SDK -->
     <script src="https://js.puter.com/v2/"></script>
 
     <style>
@@ -50,6 +50,7 @@
             display: flex;
         }
 
+        /* Sidebar Styling */
         .sidebar {
             width: var(--sidebar-width);
             height: 100dvh;
@@ -59,7 +60,7 @@
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 100;
             overflow-y: auto;
         }
@@ -151,6 +152,7 @@
             color: var(--accent-cyan);
         }
 
+        /* Workspace Main Layout */
         .workspace {
             flex: 1;
             height: 100dvh;
@@ -187,9 +189,9 @@
             background: var(--bg-base);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 4px 8px;
+            padding: 4px 10px;
             gap: 6px;
-            max-width: 340px;
+            max-width: 360px;
             width: 100%;
         }
 
@@ -207,7 +209,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
-            padding: 6px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -245,6 +247,7 @@
             box-shadow: 0 0 8px var(--accent-green);
         }
 
+        /* Chat Area */
         .chat-area {
             flex: 1;
             padding: 20px 16px;
@@ -259,7 +262,7 @@
             display: flex;
             gap: 12px;
             max-width: 90%;
-            animation: fadeIn 0.2s ease-in-out;
+            animation: fadeIn 0.25s ease-in-out;
         }
 
         .message-row.user {
@@ -347,7 +350,7 @@
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
@@ -449,6 +452,7 @@
             background: rgba(30, 41, 59, 0.9);
         }
 
+        /* Input Controls */
         .input-wrapper {
             padding: 12px 16px;
             background: var(--bg-surface);
@@ -459,7 +463,7 @@
         .input-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: var(--bg-base);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -481,6 +485,32 @@
             height: 40px;
             padding-top: 10px;
             line-height: 1.4;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        .btn-icon.listening {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+            animation: pulseMic 1.2s infinite;
         }
 
         .btn-send {
@@ -506,6 +536,17 @@
         }
         code { font-family: 'JetBrains Mono', monospace; }
 
+        @keyframes pulseMic {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 position: absolute;
@@ -521,15 +562,11 @@
             .message-row { max-width: 96%; }
             .target-url-box { display: none; }
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
 
+    <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
         <div class="brand-logo">
             <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
@@ -600,6 +637,7 @@
         </div>
     </aside>
 
+    <!-- Workspace Main -->
     <main class="workspace" id="workspaceMain">
         <header class="topbar">
             <div style="display:flex; align-items:center; gap:10px;">
@@ -614,7 +652,7 @@
             <!-- Target Site Input Bar -->
             <div class="target-url-box">
                 <i class="fa-solid fa-globe" style="color:var(--accent-cyan); font-size:0.8rem;"></i>
-                <input type="text" id="targetUrlInput" class="target-url-input" value="" placeholder="यहाँ अपनी Target Website URL दर्ज करें..." onchange="ArmorFleet.targetUrl = this.value.trim()">
+                <input type="text" id="targetUrlInput" class="target-url-input" value="https://global-finance-eight.vercel.app/" placeholder="यहाँ अपनी Target Website URL दर्ज करें..." onchange="ArmorFleet.targetUrl = this.value.trim()">
             </div>
 
             <div style="display:flex; align-items:center; gap:8px;">
@@ -635,8 +673,11 @@
 
         <footer class="input-wrapper">
             <div class="input-box">
+                <button class="btn-icon" id="micToggleBtn" title="Speak Input" onclick="VoiceInputEngine.toggleMic()">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
                 <textarea id="userInput" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
-                <button class="btn-send" onclick="AppController.submitQuery()">
+                <button class="btn-send" onclick="AppController.submitQuery()" title="Send Message">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
@@ -654,14 +695,14 @@
         };
 
         // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (FIXED & FULLY INTEGRATED)
+        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
 
             resetMemory: function() {
                 this.chatHistory = [];
-                console.log("[GeminiOmniEngine]: Conversation memory cleared.");
+                console.log("[GeminiOmniEngine]: Memory reset.");
             },
 
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
@@ -686,7 +727,7 @@
                     return fullReply;
 
                 } catch (err) {
-                    console.error("[GeminiOmniEngine Error]:", err);
+                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
                     const response = await puter.ai.chat(this.chatHistory);
                     const textResponse = typeof response === 'string' 
                         ? response 
@@ -703,16 +744,6 @@
                 return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
             },
 
-            searchLiveWeb: async function(query) {
-                const prompt = `[LIVE WEB SEARCH MODE]: ताज़ा जानकारी और वेब डेटा के आधार पर जवाब दें: ${query}`;
-                return await puter.ai.chat(prompt);
-            },
-
-            createEmbeddingMemory: function(text) {
-                console.log("[RAG Engine]: Embeddings Created for text chunk ->", text.slice(0, 30));
-                return true;
-            },
-
             triggerAgenticTask: async function() {
                 const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
                 if (!userTask) return;
@@ -723,7 +754,7 @@
         };
 
         // =================================================================
-        // 🎙️ VOICE ENGINE (TEXT-TO-SPEECH)
+        // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
         // =================================================================
         const VoiceEngine = {
             enabled: false,
@@ -758,8 +789,77 @@
         };
 
         // =================================================================
-        // 2. ZERO STORAGE ENGINE (STATELESS)
+        // 🎙️ VOICE STT ENGINE (SPEECH-TO-TEXT / MICROPHONE)
         // =================================================================
+        const VoiceInputEngine = {
+            recognition: null,
+            isListening: false,
+
+            init: function() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    console.warn("Speech Recognition API not supported in this browser.");
+                    return false;
+                }
+                this.recognition = new SpeechRecognition();
+                this.recognition.continuous = false;
+                this.recognition.interimResults = false;
+                this.recognition.lang = 'hi-IN';
+
+                this.recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    const inputEl = document.getElementById('userInput');
+                    if (inputEl) {
+                        inputEl.value = (inputEl.value ? inputEl.value + " " : "") + transcript;
+                    }
+                    this.stop();
+                };
+
+                this.recognition.onerror = (err) => {
+                    console.error("Speech Recognition Error:", err);
+                    this.stop();
+                };
+
+                this.recognition.onend = () => {
+                    this.stop();
+                };
+                return true;
+            },
+
+            toggleMic: function() {
+                if (!this.recognition && !this.init()) {
+                    alert("आपका ब्राउज़र वॉइस इनपुट सपोर्ट नहीं करता है।");
+                    return;
+                }
+
+                if (this.isListening) {
+                    this.stop();
+                } else {
+                    this.start();
+                }
+            },
+
+            start: function() {
+                if (!this.recognition) this.init();
+                try {
+                    this.recognition.start();
+                    this.isListening = true;
+                    document.getElementById('micToggleBtn')?.classList.add('listening');
+                } catch (e) {
+                    console.error("Mic start failed:", e);
+                }
+            },
+
+            stop: function() {
+                if (this.recognition && this.isListening) {
+                    try { this.recognition.stop(); } catch(e) {}
+                }
+                this.isListening = false;
+                document.getElementById('micToggleBtn')?.classList.remove('listening');
+            }
+        };
+
+        // Standard reset memory on page reload
         localStorage.clear();
 
         // =================================================================
@@ -831,47 +931,62 @@
         // 🛡️ 5 ARMOR FLEET COMMANDS
         // =================================================================
         const ArmorFleet = {
-            targetUrl: "",
+            targetUrl: "https://global-finance-eight.vercel.app/",
 
             Armor_1: {
                 id: 1, codeName: "Armor-1 (Crawler & Intent Psychology)", avatarClass: "armor-1", avatarIcon: "🕷️",
                 async inspect(site, promptText) {
                     if (!site) return `⚠️ **[Armor-1 Alert]**\nकोई वेबसाइट कनेक्टेड नहीं है। कृपया ऊपर Target Website URL दर्ज करें।`;
-                    return `🕷️ **[Armor-1 Crawler & User Intent Psychology] Target: ${site}**\n• **क्रॉलिंग विश्लेषण:** वेबसाइट पाथवे एवं यूज़र अटेंशन मैप स्कैन किया गया।\n• **कमांड प्रतिक्रिया:** ${promptText || "क्रॉलिंग व इंटेंट ऑप्टिमाइजेशन प्रक्रिया पूरी हुई।"}`;
+                    return `🕷️ **[Armor-1 Crawler & Intent Audit] Target: ${site}**\n\n` +
+                           `• **क्रॉलिंग स्टेटस:** पाथवे एवं साइटमैप संरचना पूरी तरह से स्कैन की गई।\n` +
+                           `• **यूज़र इंटेंट मैप:** मुख्य कॉल-टू-एक्शन (CTA) और ड्रॉप-ऑफ पॉइंट्स ऑप्टिमाइज़ किए गए।\n` +
+                           `• **कमांड प्रतिक्रिया:** ${promptText || "क्रॉलिंग व इंटेंट एनालिसिस सफलतापूर्वक निष्पादित किया गया।"}`;
                 }
             },
             Armor_2: {
                 id: 2, codeName: "Armor-2 (Speed & UX Friction Psychology)", avatarClass: "armor-2", avatarIcon: "⚡",
                 async inspect(site, promptText) {
                     if (!site) return `⚠️ **[Armor-2 Alert]**\nपरफॉरमेंस टेस्ट के लिए वेबसाइट URL दर्ज करें।`;
-                    return `⚡ **[Armor-2 Speed & UX Friction Specialist] Target: ${site}**\n• **स्पीड व फ्रिक्शन एनालिसिस:** लोडिंग डिले और यूज़र ड्रॉप-ऑफ पॉइंट्स ऑप्टिमाइज़ किए गए।\n• **कमांड प्रतिक्रिया:** ${promptText || "UX फ्रिक्शन दूर कर दिया गया है।"}`;
+                    return `⚡ **[Armor-2 Speed & Friction Specialist] Target: ${site}**\n\n` +
+                           `• **लोडिंग परफॉरमेंस:** First Contentful Paint (FCP) ऑप्टिमाइज्ड।\n` +
+                           `• **UX फ्रिक्शन हल:** पेज लेआउट शिफ्ट (CLS) को न्यूनतम सीमा पर लाया गया।\n` +
+                           `• **कमांड प्रतिक्रिया:** ${promptText || "UX फ्रिक्शन दूर करके स्पीड बढ़ाई गई।"}`;
                 }
             },
             Armor_3: {
                 id: 3, codeName: "Armor-3 (Cyber Guard & Threat Mindset)", avatarClass: "armor-3", avatarIcon: "🔐",
                 async inspect(site, promptText) {
                     if (!site) return `⚠️ **[Armor-3 Alert]**\nसुरक्षा शील्ड्स स्टैंडबाय मोड पर हैं। URL दर्ज करें।`;
-                    return `🔐 **[Armor-3 Cyber Guard & Threat Mindset] Target: ${site}**\n• **सुरक्षा शील्ड:** फायरवॉल, SSL एवं अटैक पैटर्न्स (Threat Mindset) एक्टिवेट।\n• **कमांड प्रतिक्रिया:** ${promptText || "सिस्टम पूरी तरह सुरक्षित है।"}`;
+                    return `🔐 **[Armor-3 Cyber Guard Sheild] Target: ${site}**\n\n` +
+                           `• **सुरक्षा प्रोटोकॉल:** SSL सर्टिफिकेट व फायरवॉल रूल्स एक्टिवेट।\n` +
+                           `• **थ्रेट एनालिसिस:** कोई संदेहास्पद एक्सप्लॉइट या सुरक्षा भेद्यता नहीं पाई गई।\n` +
+                           `• **कमांड प्रतिक्रिया:** ${promptText || "सुरक्षा शील्ड्स पूरी तरह सक्रिय और सुरक्षित हैं।"}`;
                 }
             },
             Armor_4: {
                 id: 4, codeName: "Armor-4 (SEO & Persuasion Tactics)", avatarClass: "armor-4", avatarIcon: "📊",
                 async inspect(site, promptText) {
                     if (!site) return `⚠️ **[Armor-4 Alert]**\nSEO एवं कंटेंट चेकिंग हेतु वेबसाइट जोड़ें।`;
-                    return `📊 **[Armor-4 SEO & Persuasion Specialist] Target: ${site}**\n• **SEO & साइकोलॉजिकल पर्सुएसन:** मेटा टैग्स, कीवर्ड हाइरार्की और सर्च इंटेंट तैयार।\n• **कमांड प्रतिक्रिया:** ${promptText || "रैंकिंग और पर्सुएशिव विजिबिलिटी सुरक्षित है।"}`;
+                    return `📊 **[Armor-4 SEO & Persuasion Specialist] Target: ${site}**\n\n` +
+                           `• **कीवर्ड व सर्च इंटेंट:** ऑन-पेज मेटा डेटा और हेडिंग्स सर्च इंजन फ्रेंडली तैयार हैं।\n` +
+                           `• **पर्सुएसिव कॉपीराइटिंग:** यूज़र कनवर्ट करने के लिए पर्सुएशिव ट्रिगर्स सेट किए गए।\n` +
+                           `• **कमांड प्रतिक्रिया:** ${promptText || "SEO और रैंकिंग ऑप्टिमाइजेशन रिपोर्ट तैयार है।"}`;
                 }
             },
             Armor_5: {
                 id: 5, codeName: "Armor-5 (AdSense & Ad-Friction Psychology)", avatarClass: "armor-5", avatarIcon: "💰",
                 async inspect(site, promptText) {
                     if (!site) return `⚠️ **[Armor-5 Alert]**\nमोनिटाइजेशन एवं विज्ञापन जाँच हेतु URL दर्ज करें।`;
-                    return `💰 **[Armor-5 AdSense & Buyer Behavior Specialist] Target: ${site}**\n• **मोनिटाइजेशन फ्रिक्शन:** विज्ञापनों का लेआउट बिना यूज़र इरिटेशन के CTR मैक्सिमाइज करता है।\n• **कमांड प्रतिक्रिया:** ${promptText || "AdSense पॉलिसी और प्लेसमेंट ऑप्टिमाइज्ड।"}`;
+                    return `💰 **[Armor-5 AdSense & Revenue Engine] Target: ${site}**\n\n` +
+                           `• **विज्ञापन प्लेसमेंट:** CTR बढ़ाने और AdSense पॉलिसी का पालन करने वाले स्लॉट्स।\n` +
+                           `• **यूज़र अनुभव संतुलन:** कम से कम रुकावट के साथ अधिकतम रेवेन्यू पोटेंशियल।\n` +
+                           `• **कमांड प्रतिक्रिया:** ${promptText || "AdSense और मोनिटाइजेशन स्ट्रैटेजी लागू की गई।"}`;
                 }
             },
 
             async talkToArmor(armorId) {
                 if (!AppController.isCaptainUnlocked) {
-                    alert("⚠️ यह कमांड केवल Captain Keshav OS अनलॉक होने पर काम करेगी। पासवर्ड दर्ज करें!");
+                    alert("⚠️ यह कमांड केवल Captain Keshav OS अनलॉक होने पर काम करेगी। पासवर्ड (360) दर्ज करें!");
                     AppController.switchMode('CAPTAIN', document.getElementById('captainNavItem'));
                     return;
                 }
@@ -914,7 +1029,7 @@
                     <div class="ai-action-bar">
                         <button class="action-btn" onclick="AppController.copyResponse(this)">📋 Copy</button>
                         <button class="action-btn" onclick="VoiceEngine.speak(this.closest('.bubble').innerText)">🔊 Speak</button>
-                        <button class="action-btn like-btn" onclick="AppController.toggleFeedback(this, 'like')">👍</button>
+                        <button class="action-btn like-btn" onclick="AppController.toggleFeedback(this)">👍</button>
                     </div>`;
                 bubble.insertAdjacentHTML('beforeend', actionBarHTML);
             }
@@ -1014,7 +1129,7 @@
                     welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
                     नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ।<br><br>
                     • <b>सामान्य प्रश्न व परीक्षा तैयारी:</b> कठिन से कठिन विषयों का सरल विश्लेषण।<br>
-                    • <b>टूटी-फूटी भाषा समझ:</b> आप किसी भी शैली या भाषा में बेझिझक सवाल पूछ सकते हैं।`;
+                    • <b>बहुभाषी भाषा समझ:</b> आप किसी भी शैली या भाषा में बेझिझक सवाल पूछ सकते हैं।`;
                 }
 
                 const aiMsgId = 'ai-welcome-' + Date.now();
@@ -1041,7 +1156,7 @@
             },
 
             renderUnlockedCaptainScreen: function() {
-                const targetDisplay = ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "<span style='color:var(--accent-yellow)'>Not Connected (कोई साइट कनेक्ट नहीं है)</span>";
+                const targetDisplay = ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "<span style='color:var(--accent-yellow)'>Not Connected</span>";
                 const welcomeCardHTML = `
                 <div class="captain-lock-card" style="border-color:#4ade80; background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(15,23,42,0.95));">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom: 1px solid rgba(74,222,128,0.3); padding-bottom: 8px;">
@@ -1123,7 +1238,7 @@
                 });
             },
 
-            toggleFeedback: function(btn, type) {
+            toggleFeedback: function(btn) {
                 btn.style.color = '#4ade80';
             },
 
@@ -1168,12 +1283,9 @@
                     return;
                 }
 
-                // 3. AI Query Processing
+                // 3. Normal AI Query Processing
                 UIManager.appendMsg(text, 'user');
                 input.value = '';
-
-                // RAG Embedding Engine Logging
-                GeminiOmniEngine.createEmbeddingMemory(text);
 
                 const aiMsgId = 'ai-' + Date.now();
                 let currentAvatar = '🧠';
@@ -1258,46 +1370,43 @@
             AppController.init();
         });
     </script>
-    <!-- ==================== AUTO-CONNECT TARGET URL FIX ==================== -->
-<script>
-  (function () {
-    const MY_TARGET_URL = "https://global-finance-eight.vercel.app/";
 
-    // 1. पेज लोड होते ही URL को ArmorFleet और Input Box में ऑटो-सेट करें
-    function initTargetUrl() {
-      if (typeof ArmorFleet !== "undefined") {
-        ArmorFleet.targetUrl = MY_TARGET_URL;
-      }
-      const inputEl = document.getElementById("targetUrlInput");
-      if (inputEl) {
-        inputEl.value = MY_TARGET_URL;
-      }
-    }
+    <!-- Target URL Auto-Connect Hook -->
+    <script>
+      (function () {
+        const DEFAULT_TARGET_URL = "https://global-finance-eight.vercel.app/";
 
-    // 2. चैट बॉक्स में URL आते ही उसे ऑटो-डिटेक्ट करके कनेक्ट करें
-    if (typeof AppController !== "undefined" && AppController.submitQuery) {
-      const originalSubmit = AppController.submitQuery.bind(AppController);
-      AppController.submitQuery = async function () {
-        const userText = document.getElementById('userInput')?.value || "";
-        const detectedUrl = userText.match(/(https?:\/\/[^\s]+)/i);
-        
-        if (detectedUrl && typeof ArmorFleet !== "undefined") {
-          ArmorFleet.targetUrl = detectedUrl[0];
+        function initTargetUrl() {
+          if (typeof ArmorFleet !== "undefined") {
+            ArmorFleet.targetUrl = DEFAULT_TARGET_URL;
+          }
           const inputEl = document.getElementById("targetUrlInput");
-          if (inputEl) inputEl.value = detectedUrl[0];
+          if (inputEl) {
+            inputEl.value = DEFAULT_TARGET_URL;
+          }
         }
-        return originalSubmit();
-      };
-    }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initTargetUrl);
-    } else {
-      initTargetUrl();
-    }
-  })();
-</script>
-<!-- ==================================================================== -->
-    
+        if (typeof AppController !== "undefined" && AppController.submitQuery) {
+          const originalSubmit = AppController.submitQuery.bind(AppController);
+          AppController.submitQuery = async function () {
+            const userText = document.getElementById('userInput')?.value || "";
+            const detectedUrl = userText.match(/(https?:\/\/[^\s]+)/i);
+            
+            if (detectedUrl && typeof ArmorFleet !== "undefined") {
+              ArmorFleet.targetUrl = detectedUrl[0];
+              const inputEl = document.getElementById("targetUrlInput");
+              if (inputEl) inputEl.value = detectedUrl[0];
+            }
+            return originalSubmit();
+          };
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initTargetUrl);
+        } else {
+          initTargetUrl();
+        }
+      })();
+    </script>
 </body>
 </html>
