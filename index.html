@@ -1258,80 +1258,46 @@
             AppController.init();
         });
     </script>
-    <!-- </body> टैग से ठीक पहले नीचे दिया गया पूरा कोड पेस्ट करें -->
+    <!-- ==================== AUTO-CONNECT TARGET URL FIX ==================== -->
 <script>
-  // 1. Skills Data Object (वेबसाइट/पोर्टफोलियो में यूज़ करने के लिए)
-  const myProfileSkills = {
-    omnichannelCX: {
-      category: "Omnichannel (Marketing, Retail & CX)",
-      skills: [
-        "Customer Journey Mapping",
-        "CRM & CDP Integration (Salesforce, HubSpot, Segment)",
-        "Omnichannel Analytics (Google Analytics 4)",
-        "Supply Chain & OMS (Unified Inventory Management)"
-      ]
-    },
-    nvidiaOmniverse: {
-      category: "NVIDIA Omniverse (3D & Digital Twins)",
-      skills: [
-        "OpenUSD (Universal Scene Description)",
-        "Digital Twin & Simulation (Isaac Sim, PhysX)",
-        "3D Pipeline Integration (Blender, Maya, Unreal Engine)",
-        "Real-time RTX Rendering (MDL & Shading)"
-      ]
-    }
-  };
+  (function () {
+    const MY_TARGET_URL = "https://global-finance-eight.vercel.app/";
 
-  // 2. SEO Structured Data Injector (Search Engines के लिए)
-  const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "knowsAbout": [
-      "Customer Journey Mapping",
-      "CRM & CDP Integration",
-      "Omnichannel Analytics",
-      "Supply Chain & OMS",
-      "OpenUSD",
-      "Digital Twin & Simulation",
-      "3D Pipeline Integration",
-      "Real-time RTX Rendering"
-    ]
-  };
-
-  // ऑटोमैटिक Head में Schema डेटा जोड़ने के लिए
-  const schemaScript = document.createElement('script');
-  schemaScript.type = 'application/ld+json';
-  schemaScript.text = JSON.stringify(personSchema);
-  document.head.appendChild(schemaScript);
-
-  console.log("Omni Skills Profile Loaded Successfully!");
-</script>
-  <!-- ==================== ARMOR FLEET SCRIPT START ==================== -->
-  <script>
-    // 1. Target Website URL डिफॉल्ट सेट करें
-    const TARGET_URL = "https://global-finance-eight.vercel.app/";
-    const SYSTEM_PIN = "360";
-
-    // इनपुट बॉक्स में ऑटोमैटिक URL भरने के लिए (यदि इनपुट बॉक्स की id 'targetUrl' है)
-    document.addEventListener("DOMContentLoaded", function () {
-      const urlInput = document.getElementById("targetUrl");
-      if (urlInput) {
-        urlInput.value = TARGET_URL;
+    // 1. पेज लोड होते ही URL को ArmorFleet और Input Box में ऑटो-सेट करें
+    function initTargetUrl() {
+      if (typeof ArmorFleet !== "undefined") {
+        ArmorFleet.targetUrl = MY_TARGET_URL;
       }
-    });
-
-    // 2. Armor Command Execution Function
-    function runArmorAudit(armorNumber) {
-      console.log(`[Armor-${armorNumber}] Audit Started for: ${TARGET_URL}`);
-      alert(`Armor-${armorNumber} Active! Auditing Target: ${TARGET_URL}`);
-      
-      // यहां आपका एपीआई या ऑडिट लॉजिक रन होगा
+      const inputEl = document.getElementById("targetUrlInput");
+      if (inputEl) {
+        inputEl.value = MY_TARGET_URL;
+      }
     }
-  </script>
-  <!-- ===================== ARMOR FLEET SCRIPT END ===================== -->
 
-</body>
-</html>
+    // 2. चैट बॉक्स में URL आते ही उसे ऑटो-डिटेक्ट करके कनेक्ट करें
+    if (typeof AppController !== "undefined" && AppController.submitQuery) {
+      const originalSubmit = AppController.submitQuery.bind(AppController);
+      AppController.submitQuery = async function () {
+        const userText = document.getElementById('userInput')?.value || "";
+        const detectedUrl = userText.match(/(https?:\/\/[^\s]+)/i);
+        
+        if (detectedUrl && typeof ArmorFleet !== "undefined") {
+          ArmorFleet.targetUrl = detectedUrl[0];
+          const inputEl = document.getElementById("targetUrlInput");
+          if (inputEl) inputEl.value = detectedUrl[0];
+        }
+        return originalSubmit();
+      };
+    }
 
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initTargetUrl);
+    } else {
+      initTargetUrl();
+    }
+  })();
+</script>
+<!-- ==================================================================== -->
+    
 </body>
 </html>
