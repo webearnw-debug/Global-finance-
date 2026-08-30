@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio (Captain Supreme Edition)</title>
+    <title>Parnarav AI - Universal Studio</title>
     
     <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -116,12 +116,6 @@
             border: 1px solid var(--border-color);
         }
 
-        .nav-item.captain-mode-item {
-            color: #f87171 !important;
-            border: 1px solid rgba(239, 68, 68, 0.4) !important;
-            background: rgba(239, 68, 68, 0.1) !important;
-        }
-
         .tools-menu {
             margin-top: 14px;
             background: var(--bg-card);
@@ -181,28 +175,6 @@
             color: var(--text-main);
             font-size: 1.2rem;
             cursor: pointer;
-        }
-
-        .target-url-box {
-            display: flex;
-            align-items: center;
-            background: var(--bg-base);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 4px 10px;
-            gap: 6px;
-            max-width: 360px;
-            width: 100%;
-        }
-
-        .target-url-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--accent-cyan);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            width: 100%;
         }
 
         .voice-toggle-btn {
@@ -291,12 +263,6 @@
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
 
-        .avatar.armor-1 { background: rgba(56, 189, 248, 0.2); color: var(--accent-cyan); border-color: var(--accent-cyan); }
-        .avatar.armor-2 { background: rgba(251, 191, 36, 0.2); color: var(--accent-yellow); border-color: var(--accent-yellow); }
-        .avatar.armor-3 { background: rgba(248, 113, 113, 0.2); color: var(--accent-red); border-color: var(--accent-red); }
-        .avatar.armor-4 { background: rgba(192, 132, 252, 0.2); color: var(--accent-purple); border-color: var(--accent-purple); }
-        .avatar.armor-5 { background: rgba(74, 222, 128, 0.2); color: var(--accent-green); border-color: var(--accent-green); }
-
         .bubble {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -360,96 +326,6 @@
         .action-btn:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
-        }
-
-        .captain-lock-card {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(15, 23, 42, 0.95));
-            border: 2px solid #ef4444;
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
-        }
-
-        .captain-pass-box {
-            display: flex;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .captain-pass-input {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(239, 68, 68, 0.5);
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .captain-pass-input:focus {
-            border-color: #ef4444;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
-        }
-
-        .captain-unlock-btn {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .captain-unlock-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .captain-exit-btn {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #ef4444;
-            color: #f87171;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .captain-exit-btn:hover {
-            background: rgba(239, 68, 68, 0.4);
-        }
-
-        .armor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .armor-card-btn {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 8px;
-            color: var(--text-main);
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        .armor-card-btn:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(30, 41, 59, 0.9);
         }
 
         /* Input Controls */
@@ -560,7 +436,6 @@
             }
             .mobile-menu-btn { display: block; }
             .message-row { max-width: 96%; }
-            .target-url-box { display: none; }
         }
     </style>
 </head>
@@ -586,7 +461,7 @@
             <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
         </div>
 
-        <div class="nav-section-title">Operating Modes & Communication Roles</div>
+        <div class="nav-section-title">Operating Modes & Roles</div>
         <ul class="nav-list" id="navList">
             <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
                 <i class="fa-solid fa-brain"></i> Omni Super AI
@@ -602,9 +477,6 @@
             </li>
             <li class="nav-item" onclick="AppController.switchMode('SALES', this)">
                 <i class="fa-solid fa-handshake"></i> Sales Executive
-            </li>
-            <li class="nav-item captain-mode-item" id="captainNavItem" onclick="AppController.switchMode('CAPTAIN', this)">
-                <i class="fa-solid fa-crown" style="color:#ef4444;"></i> Captain Keshav OS
             </li>
         </ul>
 
@@ -649,12 +521,6 @@
                 </div>
             </div>
 
-            <!-- Target Site Input Bar -->
-            <div class="target-url-box">
-                <i class="fa-solid fa-globe" style="color:var(--accent-cyan); font-size:0.8rem;"></i>
-                <input type="text" id="targetUrlInput" class="target-url-input" value="https://global-finance-eight.vercel.app/" placeholder="यहाँ अपनी Target Website URL दर्ज करें..." onchange="ArmorFleet.targetUrl = this.value.trim()">
-            </div>
-
             <div style="display:flex; align-items:center; gap:8px;">
                 <button class="voice-toggle-btn" id="voiceToggleBtn" onclick="VoiceEngine.toggleVoice()">
                     <i class="fa-solid fa-volume-high"></i> <span id="voiceStatusText">Voice OFF</span>
@@ -685,14 +551,8 @@
     </main>
 
     <script>
-        // =================================================================
-        // 1. CONFIG & SYSTEM IDENTITY
-        // =================================================================
-        const CAPTAIN_CONFIG = {
-            PASSWORD: "360",
-            SYSTEM_NAME: "Keshav-OS Executive Core v5.0 Supreme",
-            CREATOR_INFO: "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।"
-        };
+        // System Creator Identity
+        const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
         // =================================================================
         // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
@@ -859,11 +719,11 @@
             }
         };
 
-        // Standard reset memory on page reload
+        // Reset local storage memory
         localStorage.clear();
 
         // =================================================================
-        // 3. SPECIALIZED KNOWLEDGE ENGINES
+        // SPECIALIZED KNOWLEDGE ENGINES
         // =================================================================
         const OmniKnowledgeEngine = {
             solveExamQuestion: function() {
@@ -887,7 +747,6 @@
                 const html = `
                     <div class="widget-card">
                         <div class="widget-title"><i class="fa-solid fa-chart-line"></i> QUANT DECISION ENGINE</div>
-                        • Target Site: <b>${ArmorFleet.targetUrl || "Not Connected"}</b><br>
                         • Asset Pair: <b>BTC/USD</b><br>
                         • RSI (14 Period): <b>${rsi}</b><br>
                         • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
@@ -928,82 +787,7 @@
         };
 
         // =================================================================
-        // 🛡️ 5 DYNAMIC AI ARMOR FLEET ENGINES
-        // =================================================================
-        const ArmorFleet = {
-            targetUrl: "https://global-finance-eight.vercel.app/",
-
-            Armor_1: {
-                id: 1, codeName: "Armor-1 (Crawler & Intent Psychology)", avatarClass: "armor-1", avatarIcon: "🕷️",
-                systemPrompt: "You are Armor-1: Web Crawler & Intent Psychology Specialist for Captain Keshav OS. Audit website architecture, user conversion pathways, Call-to-Action (CTA) placement, and psychological drop-off points.",
-                async inspect(site, promptText, onChunkCallback) {
-                    const target = site || "Not Connected";
-                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
-                    const userMsg = `[ARMOR-1 DIRECTIVE]: Analyze target site '${target}'. Query/Task: ${promptText || "Perform complete crawler and intent psychology audit."}`;
-                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
-                }
-            },
-            Armor_2: {
-                id: 2, codeName: "Armor-2 (Speed & UX Friction Psychology)", avatarClass: "armor-2", avatarIcon: "⚡",
-                systemPrompt: "You are Armor-2: Speed & UX Friction Specialist for Captain Keshav OS. Audit loading performance (FCP, LCP), Cumulative Layout Shift (CLS), visual hierarchy, and UX friction factors.",
-                async inspect(site, promptText, onChunkCallback) {
-                    const target = site || "Not Connected";
-                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
-                    const userMsg = `[ARMOR-2 DIRECTIVE]: Analyze speed and UX friction for target '${target}'. Task: ${promptText || "Audit page speed, rendering optimization, and user experience friction."}`;
-                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
-                }
-            },
-            Armor_3: {
-                id: 3, codeName: "Armor-3 (Cyber Guard & Threat Mindset)", avatarClass: "armor-3", avatarIcon: "🔐",
-                systemPrompt: "You are Armor-3: Cyber Guard & Threat Assessment Specialist for Captain Keshav OS. Audit web security headers, SSL/TLS policies, attack surface vectors, and vulnerability risks.",
-                async inspect(site, promptText, onChunkCallback) {
-                    const target = site || "Not Connected";
-                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
-                    const userMsg = `[ARMOR-3 DIRECTIVE]: Security assessment for target '${target}'. Task: ${promptText || "Perform cybersecurity vulnerability check and shield audit."}`;
-                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
-                }
-            },
-            Armor_4: {
-                id: 4, codeName: "Armor-4 (SEO & Persuasion Tactics)", avatarClass: "armor-4", avatarIcon: "📊",
-                systemPrompt: "You are Armor-4: SEO & Persuasive Copywriting Specialist for Captain Keshav OS. Analyze search engine optimization, keywords, meta structures, and persuasive conversion triggers.",
-                async inspect(site, promptText, onChunkCallback) {
-                    const target = site || "Not Connected";
-                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
-                    const userMsg = `[ARMOR-4 DIRECTIVE]: SEO and copywriting audit for target '${target}'. Task: ${promptText || "Evaluate search rankings, metadata, and persuasion psychology."}`;
-                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
-                }
-            },
-            Armor_5: {
-                id: 5, codeName: "Armor-5 (AdSense & Ad-Friction Psychology)", avatarClass: "armor-5", avatarIcon: "💰",
-                systemPrompt: "You are Armor-5: AdSense Monetization & Ad-Friction Specialist for Captain Keshav OS. Analyze ad placement strategy, CTR optimization, AdSense policy compliance, and revenue balance.",
-                async inspect(site, promptText, onChunkCallback) {
-                    const target = site || "Not Connected";
-                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
-                    const userMsg = `[ARMOR-5 DIRECTIVE]: Monetization audit for target '${target}'. Task: ${promptText || "Analyze AdSense compliance, CTR potential, and revenue-UX balance."}`;
-                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
-                }
-            },
-
-            async talkToArmor(armorId) {
-                if (!AppController.isCaptainUnlocked) {
-                    alert("⚠️ यह कमांड केवल Captain Keshav OS अनलॉक होने पर काम करेगी। पासवर्ड (360) दर्ज करें!");
-                    AppController.switchMode('CAPTAIN', document.getElementById('captainNavItem'));
-                    return;
-                }
-
-                const armor = this[`Armor_${armorId}`];
-                if (!armor) return;
-
-                const query = prompt(`🛡️ [${armor.codeName}] को क्या आदेश देना चाहते हैं?`);
-                if (!query) return;
-
-                document.getElementById('userInput').value = `@Armor-${armorId}: ${query}`;
-                AppController.submitQuery();
-            }
-        };
-
-        // =================================================================
-        // 4. UI MANAGER
+        // UI MANAGER
         // =================================================================
         const UIManager = {
             appendMsg: function(content, sender, id = null, customAvatar = null, avatarClass = "") {
@@ -1036,11 +820,10 @@
         };
 
         // =================================================================
-        // 5. MAIN APP CONTROLLER
+        // MAIN APP CONTROLLER
         // =================================================================
         const AppController = {
             currentMode: 'OMNI',
-            isCaptainUnlocked: false,
 
             init: function() {
                 this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
@@ -1072,19 +855,6 @@
                 chatContainer.innerHTML = '';
 
                 let titleName = "Omni Super AI Active";
-
-                if (mode === 'CAPTAIN') {
-                    titleName = "Captain Keshav OS (Restricted Domain)";
-                    document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
-                    
-                    if (this.isCaptainUnlocked) {
-                        this.renderUnlockedCaptainScreen();
-                    } else {
-                        this.renderLockedCaptainScreen();
-                    }
-                    this.closeSidebarMobile();
-                    return;
-                }
 
                 if (mode === 'FINANCE') titleName = "Trading & Finance Active";
                 else if (mode === 'DEV') titleName = "Coding Master Active";
@@ -1137,89 +907,6 @@
                 UIManager.renderActionBar(aiMsgId);
             },
 
-            renderLockedCaptainScreen: function() {
-                const lockCardHTML = `
-                <div class="captain-lock-card">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; border-bottom: 1px solid rgba(239, 68, 68, 0.3); padding-bottom: 8px;">
-                        <i class="fa-solid fa-user-shield" style="font-size: 1.4rem; color: #ef4444;"></i>
-                        <span style="font-size: 1.15rem; font-weight: 800; color: #f87171;">CAPTAIN KESHAV OS - EXECUTIVE RESTRICTED ACCESS</span>
-                    </div>
-                    <p style="font-size:0.95rem; line-height:1.5; color:#e2e8f0;">
-                        यह केवल कैप्टन केशव के लिए आरक्षित <b>Executive Operating System</b> है। कृपया सुरक्षा कोड (360) दर्ज करके अनलॉक करें।
-                    </p>
-                    <div class="captain-pass-box">
-                        <input type="password" id="captainPassInput" class="captain-pass-input" placeholder="सुरक्षा कोड (360) दर्ज करें..." onkeydown="if(event.key==='Enter') AppController.verifyCaptainPass()">
-                        <button class="captain-unlock-btn" onclick="AppController.verifyCaptainPass()">अनलॉक करें 🔓</button>
-                    </div>
-                </div>`;
-                UIManager.appendMsg(lockCardHTML, 'ai', 'locked-captain-card', '🔒');
-            },
-
-            renderUnlockedCaptainScreen: function() {
-                const targetDisplay = ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "<span style='color:var(--accent-yellow)'>Not Connected</span>";
-                const welcomeCardHTML = `
-                <div class="captain-lock-card" style="border-color:#4ade80; background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(15,23,42,0.95));">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom: 1px solid rgba(74,222,128,0.3); padding-bottom: 8px;">
-                        <span style="font-size: 1.15rem; font-weight: 800; color: #4ade80;">🫡 SUPREME COMMANDER ACCESS UNLOCKED</span>
-                    </div>
-                    <p style="font-size:1.05rem; line-height:1.5; color:#f8fafc; margin-bottom:12px;">
-                        <b>प्रणाम कैप्टन केशव जी!</b><br>
-                        Keshav OS सक्रिय है। यह मोड केवल वेबसाइट ऑडिट, सुरक्षा और आर्मर सिस्टम कंट्रोल तक सीमित है।
-                    </p>
-                    <div style="background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px; border-left:3px solid #4ade80; font-size:0.88rem; margin-bottom:12px;">
-                        • Status: <b>ONLINE & RESTRICTED DOMAIN ACTIVE</b><br>
-                        • Creator Info: <b>${CAPTAIN_CONFIG.CREATOR_INFO}</b><br>
-                        • Target Site: <b>${targetDisplay}</b>
-                    </div>
-
-                    <div style="font-size:0.8rem; font-weight:700; color:#4ade80; margin-bottom:6px; text-transform:uppercase;">
-                        🛡️ 5 Armor Fleet Commands (Live AI Powered)
-                    </div>
-                    <div class="armor-grid">
-                        <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(1)">
-                            <i class="fa-solid fa-spider" style="color:var(--accent-cyan)"></i> Armor-1 (Crawler & Intent)
-                        </button>
-                        <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(2)">
-                            <i class="fa-solid fa-gauge-high" style="color:var(--accent-yellow)"></i> Armor-2 (Speed & UX Friction)
-                        </button>
-                        <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(3)">
-                            <i class="fa-solid fa-shield-halved" style="color:var(--accent-red)"></i> Armor-3 (Cyber Guard & Threat)
-                        </button>
-                        <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(4)">
-                            <i class="fa-solid fa-magnifying-glass-chart" style="color:var(--accent-purple)"></i> Armor-4 (SEO & Persuasion)
-                        </button>
-                        <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(5)">
-                            <i class="fa-solid fa-rectangle-ad" style="color:var(--accent-green)"></i> Armor-5 (AdSense & Friction)
-                        </button>
-                    </div>
-
-                    <button class="captain-exit-btn" onclick="AppController.lockCaptainMode()">
-                        <i class="fa-solid fa-lock"></i> Exit / Lock OS
-                    </button>
-                </div>`;
-                UIManager.appendMsg(welcomeCardHTML, 'ai', 'unlocked-captain-card', '🫡');
-                VoiceEngine.speak("प्रणाम कैप्टन केशव जी, Keshav OS में आपका स्वागत है।");
-            },
-
-            verifyCaptainPass: function() {
-                const input = document.getElementById('captainPassInput');
-                const pass = input?.value.trim();
-
-                if (pass === CAPTAIN_CONFIG.PASSWORD) {
-                    this.isCaptainUnlocked = true;
-                    this.currentMode = 'CAPTAIN';
-                    document.getElementById('chatContainer').innerHTML = '';
-                    this.renderUnlockedCaptainScreen();
-                } else {
-                    alert("⚠️ गलत पासवर्ड! कृपया सही सुरक्षा कोड दर्ज करें।");
-                }
-            },
-
-            lockCaptainMode: function() {
-                this.isCaptainUnlocked = false;
-                this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
-            },
-
             handleKeyPress: function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -1251,51 +938,6 @@
 
                 const mode = this.currentMode;
 
-                // 🔒 1. Captain Mode Lock Check
-                if (mode === 'CAPTAIN' && !this.isCaptainUnlocked) {
-                    UIManager.appendMsg(text, 'user');
-                    input.value = '';
-                    UIManager.appendMsg("🔒 <b>[Access Denied]</b> Captain Keshav OS लॉक्ड है! सही सुरक्षा कोड (360) दर्ज करें।", 'ai', null, '🔒');
-                    return;
-                }
-
-                // 🛡️ 2. DYNAMIC AI ARMOR FLEET COMMANDS PROCESSING
-                const matchArmor = text.match(/@Armor-([1-5])/i);
-                if (matchArmor) {
-                    const armorNum = matchArmor[1];
-                    const armorObj = ArmorFleet[`Armor_${armorNum}`];
-
-                    UIManager.appendMsg(text, 'user');
-                    input.value = '';
-
-                    const aiMsgId = 'armor-' + Date.now();
-                    UIManager.appendMsg(`<i>${armorObj.codeName} लाइव AI विश्लेषण निष्पादित कर रहा है... ⚡</i>`, 'ai', aiMsgId, armorObj.avatarIcon, armorObj.avatarClass);
-
-                    const userPromptOnly = text.replace(/@Armor-[1-5]:?/i, '').trim();
-                    const bubbleElement = document.getElementById(aiMsgId);
-                    const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
-
-                    try {
-                        const armorReport = await armorObj.inspect(ArmorFleet.targetUrl, userPromptOnly, (streamedText) => {
-                            if (bubble) {
-                                bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
-                                if (window.hljs) hljs.highlightAll();
-                            }
-                        });
-
-                        if (bubbleElement) {
-                            UIManager.renderActionBar(aiMsgId);
-                        }
-                        VoiceEngine.speak(`${armorObj.codeName} का dynamic AI विश्लेषण पूर्ण हो गया है।`);
-                    } catch (err) {
-                        if (bubble) {
-                            bubble.innerHTML = `**[Armor System Error]**: \`${err.message || err}\``;
-                        }
-                    }
-                    return;
-                }
-
-                // 3. Normal AI Query Processing
                 UIManager.appendMsg(text, 'user');
                 input.value = '';
 
@@ -1312,33 +954,25 @@
                 // DYNAMIC SYSTEM PROMPT CONFIGURED FOR DIFFERENT ROLES
                 let systemRolePrompt = "";
 
-                if (mode === 'CAPTAIN' && this.isCaptainUnlocked) {
-                    systemRolePrompt = `STRICT EXECUTIVE PROTOCOL FOR KESHAV OS (CAPTAIN MODE):
-1. ADDRESSING RULE: You MUST strictly address the user as "कैप्टन" or "कैप्टन केशव".
-2. CREATOR / IDENTITY RULE: If asked who created you ("किसने बनाया", "creator", "owner"), reply strictly: "${CAPTAIN_CONFIG.CREATOR_INFO}".
-3. DOMAIN RESTRICTION RULE:
-   - Keshav OS ONLY handles: Target Website status/audit (${ArmorFleet.targetUrl ? ArmorFleet.targetUrl : "No site connected"}) and armor commands.
-   - If user asks general questions, reply politely: "प्रणाम कैप्टन! कैप्टन ओएस केवल वेबसाइट सुरक्षा और आर्मर सिस्टम तक सीमित है।"`;
-                } else if (mode === 'INTERVIEW') {
+                if (mode === 'INTERVIEW') {
                     systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer.
 1. DUTY: Conduct a structured technical mock interview. Ask strictly ONE question at a time.
 2. FEEDBACK: Evaluate user's answers with constructive feedback before asking the next question.
-3. TONE: Professional, analytical, fair, and supportive. DO NOT call the user Captain.
-4. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+3. TONE: Professional, analytical, fair, and supportive.
+4. CREATOR RULE: "${SYSTEM_CREATOR}".`;
                 } else if (mode === 'SALES') {
                     systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist.
 1. DUTY: Handle objections, explain product value proposition, and practice B2B sales pitch negotiations.
-2. TONE: Energetic, highly persuasive, confident, and solution-oriented. DO NOT call the user Captain.
-3. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+2. TONE: Energetic, highly persuasive, confident, and solution-oriented.
+3. CREATOR RULE: "${SYSTEM_CREATOR}".`;
                 } else if (mode === 'FINANCE') {
-                    systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. DO NOT call the user Captain. Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                    systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Creator info: "${SYSTEM_CREATOR}".`;
                 } else if (mode === 'DEV') {
-                    systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. DO NOT call the user Captain. Creator info: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+                    systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. Creator info: "${SYSTEM_CREATOR}".`;
                 } else {
                     systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist.
 1. TONE & COMMUNICATION: Adapt tone dynamically, switch language smoothly between Hindi/Hinglish/English.
-2. DO NOT call the user Captain.
-3. CREATOR RULE: "${CAPTAIN_CONFIG.CREATOR_INFO}".`;
+2. CREATOR RULE: "${SYSTEM_CREATOR}".`;
                 }
 
                 const bubbleElement = document.getElementById(aiMsgId);
@@ -1381,44 +1015,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             AppController.init();
         });
-    </script>
-
-    <!-- Target URL Auto-Connect Hook -->
-    <script>
-      (function () {
-        const DEFAULT_TARGET_URL = "https://global-finance-eight.vercel.app/";
-
-        function initTargetUrl() {
-          if (typeof ArmorFleet !== "undefined") {
-            ArmorFleet.targetUrl = DEFAULT_TARGET_URL;
-          }
-          const inputEl = document.getElementById("targetUrlInput");
-          if (inputEl) {
-            inputEl.value = DEFAULT_TARGET_URL;
-          }
-        }
-
-        if (typeof AppController !== "undefined" && AppController.submitQuery) {
-          const originalSubmit = AppController.submitQuery.bind(AppController);
-          AppController.submitQuery = async function () {
-            const userText = document.getElementById('userInput')?.value || "";
-            const detectedUrl = userText.match(/(https?:\/\/[^\s]+)/i);
-            
-            if (detectedUrl && typeof ArmorFleet !== "undefined") {
-              ArmorFleet.targetUrl = detectedUrl[0];
-              const inputEl = document.getElementById("targetUrlInput");
-              if (inputEl) inputEl.value = detectedUrl[0];
-            }
-            return originalSubmit();
-          };
-        }
-
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", initTargetUrl);
-        } else {
-          initTargetUrl();
-        }
-      })();
     </script>
 </body>
 </html>
