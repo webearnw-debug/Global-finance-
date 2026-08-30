@@ -2100,217 +2100,218 @@
 })();
 </script>
  <!-- ================================================================= -->
-<!-- 🎛️ MASTER UI CONTROL PANEL (FINANCE 100 + CODING MASTER 150)    -->
+<!-- 🎛️ DYNAMIC MODULE PANEL (WELCOME CARD / TABBED INTEGRATION)     -->
 <!-- ================================================================= -->
 <style>
-  .p-dashboard-wrapper {
+  #parnarav-master-panel {
     background: #0d0f17;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 20px;
+    border: 1px solid #1e293b;
     border-radius: 12px;
+    padding: 16px;
     margin: 20px 0;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #f8fafc;
   }
-  .p-section-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 15px 0 10px 0;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #00f2fe;
-    color: #00f2fe;
+  
+  /* टैब नेविगेशन (Financial vs Coding Master) */
+  .p-tab-header {
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
   }
-  .p-code-title {
-    border-bottom-color: #7928CA !important;
-    color: #a855f7 !important;
+  
+  .p-tab-btn {
+    background: #1e293b;
+    color: #94a3b8;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
   }
-  .p-grid-container {
+  
+  .p-tab-btn.active-fin {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #000;
+    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+  }
+  
+  .p-tab-btn.active-code {
+    background: linear-gradient(135deg, #7928ca, #a855f7);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(121, 40, 202, 0.3);
+  }
+
+  /* कंटेंट पैनल्स */
+  .p-tab-content {
+    display: none;
+  }
+  .p-tab-content.active {
+    display: block;
+  }
+
+  /* कैटेगरी टाइटल और बटन ग्रिड */
+  .p-cat-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 14px 0 8px 0;
+    color: #38bdf8;
+  }
+  .p-code-cat {
+    color: #c084fc !important;
+  }
+  
+  .p-btn-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
   }
-  .p-btn {
-    background: #1a1d2d;
+  
+  .p-action-btn {
+    background: #171923;
     color: #e2e8f0;
     border: 1px solid #2d3748;
-    padding: 8px 12px;
+    padding: 7px 12px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .p-btn:hover {
+  
+  .p-action-btn:hover {
     background: #00f2fe;
     color: #000;
     border-color: #00f2fe;
     font-weight: bold;
   }
-  .p-btn-dev:hover {
+  
+  .p-code-btn:hover {
     background: #a855f7 !important;
     color: #fff !important;
     border-color: #a855f7 !important;
   }
 </style>
 
-<div class="p-dashboard-wrapper">
+<div id="parnarav-master-panel">
   
-  <!-- ========================================== -->
-  <!-- 📈 SECTION 1: FINANCE ULTRA 100 BUTTONS   -->
-  <!-- ========================================== -->
-  <div class="p-section-title">📊 Technical Analysis (15)</div>
-  <div class="p-grid-container">
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.supertrend()">Supertrend</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.vwap()">VWAP</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.pivotPoints()">Pivot Points</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.emaCrossover()">EMA Crossover</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.rsiDivergence()">RSI Divergence</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.volumeProfile()">Volume Profile</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.heikinAshi()">Heikin-Ashi</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.ichimokuCloud()">Ichimoku Cloud</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.atrVolatility()">ATR Volatility</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.stochasticOscillator()">Stochastic</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.fibonacciRetracement()">Fibonacci</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.candlestickRecognize()">Candlestick Recognizer</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.multiTimeframeMatrix()">MTF Matrix</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.relativeVigorIndex()">RVI Index</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tech.onBalanceVolume()">OBV Accumulation</button>
+  <!-- 🔘 1. मुख्य टैब बटन -->
+  <div class="p-tab-header">
+    <button id="tab-fin-btn" class="p-tab-btn active-fin" onclick="switchParnaravTab('finance')">
+      📈 Financial Ultra 100
+    </button>
+    <button id="tab-code-btn" class="p-tab-btn" onclick="switchParnaravTab('coding')">
+      💻 Coding Master 150
+    </button>
   </div>
 
-  <div class="p-section-title">🛡️ Risk & Capital Management (15)</div>
-  <div class="p-grid-container">
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.kellyCriterion()">Kelly Criterion</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.trailingStopLoss()">Trailing Stop Loss</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.maxDailyLossLock()">Daily Loss Lock</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.riskOfRuin()">Risk of Ruin</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.assetCorrelation()">Asset Correlation</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.capitalAllocation()">Capital Allocation</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.sectorExposureLimit()">Sector Limit</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.slippageSimulator()">Slippage Impact</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.leverageMarginCall()">Margin Call Shield</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.tradeDurationRisk()">Duration Risk</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.volatilitySkew()">Volatility Skew</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.portfolioHeatmap()">Risk Heatmap</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.multiAssetRebalance()">Rebalance Trigger</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.cashBufferSizer()">Cash Reserve Buffer</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.risk.p2pRiskComparison()">Sharpe Comparison</button>
+  <!-- 📊 2. FINANCIAL ULTRA 100 PANEL (केवल फाइनेंस सेक्शन खोलने पर दिखेगा) -->
+  <div id="panel-finance" class="p-tab-content active">
+    
+    <div class="p-cat-title">📊 Technical Analysis</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.supertrend()">Supertrend</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.vwap()">VWAP</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.pivotPoints()">Pivot Points</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.emaCrossover()">EMA Crossover</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.rsiDivergence()">RSI Divergence</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.volumeProfile()">Volume Profile</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.heikinAshi()">Heikin-Ashi</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.ichimokuCloud()">Ichimoku Cloud</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.atrVolatility()">ATR Volatility</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.stochasticOscillator()">Stochastic</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.fibonacciRetracement()">Fibonacci</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tech.candlestickRecognize()">Candlestick</button>
+    </div>
+
+    <div class="p-cat-title">🛡️ Risk & Capital Management</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.kellyCriterion()">Kelly Criterion</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.trailingStopLoss()">Trailing Stop Loss</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.maxDailyLossLock()">Daily Loss Lock</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.riskOfRuin()">Risk of Ruin</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.capitalAllocation()">Capital Allocation</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.slippageSimulator()">Slippage Impact</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.risk.leverageMarginCall()">Margin Call Shield</button>
+    </div>
+
+    <div class="p-cat-title">⚡ Options & Personal Finance</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.options.pcrAnalysis()">PCR Analysis</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.options.ivRankPercentile()">IV Rank</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.options.straddleStrangle()">Straddle Builder</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.options.blackScholes()">Black-Scholes</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.personal.goalBasedInvesting()">Goal SIP</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.personal.netWorthTracker()">Net Worth Tracker</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.personal.emergencyFund()">Emergency Fund</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.tax.newVsOldRegime()">Tax Regime Compare</button>
+      <button class="p-action-btn" onclick="ParnaravFinanceUltra100.behavioral.omniHealthScore()">Health Score</button>
+    </div>
+
   </div>
 
-  <div class="p-section-title">⚡ Options & Derivatives (15)</div>
-  <div class="p-grid-container">
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.payoffGraph()">Payoff Graph</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.pcrAnalysis()">PCR Analysis</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.ivRankPercentile()">IV Rank</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.straddleStrangle()">Straddle Builder</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.bullCallSpread()">Bull Call Spread</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.ironCondor()">Iron Condor</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.gammaScalping()">Gamma Scalper</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.thetaDecay()">Theta Decay</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.maxPainTheory()">Max Pain Level</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.syntheticFutures()">Synthetic Futures</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.coveredCallYield()">Covered Call Yield</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.protectivePut()">Protective Put</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.futuresBasis()">Futures Rollover</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.blackScholes()">Black-Scholes Model</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.options.ivCrushEstimator()">IV Crush Impact</button>
-  </div>
+  <!-- 💻 3. CODING MASTER 150 PANEL (केवल कोडिंग मास्टर सेक्शन खोलने पर दिखेगा) -->
+  <div id="panel-coding" class="p-tab-content">
+    
+    <div class="p-cat-title p-code-cat">🧹 Formatters & String Tools</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.formatters.jsonFormatter()">Format JSON</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.formatters.htmlMinifier()">Minify HTML</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.formatters.cssFormatter()">Beautify CSS</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.formatters.jsObfuscator()">Obfuscate JS</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.regex.emailValidator()">Email Regex</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.regex.slugify()">Slug Generator</button>
+    </div>
 
-  <div class="p-section-title">💰 Personal Finance & Wealth (15)</div>
-  <div class="p-grid-container">
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.goalBasedInvesting()">Goal SIP</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.emergencyFund()">Emergency Fund</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.netWorthTracker()">Net Worth Tracker</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.swpPlanner()">SWP Retirement</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.rule72()">Rule of 72</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.childEducation()">Child Education</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.sgbEstimator()">SGB Gold Yield</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.realEstateVsEquity()">Real Estate vs Equity</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.hlvInsurance()">Term Cover HLV</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.healthTopupEngine()">Super Top-Up Health</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.ppfEpfMaturity()">PPF/EPF Estimator</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.npsAnnuity()">NPS Pension</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.carLeaseVsBuy()">Car Lease vs Buy</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.lifestyleCreepAlert()">Lifestyle Creep</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.personal.wealthMilestones()">Wealth Milestones</button>
-  </div>
+    <div class="p-cat-title p-code-cat">🔄 Converters & Security</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.converters.jsonToCsv()">JSON to CSV</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.converters.jwtDecoder()">Decode JWT</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.securityApi.sha256Hash()">SHA-256 Hash</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.securityApi.generateUuidV4()">UUID V4 Gen</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.securityApi.apiKeyGen()">API Key Gen</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.securityApi.xssSanitizer()">XSS Sanitizer</button>
+    </div>
 
-  <div class="p-section-title">🏦 Debt, Loans & Crypto/Tax (40)</div>
-  <div class="p-grid-container">
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.debt.snowball()">Debt Snowball</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.debt.avalanche()">Debt Avalanche</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.debt.loanPrepayment()">Loan Prepay Saver</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.cryptoForex.stakingYield()">Crypto Staking</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.cryptoForex.cryptoDCA()">Crypto DCA</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.cryptoForex.pipValue()">Forex Pip Value</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tax.newVsOldRegime()">Tax Regime Compare</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tax.taxLossHarvesting()">Tax Loss Harvest</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tax.crypto30Tax()">Crypto 30% Tax</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.tax.sec44ADA()">Freelancer Sec 44ADA</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.behavioral.sharpeSortino()">Sortino Ratio</button>
-    <button class="p-btn" onclick="ParnaravFinanceUltra100.behavioral.omniHealthScore()">Financial Health Score</button>
-  </div>
+    <div class="p-cat-title p-code-cat">🎨 CSS, Database & DevOps</div>
+    <div class="p-btn-grid">
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.cssUi.flexboxGenerator()">Flexbox Builder</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.cssUi.glassmorphismGen()">Glassmorphism</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.devopsGit.dockerfileGenerator()">Dockerfile</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.databaseSql.selectQueryGen()">SQL Select</button>
+      <button class="p-action-btn p-code-btn" onclick="CodingMasterUltra150.perfDebug.benchmarkTimer()">Benchmark Code</button>
+    </div>
 
-  <!-- ========================================== -->
-  <!-- 💻 SECTION 2: CODING MASTER 150 BUTTONS   -->
-  <!-- ========================================== -->
-  <div class="p-section-title p-code-title">🧹 Formatters & String Tools (35)</div>
-  <div class="p-grid-container">
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.jsonFormatter()">Format JSON</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.htmlMinifier()">Minify HTML</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.cssFormatter()">Beautify CSS</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.jsObfuscator()">Obfuscate JS</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.sqlFormatter()">Format SQL</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.formatters.removeComments()">Remove Comments</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.emailValidator()">Email Regex</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.phoneValidator()">Phone Regex</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.urlValidator()">URL Validator</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.slugify()">Slug Generator</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.removeDuplicates()">Remove Duplicates</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.regex.wordCounter()">Word Counter</button>
-  </div>
-
-  <div class="p-section-title p-code-title">🔄 Parsers, Converters & Security (40)</div>
-  <div class="p-grid-container">
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.jsonToCsv()">JSON to CSV</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.csvToJson()">CSV to JSON</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.hexToRgb()">HEX to RGB</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.epochToDate()">Epoch to Date</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.jwtDecoder()">Decode JWT</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.converters.bytesToSize()">File Size Humanizer</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.securityApi.sha256Hash()">SHA-256 Hash</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.securityApi.generateUuidV4()">UUID V4 Gen</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.securityApi.apiKeyGen()">API Key Gen</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.securityApi.httpStatusLookup()">HTTP Statuses</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.securityApi.xssSanitizer()">XSS Sanitizer</button>
-  </div>
-
-  <div class="p-section-title p-code-title">🎨 CSS, DevOps & Databases (50)</div>
-  <div class="p-grid-container">
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.cssUi.flexboxGenerator()">Flexbox Builder</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.cssUi.gridGenerator()">CSS Grid</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.cssUi.glassmorphismGen()">Glassmorphism</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.cssUi.gradientGenerator()">Gradient Gen</button>
-
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.devopsGit.gitCommitBuilder()">Git Commit</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.devopsGit.dockerfileGenerator()">Dockerfile</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.devopsGit.nginxConfigGen()">Nginx Config</button>
-
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.databaseSql.selectQueryGen()">SQL Select</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.databaseSql.joinQueryBuilder()">SQL Join</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.databaseSql.mongoQueryGen()">Mongo Query</button>
-  </div>
-
-  <div class="p-section-title p-code-title">⚙️ Algo, DS & Performance (25)</div>
-  <div class="p-grid-container">
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.algoDs.binarySearch()">Binary Search</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.algoDs.quickSort()">Quick Sort</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.algoDs.dijkstraShortestPath()">Dijkstra Path</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.perfDebug.benchmarkTimer()">Benchmark Code</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.perfDebug.memoryLeakDetector()">Memory Check</button>
-    <button class="p-btn p-btn-dev" onclick="CodingMasterUltra150.perfDebug.networkStatusCheck()">Network Status</button>
   </div>
 
 </div>
 
+<!-- 🔄 4. स्विच करने का जावास्क्रिप्ट लॉजिक -->
+<script>
+function switchParnaravTab(type) {
+    const finPanel = document.getElementById('panel-finance');
+    const codePanel = document.getElementById('panel-coding');
+    const finBtn = document.getElementById('tab-fin-btn');
+    const codeBtn = document.getElementById('tab-code-btn');
+
+    if (type === 'finance') {
+        finPanel.classList.add('active');
+        codePanel.classList.remove('active');
+        finBtn.classList.add('active-fin');
+        codeBtn.classList.remove('active-code');
+    } else {
+        codePanel.classList.add('active');
+        finPanel.classList.remove('active');
+        codeBtn.classList.add('active-code');
+        finBtn.classList.remove('active-fin');
+    }
+}
+</script>
+
+  
 </body>
 </html>
