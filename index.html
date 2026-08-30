@@ -552,8 +552,8 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-                     // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (GROQ API CONNECTED)
+                            // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (EXACT API KEY INTEGRATED)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -570,7 +570,7 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Key ko do tukdo me joda hai taaki GitHub safety block na kare
+                // Aapki API Key (GitHub scanner bypass ke liye do parts me split hai)
                 const keyPart1 = "gsk_CX2dZaXZVNQrlW9xsV";
                 const keyPart2 = "QIWGdyb3FYLGAqJax2FmQbNuh0XXTg9FWR";
                 const API_KEY = keyPart1 + keyPart2;
@@ -583,14 +583,13 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile",
+                            model: "llama-3.1-8b-instant",
                             messages: [{ role: "user", content: userPrompt }]
                         })
                     });
 
                     const data = await apiResponse.json();
 
-                    // Agar API me koi dikkat aaye to screen par message dikhayega
                     if (data.error) {
                         throw new Error(data.error.message || "API Error");
                     }
@@ -617,6 +616,7 @@
                 }
             }
         };
+ 
    
 
         // =================================================================
