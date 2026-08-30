@@ -553,9 +553,8 @@
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
                  
-                   
-                   // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (ACTIVE MODEL FIX)
+                  // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (NO API KEY REQUIRED - PERMANENT FIX)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -572,33 +571,25 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Active Groq API Key
-                const keyPart1 = "gsk_9VcmeYBAVXs5K7PgLAoj";
-                const keyPart2 = "WGdyb3FYSqfkGvwEiFZsbmkmOuLjHcLJ";
-                const API_KEY = keyPart1 + keyPart2;
-
                 try {
-                    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    // Pollinations AI Endpoint (Bilkul Free, No API Key Needed)
+                    const apiResponse = await fetch("https://text.pollinations.ai/", {
                         method: "POST",
                         headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile", // Latest Working Model
-                            messages: [{ role: "user", content: userPrompt }]
+                            messages: [
+                                { role: "system", content: systemInstruction || "You are a helpful AI assistant." },
+                                { role: "user", content: userPrompt }
+                            ],
+                            model: "openai"
                         })
                     });
 
-                    const data = await apiResponse.json();
+                    const fullReply = await apiResponse.text();
 
-                    if (data.error) {
-                        throw new Error(data.error.message || "API Error");
-                    }
-
-                    if (data.choices && data.choices[0] && data.choices[0].message) {
-                        const fullReply = data.choices[0].message.content;
-                        
+                    if (fullReply && fullReply.trim() !== "") {
                         this.chatHistory.push({ role: "assistant", content: fullReply });
 
                         if (onChunkCallback) {
@@ -606,11 +597,11 @@
                         }
                         return fullReply;
                     } else {
-                        throw new Error("Invalid AI response");
+                        throw new Error("Empty response from AI server");
                     }
                 } catch (error) {
-                    console.error("Groq API Error:", error);
-                    const errorMsg = "⚠️ Connection Error: " + error.message;
+                    console.error("AI Error:", error);
+                    const errorMsg = "⚠️ Connection Error: Please try again.";
                     if (onChunkCallback) {
                         onChunkCallback(errorMsg);
                     }
@@ -618,9 +609,8 @@
                 }
             }
         };
-
-
-
+         
+                   
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
         // =================================================================
