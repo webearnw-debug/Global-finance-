@@ -572,50 +572,38 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
- // === Puter ki jagah Naya Gemini API Code ===
-const API_KEY = "YOUR_GEMINI_API_KEY"; // Yahan apni Google AI Studio wali Key dalein
 
-// Chat history se latest user message nikalna
+// === Groq Free API Code ===
+const API_KEY = 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
+
 const lastUserMsg = this.chatHistory ? this.chatHistory[this.chatHistory.length - 1]?.content || "" : "";
 
 try {
-    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${API_KEY}`,
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-            contents: [{ parts: [{ text: lastUserMsg }] }]
+            model: "llama-3.3-70b-versatile",
+            messages: [{ role: "user", content: lastUserMsg }]
         })
     });
 
     const data = await apiResponse.json();
-    const fullReply = data.candidates[0].content.parts[0].text;
+    const fullReply = data.choices[0].message.content;
 
-    // Output UI ko bhej na
     if (onChunkCallback) {
         onChunkCallback(fullReply);
     }
 } catch (error) {
     console.error("API Error:", error);
     if (onChunkCallback) {
-        onChunkCallback("Sorry, response connect karne me issue aaya.");
+        onChunkCallback("API Connection me koi error aaya.");
     }
 }
-               
-            },
 
-            generateStructuredData: async function(prompt) {
-                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
-                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
-            },
-
-            triggerAgenticTask: async function() {
-                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
-                if (!userTask) return;
-
-                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
-                AppController.submitQuery();
-            }
-        };
 
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
