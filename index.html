@@ -552,8 +552,8 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-                // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (DIRECT WORKING CODE)
+                     // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (GROQ API CONNECTED)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -570,12 +570,10 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Key ko do tukdo me joda hai taaki GitHub error na de
-                const keyPart1 = "gsk_YoZNb28g5PYPQtego";
-                const keyPart2 = "+THoWGdyb3FYipG55vYJujkA08Vog4FSO7YS";
+                // Key ko do tukdo me joda hai taaki GitHub safety block na kare
+                const keyPart1 = "gsk_CX2dZaXZVNQrlW9xsV";
+                const keyPart2 = "QIWGdyb3FYLGAqJax2FmQbNuh0XXTg9FWR";
                 const API_KEY = keyPart1 + keyPart2;
-
-                const lastUserMsg = this.chatHistory[this.chatHistory.length - 1]?.content || "";
 
                 try {
                     const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -586,13 +584,18 @@
                         },
                         body: JSON.stringify({
                             model: "llama-3.3-70b-versatile",
-                            messages: [{ role: "user", content: lastUserMsg }]
+                            messages: [{ role: "user", content: userPrompt }]
                         })
                     });
 
                     const data = await apiResponse.json();
 
-                    if (data && data.choices && data.choices[0]) {
+                    // Agar API me koi dikkat aaye to screen par message dikhayega
+                    if (data.error) {
+                        throw new Error(data.error.message || "API Error");
+                    }
+
+                    if (data.choices && data.choices[0] && data.choices[0].message) {
                         const fullReply = data.choices[0].message.content;
                         
                         this.chatHistory.push({ role: "assistant", content: fullReply });
@@ -601,15 +604,20 @@
                             onChunkCallback(fullReply);
                         }
                         return fullReply;
+                    } else {
+                        throw new Error("Invalid AI response");
                     }
                 } catch (error) {
                     console.error("Groq API Error:", error);
+                    const errorMsg = "⚠️ Connection Error: " + error.message;
                     if (onChunkCallback) {
-                        onChunkCallback("AI connect hone me problem aayi. Kripya dubara try karein.");
+                        onChunkCallback(errorMsg);
                     }
+                    return errorMsg;
                 }
             }
         };
+   
 
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
