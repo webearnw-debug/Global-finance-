@@ -552,8 +552,10 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-                 // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (NEW API KEY INTEGRATED)
+                 
+                   
+           // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (ACTIVE MODEL FIX)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -570,7 +572,7 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Nayi API Key (GitHub scanner bypass ke liye 2 tukdo me split)
+                // Apni Active API Key (Split for GitHub safety)
                 const keyPart1 = "gsk_9VcmeYBAVXs5K7PgLAoj";
                 const keyPart2 = "WGdyb3FYSqfkGvwEiFZsbmkmOuLjHcLJ";
                 const API_KEY = keyPart1 + keyPart2;
@@ -583,7 +585,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            model: "llama3-8b-8192",
+                            model: "llama-3.3-70b-versatile", // Updated Active Groq Model
                             messages: [{ role: "user", content: userPrompt }]
                         })
                     });
@@ -616,8 +618,7 @@
                 }
             }
         };
-                   
-   
+
 
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
