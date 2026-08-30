@@ -928,59 +928,59 @@
         };
 
         // =================================================================
-        // 🛡️ 5 ARMOR FLEET COMMANDS
+        // 🛡️ 5 DYNAMIC AI ARMOR FLEET ENGINES
         // =================================================================
         const ArmorFleet = {
             targetUrl: "https://global-finance-eight.vercel.app/",
 
             Armor_1: {
                 id: 1, codeName: "Armor-1 (Crawler & Intent Psychology)", avatarClass: "armor-1", avatarIcon: "🕷️",
-                async inspect(site, promptText) {
-                    if (!site) return `⚠️ **[Armor-1 Alert]**\nकोई वेबसाइट कनेक्टेड नहीं है। कृपया ऊपर Target Website URL दर्ज करें।`;
-                    return `🕷️ **[Armor-1 Crawler & Intent Audit] Target: ${site}**\n\n` +
-                           `• **क्रॉलिंग स्टेटस:** पाथवे एवं साइटमैप संरचना पूरी तरह से स्कैन की गई।\n` +
-                           `• **यूज़र इंटेंट मैप:** मुख्य कॉल-टू-एक्शन (CTA) और ड्रॉप-ऑफ पॉइंट्स ऑप्टिमाइज़ किए गए।\n` +
-                           `• **कमांड प्रतिक्रिया:** ${promptText || "क्रॉलिंग व इंटेंट एनालिसिस सफलतापूर्वक निष्पादित किया गया।"}`;
+                systemPrompt: "You are Armor-1: Web Crawler & Intent Psychology Specialist for Captain Keshav OS. Audit website architecture, user conversion pathways, Call-to-Action (CTA) placement, and psychological drop-off points.",
+                async inspect(site, promptText, onChunkCallback) {
+                    const target = site || "Not Connected";
+                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
+                    const userMsg = `[ARMOR-1 DIRECTIVE]: Analyze target site '${target}'. Query/Task: ${promptText || "Perform complete crawler and intent psychology audit."}`;
+                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
                 }
             },
             Armor_2: {
                 id: 2, codeName: "Armor-2 (Speed & UX Friction Psychology)", avatarClass: "armor-2", avatarIcon: "⚡",
-                async inspect(site, promptText) {
-                    if (!site) return `⚠️ **[Armor-2 Alert]**\nपरफॉरमेंस टेस्ट के लिए वेबसाइट URL दर्ज करें।`;
-                    return `⚡ **[Armor-2 Speed & Friction Specialist] Target: ${site}**\n\n` +
-                           `• **लोडिंग परफॉरमेंस:** First Contentful Paint (FCP) ऑप्टिमाइज्ड।\n` +
-                           `• **UX फ्रिक्शन हल:** पेज लेआउट शिफ्ट (CLS) को न्यूनतम सीमा पर लाया गया।\n` +
-                           `• **कमांड प्रतिक्रिया:** ${promptText || "UX फ्रिक्शन दूर करके स्पीड बढ़ाई गई।"}`;
+                systemPrompt: "You are Armor-2: Speed & UX Friction Specialist for Captain Keshav OS. Audit loading performance (FCP, LCP), Cumulative Layout Shift (CLS), visual hierarchy, and UX friction factors.",
+                async inspect(site, promptText, onChunkCallback) {
+                    const target = site || "Not Connected";
+                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
+                    const userMsg = `[ARMOR-2 DIRECTIVE]: Analyze speed and UX friction for target '${target}'. Task: ${promptText || "Audit page speed, rendering optimization, and user experience friction."}`;
+                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
                 }
             },
             Armor_3: {
                 id: 3, codeName: "Armor-3 (Cyber Guard & Threat Mindset)", avatarClass: "armor-3", avatarIcon: "🔐",
-                async inspect(site, promptText) {
-                    if (!site) return `⚠️ **[Armor-3 Alert]**\nसुरक्षा शील्ड्स स्टैंडबाय मोड पर हैं। URL दर्ज करें।`;
-                    return `🔐 **[Armor-3 Cyber Guard Sheild] Target: ${site}**\n\n` +
-                           `• **सुरक्षा प्रोटोकॉल:** SSL सर्टिफिकेट व फायरवॉल रूल्स एक्टिवेट।\n` +
-                           `• **थ्रेट एनालिसिस:** कोई संदेहास्पद एक्सप्लॉइट या सुरक्षा भेद्यता नहीं पाई गई।\n` +
-                           `• **कमांड प्रतिक्रिया:** ${promptText || "सुरक्षा शील्ड्स पूरी तरह सक्रिय और सुरक्षित हैं।"}`;
+                systemPrompt: "You are Armor-3: Cyber Guard & Threat Assessment Specialist for Captain Keshav OS. Audit web security headers, SSL/TLS policies, attack surface vectors, and vulnerability risks.",
+                async inspect(site, promptText, onChunkCallback) {
+                    const target = site || "Not Connected";
+                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
+                    const userMsg = `[ARMOR-3 DIRECTIVE]: Security assessment for target '${target}'. Task: ${promptText || "Perform cybersecurity vulnerability check and shield audit."}`;
+                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
                 }
             },
             Armor_4: {
                 id: 4, codeName: "Armor-4 (SEO & Persuasion Tactics)", avatarClass: "armor-4", avatarIcon: "📊",
-                async inspect(site, promptText) {
-                    if (!site) return `⚠️ **[Armor-4 Alert]**\nSEO एवं कंटेंट चेकिंग हेतु वेबसाइट जोड़ें।`;
-                    return `📊 **[Armor-4 SEO & Persuasion Specialist] Target: ${site}**\n\n` +
-                           `• **कीवर्ड व सर्च इंटेंट:** ऑन-पेज मेटा डेटा और हेडिंग्स सर्च इंजन फ्रेंडली तैयार हैं।\n` +
-                           `• **पर्सुएसिव कॉपीराइटिंग:** यूज़र कनवर्ट करने के लिए पर्सुएशिव ट्रिगर्स सेट किए गए।\n` +
-                           `• **कमांड प्रतिक्रिया:** ${promptText || "SEO और रैंकिंग ऑप्टिमाइजेशन रिपोर्ट तैयार है।"}`;
+                systemPrompt: "You are Armor-4: SEO & Persuasive Copywriting Specialist for Captain Keshav OS. Analyze search engine optimization, keywords, meta structures, and persuasive conversion triggers.",
+                async inspect(site, promptText, onChunkCallback) {
+                    const target = site || "Not Connected";
+                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
+                    const userMsg = `[ARMOR-4 DIRECTIVE]: SEO and copywriting audit for target '${target}'. Task: ${promptText || "Evaluate search rankings, metadata, and persuasion psychology."}`;
+                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
                 }
             },
             Armor_5: {
                 id: 5, codeName: "Armor-5 (AdSense & Ad-Friction Psychology)", avatarClass: "armor-5", avatarIcon: "💰",
-                async inspect(site, promptText) {
-                    if (!site) return `⚠️ **[Armor-5 Alert]**\nमोनिटाइजेशन एवं विज्ञापन जाँच हेतु URL दर्ज करें।`;
-                    return `💰 **[Armor-5 AdSense & Revenue Engine] Target: ${site}**\n\n` +
-                           `• **विज्ञापन प्लेसमेंट:** CTR बढ़ाने और AdSense पॉलिसी का पालन करने वाले स्लॉट्स।\n` +
-                           `• **यूज़र अनुभव संतुलन:** कम से कम रुकावट के साथ अधिकतम रेवेन्यू पोटेंशियल।\n` +
-                           `• **कमांड प्रतिक्रिया:** ${promptText || "AdSense और मोनिटाइजेशन स्ट्रैटेजी लागू की गई।"}`;
+                systemPrompt: "You are Armor-5: AdSense Monetization & Ad-Friction Specialist for Captain Keshav OS. Analyze ad placement strategy, CTR optimization, AdSense policy compliance, and revenue balance.",
+                async inspect(site, promptText, onChunkCallback) {
+                    const target = site || "Not Connected";
+                    const sysInst = `${this.systemPrompt}\nTarget Site URL: ${target}`;
+                    const userMsg = `[ARMOR-5 DIRECTIVE]: Monetization audit for target '${target}'. Task: ${promptText || "Analyze AdSense compliance, CTR potential, and revenue-UX balance."}`;
+                    return await GeminiOmniEngine.processChat(userMsg, sysInst, onChunkCallback);
                 }
             },
 
@@ -1173,7 +1173,7 @@
                     </div>
 
                     <div style="font-size:0.8rem; font-weight:700; color:#4ade80; margin-bottom:6px; text-transform:uppercase;">
-                        🛡️ 5 Armor Fleet Commands (Tactical & Psychological)
+                        🛡️ 5 Armor Fleet Commands (Live AI Powered)
                     </div>
                     <div class="armor-grid">
                         <button class="armor-card-btn" onclick="ArmorFleet.talkToArmor(1)">
@@ -1259,7 +1259,7 @@
                     return;
                 }
 
-                // 🛡️ 2. ARMOR FLEET COMMANDS
+                // 🛡️ 2. DYNAMIC AI ARMOR FLEET COMMANDS PROCESSING
                 const matchArmor = text.match(/@Armor-([1-5])/i);
                 if (matchArmor) {
                     const armorNum = matchArmor[1];
@@ -1269,17 +1269,29 @@
                     input.value = '';
 
                     const aiMsgId = 'armor-' + Date.now();
-                    UIManager.appendMsg(`<i>${armorObj.codeName} साइकोलॉजिकल व टेक्निकल रिपोर्ट तैयार कर रहा है... ⚡</i>`, 'ai', aiMsgId, armorObj.avatarIcon, armorObj.avatarClass);
+                    UIManager.appendMsg(`<i>${armorObj.codeName} लाइव AI विश्लेषण निष्पादित कर रहा है... ⚡</i>`, 'ai', aiMsgId, armorObj.avatarIcon, armorObj.avatarClass);
 
                     const userPromptOnly = text.replace(/@Armor-[1-5]:?/i, '').trim();
-                    const armorReport = await armorObj.inspect(ArmorFleet.targetUrl, userPromptOnly);
                     const bubbleElement = document.getElementById(aiMsgId);
-                    if (bubbleElement) {
-                        const bubble = bubbleElement.querySelector('.bubble');
-                        bubble.innerHTML = window.marked ? marked.parse(armorReport) : armorReport;
-                        UIManager.renderActionBar(aiMsgId);
+                    const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
+
+                    try {
+                        const armorReport = await armorObj.inspect(ArmorFleet.targetUrl, userPromptOnly, (streamedText) => {
+                            if (bubble) {
+                                bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
+                                if (window.hljs) hljs.highlightAll();
+                            }
+                        });
+
+                        if (bubbleElement) {
+                            UIManager.renderActionBar(aiMsgId);
+                        }
+                        VoiceEngine.speak(`${armorObj.codeName} का dynamic AI विश्लेषण पूर्ण हो गया है।`);
+                    } catch (err) {
+                        if (bubble) {
+                            bubble.innerHTML = `**[Armor System Error]**: \`${err.message || err}\``;
+                        }
                     }
-                    VoiceEngine.speak(`${armorObj.codeName} की रिपोर्ट तैयार है।`);
                     return;
                 }
 
