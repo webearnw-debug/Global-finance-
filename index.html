@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
-    <!-- Puter Cloud AI Engine Core SDK -->
-    <script src="https://js.puter.com/v2/"></script>
 
     <style>
         :root {
@@ -554,65 +552,7 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-        // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
-        // =================================================================
-        const GeminiOmniEngine = {
-            chatHistory: [],
-
-            resetMemory: function() {
-                this.chatHistory = [];
-                console.log("[GeminiOmniEngine]: Memory reset.");
-            },
-
-            processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-                if (this.chatHistory.length === 0 && systemInstruction) {
-                    this.chatHistory.push({ role: "system", content: systemInstruction });
-                }
-                
-                this.chatHistory.push({ role: "user", content: userPrompt });
-
-                try {
-                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
-
-                    let fullReply = "";
-                    for await (const part of responseStream) {
-                        if (part?.text) {
-                            fullReply += part.text;
-                            if (onChunkCallback) onChunkCallback(fullReply);
-                        }
-                    }
-
-                    this.chatHistory.push({ role: "assistant", content: fullReply });
-                    return fullReply;
-
-                } catch (err) {
-                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
-                    const response = await puter.ai.chat(this.chatHistory);
-                    const textResponse = typeof response === 'string' 
-                        ? response 
-                        : (response?.message?.content || response?.text || "Error processing request.");
-
-                    this.chatHistory.push({ role: "assistant", content: textResponse });
-                    if (onChunkCallback) onChunkCallback(textResponse);
-                    return textResponse;
-                }
-            },
-
-            generateStructuredData: async function(prompt) {
-                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
-                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
-            },
-
-            triggerAgenticTask: async function() {
-                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
-                if (!userTask) return;
-
-                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
-                AppController.submitQuery();
-            }
-        };
-
+        
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
         // =================================================================
