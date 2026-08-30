@@ -1306,6 +1306,32 @@
 
   console.log("Omni Skills Profile Loaded Successfully!");
 </script>
+  <!-- ==================== ARMOR FLEET SCRIPT START ==================== -->
+  <script>
+    // 1. Target Website URL डिफॉल्ट सेट करें
+    const TARGET_URL = "https://global-finance-eight.vercel.app/";
+    const SYSTEM_PIN = "360";
+
+    // इनपुट बॉक्स में ऑटोमैटिक URL भरने के लिए (यदि इनपुट बॉक्स की id 'targetUrl' है)
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlInput = document.getElementById("targetUrl");
+      if (urlInput) {
+        urlInput.value = TARGET_URL;
+      }
+    });
+
+    // 2. Armor Command Execution Function
+    function runArmorAudit(armorNumber) {
+      console.log(`[Armor-${armorNumber}] Audit Started for: ${TARGET_URL}`);
+      alert(`Armor-${armorNumber} Active! Auditing Target: ${TARGET_URL}`);
+      
+      // यहां आपका एपीआई या ऑडिट लॉजिक रन होगा
+    }
+  </script>
+  <!-- ===================== ARMOR FLEET SCRIPT END ===================== -->
+
+</body>
+</html>
 
 </body>
 </html>
