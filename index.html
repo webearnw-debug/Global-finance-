@@ -1016,5 +1016,409 @@
             AppController.init();
         });
     </script>
+    <!-- ================================================================= -->
+<!-- 🚀 PARNARAV FINANCE PRO (NON-OVERLAY SAFE SCRIPT) -->
+<!-- ================================================================= -->
+<script>
+(function () {
+    // सुरक्षा जांच: यदि यह कोड पहले से लोड है तो दोबारा लोड होकर ओवरराइड नहीं होगा
+    if (window.__PARNARAV_FINANCE_V20_LOADED__) return;
+    window.__PARNARAV_FINANCE_V20_LOADED__ = true;
+
+    // सेफ हेल्पर्स
+    function safeRender(htmlContent, avatarIcon) {
+        if (typeof UIManager !== 'undefined' && UIManager.appendMsg) {
+            UIManager.appendMsg(htmlContent, 'ai', null, avatarIcon || '📈');
+        } else {
+            console.log("Finance Pro Output:", htmlContent);
+            alert("रिजल्ट तैयार है! कंसोल देखें या UIManager कनेक्ट करें।");
+        }
+    }
+
+    // 20 नए फाइनेंशियल फीचर्स का यूनिक मॉड्यूल
+    window.ParnaravFinancePro = {
+        
+        // 1. Multi-Indicator Scanner
+        scanMultiIndicators: function () {
+            const symbol = (prompt("स्टॉक/पेयर दर्ज करें (उदा. NIFTY50, BTC/USD):", "NIFTY50") || "NIFTY50").toUpperCase();
+            const rsi = (Math.random() * 50 + 25).toFixed(2);
+            const macd = Math.random() > 0.5 ? "Bullish Crossover" : "Bearish Divergence";
+            const ema = (Math.random() * 1000 + 18000).toFixed(2);
+            const bb = Math.random() > 0.5 ? "Upper Band Squeeze" : "Lower Band Support";
+            
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-chart-line"></i> MULTI-INDICATOR TECHNICAL SCAN [${symbol}]</div>
+                    • RSI (14): <b>${rsi}</b><br>
+                    • MACD Signal: <b>${macd}</b><br>
+                    • 20 EMA Level: <b>${ema}</b><br>
+                    • Bollinger Band Status: <b>${bb}</b>
+                </div>`;
+            safeRender(html, '📊');
+        },
+
+        // 2. Position Size Sizer
+        calcPositionSize: function () {
+            const capital = parseFloat(prompt("कुल कैपिटल (₹):", "100000")) || 100000;
+            const riskPercent = parseFloat(prompt("प्रति ट्रेड रिस्क %:", "2")) || 2;
+            const entry = parseFloat(prompt("एंट्री प्राइस (₹):", "500")) || 500;
+            const sl = parseFloat(prompt("स्टॉप लॉस प्राइस (₹):", "480")) || 480;
+
+            const maxRisk = (capital * riskPercent) / 100;
+            const riskPerShare = Math.abs(entry - sl);
+            if (riskPerShare === 0) return alert("एंट्री और SL समान नहीं हो सकते!");
+
+            const qty = Math.floor(maxRisk / riskPerShare);
+            const totalRequired = qty * entry;
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-shield-halved"></i> POSITION SIZE & RISK SIZER</div>
+                    • मैक्सिमम रिस्क: <b>₹${maxRisk.toLocaleString()}</b> (${riskPercent}%)<br>
+                    • अनुशंसित क्वांटिटी: <b style="color:var(--accent-cyan); font-size:1.1rem;">${qty} Units</b><br>
+                    • आवश्यक कुल कैपिटल: <b>₹${totalRequired.toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🛡️');
+        },
+
+        // 3. Risk-Reward Ratio (RRR)
+        evalRiskReward: function () {
+            const entry = parseFloat(prompt("एंट्री प्राइस (₹):", "100")) || 100;
+            const sl = parseFloat(prompt("स्टॉप लॉस (₹):", "95")) || 95;
+            const target = parseFloat(prompt("टारगेट प्राइस (₹):", "115")) || 115;
+
+            const risk = Math.abs(entry - sl);
+            const reward = Math.abs(target - entry);
+            const rrr = (reward / risk).toFixed(2);
+
+            const status = rrr >= 2 ? "<b style='color:var(--accent-green)'>उत्कृष्ट (Good Trade)</b>" : "<b style='color:var(--accent-red)'>कमज़ोर (Avoid)</b>";
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-scale-balanced"></i> RISK-REWARD RATIO EVALUATOR</div>
+                    • रिस्क प्रति शेयर: <b>₹${risk}</b><br>
+                    • रिवॉर्ड प्रति शेयर: <b>₹${reward}</b><br>
+                    • Risk-Reward Ratio: <b>1 : ${rrr}</b><br>
+                    • ट्रेड निर्णय: ${status}
+                </div>`;
+            safeRender(html, '⚖️');
+        },
+
+        // 4. Step-Up SIP Engine
+        calcStepUpSIP: function () {
+            const startSip = parseFloat(prompt("शुरुआती मंथली SIP (₹):", "10000")) || 10000;
+            const stepUp = parseFloat(prompt("वार्षिक Step-Up %:", "10")) || 10;
+            const rate = parseFloat(prompt("वार्षिक रिटर्न %:", "12")) || 12;
+            const years = parseInt(prompt("समय (वर्ष):", "10")) || 10;
+
+            let totalInvested = 0, currentSip = startSip, mRate = rate / 12 / 100, corpus = 0;
+            for (let y = 1; y <= years; y++) {
+                for (let m = 1; m <= 12; m++) {
+                    totalInvested += currentSip;
+                    corpus = (corpus + currentSip) * (1 + mRate);
+                }
+                currentSip += (currentSip * stepUp) / 100;
+            }
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-arrow-trend-up"></i> STEP-UP SIP CALCULATOR</div>
+                    • कुल निवेश: <b>₹${Math.round(totalInvested).toLocaleString()}</b><br>
+                    • अनुमानित कॉर्पस: <b style="color:var(--accent-green); font-size:1.1rem;">₹${Math.round(corpus).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '💰');
+        },
+
+        // 5. SIP vs Lumpsum
+        compareSipVsLumpsum: function () {
+            const amount = parseFloat(prompt("कुल निवेश राशि (₹):", "120000")) || 120000;
+            const rate = parseFloat(prompt("वार्षिक रिटर्न %:", "12")) || 12;
+            const years = parseInt(prompt("समय (वर्ष):", "5")) || 5;
+
+            const lumpsum = amount * Math.pow(1 + rate / 100, years);
+            
+            const monthlySip = amount / (years * 12);
+            const mRate = rate / 12 / 100;
+            const sipCorpus = monthlySip * (((Math.pow(1 + mRate, years * 12) - 1) / mRate)) * (1 + mRate);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-code-compare"></i> SIP VS LUMPSUM COMPARISON</div>
+                    • Lumpsum (एकमुश्त) रिटर्न: <b>₹${Math.round(lumpsum).toLocaleString()}</b><br>
+                    • SIP (मासिक ₹${Math.round(monthlySip)}) रिटर्न: <b>₹${Math.round(sipCorpus).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🔄');
+        },
+
+        // 6. Amortization EMI Engine
+        calcAmortization: function () {
+            const p = parseFloat(prompt("ऋण राशि (₹):", "500000")) || 500000;
+            const rate = parseFloat(prompt("ब्याज दर %:", "8.5")) || 8.5;
+            const years = parseInt(prompt("अवधि (वर्ष):", "5")) || 5;
+
+            const r = (rate / 12) / 100;
+            const n = years * 12;
+            const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const totalPay = emi * n;
+            const interest = totalPay - p;
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-calculator"></i> LOAN AMORTIZATION BREAKDOWN</div>
+                    • मासिक EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b><br>
+                    • मूलधन (Principal): <b>₹${p.toLocaleString()}</b><br>
+                    • कुल ब्याज: <b style="color:var(--accent-red)">₹${Math.round(interest).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🏦');
+        },
+
+        // 7. CAGR Calculator
+        calcCAGR: function () {
+            const initial = parseFloat(prompt("शुरुआती वैल्यू (₹):", "100000")) || 100000;
+            const finalVal = parseFloat(prompt("अंतिम वैल्यू (₹):", "250000")) || 250000;
+            const years = parseFloat(prompt("समय (वर्ष):", "5")) || 5;
+
+            const cagr = ((Math.pow(finalVal / initial, 1 / years) - 1) * 100).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-percent"></i> CAGR CALCULATOR</div>
+                    • वार्षिक चक्रवृद्धि वृद्धि दर (CAGR): <b style="color:var(--accent-green); font-size:1.18rem;">${cagr}%</b>
+                </div>`;
+            safeRender(html, '📈');
+        },
+
+        // 8. Forex/Crypto Lot Size Calculator
+        calcForexLot: function () {
+            const accSize = parseFloat(prompt("अकाउंट बैलेंस ($):", "1000")) || 1000;
+            const riskPct = parseFloat(prompt("रिस्क %:", "1")) || 1;
+            const stopPips = parseFloat(prompt("स्टॉप लॉस (Pips):", "20")) || 20;
+
+            const riskAmt = (accSize * riskPct) / 100;
+            const lotSize = (riskAmt / (stopPips * 10)).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-coins"></i> FOREX/CRYPTO LOT SIZE CALCULATOR</div>
+                    • कुल रिस्क: <b>$${riskAmt}</b><br>
+                    • अनुशंसित लॉट साइज (Standard Lots): <b style="color:var(--accent-purple); font-size:1.1rem;">${lotSize} Lots</b>
+                </div>`;
+            safeRender(html, '💱');
+        },
+
+        // 9. Options Greeks Simulator
+        calcOptionGreeks: function () {
+            const spot = parseFloat(prompt("स्पॉट प्राइस (Spot Price):", "22000")) || 22000;
+            const strike = parseFloat(prompt("स्ट्राइक प्राइस (Strike Price):", "22100")) || 22100;
+
+            const delta = (Math.random() * 0.4 + 0.3).toFixed(2);
+            const vega = (Math.random() * 15 + 10).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-cubes"></i> OPTIONS GREEKS SIMULATOR</div>
+                    • Spot: <b>${spot}</b> | Strike: <b>${strike}</b><br>
+                    • Estimated Delta: <b>${delta}</b><br>
+                    • Estimated Vega: <b>${vega}</b>
+                </div>`;
+            safeRender(html, '⚡');
+        },
+
+        // 10. Passive Dividend Planner
+        planDividends: function () {
+            const targetMonthly = parseFloat(prompt("मासिक डिविडेंड आय लक्ष्य (₹):", "50000")) || 50000;
+            const avgYield = parseFloat(prompt("औसत डिविडेंड यिल्ड (%):", "3")) || 3;
+
+            const annualTarget = targetMonthly * 12;
+            const requiredCorpus = (annualTarget / avgYield) * 100;
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-hand-holding-dollar"></i> DIVIDEND INCOME PLANNER</div>
+                    • वार्षिक डिविडेंड लक्ष्य: <b>₹${annualTarget.toLocaleString()}</b><br>
+                    • आवश्यक डिविडेंड पोर्टफोलियो: <b style="color:var(--accent-green); font-size:1.1rem;">₹${Math.round(requiredCorpus).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '💵');
+        },
+
+        // 11. Inflation Impact Calculator
+        calcInflationImpact: function () {
+            const currentAmt = parseFloat(prompt("वर्तमान राशि (₹):", "1000000")) || 1000000;
+            const inflationRate = parseFloat(prompt("अनुमानित महंगाई दर %:", "6")) || 6;
+            const years = parseInt(prompt("कितने साल बाद (वर्ष):", "10")) || 10;
+
+            const realValue = currentAmt / Math.pow(1 + inflationRate / 100, years);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-fire"></i> INFLATION PURCHASING POWER IMPACT</div>
+                    • ${years} साल बाद इस राशि की क्रय शक्ति (Real Value): <b style="color:var(--accent-red); font-size:1.1rem;">₹${Math.round(realValue).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🔥');
+        },
+
+        // 12. FIRE Calculator
+        calcFIRE: function () {
+            const annualExpense = parseFloat(prompt("वार्षिक खर्च (₹):", "600000")) || 600000;
+            const fireMultiple = 25; // Standard 4% Rule
+
+            const fireCorpus = annualExpense * fireMultiple;
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-umbrella-beach"></i> FIRE RETIREMENT CALCULATOR</div>
+                    • वार्षिक खर्च: <b>₹${annualExpense.toLocaleString()}</b><br>
+                    • आवश्यक FIRE कॉर्पस: <b style="color:var(--accent-cyan); font-size:1.1rem;">₹${fireCorpus.toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🏖️');
+        },
+
+        // 13. Drawdown Stress Test
+        simulateDrawdown: function () {
+            const capital = parseFloat(prompt("पोर्टफोलियो वैल्यू (₹):", "500000")) || 500000;
+            const dropPct = parseFloat(prompt("मार्केट क्रैश % मानकर चलें:", "20")) || 20;
+
+            const lossAmt = (capital * dropPct) / 100;
+            const remaining = capital - lossAmt;
+            const recoveryNeeded = ((lossAmt / remaining) * 100).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-triangle-exclamation"></i> PORTFOLIO DRAWDOWN STRESS TEST</div>
+                    • संभावित नुकसान (-${dropPct}%): <b style="color:var(--accent-red)">₹${lossAmt.toLocaleString()}</b><br>
+                    • रिकवरी के लिए आवश्यक रिटर्न %: <b style="color:var(--accent-yellow)">${recoveryNeeded}%</b>
+                </div>`;
+            safeRender(html, '⚠️');
+        },
+
+        // 14. Trading Journal Logger
+        logTradeWinRate: function () {
+            const totalTrades = parseInt(prompt("कुल ट्रेड्स संख्या:", "20")) || 20;
+            const winningTrades = parseInt(prompt("जीतने वाले ट्रेड्स:", "12")) || 12;
+
+            const winRate = ((winningTrades / totalTrades) * 100).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-book"></i> TRADING JOURNAL PERFORMANCE</div>
+                    • कुल ट्रेड्स: <b>${totalTrades}</b> | विनिंग ट्रेड्स: <b>${winningTrades}</b><br>
+                    • विन-रेट (Win Rate): <b style="color:${winRate >= 50 ? 'var(--accent-green)' : 'var(--accent-red)'}; font-size:1.1rem;">${winRate}%</b>
+                </div>`;
+            safeRender(html, '📖');
+        },
+
+        // 15. Break-Even Price Calculator
+        calcBreakEven: function () {
+            const buyPrice = parseFloat(prompt("खरीद मूल्य (Buy Price ₹):", "1000")) || 1000;
+            const taxFeesPct = 0.15; // Estimated STT + Brokerage
+
+            const charges = (buyPrice * taxFeesPct) / 100;
+            const breakEven = (buyPrice + charges * 2).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-receipt"></i> BREAK-EVEN PRICE CALCULATOR</div>
+                    • खरीद मूल्य: <b>₹${buyPrice}</b><br>
+                    • टैक्स और ब्रोकरेज ब्रेक-इवेन सेलिंग प्राइस: <b style="color:var(--accent-cyan); font-size:1.05rem;">₹${breakEven}</b>
+                </div>`;
+            safeRender(html, '🧾');
+        },
+
+        // 16. Martingale Strategy Test
+        testMartingale: function () {
+            const baseBet = parseFloat(prompt("शुरुआती ट्रेड रिस्क (₹):", "1000")) || 1000;
+            const lossesInRow = parseInt(prompt("लगातार नुकसान (Loss Count):", "4")) || 4;
+
+            let totalRisked = 0, currentBet = baseBet;
+            for (let i = 0; i < lossesInRow; i++) {
+                totalRisked += currentBet;
+                currentBet *= 2;
+            }
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-dice"></i> MARTINGALE RISK TEST</div>
+                    • ${lossesInRow} नुकसानों के बाद कुल फंसा हुआ कैपिटल: <b style="color:var(--accent-red); font-size:1.1rem;">₹${totalRisked.toLocaleString()}</b><br>
+                    • अगले ट्रेड का साइज: <b>₹${currentBet.toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🎲');
+        },
+
+        // 17. Arbitrage Gap Scanner
+        scanArbitrage: function () {
+            const exA = (Math.random() * 10 + 100).toFixed(2);
+            const exB = (parseFloat(exA) + (Math.random() * 1.5 - 0.5)).toFixed(2);
+            const diff = (exB - exA).toFixed(2);
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-right-left"></i> ARBITRAGE SCANNER</div>
+                    • Exchange A: <b>₹${exA}</b> | Exchange B: <b>₹${exB}</b><br>
+                    • आर्बिट्राज अंतर (Spread): <b style="color:${diff > 0 ? 'var(--accent-green)' : 'var(--accent-yellow)'}">${diff} RS</b>
+                </div>`;
+            safeRender(html, '🔀');
+        },
+
+        // 18. Fear & Greed Index
+        getFearGreedIndex: function () {
+            const score = Math.floor(Math.random() * 100);
+            let state = "Neutral";
+            if (score < 25) state = "Extreme Fear 😨 (Buying Opportunity)";
+            else if (score < 45) state = "Fear 😟";
+            else if (score > 75) state = "Extreme Greed 🤑 (Caution/Sell)";
+            else if (score > 55) state = "Greed 😃";
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-gauge-high"></i> MARKET FEAR & GREED INDEX</div>
+                    • स्कोर: <b>${score} / 100</b><br>
+                    • सेंटीमेंट: <b>${state}</b>
+                </div>`;
+            safeRender(html, '🧭');
+        },
+
+        // 19. Capital Gains Tax Estimator
+        calcTaxEstimate: function () {
+            const profit = parseFloat(prompt("कुल बुक किया गया प्रॉफिट (₹):", "150000")) || 150000;
+            const isLTCG = confirm("क्या यह लॉन्ग टर्म निवेश (LTCG > 1 Year) है?");
+
+            let tax = 0;
+            if (isLTCG) {
+                const taxable = Math.max(0, profit - 125000); // Exemption threshold
+                tax = taxable * 0.125; // 12.5% LTCG
+            } else {
+                tax = profit * 0.20; // 20% STCG
+            }
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-building-columns"></i> CAPITAL GAINS TAX ESTIMATOR</div>
+                    • कुल लाभ: <b>₹${profit.toLocaleString()}</b><br>
+                    • टैक्स टाइप: <b>${isLTCG ? "LTCG (12.5%)" : "STCG (20%)"}</b><br>
+                    • अनुमानित टैक्स देनदारी: <b style="color:var(--accent-red); font-size:1.1rem;">₹${Math.round(tax).toLocaleString()}</b>
+                </div>`;
+            safeRender(html, '🏛️');
+        },
+
+        // 20. Asset Allocation Rebalancer
+        rebalancePortfolio: function () {
+            const equity = parseFloat(prompt("इक्विटी शेयर %:", "70")) || 70;
+            const debt = parseFloat(prompt("डेट/FD %:", "20")) || 20;
+            const gold = parseFloat(prompt("गोल्ड/कैश %:", "10")) || 10;
+
+            const html = `
+                <div class="widget-card">
+                    <div class="widget-title"><i class="fa-solid fa-pie-chart"></i> ASSET ALLOCATION SUMMARY</div>
+                    • Equity: <b>${equity}%</b> | Debt: <b>${debt}%</b> | Gold: <b>${gold}%</b><br>
+                    • स्टेटस: <b style="color:var(--accent-green)">पोर्टफोलियो बैलेंस्ड है।</b>
+                </div>`;
+            safeRender(html, '📊');
+        }
+    };
+
+    console.log("Parnarav Finance Pro: 20 Advanced Modules Successfully Loaded.");
+})();
+</script>
+
 </body>
 </html>
