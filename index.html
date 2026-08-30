@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
-
-    
+    <!-- Puter Cloud AI Engine Core SDK -->
+    <script src="https://js.puter.com/v2/"></script>
 
     <style>
         :root {
@@ -554,8 +554,8 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-                // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (GROQ INTEGRATION)
+        // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -572,46 +572,86 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // === Groq Free API Code ===
-                const API_KEY = "gsk_YoZNb28g5PYPQtego+THoWGdyb3FYipG55vYJujkA08Vog4FSO7YS"; // Quotes me band kar diya hai
-
-                const lastUserMsg = this.chatHistory ? this.chatHistory[this.chatHistory.length - 1]?.content || "" : "";
-
                 try {
-                    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile",
-                            messages: [{ role: "user", content: lastUserMsg }]
-                        })
-                    });
+                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
 
-                    const data = await apiResponse.json();
-                    
-                    if (data && data.choices && data.choices[0]) {
-                        const fullReply = data.choices[0].message.content;
-                        
-                        // History me AI reply add karein
-                        this.chatHistory.push({ role: "assistant", content: fullReply });
-
-                        if (onChunkCallback) {
-                            onChunkCallback(fullReply);
+                    let fullReply = "";
+                    for await (const part of responseStream) {
+                        if (part?.text) {
+                            fullReply += part.text;
+                            if (onChunkCallback) onChunkCallback(fullReply);
                         }
-                        return fullReply;
                     }
-                } catch (error) {
-                    console.error("API Error:", error);
-                    if (onChunkCallback) {
-                        onChunkCallback("API Connection me koi error aaya.");
-                    }
+
+                    this.chatHistory.push({ role: "assistant", content: fullReply });
+                    return fullReply;
+
+                } catch (err) {
+                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
+                    const response = await puter.ai.chat(this.chatHistory);
+                    const textResponse = typeof response === 'string' 
+                        ? response 
+                        : (response?.message?.content || response?.text || "Error processing request.");
+
+                    this.chatHistory.push({ role: "assistant", content: textResponse });
+                    if (onChunkCallback) onChunkCallback(textResponse);
+                    return textResponse;
                 }
+            },
+
+            generateStructuredData: async function(prompt) {
+                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
+                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
+            },
+
+            triggerAgenticTask: async function() {
+                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
+                if (!userTask) return;
+
+                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
+                AppController.submitQuery();
             }
         };
 
+        // =================================================================
+        // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
+        // =================================================================
+        const VoiceEngine = {
+            enabled: false,
+
+            toggleVoice: function() {
+                this.enabled = !this.enabled;
+                const btn = document.getElementById('voiceToggleBtn');
+                const txt = document.getElementById('voiceStatusText');
+                if (this.enabled) {
+                    btn.classList.add('active');
+                    txt.innerText = "Voice ON";
+                    this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
+                } else {
+                    btn.classList.remove('active');
+                    txt.innerText = "Voice OFF";
+                    window.speechSynthesis.cancel();
+                }
+            },
+
+            speak: function(text) {
+                if (!this.enabled || !('speechSynthesis' in window)) return;
+                window.speechSynthesis.cancel();
+
+                const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'hi-IN';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+
+                window.speechSynthesis.speak(utterance);
+            }
+        };
+
+        // =================================================================
+        // 🎙️ VOICE STT ENGINE (SPEECH-TO-TEXT / MICROPHONE)
+        // =================================================================
+        const VoiceInputEngine = {
             recognition: null,
             isListening: false,
 
@@ -2709,4 +2749,4 @@ window.salesEngine = new SalesExecutiveUltra100();
 </script>
 
 </body>
-</html>
+</html> 
