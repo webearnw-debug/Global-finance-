@@ -554,7 +554,7 @@
 
                  
                    
-           // =================================================================
+                   // =================================================================
         // 🚀 OMNI AI ENGINE MODULE (ACTIVE MODEL FIX)
         // =================================================================
         const GeminiOmniEngine = {
@@ -572,7 +572,7 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Apni Active API Key (Split for GitHub safety)
+                // Active Groq API Key
                 const keyPart1 = "gsk_9VcmeYBAVXs5K7PgLAoj";
                 const keyPart2 = "WGdyb3FYSqfkGvwEiFZsbmkmOuLjHcLJ";
                 const API_KEY = keyPart1 + keyPart2;
@@ -585,7 +585,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile", // Updated Active Groq Model
+                            model: "llama-3.3-70b-versatile", // Latest Working Model
                             messages: [{ role: "user", content: userPrompt }]
                         })
                     });
@@ -618,6 +618,7 @@
                 }
             }
         };
+
 
 
         // =================================================================
