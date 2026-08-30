@@ -572,31 +572,35 @@
                 
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                try {
-                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
+ // === Puter ki jagah Naya Gemini API Code ===
+const API_KEY = "YOUR_GEMINI_API_KEY"; // Yahan apni Google AI Studio wali Key dalein
 
-                    let fullReply = "";
-                    for await (const part of responseStream) {
-                        if (part?.text) {
-                            fullReply += part.text;
-                            if (onChunkCallback) onChunkCallback(fullReply);
-                        }
-                    }
+// Chat history se latest user message nikalna
+const lastUserMsg = this.chatHistory ? this.chatHistory[this.chatHistory.length - 1]?.content || "" : "";
 
-                    this.chatHistory.push({ role: "assistant", content: fullReply });
-                    return fullReply;
+try {
+    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: lastUserMsg }] }]
+        })
+    });
 
-                } catch (err) {
-                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
-                    const response = await puter.ai.chat(this.chatHistory);
-                    const textResponse = typeof response === 'string' 
-                        ? response 
-                        : (response?.message?.content || response?.text || "Error processing request.");
+    const data = await apiResponse.json();
+    const fullReply = data.candidates[0].content.parts[0].text;
 
-                    this.chatHistory.push({ role: "assistant", content: textResponse });
-                    if (onChunkCallback) onChunkCallback(textResponse);
-                    return textResponse;
-                }
+    // Output UI ko bhej na
+    if (onChunkCallback) {
+        onChunkCallback(fullReply);
+    }
+} catch (error) {
+    console.error("API Error:", error);
+    if (onChunkCallback) {
+        onChunkCallback("Sorry, response connect karne me issue aaya.");
+    }
+}
+               
             },
 
             generateStructuredData: async function(prompt) {
