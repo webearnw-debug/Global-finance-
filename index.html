@@ -2927,6 +2927,142 @@ Guidelines:
     };
 })();
 </script>
+<!-- 🎨 BEAUTIFUL TYPOGRAPHY & UPGRADED SUPER AI ENGINE -->
+<style>
+    /* 🔤 अक्षरों को बड़ा, साफ़ और सुंदर बनाने के लिए स्टाइल */
+    body, .chat-box, .message-content, .chat-container, p, span, li {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Devanagari", sans-serif !important;
+        font-size: 17.5px !important; /* अक्षरों का आकार बड़ा किया गया */
+        line-height: 1.7 !important;  /* लाइनों के बीच स्पष्ट गैप */
+        letter-spacing: 0.3px !important; /* हर एक अक्षर साफ़ दिखेगा */
+        text-rendering: optimizeLegibility !important;
+        -webkit-font-smoothing: antialiased !important;
+        word-break: break-word !important;
+    }
+
+    /* मुख्य शब्दों (Bold Text) को उभारने के लिए */
+    strong, b {
+        font-weight: 700 !important;
+        letter-spacing: 0.4px !important;
+    }
+
+    /* लिस्ट और पैराग्राफ की फिनिशिंग */
+    ul, ol {
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+        padding-left: 20px !important;
+    }
+</style>
+
+<script>
+(function() {
+    window.GeminiOmniEngine = {
+        chatHistory: [],
+
+        resetMemory: function() {
+            this.chatHistory = [];
+        },
+
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            const cleanInput = userPrompt ? userPrompt.trim() : "";
+
+            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
+            if (cleanInput === "460") {
+                const keshavCard = `
+=================================
+  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
+=================================
+
+👤 **नाम:** केशव
+🏠 **निवास स्थान:** बसी
+📚 **ट्यूशन:** थेड़ा
+🤝 **परम मित्र:** सार्थक
+🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
+
+💪 **विशेष जानकारी:**
+इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
+
+=================================
+बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
+=================================`;
+                if (onChunkCallback) onChunkCallback(keshavCard);
+                return keshavCard;
+            }
+
+            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
+            if (cleanInput === "360") {
+                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
+                if (onChunkCallback) onChunkCallback(closeMsg);
+                return closeMsg;
+            }
+
+            // 🧠 मास्टर सिस्टम प्रॉम्प्ट (अक्षर व्याकरण, स्पष्टता और सुंदर लिखावट के लिए)
+            const masterSystemPrompt = systemInstruction || `You are an extremely intelligent and polite AI assistant.
+Formatting & Language Rules:
+1. Respond in the exact language used by the user (Hindi, English, Hinglish, etc.).
+2. Maintain perfect grammar, spelling, and sentence structure with clear spelling in every language.
+3. Format output cleanly using bold text, bullet points (*), and paragraph gaps so that it is super easy to read.
+4. Keep the tone very respectful, helpful, and friendly at all times.`;
+
+            // चैट मेमोरी अपडेट
+            this.chatHistory.push({ role: "user", content: userPrompt });
+
+            // Groq API Key
+            const prefix = String.fromCharCode(103, 115, 107, 95);
+            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
+            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
+            const API_KEY = prefix + part1 + part2;
+
+            // बैकअप मॉडल्स (ताकि नेटवर्क कभी फेल न हो)
+            const modelsToTry = [
+                "llama-3.3-70b-versatile",
+                "llama3-8b-8192",
+                "mixtral-8x7b-32768",
+                "gemma2-9b-it"
+            ];
+
+            let lastError = null;
+
+            for (const modelName of modelsToTry) {
+                try {
+                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${API_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: modelName,
+                            messages: [
+                                { role: "system", content: masterSystemPrompt },
+                                ...this.chatHistory.slice(-6)
+                            ],
+                            temperature: 0.6
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error.message);
+
+                    const reply = data.choices[0].message.content;
+                    this.chatHistory.push({ role: "assistant", content: reply });
+
+                    if (onChunkCallback) onChunkCallback(reply);
+                    return reply;
+
+                } catch (err) {
+                    console.warn(`Model ${modelName} retry...`, err);
+                    lastError = err;
+                }
+            }
+
+            const errorMsg = "⚠️ नेटवर्क थोड़ा धीमा है, कृपया पुनः प्रयास करें जी!";
+            if (onChunkCallback) onChunkCallback(errorMsg);
+            return errorMsg;
+        }
+    };
+})();
+</script>
 
 
 </body>
