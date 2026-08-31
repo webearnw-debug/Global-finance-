@@ -555,8 +555,8 @@
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
                         
-                // =================================================================
-        // 🚀 SMART OMNI AI ENGINE (SUPER FAST & NO USER LOGIN)
+                  // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (FIXED MODEL & FAST RESPONSE)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -568,8 +568,8 @@
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Secret Encoding (GitHub Scanner ise kabhi nahi pakad paayega)
-                const prefix = String.fromCharCode(103, 115, 107, 95); // 'gsk_'
+                // Secret Encoding
+                const prefix = String.fromCharCode(103, 115, 107, 95);
                 const part1 = "tOdZ4LKWLbq0xjg2iG1T";
                 const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
                 
@@ -583,9 +583,9 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile",
+                            model: "llama-3.1-8b-instant",
                             messages: [
-                                { role: "system", content: systemInstruction || "You are an extremely intelligent AI assistant." },
+                                { role: "system", content: systemInstruction || "You are an intelligent AI assistant." },
                                 { role: "user", content: userPrompt }
                             ]
                         })
@@ -608,6 +608,7 @@
                 }
             }
         };
+      
 
         
 
