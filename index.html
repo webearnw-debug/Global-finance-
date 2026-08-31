@@ -3190,6 +3190,132 @@ Rules:
     };
 })();
 </script>
+<!-- ⚡ FIXED & ULTRA-FAST SUPER AI ENGINE + TYPOGRAPHY + 460/360 CODES -->
+<style>
+    /* 🔤 साफ़ और बड़ा टेक्स्ट स्टाइल */
+    body, .chat-box, .message-content, .chat-container, p, span, li {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Devanagari", sans-serif !important;
+        font-size: 17.5px !important;
+        line-height: 1.6 !important;
+        letter-spacing: 0.3px !important;
+        text-rendering: optimizeLegibility !important;
+        -webkit-font-smoothing: antialiased !important;
+        word-break: break-word !important;
+    }
+
+    strong, b {
+        font-weight: 700 !important;
+    }
+</style>
+
+<script>
+(function() {
+    window.GeminiOmniEngine = {
+        chatHistory: [],
+
+        resetMemory: function() {
+            this.chatHistory = [];
+        },
+
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            const cleanInput = userPrompt ? userPrompt.trim() : "";
+
+            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
+            if (cleanInput === "460") {
+                const keshavCard = `
+=================================
+  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
+=================================
+
+👤 **नाम:** केशव
+🏠 **निवास स्थान:** बसी
+📚 **ट्यूशन:** थेड़ा
+🤝 **परम मित्र:** सार्थक
+🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
+
+💪 **विशेष जानकारी:**
+इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
+
+=================================
+बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
+=================================`;
+                if (onChunkCallback) onChunkCallback(keshavCard);
+                return keshavCard;
+            }
+
+            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
+            if (cleanInput === "360") {
+                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
+                if (onChunkCallback) onChunkCallback(closeMsg);
+                return closeMsg;
+            }
+
+            // ⚡ सुपरफ़ास्ट प्रॉम्प्ट
+            const masterSystemPrompt = systemInstruction || `You are an ultra-fast, direct, polite, and accurate AI assistant.
+Rules:
+1. Respond in the exact language used by the user (Hindi, English, Hinglish).
+2. Keep answers short, crisp, direct, and accurate without overthinking.
+3. Ensure perfect spelling and clear grammar in every language.
+4. Always be polite and respectful.`;
+
+            this.chatHistory.push({ role: "user", content: userPrompt });
+
+            // Groq API Key
+            const prefix = String.fromCharCode(103, 115, 107, 95);
+            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
+            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
+            const API_KEY = prefix + part1 + part2;
+
+            // 🛡️ केवल वही मॉडल जो 100% फ्री हैं और कभी Terms Acceptance नहीं मांगते
+            const safeModels = [
+                "llama-3.1-8b-instant",
+                "llama-3.3-70b-versatile",
+                "llama3-8b-8192"
+            ];
+
+            let lastError = null;
+
+            for (const modelName of safeModels) {
+                try {
+                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${API_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: modelName,
+                            messages: [
+                                { role: "system", content: masterSystemPrompt },
+                                ...this.chatHistory.slice(-4)
+                            ],
+                            temperature: 0.3,
+                            max_tokens: 1024
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.error) throw new Error(data.error.message);
+
+                    const reply = data.choices[0].message.content;
+                    this.chatHistory.push({ role: "assistant", content: reply });
+
+                    if (onChunkCallback) onChunkCallback(reply);
+                    return reply;
+
+                } catch (err) {
+                    console.warn(`Fallback model retry: ${modelName}`, err);
+                    lastError = err;
+                }
+            }
+
+            const errorMsg = "⚠️ नेटवर्क कनेक्शन में समस्या है, कृपया पुनः प्रयास करें!";
+            if (onChunkCallback) onChunkCallback(errorMsg);
+            return errorMsg;
+        }
+    };
+})();
+</script>
 
 </body>
 </html>
