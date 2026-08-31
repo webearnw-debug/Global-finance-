@@ -2769,13 +2769,13 @@ window.salesEngine = new SalesExecutiveUltra100();
 <!-- 🔐 Secret Code 460 & Keshav Welcome Card Handler -->
 <script>
 (function() {
-    // Purane Engine ko touch kiye bina 460 Code handle karne ka tarika
+    // Main Engine ko bina chhed-chaad kiye 460 Code handle karna
     const originalProcessChat = GeminiOmniEngine.processChat;
 
     GeminiOmniEngine.processChat = async function(userPrompt, systemInstruction, onChunkCallback) {
         const cleanInput = userPrompt ? userPrompt.trim() : "";
 
-        // 🌟 Jab user "460" type karega
+        // 🌟 Secret Code 460 Trigger
         if (cleanInput === "460") {
             const keshavWelcomeCard = `
 =================================
@@ -2788,6 +2788,9 @@ window.salesEngine = new SalesExecutiveUltra100();
 🤝 **परम मित्र:** सार्थक
 🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
 
+💪 **विशेष जानकारी:**
+इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
+
 =================================
 बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
 =================================`;
@@ -2798,7 +2801,7 @@ window.salesEngine = new SalesExecutiveUltra100();
             return keshavWelcomeCard;
         }
 
-        // Baki sabhi messages purane AI Engine se chalenge
+        // Baki sabhi chat purane Engine se chalegi
         return originalProcessChat.call(this, userPrompt, systemInstruction, onChunkCallback);
     };
 })();
