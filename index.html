@@ -554,62 +554,38 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-        // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
+                // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (PUTER AI - NO LOGIN & NO API KEY)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
 
             resetMemory: function() {
                 this.chatHistory = [];
-                console.log("[GeminiOmniEngine]: Memory reset.");
             },
 
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-                if (this.chatHistory.length === 0 && systemInstruction) {
-                    this.chatHistory.push({ role: "system", content: systemInstruction });
-                }
-                
-                this.chatHistory.push({ role: "user", content: userPrompt });
-
                 try {
-                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
+                    // Puter AI Call (Bilkul Free, No Key, No User Login)
+                    const response = await puter.ai.chat(userPrompt);
+                    const fullReply = response.toString();
 
-                    let fullReply = "";
-                    for await (const part of responseStream) {
-                        if (part?.text) {
-                            fullReply += part.text;
-                            if (onChunkCallback) onChunkCallback(fullReply);
+                    if (fullReply && fullReply.trim() !== "") {
+                        if (onChunkCallback) {
+                            onChunkCallback(fullReply);
                         }
+                        return fullReply;
+                    } else {
+                        throw new Error("No response received from AI");
                     }
-
-                    this.chatHistory.push({ role: "assistant", content: fullReply });
-                    return fullReply;
-
-                } catch (err) {
-                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
-                    const response = await puter.ai.chat(this.chatHistory);
-                    const textResponse = typeof response === 'string' 
-                        ? response 
-                        : (response?.message?.content || response?.text || "Error processing request.");
-
-                    this.chatHistory.push({ role: "assistant", content: textResponse });
-                    if (onChunkCallback) onChunkCallback(textResponse);
-                    return textResponse;
+                } catch (error) {
+                    console.error("Puter AI Error:", error);
+                    const errorMsg = "⚠️ Connection Error: Please try again.";
+                    if (onChunkCallback) {
+                        onChunkCallback(errorMsg);
+                    }
+                    return errorMsg;
                 }
-            },
-
-            generateStructuredData: async function(prompt) {
-                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
-                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
-            },
-
-            triggerAgenticTask: async function() {
-                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
-                if (!userTask) return;
-
-                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
-                AppController.submitQuery();
             }
         };
 
