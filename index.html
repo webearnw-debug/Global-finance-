@@ -2766,16 +2766,15 @@ class SalesExecutiveUltra100 {
 window.mockEngine = new MockInterviewerUltra100();
 window.salesEngine = new SalesExecutiveUltra100();
 </script>
-<!-- 🔐 Secret Code 460 & Keshav Welcome Card Handler -->
+<!-- 🔐 Secret Code 460 (ON) & 360 (OFF) Handler -->
 <script>
 (function() {
-    // Main Engine ko bina chhed-chaad kiye 460 Code handle karna
     const originalProcessChat = GeminiOmniEngine.processChat;
 
     GeminiOmniEngine.processChat = async function(userPrompt, systemInstruction, onChunkCallback) {
         const cleanInput = userPrompt ? userPrompt.trim() : "";
 
-        // 🌟 Secret Code 460 Trigger
+        // 🟢 Code 460: सीक्रेट मोड चालू (Welcome Card)
         if (cleanInput === "460") {
             const keshavWelcomeCard = `
 =================================
@@ -2795,17 +2794,26 @@ window.salesEngine = new SalesExecutiveUltra100();
 बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
 =================================`;
 
-            if (onChunkCallback) {
-                onChunkCallback(keshavWelcomeCard);
-            }
+            if (onChunkCallback) onChunkCallback(keshavWelcomeCard);
             return keshavWelcomeCard;
         }
 
-        // Baki sabhi chat purane Engine se chalegi
+        // 🔴 Code 360: सीक्रेट मोड बंद (Hide Info)
+        if (cleanInput === "360") {
+            const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**
+
+आपकी सभी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
+
+            if (onChunkCallback) onChunkCallback(closeMsg);
+            return closeMsg;
+        }
+
+        // बाकी सभी मैसेज सामान्य AI Engine से चलेंगे
         return originalProcessChat.call(this, userPrompt, systemInstruction, onChunkCallback);
     };
 })();
 </script>
+
 
 </body>
 </html>
