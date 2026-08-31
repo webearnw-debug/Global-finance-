@@ -555,8 +555,9 @@
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
                         
+        
         // =================================================================
-        // 🚀 NO-LOGIN SUPER AI ENGINE (NO VERCEL SETUP REQUIRED)
+        // 🚀 OMNI AI ENGINE (NO API KEY & NO USER LOGIN)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
@@ -566,38 +567,31 @@
             },
 
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-                this.chatHistory.push({ role: "user", content: userPrompt });
-
-                // Reversed Key (GitHub Scanner ise kabhi nahi pakad payega)
-                const revKey = "3WozpjYbhpcmwjs0UTDMKMpYF3bydGW1Gi2gjx0qbLWKTL4ZdOt_ksg";
-                const API_KEY = revKey.split("").reverse().join("");
-
                 try {
-                    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: "llama-3.3-70b-versatile",
-                            messages: [{ role: "user", content: userPrompt }]
-                        })
-                    });
+                    // Anonymous Direct AI Request (No Key, No Login Needed)
+                    const encodedPrompt = encodeURIComponent(userPrompt);
+                    const response = await fetch(`https://text.pollinations.ai/${encodedPrompt}`);
 
-                    const data = await apiResponse.json();
-
-                    if (data.error) {
-                        throw new Error(data.error.message);
+                    if (!response.ok) {
+                        throw new Error("Server Response Error");
                     }
 
-                    const fullReply = data.choices[0].message.content;
-                    if (onChunkCallback) onChunkCallback(fullReply);
-                    return fullReply;
+                    const fullReply = await response.text();
+
+                    if (fullReply && fullReply.trim() !== "") {
+                        if (onChunkCallback) {
+                            onChunkCallback(fullReply);
+                        }
+                        return fullReply;
+                    } else {
+                        throw new Error("Empty reply");
+                    }
                 } catch (error) {
                     console.error("AI Error:", error);
-                    const errorMsg = "⚠️ Connection Error: " + error.message;
-                    if (onChunkCallback) onChunkCallback(errorMsg);
+                    const errorMsg = "⚠️ Connection Error: Please try again.";
+                    if (onChunkCallback) {
+                        onChunkCallback(errorMsg);
+                    }
                     return errorMsg;
                 }
             }
