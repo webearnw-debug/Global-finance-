@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     
+    <!-- Puter Cloud AI Engine Core SDK -->
     <script src="https://js.puter.com/v2/"></script>
-
 
     <style>
         :root {
@@ -554,83 +554,64 @@
         // System Creator Identity
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-                        
-                  
-      
-                  // =================================================================
-        // 🚀 OMNI AI ENGINE (AUTO-DETECT LIVE GROQ MODEL)
+        // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
 
             resetMemory: function() {
                 this.chatHistory = [];
+                console.log("[GeminiOmniEngine]: Memory reset.");
             },
 
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+                if (this.chatHistory.length === 0 && systemInstruction) {
+                    this.chatHistory.push({ role: "system", content: systemInstruction });
+                }
+                
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
-                // Groq Key (Encoded to prevent GitHub scan)
-                const prefix = String.fromCharCode(103, 115, 107, 95);
-                const part1 = "tOdZ4LKWLbq0xjg2iG1T";
-                const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
-                const API_KEY = prefix + part1 + part2;
-
                 try {
-                    // 1. Fetch currently active models dynamically from Groq
-                    let selectedModel = "llama-3.3-70b-versatile";
-                    try {
-                        const modelsRes = await fetch("https://api.groq.com/openai/v1/models", {
-                            headers: { "Authorization": `Bearer ${API_KEY}` }
-                        });
-                        const modelsData = await modelsRes.json();
-                        if (modelsData && modelsData.data && modelsData.data.length > 0) {
-                            const activeModelObj = modelsData.data.find(m => 
-                                !m.id.includes("whisper") && 
-                                !m.id.includes("safeguard") && 
-                                !m.id.includes("vision")
-                            );
-                            if (activeModelObj) selectedModel = activeModelObj.id;
+                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
+
+                    let fullReply = "";
+                    for await (const part of responseStream) {
+                        if (part?.text) {
+                            fullReply += part.text;
+                            if (onChunkCallback) onChunkCallback(fullReply);
                         }
-                    } catch (e) {
-                        console.warn("Could not fetch models list, fallback to default.", e);
                     }
 
-                    // 2. Call Chat Completions API with active model
-                    const apiResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: selectedModel,
-                            messages: [
-                                { role: "system", content: systemInstruction || "You are an intelligent AI assistant." },
-                                { role: "user", content: userPrompt }
-                            ]
-                        })
-                    });
-
-                    const data = await apiResponse.json();
-
-                    if (data.error) {
-                        throw new Error(data.error.message);
-                    }
-
-                    const fullReply = data.choices[0].message.content;
-                    if (onChunkCallback) onChunkCallback(fullReply);
+                    this.chatHistory.push({ role: "assistant", content: fullReply });
                     return fullReply;
-                } catch (error) {
-                    console.error("AI Error:", error);
-                    const errorMsg = "⚠️ Connection Error: " + error.message;
-                    if (onChunkCallback) onChunkCallback(errorMsg);
-                    return errorMsg;
+
+                } catch (err) {
+                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
+                    const response = await puter.ai.chat(this.chatHistory);
+                    const textResponse = typeof response === 'string' 
+                        ? response 
+                        : (response?.message?.content || response?.text || "Error processing request.");
+
+                    this.chatHistory.push({ role: "assistant", content: textResponse });
+                    if (onChunkCallback) onChunkCallback(textResponse);
+                    return textResponse;
                 }
+            },
+
+            generateStructuredData: async function(prompt) {
+                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
+                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
+            },
+
+            triggerAgenticTask: async function() {
+                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
+                if (!userTask) return;
+
+                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
+                AppController.submitQuery();
             }
         };
-      
-
 
         // =================================================================
         // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
@@ -2765,556 +2746,6 @@ class SalesExecutiveUltra100 {
 // Global Browser Instances Init
 window.mockEngine = new MockInterviewerUltra100();
 window.salesEngine = new SalesExecutiveUltra100();
-</script>
-<!-- 🔐 Secret Code 460 (ON) & 360 (OFF) Handler -->
-<script>
-(function() {
-    const originalProcessChat = GeminiOmniEngine.processChat;
-
-    GeminiOmniEngine.processChat = async function(userPrompt, systemInstruction, onChunkCallback) {
-        const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-        // 🟢 Code 460: सीक्रेट मोड चालू (Welcome Card)
-        if (cleanInput === "460") {
-            const keshavWelcomeCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-
-            if (onChunkCallback) onChunkCallback(keshavWelcomeCard);
-            return keshavWelcomeCard;
-        }
-
-        // 🔴 Code 360: सीक्रेट मोड बंद (Hide Info)
-        if (cleanInput === "360") {
-            const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**
-
-आपकी सभी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-
-            if (onChunkCallback) onChunkCallback(closeMsg);
-            return closeMsg;
-        }
-
-        // बाकी सभी मैसेज सामान्य AI Engine से चलेंगे
-        return originalProcessChat.call(this, userPrompt, systemInstruction, onChunkCallback);
-    };
-})();
-</script>
-<!-- 🚀 UPGRADED SUPER AI ENGINE (SMART TALK + STABLE NETWORK + 460/360 CODE) -->
-<script>
-(function() {
-    window.GeminiOmniEngine = {
-        chatHistory: [],
-
-        resetMemory: function() {
-            this.chatHistory = [];
-        },
-
-        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-            const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-            // 🟢 Secret Code 460 (Keshav Profile ON)
-            if (cleanInput === "460") {
-                const keshavCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-                if (onChunkCallback) onChunkCallback(keshavCard);
-                return keshavCard;
-            }
-
-            // 🔴 Secret Code 360 (Keshav Profile OFF)
-            if (cleanInput === "360") {
-                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-                if (onChunkCallback) onChunkCallback(closeMsg);
-                return closeMsg;
-            }
-
-            // 🧠 Master System Prompt (Behtareen aur Tameezdaar Baat-Cheet ke liye)
-            const masterSystemPrompt = systemInstruction || `You are a highly intelligent, exceptionally polite, respectful, and friendly AI assistant. 
-Guidelines:
-1. Always speak respectfully using words like 'जी', 'ज़रूर', 'नमस्ते'.
-2. Respond in the exact same language used by the user (Hindi, Hinglish, or English).
-3. Provide precise, helpful, and highly detailed answers to every question.
-4. Keep the tone warm, engaging, and supportive at all times.`;
-
-            // Memory History Update
-            this.chatHistory.push({ role: "user", content: userPrompt });
-
-            // Groq Encoded Key
-            const prefix = String.fromCharCode(103, 115, 107, 95);
-            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
-            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
-            const API_KEY = prefix + part1 + part2;
-
-            // Multiple Network Fallback Models (Network weak hone par auto-shift)
-            const modelsToTry = [
-                "llama-3.3-70b-versatile",
-                "llama3-8b-8192",
-                "mixtral-8x7b-32768",
-                "gemma2-9b-it"
-            ];
-
-            let lastError = null;
-
-            // Network Auto-Retry Mechanism
-            for (const modelName of modelsToTry) {
-                try {
-                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: modelName,
-                            messages: [
-                                { role: "system", content: masterSystemPrompt },
-                                ...this.chatHistory.slice(-6) // Purani 6 baatein yaad rakhega
-                            ],
-                            temperature: 0.7
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.error) throw new Error(data.error.message);
-
-                    const reply = data.choices[0].message.content;
-                    
-                    // Save AI response to Memory
-                    this.chatHistory.push({ role: "assistant", content: reply });
-
-                    if (onChunkCallback) onChunkCallback(reply);
-                    return reply;
-
-                } catch (err) {
-                    console.warn(`Model ${modelName} failed, retrying next server...`, err);
-                    lastError = err;
-                }
-            }
-
-            const errorMsg = "⚠️ नेटवर्क थोड़ा धीमा है, कृपया एक बार फिर से प्रयास करें जी!";
-            if (onChunkCallback) onChunkCallback(errorMsg);
-            return errorMsg;
-        }
-    };
-})();
-</script>
-<!-- 🎨 BEAUTIFUL TYPOGRAPHY & UPGRADED SUPER AI ENGINE -->
-<style>
-    /* 🔤 अक्षरों को बड़ा, साफ़ और सुंदर बनाने के लिए स्टाइल */
-    body, .chat-box, .message-content, .chat-container, p, span, li {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Devanagari", sans-serif !important;
-        font-size: 17.5px !important; /* अक्षरों का आकार बड़ा किया गया */
-        line-height: 1.7 !important;  /* लाइनों के बीच स्पष्ट गैप */
-        letter-spacing: 0.3px !important; /* हर एक अक्षर साफ़ दिखेगा */
-        text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: antialiased !important;
-        word-break: break-word !important;
-    }
-
-    /* मुख्य शब्दों (Bold Text) को उभारने के लिए */
-    strong, b {
-        font-weight: 700 !important;
-        letter-spacing: 0.4px !important;
-    }
-
-    /* लिस्ट और पैराग्राफ की फिनिशिंग */
-    ul, ol {
-        margin-top: 8px !important;
-        margin-bottom: 8px !important;
-        padding-left: 20px !important;
-    }
-</style>
-
-<script>
-(function() {
-    window.GeminiOmniEngine = {
-        chatHistory: [],
-
-        resetMemory: function() {
-            this.chatHistory = [];
-        },
-
-        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-            const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
-            if (cleanInput === "460") {
-                const keshavCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-                if (onChunkCallback) onChunkCallback(keshavCard);
-                return keshavCard;
-            }
-
-            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
-            if (cleanInput === "360") {
-                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-                if (onChunkCallback) onChunkCallback(closeMsg);
-                return closeMsg;
-            }
-
-            // 🧠 मास्टर सिस्टम प्रॉम्प्ट (अक्षर व्याकरण, स्पष्टता और सुंदर लिखावट के लिए)
-            const masterSystemPrompt = systemInstruction || `You are an extremely intelligent and polite AI assistant.
-Formatting & Language Rules:
-1. Respond in the exact language used by the user (Hindi, English, Hinglish, etc.).
-2. Maintain perfect grammar, spelling, and sentence structure with clear spelling in every language.
-3. Format output cleanly using bold text, bullet points (*), and paragraph gaps so that it is super easy to read.
-4. Keep the tone very respectful, helpful, and friendly at all times.`;
-
-            // चैट मेमोरी अपडेट
-            this.chatHistory.push({ role: "user", content: userPrompt });
-
-            // Groq API Key
-            const prefix = String.fromCharCode(103, 115, 107, 95);
-            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
-            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
-            const API_KEY = prefix + part1 + part2;
-
-            // बैकअप मॉडल्स (ताकि नेटवर्क कभी फेल न हो)
-            const modelsToTry = [
-                "llama-3.3-70b-versatile",
-                "llama3-8b-8192",
-                "mixtral-8x7b-32768",
-                "gemma2-9b-it"
-            ];
-
-            let lastError = null;
-
-            for (const modelName of modelsToTry) {
-                try {
-                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: modelName,
-                            messages: [
-                                { role: "system", content: masterSystemPrompt },
-                                ...this.chatHistory.slice(-6)
-                            ],
-                            temperature: 0.6
-                        })
-                    });
-
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-
-                    const reply = data.choices[0].message.content;
-                    this.chatHistory.push({ role: "assistant", content: reply });
-
-                    if (onChunkCallback) onChunkCallback(reply);
-                    return reply;
-
-                } catch (err) {
-                    console.warn(`Model ${modelName} retry...`, err);
-                    lastError = err;
-                }
-            }
-
-            const errorMsg = "⚠️ नेटवर्क थोड़ा धीमा है, कृपया पुनः प्रयास करें जी!";
-            if (onChunkCallback) onChunkCallback(errorMsg);
-            return errorMsg;
-        }
-    };
-})();
-</script>
-
-<!-- ⚡ ULTRA-FAST SUPER AI ENGINE + TYPOGRAPHY + 460/360 CODES -->
-<style>
-    /* 🔤 बड़ा और साफ़ टेक्स्ट स्टाइल */
-    body, .chat-box, .message-content, .chat-container, p, span, li {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Devanagari", sans-serif !important;
-        font-size: 17.5px !important;
-        line-height: 1.6 !important;
-        letter-spacing: 0.3px !important;
-        text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: antialiased !important;
-        word-break: break-word !important;
-    }
-
-    strong, b {
-        font-weight: 700 !important;
-    }
-</style>
-
-<script>
-(function() {
-    window.GeminiOmniEngine = {
-        chatHistory: [],
-
-        resetMemory: function() {
-            this.chatHistory = [];
-        },
-
-        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-            const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
-            if (cleanInput === "460") {
-                const keshavCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-                if (onChunkCallback) onChunkCallback(keshavCard);
-                return keshavCard;
-            }
-
-            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
-            if (cleanInput === "360") {
-                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-                if (onChunkCallback) onChunkCallback(closeMsg);
-                return closeMsg;
-            }
-
-            // ⚡ सुपरफास्ट प्रॉम्प्ट (बिना ज्यादा सोचे तुरंत और सटीक जवाब देने के लिए)
-            const masterSystemPrompt = systemInstruction || `You are an ultra-fast, direct, and helpful AI assistant.
-Rules:
-1. Respond in the exact language used by the user (Hindi, English, Hinglish).
-2. Keep answers short, crisp, direct, and accurate without overthinking or writing long unnecessary explanations.
-3. Ensure perfect spelling and clear grammar.
-4. Always be polite and respectful.`;
-
-            this.chatHistory.push({ role: "user", content: userPrompt });
-
-            // Groq API Key
-            const prefix = String.fromCharCode(103, 115, 107, 95);
-            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
-            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
-            const API_KEY = prefix + part1 + part2;
-
-            // 🚀 सबसे तेज़ स्पीड वाले मॉडल सबसे पहले हैं
-            const modelsToTry = [
-                "llama-3.1-8b-instant",
-                "llama3-8b-8192",
-                "llama-3.3-70b-versatile"
-            ];
-
-            let lastError = null;
-
-            for (const modelName of modelsToTry) {
-                try {
-                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: modelName,
-                            messages: [
-                                { role: "system", content: masterSystemPrompt },
-                                ...this.chatHistory.slice(-4) // सिर्फ काम की बातें याद रखेगा
-                            ],
-                            temperature: 0.3, // कम तापमान = तेज़ और सटीक जवाब
-                            max_tokens: 1024 // तुरंत आउटपुट देने के लिए टोकन सीमा
-                        })
-                    });
-
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-
-                    const reply = data.choices[0].message.content;
-                    this.chatHistory.push({ role: "assistant", content: reply });
-
-                    if (onChunkCallback) onChunkCallback(reply);
-                    return reply;
-
-                } catch (err) {
-                    console.warn(`Speed fallback retry: ${modelName}`, err);
-                    lastError = err;
-                }
-            }
-
-            const errorMsg = "⚠️ नेटवर्क धीमा है, कृपया पुनः प्रयास करें!";
-            if (onChunkCallback) onChunkCallback(errorMsg);
-            return errorMsg;
-        }
-    };
-})();
-</script>
-<!-- ⚡ FIXED & ULTRA-FAST SUPER AI ENGINE + TYPOGRAPHY + 460/360 CODES -->
-<style>
-    /* 🔤 साफ़ और बड़ा टेक्स्ट स्टाइल */
-    body, .chat-box, .message-content, .chat-container, p, span, li {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Devanagari", sans-serif !important;
-        font-size: 17.5px !important;
-        line-height: 1.6 !important;
-        letter-spacing: 0.3px !important;
-        text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: antialiased !important;
-        word-break: break-word !important;
-    }
-
-    strong, b {
-        font-weight: 700 !important;
-    }
-</style>
-
-<script>
-(function() {
-    window.GeminiOmniEngine = {
-        chatHistory: [],
-
-        resetMemory: function() {
-            this.chatHistory = [];
-        },
-
-        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-            const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
-            if (cleanInput === "460") {
-                const keshavCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-                if (onChunkCallback) onChunkCallback(keshavCard);
-                return keshavCard;
-            }
-
-            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
-            if (cleanInput === "360") {
-                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-                if (onChunkCallback) onChunkCallback(closeMsg);
-                return closeMsg;
-            }
-
-            // ⚡ सुपरफ़ास्ट प्रॉम्प्ट
-            const masterSystemPrompt = systemInstruction || `You are an ultra-fast, direct, polite, and accurate AI assistant.
-Rules:
-1. Respond in the exact language used by the user (Hindi, English, Hinglish).
-2. Keep answers short, crisp, direct, and accurate without overthinking.
-3. Ensure perfect spelling and clear grammar in every language.
-4. Always be polite and respectful.`;
-
-            this.chatHistory.push({ role: "user", content: userPrompt });
-
-            // Groq API Key
-            const prefix = String.fromCharCode(103, 115, 107, 95);
-            const part1 = "tOdZ4LKWLbq0xjg2iG1T";
-            const part2 = "WGdyb3FYpMKM2DTU0sjwmcphbYpjzoW3";
-            const API_KEY = prefix + part1 + part2;
-
-            // 🛡️ केवल वही मॉडल जो 100% फ्री हैं और कभी Terms Acceptance नहीं मांगते
-            const safeModels = [
-                "llama-3.1-8b-instant",
-                "llama-3.3-70b-versatile",
-                "llama3-8b-8192"
-            ];
-
-            let lastError = null;
-
-            for (const modelName of safeModels) {
-                try {
-                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${API_KEY}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model: modelName,
-                            messages: [
-                                { role: "system", content: masterSystemPrompt },
-                                ...this.chatHistory.slice(-4)
-                            ],
-                            temperature: 0.3,
-                            max_tokens: 1024
-                        })
-                    });
-
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error.message);
-
-                    const reply = data.choices[0].message.content;
-                    this.chatHistory.push({ role: "assistant", content: reply });
-
-                    if (onChunkCallback) onChunkCallback(reply);
-                    return reply;
-
-                } catch (err) {
-                    console.warn(`Fallback model retry: ${modelName}`, err);
-                    lastError = err;
-                }
-            }
-
-            const errorMsg = "⚠️ नेटवर्क कनेक्शन में समस्या है, कृपया पुनः प्रयास करें!";
-            if (onChunkCallback) onChunkCallback(errorMsg);
-            return errorMsg;
-        }
-    };
-})();
 </script>
 
 </body>
