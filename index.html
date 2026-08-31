@@ -2766,6 +2766,43 @@ class SalesExecutiveUltra100 {
 window.mockEngine = new MockInterviewerUltra100();
 window.salesEngine = new SalesExecutiveUltra100();
 </script>
+<!-- 🔐 Secret Code 460 & Keshav Welcome Card Handler -->
+<script>
+(function() {
+    // Purane Engine ko touch kiye bina 460 Code handle karne ka tarika
+    const originalProcessChat = GeminiOmniEngine.processChat;
+
+    GeminiOmniEngine.processChat = async function(userPrompt, systemInstruction, onChunkCallback) {
+        const cleanInput = userPrompt ? userPrompt.trim() : "";
+
+        // 🌟 Jab user "460" type karega
+        if (cleanInput === "460") {
+            const keshavWelcomeCard = `
+=================================
+  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
+=================================
+
+👤 **नाम:** केशव
+🏠 **निवास स्थान:** बसी
+📚 **ट्यूशन:** थेड़ा
+🤝 **परम मित्र:** सार्थक
+🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
+
+=================================
+बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
+=================================`;
+
+            if (onChunkCallback) {
+                onChunkCallback(keshavWelcomeCard);
+            }
+            return keshavWelcomeCard;
+        }
+
+        // Baki sabhi messages purane AI Engine se chalenge
+        return originalProcessChat.call(this, userPrompt, systemInstruction, onChunkCallback);
+    };
+})();
+</script>
 
 </body>
 </html>
