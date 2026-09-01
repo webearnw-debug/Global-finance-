@@ -2965,6 +2965,11 @@ window.salesEngine = new SalesExecutiveUltra100();
         cursor: pointer;
     }
 </style>
+/* Voice Button को पूरी तरह गायब करने के लिए */
+#voice-btn, .voice-btn, #voice-toggle, .voice-toggle, [class*="voice"], [id*="voice"] {
+    display: none !important;
+}
+    
 
 <!-- 🔐 Light Theme Login Card HTML -->
 <div id="parnarav-auth-modal">
@@ -3031,6 +3036,7 @@ window.salesEngine = new SalesExecutiveUltra100();
     };
 })();
 </script>
+
 
 
 </body>
