@@ -3640,58 +3640,193 @@ STRICT BEHAVIORAL DIRECTIVES:
     }
 </style>
 
+
+</script>
+<!-- 🎨 FLOATING WIDGET & CHAT STYLING -->
+<style>
+    #parnarav-fab-trigger {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #38bdf8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.5);
+        cursor: pointer;
+        z-index: 999999;
+        transition: transform 0.25s ease;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    #parnarav-fab-trigger:hover { transform: scale(1.08); }
+
+    #parnarav-widget-container {
+        position: fixed;
+        bottom: 100px;
+        right: 28px;
+        width: 380px;
+        max-width: calc(100vw - 40px);
+        height: 560px;
+        max-height: calc(100vh - 140px);
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 999998;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        border: 1px solid #e2e8f0;
+    }
+
+    .p-widget-header {
+        background: #0f172a;
+        color: #ffffff;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .p-widget-body {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        background: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .p-bubble {
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14.5px;
+        line-height: 1.55;
+        word-break: break-word;
+    }
+
+    .p-bubble.user {
+        align-self: flex-end;
+        background: #2563eb;
+        color: #ffffff;
+        border-bottom-right-radius: 4px;
+    }
+
+    .p-bubble.ai {
+        align-self: flex-start;
+        background: #ffffff;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .p-widget-footer {
+        padding: 12px 14px;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        gap: 8px;
+    }
+
+    .p-widget-input {
+        flex: 1;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .p-widget-send {
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        padding: 0 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    #parnarav-auth-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(255, 255, 255, 0.96);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        z-index: 100;
+    }
+
+    .p-auth-btn {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 16px;
+    }
+</style>
+
 <!-- 📌 WIDGET TRIGGER & CHAT HTML -->
 <div id="parnarav-fab-trigger" onclick="toggleParnaravWidget()" title="Parnarav AI Active">🧠</div>
 
 <div id="parnarav-widget-container">
     <div class="p-widget-header">
-        <div class="p-widget-title">
+        <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:#f8fafc;">
             <span>🧠</span>
-            <span>Parnarav Omni AI</span>
+            <span>Parnarav AI</span>
         </div>
-        <span class="p-widget-close" onclick="toggleParnaravWidget()">✕</span>
+        <span style="cursor:pointer; color:#94a3b8; font-size:20px;" onclick="toggleParnaravWidget()">✕</span>
     </div>
 
-    <div class="p-widget-body" id="parnarav-msg-flow">
-        <!-- Default Welcome Card -->
-        <div class="p-welcome-card">
-            <h4>🧠 Omni Super AI Engine Active!</h4>
-            <p>नमस्ते! मैं आपका Parnarav AI असिस्टेंट हूँ। कोडिंग, फ़ाइनेंशियल ट्रेडिंग, कठिन प्रश्नों और लॉजिकल एनालिसिस के लिए पूरी तरह तैयार हूँ।</p>
-            <div class="p-welcome-tags">
-                <span class="p-tag">💻 Coding Master</span>
-                <span class="p-tag">📈 Trading & Quant</span>
-                <span class="p-tag">🎯 Exam Solver</span>
-            </div>
-        </div>
-    </div>
+    <!-- ⚡ Dynamic AI Flow Area (Card AI खुद जनरेट करेगा) -->
+    <div class="p-widget-body" id="parnarav-msg-flow"></div>
 
     <div class="p-widget-footer">
         <input type="text" id="parnarav-user-input" class="p-widget-input" placeholder="कुछ भी पूछें..." onkeydown="if(event.key==='Enter') executeParnaravChat()">
         <button class="p-widget-send" onclick="executeParnaravChat()">भेजें</button>
     </div>
 
-    <!-- Embedded Auth Overlay -->
     <div id="parnarav-auth-overlay">
         <div style="font-size:36px; margin-bottom:12px;">🔐</div>
         <h4 style="margin:0 0 8px 0; color:#0f172a; font-size:18px;">Parnarav AI Login</h4>
-        <p style="margin:0; font-size:13.5px; color:#64748b;">सुरक्षित चैट और AI मॉडल उपयोग के लिए साइन-इन करें</p>
+        <p style="margin:0; font-size:13.5px; color:#64748b;">साइन-इन करें और चैट शुरू करें</p>
         <button class="p-auth-btn" onclick="triggerParnaravAuth()">Login with Puter</button>
     </div>
 </div>
 
 <script src="https://js.puter.com/v2/"></script>
 
-<!-- 🚀 WIDGET & TOP-LEVEL OMNI PROMPT LOGIC -->
+<!-- 🚀 AI DYNAMIC WELCOME GENERATOR & SYSTEM LOGIC -->
 <script>
 (function() {
-    // 🔘 Widget Toggle Logic (Opens widget, checks auth)
+    let hasGeneratedWelcome = false;
+
     window.toggleParnaravWidget = async function() {
         const widget = document.getElementById('parnarav-widget-container');
         if (widget.style.display === 'flex') {
             widget.style.display = 'none';
         } else {
             widget.style.display = 'flex';
-            checkAuthStateInternal();
+            const isAuth = await checkAuthStateInternal();
+            if (isAuth && !hasGeneratedWelcome) {
+                generateAIWelcomeCard();
+            }
         }
     };
 
@@ -3701,10 +3836,13 @@ STRICT BEHAVIORAL DIRECTIVES:
             const overlay = document.getElementById('parnarav-auth-overlay');
             if (!isLogged) {
                 overlay.style.display = 'flex';
+                return false;
             } else {
                 overlay.style.display = 'none';
+                return true;
             }
         }
+        return false;
     }
 
     window.triggerParnaravAuth = async function() {
@@ -3712,13 +3850,32 @@ STRICT BEHAVIORAL DIRECTIVES:
             if (window.puter && puter.auth) {
                 await puter.auth.signIn();
                 document.getElementById('parnarav-auth-overlay').style.display = 'none';
+                if (!hasGeneratedWelcome) {
+                    generateAIWelcomeCard();
+                }
             }
         } catch (err) {
-            console.error("Auth process cancelled", err);
+            console.error("Auth cancelled", err);
         }
     };
 
-    // 💬 UI Message Rendering Logic
+    // 🧠 AI द्वारा ऑटोमैटिक वेलकम कार्ड जनरेट करने का लॉजिक
+    async function generateAIWelcomeCard() {
+        hasGeneratedWelcome = true;
+        const flowEl = document.getElementById('parnarav-msg-flow');
+
+        const loadingBubble = document.createElement('div');
+        loadingBubble.className = 'p-bubble ai';
+        loadingBubble.textContent = 'Parnarav AI शुरू हो रहा है...';
+        flowEl.appendChild(loadingBubble);
+
+        const welcomePrompt = "Act as Parnarav AI. Generate an intelligent, sharp, dynamic welcome greeting for a visitor opening your interface. Autonomously highlight your key decision-making capabilities (Coding Master, Financial Trading, Logical Math & General AI) in a direct, modern, and engaging tone. Keep it concise, zero-fluff, with 0 spelling errors.";
+
+        const welcomeText = await window.GeminiOmniEngine.processChat(welcomePrompt, true);
+        loadingBubble.textContent = welcomeText;
+        flowEl.scrollTop = flowEl.scrollHeight;
+    }
+
     window.executeParnaravChat = async function() {
         const inputEl = document.getElementById('parnarav-user-input');
         const flowEl = document.getElementById('parnarav-msg-flow');
@@ -3726,7 +3883,6 @@ STRICT BEHAVIORAL DIRECTIVES:
 
         if (!promptText) return;
 
-        // Add User Message
         const userBubble = document.createElement('div');
         userBubble.className = 'p-bubble user';
         userBubble.textContent = promptText;
@@ -3734,51 +3890,34 @@ STRICT BEHAVIORAL DIRECTIVES:
         inputEl.value = '';
         flowEl.scrollTop = flowEl.scrollHeight;
 
-        // Add Placeholder AI Message
         const aiBubble = document.createElement('div');
         aiBubble.className = 'p-bubble ai';
-        aiBubble.textContent = 'विश्लेषण कर रहा हूँ...';
+        aiBubble.textContent = 'सोच रहा हूँ...';
         flowEl.appendChild(aiBubble);
         flowEl.scrollTop = flowEl.scrollHeight;
 
-        // Fetch AI Response
-        const responseText = await window.GeminiOmniEngine.processChat(promptText);
+        const responseText = await window.GeminiOmniEngine.processChat(promptText, false);
         aiBubble.textContent = responseText;
         flowEl.scrollTop = flowEl.scrollHeight;
     };
 
-    // 🧠 HIGH-INTELLIGENCE EXPERT SYSTEM PROMPT
+    // 🧠 CORE ENGINE (Strict Decisive AI)
     window.GeminiOmniEngine = {
-        processChat: async function(userPrompt) {
+        processChat: async function(userPrompt, isInternalInstruction = false) {
             try {
-                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
-                    const isSignedIn = await puter.auth.isSignedIn();
-                    if (!isSignedIn) {
-                        document.getElementById('parnarav-auth-overlay').style.display = 'flex';
-                        return "⚠️ कृपया जारी रखने के लिए पहले लॉगिन करें।";
-                    }
-                }
-
-                // 🎯 Master System Prompt: Emulating Gemini's Polished Tone & High Accuracy
-                const HIGH_LEVEL_SYSTEM_PROMPT = `
-You are Parnarav AI (Omni Super AI), a world-class AI assistant known for exceptional intelligence, warmth, structural clarity, and flawless execution.
-
-COMMUNICATION & OPERATIONAL STANDARDS:
-1. **Articulate & Natural Tone**: Communicate with high intelligence, professional warmth, and immaculate grammar (0 errors in Hindi and English).
-2. **Zero Preaching / Zero Fluff**: If input contains broken syntax, slang, or crude language, silently extract the intent without analyzing, explaining, or moralizing about words. Jump directly into the solution.
-3. **Independent Decision-Making**: Make clear, optimal choices independently rather than asking vague follow-up questions.
-4. **Domain Expertise**: Deliver precise, functional code snippets for Software Development and accurate analysis for Financial Trading/Math.
-5. **No Filler Setup**: Provide immediate value without meta-announcements or introductory fluff.
+                const MASTER_PROMPT = `
+You are Parnarav AI, an autonomous, highly intelligent AI engine.
+1. Make your own independent decisions on how to structure responses, greetings, and technical solutions.
+2. Complete zero-fluff, zero moral preaching, zero spell errors.
+3. Parse any broken syntax or slang silently and give direct, high-level answers.
 `;
 
-                const formattedPrompt = `${HIGH_LEVEL_SYSTEM_PROMPT}\n\n[User Input]: ${userPrompt}\n\n[Response]:`;
-                const response = await puter.ai.chat(formattedPrompt);
-                
+                const finalPrompt = isInternalInstruction ? userPrompt : `${MASTER_PROMPT}\n\n[User Input]: ${userPrompt}\n\n[Response]:`;
+                const response = await puter.ai.chat(finalPrompt);
                 return response ? response.toString().trim() : "कोई उत्तर प्राप्त नहीं हुआ।";
-
             } catch (error) {
                 console.error("Omni Engine Error:", error);
-                return "⚠️ कनेक्शन में समस्या आई। कृपया पुनः प्रयास करें।";
+                return "⚠️ कनेक्शन में समस्या आई। पुनः प्रयास करें।";
             }
         }
     };
