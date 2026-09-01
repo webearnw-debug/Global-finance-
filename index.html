@@ -3,295 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Smart Trading & Investment</title>
+    <title>Global Finance - Modern Sidebar Menu</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS Reset & Variables */
+        /* Global Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
             background-color: #06090e;
             color: #ffffff;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Top Navbar Container */
+        /* 1. Header Navigation Bar */
         .navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 24px;
+            padding: 12px 24px;
             background-color: #0b0e14;
             border-bottom: 1px solid #161f2e;
             position: sticky;
             top: 0;
             z-index: 1000;
-            height: 60px;
+            height: 64px;
         }
 
-        /* Logo Branding */
-        .logo-box {
+        .logo {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
-        }
-
-        .logo-icon {
-            color: #22c55e;
-            font-size: 20px;
-        }
-
-        .logo-text h2 {
-            font-size: 15px;
-            font-weight: 700;
             color: #ffffff;
-            letter-spacing: 0.3px;
-            line-height: 1.1;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
         }
 
-        .logo-text span {
-            font-size: 9px;
-            color: #6b7280;
-            display: block;
-            text-transform: uppercase;
+        .logo i {
+            color: #22c55e;
+            font-size: 22px;
         }
 
-        /* Desktop Nav Links */
-        .nav-links {
+        /* Desktop Header Links (Visible on large screens) */
+        .desktop-links {
             display: flex;
-            align-items: center;
-            gap: 20px;
             list-style: none;
+            gap: 20px;
         }
 
-        .nav-links a {
+        .desktop-links a {
             color: #9ca3af;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 500;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: #22c55e;
-        }
-
-        /* Right Header Controls */
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .icon-btn {
-            background: transparent;
-            border: none;
-            color: #9ca3af;
-            font-size: 14px;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 50%;
             transition: color 0.2s;
         }
 
-        .icon-btn:hover { color: #ffffff; }
-
-        .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #9ca3af;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
+        .desktop-links a:hover, .desktop-links a.active {
+            color: #22c55e;
         }
 
-        .lang-selector:hover { color: #fff; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
-        /* Sleek & Compact Personal AI Assistant Button */
-        .ai-assistant-btn {
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Top AI Assistant Button */
+        .ai-top-btn {
             display: flex;
             align-items: center;
             gap: 6px;
             background: rgba(34, 197, 94, 0.08);
             border: 1px solid rgba(34, 197, 94, 0.4);
             color: #22c55e;
-            padding: 5px 12px;
-            border-radius: 16px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(34, 197, 94, 0.15);
-            transition: all 0.2s ease;
-            white-space: nowrap;
         }
 
-        .ai-assistant-btn:hover {
-            background: rgba(34, 197, 94, 0.2);
-            box-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
-            color: #ffffff;
-        }
-
-        .login-btn {
-            background: #111827;
-            border: 1px solid #1f293d;
-            color: #ffffff;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .login-btn:hover { background: #1f293d; }
-
-        .hamburger-btn {
-            display: none;
+        .menu-toggle-btn {
             background: transparent;
             border: none;
             color: #ffffff;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
+            padding: 4px;
         }
 
-        /* Mobile Slide-down Drawer Menu */
-        .mobile-drawer {
-            display: none;
-            flex-direction: column;
-            background-color: #0b0e14;
-            border-bottom: 1px solid #161f2e;
-            padding: 16px 24px;
-            gap: 14px;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            z-index: 999;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .mobile-drawer.active {
+        /* 2. Main Content & Sidebar Container */
+        .app-container {
             display: flex;
+            position: relative;
+            min-height: calc(100vh - 64px);
         }
 
-        .mobile-drawer a {
-            color: #9ca3af;
+        /* Slide-Out Side Menu (Exact match to uploaded image) */
+        .menu-drawer {
+            width: 320px;
+            background-color: #0b0e14;
+            border-right: 1px solid #161f2e;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, margin-left 0.3s ease;
+            z-index: 999;
+        }
+
+        .menu-drawer.closed {
+            margin-left: -320px;
+        }
+
+        /* Navigation List inside Menu */
+        .drawer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .drawer-list li a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 14px;
+            color: #d1d5db;
+            font-size: 15px;
             font-weight: 500;
+            transition: background 0.2s;
         }
 
-        .mobile-drawer a:hover, .mobile-drawer a.active {
+        .drawer-list li a:hover {
+            background-color: #121824;
+        }
+
+        .drawer-list li.active a {
+            background-color: #121824;
             color: #22c55e;
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 1024px) {
-            .nav-links, .lang-selector, .login-btn { display: none; }
-            .hamburger-btn { display: block; }
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
-        @media (max-width: 480px) {
-            .ai-btn-text { font-size: 11px; }
-            .logo-text span { display: none; }
-            .navbar { padding: 10px 14px; }
+        .item-left i {
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        /* Icon Colors Matching Image */
+        .icon-home { color: #22c55e; }
+        .icon-markets { color: #3b82f6; }
+        .icon-trading { color: #f97316; }
+        .icon-investments { color: #a855f7; }
+        .icon-loans { color: #eab308; }
+        .icon-earnings { color: #10b981; }
+
+        .arrow-icon {
+            font-size: 12px;
+            color: #4b5563;
+        }
+
+        /* 3. Quick Action Grid Cards (Watchlist, Portfolio, Alerts, Profile) */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 24px;
+            margin-bottom: 20px;
+        }
+
+        .grid-card {
+            background-color: #111622;
+            border: 1px solid #1a2333;
+            border-radius: 10px;
+            padding: 14px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .grid-card:hover {
+            border-color: #2a364f;
+            transform: translateY(-2px);
+        }
+
+        .grid-card i {
+            font-size: 18px;
+        }
+
+        .grid-card span {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .card-watchlist i { color: #22c55e; }
+        .card-portfolio i { color: #3b82f6; }
+        .card-alerts i { color: #f97316; }
+        .card-profile i { color: #a855f7; }
+
+        /* 4. Bottom AI Assistant Companion Banner */
+        .ai-banner-card {
+            background-color: #111622;
+            border: 1px solid #1a2e26;
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .ai-banner-card:hover {
+            border-color: #22c55e;
+            background-color: #131d2b;
+        }
+
+        .ai-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .robot-icon-box {
+            width: 38px;
+            height: 38px;
+            background-color: rgba(34, 197, 94, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22c55e;
+            font-size: 20px;
+        }
+
+        .ai-banner-text h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .ai-banner-text p {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Layout for Dashboard Area */
+        .main-dashboard {
+            flex: 1;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .desktop-links { display: none; }
+            .menu-drawer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+            }
+            .menu-drawer.closed {
+                margin-left: -100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    <!-- Top Navigation Header -->
     <header class="navbar">
-        <!-- Brand Logo -->
-        <a href="#" class="logo-box">
-            <i class="fa-solid fa-chart-line logo-icon"></i>
-            <div class="logo-text">
-                <h2>GLOBAL FINANCE</h2>
-                <span>Trade. Invest. Grow.</span>
-            </div>
+        <a href="#" class="logo">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>GLOBAL FINANCE</span>
         </a>
 
-        <!-- Navigation Links (Desktop) -->
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#markets">Markets</a></li>
-                <li><a href="#trading">Trading</a></li>
-                <li><a href="#investments">Investments</a></li>
-                <li><a href="#loans">Loans</a></li>
-                <li><a href="#earnings">Earnings</a></li>
-                <li><a href="#insights">Insights</a></li>
-                <li><a href="#tools">Tools</a></li>
-                <li><a href="#more">More <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a></li>
-            </ul>
-        </nav>
+        <ul class="desktop-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#markets">Markets</a></li>
+            <li><a href="#trading">Trading</a></li>
+            <li><a href="#investments">Investments</a></li>
+            <li><a href="#loans">Loans</a></li>
+            <li><a href="#earnings">Earnings</a></li>
+        </ul>
 
-        <!-- Header Actions -->
-        <div class="nav-actions">
-            <button class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-
-            <div class="lang-selector">
-                <i class="fa-solid fa-globe"></i>
-                <span>EN</span>
-                <i class="fa-solid fa-chevron-down" style="font-size: 9px;"></i>
-            </div>
-
-            <!-- Sleek AI Assistant Button -->
-            <button class="ai-assistant-btn" onclick="openAIAssistant()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span class="ai-btn-text">Personal AI Assistant</span>
+        <div class="nav-right">
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            
+            <button class="ai-top-btn" onclick="openAIAssistant()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Personal AI Assistant
             </button>
 
-            <button class="login-btn">Login</button>
-            <button class="hamburger-btn" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+            <!-- Menu Toggle Button (Swaps between Bars and Close X) -->
+            <button class="menu-toggle-btn" id="menuToggle">
+                <i class="fa-solid fa-xmark" id="toggleIcon"></i>
+            </button>
         </div>
     </header>
 
-    <!-- Mobile Navigation Drawer -->
-    <div class="mobile-drawer" id="mobileDrawer">
-        <a href="#home" class="active">Home</a>
-        <a href="#markets">Markets</a>
-        <a href="#trading">Trading</a>
-        <a href="#investments">Investments</a>
-        <a href="#loans">Loans</a>
-        <a href="#earnings">Earnings</a>
-        <a href="#insights">Insights</a>
-        <a href="#tools">Tools</a>
-        <a href="#more">More</a>
+    <!-- App Body Container -->
+    <div class="app-container">
+
+        <!-- Slide-out Sidebar Drawer Menu -->
+        <div class="menu-drawer" id="menuDrawer">
+            <div>
+                <!-- Vertical Nav List -->
+                <ul class="drawer-list">
+                    <li class="active">
+                        <a href="#home">
+                            <div class="item-left"><i class="fa-solid fa-house icon-home"></i> <span>Home</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#markets">
+                            <div class="item-left"><i class="fa-solid fa-chart-simple icon-markets"></i> <span>Markets</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#trading">
+                            <div class="item-left"><i class="fa-solid fa-money-bill-transfer icon-trading"></i> <span>Trading</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#investments">
+                            <div class="item-left"><i class="fa-solid fa-chart-pie icon-investments"></i> <span>Investments</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#loans">
+                            <div class="item-left"><i class="fa-solid fa-building-columns icon-loans"></i> <span>Loans</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#earnings">
+                            <div class="item-left"><i class="fa-solid fa-wallet icon-earnings"></i> <span>Earnings</span></div>
+                            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Quick Action Cards Grid -->
+                <div class="quick-grid">
+                    <div class="grid-card card-watchlist">
+                        <i class="fa-regular fa-star"></i>
+                        <span>Watchlist</span>
+                    </div>
+                    <div class="grid-card card-portfolio">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>Portfolio</span>
+                    </div>
+                    <div class="grid-card card-alerts">
+                        <i class="fa-regular fa-bell"></i>
+                        <span>Alerts</span>
+                    </div>
+                    <div class="grid-card card-profile">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Personal AI Assistant Companion Banner -->
+            <div class="ai-banner-card" onclick="openAIAssistant()">
+                <div class="ai-banner-left">
+                    <div class="robot-icon-box">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="ai-banner-text">
+                        <h4>Personal AI Assistant</h4>
+                        <p>Your smart financial companion</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </div>
+        </div>
+
+        <!-- Dashboard Content Placeholder Area -->
+        <main class="main-dashboard">
+            <!-- Yahan aapka baki ka main dashboard content aayega -->
+        </main>
     </div>
 
-    <!-- JavaScript Handler -->
+    <!-- JavaScript Logic -->
     <script>
-        // Toggle Mobile Menu Drawer
         const menuToggle = document.getElementById('menuToggle');
-        const mobileDrawer = document.getElementById('mobileDrawer');
+        const menuDrawer = document.getElementById('menuDrawer');
+        const toggleIcon = document.getElementById('toggleIcon');
 
+        // Drawer open/close handler
         menuToggle.addEventListener('click', () => {
-            mobileDrawer.classList.toggle('active');
+            menuDrawer.classList.toggle('closed');
+            
+            if (menuDrawer.classList.contains('closed')) {
+                toggleIcon.className = 'fa-solid fa-bars';
+            } else {
+                toggleIcon.className = 'fa-solid fa-xmark';
+            }
         });
 
-        // Personal AI Assistant Click Event Placeholder
+        // AI Assistant Integration Placeholder
         function openAIAssistant() {
             /* 
-               =============================================================
-               👉 YAHAN APNA 4,000 LINE WALA AI BOT CODE / MODAL FUNCTION PASTE KAREIN
-               =============================================================
+               👉 YAHAN APNA 4,000 LINE WALA AI BOT CODE CONNECT KAREIN
             */
-            console.log("Personal AI Assistant Triggered");
+            console.log("Personal AI Assistant opened.");
         }
     </script>
-
 </body>
 </html>
