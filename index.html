@@ -3039,6 +3039,63 @@ window.salesEngine = new SalesExecutiveUltra100();
 <script>
 
 </script>
+<script src="https://js.puter.com/v2/"></script>
+
+<!-- 🧠 PARNARAV ULTRA-INTELLIGENT DECISION ENGINE -->
+<script>
+(function() {
+    // 🎯 MASTER SYSTEM INSTRUCTION (Coding, Trading & Decision-Making Core)
+    const MASTER_SYSTEM_PROMPT = `
+You are Parnarav AI, an elite-level Artificial Intelligence specialized in:
+1. Advanced Software Development & System Architecture (Coding Master).
+2. Financial Trading, Market Analysis, Risk Management & Technical Chart Analysis.
+3. Precise Logical Reasoning and Independent Decision Making.
+
+Strict Operational Rules:
+- **Zero Fluff & High Precision**: Never indulge in unnecessary chatter or unasked explanations. Answer strictly what is asked with maximum clarity and accuracy.
+- **Zero Spelling & Grammatical Errors**: All responses must maintain 100% linguistic accuracy in both English and Hindi.
+- **Independent Decision-Making**: When faced with logical, technical, or coding choices, analyze the optimal solution and state the best path directly rather than asking vague questions.
+- **Flawless Code & Calculations**: All code snippets must be fully functional, optimized, and bug-free. All numerical calculations must be double-checked before output.
+- **Direct & Helpful**: Deliver direct answers immediately.
+`;
+
+    window.GeminiOmniEngine = {
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            try {
+                // Auto Auth Check
+                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+                    const isSignedIn = await puter.auth.isSignedIn();
+                    if (!isSignedIn) {
+                        const modal = document.getElementById('parnarav-auth-modal');
+                        if (modal) modal.style.display = 'flex';
+                        await puter.auth.signIn();
+                        if (modal) modal.style.display = 'none';
+                    }
+                }
+
+                // Combine Master System Prompt with User Prompt for Puter AI
+                const formattedPrompt = `${MASTER_SYSTEM_PROMPT}\n\nUser Question: ${userPrompt}\n\nProvide the most accurate, concise, and direct answer:`;
+
+                const response = await puter.ai.chat(formattedPrompt);
+                const reply = response ? response.toString().trim() : "";
+
+                if (reply !== "") {
+                    if (onChunkCallback) onChunkCallback(reply);
+                    return reply;
+                } else {
+                    throw new Error("No response generated.");
+                }
+
+            } catch (error) {
+                console.error("Engine Processing Error:", error);
+                const errorMsg = "⚠️ सिस्टम प्रोसेसिंग में त्रुटि हुई। कृपया पुनः प्रयास करें।";
+                if (onChunkCallback) onChunkCallback(errorMsg);
+                return errorMsg;
+            }
+        }
+    };
+})();
+</script>
 
 </body>
 </html>
