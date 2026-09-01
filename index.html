@@ -3035,76 +3035,9 @@ window.salesEngine = new SalesExecutiveUltra100();
 </script>
 
 
-<!-- 🚫 FOOLPROOF VOICE BUTTON REMOVER & CLEANER -->
-<style>
-    /* CSS से वॉइस, माइक और साउंड के सभी संभावित बटनों को हाइड करना */
-    [id*="voice" i], [class*="voice" i],
-    [id*="speech" i], [class*="speech" i],
-    [id*="audio" i], [class*="audio" i],
-    [id*="mic" i], [class*="mic" i],
-    [id*="tts" i], [class*="tts" i],
-    [id*="speaker" i], [class*="speaker" i],
-    [id*="sound" i], [class*="sound" i] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-</style>
 
 <script>
-(function() {
-    // 🧹 वॉइस बटन ढूँढकर DOM से हटाने वाला फ़ंक्शन
-    function purgeVoiceButton() {
-        // 1. सभी बटनों और क्लिक करने योग्य तत्वों की जाँच
-        const elements = document.querySelectorAll('button, div, span, i, a, svg');
 
-        elements.forEach(el => {
-            const text = (el.innerText || el.textContent || "").toLowerCase();
-            const title = (el.getAttribute('title') || "").toLowerCase();
-            const ariaLabel = (el.getAttribute('aria-label') || "").toLowerCase();
-            const onClickAttr = (el.getAttribute('onclick') || "").toLowerCase();
-            const idAttr = (el.id || "").toLowerCase();
-            const classAttr = (el.className || "").toString().toLowerCase();
-
-            // जाँचें कि क्या इनमें से कोई भी शब्द या आइकॉन मौजूद है
-            const isVoiceElement = 
-                text.includes('voice') || text.includes('speak') || text.includes('आवाज़') || text.includes('ध्वनि') ||
-                title.includes('voice') || title.includes('speech') || title.includes('mic') || title.includes('audio') ||
-                ariaLabel.includes('voice') || ariaLabel.includes('speech') || ariaLabel.includes('mic') ||
-                onClickAttr.includes('voice') || onClickAttr.includes('speak') || onClickAttr.includes('audio') || onClickAttr.includes('tts') ||
-                idAttr.includes('voice') || idAttr.includes('speech') || idAttr.includes('audio') || idAttr.includes('mic') ||
-                classAttr.includes('voice') || classAttr.includes('speech') || classAttr.includes('audio') || classAttr.includes('mic') ||
-                text.includes('🔊') || text.includes('🔇') || text.includes('🎙️') || text.includes('🎤') || text.includes('🗣️');
-
-            if (isVoiceElement) {
-                // लेआउट बिगड़े बिना सुरक्षित रूप से एलिमेंट हटाएँ
-                el.style.display = 'none';
-                el.remove();
-            }
-        });
-    }
-
-    // ⚡ 1. पेज लोड पर तुरंत चलाएँ
-    document.addEventListener('DOMContentLoaded', purgeVoiceButton);
-    window.addEventListener('load', purgeVoiceButton);
-
-    // ⚡ 2. हर 300ms में चेक करे (ताकि देर से लोड होने वाला बटन भी हट जाए)
-    const intervalId = setInterval(purgeVoiceButton, 300);
-
-    // 5 सेकंड बाद इंटरवल बंद कर दें ताकि परफ़ॉर्मेंस धीमी न हो
-    setTimeout(() => clearInterval(intervalId), 5000);
-
-    // ⚡ 3. Real-time DOM Observer (जैसे ही बटन बनेगा, तुरंत डिलीट कर देगा)
-    const observer = new MutationObserver(() => {
-        purgeVoiceButton();
-    });
-
-    observer.observe(document.body || document.documentElement, {
-        childList: true,
-        subtree: true
-    });
-})();
 </script>
 
 </body>
