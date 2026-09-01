@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Modern Sidebar Menu</title>
+    <title>Global Finance & FinAura AI</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Global Reset */
+        /* Global CSS Reset */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +44,6 @@
             color: #ffffff;
             font-weight: 700;
             font-size: 16px;
-            letter-spacing: 0.5px;
         }
 
         .logo i {
@@ -52,7 +51,6 @@
             font-size: 22px;
         }
 
-        /* Desktop Header Links (Visible on large screens) */
         .desktop-links {
             display: flex;
             list-style: none;
@@ -64,6 +62,7 @@
             text-decoration: none;
             font-size: 13.5px;
             font-weight: 500;
+            cursor: pointer;
             transition: color 0.2s;
         }
 
@@ -83,9 +82,13 @@
             color: #9ca3af;
             font-size: 16px;
             cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
         }
 
-        /* Top AI Assistant Button */
+        .search-btn:hover { color: #ffffff; }
+
+        /* AI Assistant Top Button */
         .ai-top-btn {
             display: flex;
             align-items: center;
@@ -107,17 +110,16 @@
             color: #ffffff;
             font-size: 20px;
             cursor: pointer;
-            padding: 4px;
         }
 
-        /* 2. Main Content & Sidebar Container */
+        /* 2. Main Layout Container */
         .app-container {
             display: flex;
             position: relative;
             min-height: calc(100vh - 64px);
         }
 
-        /* Slide-Out Side Menu (Exact match to uploaded image) */
+        /* Slide-Out Side Menu */
         .menu-drawer {
             width: 320px;
             background-color: #0b0e14;
@@ -126,7 +128,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s ease, margin-left 0.3s ease;
+            transition: margin-left 0.3s ease;
             z-index: 999;
         }
 
@@ -134,7 +136,6 @@
             margin-left: -320px;
         }
 
-        /* Navigation List inside Menu */
         .drawer-list {
             list-style: none;
             display: flex;
@@ -152,6 +153,7 @@
             color: #d1d5db;
             font-size: 15px;
             font-weight: 500;
+            cursor: pointer;
             transition: background 0.2s;
         }
 
@@ -176,7 +178,6 @@
             text-align: center;
         }
 
-        /* Icon Colors Matching Image */
         .icon-home { color: #22c55e; }
         .icon-markets { color: #3b82f6; }
         .icon-trading { color: #f97316; }
@@ -189,7 +190,7 @@
             color: #4b5563;
         }
 
-        /* 3. Quick Action Grid Cards (Watchlist, Portfolio, Alerts, Profile) */
+        /* Quick Cards Grid */
         .quick-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -211,27 +212,20 @@
             transition: transform 0.2s, border-color 0.2s;
         }
 
-        .grid-card:hover {
-            border-color: #2a364f;
+        .grid-card:hover, .grid-card.active {
+            border-color: #22c55e;
             transform: translateY(-2px);
         }
 
-        .grid-card i {
-            font-size: 18px;
-        }
-
-        .grid-card span {
-            font-size: 11px;
-            color: #9ca3af;
-            font-weight: 500;
-        }
+        .grid-card i { font-size: 18px; }
+        .grid-card span { font-size: 11px; color: #9ca3af; font-weight: 500; }
 
         .card-watchlist i { color: #22c55e; }
         .card-portfolio i { color: #3b82f6; }
         .card-alerts i { color: #f97316; }
         .card-profile i { color: #a855f7; }
 
-        /* 4. Bottom AI Assistant Companion Banner */
+        /* AI Assistant Bottom Companion Card */
         .ai-banner-card {
             background-color: #111622;
             border: 1px solid #1a2e26;
@@ -267,26 +261,125 @@
             font-size: 20px;
         }
 
-        .ai-banner-text h4 {
-            font-size: 13px;
-            font-weight: 600;
-            color: #ffffff;
-        }
+        .ai-banner-text h4 { font-size: 13px; font-weight: 600; color: #ffffff; }
+        .ai-banner-text p { font-size: 11px; color: #6b7280; margin-top: 2px; }
 
-        .ai-banner-text p {
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: 2px;
-        }
-
-        /* Layout for Dashboard Area */
+        /* 3. Main Dynamic Content Area */
         .main-dashboard {
             flex: 1;
-            padding: 30px;
-            color: #6b7280;
+            padding: 24px;
         }
 
-        /* Mobile Adjustments */
+        .content-card {
+            background-color: #0d1117;
+            border: 1px solid #1f293d;
+            border-radius: 12px;
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .content-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-subtitle {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Search Overlay Modal */
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+
+        .search-modal.open {
+            display: flex;
+        }
+
+        .search-box-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #0d1117;
+            border: 1px solid #22c55e;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+        .search-input-wrapper input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            width: 100%;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-close-btn {
+            background: transparent;
+            border: none;
+            color: #8b949e;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .search-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tag-btn {
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #9ca3af;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .tag-btn:hover { border-color: #22c55e; color: #22c55e; }
+
+        .search-results {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #1f293d;
+            color: #6b7280;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .desktop-links { display: none; }
             .menu-drawer {
@@ -296,15 +389,13 @@
                 height: 100%;
                 width: 100%;
             }
-            .menu-drawer.closed {
-                margin-left: -100%;
-            }
+            .menu-drawer.closed { margin-left: -100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation Header -->
+    <!-- 1. Header Navigation Bar -->
     <header class="navbar">
         <a href="#" class="logo">
             <i class="fa-solid fa-chart-line"></i>
@@ -312,68 +403,66 @@
         </a>
 
         <ul class="desktop-links">
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#markets">Markets</a></li>
-            <li><a href="#trading">Trading</a></li>
-            <li><a href="#investments">Investments</a></li>
-            <li><a href="#loans">Loans</a></li>
-            <li><a href="#earnings">Earnings</a></li>
+            <li><a class="active" onclick="switchSection('home')">Home</a></li>
+            <li><a onclick="switchSection('markets')">Markets</a></li>
+            <li><a onclick="switchSection('trading')">Trading</a></li>
+            <li><a onclick="switchSection('investments')">Investments</a></li>
+            <li><a onclick="switchSection('loans')">Loans</a></li>
+            <li><a onclick="switchSection('earnings')">Earnings</a></li>
         </ul>
 
         <div class="nav-right">
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="search-btn" id="openSearchBtn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
             
-            <button class="ai-top-btn" onclick="openAIAssistant()">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> Personal AI Assistant
+            <button class="ai-top-btn" onclick="triggerAI()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> FinAura AI
             </button>
 
-            <!-- Menu Toggle Button (Swaps between Bars and Close X) -->
             <button class="menu-toggle-btn" id="menuToggle">
                 <i class="fa-solid fa-xmark" id="toggleIcon"></i>
             </button>
         </div>
     </header>
 
-    <!-- App Body Container -->
+    <!-- 2. App Body Layout -->
     <div class="app-container">
 
-        <!-- Slide-out Sidebar Drawer Menu -->
+        <!-- Slide-Out Sidebar Drawer -->
         <div class="menu-drawer" id="menuDrawer">
             <div>
-                <!-- Vertical Nav List -->
-                <ul class="drawer-list">
-                    <li class="active">
-                        <a href="#home">
+                <ul class="drawer-list" id="drawerList">
+                    <li class="nav-item active" data-section="home">
+                        <a onclick="switchSection('home')">
                             <div class="item-left"><i class="fa-solid fa-house icon-home"></i> <span>Home</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#markets">
+                    <li class="nav-item" data-section="markets">
+                        <a onclick="switchSection('markets')">
                             <div class="item-left"><i class="fa-solid fa-chart-simple icon-markets"></i> <span>Markets</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#trading">
+                    <li class="nav-item" data-section="trading">
+                        <a onclick="switchSection('trading')">
                             <div class="item-left"><i class="fa-solid fa-money-bill-transfer icon-trading"></i> <span>Trading</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#investments">
+                    <li class="nav-item" data-section="investments">
+                        <a onclick="switchSection('investments')">
                             <div class="item-left"><i class="fa-solid fa-chart-pie icon-investments"></i> <span>Investments</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#loans">
+                    <li class="nav-item" data-section="loans">
+                        <a onclick="switchSection('loans')">
                             <div class="item-left"><i class="fa-solid fa-building-columns icon-loans"></i> <span>Loans</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#earnings">
+                    <li class="nav-item" data-section="earnings">
+                        <a onclick="switchSection('earnings')">
                             <div class="item-left"><i class="fa-solid fa-wallet icon-earnings"></i> <span>Earnings</span></div>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </a>
@@ -382,69 +471,191 @@
 
                 <!-- Quick Action Cards Grid -->
                 <div class="quick-grid">
-                    <div class="grid-card card-watchlist">
+                    <div class="grid-card card-watchlist" onclick="switchSection('watchlist')">
                         <i class="fa-regular fa-star"></i>
                         <span>Watchlist</span>
                     </div>
-                    <div class="grid-card card-portfolio">
+                    <div class="grid-card card-portfolio" onclick="switchSection('portfolio')">
                         <i class="fa-solid fa-briefcase"></i>
                         <span>Portfolio</span>
                     </div>
-                    <div class="grid-card card-alerts">
+                    <div class="grid-card card-alerts" onclick="switchSection('alerts')">
                         <i class="fa-regular fa-bell"></i>
                         <span>Alerts</span>
                     </div>
-                    <div class="grid-card card-profile">
+                    <div class="grid-card card-profile" onclick="switchSection('profile')">
                         <i class="fa-regular fa-user"></i>
                         <span>Profile</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Personal AI Assistant Companion Banner -->
-            <div class="ai-banner-card" onclick="openAIAssistant()">
+            <!-- Bottom FinAura AI Assistant Banner -->
+            <div class="ai-banner-card" onclick="triggerAI()">
                 <div class="ai-banner-left">
                     <div class="robot-icon-box">
-                        <i class="fa-solid fa-robot"></i>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
                     <div class="ai-banner-text">
-                        <h4>Personal AI Assistant</h4>
-                        <p>Your smart financial companion</p>
+                        <h4>FinAura AI</h4>
+                        <p>Your 24/7 Smart Companion</p>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right arrow-icon"></i>
             </div>
         </div>
 
-        <!-- Dashboard Content Placeholder Area -->
+        <!-- Dynamic Content Display Area -->
         <main class="main-dashboard">
-            <!-- Yahan aapka baki ka main dashboard content aayega -->
+            <div class="content-card" id="contentDisplay">
+                <div class="content-title"><i class="fa-solid fa-house icon-home"></i> Welcome to Global Finance</div>
+                <div class="content-subtitle">Select any option from the menu to start trading, checking loan options, or managing investments.</div>
+            </div>
         </main>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- 3. Search Popup Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-box-container">
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass" style="color:#8b949e;"></i>
+                <input type="text" id="searchInput" placeholder="Search Markets, Trading, Loans, Mutual Funds..." autocomplete="off">
+                <button class="search-close-btn" id="closeSearchBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="search-tags">
+                <span class="tag-btn" onclick="setSearch('Nifty 50')">Nifty 50</span>
+                <span class="tag-btn" onclick="setSearch('Home Loan')">Home Loan Rates</span>
+                <span class="tag-btn" onclick="setSearch('Mutual Funds')">Mutual Funds</span>
+                <span class="tag-btn" onclick="setSearch('Crypto')">Bitcoin/USDT</span>
+            </div>
+
+            <div class="search-results" id="searchResults">
+                🔍 Type above to search across markets, tools, and loans...
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Actions Logic -->
     <script>
+        // DOM Elements
         const menuToggle = document.getElementById('menuToggle');
         const menuDrawer = document.getElementById('menuDrawer');
         const toggleIcon = document.getElementById('toggleIcon');
+        const contentDisplay = document.getElementById('contentDisplay');
 
-        // Drawer open/close handler
+        // Search Elements
+        const searchModal = document.getElementById('searchModal');
+        const openSearchBtn = document.getElementById('openSearchBtn');
+        const closeSearchBtn = document.getElementById('closeSearchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Drawer Menu Toggle Handler
         menuToggle.addEventListener('click', () => {
             menuDrawer.classList.toggle('closed');
-            
-            if (menuDrawer.classList.contains('closed')) {
+            toggleIcon.className = menuDrawer.classList.contains('closed') ? 'fa-solid fa-bars' : 'fa-solid fa-xmark';
+        });
+
+        // Dynamic Section Switcher Handler
+        function switchSection(section) {
+            // Update Active Class in Side List
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.section === section);
+            });
+
+            // Section Content Definitions
+            const sectionsData = {
+                home: {
+                    title: '<i class="fa-solid fa-house icon-home"></i> Home Dashboard',
+                    desc: 'Live financial market trends, quick stats, and personal asset summary.'
+                },
+                markets: {
+                    title: '<i class="fa-solid fa-chart-simple icon-markets"></i> Global Markets Overview',
+                    desc: 'Real-time charts for Nifty 50, Sensex, Gold, Crude Oil, and Crypto.'
+                },
+                trading: {
+                    title: '<i class="fa-solid fa-money-bill-transfer icon-trading"></i> Trading Terminal',
+                    desc: 'Advanced candlestick charts, order execution, and technical indicators.'
+                },
+                investments: {
+                    title: '<i class="fa-solid fa-chart-pie icon-investments"></i> Investments & Mutual Funds',
+                    desc: 'Explore SIPs, Equity Mutual Funds, Bonds, and Stock Portfolios.'
+                },
+                loans: {
+                    title: '<i class="fa-solid fa-building-columns icon-loans"></i> Loans & EMI Calculators',
+                    desc: 'Compare Personal, Home, and Business loans with interest calculators.'
+                },
+                earnings: {
+                    title: '<i class="fa-solid fa-wallet icon-earnings"></i> Earnings & Passive Income',
+                    desc: 'Guides, tips, and strategy articles on passive income and stock dividends.'
+                },
+                watchlist: {
+                    title: '<i class="fa-regular fa-star icon-home"></i> Your Stock Watchlist',
+                    desc: 'Track your saved stocks, indices, and favorite trading pairs.'
+                },
+                portfolio: {
+                    title: '<i class="fa-solid fa-briefcase icon-markets"></i> Investment Portfolio',
+                    desc: 'Detailed breakdown of your current holdings, profits, and asset allocation.'
+                },
+                alerts: {
+                    title: '<i class="fa-regular fa-bell icon-trading"></i> Price & Market Alerts',
+                    desc: 'Set customized price triggers and stock alert notifications.'
+                },
+                profile: {
+                    title: '<i class="fa-regular fa-user icon-investments"></i> Account & Profile Settings',
+                    desc: 'Manage security, KYC verification, connected accounts, and preferences.'
+                }
+            };
+
+            const data = sectionsData[section] || sectionsData['home'];
+            contentDisplay.innerHTML = `
+                <div class="content-title">${data.title}</div>
+                <div class="content-subtitle">${data.desc}</div>
+            `;
+
+            // Auto-close drawer on mobile view after selecting
+            if (window.innerWidth <= 768) {
+                menuDrawer.classList.add('closed');
                 toggleIcon.className = 'fa-solid fa-bars';
+            }
+        }
+
+        // Search Modal Handler
+        openSearchBtn.addEventListener('click', () => {
+            searchModal.classList.add('open');
+            searchInput.focus();
+        });
+
+        closeSearchBtn.addEventListener('click', () => {
+            searchModal.classList.remove('open');
+        });
+
+        // Live Search Input Filter Simulation
+        searchInput.addEventListener('keyup', (e) => {
+            const query = e.target.value.trim();
+            if (query.length === 0) {
+                searchResults.innerHTML = "🔍 Type above to search across markets, tools, and loans...";
             } else {
-                toggleIcon.className = 'fa-solid fa-xmark';
+                searchResults.innerHTML = `⚠️ No live match found for "<strong>${query}</strong>". Try searching for <em>Nifty, Loans, or Trading</em>.`;
             }
         });
 
-        // AI Assistant Integration Placeholder
-        function openAIAssistant() {
+        function setSearch(term) {
+            searchInput.value = term;
+            searchResults.innerHTML = `Showing results for "<strong>${term}</strong>"... <br><br>📊 Interactive trading data loading for ${term}.`;
+        }
+
+        // FinAura AI Assistant Integration Point
+        function triggerAI() {
             /* 
-               👉 YAHAN APNA 4,000 LINE WALA AI BOT CODE CONNECT KAREIN
+               👉 YAHAN APNA 4,000 LINE WALA FinAura AI BOT CODE CONNECT KAREIN
             */
-            console.log("Personal AI Assistant opened.");
+            switchSection('home');
+            contentDisplay.innerHTML = `
+                <div class="content-title"><i class="fa-solid fa-wand-magic-sparkles" style="color:#22c55e;"></i> FinAura AI Assistant Active</div>
+                <div class="content-subtitle">Aapka 4,000 line wala AI code yahan render hoga.</div>
+            `;
         }
     </script>
 </body>
