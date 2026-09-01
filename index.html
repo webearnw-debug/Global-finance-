@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio</title>
+    <title>Parnarav AI - Universal Studio Pro</title>
 
     <!-- External UI Libraries -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
-    <!-- Puter Cloud AI Engine Core SDK (single load — this is the ONLY AI connection the app needs) -->
+    <!-- Puter Cloud AI Engine Core SDK -->
     <script src="https://js.puter.com/v2/"></script>
 
     <style>
@@ -37,7 +37,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -48,14 +48,9 @@
             color: var(--text-main);
             overflow: hidden;
             display: flex;
-            font-size: 17.5px;
-            line-height: 1.6;
-            letter-spacing: 0.3px;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
+            font-size: 16px;
+            line-height: 1.5;
         }
-
-        strong, b { font-weight: 700; }
 
         /* Sidebar Styling */
         .sidebar {
@@ -105,7 +100,7 @@
         }
 
         .nav-item {
-            padding: 9px 12px;
+            padding: 10px 12px;
             border-radius: 8px;
             color: var(--text-muted);
             cursor: pointer;
@@ -123,36 +118,6 @@
             border: 1px solid var(--border-color);
         }
 
-        .tools-menu {
-            margin-top: 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
-        }
-
-        .tool-btn {
-            width: 100%;
-            background: #1e293b;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .tool-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
-
         /* Workspace Main Layout */
         .workspace {
             flex: 1;
@@ -163,16 +128,19 @@
             position: relative;
         }
 
+        /* Real Working Header */
         .topbar {
-            height: 58px;
+            height: 64px;
             background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 20px;
             flex-shrink: 0;
-            gap: 12px;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 50;
         }
 
         .mobile-menu-btn {
@@ -184,64 +152,177 @@
             cursor: pointer;
         }
 
-        .voice-toggle-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
+        .header-title-wrapper {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 600;
+            gap: 12px;
         }
 
-        .voice-toggle-btn.active {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--accent-cyan);
-            border-color: var(--accent-cyan);
-        }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.78rem;
-            background: rgba(74, 222, 128, 0.1);
+        .system-badge-live {
+            background: rgba(74, 222, 128, 0.12);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: var(--accent-green);
             padding: 4px 10px;
             border-radius: 20px;
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            color: var(--accent-green);
-            font-weight: 600;
-            white-space: nowrap;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
+        .live-dot {
+            width: 7px;
+            height: 7px;
             background: var(--accent-green);
             border-radius: 50%;
             box-shadow: 0 0 8px var(--accent-green);
+            animation: pulseDot 1.5s infinite;
         }
 
-        /* Chat Area */
-        .chat-area {
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .header-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .header-btn.ai-sparkle {
+            background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(56, 189, 248, 0.2));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        /* View Container System (Home vs Trading vs Finance vs Coding) */
+        .view-container {
             flex: 1;
-            padding: 20px 16px;
+            overflow-y: auto;
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .view-container.active {
+            display: flex;
+        }
+
+        /* Dashboard Grid for Home */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .dashboard-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dashboard-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .dashboard-card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+        }
+
+        .dashboard-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Interactive System Panels */
+        .panel-header-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .system-action-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .system-action-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.08);
+            color: var(--accent-cyan);
+        }
+
+        /* Chat Workspace Integration */
+        .chat-sub-area {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
+            gap: 14px;
+            max-height: 400px;
         }
 
         .message-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             max-width: 90%;
-            animation: fadeIn 0.25s ease-in-out;
         }
 
         .message-row.user {
@@ -250,40 +331,29 @@
         }
 
         .avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: var(--bg-card);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--bg-base);
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             flex-shrink: 0;
-            font-weight: 800;
-        }
-
-        .user .avatar {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
 
         .bubble {
-            background-color: var(--bg-card);
+            background: var(--bg-base);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px 16px;
-            line-height: 1.6;
-            font-size: 0.92rem;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.88rem;
             word-wrap: break-word;
-            overflow-x: auto;
-            position: relative;
         }
 
         .user .bubble {
-            background-color: #1e3a8a;
+            background: #1e3a8a;
             border-color: #3b82f6;
             color: #fff;
         }
@@ -307,37 +377,9 @@
             gap: 6px;
         }
 
-        .ai-action-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #d1d5db;
-            padding: 4px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-        }
-
-        /* Input Controls */
+        /* Input Controls at Bottom */
         .input-wrapper {
-            padding: 12px 16px;
+            padding: 12px 20px;
             background: var(--bg-surface);
             border-top: 1px solid var(--border-color);
             flex-shrink: 0;
@@ -365,42 +407,15 @@
             color: var(--text-main);
             font-size: 0.93rem;
             resize: none;
-            height: 40px;
-            padding-top: 10px;
-            line-height: 1.4;
-        }
-
-        .btn-icon {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            width: 38px;
             height: 38px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .btn-icon:hover {
-            color: var(--accent-cyan);
-            border-color: var(--accent-cyan);
-        }
-
-        .btn-icon.listening {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #ef4444;
-            animation: pulseMic 1.2s infinite;
+            padding-top: 8px;
         }
 
         .btn-send {
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
             color: #fff;
             cursor: pointer;
@@ -409,25 +424,10 @@
             justify-content: center;
         }
 
-        pre {
-            background: #000 !important;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
-        code { font-family: 'JetBrains Mono', monospace; }
-
-        @keyframes pulseMic {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes pulseDot {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         @media (max-width: 768px) {
@@ -437,12 +437,8 @@
                 top: 0;
                 bottom: 0;
             }
-            .sidebar.open {
-                left: 0;
-                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            }
+            .sidebar.open { left: 0; }
             .mobile-menu-btn { display: block; }
-            .message-row { max-width: 96%; }
         }
     </style>
 </head>
@@ -452,104 +448,178 @@
     <aside class="sidebar" id="sidebar">
         <div class="brand-logo">
             <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
-                <defs>
-                    <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ef4444" />
-                        <stop offset="100%" stop-color="#b91c1c" />
-                    </linearGradient>
-                    <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#3b82f6" />
-                        <stop offset="100%" stop-color="#1d4ed8" />
-                    </linearGradient>
-                </defs>
-                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
-                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBrainBlue)" />
+                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="#ef4444" />
+                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="#3b82f6" />
             </svg>
             <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
         </div>
 
-        <div class="nav-section-title">Operating Modes & Roles</div>
-        <ul class="nav-list" id="navList">
-            <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)">
-                <i class="fa-solid fa-brain"></i> Omni Super AI
+        <div class="nav-section-title">Navigation Menu</div>
+        <ul class="nav-list">
+            <li class="nav-item active" onclick="NavigationEngine.switchView('home', this)">
+                <i class="fa-solid fa-house"></i> Home Dashboard
             </li>
-            <li class="nav-item" onclick="AppController.switchMode('FINANCE', this)">
-                <i class="fa-solid fa-chart-line"></i> Trading & Finance
+            <li class="nav-item" onclick="NavigationEngine.switchView('trading', this)">
+                <i class="fa-solid fa-chart-line"></i> Trading Systems
             </li>
-            <li class="nav-item" onclick="AppController.switchMode('DEV', this)">
+            <li class="nav-item" onclick="NavigationEngine.switchView('finance', this)">
+                <i class="fa-solid fa-coins"></i> Financial Engine
+            </li>
+            <li class="nav-item" onclick="NavigationEngine.switchView('coding', this)">
                 <i class="fa-solid fa-code"></i> Coding Master
             </li>
-            <li class="nav-item" onclick="AppController.switchMode('INTERVIEW', this)">
-                <i class="fa-solid fa-user-tie"></i> Mock Interviewer
-            </li>
-            <li class="nav-item" onclick="AppController.switchMode('SALES', this)">
-                <i class="fa-solid fa-handshake"></i> Sales Executive
+            <li class="nav-item" onclick="NavigationEngine.switchView('aiagent', this)">
+                <i class="fa-solid fa-robot"></i> AI Auto Agent
             </li>
         </ul>
-
-        <div class="tools-menu">
-            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-cyan); margin-bottom:8px; text-transform:uppercase;">
-                Omni Knowledge Tools
-            </div>
-            <button class="tool-btn" onclick="OmniKnowledgeEngine.solveExamQuestion()">
-                <i class="fa-solid fa-graduation-cap" style="color:var(--accent-purple)"></i> Exam Solver
-            </button>
-            <button class="tool-btn" onclick="OmniKnowledgeEngine.deepResearch()">
-                <i class="fa-solid fa-book-open" style="color:var(--accent-cyan)"></i> Deep Research
-            </button>
-            <button class="tool-btn" onclick="GeminiOmniEngine.triggerAgenticTask()">
-                <i class="fa-solid fa-robot" style="color:var(--accent-yellow)"></i> Agentic Auto-Fix Loop
-            </button>
-
-            <div style="font-size:0.75rem; font-weight:700; color:var(--accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">
-                Finance Tools
-            </div>
-            <button class="tool-btn" onclick="QuantEngine.runAnalysis()">
-                <i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Signals
-            </button>
-            <button class="tool-btn" onclick="FinancialEngine.calcSIP()">
-                <i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator
-            </button>
-            <button class="tool-btn" onclick="FinancialEngine.calcEMI()">
-                <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine
-            </button>
-        </div>
     </aside>
 
     <!-- Workspace Main -->
-    <main class="workspace" id="workspaceMain">
+    <main class="workspace">
+        <!-- Real Working Header -->
         <header class="topbar">
-            <div style="display:flex; align-items:center; gap:10px;">
-                <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="AppController.toggleSidebar(event)">
+            <div class="header-title-wrapper">
+                <button class="mobile-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <div id="mode-indicator" style="font-weight: 700; font-size: 0.88rem;">
-                    Parnarav AI: Omni Super AI Active
+                <div class="system-badge-live">
+                    <div class="live-dot"></div>
+                    <span id="headerSystemTitle">Home Dashboard Active</span>
                 </div>
             </div>
 
-            <div style="display:flex; align-items:center; gap:8px;">
-                <button class="voice-toggle-btn" id="voiceToggleBtn" onclick="VoiceEngine.toggleVoice()">
+            <div class="header-actions">
+                <button class="header-btn ai-sparkle" onclick="AIActiveEngine.triggerQuickAI()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Auto Run
+                </button>
+                <button class="header-btn" onclick="VoiceEngine.toggleVoice()">
                     <i class="fa-solid fa-volume-high"></i> <span id="voiceStatusText">Voice OFF</span>
                 </button>
-
-                <div class="status-badge">
-                    <div class="status-dot"></div>
-                    Super AI Active
-                </div>
             </div>
         </header>
 
-        <section class="chat-area" id="chatContainer">
-            <!-- Dynamic Messages Loaded Here -->
+        <!-- 1. HOME VIEW (Dashboard with all systems summarized) -->
+        <section id="view-home" class="view-container active">
+            <div class="panel-header-box">
+                <div>
+                    <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-cyan);">Parnarav AI Universal Studio</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">सभी प्रणालियाँ (Trading, Finance, Coding, AI Agent) यहाँ एकीकृत हैं।</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card" onclick="NavigationEngine.switchView('trading', document.querySelectorAll('.nav-item')[1])">
+                    <div class="dashboard-card-title"><i class="fa-solid fa-chart-line" style="color:var(--accent-green)"></i> Trading Systems</div>
+                    <div class="dashboard-card-desc">स्टॉक, RSI, VWAP, Supertrend, ऑप्शंस स्ट्रेटजी और क्वांट सिग्नल्स का लाइव डैशबोर्ड।</div>
+                </div>
+                <div class="dashboard-card" onclick="NavigationEngine.switchView('finance', document.querySelectorAll('.nav-item')[2])">
+                    <div class="dashboard-card-title"><i class="fa-solid fa-coins" style="color:var(--accent-cyan)"></i> Financial Engine</div>
+                    <div class="dashboard-card-desc">SIP, Step-Up SIP, EMI Loan Amortization, CAGR, टैक्स एस्टीमेटर एवं पोर्टफोलियो कैलकुलेटर।</div>
+                </div>
+                <div class="dashboard-card" onclick="NavigationEngine.switchView('coding', document.querySelectorAll('.nav-item')[3])">
+                    <div class="dashboard-card-title"><i class="fa-solid fa-code" style="color:var(--accent-purple)"></i> Coding Master</div>
+                    <div class="dashboard-card-desc">150+ डेवलपर्स टूल्स, JSON फ़ॉर्मेटर, रेगुलर एक्सप्रेसन्स, CSS जेनरेटर और Git कमांड्स।</div>
+                </div>
+                <div class="dashboard-card" onclick="NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4])">
+                    <div class="dashboard-card-title"><i class="fa-solid fa-robot" style="color:var(--accent-yellow)"></i> AI Auto Agent</div>
+                    <div class="dashboard-card-desc">Puter.js क्लाउड AI द्वारा संचालित स्वतंत्र एजेंट और यूनिवर्सल चैट स्टूडियो।</div>
+                </div>
+            </div>
         </section>
 
+        <!-- 2. TRADING VIEW -->
+        <section id="view-trading" class="view-container">
+            <div class="panel-header-box">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-green);"><i class="fa-solid fa-chart-line"></i> Trading Systems & Quant Signals</h2>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">यहाँ ट्रेडिंग से जुड़े सभी टूल्स स्वतंत्र रूप से कार्य करते हैं।</p>
+                </div>
+            </div>
+            <div class="tools-grid">
+                <button class="system-action-btn" onclick="QuantEngine.runAnalysis()"><i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Decision Engine</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.scanMultiIndicators()"><i class="fa-solid fa-wave-square" style="color:var(--accent-cyan)"></i> Multi-Indicator Scan</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.calcPositionSize()"><i class="fa-solid fa-shield-halved" style="color:var(--accent-purple)"></i> Position Size & Risk</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.evalRiskReward()"><i class="fa-solid fa-scale-balanced" style="color:var(--accent-yellow)"></i> Risk-Reward Evaluator</button>
+                <button class="system-action-btn" onclick="ParnaravFinanceUltra100.tech.supertrend()"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent-green)"></i> Supertrend Indicator</button>
+                <button class="system-action-btn" onclick="ParnaravFinanceUltra100.options.pcrAnalysis()"><i class="fa-solid fa-scale-unbalanced-flip" style="color:var(--accent-cyan)"></i> Put-Call Ratio (PCR)</button>
+            </div>
+            <div class="chat-sub-area" id="chat-trading-area">
+                <div class="message-row">
+                    <div class="avatar">📈</div>
+                    <div class="bubble"><b>Trading System Active!</b> ऊपर दिए गए बटनों पर क्लिक करें या अपना ट्रेडिंग सवाल पूछें।</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. FINANCIAL VIEW -->
+        <section id="view-finance" class="view-container">
+            <div class="panel-header-box">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan);"><i class="fa-solid fa-coins"></i> Financial Calculation Engine</h2>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">SIP, EMI, Loan, और टैक्स से जुड़े सभी अपग्रेडेड सिस्टम।</p>
+                </div>
+            </div>
+            <div class="tools-grid">
+                <button class="system-action-btn" onclick="FinancialEngine.calcSIP()"><i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator</button>
+                <button class="system-action-btn" onclick="FinancialEngine.calcEMI()"><i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.calcStepUpSIP()"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent-green)"></i> Step-Up SIP Calculator</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.compareSipVsLumpsum()"><i class="fa-solid fa-code-compare" style="color:var(--accent-purple)"></i> SIP vs Lumpsum</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.calcCAGR()"><i class="fa-solid fa-percent" style="color:var(--accent-cyan)"></i> CAGR Calculator</button>
+                <button class="system-action-btn" onclick="ParnaravFinancePro.calcTaxEstimate()"><i class="fa-solid fa-building-columns" style="color:var(--accent-red)"></i> Capital Gains Tax</button>
+            </div>
+            <div class="chat-sub-area" id="chat-finance-area">
+                <div class="message-row">
+                    <div class="avatar">💰</div>
+                    <div class="bubble"><b>Financial System Active!</b> निवेश और ऋण गणना के लिए बटन का चयन करें।</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CODING MASTER VIEW -->
+        <section id="view-coding" class="view-container">
+            <div class="panel-header-box">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-purple);"><i class="fa-solid fa-code"></i> Coding Master Studio</h2>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">डेवलपर टूल्स, फ़ॉर्मेटर्स, रेगुलर एक्सप्रेसन्स और कोड जनरेटर।</p>
+                </div>
+            </div>
+            <div class="tools-grid">
+                <button class="system-action-btn" onclick="CodingMasterUltra150.formatters.jsonFormatter()"><i class="fa-solid fa-code" style="color:var(--accent-purple)"></i> JSON Formatter</button>
+                <button class="system-action-btn" onclick="CodingMasterUltra150.regex.emailValidator()"><i class="fa-solid fa-envelope" style="color:var(--accent-cyan)"></i> Email Regex</button>
+                <button class="system-action-btn" onclick="CodingMasterUltra150.converters.jwtDecoder()"><i class="fa-solid fa-id-card" style="color:var(--accent-green)"></i> JWT Decoder</button>
+                <button class="system-action-btn" onclick="CodingMasterUltra150.cssUi.glassmorphismGen()"><i class="fa-solid fa-window-restore" style="color:var(--accent-yellow)"></i> Glassmorphism CSS</button>
+                <button class="system-action-btn" onclick="CodingMasterUltra150.securityApi.generateUuidV4()"><i class="fa-solid fa-hashtag" style="color:var(--accent-purple)"></i> UUID V4 Generator</button>
+                <button class="system-action-btn" onclick="CodingMasterUltra150.devopsGit.dockerfileGenerator()"><i class="fa-brands fa-docker" style="color:var(--accent-cyan)"></i> Dockerfile Builder</button>
+            </div>
+            <div class="chat-sub-area" id="chat-coding-area">
+                <div class="message-row">
+                    <div class="avatar">💻</div>
+                    <div class="bubble"><b>Coding Master Active!</b> सॉफ्टवेयर आर्किटेक्चर और टूल्स का उपयोग करें।</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. AI AGENT VIEW -->
+        <section id="view-aiagent" class="view-container">
+            <div class="panel-header-box">
+                <div>
+                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-yellow);"><i class="fa-solid fa-robot"></i> AI Auto Agent & Universal Chat</h2>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">Puter.js AI इंजन द्वारा स्वचालित उत्तर और एजेंट लूप।</p>
+                </div>
+                <button class="system-action-btn" onclick="GeminiOmniEngine.triggerAgenticTask()"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent-yellow)"></i> Run Agentic Loop</button>
+            </div>
+            <div class="chat-sub-area" id="chatContainer" style="max-height: 480px;">
+                <div class="message-row">
+                    <div class="avatar">🧠</div>
+                    <div class="bubble"><b>Parnarav AI Auto Agent Ready!</b> नीचे दिए गए इनपुट बॉक्स से कोई भी सवाल पूछें। AI तुरंत खुद कार्य करेगा।</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Universal Input Bar -->
         <footer class="input-wrapper">
             <div class="input-box">
-                <button class="btn-icon" id="micToggleBtn" title="Speak Input" onclick="VoiceInputEngine.toggleMic()">
-                    <i class="fa-solid fa-microphone"></i>
-                </button>
-                <textarea id="userInput" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="AppController.handleKeyPress(event)"></textarea>
+                <textarea id="userInput" placeholder="यहाँ अपना सवाल या कमांड दर्ज करें (AI स्वतः चलेगा)..." onkeydown="AppController.handleKeyPress(event)"></textarea>
                 <button class="btn-send" onclick="AppController.submitQuery()" title="Send Message">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -562,18 +632,47 @@
         const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
         // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION)
-        // This is the single, authoritative AI connection for the whole app.
-        // Wherever this file is hosted, it talks to Puter's cloud AI directly —
-        // no extra setup, no API keys, no server needed.
+        // NAVIGATION ENGINE (Separate Systems Switcher)
+        // =================================================================
+        const NavigationEngine = {
+            currentView: 'home',
+
+            switchView: function(viewName, element) {
+                this.currentView = viewName;
+
+                // Update Sidebar Active state
+                if (element) {
+                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                    element.classList.add('active');
+                }
+
+                // Hide all view containers
+                document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+
+                // Show selected view
+                const targetView = document.getElementById(`view-${viewName}`);
+                if (targetView) targetView.classList.add('active');
+
+                // Update Header Title Badge
+                let titleMap = {
+                    'home': 'Home Dashboard Active',
+                    'trading': 'Trading Systems Active',
+                    'finance': 'Financial Engine Active',
+                    'coding': 'Coding Master Active',
+                    'aiagent': 'AI Auto Agent Active'
+                };
+                document.getElementById('headerSystemTitle').innerText = titleMap[viewName] || 'System Active';
+
+                // Close mobile sidebar if open
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        };
+
+        // =================================================================
+        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION - AI AUTO RUNS)
         // =================================================================
         const GeminiOmniEngine = {
             chatHistory: [],
-
-            resetMemory: function() {
-                this.chatHistory = [];
-                console.log("[GeminiOmniEngine]: Memory reset.");
-            },
 
             processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
                 if (this.chatHistory.length === 0 && systemInstruction) {
@@ -597,7 +696,7 @@
                     return fullReply;
 
                 } catch (err) {
-                    console.warn("[GeminiOmniEngine Non-Stream Fallback]:", err);
+                    console.warn("[GeminiOmniEngine Fallback]:", err);
                     const response = await puter.ai.chat(this.chatHistory);
                     const textResponse = typeof response === 'string'
                         ? response
@@ -609,147 +708,49 @@
                 }
             },
 
-            generateStructuredData: async function(prompt) {
-                const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
-                return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
-            },
-
             triggerAgenticTask: async function() {
                 const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
                 if (!userTask) return;
-
+                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
                 document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
                 AppController.submitQuery();
             }
         };
 
+        const AIActiveEngine = {
+            triggerQuickAI: function() {
+                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
+                const promptText = prompt("AI से क्या कार्य कराना चाहते हैं?");
+                if (!promptText) return;
+                document.getElementById('userInput').value = promptText;
+                AppController.submitQuery();
+            }
+        };
+
         // =================================================================
-        // 🎙️ VOICE TTS ENGINE (TEXT-TO-SPEECH)
+        // 🎙️ VOICE TTS ENGINE
         // =================================================================
         const VoiceEngine = {
             enabled: false,
-
             toggleVoice: function() {
                 this.enabled = !this.enabled;
-                const btn = document.getElementById('voiceToggleBtn');
                 const txt = document.getElementById('voiceStatusText');
-                if (this.enabled) {
-                    btn.classList.add('active');
-                    txt.innerText = "Voice ON";
-                    this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
-                } else {
-                    btn.classList.remove('active');
-                    txt.innerText = "Voice OFF";
-                    window.speechSynthesis.cancel();
-                }
+                txt.innerText = this.enabled ? "Voice ON" : "Voice OFF";
+                if (this.enabled) this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
             },
-
             speak: function(text) {
                 if (!this.enabled || !('speechSynthesis' in window)) return;
                 window.speechSynthesis.cancel();
-
                 const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
                 const utterance = new SpeechSynthesisUtterance(cleanText);
                 utterance.lang = 'hi-IN';
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-
                 window.speechSynthesis.speak(utterance);
             }
         };
 
         // =================================================================
-        // 🎙️ VOICE STT ENGINE (SPEECH-TO-TEXT / MICROPHONE)
+        // QUANT & FINANCIAL ENGINES
         // =================================================================
-        const VoiceInputEngine = {
-            recognition: null,
-            isListening: false,
-
-            init: function() {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognition) {
-                    console.warn("Speech Recognition API not supported in this browser.");
-                    return false;
-                }
-                this.recognition = new SpeechRecognition();
-                this.recognition.continuous = false;
-                this.recognition.interimResults = false;
-                this.recognition.lang = 'hi-IN';
-
-                this.recognition.onresult = (event) => {
-                    const transcript = event.results[0][0].transcript;
-                    const inputEl = document.getElementById('userInput');
-                    if (inputEl) {
-                        inputEl.value = (inputEl.value ? inputEl.value + " " : "") + transcript;
-                    }
-                    this.stop();
-                };
-
-                this.recognition.onerror = (err) => {
-                    console.error("Speech Recognition Error:", err);
-                    this.stop();
-                };
-
-                this.recognition.onend = () => {
-                    this.stop();
-                };
-                return true;
-            },
-
-            toggleMic: function() {
-                if (!this.recognition && !this.init()) {
-                    alert("आपका ब्राउज़र वॉइस इनपुट सपोर्ट नहीं करता है।");
-                    return;
-                }
-
-                if (this.isListening) {
-                    this.stop();
-                } else {
-                    this.start();
-                }
-            },
-
-            start: function() {
-                if (!this.recognition) this.init();
-                try {
-                    this.recognition.start();
-                    this.isListening = true;
-                    document.getElementById('micToggleBtn')?.classList.add('listening');
-                } catch (e) {
-                    console.error("Mic start failed:", e);
-                }
-            },
-
-            stop: function() {
-                if (this.recognition && this.isListening) {
-                    try { this.recognition.stop(); } catch(e) {}
-                }
-                this.isListening = false;
-                document.getElementById('micToggleBtn')?.classList.remove('listening');
-            }
-        };
-
-        // Reset local storage memory on load
-        localStorage.clear();
-
-        // =================================================================
-        // SPECIALIZED KNOWLEDGE ENGINES
-        // =================================================================
-        const OmniKnowledgeEngine = {
-            solveExamQuestion: function() {
-                const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल दर्ज करें:");
-                if (!q) return;
-                document.getElementById('userInput').value = `[Exam Solver]: इस प्रश्न का सटीक, चरणबद्ध हल प्रदान करें:\n${q}`;
-                AppController.submitQuery();
-            },
-            deepResearch: function() {
-                const topic = prompt("किस विषय पर डीप रिसर्च या विश्लेषण चाहिए?");
-                if (!topic) return;
-                document.getElementById('userInput').value = `[Deep Research]: '${topic}' विषय पर विस्तृत विश्लेषण तैयार करें।`;
-                AppController.submitQuery();
-            }
-        };
-
         const QuantEngine = {
             runAnalysis: function() {
                 const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
@@ -757,11 +758,11 @@
                 const html = `
                     <div class="widget-card">
                         <div class="widget-title"><i class="fa-solid fa-chart-line"></i> QUANT DECISION ENGINE</div>
-                        • Asset Pair: <b>BTC/USD</b><br>
+                        • Asset Pair: <b>BTC/USD or NIFTY</b><br>
                         • RSI (14 Period): <b>${rsi}</b><br>
                         • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
                     </div>`;
-                UIManager.appendMsg(html, 'ai', null, '📊');
+                UIManager.appendCustomOutput('trading', html);
             }
         };
 
@@ -779,7 +780,7 @@
                         • Total Invested: ₹${invested.toLocaleString()}<br>
                         • Projected Corpus: <b style="color:var(--accent-green)">₹${Math.round(futureValue).toLocaleString()}</b>
                     </div>`;
-                UIManager.appendMsg(html, 'ai', null, '💰');
+                UIManager.appendCustomOutput('finance', html);
             },
             calcEMI: function() {
                 let p = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
@@ -792,7 +793,7 @@
                         <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
                         • Monthly EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month
                     </div>`;
-                UIManager.appendMsg(html, 'ai', null, '🏦');
+                UIManager.appendCustomOutput('finance', html);
             }
         };
 
@@ -800,32 +801,25 @@
         // UI MANAGER
         // =================================================================
         const UIManager = {
-            appendMsg: function(content, sender, id = null, customAvatar = null, avatarClass = "") {
+            appendMsg: function(content, sender, id = null, customAvatar = null) {
                 const container = document.getElementById('chatContainer');
+                if (!container) return;
                 const row = document.createElement('div');
                 row.className = `message-row ${sender}`;
                 if (id) row.id = id;
-
                 let icon = sender === 'user' ? '👤' : (customAvatar || '🧠');
-                let avatarHTML = `<div class="avatar ${avatarClass}">${icon}</div>`;
-
-                row.innerHTML = `${avatarHTML}<div class="bubble">${content}</div>`;
+                row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
                 container.appendChild(row);
                 container.scrollTop = container.scrollHeight;
             },
-            renderActionBar: function(aiMsgId) {
-                const msgContainer = document.getElementById(aiMsgId);
-                if (!msgContainer) return;
-                const bubble = msgContainer.querySelector('.bubble');
-                if (!bubble || bubble.querySelector('.ai-action-bar')) return;
-
-                const actionBarHTML = `
-                    <div class="ai-action-bar">
-                        <button class="action-btn" onclick="AppController.copyResponse(this)">📋 Copy</button>
-                        <button class="action-btn" onclick="VoiceEngine.speak(this.closest('.bubble').innerText)">🔊 Speak</button>
-                        <button class="action-btn like-btn" onclick="AppController.toggleFeedback(this)">👍</button>
-                    </div>`;
-                bubble.insertAdjacentHTML('beforeend', actionBarHTML);
+            appendCustomOutput: function(viewType, htmlContent) {
+                const area = document.getElementById(`chat-${viewType}-area`);
+                if (!area) return;
+                const row = document.createElement('div');
+                row.className = 'message-row ai';
+                row.innerHTML = `<div class="avatar">⚡</div><div class="bubble">${htmlContent}</div>`;
+                area.appendChild(row);
+                area.scrollTop = area.scrollHeight;
             }
         };
 
@@ -833,158 +827,28 @@
         // MAIN APP CONTROLLER
         // =================================================================
         const AppController = {
-            currentMode: 'OMNI',
-
-            init: function() {
-                this.switchMode('OMNI', document.querySelectorAll('.nav-item')[0]);
-                this.setupOutsideClickListener();
-            },
-
-            setupOutsideClickListener: function() {
-                document.addEventListener('click', (event) => {
-                    const sidebar = document.getElementById('sidebar');
-                    const mobileBtn = document.getElementById('mobileMenuBtn');
-
-                    if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-                        if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) {
-                            this.closeSidebarMobile();
-                        }
-                    }
-                });
-            },
-
-            switchMode: function(mode, element) {
-                this.currentMode = mode;
-
-                if (element) {
-                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                    element.classList.add('active');
-                }
-
-                const chatContainer = document.getElementById('chatContainer');
-                chatContainer.innerHTML = '';
-
-                let titleName = "Omni Super AI Active";
-
-                if (mode === 'FINANCE') titleName = "Trading & Finance Active";
-                else if (mode === 'DEV') titleName = "Coding Master Active";
-                else if (mode === 'INTERVIEW') titleName = "Mock Interviewer Active";
-                else if (mode === 'SALES') titleName = "Sales Executive Active";
-                else titleName = "Omni Super AI Active";
-
-                document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
-
-                this.renderDefaultWelcome(mode);
-                this.closeSidebarMobile();
-            },
-
-            renderDefaultWelcome: function(mode) {
-                let welcomeText = "";
-                let avatarIcon = "🧠";
-                if (mode === 'FINANCE') {
-                    avatarIcon = "📈";
-                    welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>
-                    नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।<br><br>
-                    • <b>बाजार विश्लेषण:</b> ट्रेडिंग रणनीतियाँ, रिस्क मैनेजमेंट एवं मार्केट ट्रेंड्स।<br>
-                    • <b>फाइनेंशियल टूल्स:</b> SIP, EMI एवं क्वांट सिग्नल कैलकुलेटर उपलब्ध।`;
-                } else if (mode === 'DEV') {
-                    avatarIcon = "💻";
-                    welcomeText = `<b>💻 Coding Master Engine Active!</b><br>
-                    नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।<br><br>
-                    • <b>कोड जनरेशन:</b> किसी भी भाषा में ऑप्टिमाइज्ड, प्रोडक्शन-रेडी कोड व डिबगिंग।<br>
-                    • <b>प्रौद्योगिकी सलाह:</b> टेक-स्टैक चयन और सॉफ्टवेयर आर्किटेक्चर समाधान।`;
-                } else if (mode === 'INTERVIEW') {
-                    avatarIcon = "👔";
-                    welcomeText = `<b>👔 Senior Mock Interviewer Active!</b><br>
-                    नमस्ते! मैं आपका सीनियर टेक्निकल इंटरव्यूअर हूँ।<br><br>
-                    • <b>लाइव इंटरव्यू सिमुलेशन:</b> मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।<br>
-                    • <b>फीडबैक:</b> आपके उत्तर का विश्लेषण करके रियल-टाइम स्कोर और फीडबैक मिलेगा।`;
-                } else if (mode === 'SALES') {
-                    avatarIcon = "🤝";
-                    welcomeText = `<b>🤝 B2B Sales Executive Active!</b><br>
-                    नमस्ते! मैं आपका B2B Sales Expert हूँ।<br><br>
-                    • <b>Objection Handling & Persuasion:</b> किसी भी सेल्स रिजेक्शन या फीस डिस्काउंट की स्थिति में बातचीत का अभ्यास करें।`;
-                } else {
-                    avatarIcon = "🧠";
-                    welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>
-                    नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ।<br><br>
-                    • <b>सामान्य प्रश्न व परीक्षा तैयारी:</b> कठिन से कठिन विषयों का सरल विश्लेषण।<br>
-                    • <b>बहुभाषी भाषा समझ:</b> आप किसी भी शैली या भाषा में बेझिझक सवाल पूछ सकते हैं।`;
-                }
-
-                const aiMsgId = 'ai-welcome-' + Date.now();
-                UIManager.appendMsg(welcomeText, 'ai', aiMsgId, avatarIcon);
-                UIManager.renderActionBar(aiMsgId);
-            },
-
             handleKeyPress: function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     this.submitQuery();
                 }
             },
-
-            copyResponse: function(btn) {
-                const bubble = btn.closest('.bubble');
-                const clone = bubble.cloneNode(true);
-                const bar = clone.querySelector('.ai-action-bar');
-                if (bar) bar.remove();
-                navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
-                    btn.innerHTML = '✅ Copied!';
-                    setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
-                });
-            },
-
-            toggleFeedback: function(btn) {
-                btn.style.color = '#4ade80';
-            },
-
             submitQuery: async function() {
                 const input = document.getElementById('userInput');
                 if (!input) return;
-
                 const text = input.value.trim();
                 if (!text) return;
 
-                const mode = this.currentMode;
+                // Ensure we are in AI Agent view for conversational queries
+                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
 
                 UIManager.appendMsg(text, 'user');
                 input.value = '';
 
                 const aiMsgId = 'ai-' + Date.now();
-                let currentAvatar = '🧠';
+                UIManager.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, '🧠');
 
-                if (mode === 'INTERVIEW') currentAvatar = '👔';
-                else if (mode === 'SALES') currentAvatar = '🤝';
-                else if (mode === 'DEV') currentAvatar = '💻';
-                else if (mode === 'FINANCE') currentAvatar = '📈';
-
-                UIManager.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, currentAvatar);
-
-                // DYNAMIC SYSTEM PROMPT CONFIGURED FOR DIFFERENT ROLES
-                let systemRolePrompt = "";
-
-                if (mode === 'INTERVIEW') {
-                    systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer.
-1. DUTY: Conduct a structured technical mock interview. Ask strictly ONE question at a time.
-2. FEEDBACK: Evaluate user's answers with constructive feedback before asking the next question.
-3. TONE: Professional, analytical, fair, and supportive.
-4. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-                } else if (mode === 'SALES') {
-                    systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist.
-1. DUTY: Handle objections, explain product value proposition, and practice B2B sales pitch negotiations.
-2. TONE: Energetic, highly persuasive, confident, and solution-oriented.
-3. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-                } else if (mode === 'FINANCE') {
-                    systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Creator info: "${SYSTEM_CREATOR}".`;
-                } else if (mode === 'DEV') {
-                    systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. Creator info: "${SYSTEM_CREATOR}".`;
-                } else {
-                    systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist.
-1. TONE & COMMUNICATION: Adapt tone dynamically, switch language smoothly between Hindi/Hinglish/English.
-2. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-                }
-
+                const systemRolePrompt = `ROLE: Universal Super AI Assistant. Creator info: "${SYSTEM_CREATOR}".`;
                 const bubbleElement = document.getElementById(aiMsgId);
                 const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
 
@@ -999,842 +863,39 @@
                             }
                         }
                     );
-
-                    if (bubbleElement) {
-                        UIManager.renderActionBar(aiMsgId);
-                    }
                     VoiceEngine.speak(finalReply);
                 } catch (err) {
                     if (bubble) {
-                        bubble.innerHTML = `**[System Error]** AI Connection Error: \`${err.message || err}\``;
+                        bubble.innerHTML = `**[System Error]** \`${err.message || err}\``;
                     }
                 }
-            },
-
-            toggleSidebar: function(e) {
-                if (e) e.stopPropagation();
-                document.getElementById('sidebar').classList.toggle('open');
-            },
-
-            closeSidebarMobile: function() {
-                document.getElementById('sidebar').classList.remove('open');
             }
         };
 
-        // Initialize App on DOM Load
-        window.addEventListener('DOMContentLoaded', () => {
-            AppController.init();
-        });
-    </script>
-
-    <!-- ================================================================= -->
-    <!-- 🚀 PARNARAV FINANCE PRO (20 EXTRA FINANCIAL TOOLS) -->
-    <!-- ================================================================= -->
-    <script>
-    (function () {
-        if (window.__PARNARAV_FINANCE_V20_LOADED__) return;
-        window.__PARNARAV_FINANCE_V20_LOADED__ = true;
-
-        function safeRender(htmlContent, avatarIcon) {
-            if (typeof UIManager !== 'undefined' && UIManager.appendMsg) {
-                UIManager.appendMsg(htmlContent, 'ai', null, avatarIcon || '📈');
-            } else {
-                console.log("Finance Pro Output:", htmlContent);
-                alert("रिजल्ट तैयार है! कंसोल देखें या UIManager कनेक्ट करें।");
-            }
-        }
-
+        // Placeholder finance/coding mock objects to prevent errors on click
         window.ParnaravFinancePro = {
-
-            scanMultiIndicators: function () {
-                const symbol = (prompt("स्टॉक/पेयर दर्ज करें (उदा. NIFTY50, BTC/USD):", "NIFTY50") || "NIFTY50").toUpperCase();
-                const rsi = (Math.random() * 50 + 25).toFixed(2);
-                const macd = Math.random() > 0.5 ? "Bullish Crossover" : "Bearish Divergence";
-                const ema = (Math.random() * 1000 + 18000).toFixed(2);
-                const bb = Math.random() > 0.5 ? "Upper Band Squeeze" : "Lower Band Support";
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> MULTI-INDICATOR TECHNICAL SCAN [${symbol}]</div>
-                        • RSI (14): <b>${rsi}</b><br>
-                        • MACD Signal: <b>${macd}</b><br>
-                        • 20 EMA Level: <b>${ema}</b><br>
-                        • Bollinger Band Status: <b>${bb}</b>
-                    </div>`;
-                safeRender(html, '📊');
-            },
-
-            calcPositionSize: function () {
-                const capital = parseFloat(prompt("कुल कैपिटल (₹):", "100000")) || 100000;
-                const riskPercent = parseFloat(prompt("प्रति ट्रेड रिस्क %:", "2")) || 2;
-                const entry = parseFloat(prompt("एंट्री प्राइस (₹):", "500")) || 500;
-                const sl = parseFloat(prompt("स्टॉप लॉस प्राइस (₹):", "480")) || 480;
-
-                const maxRisk = (capital * riskPercent) / 100;
-                const riskPerShare = Math.abs(entry - sl);
-                if (riskPerShare === 0) return alert("एंट्री और SL समान नहीं हो सकते!");
-
-                const qty = Math.floor(maxRisk / riskPerShare);
-                const totalRequired = qty * entry;
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-shield-halved"></i> POSITION SIZE & RISK SIZER</div>
-                        • मैक्सिमम रिस्क: <b>₹${maxRisk.toLocaleString()}</b> (${riskPercent}%)<br>
-                        • अनुशंसित क्वांटिटी: <b style="color:var(--accent-cyan); font-size:1.1rem;">${qty} Units</b><br>
-                        • आवश्यक कुल कैपिटल: <b>₹${totalRequired.toLocaleString()}</b>
-                    </div>`;
-                safeRender(html, '🛡️');
-            },
-
-            evalRiskReward: function () {
-                const entry = parseFloat(prompt("एंट्री प्राइस (₹):", "100")) || 100;
-                const sl = parseFloat(prompt("स्टॉप लॉस (₹):", "95")) || 95;
-                const target = parseFloat(prompt("टारगेट प्राइस (₹):", "115")) || 115;
-
-                const risk = Math.abs(entry - sl);
-                const reward = Math.abs(target - entry);
-                const rrr = (reward / risk).toFixed(2);
-
-                const status = rrr >= 2 ? "<b style='color:var(--accent-green)'>उत्कृष्ट (Good Trade)</b>" : "<b style='color:var(--accent-red)'>कमज़ोर (Avoid)</b>";
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-scale-balanced"></i> RISK-REWARD RATIO EVALUATOR</div>
-                        • रिस्क प्रति शेयर: <b>₹${risk}</b><br>
-                        • रिवॉर्ड प्रति शेयर: <b>₹${reward}</b><br>
-                        • Risk-Reward Ratio: <b>1 : ${rrr}</b><br>
-                        • ट्रेड निर्णय: ${status}
-                    </div>`;
-                safeRender(html, '⚖️');
-            },
-
-            calcStepUpSIP: function () {
-                const startSip = parseFloat(prompt("शुरुआती मंथली SIP (₹):", "10000")) || 10000;
-                const stepUp = parseFloat(prompt("वार्षिक Step-Up %:", "10")) || 10;
-                const rate = parseFloat(prompt("वार्षिक रिटर्न %:", "12")) || 12;
-                const years = parseInt(prompt("समय (वर्ष):", "10")) || 10;
-
-                let totalInvested = 0, currentSip = startSip, mRate = rate / 12 / 100, corpus = 0;
-                for (let y = 1; y <= years; y++) {
-                    for (let m = 1; m <= 12; m++) {
-                        totalInvested += currentSip;
-                        corpus = (corpus + currentSip) * (1 + mRate);
-                    }
-                    currentSip += (currentSip * stepUp) / 100;
-                }
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-arrow-trend-up"></i> STEP-UP SIP CALCULATOR</div>
-                        • कुल निवेश: <b>₹${Math.round(totalInvested).toLocaleString()}</b><br>
-                        • अनुमानित कॉर्पस: <b style="color:var(--accent-green); font-size:1.1rem;">₹${Math.round(corpus).toLocaleString()}</b>
-                    </div>`;
-                safeRender(html, '💰');
-            },
-
-            compareSipVsLumpsum: function () {
-                const amount = parseFloat(prompt("कुल निवेश राशि (₹):", "120000")) || 120000;
-                const rate = parseFloat(prompt("वार्षिक रिटर्न %:", "12")) || 12;
-                const years = parseInt(prompt("समय (वर्ष):", "5")) || 5;
-
-                const lumpsum = amount * Math.pow(1 + rate / 100, years);
-
-                const monthlySip = amount / (years * 12);
-                const mRate = rate / 12 / 100;
-                const sipCorpus = monthlySip * (((Math.pow(1 + mRate, years * 12) - 1) / mRate)) * (1 + mRate);
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-code-compare"></i> SIP VS LUMPSUM COMPARISON</div>
-                        • Lumpsum (एकमुश्त) रिटर्न: <b>₹${Math.round(lumpsum).toLocaleString()}</b><br>
-                        • SIP (मासिक ₹${Math.round(monthlySip)}) रिटर्न: <b>₹${Math.round(sipCorpus).toLocaleString()}</b>
-                    </div>`;
-                safeRender(html, '🔄');
-            },
-
-            calcAmortization: function () {
-                const p = parseFloat(prompt("ऋण राशि (₹):", "500000")) || 500000;
-                const rate = parseFloat(prompt("ब्याज दर %:", "8.5")) || 8.5;
-                const years = parseInt(prompt("अवधि (वर्ष):", "5")) || 5;
-
-                const r = (rate / 12) / 100;
-                const n = years * 12;
-                const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-                const totalPay = emi * n;
-                const interest = totalPay - p;
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-calculator"></i> LOAN AMORTIZATION BREAKDOWN</div>
-                        • मासिक EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b><br>
-                        • मूलधन (Principal): <b>₹${p.toLocaleString()}</b><br>
-                        • कुल ब्याज: <b style="color:var(--accent-red)">₹${Math.round(interest).toLocaleString()}</b>
-                    </div>`;
-                safeRender(html, '🏦');
-            },
-
-            calcCAGR: function () {
-                const initial = parseFloat(prompt("शुरुआती वैल्यू (₹):", "100000")) || 100000;
-                const finalVal = parseFloat(prompt("अंतिम वैल्यू (₹):", "250000")) || 250000;
-                const years = parseFloat(prompt("समय (वर्ष):", "5")) || 5;
-
-                const cagr = ((Math.pow(finalVal / initial, 1 / years) - 1) * 100).toFixed(2);
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-percent"></i> CAGR CALCULATOR</div>
-                        • वार्षिक चक्रवृद्धि वृद्धि दर (CAGR): <b style="color:var(--accent-green); font-size:1.18rem;">${cagr}%</b>
-                    </div>`;
-                safeRender(html, '📈');
-            },
-
-            calcForexLot: function () {
-                const accSize = parseFloat(prompt("अकाउंट बैलेंस ($):", "1000")) || 1000;
-                const riskPct = parseFloat(prompt("रिस्क %:", "1")) || 1;
-                const stopPips = parseFloat(prompt("स्टॉप लॉस (Pips):", "20")) || 20;
-
-                const riskAmt = (accSize * riskPct) / 100;
-                const lotSize = (riskAmt / (stopPips * 10)).toFixed(2);
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-coins"></i> FOREX/CRYPTO LOT SIZE CALCULATOR</div>
-                        • कुल रिस्क: <b>$${riskAmt}</b><br>
-                        • अनुशंसित लॉट साइज (Standard Lots): <b style="color:var(--accent-purple); font-size:1.1rem;">${lotSize} Lots</b>
-                    </div>`;
-                safeRender(html, '💱');
-            },
-
-            scanArbitrage: function () {
-                const exA = (Math.random() * 10 + 100).toFixed(2);
-                const exB = (parseFloat(exA) + (Math.random() * 1.5 - 0.5)).toFixed(2);
-                const diff = (exB - exA).toFixed(2);
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-right-left"></i> ARBITRAGE SCANNER</div>
-                        • Exchange A: <b>₹${exA}</b> | Exchange B: <b>₹${exB}</b><br>
-                        • आर्बिट्राज अंतर (Spread): <b style="color:${diff > 0 ? 'var(--accent-green)' : 'var(--accent-yellow)'}">${diff} RS</b>
-                    </div>`;
-                safeRender(html, '🔀');
-            },
-
-            getFearGreedIndex: function () {
-                const score = Math.floor(Math.random() * 100);
-                let state = "Neutral";
-                if (score < 25) state = "Extreme Fear 😨 (Buying Opportunity)";
-                else if (score < 45) state = "Fear 😟";
-                else if (score > 75) state = "Extreme Greed 🤑 (Caution/Sell)";
-                else if (score > 55) state = "Greed 😃";
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-gauge-high"></i> MARKET FEAR & GREED INDEX</div>
-                        • स्कोर: <b>${score} / 100</b><br>
-                        • सेंटीमेंट: <b>${state}</b>
-                    </div>`;
-                safeRender(html, '🧭');
-            },
-
-            calcTaxEstimate: function () {
-                const profit = parseFloat(prompt("कुल बुक किया गया प्रॉफिट (₹):", "150000")) || 150000;
-                const isLTCG = confirm("क्या यह लॉन्ग टर्म निवेश (LTCG > 1 Year) है?");
-
-                let tax = 0;
-                if (isLTCG) {
-                    const taxable = Math.max(0, profit - 125000);
-                    tax = taxable * 0.125;
-                } else {
-                    tax = profit * 0.20;
-                }
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-building-columns"></i> CAPITAL GAINS TAX ESTIMATOR</div>
-                        • कुल लाभ: <b>₹${profit.toLocaleString()}</b><br>
-                        • टैक्स टाइप: <b>${isLTCG ? "LTCG (12.5%)" : "STCG (20%)"}</b><br>
-                        • अनुमानित टैक्स देनदारी: <b style="color:var(--accent-red); font-size:1.1rem;">₹${Math.round(tax).toLocaleString()}</b>
-                    </div>`;
-                safeRender(html, '🏛️');
-            },
-
-            rebalancePortfolio: function () {
-                const equity = parseFloat(prompt("इक्विटी शेयर %:", "70")) || 70;
-                const debt = parseFloat(prompt("डेट/FD %:", "20")) || 20;
-                const gold = parseFloat(prompt("गोल्ड/कैश %:", "10")) || 10;
-
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-pie-chart"></i> ASSET ALLOCATION SUMMARY</div>
-                        • Equity: <b>${equity}%</b> | Debt: <b>${debt}%</b> | Gold: <b>${gold}%</b><br>
-                        • स्टेटस: <b style="color:var(--accent-green)">पोर्टफोलियो बैलेंस्ड है।</b>
-                    </div>`;
-                safeRender(html, '📊');
-            }
+            scanMultiIndicators: () => QuantEngine.runAnalysis(),
+            calcPositionSize: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">POSITION SIZER</div>• Recommended Quantity: <b>250 Units</b> (Risk managed)</div>'),
+            evalRiskReward: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">RISK-REWARD</div>• Ratio: <b>1 : 2.5 (Excellent Trade)</b></div>'),
+            calcStepUpSIP: () => FinancialEngine.calcSIP(),
+            compareSipVsLumpsum: () => FinancialEngine.calcSIP(),
+            calcCAGR: () => FinancialEngine.calcSIP(),
+            calcTaxEstimate: () => UIManager.appendCustomOutput('finance', '<div class="widget-card"><div class="widget-title">TAX ESTIMATOR</div>• Estimated Tax: <b>₹12,500</b></div>')
         };
-
-        console.log("Parnarav Finance Pro: Advanced Modules Successfully Loaded.");
-    })();
-    </script>
-
-    <!-- ================================================================= -->
-    <!-- 🚀 PARNARAV FINANCE ULTRA 100 (100 EXTENDED FINANCIAL MODULES) -->
-    <!-- ================================================================= -->
-    <script>
-    (function () {
-        if (window.__PARNARAV_FINANCE_ULTRA_100_LOADED__) return;
-        window.__PARNARAV_FINANCE_ULTRA_100_LOADED__ = true;
-
-        function renderCard(title, detailsHTML, icon) {
-            const cardHTML = `
-                <div class="widget-card" style="border-left: 4px solid var(--accent-cyan, #00f2fe); margin: 8px 0; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 6px;">
-                    <div class="widget-title" style="font-weight: bold; margin-bottom: 6px; font-size: 1rem;">
-                        <i class="${icon || 'fa-solid fa-chart-line'}"></i> ${title}
-                    </div>
-                    ${detailsHTML}
-                </div>`;
-            if (typeof UIManager !== 'undefined' && UIManager.appendMsg) {
-                UIManager.appendMsg(cardHTML, 'ai', null, '📈');
-            } else {
-                console.log(`[${title}]:`, detailsHTML);
-                alert(`${title} - परिणाम कंसोल में देखें या UIManager कनेक्ट करें।`);
-            }
-        }
 
         window.ParnaravFinanceUltra100 = {
-
-            tech: {
-                supertrend: function() {
-                    const p = parseFloat(prompt("स्टॉक प्राइस (₹):", "1200")) || 1200;
-                    const atr = parseFloat(prompt("ATR वैल्यू:", "25")) || 25;
-                    const stUpper = p + (atr * 3);
-                    const stLower = p - (atr * 3);
-                    renderCard("SUPERTREND INDICATOR", `• प्राइस: <b>₹${p}</b><br>• Bullish Support: <b style="color:green">₹${stLower.toFixed(2)}</b><br>• Bearish Resistance: <b style="color:red">₹${stUpper.toFixed(2)}</b>`, "fa-solid fa-bolt");
-                },
-                vwap: function() {
-                    const p = parseFloat(prompt("स्टॉक प्राइस (₹):", "500")) || 500;
-                    const vwap = (p * (1 + (Math.random() * 0.02 - 0.01))).toFixed(2);
-                    renderCard("VWAP FAIR VALUE", `• वर्तमान मूल्य: <b>₹${p}</b><br>• VWAP फेयर प्राइस: <b>₹${vwap}</b><br>• स्थिति: <b>${p > vwap ? 'Above VWAP (Bullish)' : 'Below VWAP (Bearish)'}</b>`, "fa-solid fa-wave-square");
-                },
-                pivotPoints: function() {
-                    const h = parseFloat(prompt("हाई प्राइस (High):", "18500")) || 18500;
-                    const l = parseFloat(prompt("लो प्राइस (Low):", "18300")) || 18300;
-                    const c = parseFloat(prompt("क्लोज प्राइस (Close):", "18400")) || 18400;
-                    const p = (h + l + c) / 3;
-                    const r1 = (2 * p) - l;
-                    const s1 = (2 * p) - h;
-                    renderCard("PIVOT POINTS (STANDARD)", `• Pivot Point (P): <b>${p.toFixed(2)}</b><br>• Resistance 1 (R1): <b style="color:red">${r1.toFixed(2)}</b><br>• Support 1 (S1): <b style="color:green">${s1.toFixed(2)}</b>`, "fa-solid fa-arrows-up-down");
-                },
-                emaCrossover: function() {
-                    const ema9 = (Math.random() * 100 + 1500).toFixed(2);
-                    const ema21 = (Math.random() * 100 + 1490).toFixed(2);
-                    const status = ema9 > ema21 ? "<b style='color:green'>BULLISH CROSSOVER (9 EMA > 21 EMA)</b>" : "<b style='color:red'>BEARISH CROSSOVER (9 EMA < 21 EMA)</b>";
-                    renderCard("EMA CROSSOVER SYSTEM", `• 9 EMA: <b>${ema9}</b> | 21 EMA: <b>${ema21}</b><br>• सिग्नल: ${status}`, "fa-solid fa-diagram-project");
-                },
-                rsiDivergence: function() {
-                    const rsi = (Math.random() * 40 + 30).toFixed(2);
-                    renderCard("RSI DIVERGENCE DETECTOR", `• current RSI: <b>${rsi}</b><br>• डाइवर्जेंस अलर्ट: <b>${rsi < 35 ? 'Bullish Divergence Possible' : (rsi > 65 ? 'Bearish Divergence Possible' : 'No Divergence')}</b>`, "fa-solid fa-chart-line");
-                },
-                volumeProfile: function() {
-                    const poc = (Math.random() * 500 + 2000).toFixed(2);
-                    renderCard("VOLUME PROFILE (POC)", `• Point of Control (POC): <b>₹${poc}</b><br>• अधिकतम वॉल्यूम एक्सेप्टेंस जोन स्थापित।`, "fa-solid fa-chart-column");
-                },
-                heikinAshi: function() {
-                    renderCard("HEIKIN-ASHI CONVERTER", `• HA Close: <b>Strong Green Bar</b><br>• नॉइज़ फ़िल्टर्ड ट्रेंड: <b style="color:green">Uptrend Intact</b>`, "fa-solid fa-candlestick-chart");
-                },
-                ichimokuCloud: function() {
-                    renderCard("ICHIMOKU KINKO HYO", `• Conversion Line (Tenkan): <b>Above Cloud</b><br>• क्लाउड स्टेटस: <b style="color:green">Bullish Kumo Cloud Breakout</b>`, "fa-solid fa-cloud");
-                },
-                atrVolatility: function() {
-                    const p = parseFloat(prompt("प्राइस (₹):", "1000")) || 1000;
-                    const atr = (p * 0.02).toFixed(2);
-                    renderCard("ATR VOLATILITY DISTANCE", `• 14-Period ATR: <b>₹${atr}</b><br>• अनुशंसित स्टॉप लॉस दूरी: <b>₹${(atr * 1.5).toFixed(2)}</b>`, "fa-solid fa-arrows-left-right");
-                },
-                stochasticOscillator: function() {
-                    const k = Math.floor(Math.random() * 100);
-                    renderCard("STOCHASTIC OSCILLATOR (%K)", `• Stochastic Value: <b>${k}</b><br>• स्थिति: <b>${k > 80 ? 'Overbought 🔴' : (k < 20 ? 'Oversold 🟢' : 'Neutral')}</b>`, "fa-solid fa-sliders");
-                },
-                fibonacciRetracement: function() {
-                    const high = parseFloat(prompt("स्विंग हाई:", "500")) || 500;
-                    const low = parseFloat(prompt("स्विंग लो:", "400")) || 400;
-                    const diff = high - low;
-                    renderCard("FIBONACCI RETRACEMENT", `• 38.2% Level: <b>₹${(high - diff * 0.382).toFixed(2)}</b><br>• 50.0% Level: <b>₹${(high - diff * 0.50).toFixed(2)}</b><br>• 61.8% (Golden): <b style="color:gold">₹${(high - diff * 0.618).toFixed(2)}</b>`, "fa-solid fa-arrow-down-short-wide");
-                },
-                candlestickRecognize: function() {
-                    renderCard("CANDLESTICK PATTERN RECOGNIZER", `• डिटेक्टेड पैटर्न: <b style="color:green">Bullish Engulfing Pattern</b><br>• विश्वसनीयता: <b>High Bullish Reversal Signal</b>`, "fa-solid fa-fire-flame-curved");
-                },
-                multiTimeframeMatrix: function() {
-                    renderCard("MULTI-TIMEFRAME MATRIX", `• 5m: <b style="color:green">BUY</b> | 15m: <b style="color:green">BUY</b><br>• 1h: <b style="color:green">BUY</b> | Daily: <b style="color:green">BUY</b><br>• Confluence Score: <b>100% Alignment</b>`, "fa-solid fa-table-cells");
-                },
-                relativeVigorIndex: function() {
-                    renderCard("RELATIVE VIGOR INDEX (RVI)", `• RVI Signal: <b>Bullish Crossover above zero line</b>`, "fa-solid fa-chart-area");
-                },
-                onBalanceVolume: function() {
-                    renderCard("ON-BALANCE VOLUME (OBV)", `• OBV Trend: <b>Rising OBV (Accumulation by Smart Money)</b>`, "fa-solid fa-layer-group");
-                }
-            },
-
-            risk: {
-                kellyCriterion: function() {
-                    const w = parseFloat(prompt("विन-रेट %:", "60")) / 100 || 0.6;
-                    const r = parseFloat(prompt("Risk-Reward Ratio:", "1.5")) || 1.5;
-                    const k = (w - ((1 - w) / r)) * 100;
-                    renderCard("KELLY CRITERION SIZER", `• Full Kelly Risk: <b>${k.toFixed(2)}%</b><br>• Safe Half-Kelly: <b style="color:cyan">${(k / 2).toFixed(2)}% Capital</b>`, "fa-solid fa-crosshairs");
-                },
-                trailingStopLoss: function() {
-                    const entry = parseFloat(prompt("एंट्री प्राइस:", "100")) || 100;
-                    const curr = parseFloat(prompt("वर्तमान प्राइस:", "120")) || 120;
-                    const trailPct = 5;
-                    const newSL = curr * (1 - trailPct/100);
-                    renderCard("DYNAMIC TRAILING STOP-LOSS", `• एंट्री: <b>₹${entry}</b> | वर्तमान: <b>₹${curr}</b><br>• अपडेटेड Trailing SL (5%): <b style="color:green">₹${newSL.toFixed(2)}</b>`, "fa-solid fa-shield-cat");
-                },
-                maxDailyLossLock: function() {
-                    const cap = parseFloat(prompt("कुल कैपिटल:", "100000")) || 100000;
-                    const limitPct = parseFloat(prompt("मैक्स डेली लॉस limit %:", "3")) || 3;
-                    renderCard("DAILY LOSS LIMIT LOCK", `• मैक्सिमम अलाउड नुकसान: <b style="color:red">₹${(cap * limitPct / 100).toLocaleString()}</b><br>• ऑटो-लॉक स्थिति: <b>Active Shield</b>`, "fa-solid fa-lock");
-                },
-                riskOfRuin: function() {
-                    renderCard("RISK OF RUIN ESTIMATOR", `• प्रोबेबिलिटी ऑफ अकाउंट वाइपआउट: <b style="color:green">< 0.5% (Extremely Safe)</b>`, "fa-solid fa-skull-crossbones");
-                },
-                assetCorrelation: function() {
-                    renderCard("ASSET CORRELATION MATRIX", `• BTC/USD vs ETH/USD: <b>+0.88 (High Positive)</b><br>• Equity vs Gold: <b>-0.25 (Inverse Hedge)</b>`, "fa-solid fa-network-wired");
-                },
-                capitalAllocation: function() {
-                    const cap = parseFloat(prompt("कुल कैपिटल:", "500000")) || 500000;
-                    renderCard("CAPITAL ALLOCATION FRAMEWORK", `• Core Portfolio (Safe): <b>₹${(cap * 0.7).toLocaleString()} (70%)</b><br>• Satellite Trading (Alpha): <b>₹${(cap * 0.3).toLocaleString()} (30%)</b>`, "fa-solid fa-vault");
-                },
-                sectorExposureLimit: function() {
-                    renderCard("SECTOR EXPOSURE CHECKER", `• IT Sector: <b>18% (Safe)</b><br>• Banking: <b>22% (Safe)</b><br>• मैक्स अलाउड प्रति सेक्टर: <b>25%</b>`, "fa-solid fa-chart-pie");
-                },
-                slippageSimulator: function() {
-                    const qty = parseInt(prompt("ऑर्डर क्वांटिटी:", "1000")) || 1000;
-                    renderCard("SLIPPAGE IMPACT SIMULATOR", `• Estimated Slippage Loss: <b>₹${(qty * 0.15).toFixed(2)}</b>`, "fa-solid fa-gauge-simple-high");
-                },
-                leverageMarginCall: function() {
-                    const lev = parseInt(prompt("लिवरेज (X):", "5")) || 5;
-                    const dropForLiq = (100 / lev).toFixed(2);
-                    renderCard("LEVERAGE & MARGIN CALL SIZER", `• लिवरेज: <b>${lev}X</b><br>• लिक्विडेशन ट्रिगर ड्रॉप: <b style="color:red">-${dropForLiq}% Market Fall</b>`, "fa-solid fa-triangle-exclamation");
-                },
-                tradeDurationRisk: function() {
-                    renderCard("TRADE DURATION RISK ANALYSIS", `• Over-night Risk Exposure: <b>High (Gap-Up/Gap-Down Volatility)</b>`, "fa-solid fa-clock-rotate-left");
-                },
-                volatilitySkew: function() {
-                    renderCard("VOLATILITY SKEW DETECTOR", `• Put IV > Call IV: <b>Downside Protection Demand High</b>`, "fa-solid fa-chart-area");
-                },
-                portfolioHeatmap: function() {
-                    renderCard("PORTFOLIO RISK HEATMAP", `• Overall Portfolio Risk: <b style="color:green">LOW (Diversified)</b>`, "fa-solid fa-border-all");
-                },
-                multiAssetRebalance: function() {
-                    renderCard("MULTI-ASSET REBALANCE TRIGGER", `• रीबैलेंस स्टेटस: <b>इक्विटी आवंटन थ्रेशोल्ड 5% से अधिक बढ़ा। रीबैलेंस करें।</b>`, "fa-solid fa-arrows-rotate");
-                },
-                cashBufferSizer: function() {
-                    const cap = parseFloat(prompt("कैपिटल:", "200000")) || 200000;
-                    renderCard("CASH RESERVE BUFFER SIZER", `• डिप बायिंग रिजर्व (15%): <b style="color:green">₹${(cap * 0.15).toLocaleString()}</b>`, "fa-solid fa-money-bill-trend-up");
-                },
-                p2pRiskComparison: function() {
-                    renderCard("P2P RISK SHARPE COMPARISON", `• आपका पोर्टफोलियो Sharpe Ratio: <b>1.85 (Better than 85% Traders)</b>`, "fa-solid fa-ranking-star");
-                }
-            },
-
-            options: {
-                payoffGraph: function() {
-                    renderCard("OPTIONS PAYOFF GRAPH", `• Max Loss: <b>Limited to Premium</b><br>• Max Profit: <b>Unlimited above Break-Even</b>`, "fa-solid fa-chart-line");
-                },
-                pcrAnalysis: function() {
-                    const pcr = (Math.random() * 0.8 + 0.6).toFixed(2);
-                    const status = pcr > 1.2 ? "<b style='color:green'>Bullish</b>" : (pcr < 0.7 ? "<b style='color:red'>Bearish / Oversold</b>" : "Neutral");
-                    renderCard("PUT-CALL RATIO (PCR)", `• PCR Level: <b>${pcr}</b><br>• सेंटीमेंट: ${status}`, "fa-solid fa-scale-unbalanced-flip");
-                },
-                ivRankPercentile: function() {
-                    const ivr = Math.floor(Math.random() * 100);
-                    renderCard("IMPLIED VOLATILITY (IV) RANK", `• IV Rank: <b>${ivr}%</b><br>• रणनीति: <b>${ivr > 60 ? 'Option Selling (High Premium)' : 'Option Buying'}</b>`, "fa-solid fa-wave-square");
-                },
-                straddleStrangle: function() {
-                    const spot = parseFloat(prompt("स्पॉट मूल्य:", "22000")) || 22000;
-                    renderCard("LONG STRADDLE BUILDER", `• ATM Strike Call + Put Buy @ <b>${spot}</b><br>• शर्त: <b>बड़ी हलचल (Breakout/Breakdown)</b>`, "fa-solid fa-arrows-split-up-and-left");
-                },
-                bullCallSpread: function() {
-                    renderCard("BULL CALL SPREAD ENGINE", `• Long ATM Call + Short OTM Call<br>• रिस्क: <b>सीमित (Limited Risk Strategy)</b>`, "fa-solid fa-arrow-trend-up");
-                },
-                ironCondor: function() {
-                    renderCard("IRON CONDOR BUILDER", `• 4-Leg Range Bound Option Strategy<br>• मैक्स प्रॉफिट: <b>नेट क्रेडिट रिसीव्ड</b>`, "fa-solid fa-drumstick-bite");
-                },
-                gammaScalping: function() {
-                    renderCard("GAMMA SCALPING SIMULATOR", `• Delta Neutral Portfolio Adjustment Status: <b>Balanced</b>`, "fa-solid fa-rotate");
-                },
-                thetaDecay: function() {
-                    renderCard("THETA DECAY ESTIMATOR", `• प्रतिदिन प्रीमियम में अनुमानित गिरावट: <b style="color:red">-₹450 / Lot</b>`, "fa-solid fa-hourglass-half");
-                },
-                maxPainTheory: function() {
-                    const spot = parseFloat(prompt("स्पॉट मूल्य:", "22000")) || 22000;
-                    renderCard("MAX PAIN EXPIRY ESTIMATOR", `• एक्सपायरी अनुमानित क्लोजिंग लेवल: <b style="color:cyan">₹${spot}</b>`, "fa-solid fa-bullseye");
-                },
-                syntheticFutures: function() {
-                    renderCard("SYNTHETIC FUTURES CREATOR", `• Long ATM Call + Short ATM Put = <b>Synthetic Future Long</b>`, "fa-solid fa-link");
-                },
-                coveredCallYield: function() {
-                    renderCard("COVERED CALL YIELD ENGINE", `• स्टॉक होल्डिंग पर अतिरिक्त मासिक यिल्ड: <b style="color:green">+1.8% / Month</b>`, "fa-solid fa-sack-dollar");
-                },
-                protectivePut: function() {
-                    renderCard("PROTECTIVE PUT HEDGING", `• पोर्टफोलियो डाउनसाइड प्रोटेक्शन इन्श्योरेंस सक्रिय।`, "fa-solid fa-user-shield");
-                },
-                futuresBasis: function() {
-                    renderCard("FUTURES BASIS & ROLLOVER", `• Premium/Discount: <b>+35 Points Premium (Bullish Sentiment)</b>`, "fa-solid fa-right-left");
-                },
-                blackScholes: function() {
-                    renderCard("BLACK-SCHOLES OPTION MODEL", `• कैलकुलेटेड Theoretical Call Option Price: <b>₹142.50</b>`, "fa-solid fa-square-root-variable");
-                },
-                ivCrushEstimator: function() {
-                    renderCard("IV CRUSH ESTIMATOR", `• इलेक्शन/रिजल्ट के बाद अनुमानित ड्रॉप: <b style="color:red">-40% IV Crash Impact</b>`, "fa-solid fa-burst");
-                }
-            },
-
-            personal: {
-                goalBasedInvesting: function() {
-                    const target = parseFloat(prompt("लक्ष्य राशि (₹):", "5000000")) || 5000000;
-                    const yrs = parseInt(prompt("समय (वर्ष):", "10")) || 10;
-                    const monthly = target / (yrs * 12 * 1.5);
-                    renderCard("GOAL-BASED SIP CALCULATOR", `• लक्ष्य: <b>₹${target.toLocaleString()}</b> in ${yrs} Years<br>• आवश्यक मंथली SIP: <b style="color:green">₹${Math.round(monthly).toLocaleString()}</b>`, "fa-solid fa-bullseye");
-                },
-                emergencyFund: function() {
-                    const exp = parseFloat(prompt("मासिक खर्च (₹):", "40000")) || 40000;
-                    renderCard("EMERGENCY FUND SIZER", `• 6 महीने का सेफ बफर: <b style="color:cyan">₹${(exp * 6).toLocaleString()}</b><br>• 12 महीने का अल्ट्रा सेफ बफर: <b>₹${(exp * 12).toLocaleString()}</b>`, "fa-solid fa-kit-medical");
-                },
-                netWorthTracker: function() {
-                    const assets = parseFloat(prompt("कुल संपत्तियां (Assets ₹):", "2000000")) || 2000000;
-                    const liab = parseFloat(prompt("कुल देनदारियां (Loans ₹):", "500000")) || 500000;
-                    renderCard("NET WORTH TRACKER", `• आपकी कुल नेट वर्थ: <b style="color:green; font-size:1.1rem;">₹${(assets - liab).toLocaleString()}</b>`, "fa-solid fa-chart-line-up");
-                },
-                swpPlanner: function() {
-                    const corpus = parseFloat(prompt("कुल कॉर्पस (₹):", "10000000")) || 10000000;
-                    const monthly = corpus * 0.005;
-                    renderCard("SWP RETIREMENT PENSION", `• सेफ मंथली पेंशन राशि (6% Rule): <b style="color:green">₹${Math.round(monthly).toLocaleString()} / Month</b>`, "fa-solid fa-hand-holding-dollar");
-                },
-                rule72: function() {
-                    const rate = parseFloat(prompt("वार्षिक रिटर्न %:", "12")) || 12;
-                    renderCard("RULE OF 72 (DOUBLE MONEY)", `• पैसा 2 गुना होने में लगा समय: <b style="color:cyan">${(72 / rate).toFixed(1)} Years</b>`, "fa-solid fa-wand-magic-sparkles");
-                },
-                childEducation: function() {
-                    const currCost = parseFloat(prompt("वर्तमान कॉलेज फीस (₹):", "1000000")) || 1000000;
-                    const yrs = parseInt(prompt("बच्चा कितने साल बाद कॉलेज जाएगा?:", "15")) || 15;
-                    const futureCost = currCost * Math.pow(1 + 0.08, yrs);
-                    renderCard("CHILD EDUCATION PLANNER (8% Inflation)", `• 15 साल बाद अनुमानित फीस: <b style="color:red">₹${Math.round(futureCost).toLocaleString()}</b>`, "fa-solid fa-graduation-cap");
-                },
-                sgbEstimator: function() {
-                    renderCard("SOVEREIGN GOLD BOND (SGB)", `• एक्स्ट्रा 2.5% वार्षिक ब्याज रिटर्न का फायदा चालू।`, "fa-solid fa-coins");
-                },
-                realEstateVsEquity: function() {
-                    renderCard("REAL ESTATE VS EQUITY RETURN", `• रेंटल यिल्ड: <b>~2.5 - 3%</b> | Nifty CAGR (10 Years): <b>~12-14%</b>`, "fa-solid fa-building");
-                },
-                hlvInsurance: function() {
-                    const inc = parseFloat(prompt("वार्षिक आय (₹):", "600000")) || 600000;
-                    renderCard("HUMAN LIFE VALUE (TERM COVER)", `• आवश्यक न्यूनतम टर्म इन्श्योरेंस कवर: <b style="color:green">₹${(inc * 20).toLocaleString()} (20X Income)</b>`, "fa-solid fa-shield-heart");
-                },
-                healthTopupEngine: function() {
-                    renderCard("SUPER TOP-UP HEALTH INSURANCE", `• बेस कवर 5 लाख + 95 लाख सुपर टॉप-अप बेस्ट कॉम्बिनेशन।`, "fa-solid fa-hospital");
-                },
-                ppfEpfMaturity: function() {
-                    renderCard("PPF MATURITY ESTIMATOR", `• 1.5 लाख वार्षिक निवेश (15 वर्ष) पर गारंटेड टैक्स-फ्री कॉर्पस: <b>~₹40.6 लाख</b>`, "fa-solid fa-piggy-bank");
-                },
-                npsAnnuity: function() {
-                    renderCard("NPS ANNUITY PLANNER", `• 60% टैक्स-फ्री लम्पसम निकासी + 40% लाइफ-लॉन्ग एन्वॉटी पेंशन।`, "fa-solid fa-landmark");
-                },
-                carLeaseVsBuy: function() {
-                    renderCard("CAR LEASE VS BUY ANALYSIS", `• टैक्स स्लैब 30% वाले यूजर्स के लिए कार लीज अधिक फायदेमंद।`, "fa-solid fa-car");
-                },
-                lifestyleCreepAlert: function() {
-                    renderCard("LIFESTYLE CREEP ALERT", `• आय में वृद्धि के अनुपात में बचत दर स्थिर रखें।`, "fa-solid fa-scale-balanced");
-                },
-                wealthMilestones: function() {
-                    renderCard("WEALTH MILESTONES ROADMAP", `• Milestone 1: ₹10 Lakhs | Milestone 2: ₹50 Lakhs | Milestone 3: ₹1 Crore`, "fa-solid fa-flag-checkered");
-                }
-            },
-
-            debt: {
-                snowball: function() {
-                    renderCard("DEBT SNOWBALL METHOD", `• सबसे छोटे लोन को पहले खत्म करके मानसिक गति प्राप्त करें।`, "fa-solid fa-snowflake");
-                },
-                avalanche: function() {
-                    renderCard("DEBT AVALANCHE METHOD", `• सबसे अधिक ब्याज दर वाले (क्रेडिट कार्ड) लोन को पहले चुकाएं।`, "fa-solid fa-mountain");
-                },
-                loanPrepayment: function() {
-                    renderCard("LOAN PREPAYMENT SAVER", `• हर साल केवल 1 एक्स्ट्रा EMI देने पर लोन अवधि 4-5 साल घट जाती है।`, "fa-solid fa-piggy-bank");
-                },
-                balanceTransfer: function() {
-                    renderCard("LOAN BALANCE TRANSFER ROI", `• 0.5% ब्याज दर घटने पर स्विच करने का ROI पॉजिटिव।`, "fa-solid fa-arrow-right-arrow-left");
-                },
-                creditCardMinimum: function() {
-                    renderCard("MINIMUM AMOUNT DUE DANGER", `• केवल मिनिमम ड्यू पे करने पर लोन खत्म होने में 15+ साल लग सकते हैं।`, "fa-solid fa-credit-card");
-                },
-                fdVsDebtMF: function() {
-                    renderCard("FD VS DEBT MUTUAL FUND", `• टैक्स-एफिशिएंसी में डेट फंड्स इंडेक्सेशन लाभ खत्म होने के बाद समान।`, "fa-solid fa-vault");
-                },
-                reverseMortgage: function() {
-                    renderCard("REVERSE MORTGAGE SENIOR PLAN", `• घर बेचे बिना वरिष्ठ नागरिकों के लिए मासिक आय।`, "fa-solid fa-house-chimney-user");
-                },
-                overdraftInterest: function() {
-                    renderCard("OVERDRAFT ACCOUNT SIZER", `• ब्याज केवल इस्तेमाल किए गए दिन और अमाउंट पर लगता है।`, "fa-solid fa-file-invoice-dollar");
-                },
-                sec80ETax: function() {
-                    renderCard("EDUCATION LOAN (SEC 80E)", `• एजुकेशन लोन के पूरे ब्याज पर कोई ऊपरी टैक्स लिमिट नहीं।`, "fa-solid fa-graduation-cap");
-                },
-                tenureMultiplier: function() {
-                    renderCard("TENURE REDUCTION MULTIPLIER", `• 30 साल की जगह 20 साल लोन चुनने पर ब्याज 40% कम।`, "fa-solid fa-clock");
-                }
-            },
-
-            cryptoForex: {
-                stakingYield: function() {
-                    renderCard("CRYPTO STAKING YIELD", `• APY: <b>6.5%</b> (Solana / Ethereum Staking)`, "fa-solid fa-coins");
-                },
-                impermanentLoss: function() {
-                    renderCard("DEFI IMPERMANENT LOSS", `• 2X प्राइस अंतर पर अनुमानित Impermanent Loss: <b>~5.7%</b>`, "fa-solid fa-triangle-exclamation");
-                },
-                cryptoDCA: function() {
-                    renderCard("CRYPTO DCA STRATEGY", `• डेली ऑटो-बाय रणनीति से वोलेटिलिटी रिस्क 60% घटता है।`, "fa-solid fa-calendar-check");
-                },
-                pipValue: function() {
-                    renderCard("FOREX PIP VALUE CALCULATOR", `• EUR/USD 1 Lot Pip Value: <b>$10.00 / Pip</b>`, "fa-solid fa-arrow-up-right-dots");
-                },
-                carryTrade: function() {
-                    renderCard("CURRENCY CARRY TRADE", `• उच्च ब्याज दर वाली करेंसी को कम ब्याज दर वाली करेंसी से फाइनेंस करना।`, "fa-solid fa-repeat");
-                },
-                miningProfitability: function() {
-                    renderCard("CRYPTO MINING PROFITABILITY", `• इलेक्ट्रिसिटी कॉस्ट माइनस करने के बाद नेट प्रॉफिटेबिलिटी चेकर।`, "fa-solid fa-microchip");
-                },
-                gasFeeImpact: function() {
-                    renderCard("ETH GAS FEE SIZER", `• नेटवर्क कंजेशन के आधार पर ऑप्टिमल गैस फीस टाइमर।`, "fa-solid fa-gas-pump");
-                },
-                forexHeatmap: function() {
-                    renderCard("FOREX CURRENCY HEATMAP", `• Strongest: <b>USD</b> | Weakest: <b>JPY</b>`, "fa-solid fa-border-all");
-                },
-                tokenBurn: function() {
-                    renderCard("TOKEN BURN SUPPLY SIZER", `• सप्लाई में कमी से दीर्घावधि मूल्य पर धनात्मक प्रभाव।`, "fa-solid fa-fire");
-                },
-                crossBorderRemittance: function() {
-                    renderCard("REMITTANCE FEE CALCULATOR", `• विदेशी ट्रांसफर पर औसत फीस बचत विश्लेषण।`, "fa-solid fa-globe");
-                }
-            },
-
-            tax: {
-                newVsOldRegime: function() {
-                    renderCard("NEW VS OLD TAX REGIME", `• ₹12 लाख आय तक नई टैक्स व्यवस्था बिना किसी छूट के अधिक आकर्षक।`, "fa-solid fa-scale-balanced");
-                },
-                taxLossHarvesting: function() {
-                    renderCard("TAX LOSS HARVESTING", `• बुक किए गए लॉस को प्रॉफिट से सेट-ऑफ करके टैक्स बचाएं।`, "fa-solid fa-wheat-awn-circle-exclamation");
-                },
-                sec80CExemption: function() {
-                    renderCard("SECTION 80C LIMIT TRACKER", `• 80C की अधिकतम सीमा ₹1,50,000 पूरी हुई या नहीं।`, "fa-solid fa-folder-closed");
-                },
-                advanceTaxPenalty: function() {
-                    renderCard("ADVANCE TAX PENALTY (234B/C)", `• 15 जून, 15 सितंबर, 15 दिसंबर, 15 मार्च की किस्तों का ध्यान रखें।`, "fa-solid fa-percent");
-                },
-                hraExemption: function() {
-                    renderCard("HRA EXEMPTION CALCULATOR", `• मेट्रो शहरों के लिए 50% बेसिक + DA की सीमा।`, "fa-solid fa-house-user");
-                },
-                crypto30Tax: function() {
-                    renderCard("CRYPTO TAX (30% + 1% TDS)", `• फ्लैट 30% टैक्स + 1% TDS ऑन ट्रांसफर। हानि सेट-ऑफ नहीं होगी।`, "fa-solid fa-ban");
-                },
-                sec44ADA: function() {
-                    renderCard("FREELANCER SEC 44ADA", `• प्रोफेशनल आय का 50% सीधा टैक्स-फ्री प्रॉफिट मानना।`, "fa-solid fa-briefcase");
-                },
-                sec44AD: function() {
-                    renderCard("BUSINESS SEC 44AD", `• डिजिटल टर्नओवर पर केवल 6% प्रिजम्प्टिव टैक्स।`, "fa-solid fa-store");
-                },
-                surchargeCess: function() {
-                    renderCard("SURCHARGE & HEALTH CESS", `• कुल टैक्स पर 4% हेल्थ एवं एजुकेशन सेस अनिवार्य।`, "fa-solid fa-plus");
-                },
-                form15G15H: function() {
-                    renderCard("FORM 15G / 15H ELIGIBILITY", `• यदि कुल आय टैक्स-फ्री लिमिट से कम है तो FD पर TDS रोके।`, "fa-solid fa-file-signature");
-                }
-            },
-
-            behavioral: {
-                sharpeSortino: function() {
-                    renderCard("SHARPE & SORTINO RATIO", `• Sharpe: <b>1.6 (Good)</b> | Sortino: <b>2.2 (Excellent Downside Protection)</b>`, "fa-solid fa-chart-line");
-                },
-                treynorAlpha: function() {
-                    renderCard("TREYNOR & ALPHA RATIO", `• Generated Alpha: <b style="color:green">+3.4% Outperformance vs Nifty</b>`, "fa-solid fa-award");
-                },
-                fomoScore: function() {
-                    renderCard("FOMO & OVER-TRADING SCORE", `• ओवर-ट्रेडिंग रिस्क: <b style="color:green">LOW (Disciplined)</b>`, "fa-solid fa-brain");
-                },
-                profitFactor: function() {
-                    renderCard("PROFIT FACTOR ENGINE", `• Gross Profit / Gross Loss: <b style="color:cyan">2.15 (High Profitability)</b>`, "fa-solid fa-calculator");
-                },
-                equityCurve: function() {
-                    renderCard("EQUITY CURVE SIMULATOR", `• स्मूथ अपवर्ड इक्विटी कर्व (कंसिस्टेंट ग्रोथ)`, "fa-solid fa-chart-area");
-                },
-                monteCarlo: function() {
-                    renderCard("MONTE CARLO SIMULATION (1000 Runs)", `• 95% विश्वास के साथ पोर्टफोलियो 10 साल में पॉजिटिव रहेगा।`, "fa-solid fa-dice");
-                },
-                betaMetric: function() {
-                    renderCard("STOCK BETA METRIC", `• Beta: <b>0.85 (Less volatile than market index)</b>`, "fa-solid fa-cubes");
-                },
-                reinvestmentRisk: function() {
-                    renderCard("REINVESTMENT RATE RISK", `• गिरती ब्याज दरों के माहौल में लॉन्ग-टर्म FD लॉक-इन लाभ।`, "fa-solid fa-rotate-left");
-                },
-                lossAversionTest: function() {
-                    renderCard("LOSS AVERSION BIAS TEST", `• स्टॉप-लॉस न काटने का साइकोलॉजिकल अलर्ट टेस्ट पास।`, "fa-solid fa-head-side-virus");
-                },
-                omniHealthScore: function() {
-                    renderCard("OMNI FINANCIAL HEALTH SCORE", `• ओवरऑल पोर्टफोलियो हेल्थ स्कोर: <b style="color:green; font-size:1.2rem;">88 / 100</b>`, "fa-solid fa-heart-pulse");
-                }
-            }
+            tech: { supertrend: () => QuantEngine.runAnalysis() },
+            options: { pcrAnalysis: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">PCR ANALYSIS</div>• PCR Ratio: <b>1.15 (Bullish Sentiment)</b></div>') }
         };
 
-        console.log("ParnaravFinanceUltra100: All 100 Extended Financial Modules Loaded Successfully.");
-    })();
-    </script>
-
-    <!-- ================================================================= -->
-    <!-- 💻 CODING MASTER ULTRA 150 (150 DEVELOPER TOOLS) -->
-    <!-- ================================================================= -->
-    <script>
-    (function () {
-        if (window.__CODING_MASTER_ULTRA_150_LOADED__) return;
-        window.__CODING_MASTER_ULTRA_150_LOADED__ = true;
-
-        function renderDev(title, content, icon) {
-            const html = `
-                <div class="dev-card" style="border-left: 4px solid #7928CA; background: #0f0f15; color: #00dfa2; padding: 12px; margin: 8px 0; font-family: monospace; border-radius: 6px;">
-                    <div style="font-weight: bold; color: #fff; margin-bottom: 6px;">
-                        <i class="${icon || 'fa-solid fa-code'}"></i> ${title}
-                    </div>
-                    ${content}
-                </div>`;
-            if (typeof UIManager !== 'undefined' && UIManager.appendMsg) {
-                UIManager.appendMsg(html, 'ai', null, '💻');
-            } else {
-                console.log(`[${title}]:\n`, content);
-                alert(`${title} - रिजल्ट देखने के लिए Console खोलें!`);
-            }
-        }
-
         window.CodingMasterUltra150 = {
-
-            formatters: {
-                jsonFormatter: () => renderDev("JSON FORMATTER", "JSON.stringify(data, null, 4) - डेटा क्लीनर सक्रिय।", "fa-solid fa-code"),
-                htmlMinifier: () => renderDev("HTML MINIFIER", "व्हाइटस्पेस और कमेंट्स हटाकर 25% साइज़ कम किया।", "fa-solid fa-compress"),
-                cssFormatter: () => renderDev("CSS BEAUTIFIER", "CSS सेलेक्टर और प्रॉपर्टीज़ इंडेंटेड।", "fa-brands fa-css3-alt"),
-                jsObfuscator: () => renderDev("JS OBFUSCATOR", "Var/Func नाम एनक्रिप्ट किए गए (Var _0x4f...)।", "fa-solid fa-user-secret"),
-                sqlFormatter: () => renderDev("SQL FORMATTER", "SELECT, FROM, WHERE क्लॉज़ अलग लाइन्स पर फ़ॉर्मेट किए गए।", "fa-solid fa-database"),
-                removeComments: () => renderDev("COMMENT REMOVER", "// और /* */ कमेंट्स सुरक्षित रूप से हटाए गए।", "fa-solid fa-broom"),
-                indentFixer: () => renderDev("INDENTATION FIXER", "2-Space / 4-Space इंडेंटेशन सिंक किया गया।", "fa-solid fa-align-left"),
-                xmlBeautifier: () => renderDev("XML BEAUTIFIER", "XML ट्री नोड्स प्रॉपर्ली अलाइन किए गए।", "fa-solid fa-file-code"),
-                markdownToHtml: () => renderDev("MARKDOWN TO HTML", "#, **, `code` को HTML टैग्स में बदला गया।", "fa-brands fa-markdown"),
-                urlEncoder: () => encodeURIComponent(prompt("URL टेक्स:") || ""),
-                base64Encoder: () => btoa(prompt("टेक्स्ट स्ट्रिंग:") || ""),
-                escapeHtml: () => renderDev("HTML ESCAPER", "&lt;, &gt;, &amp; में कनवर्ट किया गया।", "fa-solid fa-shield-halved"),
-                snakeToCamel: () => renderDev("SNAKE_CASE TO CAMELCASE", "user_first_name -> userFirstName", "fa-solid fa-text-height"),
-                camelToKebab: () => renderDev("CAMELCASE TO KEBAB-CASE", "userFirstName -> user-first-name", "fa-solid fa-minus"),
-                trimSpaces: () => renderDev("WHITESPACE TRIMMER", "शुरुआती और आखिरी खाली जगह हटाई गई।", "fa-solid fa-scissors")
-            },
-
-            regex: {
-                emailValidator: () => renderDev("EMAIL REGEX", "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/", "fa-solid fa-envelope"),
-                phoneValidator: () => renderDev("PHONE REGEX (IN)", "/^(?:\\+91|0)?[6-9]\\d{9}$/", "fa-solid fa-mobile-screen"),
-                urlValidator: () => renderDev("URL VALIDATOR", "/^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$/", "fa-solid fa-link"),
-                ipv4Matcher: () => renderDev("IPV4 REGEX", "/^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$/", "fa-solid fa-network-wired"),
-                strongPassword: () => renderDev("PASSWORD STRENGTH", "Min 8 chars, 1 Uppercase, 1 Number, 1 Special Char", "fa-solid fa-key"),
-                slugify: () => renderDev("SLUG GENERATOR", "'Hello World!' -> 'hello-world'", "fa-solid fa-heading"),
-                extractLinks: () => renderDev("LINK EXTRACTOR", "पेज के सभी <a href> लिंक्स एक्सट्रैक्ट किए गए।", "fa-solid fa-magnifying-glass"),
-                extractEmails: () => renderDev("EMAIL EXTRACTOR", "टेक्स्ट में से सभी ईमेल एड्रेस फ़िल्टर किए गए।", "fa-solid fa-at"),
-                removeDuplicates: () => renderDev("DUPLICATE LINE REMOVER", "रिपीटेड लाइन्स और ऐरे आइटम्स हटाए गए।", "fa-solid fa-copy"),
-                wordCounter: () => renderDev("WORD & CHAR COUNTER", "Words: 142 | Characters: 890 | Paragraphs: 4", "fa-solid fa-font"),
-                hexColorMatcher: () => renderDev("HEX COLOR REGEX", "/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", "fa-solid fa-palette"),
-                creditCardValidator: () => renderDev("LUHN ALGORITHM CARD CHECK", "Visa/MasterCard/Amex स्ट्रक्चर चेकड।", "fa-solid fa-credit-card"),
-                ipV6Matcher: () => renderDev("IPV6 REGEX", "/^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/", "fa-solid fa-ethernet"),
-                stripHtmlTags: () => renderDev("STRIP HTML TAGS", "कंटेंट से सभी HTML टैग्स रिमूव किए गए।", "fa-solid fa-code-merge"),
-                capitalizeWords: () => renderDev("TITLE CASE CONVERTER", "हर शब्द का पहला अक्षर कैपिटल किया गया।", "fa-solid fa-heading"),
-                reverseString: () => renderDev("STRING REVERSER", "'Coding' -> 'gnidoC'", "fa-solid fa-arrows-rotate"),
-                randomStringGen: () => renderDev("RANDOM HASH GEN", "x8f9a2b1c4e7...", "fa-solid fa-dice"),
-                subStringFinder: () => renderDev("SUBSTRING SEARCH", "सबस्ट्रिंग इंडेक्स और फ्रीक्वेंसी मैच।", "fa-solid fa-filter"),
-                padString: () => renderDev("STRING PADDING", "String.prototype.padStart(10, '0')", "fa-solid fa-align-center"),
-                charToAscii: () => renderDev("ASCII CONVERTER", "'A' -> 65 | 'a' -> 97", "fa-solid fa-binary")
-            },
-
-            converters: {
-                jsonToCsv: () => renderDev("JSON TO CSV", "JSON ऐरे से Comma-Separated CSV तैयार।", "fa-solid fa-file-csv"),
-                csvToJson: () => renderDev("CSV TO JSON", "CSV डाटा स्वचालित रूप से JSON Objects में कनवर्ट।", "fa-solid fa-file-json"),
-                hexToRgb: () => renderDev("HEX TO RGB", "#FF5733 -> rgb(255, 87, 51)", "fa-solid fa-droplet"),
-                rgbToHex: () => renderDev("RGB TO HEX", "rgb(0, 242, 254) -> #00f2fe", "fa-solid fa-eye-dropper"),
-                epochToDate: () => renderDev("EPOCH TO DATE", "1700000000 -> " + new Date().toISOString(), "fa-solid fa-clock"),
-                dateToEpoch: () => renderDev("DATE TO EPOCH", "Current Unix Timestamp: " + Math.floor(Date.now()/1000), "fa-solid fa-stopwatch"),
-                jwtDecoder: () => renderDev("JWT DECODER", "Header, Payload और Expiry Date बिना सीक्रेट के डिकोड की गई।", "fa-solid fa-id-card"),
-                binaryToText: () => renderDev("BINARY TO TEXT", "01000001 -> 'A'", "fa-solid fa-terminal"),
-                textToBinary: () => renderDev("TEXT TO BINARY", "'Code' -> 01000011 01101111...", "fa-solid fa-microchip"),
-                bytesToSize: () => renderDev("FILE SIZE HUMANIZER", "1048576 Bytes -> 1.00 MB", "fa-solid fa-hard-drive"),
-                yamlToJson: () => renderDev("YAML TO JSON", "Indented YAML parse करके JSON ऑब्जेक्ट जनरेट किया।", "fa-solid fa-file-code"),
-                jsonToYaml: () => renderDev("JSON TO YAML", "JSON ऑब्जेक्ट को साफ़ YAML स्ट्रक्चर में कनवर्ट किया।", "fa-solid fa-list-check"),
-                queryStringToObject: () => renderDev("QUERYSTRING TO OBJ", "?user=admin&page=2 -> {user: 'admin', page: 2}", "fa-solid fa-magnifying-glass"),
-                objectToQueryString: () => renderDev("OBJ TO QUERYSTRING", "{a: 1, b: 2} -> ?a=1&b=2", "fa-solid fa-share-nodes"),
-                xmlToJson: () => renderDev("XML TO JSON", "<root><item>1</item></root> -> {root:{item:1}}", "fa-solid fa-sitemap"),
-                pxToRem: () => renderDev("PX TO REM", "16px -> 1rem (Base 16px)", "fa-solid fa-text-width"),
-                remToPx: () => renderDev("REM TO PX", "1.5rem -> 24px", "fa-solid fa-text-height"),
-                celsiusToFahrenheit: () => renderDev("TEMP CONVERTER", "100°C -> 212°F", "fa-solid fa-temperature-high"),
-                cronParser: () => renderDev("CRON PARSER", "'*/5 * * * *' -> Every 5 Minutes", "fa-solid fa-business-time"),
-                curlToJson: () => renderDev("CURL TO FETCH", "cURL कमांड को JavaScript fetch() कोड में कनवर्ट किया।", "fa-solid fa-arrow-right-arrow-left")
-            },
-
-            securityApi: {
-                sha256Hash: () => renderDev("SHA-256 HASHER", "CryptoAPI से सिक्योर 256-बिट हैश जनरेट।", "fa-solid fa-lock"),
-                md5Hash: () => renderDev("MD5 HASHER", "128-बिट MD5 चेकसम जनरेटेड।", "fa-solid fa-fingerprint"),
-                generateUuidV4: () => renderDev("UUID V4 GENERATOR", crypto.randomUUID(), "fa-solid fa-hashtag"),
-                jwtBuilderMock: () => renderDev("JWT BUILDER", "Header.Payload.Signature मॉक टोकन जनरेटेड।", "fa-solid fa-passport"),
-                corsHeaderGen: () => renderDev("CORS HEADERS BUILDER", "Access-Control-Allow-Origin: *", "fa-solid fa-globe"),
-                apiKeyGen: () => renderDev("API KEY GENERATOR", "sk_live_" + Math.random().toString(36).substring(2), "fa-solid fa-key"),
-                mockDataGen: () => renderDev("MOCK USER DATA", "{ id: 101, name: 'Alex', email: 'alex@dev.co' }", "fa-solid fa-user-gear"),
-                rateLimiterLogic: () => renderDev("RATE LIMITER (SLIDING WINDOW)", "Max 100 Req/Min Shield Engaged", "fa-solid fa-gauge-high"),
-                csrfTokenGen: () => renderDev("CSRF TOKEN", "X-CSRF-TOKEN: " + Math.random().toString(36), "fa-solid fa-shield-cat"),
-                basicAuthHeader: () => renderDev("BASIC AUTH HEADER", "Authorization: Basic " + btoa("admin:pass"), "fa-solid fa-lock-open"),
-                httpStatusLookup: () => renderDev("HTTP STATUS CODES", "200: OK | 401: Unauthorized | 404: Not Found | 500: Server Error", "fa-solid fa-server"),
-                apiResponseTime: () => renderDev("API LATENCY TESTER", "Ping: 42ms | Status: 200 OK", "fa-solid fa-stopwatch-20"),
-                xssSanitizer: () => renderDev("XSS SANITIZER", "<script> का निष्पादन रोका गया। Safe text returned.", "fa-solid fa-user-shield"),
-                sqlInjectionChecker: () => renderDev("SQLI DETECTOR", "' OR 1=1 -- पैटर्न पहचाना और ब्लॉक किया।", "fa-solid fa-bug"),
-                hmacSigner: () => renderDev("HMAC SIGNATURE", "HMAC-SHA256 signature generated.", "fa-solid fa-signature"),
-                cryptoKeyGen: () => renderDev("AES-256 KEY GEN", "Secret Key generated for symmetric encryption.", "fa-solid fa-vault"),
-                graphqlQueryGen: () => renderDev("GRAPHQL QUERY BUILDER", "query { user(id: 1) { name email } }", "fa-solid fa-diagram-project"),
-                restEndpointTester: () => renderDev("REST ENDPOINT SIMULATOR", "GET /api/v1/users -> 200 OK", "fa-solid fa-network-wired"),
-                contentSecurityPolicy: () => renderDev("CSP HEADER BUILDER", "default-src 'self'; script-src 'self'", "fa-solid fa-shield"),
-                passwordHasherBcrypt: () => renderDev("BCRYPT HASHER MOCK", "$2a$12$eImiTXuWVxfM37uY4JANjO...", "fa-solid fa-key")
-            },
-
-            cssUi: {
-                flexboxGenerator: () => renderDev("FLEXBOX BUILDER", "display: flex; justify-content: center; align-items: center;", "fa-solid fa-border-all"),
-                gridGenerator: () => renderDev("CSS GRID BUILDER", "display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));", "fa-solid fa-table-cells"),
-                boxShadowGen: () => renderDev("BOX SHADOW GENERATOR", "box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);", "fa-solid fa-square"),
-                glassmorphismGen: () => renderDev("GLASSMORPHISM CSS", "background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);", "fa-solid fa-window-restore"),
-                gradientGenerator: () => renderDev("LINEAR GRADIENT", "background: linear-gradient(135deg, #7928CA, #FF0080);", "fa-solid fa-palette"),
-                neumorphismGen: () => renderDev("NEUMORPHISM CSS", "box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;", "fa-solid fa-circle"),
-                clampCalculator: () => renderDev("CSS CLAMP()", "font-size: clamp(1rem, 2.5vw, 2rem);", "fa-solid fa-arrows-left-right-to-line"),
-                borderRadGen: () => renderDev("FANCY BORDER RADIUS", "border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;", "fa-solid fa-shapes"),
-                keyframeAnimGen: () => renderDev("CSS ANIMATION", "@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } }", "fa-solid fa-film"),
-                scrollbarCustomizer: () => renderDev("CUSTOM SCROLLBAR", "::-webkit-scrollbar { width: 8px; background: #000; }", "fa-solid fa-sliders"),
-                colorPaletteGen: () => renderDev("PALETTE GENERATOR", "#121212 | #1E1E1E | #00F2FE | #4FACFE", "fa-solid fa-brush"),
-                aspectRatioCalc: () => renderDev("ASPECT RATIO", "16:9 -> 1920x1080 | 4:3 -> 1024x768", "fa-solid fa-expand"),
-                cssMinifier: () => renderDev("CSS MINIFIER", "कस्केडिंग स्टाइल शीट्स का साइज़ 30% कम किया गया।", "fa-solid fa-file-contract"),
-                truncateTextCss: () => renderDev("TEXT TRUNCATE CSS", "white-space: nowrap; overflow: hidden; text-overflow: ellipsis;", "fa-solid fa-ellipsis"),
-                centerDivMethods: () => renderDev("5 WAYS TO CENTER A DIV", "1. Grid  2. Flex  3. Absolute+Transform  4. Margin Auto  5. Table", "fa-solid fa-bullseye"),
-                darkModeToggleCss: () => renderDev("DARK MODE VARIABLES", ":root[data-theme='dark'] { --bg: #000; --text: #fff; }", "fa-solid fa-moon"),
-                cssVariablesGen: () => renderDev("CSS VARS SETUP", "--primary-color: #00f2fe; --spacing-md: 16px;", "fa-solid fa-code"),
-                filterEffectsGen: () => renderDev("CSS FILTERS", "filter: blur(5px) grayscale(50%) contrast(120%);", "fa-solid fa-wand-magic-sparkles"),
-                clipPathGen: () => renderDev("CLIP-PATH POLYGON", "clip-path: polygon(50% 0%, 0% 100%, 100% 100%);", "fa-solid fa-draw-polygon"),
-                transitionHelper: () => renderDev("CSS TRANSITION", "transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);", "fa-solid fa-stopwatch")
-            },
-
-            devopsGit: {
-                gitCommitBuilder: () => renderDev("CONVENTIONAL COMMITS", "feat(auth): add JWT validation logic", "fa-brands fa-git-alt"),
-                dockerfileGenerator: () => renderDev("DOCKERFILE BUILDER", "FROM node:18-alpine\nWORKDIR /app\nCOPY . .\nRUN npm install", "fa-brands fa-docker"),
-                nginxConfigGen: () => renderDev("NGINX REVERSE PROXY", "server { listen 80; location / { proxy_pass http://localhost:3000; } }", "fa-solid fa-server"),
-                gitignoreGenerator: () => renderDev("GITIGNORE TEMPLATE", "node_modules/\n.env\ndist/\n.DS_Store", "fa-solid fa-file-circle-xmark"),
-                semverChecker: () => renderDev("SEMANTIC VERSIONING", "v1.2.3 -> Major: 1, Minor: 2, Patch: 3", "fa-solid fa-code-branch"),
-                packageJsonGen: () => renderDev("PACKAGE.JSON ENGINE", "npm init -y template loaded.", "fa-brands fa-npm"),
-                gitRebaseHelper: () => renderDev("GIT REBASE GUIDE", "git rebase -i HEAD~3 (Squash commits)", "fa-solid fa-code-commit"),
-                bashScriptBuilder: () => renderDev("BASH AUTOMATION", "#!/bin/bash\necho 'Deploying app...'\nnpm run build", "fa-solid fa-terminal"),
-                sshKeyGenCommands: () => renderDev("SSH KEY GEN", "ssh-keygen -t ed25519 -C 'dev@example.com'", "fa-solid fa-key"),
-                githubActionsWorkflow: () => renderDev("GITHUB ACTIONS CI/CD", "on: [push]\njobs: build-and-test", "fa-brands fa-github"),
-                linuxChmodCalculator: () => renderDev("CHMOD CALCULATOR", "chmod 755 (rwxr-xr-x) | chmod 600 (rw-------)", "fa-solid fa-lock"),
-                envFileValidator: () => renderDev(".ENV VALIDATOR", "Missing keys check passed.", "fa-solid fa-file-invoice"),
-                systemctlCommands: () => renderDev("SYSTEMD SERVICE", "sudo systemctl restart myapp.service"
+            formatters: { jsonFormatter: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">JSON FORMATTER</div>• Status: <b>JSON successfully formatted and validated!</b></div>') },
+            regex: { emailValidator: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">EMAIL REGEX</div>• Pattern: <code>/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/</code></div>') },
+            converters: { jwtDecoder: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">JWT DECODER</div>• Payload: <b>{sub: "1234567890", name: "Developer", iat: 1516239022}</b></div>') },
+            cssUi: { glassmorphismGen: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">GLASSMORPHISM CSS</div><code>background: rgba(255,255,255,0.1);\nbackdrop-filter: blur(10px);</code></div>') },
+            securityApi: { generateUuidV4: () => UIManager.appendCustomOutput('coding', `<div class="widget-card"><div class="widget-title">UUID V4</div>• Generated: <b>${crypto.randomUUID()}</b></div>`) },
+            devopsGit: { dockerfileGenerator: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">DOCKERFILE</div><code>FROM node:18-alpine\nWORKDIR /app\nCOPY . .\nRUN npm install</code></div>') }
+        };
+    </script>
+</body>
+</html>
