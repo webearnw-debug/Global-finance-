@@ -3096,6 +3096,60 @@ Strict Operational Rules:
     };
 })();
 </script>
+<script src="https://js.puter.com/v2/"></script>
+
+<!-- ⚡ PARNARAV UNIVERSAL OMNI ENGINE -->
+<script>
+(function() {
+    // 🧠 ULTRA MASTER PROMPT (Universal Comprehension & Decision Making)
+    const ULTRA_MASTER_SYSTEM_PROMPT = `
+You are Parnarav AI, an extraordinary, top-tier Artificial Intelligence engine.
+
+STRICT OPERATIONAL DIRECTIVES:
+1. **Universal Input Decoding**: You must flawlessly parse, decode, and understand ANY user input, regardless of how broken, misspelled, slang-filled, grammatically incorrect, fragmented, or complex it is (including Hindi, Hinglish, English, and technical jargon). Always extract the true user intent.
+2. **Multi-Domain Mastery**: Deliver expert-level answers across Software Engineering (Coding), Financial Trading & Chart Analysis, Advanced Mathematics, and Strategic Logic.
+3. **Flawless Output Standards**: Your output must contain ZERO spelling or grammatical errors in both Hindi and English. All generated code and calculations must be 100% accurate and functional.
+4. **Direct & Fluff-Free**: Answer directly and concisely. Do not add filler text, unnecessary setup sentences, or useless pleasantries.
+5. **Independent Decision Making**: When a logical or technical choice is needed, evaluate the optimal path independently and present the definitive best solution directly.
+`;
+
+    window.GeminiOmniEngine = {
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            try {
+                // Auto Authentication Check
+                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+                    const isSignedIn = await puter.auth.isSignedIn();
+                    if (!isSignedIn) {
+                        const modal = document.getElementById('parnarav-auth-modal');
+                        if (modal) modal.style.display = 'flex';
+                        await puter.auth.signIn();
+                        if (modal) modal.style.display = 'none';
+                    }
+                }
+
+                // Inject Universal Decoding Prompt
+                const finalPrompt = `${ULTRA_MASTER_SYSTEM_PROMPT}\n\n[User Input]: ${userPrompt}\n\n[Instruction]: Decode intent (regardless of broken syntax) and provide the accurate answer directly:`;
+
+                const response = await puter.ai.chat(finalPrompt);
+                const reply = response ? response.toString().trim() : "";
+
+                if (reply !== "") {
+                    if (onChunkCallback) onChunkCallback(reply);
+                    return reply;
+                } else {
+                    throw new Error("Empty AI response received.");
+                }
+
+            } catch (error) {
+                console.error("OmniEngine Error:", error);
+                const errorMsg = "⚠️ प्रोसेसिंग में समस्या आई। कृपया पुनः प्रयास करें।";
+                if (onChunkCallback) onChunkCallback(errorMsg);
+                return errorMsg;
+            }
+        }
+    };
+})();
+</script>
 
 </body>
 </html>
