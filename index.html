@@ -2799,74 +2799,119 @@ window.salesEngine = new SalesExecutiveUltra100();
     strong, b { font-weight: 700 !important; }
 </style>
 
-<!-- 🚀 PUTER AI ENGINE (YOUR PUTER TOKEN + 460/360 CODES) -->
-<script>
-(function() {
-    // 🔑 आपका जनरेट किया हुआ PUTER AUTH TOKEN
-    const MASTER_PUTER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InYyIn0.eyJ0IjoidCIsInYiOiIyIiwidG9rZW5fdWlkIjoiOWRlNDIxODctMmQwNi00NmE3LWI5MzktNDQ3MmM2MjUxNTQ3IiwidXUiOiJGOGJZTmVkL1JJcTcweE80VHZqL3ZBPT0iLCJzdSI6IjlSRlJCeWJjUlZLM1VhZHZuU0ZkRmc9PSIsImFpIjoiRjhiWU5lZC9SSXE3MHhPNFR2ai92QT09IiwiZnVsbF9hY2Nlc3MiOnRydWUsImlhdCI6MTc4ODE5NzM1M30.cDg3aRjL9KUNZkD4TC5WO882SaInou_93BRwBE1ZAyk";
-
-    if (window.puter) {
-        puter.authToken = MASTER_PUTER_TOKEN;
+<!-- 🎨 Parnarav AI Light Login Box Styling -->
+<style>
+    #parnarav-auth-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999999;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
+    .parnarav-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 360px;
+        padding: 28px 20px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: sans-serif;
+    }
+
+    .parnarav-card h3 {
+        margin: 0 0 8px 0;
+        font-size: 20px;
+        color: #0f172a;
+    }
+
+    .parnarav-card p {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0 0 20px 0;
+    }
+
+    .parnarav-login-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- 🔐 Light Theme Login Card HTML -->
+<div id="parnarav-auth-modal">
+    <div class="parnarav-card">
+        <h3>Parnarav AI Login</h3>
+        <p>चैट शुरू करने के लिए लॉगिन करें</p>
+        <button class="parnarav-login-btn" onclick="triggerParnaravLogin()">Login with Puter</button>
+    </div>
+</div>
+
+<script src="https://js.puter.com/v2/"></script>
+
+<!-- 🚀 Simple Puter Engine with In-App Login -->
+<script>
+(function() {
+    async function checkAuthState() {
+        if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+            const isLogged = await puter.auth.isSignedIn();
+            if (!isLogged) {
+                document.getElementById('parnarav-auth-modal').style.display = 'flex';
+            }
+        }
+    }
+
+    window.triggerParnaravLogin = async function() {
+        try {
+            if (window.puter && puter.auth) {
+                await puter.auth.signIn();
+                document.getElementById('parnarav-auth-modal').style.display = 'none';
+            }
+        } catch (err) {
+            console.error("Login failed:", err);
+        }
+    };
+
+    window.addEventListener('load', checkAuthState);
+
     window.GeminiOmniEngine = {
-        chatHistory: [],
-
-        resetMemory: function() {
-            this.chatHistory = [];
-        },
-
         processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-            const cleanInput = userPrompt ? userPrompt.trim() : "";
-
-            // 🟢 सीक्रेट कोड 460 (केशव प्रोफाइल चालू)
-            if (cleanInput === "460") {
-                const keshavCard = `
-=================================
-  🙏 **नमस्ते और हार्दिक स्वागत है!** 🙏
-=================================
-
-👤 **नाम:** केशव
-🏠 **निवास स्थान:** बसी
-📚 **ट्यूशन:** थेड़ा
-🤝 **परम मित्र:** सार्थक
-🛕 **दैनिक नियम:** बाबा भरथरी मंदिर दर्शन
-
-💪 **विशेष जानकारी:**
-इस पूरे AI सिस्टम को बनाने, इसके सभी मोड्स और हर एक चीज़ को तैयार करने में केशव भाई की पूरे **6 महीने की कड़ी मेहनत** लगी है! 🚀
-
-=================================
-बताइए केशव भाई, आज मैं आपकी क्या सहायता कर सकता हूँ?
-=================================`;
-                if (onChunkCallback) onChunkCallback(keshavCard);
-                return keshavCard;
-            }
-
-            // 🔴 सीक्रेट कोड 360 (केशव प्रोफाइल बंद)
-            if (cleanInput === "360") {
-                const closeMsg = `🔒 **सीक्रेट मोड सफलतापूर्वक बंद कर दिया गया है!**\nआपकी व्यक्तिगत जानकारी हाइड कर दी गई है। सामान्य AI चैट जारी है।`;
-                if (onChunkCallback) onChunkCallback(closeMsg);
-                return closeMsg;
-            }
-
-            // 🤖 Puter AI Request
             try {
-                if (window.puter) {
-                    puter.authToken = MASTER_PUTER_TOKEN;
+                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+                    const isSignedIn = await puter.auth.isSignedIn();
+                    if (!isSignedIn) {
+                        document.getElementById('parnarav-auth-modal').style.display = 'flex';
+                        const reqMsg = "⚠️ चैट करने के लिए स्क्रीन पर दिख रहे लॉगिन बटन पर क्लिक करें।";
+                        if (onChunkCallback) onChunkCallback(reqMsg);
+                        return reqMsg;
+                    }
                 }
-                
-                const response = await puter.ai.chat(userPrompt);
-                const fullReply = response.toString();
 
-                if (fullReply && fullReply.trim() !== "") {
-                    if (onChunkCallback) onChunkCallback(fullReply);
-                    return fullReply;
-                } else {
-                    throw new Error("Empty response");
-                }
+                const response = await puter.ai.chat(userPrompt);
+                const reply = response.toString();
+
+                if (onChunkCallback) onChunkCallback(reply);
+                return reply;
+
             } catch (error) {
                 console.error("Puter AI Error:", error);
-                const errorMsg = "⚠️ कनेक्शन एरर! कृपया पुनः प्रयास करें।";
+                const errorMsg = "⚠️ कनेक्शन एरर! पुनः प्रयास करें।";
                 if (onChunkCallback) onChunkCallback(errorMsg);
                 return errorMsg;
             }
