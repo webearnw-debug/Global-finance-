@@ -2,900 +2,192 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Parnarav AI - Universal Studio Pro</title>
-
-    <!-- External UI Libraries -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Header Navbar</title>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Markdown & Syntax Highlighter -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-
-    <!-- Puter Cloud AI Engine Core SDK -->
-    <script src="https://js.puter.com/v2/"></script>
-
+    
     <style>
-        :root {
-            --bg-base: #030712;
-            --bg-surface: #0b0f19;
-            --bg-card: #111827;
-            --accent-cyan: #38bdf8;
-            --accent-purple: #c084fc;
-            --accent-green: #4ade80;
-            --accent-red: #f87171;
-            --accent-yellow: #fbbf24;
-            --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-            --border-color: #1f2937;
-            --sidebar-width: 290px;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        html, body {
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 200vh; /* Scroll demo ke liye */
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100dvh;
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            overflow: hidden;
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: 100dvh;
-            background-color: var(--bg-surface);
-            border-right: 1px solid var(--border-color);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
-            overflow-y: auto;
-        }
-
-        .brand-logo {
-            font-size: 1.15rem;
-            font-weight: 800;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        .parnarav-brain-icon {
-            width: 32px;
-            height: 32px;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
-        }
-
-        .nav-section-title {
-            font-size: 0.72rem;
+        /* Brand Logo */
+        .logo {
+            font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 14px 0 6px 6px;
-        }
-
-        .nav-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .nav-item {
-            padding: 10px 12px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            cursor: pointer;
+            color: #fff;
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 600;
-            font-size: 0.86rem;
-            transition: all 0.2s ease;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--bg-card);
-            color: var(--accent-cyan);
-            border: 1px solid var(--border-color);
+        .logo span {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Workspace Main Layout */
-        .workspace {
-            flex: 1;
-            height: 100dvh;
+        /* Navigation Links */
+        .navbar {
             display: flex;
-            flex-direction: column;
-            min-width: 0;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
             position: relative;
         }
 
-        /* Real Working Header */
-        .topbar {
-            height: 64px;
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            flex-shrink: 0;
-            gap: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            z-index: 50;
+        .nav-link:hover,
+        .nav-link.active {
+            color: #38bdf8;
         }
 
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.2rem;
-            cursor: pointer;
+        /* Active underline animation */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #38bdf8;
+            transition: width 0.3s ease;
         }
 
-        .header-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
         }
 
-        .system-badge-live {
-            background: rgba(74, 222, 128, 0.12);
-            border: 1px solid rgba(74, 222, 128, 0.3);
-            color: var(--accent-green);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .live-dot {
-            width: 7px;
-            height: 7px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-green);
-            animation: pulseDot 1.5s infinite;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 12px;
+        /* Action Button */
+        .nav-btn {
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            color: #fff;
+            padding: 0.6rem 1.4rem;
             border-radius: 8px;
-            font-size: 0.8rem;
+            text-decoration: none;
             font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .header-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            background: rgba(56, 189, 248, 0.1);
-        }
-
-        .header-btn.ai-sparkle {
-            background: linear-gradient(135deg, rgba(192, 132, 252, 0.2), rgba(56, 189, 248, 0.2));
-            border-color: var(--accent-purple);
-            color: var(--accent-purple);
-        }
-
-        /* View Container System (Home vs Trading vs Finance vs Coding) */
-        .view-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: none;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .view-container.active {
-            display: flex;
-        }
-
-        /* Dashboard Grid for Home */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
-
-        .dashboard-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .dashboard-card:hover {
-            border-color: var(--accent-cyan);
+        .nav-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
         }
 
-        .dashboard-card-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-main);
-        }
-
-        .dashboard-card-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Interactive System Panels */
-        .panel-header-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
-        }
-
-        .system-action-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            text-align: left;
-        }
-
-        .system-action-btn:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(56, 189, 248, 0.08);
-            color: var(--accent-cyan);
-        }
-
-        /* Chat Workspace Integration */
-        .chat-sub-area {
-            flex: 1;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            max-height: 400px;
-        }
-
-        .message-row {
-            display: flex;
-            gap: 10px;
-            max-width: 90%;
-        }
-
-        .message-row.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            background: var(--bg-base);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .bubble {
-            background: var(--bg-base);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 0.88rem;
-            word-wrap: break-word;
-        }
-
-        .user .bubble {
-            background: #1e3a8a;
-            border-color: #3b82f6;
-            color: #fff;
-        }
-
-        .widget-card {
-            background: #070a13;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-        }
-
-        .widget-title {
-            color: var(--accent-purple);
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Input Controls at Bottom */
-        .input-wrapper {
-            padding: 12px 20px;
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
-            flex-shrink: 0;
-        }
-
-        .input-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-base);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 6px 12px;
-        }
-
-        .input-box:focus-within {
-            border-color: var(--accent-cyan);
-        }
-
-        textarea {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-main);
-            font-size: 0.93rem;
-            resize: none;
-            height: 38px;
-            padding-top: 8px;
-        }
-
-        .btn-send {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        /* Mobile Hamburger Icon */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
             color: #fff;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        @keyframes pulseDot {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.6; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .sidebar {
-                position: absolute;
-                left: -100%;
-                top: 0;
-                bottom: 0;
+            .menu-toggle {
+                display: block;
             }
-            .sidebar.open { left: 0; }
-            .mobile-menu-btn { display: block; }
+
+            .navbar {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #0f172a;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                gap: 1.2rem;
+                display: none;
+            }
+
+            .navbar.active {
+                display: flex;
+            }
+
+            .nav-btn {
+                width: 80%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar" id="sidebar">
-        <div class="brand-logo">
-            <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
-                <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="#ef4444" />
-                <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="#3b82f6" />
-            </svg>
-            <span style="background: linear-gradient(135deg, #ff4d4d, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
+    <header class="header">
+        <a href="#" class="logo">
+            <i class="fa-solid fa-bolt" style="color: #38bdf8;"></i>
+            <span>Studio</span>Pro
+        </a>
+
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fa-solid fa-bars"></i>
         </div>
 
-        <div class="nav-section-title">Navigation Menu</div>
-        <ul class="nav-list">
-            <li class="nav-item active" onclick="NavigationEngine.switchView('home', this)">
-                <i class="fa-solid fa-house"></i> Home Dashboard
-            </li>
-            <li class="nav-item" onclick="NavigationEngine.switchView('trading', this)">
-                <i class="fa-solid fa-chart-line"></i> Trading Systems
-            </li>
-            <li class="nav-item" onclick="NavigationEngine.switchView('finance', this)">
-                <i class="fa-solid fa-coins"></i> Financial Engine
-            </li>
-            <li class="nav-item" onclick="NavigationEngine.switchView('coding', this)">
-                <i class="fa-solid fa-code"></i> Coding Master
-            </li>
-            <li class="nav-item" onclick="NavigationEngine.switchView('aiagent', this)">
-                <i class="fa-solid fa-robot"></i> AI Auto Agent
-            </li>
+        <ul class="navbar" id="navList">
+            <li><a href="#" class="nav-link active">Home</a></li>
+            <li><a href="#" class="nav-link">Features</a></li>
+            <li><a href="#" class="nav-link">Pricing</a></li>
+            <li><a href="#" class="nav-link">About</a></li>
+            <li><a href="#" class="nav-btn">Get Started</a></li>
         </ul>
-    </aside>
-
-    <!-- Workspace Main -->
-    <main class="workspace">
-        <!-- Real Working Header -->
-        <header class="topbar">
-            <div class="header-title-wrapper">
-                <button class="mobile-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="system-badge-live">
-                    <div class="live-dot"></div>
-                    <span id="headerSystemTitle">Home Dashboard Active</span>
-                </div>
-            </div>
-
-            <div class="header-actions">
-                <button class="header-btn ai-sparkle" onclick="AIActiveEngine.triggerQuickAI()">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Auto Run
-                </button>
-                <button class="header-btn" onclick="VoiceEngine.toggleVoice()">
-                    <i class="fa-solid fa-volume-high"></i> <span id="voiceStatusText">Voice OFF</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- 1. HOME VIEW (Dashboard with all systems summarized) -->
-        <section id="view-home" class="view-container active">
-            <div class="panel-header-box">
-                <div>
-                    <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-cyan);">Parnarav AI Universal Studio</h2>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">सभी प्रणालियाँ (Trading, Finance, Coding, AI Agent) यहाँ एकीकृत हैं।</p>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="dashboard-card" onclick="NavigationEngine.switchView('trading', document.querySelectorAll('.nav-item')[1])">
-                    <div class="dashboard-card-title"><i class="fa-solid fa-chart-line" style="color:var(--accent-green)"></i> Trading Systems</div>
-                    <div class="dashboard-card-desc">स्टॉक, RSI, VWAP, Supertrend, ऑप्शंस स्ट्रेटजी और क्वांट सिग्नल्स का लाइव डैशबोर्ड।</div>
-                </div>
-                <div class="dashboard-card" onclick="NavigationEngine.switchView('finance', document.querySelectorAll('.nav-item')[2])">
-                    <div class="dashboard-card-title"><i class="fa-solid fa-coins" style="color:var(--accent-cyan)"></i> Financial Engine</div>
-                    <div class="dashboard-card-desc">SIP, Step-Up SIP, EMI Loan Amortization, CAGR, टैक्स एस्टीमेटर एवं पोर्टफोलियो कैलकुलेटर।</div>
-                </div>
-                <div class="dashboard-card" onclick="NavigationEngine.switchView('coding', document.querySelectorAll('.nav-item')[3])">
-                    <div class="dashboard-card-title"><i class="fa-solid fa-code" style="color:var(--accent-purple)"></i> Coding Master</div>
-                    <div class="dashboard-card-desc">150+ डेवलपर्स टूल्स, JSON फ़ॉर्मेटर, रेगुलर एक्सप्रेसन्स, CSS जेनरेटर और Git कमांड्स।</div>
-                </div>
-                <div class="dashboard-card" onclick="NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4])">
-                    <div class="dashboard-card-title"><i class="fa-solid fa-robot" style="color:var(--accent-yellow)"></i> AI Auto Agent</div>
-                    <div class="dashboard-card-desc">Puter.js क्लाउड AI द्वारा संचालित स्वतंत्र एजेंट और यूनिवर्सल चैट स्टूडियो।</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. TRADING VIEW -->
-        <section id="view-trading" class="view-container">
-            <div class="panel-header-box">
-                <div>
-                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-green);"><i class="fa-solid fa-chart-line"></i> Trading Systems & Quant Signals</h2>
-                    <p style="font-size: 0.82rem; color: var(--text-muted);">यहाँ ट्रेडिंग से जुड़े सभी टूल्स स्वतंत्र रूप से कार्य करते हैं।</p>
-                </div>
-            </div>
-            <div class="tools-grid">
-                <button class="system-action-btn" onclick="QuantEngine.runAnalysis()"><i class="fa-solid fa-bolt" style="color:var(--accent-green)"></i> Quant Decision Engine</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.scanMultiIndicators()"><i class="fa-solid fa-wave-square" style="color:var(--accent-cyan)"></i> Multi-Indicator Scan</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.calcPositionSize()"><i class="fa-solid fa-shield-halved" style="color:var(--accent-purple)"></i> Position Size & Risk</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.evalRiskReward()"><i class="fa-solid fa-scale-balanced" style="color:var(--accent-yellow)"></i> Risk-Reward Evaluator</button>
-                <button class="system-action-btn" onclick="ParnaravFinanceUltra100.tech.supertrend()"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent-green)"></i> Supertrend Indicator</button>
-                <button class="system-action-btn" onclick="ParnaravFinanceUltra100.options.pcrAnalysis()"><i class="fa-solid fa-scale-unbalanced-flip" style="color:var(--accent-cyan)"></i> Put-Call Ratio (PCR)</button>
-            </div>
-            <div class="chat-sub-area" id="chat-trading-area">
-                <div class="message-row">
-                    <div class="avatar">📈</div>
-                    <div class="bubble"><b>Trading System Active!</b> ऊपर दिए गए बटनों पर क्लिक करें या अपना ट्रेडिंग सवाल पूछें।</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. FINANCIAL VIEW -->
-        <section id="view-finance" class="view-container">
-            <div class="panel-header-box">
-                <div>
-                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan);"><i class="fa-solid fa-coins"></i> Financial Calculation Engine</h2>
-                    <p style="font-size: 0.82rem; color: var(--text-muted);">SIP, EMI, Loan, और टैक्स से जुड़े सभी अपग्रेडेड सिस्टम।</p>
-                </div>
-            </div>
-            <div class="tools-grid">
-                <button class="system-action-btn" onclick="FinancialEngine.calcSIP()"><i class="fa-solid fa-calculator" style="color:var(--accent-cyan)"></i> SIP Calculator</button>
-                <button class="system-action-btn" onclick="FinancialEngine.calcEMI()"><i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> Loan EMI Engine</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.calcStepUpSIP()"><i class="fa-solid fa-arrow-trend-up" style="color:var(--accent-green)"></i> Step-Up SIP Calculator</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.compareSipVsLumpsum()"><i class="fa-solid fa-code-compare" style="color:var(--accent-purple)"></i> SIP vs Lumpsum</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.calcCAGR()"><i class="fa-solid fa-percent" style="color:var(--accent-cyan)"></i> CAGR Calculator</button>
-                <button class="system-action-btn" onclick="ParnaravFinancePro.calcTaxEstimate()"><i class="fa-solid fa-building-columns" style="color:var(--accent-red)"></i> Capital Gains Tax</button>
-            </div>
-            <div class="chat-sub-area" id="chat-finance-area">
-                <div class="message-row">
-                    <div class="avatar">💰</div>
-                    <div class="bubble"><b>Financial System Active!</b> निवेश और ऋण गणना के लिए बटन का चयन करें।</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. CODING MASTER VIEW -->
-        <section id="view-coding" class="view-container">
-            <div class="panel-header-box">
-                <div>
-                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-purple);"><i class="fa-solid fa-code"></i> Coding Master Studio</h2>
-                    <p style="font-size: 0.82rem; color: var(--text-muted);">डेवलपर टूल्स, फ़ॉर्मेटर्स, रेगुलर एक्सप्रेसन्स और कोड जनरेटर।</p>
-                </div>
-            </div>
-            <div class="tools-grid">
-                <button class="system-action-btn" onclick="CodingMasterUltra150.formatters.jsonFormatter()"><i class="fa-solid fa-code" style="color:var(--accent-purple)"></i> JSON Formatter</button>
-                <button class="system-action-btn" onclick="CodingMasterUltra150.regex.emailValidator()"><i class="fa-solid fa-envelope" style="color:var(--accent-cyan)"></i> Email Regex</button>
-                <button class="system-action-btn" onclick="CodingMasterUltra150.converters.jwtDecoder()"><i class="fa-solid fa-id-card" style="color:var(--accent-green)"></i> JWT Decoder</button>
-                <button class="system-action-btn" onclick="CodingMasterUltra150.cssUi.glassmorphismGen()"><i class="fa-solid fa-window-restore" style="color:var(--accent-yellow)"></i> Glassmorphism CSS</button>
-                <button class="system-action-btn" onclick="CodingMasterUltra150.securityApi.generateUuidV4()"><i class="fa-solid fa-hashtag" style="color:var(--accent-purple)"></i> UUID V4 Generator</button>
-                <button class="system-action-btn" onclick="CodingMasterUltra150.devopsGit.dockerfileGenerator()"><i class="fa-brands fa-docker" style="color:var(--accent-cyan)"></i> Dockerfile Builder</button>
-            </div>
-            <div class="chat-sub-area" id="chat-coding-area">
-                <div class="message-row">
-                    <div class="avatar">💻</div>
-                    <div class="bubble"><b>Coding Master Active!</b> सॉफ्टवेयर आर्किटेक्चर और टूल्स का उपयोग करें।</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. AI AGENT VIEW -->
-        <section id="view-aiagent" class="view-container">
-            <div class="panel-header-box">
-                <div>
-                    <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-yellow);"><i class="fa-solid fa-robot"></i> AI Auto Agent & Universal Chat</h2>
-                    <p style="font-size: 0.82rem; color: var(--text-muted);">Puter.js AI इंजन द्वारा स्वचालित उत्तर और एजेंट लूप।</p>
-                </div>
-                <button class="system-action-btn" onclick="GeminiOmniEngine.triggerAgenticTask()"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent-yellow)"></i> Run Agentic Loop</button>
-            </div>
-            <div class="chat-sub-area" id="chatContainer" style="max-height: 480px;">
-                <div class="message-row">
-                    <div class="avatar">🧠</div>
-                    <div class="bubble"><b>Parnarav AI Auto Agent Ready!</b> नीचे दिए गए इनपुट बॉक्स से कोई भी सवाल पूछें। AI तुरंत खुद कार्य करेगा।</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Global Universal Input Bar -->
-        <footer class="input-wrapper">
-            <div class="input-box">
-                <textarea id="userInput" placeholder="यहाँ अपना सवाल या कमांड दर्ज करें (AI स्वतः चलेगा)..." onkeydown="AppController.handleKeyPress(event)"></textarea>
-                <button class="btn-send" onclick="AppController.submitQuery()" title="Send Message">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </footer>
-    </main>
+    </header>
 
     <script>
-        // System Creator Identity
-        const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
+        const menuToggle = document.getElementById('menuToggle');
+        const navList = document.getElementById('navList');
+        const toggleIcon = menuToggle.querySelector('i');
 
-        // =================================================================
-        // NAVIGATION ENGINE (Separate Systems Switcher)
-        // =================================================================
-        const NavigationEngine = {
-            currentView: 'home',
-
-            switchView: function(viewName, element) {
-                this.currentView = viewName;
-
-                // Update Sidebar Active state
-                if (element) {
-                    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                    element.classList.add('active');
-                }
-
-                // Hide all view containers
-                document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
-
-                // Show selected view
-                const targetView = document.getElementById(`view-${viewName}`);
-                if (targetView) targetView.classList.add('active');
-
-                // Update Header Title Badge
-                let titleMap = {
-                    'home': 'Home Dashboard Active',
-                    'trading': 'Trading Systems Active',
-                    'finance': 'Financial Engine Active',
-                    'coding': 'Coding Master Active',
-                    'aiagent': 'AI Auto Agent Active'
-                };
-                document.getElementById('headerSystemTitle').innerText = titleMap[viewName] || 'System Active';
-
-                // Close mobile sidebar if open
-                document.getElementById('sidebar').classList.remove('open');
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            
+            // Icon change on click (Bars to Cross)
+            if (navList.classList.contains('active')) {
+                toggleIcon.classList.remove('fa-bars');
+                toggleIcon.classList.add('fa-xmark');
+            } else {
+                toggleIcon.classList.remove('fa-xmark');
+                toggleIcon.classList.add('fa-bars');
             }
-        };
-
-        // =================================================================
-        // 🚀 OMNI AI ENGINE MODULE (PUTER.JS INTEGRATION - AI AUTO RUNS)
-        // =================================================================
-        const GeminiOmniEngine = {
-            chatHistory: [],
-
-            processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
-                if (this.chatHistory.length === 0 && systemInstruction) {
-                    this.chatHistory.push({ role: "system", content: systemInstruction });
-                }
-
-                this.chatHistory.push({ role: "user", content: userPrompt });
-
-                try {
-                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
-
-                    let fullReply = "";
-                    for await (const part of responseStream) {
-                        if (part?.text) {
-                            fullReply += part.text;
-                            if (onChunkCallback) onChunkCallback(fullReply);
-                        }
-                    }
-
-                    this.chatHistory.push({ role: "assistant", content: fullReply });
-                    return fullReply;
-
-                } catch (err) {
-                    console.warn("[GeminiOmniEngine Fallback]:", err);
-                    const response = await puter.ai.chat(this.chatHistory);
-                    const textResponse = typeof response === 'string'
-                        ? response
-                        : (response?.message?.content || response?.text || "Error processing request.");
-
-                    this.chatHistory.push({ role: "assistant", content: textResponse });
-                    if (onChunkCallback) onChunkCallback(textResponse);
-                    return textResponse;
-                }
-            },
-
-            triggerAgenticTask: async function() {
-                const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
-                if (!userTask) return;
-                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
-                document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
-                AppController.submitQuery();
-            }
-        };
-
-        const AIActiveEngine = {
-            triggerQuickAI: function() {
-                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
-                const promptText = prompt("AI से क्या कार्य कराना चाहते हैं?");
-                if (!promptText) return;
-                document.getElementById('userInput').value = promptText;
-                AppController.submitQuery();
-            }
-        };
-
-        // =================================================================
-        // 🎙️ VOICE TTS ENGINE
-        // =================================================================
-        const VoiceEngine = {
-            enabled: false,
-            toggleVoice: function() {
-                this.enabled = !this.enabled;
-                const txt = document.getElementById('voiceStatusText');
-                txt.innerText = this.enabled ? "Voice ON" : "Voice OFF";
-                if (this.enabled) this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
-            },
-            speak: function(text) {
-                if (!this.enabled || !('speechSynthesis' in window)) return;
-                window.speechSynthesis.cancel();
-                const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
-                const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'hi-IN';
-                window.speechSynthesis.speak(utterance);
-            }
-        };
-
-        // =================================================================
-        // QUANT & FINANCIAL ENGINES
-        // =================================================================
-        const QuantEngine = {
-            runAnalysis: function() {
-                const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
-                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> QUANT DECISION ENGINE</div>
-                        • Asset Pair: <b>BTC/USD or NIFTY</b><br>
-                        • RSI (14 Period): <b>${rsi}</b><br>
-                        • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--accent-green)' : (signal === 'STRONG_SELL' ? 'var(--accent-red)' : 'var(--accent-yellow)')}">${signal}</b>
-                    </div>`;
-                UIManager.appendCustomOutput('trading', html);
-            }
-        };
-
-        const FinancialEngine = {
-            calcSIP: function() {
-                let amount = parseFloat(prompt("Monthly SIP Amount (₹):", "10000")) || 10000;
-                let rate = parseFloat(prompt("Expected Return (%):", "15")) || 15;
-                let years = parseInt(prompt("Tenure (Years):", "10")) || 10;
-                let r = (rate / 100) / 12, n = years * 12;
-                let invested = amount * n;
-                let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP PROJECTION ENGINE</div>
-                        • Total Invested: ₹${invested.toLocaleString()}<br>
-                        • Projected Corpus: <b style="color:var(--accent-green)">₹${Math.round(futureValue).toLocaleString()}</b>
-                    </div>`;
-                UIManager.appendCustomOutput('finance', html);
-            },
-            calcEMI: function() {
-                let p = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
-                let rate = parseFloat(prompt("Interest Rate (%):", "8.5")) || 8.5;
-                let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
-                let r = (rate / 12) / 100, n = years * 12;
-                let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
-                        • Monthly EMI: <b style="color:var(--accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month
-                    </div>`;
-                UIManager.appendCustomOutput('finance', html);
-            }
-        };
-
-        // =================================================================
-        // UI MANAGER
-        // =================================================================
-        const UIManager = {
-            appendMsg: function(content, sender, id = null, customAvatar = null) {
-                const container = document.getElementById('chatContainer');
-                if (!container) return;
-                const row = document.createElement('div');
-                row.className = `message-row ${sender}`;
-                if (id) row.id = id;
-                let icon = sender === 'user' ? '👤' : (customAvatar || '🧠');
-                row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
-                container.appendChild(row);
-                container.scrollTop = container.scrollHeight;
-            },
-            appendCustomOutput: function(viewType, htmlContent) {
-                const area = document.getElementById(`chat-${viewType}-area`);
-                if (!area) return;
-                const row = document.createElement('div');
-                row.className = 'message-row ai';
-                row.innerHTML = `<div class="avatar">⚡</div><div class="bubble">${htmlContent}</div>`;
-                area.appendChild(row);
-                area.scrollTop = area.scrollHeight;
-            }
-        };
-
-        // =================================================================
-        // MAIN APP CONTROLLER
-        // =================================================================
-        const AppController = {
-            handleKeyPress: function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.submitQuery();
-                }
-            },
-            submitQuery: async function() {
-                const input = document.getElementById('userInput');
-                if (!input) return;
-                const text = input.value.trim();
-                if (!text) return;
-
-                // Ensure we are in AI Agent view for conversational queries
-                NavigationEngine.switchView('aiagent', document.querySelectorAll('.nav-item')[4]);
-
-                UIManager.appendMsg(text, 'user');
-                input.value = '';
-
-                const aiMsgId = 'ai-' + Date.now();
-                UIManager.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, '🧠');
-
-                const systemRolePrompt = `ROLE: Universal Super AI Assistant. Creator info: "${SYSTEM_CREATOR}".`;
-                const bubbleElement = document.getElementById(aiMsgId);
-                const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
-
-                try {
-                    const finalReply = await GeminiOmniEngine.processChat(
-                        text,
-                        systemRolePrompt,
-                        (streamedText) => {
-                            if (bubble) {
-                                bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
-                                if (window.hljs) hljs.highlightAll();
-                            }
-                        }
-                    );
-                    VoiceEngine.speak(finalReply);
-                } catch (err) {
-                    if (bubble) {
-                        bubble.innerHTML = `**[System Error]** \`${err.message || err}\``;
-                    }
-                }
-            }
-        };
-
-        // Placeholder finance/coding mock objects to prevent errors on click
-        window.ParnaravFinancePro = {
-            scanMultiIndicators: () => QuantEngine.runAnalysis(),
-            calcPositionSize: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">POSITION SIZER</div>• Recommended Quantity: <b>250 Units</b> (Risk managed)</div>'),
-            evalRiskReward: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">RISK-REWARD</div>• Ratio: <b>1 : 2.5 (Excellent Trade)</b></div>'),
-            calcStepUpSIP: () => FinancialEngine.calcSIP(),
-            compareSipVsLumpsum: () => FinancialEngine.calcSIP(),
-            calcCAGR: () => FinancialEngine.calcSIP(),
-            calcTaxEstimate: () => UIManager.appendCustomOutput('finance', '<div class="widget-card"><div class="widget-title">TAX ESTIMATOR</div>• Estimated Tax: <b>₹12,500</b></div>')
-        };
-
-        window.ParnaravFinanceUltra100 = {
-            tech: { supertrend: () => QuantEngine.runAnalysis() },
-            options: { pcrAnalysis: () => UIManager.appendCustomOutput('trading', '<div class="widget-card"><div class="widget-title">PCR ANALYSIS</div>• PCR Ratio: <b>1.15 (Bullish Sentiment)</b></div>') }
-        };
-
-        window.CodingMasterUltra150 = {
-            formatters: { jsonFormatter: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">JSON FORMATTER</div>• Status: <b>JSON successfully formatted and validated!</b></div>') },
-            regex: { emailValidator: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">EMAIL REGEX</div>• Pattern: <code>/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/</code></div>') },
-            converters: { jwtDecoder: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">JWT DECODER</div>• Payload: <b>{sub: "1234567890", name: "Developer", iat: 1516239022}</b></div>') },
-            cssUi: { glassmorphismGen: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">GLASSMORPHISM CSS</div><code>background: rgba(255,255,255,0.1);\nbackdrop-filter: blur(10px);</code></div>') },
-            securityApi: { generateUuidV4: () => UIManager.appendCustomOutput('coding', `<div class="widget-card"><div class="widget-title">UUID V4</div>• Generated: <b>${crypto.randomUUID()}</b></div>`) },
-            devopsGit: { dockerfileGenerator: () => UIManager.appendCustomOutput('coding', '<div class="widget-card"><div class="widget-title">DOCKERFILE</div><code>FROM node:18-alpine\nWORKDIR /app\nCOPY . .\nRUN npm install</code></div>') }
-        };
+        });
     </script>
 </body>
 </html>
