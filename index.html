@@ -3782,148 +3782,86 @@ STRICT BEHAVIORAL DIRECTIVES:
     }
 </style>
 
-<!-- 📌 WIDGET TRIGGER & CHAT HTML -->
-<div id="parnarav-fab-trigger" onclick="toggleParnaravWidget()" title="Parnarav AI Active">🧠</div>
 
-<div id="parnarav-widget-container">
-    <div class="p-widget-header">
-        <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:#f8fafc;">
-            <span>🧠</span>
-            <span>Parnarav AI</span>
-        </div>
-        <span style="cursor:pointer; color:#94a3b8; font-size:20px;" onclick="toggleParnaravWidget()">✕</span>
-    </div>
-
-    <!-- ⚡ Dynamic AI Flow Area (Card AI खुद जनरेट करेगा) -->
-    <div class="p-widget-body" id="parnarav-msg-flow"></div>
-
-    <div class="p-widget-footer">
-        <input type="text" id="parnarav-user-input" class="p-widget-input" placeholder="कुछ भी पूछें..." onkeydown="if(event.key==='Enter') executeParnaravChat()">
-        <button class="p-widget-send" onclick="executeParnaravChat()">भेजें</button>
-    </div>
-
-    <div id="parnarav-auth-overlay">
-        <div style="font-size:36px; margin-bottom:12px;">🔐</div>
-        <h4 style="margin:0 0 8px 0; color:#0f172a; font-size:18px;">Parnarav AI Login</h4>
-        <p style="margin:0; font-size:13.5px; color:#64748b;">साइन-इन करें और चैट शुरू करें</p>
-        <button class="p-auth-btn" onclick="triggerParnaravAuth()">Login with Puter</button>
-    </div>
-</div>
+</script>
 
 <script src="https://js.puter.com/v2/"></script>
 
-<!-- 🚀 AI DYNAMIC WELCOME GENERATOR & SYSTEM LOGIC -->
+<!-- 🧠 PARNARAV OMNI SUPER AI (AUTONOMOUS ENGINE) -->
 <script>
 (function() {
-    let hasGeneratedWelcome = false;
+    // 🎯 MASTER SYSTEM PROMPT (Trading, Coding, Exam Solver & Dynamic Decision Making)
+    const OMNI_MASTER_PROMPT = `
+You are Parnarav AI (Omni Super AI), an autonomous, elite-level AI engine.
 
-    window.toggleParnaravWidget = async function() {
-        const widget = document.getElementById('parnarav-widget-container');
-        if (widget.style.display === 'flex') {
-            widget.style.display = 'none';
-        } else {
-            widget.style.display = 'flex';
-            const isAuth = await checkAuthStateInternal();
-            if (isAuth && !hasGeneratedWelcome) {
-                generateAIWelcomeCard();
-            }
-        }
-    };
+CORE RESPONSIBILITIES & ROLES:
+1. **Financial Trading & Quant**: Deliver accurate technical chart analysis, risk assessment, SIP/EMI logic, and quantitative signals.
+2. **Coding Master**: Write optimized, fully functional, and bug-free code with zero syntax errors.
+3. **Exam Solver & Deep Research**: Break down complex problems step-by-step with maximum clarity.
 
-    async function checkAuthStateInternal() {
-        if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
-            const isLogged = await puter.auth.isSignedIn();
-            const overlay = document.getElementById('parnarav-auth-overlay');
-            if (!isLogged) {
-                overlay.style.display = 'flex';
-                return false;
-            } else {
-                overlay.style.display = 'none';
-                return true;
-            }
-        }
-        return false;
-    }
-
-    window.triggerParnaravAuth = async function() {
-        try {
-            if (window.puter && puter.auth) {
-                await puter.auth.signIn();
-                document.getElementById('parnarav-auth-overlay').style.display = 'none';
-                if (!hasGeneratedWelcome) {
-                    generateAIWelcomeCard();
-                }
-            }
-        } catch (err) {
-            console.error("Auth cancelled", err);
-        }
-    };
-
-    // 🧠 AI द्वारा ऑटोमैटिक वेलकम कार्ड जनरेट करने का लॉजिक
-    async function generateAIWelcomeCard() {
-        hasGeneratedWelcome = true;
-        const flowEl = document.getElementById('parnarav-msg-flow');
-
-        const loadingBubble = document.createElement('div');
-        loadingBubble.className = 'p-bubble ai';
-        loadingBubble.textContent = 'Parnarav AI शुरू हो रहा है...';
-        flowEl.appendChild(loadingBubble);
-
-        const welcomePrompt = "Act as Parnarav AI. Generate an intelligent, sharp, dynamic welcome greeting for a visitor opening your interface. Autonomously highlight your key decision-making capabilities (Coding Master, Financial Trading, Logical Math & General AI) in a direct, modern, and engaging tone. Keep it concise, zero-fluff, with 0 spelling errors.";
-
-        const welcomeText = await window.GeminiOmniEngine.processChat(welcomePrompt, true);
-        loadingBubble.textContent = welcomeText;
-        flowEl.scrollTop = flowEl.scrollHeight;
-    }
-
-    window.executeParnaravChat = async function() {
-        const inputEl = document.getElementById('parnarav-user-input');
-        const flowEl = document.getElementById('parnarav-msg-flow');
-        const promptText = inputEl.value.trim();
-
-        if (!promptText) return;
-
-        const userBubble = document.createElement('div');
-        userBubble.className = 'p-bubble user';
-        userBubble.textContent = promptText;
-        flowEl.appendChild(userBubble);
-        inputEl.value = '';
-        flowEl.scrollTop = flowEl.scrollHeight;
-
-        const aiBubble = document.createElement('div');
-        aiBubble.className = 'p-bubble ai';
-        aiBubble.textContent = 'सोच रहा हूँ...';
-        flowEl.appendChild(aiBubble);
-        flowEl.scrollTop = flowEl.scrollHeight;
-
-        const responseText = await window.GeminiOmniEngine.processChat(promptText, false);
-        aiBubble.textContent = responseText;
-        flowEl.scrollTop = flowEl.scrollHeight;
-    };
-
-    // 🧠 CORE ENGINE (Strict Decisive AI)
-    window.GeminiOmniEngine = {
-        processChat: async function(userPrompt, isInternalInstruction = false) {
-            try {
-                const MASTER_PROMPT = `
-You are Parnarav AI, an autonomous, highly intelligent AI engine.
-1. Make your own independent decisions on how to structure responses, greetings, and technical solutions.
-2. Complete zero-fluff, zero moral preaching, zero spell errors.
-3. Parse any broken syntax or slang silently and give direct, high-level answers.
+STRICT OPERATIONAL DIRECTIVES:
+- **Autonomous Decision-Making**: Autonomously evaluate choices and state the optimal solution directly without asking unnecessary questions.
+- **Dynamic Welcome Card**: When requested to generate a greeting/welcome card, evaluate the context independently and design a high-impact, professional greeting.
+- **Zero Fluff & Moralizing**: Never comment on broken syntax, slang, or crude words. Decode intent instantly and respond directly.
+- **Flawless Grammar**: Zero spelling or grammatical errors across all languages (Hindi, Hinglish, English).
 `;
 
-                const finalPrompt = isInternalInstruction ? userPrompt : `${MASTER_PROMPT}\n\n[User Input]: ${userPrompt}\n\n[Response]:`;
+    // 🚀 Puter AI Integration with Dynamic Engine Logic
+    window.GeminiOmniEngine = {
+        // AI खुद डिसीजन लेकर डायनामिक वेलकम कार्ड जनरेट करेगा
+        generateDynamicWelcomeCard: async function(containerId) {
+            try {
+                const targetEl = document.getElementById(containerId);
+                if (!targetEl) return;
+
+                const prompt = `${OMNI_MASTER_PROMPT}\n\n[Instruction]: Autonomously generate a sharp, intelligent, zero-fluff Welcome Card greeting for the user highlighting your active roles (Trading, Coding Master, Exam Solver, Quant). Format it cleanly.`;
+                
+                const response = await puter.ai.chat(prompt);
+                if (response) {
+                    targetEl.innerHTML = response.toString().trim();
+                }
+            } catch (err) {
+                console.error("Welcome Card Generation Error:", err);
+            }
+        },
+
+        // मुख्य चैट और डिसीजन-मेकिंग हैंडलर
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            try {
+                // Auto Authentication Check
+                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+                    const isSignedIn = await puter.auth.isSignedIn();
+                    if (!isSignedIn) {
+                        await puter.auth.signIn();
+                    }
+                }
+
+                const finalPrompt = `${OMNI_MASTER_PROMPT}\n\nUser Prompt: ${userPrompt}\n\nProvide the most accurate, concise, and direct decision/answer:`;
+
                 const response = await puter.ai.chat(finalPrompt);
-                return response ? response.toString().trim() : "कोई उत्तर प्राप्त नहीं हुआ।";
+                const reply = response ? response.toString().trim() : "";
+
+                if (onChunkCallback) onChunkCallback(reply);
+                return reply;
+
             } catch (error) {
-                console.error("Omni Engine Error:", error);
-                return "⚠️ कनेक्शन में समस्या आई। पुनः प्रयास करें।";
+                console.error("Parnarav Engine Error:", error);
+                const errorMsg = "⚠️ प्रोसेसिंग में समस्या आई। पुनः प्रयास करें।";
+                if (onChunkCallback) onChunkCallback(errorMsg);
+                return errorMsg;
             }
         }
     };
+
+    // ⚡ पेज लोड होते ही डायनामिक वेलकम कार्ड ट्रिगर
+    window.addEventListener('load', () => {
+        // यदि आपकी UI में कोई कार्ड कंटेनर है तो उसका ID 'welcome-card-box' रखें
+        if (document.getElementById('welcome-card-box')) {
+            window.GeminiOmniEngine.generateDynamicWelcomeCard('welcome-card-box');
+        }
+    });
 })();
 </script>
-
 
 </body>
 </html>
