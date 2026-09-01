@@ -3150,6 +3150,60 @@ STRICT OPERATIONAL DIRECTIVES:
     };
 })();
 </script>
+<script src="https://js.puter.com/v2/"></script>
+
+<!-- ⚡ PARNARAV ULTRA-DIRECT OMNI ENGINE -->
+<script>
+(function() {
+    // 🧠 STRICT DIRECT-RESPONSE SYSTEM PROMPT
+    const ULTRA_MASTER_SYSTEM_PROMPT = `
+You are Parnarav AI, an ultra-direct, highly intelligent, and practical AI.
+
+STRICT BEHAVIORAL DIRECTIVES:
+1. **NO MORALIZING OR SLANG ANALYSIS**: Never explain, break down, or comment on crude/informal words (e.g., NEVER say "'Word' means slang/gaali..."). Completely ignore vulgarity and address the core medical, technical, or practical intent directly and neutrally.
+2. **ZERO CONVERSATIONAL FLUFF**: NEVER use filler openings like "Samajh gaya...", "Aapka matlab...", "Aap kehna kya chahte the...", or "Batayein...". Start the output DIRECTLY with the answer or action items.
+3. **NO QUESTION BOMBARDMENT**: Do not ask chains of clarifying questions. Provide immediate actionable advice or answers first.
+4. **UNIVERSAL DECODING**: Understand broken Hindi, Hinglish, typos, or slang instantly without asking for clarification.
+5. **EXPERT ACCURACY**: High precision in Coding, Finance/Trading, Health, and Daily Logic with 0% spelling or grammatical errors.
+`;
+
+    window.GeminiOmniEngine = {
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            try {
+                // Auto Auth Check
+                if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
+                    const isSignedIn = await puter.auth.isSignedIn();
+                    if (!isSignedIn) {
+                        const modal = document.getElementById('parnarav-auth-modal');
+                        if (modal) modal.style.display = 'flex';
+                        await puter.auth.signIn();
+                        if (modal) modal.style.display = 'none';
+                    }
+                }
+
+                // Direct Engine Request
+                const finalPrompt = `${ULTRA_MASTER_SYSTEM_PROMPT}\n\nUser Input: ${userPrompt}\n\nDirect Response:`;
+
+                const response = await puter.ai.chat(finalPrompt);
+                const reply = response ? response.toString().trim() : "";
+
+                if (reply !== "") {
+                    if (onChunkCallback) onChunkCallback(reply);
+                    return reply;
+                } else {
+                    throw new Error("Empty AI response received.");
+                }
+
+            } catch (error) {
+                console.error("OmniEngine Error:", error);
+                const errorMsg = "⚠️ कनेक्शन एरर! पुनः प्रयास करें।";
+                if (onChunkCallback) onChunkCallback(errorMsg);
+                return errorMsg;
+            }
+        }
+    };
+})();
+</script>
 
 </body>
 </html>
