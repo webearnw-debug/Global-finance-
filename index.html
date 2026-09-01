@@ -1,1 +1,280 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Finance & Personal AI Assistant</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #07090e;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Header / Navbar Styling (Design #8 Dark Theme) */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 4%;
+            background-color: #0d1117;
+            border-bottom: 1px solid #1f293d;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: #22c55e;
+            font-size: 24px;
+        }
+
+        .logo-text h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            color: #8b949e;
+            display: block;
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            padding: 6px 0;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #22c55e;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #22c55e;
+            border-radius: 2px;
+        }
+
+        /* Action Buttons & Controls */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .search-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Dedicated Glowing Personal AI Assistant Button */
+        .ai-assistant-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #22c55e;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .ai-assistant-btn:hover {
+            background: rgba(34, 197, 94, 0.25);
+            box-shadow: 0 0 18px rgba(34, 197, 94, 0.5);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1px solid #273344;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #161b22;
+        }
+
+        .get-started-btn {
+            background: #22c55e;
+            border: none;
+            color: #000000;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .get-started-btn:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Hamburger Toggle */
+        .hamburger {
+            display: none;
+            font-size: 20px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background-color: #0d1117;
+                border-bottom: 1px solid #1f293d;
+                padding: 20px 0;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .login-btn, .get-started-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar Container -->
+    <header class="navbar">
+        <!-- 1. Logo Section -->
+        <a href="#" class="logo-container">
+            <div class="logo-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="logo-text">
+                <h2>GLOBAL FINANCE</h2>
+                <span>Smart Trading & Investment</span>
+            </div>
+        </a>
+
+        <!-- 2. Main Navigation Menu -->
+        <nav class="nav-menu">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#trading" class="active">फाइनेंशियल ट्रेडिंग</a></li>
+                <li><a href="#investment">इन्वेस्टमेंट</a></li>
+                <li><a href="#loans">लोन</a></li>
+                <li><a href="#earnings">अर्निंग टिप्स</a></li>
+            </ul>
+        </nav>
+
+        <!-- 3. Right Control Panel (With Personal AI Assistant) -->
+        <div class="nav-actions">
+            <button class="search-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            <!-- Dedicated Glowing Personal AI Assistant Button -->
+            <button class="ai-assistant-btn" id="aiBtn">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>पर्सनल एआई असिस्टेंट</span>
+            </button>
+
+            <button class="login-btn">लॉगिन</button>
+            <button class="get-started-btn">शुरू करें</button>
+
+            <!-- Mobile Hamburger Toggle Icon -->
+            <div class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const aiBtn = document.getElementById('aiBtn');
+
+        // Toggle mobile navigation menu
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Trigger AI Assistant Window
+        aiBtn.addEventListener('click', () => {
+            alert("🤖 आपका पर्सनल एआई असिस्टेंट कनेक्ट हो रहा है... चैट विंडो जल्द ही खुलेगी!");
+        });
+    </script>
+
+</body>
+</html>
 
