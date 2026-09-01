@@ -2854,41 +2854,110 @@ window.salesEngine = new SalesExecutiveUltra100();
     }
 </style>
 
+<!-- 🎨 Parnarav AI Light Login Box Styling -->
+<style>
+    #parnarav-auth-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999999;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .parnarav-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 360px;
+        padding: 28px 20px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .parnarav-card h3 {
+        margin: 0 0 8px 0;
+        font-size: 20px;
+        color: #0f172a;
+        font-weight: 700;
+    }
+
+    .parnarav-card p {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0 0 20px 0;
+    }
+
+    .parnarav-login-btn {
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+</style>
+
 <!-- 🔐 Light Theme Login Card HTML -->
 <div id="parnarav-auth-modal">
     <div class="parnarav-card">
         <h3>Parnarav AI Login</h3>
-        <p>चैट शुरू करने के लिए लॉगिन करें</p>
+        <p>लॉगिन हो रहा है, कृपया प्रतीक्षा करें...</p>
         <button class="parnarav-login-btn" onclick="triggerParnaravLogin()">Login with Puter</button>
     </div>
 </div>
 
 <script src="https://js.puter.com/v2/"></script>
 
-<!-- 🚀 Simple Puter Engine with In-App Login -->
+<!-- 🚀 Fast Auto-Login Engine (3 Seconds + Light Box Modal) -->
 <script>
 (function() {
-    async function checkAuthState() {
-        if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
-            const isLogged = await puter.auth.isSignedIn();
-            if (!isLogged) {
-                document.getElementById('parnarav-auth-modal').style.display = 'flex';
-            }
-        }
-    }
+    // ⏱️ विज़िटर के आते ही 3 सेकंड (3000ms) में ऑटो-लॉगिन शुरू होगा
+    window.addEventListener('load', () => {
+        setTimeout(async () => {
+            try {
+                if (window.puter && puter.auth) {
+                    const isLogged = await puter.auth.isSignedIn();
+                    if (!isLogged) {
+                        const modal = document.getElementById('parnarav-auth-modal');
+                        if (modal) modal.style.display = 'flex';
 
+                        // अपने आप लॉगिन ट्रिगर
+                        await puter.auth.signIn();
+                        if (modal) modal.style.display = 'none';
+                    }
+                }
+            } catch (err) {
+                console.log("Auto-login status:", err);
+            }
+        }, 3000); // 3 सेकंड का टाइमर
+    });
+
+    // मैनुअल बैकअप क्लिक फ़ंक्शन
     window.triggerParnaravLogin = async function() {
         try {
             if (window.puter && puter.auth) {
                 await puter.auth.signIn();
-                document.getElementById('parnarav-auth-modal').style.display = 'none';
+                const modal = document.getElementById('parnarav-auth-modal');
+                if (modal) modal.style.display = 'none';
             }
         } catch (err) {
-            console.error("Login failed:", err);
+            console.error("Login action cancelled:", err);
         }
     };
-
-    window.addEventListener('load', checkAuthState);
 
     window.GeminiOmniEngine = {
         processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
@@ -2896,10 +2965,10 @@ window.salesEngine = new SalesExecutiveUltra100();
                 if (window.puter && puter.auth && typeof puter.auth.isSignedIn === 'function') {
                     const isSignedIn = await puter.auth.isSignedIn();
                     if (!isSignedIn) {
-                        document.getElementById('parnarav-auth-modal').style.display = 'flex';
-                        const reqMsg = "⚠️ चैट करने के लिए स्क्रीन पर दिख रहे लॉगिन बटन पर क्लिक करें।";
-                        if (onChunkCallback) onChunkCallback(reqMsg);
-                        return reqMsg;
+                        const modal = document.getElementById('parnarav-auth-modal');
+                        if (modal) modal.style.display = 'flex';
+                        await puter.auth.signIn();
+                        if (modal) modal.style.display = 'none';
                     }
                 }
 
@@ -2919,6 +2988,7 @@ window.salesEngine = new SalesExecutiveUltra100();
     };
 })();
 </script>
+
 
 
 </body>
