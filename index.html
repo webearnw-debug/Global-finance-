@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Dark Bullish Layout</title>
+    <title>Global Finance - Alpha Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #06090e;
             --bg-card: #0d131f;
             --accent-green: #00e676;
-            --accent-glow: rgba(0, 230, 118, 0.3);
+            --accent-glow: rgba(0, 230, 118, 0.25);
+            --alpha-glow: linear-gradient(135deg, #7928ca, #00dfd8);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
@@ -29,13 +30,13 @@
             min-height: 100vh;
         }
 
-        /* Top Live Ticker Bar */
+        /* --- 1. Top Stock Ticker Bar (Compact) --- */
         .ticker-bar {
             background: #030508;
             border-bottom: 1px solid var(--border-color);
-            padding: 6px 4%;
+            padding: 5px 4%;
             display: flex;
-            gap: 2rem;
+            gap: 1.8rem;
             overflow-x: auto;
             font-size: 0.75rem;
             color: var(--text-secondary);
@@ -44,181 +45,151 @@
         .ticker-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             white-space: nowrap;
         }
 
-        .ticker-val {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
+        .ticker-val { color: var(--text-primary); font-weight: 600; }
+        .ticker-up { color: var(--accent-green); font-weight: 600; }
+        .ticker-down { color: #ff5252; font-weight: 600; }
 
-        .ticker-up {
-            color: var(--accent-green);
-            font-weight: 600;
-        }
-
-        .ticker-down {
-            color: #ff5252;
-            font-weight: 600;
-        }
-
-        /* Top Header Navigation */
+        /* --- 2. Compact Sleek Header Navbar --- */
         .header {
             position: sticky;
             top: 0;
-            background: rgba(13, 19, 31, 0.9);
+            background: rgba(13, 19, 31, 0.95);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 4%;
+            padding: 0.6rem 4%;
             z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             text-decoration: none;
             color: #fff;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             letter-spacing: 0.5px;
         }
 
         .logo-icon {
             color: var(--accent-green);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
-        /* Main Top Header Menu Items */
+        /* Top Menu Buttons Row */
         .navbar {
             display: flex;
-            gap: 1.2rem;
+            gap: 0.5rem;
             list-style: none;
             align-items: center;
         }
 
-        .nav-link {
+        .nav-btn {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: 1px solid transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-btn:hover, .nav-btn.active {
             color: var(--accent-green);
             background: rgba(0, 230, 118, 0.08);
+            border-color: rgba(0, 230, 118, 0.2);
         }
 
-        /* Header Right Side Controls & AI Badge */
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .icon-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 6px;
-            transition: 0.2s;
-        }
-
-        .icon-btn:hover {
-            color: var(--accent-green);
-        }
-
-        /* Photo Jaisa Glowing AI Badge Icon */
-        .ai-header-btn {
-            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 230, 118, 0.05));
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            padding: 6px 14px;
+        /* Premium Alpha AI Button Style */
+        .alpha-ai-btn {
+            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
+            border: 1px solid #00dfd8;
+            color: #ffffff;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.82rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
-            box-shadow: 0 0 12px var(--accent-glow);
+            box-shadow: 0 0 12px rgba(0, 223, 216, 0.3);
             transition: all 0.3s ease;
+            margin-left: 6px;
         }
 
-        .ai-header-btn:hover, .ai-header-btn.active {
-            background: var(--accent-green);
-            color: #000;
-            box-shadow: 0 0 20px var(--accent-green);
+        .alpha-ai-btn i {
+            color: #00dfd8;
         }
 
-        /* Operating Systems Area */
+        .alpha-ai-btn:hover, .alpha-ai-btn.active {
+            background: var(--alpha-glow);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 223, 216, 0.6);
+            transform: translateY(-1px);
+        }
+
+        /* --- 3. Workspace / Dynamic Page Views --- */
         .main-workspace {
             padding: 1.5rem 4%;
         }
 
-        .os-view {
+        .page-view {
             display: none;
         }
 
-        .os-view.active {
+        .page-view.active {
             display: block;
         }
 
-        /* Blank OS Canvas for Your Code */
+        /* Home View Grid Layout (Mixed Content Overview) */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .home-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.2rem;
+        }
+
+        .home-card h3 {
+            font-size: 0.95rem;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Custom OS Blank Canvas */
         .blank-os-container {
             width: 100%;
-            min-height: 80vh;
+            min-height: 75vh;
             border: 2px dashed rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             background: var(--bg-card);
             position: relative;
         }
-
-        /* Mobile Hamburger Icon */
-        .mobile-menu-btn {
-            display: none;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 900px) {
-            .navbar {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: #0d131f;
-                flex-direction: column;
-                padding: 1rem;
-                border-bottom: 1px solid var(--border-color);
-            }
-            .navbar.open {
-                display: flex;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- 1. Top Stock Ticker Bar -->
+    <!-- 1. Stock Ticker Bar -->
     <div class="ticker-bar">
         <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
         <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
@@ -227,133 +198,118 @@
         <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
     </div>
 
-    <!-- 2. Header & Main Navbar Menu -->
+    <!-- 2. Clean Compact Top Header Navigation -->
     <header class="header">
         <a href="#" class="logo">
             <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
         </a>
 
-        <!-- Menu items matching photo header layout -->
-        <ul class="navbar" id="topNavbar">
-            <li><a class="nav-link active" onclick="switchOS('home', this)">Home</a></li>
-            <li><a class="nav-link" onclick="switchOS('markets', this)">Markets</a></li>
-            <li><a class="nav-link" onclick="switchOS('trading', this)">Trading</a></li>
-            <li><a class="nav-link" onclick="switchOS('investments', this)">Investments</a></li>
-            <li><a class="nav-link" onclick="switchOS('loans', this)">Loans</a></li>
-            <li><a class="nav-link" onclick="switchOS('earnings', this)">Earnings</a></li>
-            <li><a class="nav-link" onclick="switchOS('insights', this)">Insights</a></li>
-            <li><a class="nav-link" onclick="switchOS('tools', this)">Tools <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
-            <li><a class="nav-link" onclick="switchOS('more', this)">More <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+        <ul class="navbar">
+            <li><button class="nav-btn active" onclick="switchPage('home', this)">Home</button></li>
+            <li><button class="nav-btn" onclick="switchPage('financial', this)">Financial</button></li>
+            <li><button class="nav-btn" onclick="switchPage('trading', this)">Trading</button></li>
+            <li><button class="nav-btn" onclick="switchPage('investment', this)">Investment</button></li>
+            <li><button class="nav-btn" onclick="switchPage('loans', this)">Loans</button></li>
+            <li><button class="nav-btn" onclick="switchPage('earning-tips', this)">Earning Tips</button></li>
+            <li>
+                <button class="alpha-ai-btn" onclick="switchPage('alpha-ai', this)">
+                    <i class="fa-solid fa-bolt-lightning"></i> Alpha AI
+                </button>
+            </li>
         </ul>
-
-        <!-- Right side Header Actions & Updated AI Button -->
-        <div class="header-actions">
-            <button class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-            
-            <button class="ai-header-btn" onclick="switchOS('ai', this)">
-                <i class="fa-solid fa-robot"></i> AI Personal Assistant
-            </button>
-
-            <button class="icon-btn" title="User Profile"><i class="fa-regular fa-user"></i></button>
-            <div class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></div>
-        </div>
     </header>
 
-    <!-- 3. Dynamic Isolated Operating System Containers -->
+    <!-- 3. Dynamic Page Views (Operating Systems) -->
     <main class="main-workspace">
 
-        <!-- OS: HOME -->
-        <div id="os-home" class="os-view active">
+        <!-- 1. HOME VIEW (Mixed Features Overview) -->
+        <div id="page-home" class="page-view active">
+            <div class="home-grid">
+                <div class="home-card">
+                    <h3><i class="fa-solid fa-wallet"></i> Financial Overview</h3>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Overall financial status, account balance, and stats mix view.</p>
+                </div>
+                <div class="home-card">
+                    <h3><i class="fa-solid fa-chart-candlestick"></i> Trading Live</h3>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Live stock tickers, gainers, losers, and market analysis.</p>
+                </div>
+                <div class="home-card">
+                    <h3><i class="fa-solid fa-chart-pie"></i> Investment Portfolio</h3>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Mutual funds, stocks, and asset allocation breakdown.</p>
+                </div>
+                <div class="home-card">
+                    <h3><i class="fa-solid fa-hand-holding-dollar"></i> Loans & Credit</h3>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Active loans, monthly EMI status, and credit line tracker.</p>
+                </div>
+            </div>
+
+            <!-- Blank Area for Home Page Specific Code -->
             <div class="blank-os-container">
-                <!-- AAPKA HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA HOME PAGE CUSTOM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: MARKETS -->
-        <div id="os-markets" class="os-view">
+        <!-- 2. FINANCIAL PAGE OS -->
+        <div id="page-financial" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA MARKETS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA FINANCIAL OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: TRADING -->
-        <div id="os-trading" class="os-view">
+        <!-- 3. TRADING PAGE OS -->
+        <div id="page-trading" class="page-view">
             <div class="blank-os-container">
                 <!-- AAPKA TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: INVESTMENTS -->
-        <div id="os-investments" class="os-view">
+        <!-- 4. INVESTMENT PAGE OS -->
+        <div id="page-investment" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA INVESTMENTS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA INVESTMENT OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: LOANS -->
-        <div id="os-loans" class="os-view">
+        <!-- 5. LOANS PAGE OS -->
+        <div id="page-loans" class="page-view">
             <div class="blank-os-container">
                 <!-- AAPKA LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: EARNINGS -->
-        <div id="os-earnings" class="os-view">
+        <!-- 6. EARNING TIPS PAGE OS -->
+        <div id="page-earning-tips" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA EARNINGS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA EARNING TIPS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS: INSIGHTS -->
-        <div id="os-insights" class="os-view">
+        <!-- 7. ALPHA AI PAGE OS -->
+        <div id="page-alpha-ai" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA INSIGHTS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- OS: TOOLS -->
-        <div id="os-tools" class="os-view">
-            <div class="blank-os-container">
-                <!-- AAPKA TOOLS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- OS: MORE -->
-        <div id="os-more" class="os-view">
-            <div class="blank-os-container">
-                <!-- AAPKA MORE OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- OS: AI ASSISTANT -->
-        <div id="os-ai" class="os-view">
-            <div class="blank-os-container">
-                <!-- AAPKA AI ASSISTANT OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA ALPHA AI OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
     </main>
 
+    <!-- Page Switching Logic -->
     <script>
-        function switchOS(targetId, element) {
-            // Hide all active OS views
-            const views = document.querySelectorAll('.os-view');
-            views.forEach(v => v.classList.remove('active'));
+        function switchPage(pageId, element) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(p => p.classList.remove('active'));
 
-            // Reset active states on navbar items and AI button
-            const navLinks = document.querySelectorAll('.nav-link, .ai-header-btn');
-            navLinks.forEach(n => n.classList.remove('active'));
+            // Remove active highlight from all header buttons
+            const buttons = document.querySelectorAll('.nav-btn, .alpha-ai-btn');
+            buttons.forEach(b => b.classList.remove('active'));
 
-            // Show selected OS view container
-            const activeOS = document.getElementById('os-' + targetId);
-            if (activeOS) activeOS.classList.add('active');
+            // Show selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) targetPage.classList.add('active');
 
-            // Highlight active button
+            // Set active highlight on clicked button
             if (element) element.classList.add('active');
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('topNavbar').classList.toggle('open');
         }
     </script>
 </body>
