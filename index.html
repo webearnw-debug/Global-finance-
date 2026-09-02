@@ -3,191 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Header Navbar</title>
-    <!-- Font Awesome Icons -->
+    <title>Global Finance - Dark AI Header</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            min-height: 200vh; /* Scroll demo ke liye */
+            background-color: #060913;
+            color: #f1f5f9;
+            min-height: 100vh;
         }
 
-        /* Glassmorphism Header */
+        /* --- Header & Navbar Styles --- */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1rem 5%;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 70px;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 4%;
             z-index: 1000;
-            transition: all 0.3s ease;
         }
 
         /* Brand Logo */
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #060913;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .logo-text h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .logo-text span {
+            font-size: 0.7rem;
+            color: #64748b;
+            display: block;
+            margin-top: -2px;
         }
 
         /* Navigation Links */
         .navbar {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.8rem;
             list-style: none;
         }
 
-        .nav-link {
+        .nav-item {
             color: #94a3b8;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #38bdf8;
-        }
-
-        /* Active underline animation */
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: #38bdf8;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        /* Action Button */
-        .nav-btn {
-            background: linear-gradient(135deg, #0284c7, #6366f1);
-            color: #fff;
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
             font-size: 0.9rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        .nav-item:hover, .nav-item.active {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
         }
 
-        /* Mobile Hamburger Icon */
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            color: #fff;
+        /* Special AI Assistant Button */
+        .ai-btn {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            color: #38bdf8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .ai-btn:hover, .ai-btn.active {
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .ai-btn i {
+            font-size: 1rem;
+        }
+
+        /* Right Side Controls */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .auth-btn {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
+        /* --- Content Panels / Operating Systems Containers --- */
+        .main-container {
+            margin-top: 70px;
+            padding: 2rem 4%;
+        }
 
-            .navbar {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: #0f172a;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                flex-direction: column;
-                padding: 1.5rem 0;
-                gap: 1.2rem;
-                display: none;
-            }
+        .view-panel {
+            display: none;
+        }
 
-            .navbar.active {
-                display: flex;
-            }
+        .view-panel.active {
+            display: block;
+        }
 
-            .nav-btn {
-                width: 80%;
-                text-align: center;
-            }
+        /* Home View Line-by-Line Cards */
+        .feed-section {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feed-section h2 {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Empty AI Workspace Styling */
+        #ai-workspace {
+            min-height: 80vh;
+            border: 2px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .ai-placeholder-text {
+            color: #475569;
+            text-align: center;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
+    <!-- Header & Navbar -->
     <header class="header">
-        <a href="#" class="logo">
-            <i class="fa-solid fa-bolt" style="color: #38bdf8;"></i>
-            <span>Studio</span>Pro
+        <a href="#" class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="logo-text">
+                <h1>Global Finance</h1>
+                <span>INVEST. GROW. SUCCEED.</span>
+            </div>
         </a>
 
-        <div class="menu-toggle" id="menuToggle">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-
-        <ul class="navbar" id="navList">
-            <li><a href="#" class="nav-link active">Home</a></li>
-            <li><a href="#" class="nav-link">Features</a></li>
-            <li><a href="#" class="nav-link">Pricing</a></li>
-            <li><a href="#" class="nav-link">About</a></li>
-            <li><a href="#" class="nav-btn">Get Started</a></li>
+        <ul class="navbar">
+            <li><a class="nav-item active" onclick="switchView('home', this)">Home</a></li>
+            <li><a class="nav-item" onclick="switchView('markets', this)">Markets</a></li>
+            <li><a class="nav-item" onclick="switchView('insights', this)">Insights</a></li>
+            <li><a class="nav-item" onclick="switchView('tools', this)">Tools</a></li>
+            <li>
+                <button class="ai-btn" onclick="switchView('ai', this)">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant
+                </button>
+            </li>
         </ul>
+
+        <div class="header-actions">
+            <button class="auth-btn">Login</button>
+        </div>
     </header>
 
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const navList = document.getElementById('navList');
-        const toggleIcon = menuToggle.querySelector('i');
-
-        menuToggle.addEventListener('click', () => {
-            navList.classList.toggle('active');
+    <!-- Content Views Area -->
+    <main class="main-container">
+        
+        <!-- 1. Home View (Financial, Trading, Investment, Loans Grid) -->
+        <div id="home-view" class="view-panel active">
+            <div class="feed-section">
+                <h2>1. Financial Overview</h2>
+                <p style="color: #94a3b8;">Line 1: Aapka overall financial portfolio aur summary yahan show hoga.</p>
+            </div>
             
-            // Icon change on click (Bars to Cross)
-            if (navList.classList.contains('active')) {
-                toggleIcon.classList.remove('fa-bars');
-                toggleIcon.classList.add('fa-xmark');
-            } else {
-                toggleIcon.classList.remove('fa-xmark');
-                toggleIcon.classList.add('fa-bars');
-            }
-        });
+            <div class="feed-section">
+                <h2>2. Trading Live Feed</h2>
+                <p style="color: #94a3b8;">Line 2: Live stock prices aur market trends yahan update honge.</p>
+            </div>
+
+            <div class="feed-section">
+                <h2>3. Investments Tracker</h2>
+                <p style="color: #94a3b8;">Line 3: Mutual funds, stocks aur crypto investment data.</p>
+            </div>
+
+            <div class="feed-section">
+                <h2>4. Loans & Liabilities</h2>
+                <p style="color: #94a3b8;">Line 4: Active loans, EMI schedules aur interest rates ka breakdown.</p>
+            </div>
+        </div>
+
+        <!-- 2. Markets View -->
+        <div id="markets-view" class="view-panel">
+            <div class="feed-section">
+                <h2>Markets Panel</h2>
+                <p style="color: #94a3b8;">Markets ka custom operating code yahan lagayein.</p>
+            </div>
+        </div>
+
+        <!-- 3. Insights View -->
+        <div id="insights-view" class="view-panel">
+            <div class="feed-section">
+                <h2>Insights Panel</h2>
+                <p style="color: #94a3b8;">Insights ka custom code yahan lagayein.</p>
+            </div>
+        </div>
+
+        <!-- 4. Tools View -->
+        <div id="tools-view" class="view-panel">
+            <div class="feed-section">
+                <h2>Tools Panel</h2>
+                <p style="color: #94a3b8;">Calculators aur financial tools yahan add karein.</p>
+            </div>
+        </div>
+
+        <!-- 5. EMPTY AI WORKSPACE (Yahan apna AI code likhein) -->
+        <div id="ai-view" class="view-panel">
+            <div id="ai-workspace">
+                <!-- ========================================== -->
+                <!-- START: AAPKA CUSTOM AI CODE YAHAN AAYEGA -->
+                <!-- ========================================== -->
+                
+                <div class="ai-placeholder-text">
+                    <i class="fa-solid fa-code" style="font-size: 2rem; margin-bottom: 10px; color: #38bdf8;"></i>
+                    <p>[ AI Space Empty - Yahan Apna Custom AI Operating System Integration Code Likhein ]</p>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- END: AAPKA CUSTOM AI CODE -->
+                <!-- ========================================== -->
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function switchView(viewName, element) {
+            // Hide all views
+            const views = document.querySelectorAll('.view-panel');
+            views.forEach(view => view.classList.remove('active'));
+
+            // Deactivate all nav highlights
+            const navItems = document.querySelectorAll('.nav-item, .ai-btn');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            // Show target view
+            document.getElementById(viewName + '-view').classList.add('active');
+
+            // Highlight active button
+            element.classList.add('active');
+        }
     </script>
 </body>
 </html>
