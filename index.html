@@ -1,100 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Global Finance</title>
+<title>Global Finance - Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100%}
-body{background:#05080d;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
-img{display:block}
+html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
+img{display:block;width:100%}
+
+/* REAL-TIME TICKER */
 .ticker-wrap{width:100%;height:38px;overflow:hidden;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap;position:relative;z-index:2000}
-.ticker-move{height:100%;width:max-content;display:flex;align-items:center;gap:38px;padding-left:20px;animation:tickerMove 30s linear infinite}
-.ticker-item{display:flex;align-items:center;gap:7px;font-size:12px;color:#94a3b8;flex-shrink:0}
-.ticker-value{color:#fff;font-weight:700}
+.ticker-move{height:100%;width:max-content;display:flex;align-items:center;gap:30px;padding-left:15px;animation:tickerMove 35s linear infinite}
+.ticker-move:hover{animation-play-state:paused}
+.ticker-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;flex-shrink:0}
+.ticker-value{color:#fff;font-weight:700;transition:color 0.3s ease, transform 0.3s ease}
 .up{color:#00e676;font-weight:700}
 .down{color:#ff5252;font-weight:700}
+.flash-up{color:#00e676!important;text-shadow:0 0 8px rgba(0,230,118,0.8)}
+.flash-down{color:#ff5252!important;text-shadow:0 0 8px rgba(255,82,82,0.8)}
+
 @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.header{width:100%;height:70px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 3%;background:rgba(7,11,17,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
-.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-size:18px;font-weight:800;letter-spacing:.7px}
-.logo i{color:#00e676;font-size:23px;filter:drop-shadow(0 0 9px rgba(0,230,118,.45))}
+
+/* HEADER */
+.header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.96);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:16px;font-weight:800;letter-spacing:.5px}
+.logo i{color:#00e676;font-size:20px;filter:drop-shadow(0 0 8px rgba(0,230,118,.4))}
+
+/* MENU BUTTON & DROPDOWN */
 .menu-area{position:relative}
-.menu-button{height:43px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:9px;background:rgba(0,230,118,.08);color:#00e676;border:1px solid #00e676;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 0 13px rgba(0,230,118,.20)}
-.menu-button:hover{background:#00e676;color:#000;box-shadow:0 0 25px rgba(0,230,118,.55)}
-.menu-button:active{transform:scale(.97)}
-.menu-dropdown{position:absolute;top:53px;right:0;width:245px;padding:9px;display:none;flex-direction:column;gap:4px;background:rgba(10,15,24,.98);border:1px solid rgba(255,255,255,.10);border-radius:14px;box-shadow:0 20px 55px rgba(0,0,0,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.menu-button{height:38px;padding:0 16px;display:flex;align-items:center;justify-content:center;gap:8px;background:#00e676;color:#000;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 0 15px rgba(0,230,118,.3)}
+.menu-button:hover{background:#00c853;box-shadow:0 0 20px rgba(0,230,118,.5)}
+.menu-button:active{transform:scale(.96)}
+
+.menu-dropdown{position:absolute;top:48px;right:0;width:230px;padding:8px;display:none;flex-direction:column;gap:4px;background:rgba(12,16,24,.98);border:1px solid rgba(255,255,255,.1);border-radius:12px;box-shadow:0 15px 40px rgba(0,0,0,.8);backdrop-filter:blur(20px)}
 .menu-dropdown.open{display:flex;animation:dropdownOpen .18s ease-out}
-@keyframes dropdownOpen{from{opacity:0;transform:translateY(-7px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.menu-item{width:100%;min-height:45px;border:0;background:transparent;color:#94a3b8;border-radius:9px;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:14px;font-weight:600;transition:.2s ease}
-.menu-item:hover{background:rgba(0,230,118,.10);color:#00e676;padding-left:17px}
-.menu-item.active{background:rgba(0,230,118,.10);color:#00e676}
-.menu-item i{width:22px;text-align:center}
-.alpha-ai{margin-top:5px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.20),rgba(0,223,216,.18))}
-.alpha-ai:hover,.alpha-ai.active{color:#fff;background:linear-gradient(135deg,#7928ca,#00dfd8);box-shadow:0 0 20px rgba(0,223,216,.40)}
+@keyframes dropdownOpen{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.menu-item{width:100%;min-height:42px;border:0;background:transparent;color:#94a3b8;border-radius:8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;font-weight:600;transition:.2s ease}
+.menu-item:hover,.menu-item.active{background:rgba(0,230,118,.12);color:#00e676}
+.alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.25),rgba(0,223,216,.2))}
+.alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff}
+
+/* MAIN FULL WIDTH COVERAGE */
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
-.home-hero{position:relative;width:100%;height:calc(100vh - 108px);min-height:750px;margin:0;padding:0;overflow:hidden;background:#000}
-.home-hero img{position:absolute;left:0;top:0;width:100%;height:100%;margin:0;padding:0;border:0;display:block;object-fit:cover;object-position:center center;filter:brightness(0.9)}
-.home-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.10),transparent 40%,rgba(0,0,0,.40))}
-.hero-stats-overlay{position:absolute;inset:0;pointer-events:none;z-index:10;padding:24px 3%;display:flex;flex-direction:column;justify-content:space-between}
-.stats-row{display:flex;justify-content:space-between;align-items:center;width:100%}
-.stat-card{background:rgba(5,8,13,.75);backdrop-filter:blur(12px);border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:12px 18px;color:#fff;font-size:13px;display:flex;flex-direction:column;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
-.stat-card span{color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
-.empty-page{width:100%;min-height:calc(100vh - 108px);background:radial-gradient(circle at top,rgba(0,230,118,.04),transparent 42%),#0d131f}
-@media(max-width:768px){
-.ticker-wrap{height:34px}
-.ticker-move{gap:27px;animation-duration:25s}
-.ticker-item{font-size:10px;gap:5px}
-.header{height:62px;padding:0 14px}
-.logo{font-size:14px;gap:7px}
-.logo i{font-size:18px}
-.menu-button{height:39px;padding:0 13px;font-size:13px}
-.menu-dropdown{top:49px;width:min(245px,calc(100vw - 28px))}
-.home-hero{height:calc(100vh - 96px);min-height:600px}
-.hero-stats-overlay{padding:16px}
-.stat-card{padding:8px 12px;font-size:11px}
-.empty-page{min-height:calc(100vh - 96px)}
-}
-@media(max-width:430px){
-.logo{font-size:13px}
-.menu-button{width:42px;padding:0}
-.menu-button span{display:none}
-.home-hero{min-height:550px}
-}
-@media(min-width:1600px){
-.home-hero{height:calc(100vh - 108px);min-height:850px}
-}
-@media(prefers-reduced-motion:reduce){
-.ticker-move{animation:none}
+
+/* FULL EDGE-TO-EDGE IMAGE CONTAINER */
+.hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000}
+.hero-full-card img{width:100%;height:auto;display:block;object-fit:cover;margin:0;padding:0;border:none}
+
+@media(max-width:480px){
+.header{padding:0 12px;height:56px}
+.logo{font-size:15px}
+.menu-button{height:34px;padding:0 12px;font-size:13px}
 }
 </style>
 </head>
 <body>
+
 <div class="ticker-wrap">
-<div class="ticker-move">
-<div class="ticker-item">NIFTY 50 <span class="ticker-value">24,834.85</span> <span class="up">+0.42%</span></div>
-<div class="ticker-item">SENSEX <span class="ticker-value">81,157.73</span> <span class="up">+0.45%</span></div>
-<div class="ticker-item">BANK NIFTY <span class="ticker-value">51,230.10</span> <span class="up">+0.30%</span></div>
-<div class="ticker-item">USD/INR <span class="ticker-value">83.28</span> <span class="down">-0.10%</span></div>
-<div class="ticker-item">GOLD (MCX) <span class="ticker-value">72,145.00</span> <span class="up">+0.15%</span></div>
-<div class="ticker-item">BTC/USDT <span class="ticker-value">67,245.30</span> <span class="up">+1.25%</span></div>
-<div class="ticker-item">ETH/USDT <span class="ticker-value">3,245.67</span> <span class="up">+0.88%</span></div>
-<div class="ticker-item">NIFTY 50 <span class="ticker-value">24,834.85</span> <span class="up">+0.42%</span></div>
-<div class="ticker-item">SENSEX <span class="ticker-value">81,157.73</span> <span class="up">+0.45%</span></div>
-<div class="ticker-item">BANK NIFTY <span class="ticker-value">51,230.10</span> <span class="up">+0.30%</span></div>
-<div class="ticker-item">USD/INR <span class="ticker-value">83.28</span> <span class="down">-0.10%</span></div>
-<div class="ticker-item">GOLD (MCX) <span class="ticker-value">72,145.00</span> <span class="up">+0.15%</span></div>
-<div class="ticker-item">BTC/USDT <span class="ticker-value">67,245.30</span> <span class="up">+1.25%</span></div>
-<div class="ticker-item">ETH/USDT <span class="ticker-value">3,245.67</span> <span class="up">+0.88%</span></div>
+<div class="ticker-move" id="tickerContainer">
+<div class="ticker-item">NIFTY 50 <span class="ticker-value up" id="niftyVal">24,834.85</span> <span class="up" id="niftyChange">+0.42%</span></div>
+<div class="ticker-item">SENSEX <span class="ticker-value up" id="sensexVal">81,157.73</span> <span class="up" id="sensexChange">+0.45%</span></div>
+<div class="ticker-item">BANK NIFTY <span class="ticker-value up" id="bankVal">51,230.10</span> <span class="up" id="bankChange">+0.30%</span></div>
+<div class="ticker-item">USD/INR <span class="ticker-value down" id="usdinrVal">83.28</span> <span class="down" id="usdinrChange">-0.10%</span></div>
+<div class="ticker-item">GOLD (MCX) <span class="ticker-value up" id="goldVal">72,145.00</span> <span class="up" id="goldChange">+0.15%</span></div>
+<div class="ticker-item">BTC/USDT <span class="ticker-value up" id="btcVal">67,245.30</span> <span class="up" id="btcChange">+1.25%</span></div>
+<div class="ticker-item">ETH/USDT <span class="ticker-value up" id="ethVal">3,245.67</span> <span class="up" id="ethChange">+0.88%</span></div>
+
+<div class="ticker-item">NIFTY 50 <span class="ticker-value up" id="niftyVal2">24,834.85</span> <span class="up" id="niftyChange2">+0.42%</span></div>
+<div class="ticker-item">SENSEX <span class="ticker-value up" id="sensexVal2">81,157.73</span> <span class="up" id="sensexChange2">+0.45%</span></div>
+<div class="ticker-item">BTC/USDT <span class="ticker-value up" id="btcVal2">67,245.30</span> <span class="up" id="btcChange2">+1.25%</span></div>
 </div>
 </div>
+
 <header class="header">
-<a href="#" class="logo" onclick="goHome(); return false;"><i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE</a>
+<a href="#" class="logo" onclick="goHome(); return false;">
+<i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE
+</a>
 <div class="menu-area">
-<button class="menu-button" id="menuButton" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i><span>Menu</span></button>
+<button class="menu-button" id="menuButton" onclick="toggleMenu()">
+<i class="fa-solid fa-bars"></i><span>Menu</span>
+</button>
 <div class="menu-dropdown" id="menuDropdown">
 <button class="menu-item active" onclick="openPage('home',this)"><span>Home</span><i class="fa-solid fa-house"></i></button>
 <button class="menu-item" onclick="openPage('financial',this)"><span>Financial</span><i class="fa-solid fa-wallet"></i></button>
@@ -106,38 +95,109 @@ main{width:100%;margin:0;padding:0}
 </div>
 </div>
 </header>
+
 <main>
 <section id="home" class="page active">
-<div class="home-hero">
-<img src="47961.png" alt="Global Finance Bull Market" onerror="imageError(this)">
-<div class="hero-stats-overlay">
-<div class="stats-row">
-<div class="stat-card"><span>Global Market Cap</span><strong>$2.85 Trillion</strong></div>
-<div class="stat-card"><span>Market Sentiment</span><strong class="up"><i class="fa-solid fa-arrow-trend-up"></i> Bullish (+2.4%)</strong></div>
-</div>
-<div class="stats-row">
-<div class="stat-card"><span>24H Volume</span><strong>$142.8 Billion</strong></div>
-<div class="stat-card"><span>AI Trading Accuracy</span><strong class="up">94.2%</strong></div>
-</div>
-</div>
+<div class="hero-full-card">
+<img src="47961.png" alt="Global Finance Trading Chart" onerror="imageError(this)">
 </div>
 </section>
-<section id="financial" class="page"><div class="empty-page"></div></section>
-<section id="trading" class="page"><div class="empty-page"></div></section>
-<section id="investment" class="page"><div class="empty-page"></div></section>
-<section id="loans" class="page"><div class="empty-page"></div></section>
-<section id="earning" class="page"><div class="empty-page"></div></section>
-<section id="alpha" class="page"><div class="empty-page"></div></section>
+
+<section id="financial" class="page"></section>
+<section id="trading" class="page"></section>
+<section id="investment" class="page"></section>
+<section id="loans" class="page"></section>
+<section id="earning" class="page"></section>
+<section id="alpha" class="page"></section>
 </main>
+
 <script>
+// MENU FUNCTIONALITY
 const menu=document.getElementById("menuDropdown"),menuButton=document.getElementById("menuButton");
 function toggleMenu(){menu.classList.toggle("open")}
-function openPage(e,t){document.querySelectorAll(".page").forEach(e=>{e.classList.remove("active")});const n=document.getElementById(e);n&&n.classList.add("active"),document.querySelectorAll(".menu-item").forEach(e=>{e.classList.remove("active")}),t&&t.classList.add("active"),menu.classList.remove("open"),window.scrollTo({top:0,behavior:"smooth"})}
+function openPage(e,t){
+  document.querySelectorAll(".page").forEach(e=>{e.classList.remove("active")});
+  const n=document.getElementById(e);
+  if(n) n.classList.add("active");
+  document.querySelectorAll(".menu-item").forEach(e=>{e.classList.remove("active")});
+  if(t) t.classList.add("active");
+  menu.classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 function goHome(){openPage("home")}
 document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open")});
 document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open")});
-function imageError(e){e.style.display="none",e.parentElement.style.background="radial-gradient(circle at center, rgba(0,230,118,.12), #000 65%)"}
-setInterval(()=>{document.querySelectorAll(".ticker-value").forEach(e=>{const t=parseFloat(e.textContent.replace(/,/g,""));if(!isNaN(t)){const n=t+(Math.random()-.48)*t*.0005;e.textContent=n.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}})},2000);
+
+function imageError(e){
+  e.style.display="none";
+  e.parentElement.style.background="radial-gradient(circle at center, rgba(0,230,118,.15), #06090e 75%)";
+  e.parentElement.style.minHeight="80vh";
+}
+
+// REAL-TIME DATA STREAM & API CONNECTIVITY
+async function fetchRealtimeCrypto() {
+  try {
+    const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=["BTCUSDT","ETHUSDT"]');
+    if(res.ok){
+      const data = await res.json();
+      data.forEach(item => {
+        if(item.symbol === "BTCUSDT") updateLivePrice('btcVal', 'btcChange', parseFloat(item.lastPrice), parseFloat(item.priceChangePercent));
+        if(item.symbol === "ETHUSDT") updateLivePrice('ethVal', 'ethChange', parseFloat(item.lastPrice), parseFloat(item.priceChangePercent));
+      });
+    }
+  } catch(e) { console.log("Realtime fetch fallback active"); }
+}
+
+function updateLivePrice(valId, changeId, newPrice, changePercent) {
+  const elem = document.getElementById(valId);
+  const changeElem = document.getElementById(changeId);
+  if(!elem) return;
+  
+  const currentPrice = parseFloat(elem.textContent.replace(/,/g, ''));
+  elem.textContent = newPrice.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  
+  if(changeElem && changePercent !== undefined){
+    changeElem.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+    changeElem.className = changePercent >= 0 ? 'up' : 'down';
+  }
+
+  if (newPrice > currentPrice) {
+    elem.classList.add('flash-up');
+    setTimeout(() => elem.classList.remove('flash-up'), 600);
+  } else if (newPrice < currentPrice) {
+    elem.classList.add('flash-down');
+    setTimeout(() => elem.classList.remove('flash-down'), 600);
+  }
+}
+
+// REAL-TIME HIGH FREQUENCY LIVE TICKER SIMULATOR
+function simulateRealtimeStock(id, changeId, baseVal) {
+  const elem = document.getElementById(id);
+  if(!elem) return;
+  const current = parseFloat(elem.textContent.replace(/,/g, ''));
+  const delta = (Math.random() - 0.49) * (current * 0.0008);
+  const updated = current + delta;
+  
+  updateLivePrice(id, changeId, updated, (updated > baseVal ? 0.42 : 0.38));
+  
+  // Update secondary duplicate items for smooth loop
+  const elem2 = document.getElementById(id + '2');
+  if(elem2) elem2.textContent = elem.textContent;
+}
+
+// Live Update Cycle (Fetches & Updates every 1.5 Seconds)
+setInterval(() => {
+  fetchRealtimeCrypto();
+  simulateRealtimeStock('niftyVal', 'niftyChange', 24800);
+  simulateRealtimeStock('sensexVal', 'sensexChange', 81100);
+  simulateRealtimeStock('bankVal', 'bankChange', 51200);
+  simulateRealtimeStock('usdinrVal', 'usdinrChange', 83.30);
+  simulateRealtimeStock('goldVal', 'goldChange', 72100);
+}, 1500);
+
+// Initial Call
+fetchRealtimeCrypto();
 </script>
+
 </body>
 </html>
