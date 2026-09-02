@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Bull Edition</title>
-    <!-- FontAwesome Icons -->
+    <title>Global Finance - Live Bull Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --bg-main: #06090e;
             --bg-card: #0d131f;
             --accent-green: #00e676;
             --accent-glow: rgba(0, 230, 118, 0.25);
+            --alpha-glow: linear-gradient(135deg, #7928ca, #00dfd8);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
@@ -29,37 +28,43 @@
             background-color: var(--bg-main);
             color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- 1. Top Live Market Ticker Bar --- */
-        .ticker-bar {
+        /* 1. Endless Continuous Live Ticker Bar */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
             background: #030508;
             border-bottom: 1px solid var(--border-color);
-            padding: 8px 4%;
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            scrollbar-width: none; /* Hide scrollbar for clean look */
+            padding: 8px 0;
+            white-space: nowrap;
         }
 
-        .ticker-bar::-webkit-scrollbar {
-            display: none;
+        .ticker-move {
+            display: inline-flex;
+            gap: 2.5rem;
+            animation: tickerAnimation 25s linear infinite;
         }
 
         .ticker-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            white-space: nowrap;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
         }
 
         .ticker-val { color: var(--text-primary); font-weight: 600; }
         .ticker-up { color: var(--accent-green); font-weight: 600; }
         .ticker-down { color: #ff5252; font-weight: 600; }
 
-        /* --- 2. Header Navbar (Logo + Single Menu Button) --- */
+        @keyframes tickerAnimation {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        /* 2. Header (Logo + Menu Button) */
         .header {
             position: sticky;
             top: 0;
@@ -69,29 +74,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.9rem 4%;
+            padding: 0.8rem 4%;
             z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             text-decoration: none;
             color: #fff;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
         }
 
         .logo-icon {
             color: var(--accent-green);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
-        /* Menu Button */
+        /* Single Menu Button */
         .menu-trigger-btn {
-            background: rgba(0, 230, 118, 0.08);
+            background: rgba(0, 230, 118, 0.1);
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
             padding: 8px 18px;
@@ -127,6 +132,7 @@
             flex-direction: column;
             gap: 4px;
             z-index: 2000;
+            backdrop-filter: blur(20px);
         }
 
         .dropdown-menu.active {
@@ -154,83 +160,163 @@
             color: var(--accent-green);
         }
 
-        /* --- 3. Main Body Container (Only Bull Photo) --- */
-        .main-workspace {
-            padding: 1rem 4%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .alpha-ai-option {
+            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
+            border: 1px solid #00dfd8;
+            color: #fff;
+            font-weight: 700;
+            margin-top: 4px;
         }
 
-        .bull-container {
+        .alpha-ai-option:hover, .alpha-ai-option.active {
+            background: var(--alpha-glow);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
+        }
+
+        /* 3. Main Workspace Area */
+        .main-workspace {
+            padding: 1.5rem 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page-view {
+            display: none;
+            width: 100%;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        /* Bull Image Banner Styling */
+        .bull-hero-container {
             width: 100%;
             max-width: 1200px;
+            margin: 0 auto;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border-color);
             background: var(--bg-card);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .bull-img {
+        .bull-hero-img {
             width: 100%;
             height: auto;
             max-height: 80vh;
             display: block;
             object-fit: cover;
         }
+
+        .blank-os-container {
+            width: 100%;
+            min-height: 75vh;
+            border: 2px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: var(--bg-card);
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. Live Rates Top Bar -->
-    <div class="ticker-bar">
-        <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
-        <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
-        <div class="ticker-item">BANK NIFTY <span class="ticker-val">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
-        <div class="ticker-item">USD/INR <span class="ticker-val">83.28</span> <span class="ticker-down">-0.10%</span></div>
-        <div class="ticker-item">GOLD (MCX) <span class="ticker-val">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
+    <div class="ticker-wrap">
+        <div class="ticker-move" id="tickerContainer">
+            <div class="ticker-item">NIFTY 50 <span class="ticker-val" id="val-nifty">24,834.85</span> <span class="ticker-up" id="chg-nifty">+0.42%</span></div>
+            <div class="ticker-item">SENSEX <span class="ticker-val" id="val-sensex">81,157.73</span> <span class="ticker-up" id="chg-sensex">+0.45%</span></div>
+            <div class="ticker-item">BANK NIFTY <span class="ticker-val" id="val-banknifty">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
+            <div class="ticker-item">USD/INR <span class="ticker-val" id="val-usdinr">83.28</span> <span class="ticker-down">-0.10%</span></div>
+            <div class="ticker-item">GOLD (MCX) <span class="ticker-val" id="val-gold">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
+            <div class="ticker-item">BTC/USDT <span class="ticker-val" id="val-btc">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
+            <div class="ticker-item">ETH/USDT <span class="ticker-val" id="val-eth">3,245.67</span> <span class="ticker-up">+0.88%</span></div>
+
+            <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
+            <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
+            <div class="ticker-item">BANK NIFTY <span class="ticker-val">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
+            <div class="ticker-item">USD/INR <span class="ticker-val">83.28</span> <span class="ticker-down">-0.10%</span></div>
+            <div class="ticker-item">GOLD (MCX) <span class="ticker-val">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
+            <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
+            <div class="ticker-item">ETH/USDT <span class="ticker-val">3,245.67</span> <span class="ticker-up">+0.88%</span></div>
+        </div>
     </div>
 
-    <!-- 2. Header (Logo + Single Menu Button) -->
     <header class="header">
         <a href="#" class="logo">
-            <i class="fa-solid fa-chart-line logo-icon"></i>
-            GLOBAL FINANCE
+            <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
         </a>
 
-        <!-- Menu Button -->
         <div style="position: relative;">
             <button class="menu-trigger-btn" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i> Menu
             </button>
 
-            <!-- Popup Menu Dropdown -->
             <div class="dropdown-menu" id="menuDropdown">
-                <button class="dropdown-item active">Home <i class="fa-solid fa-house"></i></button>
-                <button class="dropdown-item">Financial Overview <i class="fa-solid fa-wallet"></i></button>
-                <button class="dropdown-item">Trading Live <i class="fa-solid fa-chart-candlestick"></i></button>
-                <button class="dropdown-item">Investment Portfolio <i class="fa-solid fa-chart-pie"></i></button>
-                <button class="dropdown-item">Loans & Credit <i class="fa-solid fa-hand-holding-dollar"></i></button>
+                <button class="dropdown-item active" onclick="switchPage('home', this)">Home <i class="fa-solid fa-house"></i></button>
+                <button class="dropdown-item" onclick="switchPage('financial', this)">Financial <i class="fa-solid fa-wallet"></i></button>
+                <button class="dropdown-item" onclick="switchPage('trading', this)">Trading <i class="fa-solid fa-chart-candlestick"></i></button>
+                <button class="dropdown-item" onclick="switchPage('investment', this)">Investment <i class="fa-solid fa-chart-pie"></i></button>
+                <button class="dropdown-item" onclick="switchPage('loans', this)">Loans <i class="fa-solid fa-hand-holding-dollar"></i></button>
+                <button class="dropdown-item" onclick="switchPage('earning-tips', this)">Earning Tips <i class="fa-solid fa-lightbulb"></i></button>
+                <button class="dropdown-item alpha-ai-option" onclick="switchPage('alpha-ai', this)">Alpha AI <i class="fa-solid fa-bolt-lightning"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- 3. Main Workspace (Only Bull Photo) -->
     <main class="main-workspace">
-        <div class="bull-container">
-            <!-- Replace 'bull-image.jpg' with your photo filename or URL -->
-            <img src="bull-image.jpg" alt="Bull Market" class="bull-img">
+
+        <div id="page-home" class="page-view active">
+            <div class="bull-hero-container">
+                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80" alt="Stock Market Bull" class="bull-hero-img">
+            </div>
         </div>
+
+        <div id="page-financial" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
+        <div id="page-trading" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
+        <div id="page-investment" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
+        <div id="page-loans" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
+        <div id="page-earning-tips" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
+        <div id="page-alpha-ai" class="page-view">
+            <div class="blank-os-container"></div>
+        </div>
+
     </main>
 
-    <!-- JavaScript -->
     <script>
         function toggleMenu() {
             document.getElementById('menuDropdown').classList.toggle('active');
         }
 
-        // Close menu when clicking outside
+        function switchPage(pageId, element) {
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(p => p.classList.remove('active'));
+
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(i => i.classList.remove('active'));
+
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) targetPage.classList.add('active');
+
+            if (element) element.classList.add('active');
+
+            document.getElementById('menuDropdown').classList.remove('active');
+        }
+
         window.onclick = function(event) {
             if (!event.target.matches('.menu-trigger-btn') && !event.target.matches('.menu-trigger-btn *')) {
                 const dropdown = document.getElementById('menuDropdown');
@@ -239,6 +325,25 @@
                 }
             }
         }
+
+        // Real-time Dynamic Stock Price Fluctuation Simulation
+        function updateLiveRates() {
+            const valElements = document.querySelectorAll('.ticker-val');
+            valElements.forEach(el => {
+                let currentVal = parseFloat(el.innerText.replace(/,/g, ''));
+                if (!isNaN(currentVal)) {
+                    let change = (Math.random() - 0.48) * (currentVal * 0.0008);
+                    let newVal = currentVal + change;
+                    el.innerText = newVal.toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
+            });
+        }
+
+        // Live Rates Update Every 2 Seconds
+        setInterval(updateLiveRates, 2000);
     </script>
 </body>
 </html>
