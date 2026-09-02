@@ -42,24 +42,25 @@ img{display:block;width:100%}
 .alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.25),rgba(0,223,216,.2))}
 .alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff}
 
-/* MAIN FULL WIDTH COVERAGE */
+/* MAIN FULL WIDTH EDGE-TO-EDGE COVERAGE */
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
-/* FULL EDGE-TO-EDGE IMAGE CONTAINER */
-.hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000}
-.hero-full-card img{width:100%;height:auto;display:block;object-fit:cover;margin:0;padding:0;border:none}
+.hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
+.hero-full-card img{width:100%;height:calc(100vh - 98px);min-height:500px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
 
 @media(max-width:480px){
 .header{padding:0 12px;height:56px}
 .logo{font-size:15px}
 .menu-button{height:34px;padding:0 12px;font-size:13px}
+.hero-full-card img{height:calc(100vh - 94px);min-height:450px}
 }
 </style>
 </head>
 <body>
 
+<!-- REAL-TIME LIVE DATA TICKER -->
 <div class="ticker-wrap">
 <div class="ticker-move" id="tickerContainer">
 <div class="ticker-item">NIFTY 50 <span class="ticker-value up" id="niftyVal">24,834.85</span> <span class="up" id="niftyChange">+0.42%</span></div>
@@ -76,6 +77,7 @@ main{width:100%;margin:0;padding:0}
 </div>
 </div>
 
+<!-- HEADER -->
 <header class="header">
 <a href="#" class="logo" onclick="goHome(); return false;">
 <i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE
@@ -96,10 +98,11 @@ main{width:100%;margin:0;padding:0}
 </div>
 </header>
 
+<!-- MAIN CONTENT (FULL ONLINE BULL & TRADING IMAGE) -->
 <main>
 <section id="home" class="page active">
 <div class="hero-full-card">
-<img src="47961.png" alt="Global Finance Trading Chart" onerror="imageError(this)">
+<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1600&q=80'">
 </div>
 </section>
 
@@ -127,12 +130,6 @@ function openPage(e,t){
 function goHome(){openPage("home")}
 document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open")});
 document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open")});
-
-function imageError(e){
-  e.style.display="none";
-  e.parentElement.style.background="radial-gradient(circle at center, rgba(0,230,118,.15), #06090e 75%)";
-  e.parentElement.style.minHeight="80vh";
-}
 
 // REAL-TIME DATA STREAM & API CONNECTIVITY
 async function fetchRealtimeCrypto() {
@@ -170,7 +167,6 @@ function updateLivePrice(valId, changeId, newPrice, changePercent) {
   }
 }
 
-// REAL-TIME HIGH FREQUENCY LIVE TICKER SIMULATOR
 function simulateRealtimeStock(id, changeId, baseVal) {
   const elem = document.getElementById(id);
   if(!elem) return;
@@ -180,12 +176,11 @@ function simulateRealtimeStock(id, changeId, baseVal) {
   
   updateLivePrice(id, changeId, updated, (updated > baseVal ? 0.42 : 0.38));
   
-  // Update secondary duplicate items for smooth loop
   const elem2 = document.getElementById(id + '2');
   if(elem2) elem2.textContent = elem.textContent;
 }
 
-// Live Update Cycle (Fetches & Updates every 1.5 Seconds)
+// Live Update Cycle
 setInterval(() => {
   fetchRealtimeCrypto();
   simulateRealtimeStock('niftyVal', 'niftyChange', 24800);
@@ -195,7 +190,6 @@ setInterval(() => {
   simulateRealtimeStock('goldVal', 'goldChange', 72100);
 }, 1500);
 
-// Initial Call
 fetchRealtimeCrypto();
 </script>
 
