@@ -1,348 +1,1272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Live Bull Edition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-main: #06090e;
-            --bg-card: #0d131f;
-            --accent-green: #00e676;
-            --accent-glow: rgba(0, 230, 118, 0.25);
-            --alpha-glow: linear-gradient(135deg, #7928ca, #00dfd8);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-        }
+<meta charset="UTF-8">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+<title>Global Finance</title>
 
-        /* 1. Endless Continuous Live Ticker Bar */
-        .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            background: #030508;
-            border-bottom: 1px solid var(--border-color);
-            padding: 8px 0;
-            white-space: nowrap;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        .ticker-move {
-            display: inline-flex;
-            gap: 2.5rem;
-            animation: tickerAnimation 25s linear infinite;
-        }
+<style>
 
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-        }
+/* =========================================================
+   GLOBAL
+========================================================= */
 
-        .ticker-val { color: var(--text-primary); font-weight: 600; }
-        .ticker-up { color: var(--accent-green); font-weight: 600; }
-        .ticker-down { color: #ff5252; font-weight: 600; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        @keyframes tickerAnimation {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
 
-        /* 2. Header (Logo + Menu Button) */
-        .header {
-            position: sticky;
-            top: 0;
-            background: rgba(13, 19, 31, 0.95);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 3%;
-            z-index: 1000;
-        }
+body{
+    background:#05080d;
+    color:#f8fafc;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
+    overflow-x:hidden;
+}
 
-        .logo-icon {
-            color: var(--accent-green);
-            font-size: 1.3rem;
-        }
+img{
+    display:block;
+}
 
-        /* Single Menu Button */
-        .menu-trigger-btn {
-            background: rgba(0, 230, 118, 0.1);
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 10px var(--accent-glow);
-            transition: all 0.2s ease;
-        }
 
-        .menu-trigger-btn:hover {
-            background: var(--accent-green);
-            color: #000;
-            box-shadow: 0 0 18px var(--accent-green);
-        }
+/* =========================================================
+   TICKER
+========================================================= */
 
-        /* Popup Dropdown Menu */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 110%;
-            right: 0;
-            background: #0d131f;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 10px;
-            width: 220px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            flex-direction: column;
-            gap: 4px;
-            z-index: 2000;
-            backdrop-filter: blur(20px);
-        }
+.ticker-wrap{
+    width:100%;
+    height:38px;
 
-        .dropdown-menu.active {
-            display: flex;
-        }
+    overflow:hidden;
 
-        .dropdown-item {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 10px 14px;
-            text-align: left;
-            font-size: 0.88rem;
-            font-weight: 500;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    background:#020406;
 
-        .dropdown-item:hover, .dropdown-item.active {
-            background: rgba(0, 230, 118, 0.1);
-            color: var(--accent-green);
-        }
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
 
-        .alpha-ai-option {
-            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
-            border: 1px solid #00dfd8;
-            color: #fff;
-            font-weight: 700;
-            margin-top: 4px;
-        }
+    white-space:nowrap;
 
-        .alpha-ai-option:hover, .alpha-ai-option.active {
-            background: var(--alpha-glow);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
-        }
+    position:relative;
+    z-index:2000;
+}
 
-        /* 3. Main Workspace Area (Zero Extra Margins/Gaps) */
-        .main-workspace {
-            padding: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+.ticker-move{
+    height:100%;
 
-        .page-view {
-            display: none;
-            width: 100%;
-        }
+    width:max-content;
 
-        .page-view.active {
-            display: block;
-        }
+    display:flex;
+    align-items:center;
 
-        /* Full Size Bull Image Banner */
-        .bull-hero-container {
-            width: 100%;
-            min-height: calc(100vh - 110px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
+    gap:38px;
 
-        .bull-hero-img {
-            width: 100%;
-            height: 100%;
-            min-height: 75vh;
-            max-height: 90vh;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-        }
+    padding-left:20px;
 
-        .blank-os-container {
-            width: 100%;
-            min-height: 85vh;
-            border: 2px dashed rgba(255, 255, 255, 0.08);
-            background: var(--bg-card);
-        }
-    </style>
+    animation:
+        tickerMove
+        30s
+        linear
+        infinite;
+}
+
+.ticker-item{
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+
+    font-size:12px;
+
+    color:#94a3b8;
+
+    flex-shrink:0;
+}
+
+.ticker-value{
+    color:#ffffff;
+    font-weight:700;
+}
+
+.up{
+    color:#00e676;
+    font-weight:700;
+}
+
+.down{
+    color:#ff5252;
+    font-weight:700;
+}
+
+@keyframes tickerMove{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    width:100%;
+    height:70px;
+
+    position:sticky;
+    top:0;
+
+    z-index:1500;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:
+        0 3%;
+
+    background:
+        rgba(7,11,17,.96);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+}
+
+.logo i{
+    color:#00e676;
+
+    font-size:23px;
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            rgba(0,230,118,.45)
+        );
+}
+
+
+/* =========================================================
+   MENU AREA
+========================================================= */
+
+.menu-area{
+    position:relative;
+}
+
+.menu-button{
+    height:43px;
+
+    padding:
+        0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:9px;
+
+    background:
+        rgba(0,230,118,.08);
+
+    color:#00e676;
+
+    border:
+        1px solid
+        #00e676;
+
+    border-radius:9px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:
+        .2s ease;
+
+    box-shadow:
+        0 0 13px
+        rgba(0,230,118,.20);
+}
+
+.menu-button:hover{
+    background:#00e676;
+    color:#000;
+
+    box-shadow:
+        0 0 25px
+        rgba(0,230,118,.55);
+}
+
+.menu-button:active{
+    transform:scale(.97);
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.menu-dropdown{
+    position:absolute;
+
+    top:53px;
+    right:0;
+
+    width:245px;
+
+    padding:9px;
+
+    display:none;
+
+    flex-direction:column;
+
+    gap:4px;
+
+    background:
+        rgba(10,15,24,.98);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:14px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(0,0,0,.75);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+}
+
+.menu-dropdown.open{
+    display:flex;
+
+    animation:
+        dropdownOpen
+        .18s
+        ease-out;
+}
+
+@keyframes dropdownOpen{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(-7px)
+            scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   MENU ITEMS
+========================================================= */
+
+.menu-item{
+    width:100%;
+
+    min-height:45px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#94a3b8;
+
+    border-radius:9px;
+
+    padding:
+        10px 13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.2s ease;
+}
+
+.menu-item:hover{
+    background:
+        rgba(0,230,118,.10);
+
+    color:#00e676;
+
+    padding-left:17px;
+}
+
+.menu-item.active{
+    background:
+        rgba(0,230,118,.10);
+
+    color:#00e676;
+}
+
+.menu-item i{
+    width:22px;
+    text-align:center;
+}
+
+
+/* =========================================================
+   ALPHA AI
+========================================================= */
+
+.alpha-ai{
+    margin-top:5px;
+
+    color:#ffffff;
+
+    border:
+        1px solid
+        #00dfd8;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(121,40,202,.20),
+            rgba(0,223,216,.18)
+        );
+}
+
+.alpha-ai:hover,
+.alpha-ai.active{
+
+    color:#ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7928ca,
+            #00dfd8
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(0,223,216,.40);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+    width:100%;
+    margin:0;
+    padding:0;
+}
+
+.page{
+    display:none;
+
+    width:100%;
+
+    margin:0;
+    padding:0;
+}
+
+.page.active{
+    display:block;
+}
+
+
+/* =========================================================
+   HOME IMAGE
+========================================================= */
+
+/*
+   IMPORTANT:
+
+   तुम्हारी image का नाम 47961.png है।
+   इसे index.html के साथ SAME FOLDER में रखना है।
+*/
+
+.home-hero{
+
+    position:relative;
+
+    width:100%;
+
+    height:
+        calc(100vh - 108px);
+
+    min-height:600px;
+
+    margin:0;
+    padding:0;
+
+    overflow:hidden;
+
+    background:#000;
+}
+
+
+/*
+   IMAGE — NO GAP
+*/
+
+.home-hero img{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    margin:0;
+    padding:0;
+
+    border:0;
+
+    display:block;
+
+    object-fit:cover;
+
+    object-position:center center;
+}
+
+
+/*
+   VERY LIGHT OVERLAY
+*/
+
+.home-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.04),
+            transparent 35%,
+            rgba(0,0,0,.15)
+        );
+}
+
+
+/* =========================================================
+   OTHER PAGES
+========================================================= */
+
+.empty-page{
+
+    width:100%;
+
+    min-height:
+        calc(100vh - 108px);
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(0,230,118,.04),
+            transparent 42%
+        ),
+        #0d131f;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:768px){
+
+    .ticker-wrap{
+        height:34px;
+    }
+
+    .ticker-move{
+        gap:27px;
+        animation-duration:25s;
+    }
+
+    .ticker-item{
+        font-size:10px;
+        gap:5px;
+    }
+
+
+    .header{
+        height:62px;
+        padding:
+            0 14px;
+    }
+
+
+    .logo{
+        font-size:14px;
+        gap:7px;
+    }
+
+    .logo i{
+        font-size:18px;
+    }
+
+
+    .menu-button{
+        height:39px;
+        padding:
+            0 13px;
+
+        font-size:13px;
+    }
+
+
+    .menu-dropdown{
+        top:49px;
+
+        width:
+            min(
+                245px,
+                calc(100vw - 28px)
+            );
+    }
+
+
+    .home-hero{
+
+        height:
+            calc(100vh - 96px);
+
+        min-height:500px;
+    }
+
+
+    .home-hero img{
+
+        object-fit:cover;
+
+        object-position:
+            center center;
+    }
+
+
+    .empty-page{
+
+        min-height:
+            calc(100vh - 96px);
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media(max-width:430px){
+
+    .logo{
+        font-size:13px;
+    }
+
+    .menu-button{
+        width:42px;
+        padding:0;
+    }
+
+    .menu-button span{
+        display:none;
+    }
+
+    .home-hero{
+        min-height:480px;
+    }
+
+}
+
+
+/* =========================================================
+   LARGE SCREEN
+========================================================= */
+
+@media(min-width:1600px){
+
+    .home-hero{
+
+        height:
+            calc(100vh - 108px);
+
+        min-height:700px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    .ticker-move{
+        animation:none;
+    }
+
+}
+
+</style>
 </head>
+
+
 <body>
 
-    <div class="ticker-wrap">
-        <div class="ticker-move" id="tickerContainer">
-            <div class="ticker-item">NIFTY 50 <span class="ticker-val" id="val-nifty">24,834.85</span> <span class="ticker-up" id="chg-nifty">+0.42%</span></div>
-            <div class="ticker-item">SENSEX <span class="ticker-val" id="val-sensex">81,157.73</span> <span class="ticker-up" id="chg-sensex">+0.45%</span></div>
-            <div class="ticker-item">BANK NIFTY <span class="ticker-val" id="val-banknifty">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
-            <div class="ticker-item">USD/INR <span class="ticker-val" id="val-usdinr">83.28</span> <span class="ticker-down">-0.10%</span></div>
-            <div class="ticker-item">GOLD (MCX) <span class="ticker-val" id="val-gold">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
-            <div class="ticker-item">BTC/USDT <span class="ticker-val" id="val-btc">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
-            <div class="ticker-item">ETH/USDT <span class="ticker-val" id="val-eth">3,245.67</span> <span class="ticker-up">+0.88%</span></div>
 
-            <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
-            <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
-            <div class="ticker-item">BANK NIFTY <span class="ticker-val">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
-            <div class="ticker-item">USD/INR <span class="ticker-val">83.28</span> <span class="ticker-down">-0.10%</span></div>
-            <div class="ticker-item">GOLD (MCX) <span class="ticker-val">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
-            <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
-            <div class="ticker-item">ETH/USDT <span class="ticker-val">3,245.67</span> <span class="ticker-up">+0.88%</span></div>
-        </div>
-    </div>
+<!-- ========================================================
+     LIVE MARKET TICKER
+========================================================= -->
 
-    <header class="header">
-        <a href="#" class="logo">
-            <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
-        </a>
+<div class="ticker-wrap">
 
-        <div style="position: relative;">
-            <button class="menu-trigger-btn" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars"></i> Menu
-            </button>
+<div class="ticker-move">
 
-            <div class="dropdown-menu" id="menuDropdown">
-                <button class="dropdown-item active" onclick="switchPage('home', this)">Home <i class="fa-solid fa-house"></i></button>
-                <button class="dropdown-item" onclick="switchPage('financial', this)">Financial <i class="fa-solid fa-wallet"></i></button>
-                <button class="dropdown-item" onclick="switchPage('trading', this)">Trading <i class="fa-solid fa-chart-candlestick"></i></button>
-                <button class="dropdown-item" onclick="switchPage('investment', this)">Investment <i class="fa-solid fa-chart-pie"></i></button>
-                <button class="dropdown-item" onclick="switchPage('loans', this)">Loans <i class="fa-solid fa-hand-holding-dollar"></i></button>
-                <button class="dropdown-item" onclick="switchPage('earning-tips', this)">Earning Tips <i class="fa-solid fa-lightbulb"></i></button>
-                <button class="dropdown-item alpha-ai-option" onclick="switchPage('alpha-ai', this)">Alpha AI <i class="fa-solid fa-bolt-lightning"></i></button>
-            </div>
-        </div>
-    </header>
 
-    <main class="main-workspace">
+<div class="ticker-item">
+NIFTY 50
+<span class="ticker-value">24,834.85</span>
+<span class="up">+0.42%</span>
+</div>
 
-        <div id="page-home" class="page-view active">
-            <div class="bull-hero-container">
-                <img src="47961.png" alt="Bull Market" class="bull-hero-img">
-            </div>
-        </div>
 
-        <div id="page-financial" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
+<div class="ticker-item">
+SENSEX
+<span class="ticker-value">81,157.73</span>
+<span class="up">+0.45%</span>
+</div>
 
-        <div id="page-trading" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
 
-        <div id="page-investment" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
+<div class="ticker-item">
+BANK NIFTY
+<span class="ticker-value">51,230.10</span>
+<span class="up">+0.30%</span>
+</div>
 
-        <div id="page-loans" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
 
-        <div id="page-earning-tips" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
+<div class="ticker-item">
+USD/INR
+<span class="ticker-value">83.28</span>
+<span class="down">-0.10%</span>
+</div>
 
-        <div id="page-alpha-ai" class="page-view">
-            <div class="blank-os-container"></div>
-        </div>
 
-    </main>
+<div class="ticker-item">
+GOLD (MCX)
+<span class="ticker-value">72,145.00</span>
+<span class="up">+0.15%</span>
+</div>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('menuDropdown').classList.toggle('active');
+
+<div class="ticker-item">
+BTC/USDT
+<span class="ticker-value">67,245.30</span>
+<span class="up">+1.25%</span>
+</div>
+
+
+<div class="ticker-item">
+ETH/USDT
+<span class="ticker-value">3,245.67</span>
+<span class="up">+0.88%</span>
+</div>
+
+
+<!-- DUPLICATE -->
+
+<div class="ticker-item">
+NIFTY 50
+<span class="ticker-value">24,834.85</span>
+<span class="up">+0.42%</span>
+</div>
+
+
+<div class="ticker-item">
+SENSEX
+<span class="ticker-value">81,157.73</span>
+<span class="up">+0.45%</span>
+</div>
+
+
+<div class="ticker-item">
+BANK NIFTY
+<span class="ticker-value">51,230.10</span>
+<span class="up">+0.30%</span>
+</div>
+
+
+<div class="ticker-item">
+USD/INR
+<span class="ticker-value">83.28</span>
+<span class="down">-0.10%</span>
+</div>
+
+
+<div class="ticker-item">
+GOLD (MCX)
+<span class="ticker-value">72,145.00</span>
+<span class="up">+0.15%</span>
+</div>
+
+
+<div class="ticker-item">
+BTC/USDT
+<span class="ticker-value">67,245.30</span>
+<span class="up">+1.25%</span>
+</div>
+
+
+<div class="ticker-item">
+ETH/USDT
+<span class="ticker-value">3,245.67</span>
+<span class="up">+0.88%</span>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+
+<a href="#"
+   class="logo"
+   onclick="goHome(); return false;">
+
+<i class="fa-solid fa-chart-line"></i>
+
+GLOBAL FINANCE
+
+</a>
+
+
+
+<div class="menu-area">
+
+
+<button
+    class="menu-button"
+    id="menuButton"
+    onclick="toggleMenu()">
+
+<i class="fa-solid fa-bars"></i>
+
+<span>Menu</span>
+
+</button>
+
+
+
+<!-- ======================================================
+     DROPDOWN MENU
+======================================================= -->
+
+<div
+    class="menu-dropdown"
+    id="menuDropdown">
+
+
+<button
+    class="menu-item active"
+    onclick="openPage('home',this)">
+
+<span>Home</span>
+
+<i class="fa-solid fa-house"></i>
+
+</button>
+
+
+<button
+    class="menu-item"
+    onclick="openPage('financial',this)">
+
+<span>Financial</span>
+
+<i class="fa-solid fa-wallet"></i>
+
+</button>
+
+
+<button
+    class="menu-item"
+    onclick="openPage('trading',this)">
+
+<span>Trading</span>
+
+<i class="fa-solid fa-chart-line"></i>
+
+</button>
+
+
+<button
+    class="menu-item"
+    onclick="openPage('investment',this)">
+
+<span>Investment</span>
+
+<i class="fa-solid fa-chart-pie"></i>
+
+</button>
+
+
+<button
+    class="menu-item"
+    onclick="openPage('loans',this)">
+
+<span>Loans</span>
+
+<i class="fa-solid fa-hand-holding-dollar"></i>
+
+</button>
+
+
+<button
+    class="menu-item"
+    onclick="openPage('earning',this)">
+
+<span>Earning Tips</span>
+
+<i class="fa-solid fa-lightbulb"></i>
+
+</button>
+
+
+<button
+    class="menu-item alpha-ai"
+    onclick="openPage('alpha',this)">
+
+<span>Alpha AI</span>
+
+<i class="fa-solid fa-bolt"></i>
+
+</button>
+
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- ========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+
+<!-- ======================================================
+     HOME
+======================================================= -->
+
+<section
+    id="home"
+    class="page active">
+
+
+<div class="home-hero">
+
+
+<!--
+    IMPORTANT:
+
+    यह आपकी HOME की एक ही बड़ी image है।
+
+    47961.png को index.html के
+    SAME FOLDER में रखो।
+-->
+
+<img
+    src="47961.png"
+    alt="Global Finance Bull Market"
+    onerror="imageError(this)">
+
+
+</div>
+
+</section>
+
+
+
+<!-- ======================================================
+     FINANCIAL
+======================================================= -->
+
+<section
+    id="financial"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+
+<!-- ======================================================
+     TRADING
+======================================================= -->
+
+<section
+    id="trading"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+
+<!-- ======================================================
+     INVESTMENT
+======================================================= -->
+
+<section
+    id="investment"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+
+<!-- ======================================================
+     LOANS
+======================================================= -->
+
+<section
+    id="loans"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+
+<!-- ======================================================
+     EARNING TIPS
+======================================================= -->
+
+<section
+    id="earning"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+
+<!-- ======================================================
+     ALPHA AI
+======================================================= -->
+
+<section
+    id="alpha"
+    class="page">
+
+<div class="empty-page"></div>
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   MENU
+========================================================= */
+
+const menu =
+document.getElementById("menuDropdown");
+
+
+const menuButton =
+document.getElementById("menuButton");
+
+
+function toggleMenu(){
+
+    menu.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   OPEN PAGE
+========================================================= */
+
+function openPage(
+    pageName,
+    clickedButton
+){
+
+    const pages =
+    document.querySelectorAll(".page");
+
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+
+    const selectedPage =
+    document.getElementById(pageName);
+
+
+    if(selectedPage){
+
+        selectedPage.classList.add("active");
+
+    }
+
+
+    const buttons =
+    document.querySelectorAll(".menu-item");
+
+
+    buttons.forEach(function(button){
+
+        button.classList.remove("active");
+
+    });
+
+
+    if(clickedButton){
+
+        clickedButton.classList.add("active");
+
+    }
+
+
+    menu.classList.remove("open");
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function goHome(){
+
+    openPage("home");
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            !menu.contains(event.target) &&
+            !menuButton.contains(event.target)
+        ){
+
+            menu.classList.remove("open");
+
         }
 
-        function switchPage(pageId, element) {
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(p => p.classList.remove('active'));
+    }
+);
 
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-            dropdownItems.forEach(i => i.classList.remove('active'));
 
-            const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) targetPage.classList.add('active');
+/* =========================================================
+   ESCAPE
+========================================================= */
 
-            if (element) element.classList.add('active');
+document.addEventListener(
+    "keydown",
+    function(event){
 
-            document.getElementById('menuDropdown').classList.remove('active');
+        if(event.key === "Escape"){
+
+            menu.classList.remove("open");
+
         }
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-trigger-btn') && !event.target.matches('.menu-trigger-btn *')) {
-                const dropdown = document.getElementById('menuDropdown');
-                if (dropdown && dropdown.classList.contains('active')) {
-                    dropdown.classList.remove('active');
+    }
+);
+
+
+/* =========================================================
+   IMAGE ERROR PROTECTION
+========================================================= */
+
+function imageError(image){
+
+    /*
+       अगर 47961.png नहीं मिलेगी,
+       तो black blank area दिखेगा,
+       broken-image icon नहीं।
+    */
+
+    image.style.display = "none";
+
+    image.parentElement.style.background =
+        "radial-gradient(circle at center, rgba(0,230,118,.12), #000 65%)";
+
+}
+
+
+/* =========================================================
+   DEMO MARKET MOVEMENT
+========================================================= */
+
+setInterval(function(){
+
+    const values =
+    document.querySelectorAll(
+        ".ticker-value"
+    );
+
+
+    values.forEach(function(element){
+
+        const number =
+        parseFloat(
+            element.textContent
+            .replace(/,/g,"")
+        );
+
+
+        if(!isNaN(number)){
+
+            const movement =
+            (Math.random() - .48)
+            *
+            number
+            *
+            .0005;
+
+
+            const updated =
+            number + movement;
+
+
+            element.textContent =
+            updated.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2,
+                    maximumFractionDigits:2
                 }
-            }
+            );
+
         }
 
-        // Dynamic Stock Price Fluctuation
-        function updateLiveRates() {
-            const valElements = document.querySelectorAll('.ticker-val');
-            valElements.forEach(el => {
-                let currentVal = parseFloat(el.innerText.replace(/,/g, ''));
-                if (!isNaN(currentVal)) {
-                    let change = (Math.random() - 0.48) * (currentVal * 0.0008);
-                    let newVal = currentVal + change;
-                    el.innerText = newVal.toLocaleString('en-IN', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    });
-                }
-            });
-        }
+    });
 
-        setInterval(updateLiveRates, 2000);
-    </script>
+},2000);
+
+</script>
+
+
 </body>
 </html>
