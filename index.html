@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Dark Cyber Edition</title>
+    <title>Global Finance - Dark Bullish Layout</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #06090e;
             --bg-card: #0d131f;
-            --bg-card-hover: #131c2e;
             --accent-green: #00e676;
-            --accent-glow: rgba(0, 230, 118, 0.25);
-            --border-color: rgba(255, 255, 255, 0.07);
+            --accent-glow: rgba(0, 230, 118, 0.3);
+            --border-color: rgba(255, 255, 255, 0.08);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
         }
@@ -30,7 +29,7 @@
             min-height: 100vh;
         }
 
-        /* --- 1. Top Market Ticker Bar --- */
+        /* Top Live Ticker Bar */
         .ticker-bar {
             background: #030508;
             border-bottom: 1px solid var(--border-color);
@@ -49,25 +48,26 @@
             white-space: nowrap;
         }
 
-        .ticker-value {
+        .ticker-val {
             color: var(--text-primary);
             font-weight: 600;
         }
 
-        .ticker-change {
+        .ticker-up {
             color: var(--accent-green);
             font-weight: 600;
         }
 
-        .ticker-change.down {
+        .ticker-down {
             color: #ff5252;
+            font-weight: 600;
         }
 
-        /* --- 2. Main Header / Navbar --- */
+        /* Top Header Navigation */
         .header {
             position: sticky;
             top: 0;
-            background: rgba(13, 19, 31, 0.85);
+            background: rgba(13, 19, 31, 0.9);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -85,13 +85,15 @@
             color: #fff;
             font-weight: 700;
             font-size: 1.1rem;
+            letter-spacing: 0.5px;
         }
 
         .logo-icon {
             color: var(--accent-green);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
+        /* Main Top Header Menu Items */
         .navbar {
             display: flex;
             gap: 1.2rem;
@@ -99,7 +101,7 @@
             align-items: center;
         }
 
-        .nav-item {
+        .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.85rem;
@@ -108,15 +110,40 @@
             border-radius: 6px;
             cursor: pointer;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-link:hover, .nav-link.active {
             color: var(--accent-green);
             background: rgba(0, 230, 118, 0.08);
         }
 
-        .ai-nav-btn {
-            background: rgba(0, 230, 118, 0.1);
+        /* Header Right Side Controls & AI Badge */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 6px;
+            transition: 0.2s;
+        }
+
+        .icon-btn:hover {
+            color: var(--accent-green);
+        }
+
+        /* Photo Jaisa Glowing AI Badge Icon */
+        .ai-header-btn {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 230, 118, 0.05));
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
             padding: 6px 14px;
@@ -125,21 +152,21 @@
             font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--accent-glow);
-            transition: 0.3s;
+            box-shadow: 0 0 12px var(--accent-glow);
+            transition: all 0.3s ease;
         }
 
-        .ai-nav-btn:hover, .ai-nav-btn.active {
+        .ai-header-btn:hover, .ai-header-btn.active {
             background: var(--accent-green);
             color: #000;
             box-shadow: 0 0 20px var(--accent-green);
         }
 
-        /* --- 3. Content Views / OS Containers --- */
+        /* Operating Systems Area */
         .main-workspace {
-            padding: 2rem 4%;
+            padding: 1.5rem 4%;
         }
 
         .os-view {
@@ -150,238 +177,183 @@
             display: block;
         }
 
-        /* Home View Dashboard Layout */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(0, 230, 118, 0.05), transparent);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .hero-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-btn {
-            background: var(--accent-green);
-            color: #000;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* Feature Cards Grid (Home View Buttons) */
-        .nav-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 1.2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .feature-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--accent-green);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .feature-card i {
-            font-size: 1.4rem;
-            color: var(--accent-green);
-        }
-
-        .feature-card h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        /* Custom OS Blank Canvas Styling */
+        /* Blank OS Canvas for Your Code */
         .blank-os-container {
             width: 100%;
-            min-height: 75vh;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
+            min-height: 80vh;
+            border: 2px dashed rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             background: var(--bg-card);
             position: relative;
+        }
+
+        /* Mobile Hamburger Icon */
+        .mobile-menu-btn {
+            display: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #0d131f;
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .navbar.open {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Top Ticker Bar -->
+    <!-- 1. Top Stock Ticker Bar -->
     <div class="ticker-bar">
-        <div class="ticker-item">NIFTY 50 <span class="ticker-value">24,834.85</span> <span class="ticker-change">+0.42%</span></div>
-        <div class="ticker-item">SENSEX <span class="ticker-value">81,157.73</span> <span class="ticker-change">+0.45%</span></div>
-        <div class="ticker-item">USD/INR <span class="ticker-value">83.28</span> <span class="ticker-change down">-0.10%</span></div>
-        <div class="ticker-item">GOLD (MCX) <span class="ticker-value">72,145.00</span> <span class="ticker-change">+0.15%</span></div>
-        <div class="ticker-item">BTC/USDT <span class="ticker-value">67,245.30</span> <span class="ticker-change">+1.25%</span></div>
+        <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
+        <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
+        <div class="ticker-item">USD/INR <span class="ticker-val">83.28</span> <span class="ticker-down">-0.10%</span></div>
+        <div class="ticker-item">GOLD (MCX) <span class="ticker-val">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
+        <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
     </div>
 
-    <!-- 2. Main Header / Navbar -->
+    <!-- 2. Header & Main Navbar Menu -->
     <header class="header">
         <a href="#" class="logo">
             <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
         </a>
 
-        <ul class="navbar">
-            <li><a class="nav-item active" onclick="openOS('home', this)">Home</a></li>
-            <li><a class="nav-item" onclick="openOS('markets', this)">Markets</a></li>
-            <li><a class="nav-item" onclick="openOS('insights', this)">Insights</a></li>
-            <li><a class="nav-item" onclick="openOS('tools', this)">Tools</a></li>
-            <li>
-                <button class="ai-nav-btn" onclick="openOS('ai', this)">
-                    <i class="fa-solid fa-microchip"></i> AI Assistant
-                </button>
-            </li>
+        <!-- Menu items matching photo header layout -->
+        <ul class="navbar" id="topNavbar">
+            <li><a class="nav-link active" onclick="switchOS('home', this)">Home</a></li>
+            <li><a class="nav-link" onclick="switchOS('markets', this)">Markets</a></li>
+            <li><a class="nav-link" onclick="switchOS('trading', this)">Trading</a></li>
+            <li><a class="nav-link" onclick="switchOS('investments', this)">Investments</a></li>
+            <li><a class="nav-link" onclick="switchOS('loans', this)">Loans</a></li>
+            <li><a class="nav-link" onclick="switchOS('earnings', this)">Earnings</a></li>
+            <li><a class="nav-link" onclick="switchOS('insights', this)">Insights</a></li>
+            <li><a class="nav-link" onclick="switchOS('tools', this)">Tools <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
+            <li><a class="nav-link" onclick="switchOS('more', this)">More <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></a></li>
         </ul>
+
+        <!-- Right side Header Actions & Updated AI Button -->
+        <div class="header-actions">
+            <button class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            
+            <button class="ai-header-btn" onclick="switchOS('ai', this)">
+                <i class="fa-solid fa-robot"></i> AI Personal Assistant
+            </button>
+
+            <button class="icon-btn" title="User Profile"><i class="fa-regular fa-user"></i></button>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></div>
+        </div>
     </header>
 
-    <!-- 3. Dynamic Operating Systems Area -->
+    <!-- 3. Dynamic Isolated Operating System Containers -->
     <main class="main-workspace">
 
-        <!-- OS 1: HOME DASHBOARD -->
+        <!-- OS: HOME -->
         <div id="os-home" class="os-view active">
-            <div class="hero-banner">
-                <h1 class="hero-title">Smart Decisions<br><span style="color: var(--accent-green);">Stronger Future</span></h1>
-                <p class="hero-subtitle">Trade, Invest, Grow — All in One Powerful Platform.</p>
-                <button class="hero-btn">Start Investing &rarr;</button>
-            </div>
-
-            <!-- Quick Access Button Grid -->
-            <div class="nav-cards-grid">
-                <div class="feature-card" onclick="openOS('trading')">
-                    <i class="fa-solid fa-arrow-trend-up"></i>
-                    <h3>Trading</h3>
-                </div>
-                <div class="feature-card" onclick="openOS('investments')">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <h3>Investments</h3>
-                </div>
-                <div class="feature-card" onclick="openOS('loans')">
-                    <i class="fa-solid fa-hand-holding-dollar"></i>
-                    <h3>Loans</h3>
-                </div>
-                <div class="feature-card" onclick="openOS('earnings')">
-                    <i class="fa-solid fa-wallet"></i>
-                    <h3>Earnings</h3>
-                </div>
-                <div class="feature-card" onclick="openOS('ai')">
-                    <i class="fa-solid fa-robot"></i>
-                    <h3>AI Assistant</h3>
-                </div>
-            </div>
-
-            <!-- Empty Container for Home Extra Widgets -->
             <div class="blank-os-container">
-                <!-- AAPKA CUSTOM HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- AAPKA HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 2: TRADING OPERATING SYSTEM -->
+        <!-- OS: MARKETS -->
+        <div id="os-markets" class="os-view">
+            <div class="blank-os-container">
+                <!-- AAPKA MARKETS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+            </div>
+        </div>
+
+        <!-- OS: TRADING -->
         <div id="os-trading" class="os-view">
             <div class="blank-os-container">
                 <!-- AAPKA TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 3: INVESTMENTS OPERATING SYSTEM -->
+        <!-- OS: INVESTMENTS -->
         <div id="os-investments" class="os-view">
             <div class="blank-os-container">
                 <!-- AAPKA INVESTMENTS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 4: LOANS OPERATING SYSTEM -->
+        <!-- OS: LOANS -->
         <div id="os-loans" class="os-view">
             <div class="blank-os-container">
                 <!-- AAPKA LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 5: EARNINGS OPERATING SYSTEM -->
+        <!-- OS: EARNINGS -->
         <div id="os-earnings" class="os-view">
             <div class="blank-os-container">
                 <!-- AAPKA EARNINGS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 6: AI ASSISTANT OPERATING SYSTEM -->
-        <div id="os-ai" class="os-view">
-            <div class="blank-os-container">
-                <!-- AAPKA CUSTOM AI OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- OS 7: MARKETS SYSTEM -->
-        <div id="os-markets" class="os-view">
-            <div class="blank-os-container">
-                <!-- AAPKA MARKETS CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- OS 8: INSIGHTS SYSTEM -->
+        <!-- OS: INSIGHTS -->
         <div id="os-insights" class="os-view">
             <div class="blank-os-container">
-                <!-- AAPKA INSIGHTS CODE YAHAN AAYEGA -->
+                <!-- AAPKA INSIGHTS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- OS 9: TOOLS SYSTEM -->
+        <!-- OS: TOOLS -->
         <div id="os-tools" class="os-view">
             <div class="blank-os-container">
-                <!-- AAPKA TOOLS CODE YAHAN AAYEGA -->
+                <!-- AAPKA TOOLS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+            </div>
+        </div>
+
+        <!-- OS: MORE -->
+        <div id="os-more" class="os-view">
+            <div class="blank-os-container">
+                <!-- AAPKA MORE OPERATING SYSTEM CODE YAHAN AAYEGA -->
+            </div>
+        </div>
+
+        <!-- OS: AI ASSISTANT -->
+        <div id="os-ai" class="os-view">
+            <div class="blank-os-container">
+                <!-- AAPKA AI ASSISTANT OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
     </main>
 
-    <!-- Tab Switching Logic -->
     <script>
-        function openOS(osId, element) {
-            // Hide all OS views
+        function switchOS(targetId, element) {
+            // Hide all active OS views
             const views = document.querySelectorAll('.os-view');
             views.forEach(v => v.classList.remove('active'));
 
-            // Deactivate all Navbar highlights
-            const navItems = document.querySelectorAll('.nav-item, .ai-nav-btn');
-            navItems.forEach(n => n.classList.remove('active'));
+            // Reset active states on navbar items and AI button
+            const navLinks = document.querySelectorAll('.nav-link, .ai-header-btn');
+            navLinks.forEach(n => n.classList.remove('active'));
 
-            // Show selected OS view
-            const targetOS = document.getElementById('os-' + osId);
-            if(targetOS) targetOS.classList.add('active');
+            // Show selected OS view container
+            const activeOS = document.getElementById('os-' + targetId);
+            if (activeOS) activeOS.classList.add('active');
 
-            // Highlight corresponding navbar button
-            if(element) {
-                element.classList.add('active');
-            } else {
-                // If clicked from cards grid, highlight respective navbar link
-                const activeNav = Array.from(navItems).find(item => item.textContent.trim().toLowerCase().includes(osId));
-                if(activeNav) activeNav.classList.add('active');
-            }
+            // Highlight active button
+            if (element) element.classList.add('active');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('topNavbar').classList.toggle('open');
         }
     </script>
 </body>
