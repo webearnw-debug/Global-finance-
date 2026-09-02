@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Compact Menu Edition</title>
+    <title>Global Finance - Bull Edition</title>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --bg-main: #06090e;
             --bg-card: #0d131f;
             --accent-green: #00e676;
             --accent-glow: rgba(0, 230, 118, 0.25);
-            --alpha-glow: linear-gradient(135deg, #7928ca, #00dfd8);
             --border-color: rgba(255, 255, 255, 0.08);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
@@ -30,16 +31,21 @@
             min-height: 100vh;
         }
 
-        /* 1. Top Stock Ticker Bar */
+        /* --- 1. Top Live Market Ticker Bar --- */
         .ticker-bar {
             background: #030508;
             border-bottom: 1px solid var(--border-color);
-            padding: 5px 4%;
+            padding: 8px 4%;
             display: flex;
-            gap: 1.8rem;
+            gap: 2rem;
             overflow-x: auto;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
+            scrollbar-width: none; /* Hide scrollbar for clean look */
+        }
+
+        .ticker-bar::-webkit-scrollbar {
+            display: none;
         }
 
         .ticker-item {
@@ -53,7 +59,7 @@
         .ticker-up { color: var(--accent-green); font-weight: 600; }
         .ticker-down { color: #ff5252; font-weight: 600; }
 
-        /* 2. Sleek Header with ONLY Logo and Menu Button */
+        /* --- 2. Header Navbar (Logo + Single Menu Button) --- */
         .header {
             position: sticky;
             top: 0;
@@ -63,29 +69,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 4%;
+            padding: 0.9rem 4%;
             z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-decoration: none;
             color: #fff;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             letter-spacing: 0.5px;
         }
 
         .logo-icon {
             color: var(--accent-green);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
-        /* Main Single Menu Button */
+        /* Menu Button */
         .menu-trigger-btn {
-            background: rgba(0, 230, 118, 0.1);
+            background: rgba(0, 230, 118, 0.08);
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
             padding: 8px 18px;
@@ -121,7 +127,6 @@
             flex-direction: column;
             gap: 4px;
             z-index: 2000;
-            backdrop-filter: blur(20px);
         }
 
         .dropdown-menu.active {
@@ -149,208 +154,87 @@
             color: var(--accent-green);
         }
 
-        /* Glowing Alpha AI Option Inside Menu */
-        .alpha-ai-option {
-            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
-            border: 1px solid #00dfd8;
-            color: #fff;
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        .alpha-ai-option:hover, .alpha-ai-option.active {
-            background: var(--alpha-glow);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
-        }
-
-        /* 3. Dynamic Page View Containers */
+        /* --- 3. Main Body Container (Only Bull Photo) --- */
         .main-workspace {
-            padding: 1.5rem 4%;
-        }
-
-        .page-view {
-            display: none;
-        }
-
-        .page-view.active {
-            display: block;
-        }
-
-        /* Home View Grid Overview */
-        .home-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .home-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.2rem;
-        }
-
-        .home-card h3 {
-            font-size: 0.95rem;
-            color: var(--accent-green);
-            margin-bottom: 0.5rem;
+            padding: 1rem 4%;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
         }
 
-        /* Blank Canvas Container for custom OS Code */
-        .blank-os-container {
+        .bull-container {
             width: 100%;
-            min-height: 75vh;
-            border: 2px dashed rgba(255, 255, 255, 0.08);
+            max-width: 1200px;
             border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
             background: var(--bg-card);
-            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .bull-img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            display: block;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. Stock Ticker Bar -->
+    <!-- 1. Live Rates Top Bar -->
     <div class="ticker-bar">
         <div class="ticker-item">NIFTY 50 <span class="ticker-val">24,834.85</span> <span class="ticker-up">+0.42%</span></div>
         <div class="ticker-item">SENSEX <span class="ticker-val">81,157.73</span> <span class="ticker-up">+0.45%</span></div>
+        <div class="ticker-item">BANK NIFTY <span class="ticker-val">51,230.10</span> <span class="ticker-up">+0.30%</span></div>
         <div class="ticker-item">USD/INR <span class="ticker-val">83.28</span> <span class="ticker-down">-0.10%</span></div>
         <div class="ticker-item">GOLD (MCX) <span class="ticker-val">72,145.00</span> <span class="ticker-up">+0.15%</span></div>
-        <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
     </div>
 
-    <!-- 2. Clean Header (Only Logo + Single Menu Button) -->
+    <!-- 2. Header (Logo + Single Menu Button) -->
     <header class="header">
         <a href="#" class="logo">
-            <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
+            <i class="fa-solid fa-chart-line logo-icon"></i>
+            GLOBAL FINANCE
         </a>
 
-        <!-- Single Menu Button -->
+        <!-- Menu Button -->
         <div style="position: relative;">
             <button class="menu-trigger-btn" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i> Menu
             </button>
 
-            <!-- Menu Popup Dropdown -->
+            <!-- Popup Menu Dropdown -->
             <div class="dropdown-menu" id="menuDropdown">
-                <button class="dropdown-item active" onclick="switchPage('home', this)">Home <i class="fa-solid fa-house"></i></button>
-                <button class="dropdown-item" onclick="switchPage('financial', this)">Financial <i class="fa-solid fa-wallet"></i></button>
-                <button class="dropdown-item" onclick="switchPage('trading', this)">Trading <i class="fa-solid fa-chart-candlestick"></i></button>
-                <button class="dropdown-item" onclick="switchPage('investment', this)">Investment <i class="fa-solid fa-chart-pie"></i></button>
-                <button class="dropdown-item" onclick="switchPage('loans', this)">Loans <i class="fa-solid fa-hand-holding-dollar"></i></button>
-                <button class="dropdown-item" onclick="switchPage('earning-tips', this)">Earning Tips <i class="fa-solid fa-lightbulb"></i></button>
-                <button class="dropdown-item alpha-ai-option" onclick="switchPage('alpha-ai', this)">Alpha AI <i class="fa-solid fa-bolt-lightning"></i></button>
+                <button class="dropdown-item active">Home <i class="fa-solid fa-house"></i></button>
+                <button class="dropdown-item">Financial Overview <i class="fa-solid fa-wallet"></i></button>
+                <button class="dropdown-item">Trading Live <i class="fa-solid fa-chart-candlestick"></i></button>
+                <button class="dropdown-item">Investment Portfolio <i class="fa-solid fa-chart-pie"></i></button>
+                <button class="dropdown-item">Loans & Credit <i class="fa-solid fa-hand-holding-dollar"></i></button>
             </div>
         </div>
     </header>
 
-    <!-- 3. Dynamic Page View Area -->
+    <!-- 3. Main Workspace (Only Bull Photo) -->
     <main class="main-workspace">
-
-        <!-- HOME PAGE (Mixed Feature Overview + Blank OS Area) -->
-        <div id="page-home" class="page-view active">
-            <div class="home-grid">
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-wallet"></i> Financial Overview</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Overall financial summary & account stats.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-chart-candlestick"></i> Trading Live</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Live market stats & gainers/losers overview.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-chart-pie"></i> Investment Portfolio</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Mutual funds & asset distribution.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-hand-holding-dollar"></i> Loans & Credit</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Active credit line & monthly EMI breakdown.</p>
-                </div>
-            </div>
-
-            <div class="blank-os-container">
-                <!-- HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
+        <div class="bull-container">
+            <!-- Replace 'bull-image.jpg' with your photo filename or URL -->
+            <img src="bull-image.jpg" alt="Bull Market" class="bull-img">
         </div>
-
-        <!-- FINANCIAL PAGE -->
-        <div id="page-financial" class="page-view">
-            <div class="blank-os-container">
-                <!-- FINANCIAL OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- TRADING PAGE -->
-        <div id="page-trading" class="page-view">
-            <div class="blank-os-container">
-                <!-- TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- INVESTMENT PAGE -->
-        <div id="page-investment" class="page-view">
-            <div class="blank-os-container">
-                <!-- INVESTMENT OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- LOANS PAGE -->
-        <div id="page-loans" class="page-view">
-            <div class="blank-os-container">
-                <!-- LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- EARNING TIPS PAGE -->
-        <div id="page-earning-tips" class="page-view">
-            <div class="blank-os-container">
-                <!-- EARNING TIPS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- ALPHA AI PAGE -->
-        <div id="page-alpha-ai" class="page-view">
-            <div class="blank-os-container">
-                <!-- ALPHA AI OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
     </main>
 
+    <!-- JavaScript -->
     <script>
         function toggleMenu() {
             document.getElementById('menuDropdown').classList.toggle('active');
         }
 
-        function switchPage(pageId, element) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(p => p.classList.remove('active'));
-
-            // Reset active menu item highlight
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-            dropdownItems.forEach(i => i.classList.remove('active'));
-
-            // Activate target page
-            const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) targetPage.classList.add('active');
-
-            // Highlight active menu item
-            if (element) element.classList.add('active');
-
-            // Close dropdown menu automatically after selecting an option
-            document.getElementById('menuDropdown').classList.remove('active');
-        }
-
-        // Close dropdown when clicking outside
+        // Close menu when clicking outside
         window.onclick = function(event) {
             if (!event.target.matches('.menu-trigger-btn') && !event.target.matches('.menu-trigger-btn *')) {
                 const dropdown = document.getElementById('menuDropdown');
-                if (dropdown.classList.contains('active')) {
+                if (dropdown && dropdown.classList.contains('active')) {
                     dropdown.classList.remove('active');
                 }
             }
