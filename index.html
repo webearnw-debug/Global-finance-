@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Finance - Compact Menu Edition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <!-- ===== Parnarav AI ke liye zaroori libraries ===== -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Puter Cloud AI Engine — yही Parnarav AI ka "system" hai, iske bina AI connect nahi hoga -->
     <script src="https://js.puter.com/v2/"></script>
 
@@ -39,7 +42,6 @@
             min-height: 100vh;
         }
 
-        /* 1. Top Stock Ticker Bar */
         .ticker-bar {
             background: #030508;
             border-bottom: 1px solid var(--border-color);
@@ -51,18 +53,11 @@
             color: var(--text-secondary);
         }
 
-        .ticker-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
+        .ticker-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
         .ticker-val { color: var(--text-primary); font-weight: 600; }
         .ticker-up { color: var(--accent-green); font-weight: 600; }
         .ticker-down { color: #ff5252; font-weight: 600; }
 
-        /* 2. Sleek Header with ONLY Logo and Menu Button */
         .header {
             position: sticky;
             top: 0;
@@ -76,23 +71,9 @@
             z-index: 1000;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
+        .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; font-weight: 700; font-size: 1.1rem; letter-spacing: 0.5px; }
+        .logo-icon { color: var(--accent-green); font-size: 1.3rem; }
 
-        .logo-icon {
-            color: var(--accent-green);
-            font-size: 1.3rem;
-        }
-
-        /* Main Single Menu Button */
         .menu-trigger-btn {
             background: rgba(0, 230, 118, 0.1);
             border: 1px solid var(--accent-green);
@@ -109,13 +90,8 @@
             transition: all 0.2s ease;
         }
 
-        .menu-trigger-btn:hover {
-            background: var(--accent-green);
-            color: #000;
-            box-shadow: 0 0 18px var(--accent-green);
-        }
+        .menu-trigger-btn:hover { background: var(--accent-green); color: #000; box-shadow: 0 0 18px var(--accent-green); }
 
-        /* Popup Dropdown Menu */
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -133,9 +109,7 @@
             backdrop-filter: blur(20px);
         }
 
-        .dropdown-menu.active {
-            display: flex;
-        }
+        .dropdown-menu.active { display: flex; }
 
         .dropdown-item {
             background: transparent;
@@ -153,12 +127,8 @@
             justify-content: space-between;
         }
 
-        .dropdown-item:hover, .dropdown-item.active {
-            background: rgba(0, 230, 118, 0.1);
-            color: var(--accent-green);
-        }
+        .dropdown-item:hover, .dropdown-item.active { background: rgba(0, 230, 118, 0.1); color: var(--accent-green); }
 
-        /* Glowing Alpha AI Option Inside Menu */
         .alpha-ai-option {
             background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
             border: 1px solid #00dfd8;
@@ -167,50 +137,16 @@
             margin-top: 4px;
         }
 
-        .alpha-ai-option:hover, .alpha-ai-option.active {
-            background: var(--alpha-glow);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
-        }
+        .alpha-ai-option:hover, .alpha-ai-option.active { background: var(--alpha-glow); color: #fff; box-shadow: 0 0 15px rgba(0, 223, 216, 0.5); }
 
-        /* 3. Dynamic Page View Containers */
-        .main-workspace {
-            padding: 1.5rem 4%;
-        }
+        .main-workspace { padding: 1.5rem 4%; }
+        .page-view { display: none; }
+        .page-view.active { display: block; }
 
-        .page-view {
-            display: none;
-        }
+        .home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 1.5rem; }
+        .home-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; }
+        .home-card h3 { font-size: 0.95rem; color: var(--accent-green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
 
-        .page-view.active {
-            display: block;
-        }
-
-        /* Home View Grid Overview */
-        .home-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .home-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.2rem;
-        }
-
-        .home-card h3 {
-            font-size: 0.95rem;
-            color: var(--accent-green);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Blank Canvas Container for custom OS Code */
         .blank-os-container {
             width: 100%;
             min-height: 75vh;
@@ -222,7 +158,7 @@
         }
     </style>
 
-    <!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar hi lagega, baaki page ko touch nahi karega ===== -->
+    <!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar hi lagega ===== -->
     <style>
         .parnarav-ai-app {
             --p-bg-base: #030712;
@@ -248,6 +184,18 @@
             border-radius: 16px;
             font-size: 16.5px;
             line-height: 1.6;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Upgrade #10: Light theme variant */
+        .parnarav-ai-app[data-theme="light"] {
+            --p-bg-base: #f4f6fb;
+            --p-bg-surface: #ffffff;
+            --p-bg-card: #ffffff;
+            --p-text-main: #0f172a;
+            --p-text-muted: #64748b;
+            --p-border-color: #e2e8f0;
         }
 
         .parnarav-ai-app, .parnarav-ai-app * {
@@ -258,7 +206,6 @@
 
         .parnarav-ai-app strong, .parnarav-ai-app b { font-weight: 700; }
 
-        /* Sidebar */
         .parnarav-ai-app .sidebar {
             width: var(--p-sidebar-width);
             height: 100%;
@@ -273,37 +220,11 @@
             overflow-y: auto;
         }
 
-        .parnarav-ai-app .brand-logo {
-            font-size: 1.1rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .parnarav-ai-app .brand-logo { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .parnarav-ai-app .parnarav-brain-icon { width: 30px; height: 30px; vertical-align: middle; filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4)); flex-shrink: 0; }
 
-        .parnarav-ai-app .parnarav-brain-icon {
-            width: 30px;
-            height: 30px;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
-        }
-
-        .parnarav-ai-app .nav-section-title {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--p-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 14px 0 6px 6px;
-        }
-
-        .parnarav-ai-app .nav-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .parnarav-ai-app .nav-section-title { font-size: 0.7rem; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin: 14px 0 6px 6px; }
+        .parnarav-ai-app .nav-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
 
         .parnarav-ai-app .nav-item {
             padding: 9px 12px;
@@ -318,23 +239,17 @@
             transition: all 0.2s ease;
         }
 
-        .parnarav-ai-app .nav-item:hover, .parnarav-ai-app .nav-item.active {
-            background-color: var(--p-bg-card);
-            color: var(--p-accent-cyan);
-            border: 1px solid var(--p-border-color);
-        }
+        .parnarav-ai-app .nav-item .fa-fallback { display: none; }
+        .parnarav-ai-app.fa-missing .nav-item i { display: none; }
+        .parnarav-ai-app.fa-missing .nav-item .fa-fallback { display: inline-block; }
 
-        .parnarav-ai-app .tools-menu {
-            margin-top: 14px;
-            background: var(--p-bg-card);
-            border: 1px solid var(--p-border-color);
-            border-radius: 12px;
-            padding: 12px;
-        }
+        .parnarav-ai-app .nav-item:hover, .parnarav-ai-app .nav-item.active { background-color: var(--p-bg-card); color: var(--p-accent-cyan); border: 1px solid var(--p-border-color); }
+
+        .parnarav-ai-app .tools-menu { margin-top: 14px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px; }
 
         .parnarav-ai-app .tool-btn {
             width: 100%;
-            background: #1e293b;
+            background: rgba(148, 163, 184, 0.08);
             border: 1px solid var(--p-border-color);
             color: var(--p-text-main);
             padding: 8px 10px;
@@ -349,60 +264,55 @@
             transition: all 0.2s ease;
         }
 
-        .parnarav-ai-app .tool-btn:hover {
-            border-color: var(--p-accent-cyan);
-            color: var(--p-accent-cyan);
-        }
+        .parnarav-ai-app .tool-btn:hover { border-color: var(--p-accent-cyan); color: var(--p-accent-cyan); }
 
-        /* Workspace */
-        .parnarav-ai-app .workspace {
-            flex: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            position: relative;
-        }
+        .parnarav-ai-app .workspace { flex: 1; height: 100%; display: flex; flex-direction: column; min-width: 0; position: relative; }
 
         .parnarav-ai-app .topbar {
-            height: 54px;
+            min-height: 54px;
             background-color: var(--p-bg-surface);
             border-bottom: 1px solid var(--p-border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 8px 16px;
             flex-shrink: 0;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .parnarav-ai-app .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--p-text-main);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
+        .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.2rem; cursor: pointer; }
 
-        .parnarav-ai-app .voice-toggle-btn {
+        .parnarav-ai-app .topbar-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+        .parnarav-ai-app .mini-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--p-border-color);
             color: var(--p-text-muted);
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             font-weight: 600;
+            transition: all 0.2s ease;
         }
 
-        .parnarav-ai-app .voice-toggle-btn.active {
-            background: rgba(56, 189, 248, 0.15);
-            color: var(--p-accent-cyan);
-            border-color: var(--p-accent-cyan);
+        .parnarav-ai-app .mini-btn:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+        .parnarav-ai-app .mini-btn.active { background: rgba(56, 189, 248, 0.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+        .parnarav-ai-app .mini-btn.danger:hover { color: var(--p-accent-red); border-color: var(--p-accent-red); }
+
+        .parnarav-ai-app .model-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--p-border-color);
+            color: var(--p-text-muted);
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
         }
 
         .parnarav-ai-app .status-badge {
@@ -419,107 +329,60 @@
             white-space: nowrap;
         }
 
-        .parnarav-ai-app .status-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--p-accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--p-accent-green);
-        }
+        .parnarav-ai-app .status-dot { width: 6px; height: 6px; background: var(--p-accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--p-accent-green); }
 
-        .parnarav-ai-app .chat-area {
-            flex: 1;
-            padding: 20px 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
+        /* Upgrade #18: offline banner */
+        .parnarav-ai-app .offline-banner {
+            display: none;
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--p-accent-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 5px;
         }
+        .parnarav-ai-app.is-offline .offline-banner { display: block; }
 
-        .parnarav-ai-app .message-row {
-            display: flex;
-            gap: 12px;
-            max-width: 90%;
-            animation: parnaravFadeIn 0.25s ease-in-out;
-        }
+        .parnarav-ai-app .chat-area { flex: 1; padding: 20px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth; position: relative; }
 
-        .parnarav-ai-app .message-row.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .parnarav-ai-app .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--p-bg-card);
+        /* Upgrade #13: suggested prompt chips */
+        .parnarav-ai-app .chip-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 10px; flex-shrink: 0; }
+        .parnarav-ai-app .chip-btn {
+            background: rgba(148, 163, 184, 0.08);
             border: 1px solid var(--p-border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-            font-weight: 800;
+            color: var(--p-text-muted);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
+        .parnarav-ai-app .chip-btn:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
 
-        .parnarav-ai-app .user .avatar {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: #ffffff;
-            border: none;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
-        }
+        .parnarav-ai-app .message-row { display: flex; gap: 12px; max-width: 90%; animation: parnaravFadeIn 0.25s ease-in-out; }
+        .parnarav-ai-app .message-row.user { align-self: flex-end; flex-direction: row-reverse; }
 
-        .parnarav-ai-app .bubble {
-            background-color: var(--p-bg-card);
-            border: 1px solid var(--p-border-color);
-            border-radius: 12px;
-            padding: 14px 16px;
-            line-height: 1.6;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-            overflow-x: auto;
-            position: relative;
-        }
+        .parnarav-ai-app .avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; font-weight: 800; }
+        .parnarav-ai-app .user .avatar { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #ffffff; border: none; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
 
-        .parnarav-ai-app .user .bubble {
-            background-color: #1e3a8a;
-            border-color: #3b82f6;
-            color: #fff;
-        }
+        .parnarav-ai-app .msg-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        .parnarav-ai-app .message-row.user .msg-col { align-items: flex-end; }
 
-        .parnarav-ai-app .widget-card {
-            background: #070a13;
-            border: 1px solid var(--p-border-color);
-            border-radius: 10px;
-            padding: 14px;
-            margin-top: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.83rem;
-        }
+        .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 14px 16px; line-height: 1.6; font-size: 0.9rem; word-wrap: break-word; overflow-x: auto; position: relative; }
+        .parnarav-ai-app .user .bubble { background-color: #1e3a8a; border-color: #3b82f6; color: #fff; }
 
-        .parnarav-ai-app .widget-title {
-            color: var(--p-accent-purple);
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        /* Upgrade #14: timestamps */
+        .parnarav-ai-app .msg-time { font-size: 0.65rem; color: var(--p-text-muted); padding: 0 4px; }
 
-        .parnarav-ai-app .ai-action-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .parnarav-ai-app .widget-card { background: rgba(0,0,0,0.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 14px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.83rem; }
+        .parnarav-ai-app .widget-title { color: var(--p-accent-purple); font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 
+        .parnarav-ai-app .ai-action-bar { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(148, 163, 184, 0.15); flex-wrap: wrap; }
         .parnarav-ai-app .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #d1d5db;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: var(--p-text-muted);
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
@@ -529,32 +392,59 @@
             align-items: center;
             gap: 5px;
         }
+        .parnarav-ai-app .action-btn:hover { background: rgba(255, 255, 255, 0.15); color: var(--p-text-main); }
 
-        .parnarav-ai-app .action-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+        /* Upgrade #5: typing indicator dots */
+        .parnarav-ai-app .typing-dots { display: inline-flex; gap: 4px; align-items: center; }
+        .parnarav-ai-app .typing-dots span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--p-accent-cyan);
+            animation: parnaravTypingBlink 1.2s infinite ease-in-out;
         }
+        .parnarav-ai-app .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .parnarav-ai-app .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes parnaravTypingBlink { 0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.15); } }
 
-        .parnarav-ai-app .input-wrapper {
-            padding: 12px 16px;
-            background: var(--p-bg-surface);
-            border-top: 1px solid var(--p-border-color);
-            flex-shrink: 0;
+        /* Upgrade #15: scroll-to-bottom fab + #16 unread badge */
+        .parnarav-ai-app .scroll-fab {
+            position: absolute;
+            bottom: 14px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--p-accent-cyan);
+            color: #04121c;
+            border: none;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4);
+            z-index: 4;
         }
-
-        .parnarav-ai-app .input-box {
+        .parnarav-ai-app .scroll-fab.show { display: flex; }
+        .parnarav-ai-app .scroll-fab .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--p-accent-red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: var(--p-bg-base);
-            border: 1px solid var(--p-border-color);
-            border-radius: 12px;
-            padding: 6px 12px;
+            justify-content: center;
         }
 
-        .parnarav-ai-app .input-box:focus-within {
-            border-color: var(--p-accent-cyan);
-        }
+        .parnarav-ai-app .input-wrapper { padding: 10px 16px 14px; background: var(--p-bg-surface); border-top: 1px solid var(--p-border-color); flex-shrink: 0; }
+        .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--p-text-muted); padding: 0 4px 4px; }
+
+        .parnarav-ai-app .input-box { display: flex; align-items: flex-end; gap: 8px; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 6px 12px; }
+        .parnarav-ai-app .input-box:focus-within { border-color: var(--p-accent-cyan); }
 
         .parnarav-ai-app textarea {
             flex: 1;
@@ -564,85 +454,33 @@
             color: var(--p-text-main);
             font-size: 0.92rem;
             resize: none;
-            height: 40px;
+            min-height: 40px;
+            max-height: 140px;
             padding-top: 10px;
             line-height: 1.4;
+            overflow-y: auto;
         }
 
-        .parnarav-ai-app .btn-icon {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--p-border-color);
-            color: var(--p-text-muted);
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
+        .parnarav-ai-app .btn-icon { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; flex-shrink: 0; }
+        .parnarav-ai-app .btn-icon:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+        .parnarav-ai-app .btn-icon.listening { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; color: #ef4444; animation: parnaravPulseMic 1.2s infinite; }
 
-        .parnarav-ai-app .btn-icon:hover {
-            color: var(--p-accent-cyan);
-            border-color: var(--p-accent-cyan);
-        }
+        .parnarav-ai-app .btn-send { background: linear-gradient(135deg, var(--p-accent-cyan), var(--p-accent-purple)); border: none; width: 38px; height: 38px; border-radius: 8px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .parnarav-ai-app .btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .parnarav-ai-app .btn-icon.listening {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #ef4444;
-            animation: parnaravPulseMic 1.2s infinite;
-        }
-
-        .parnarav-ai-app .btn-send {
-            background: linear-gradient(135deg, var(--p-accent-cyan), var(--p-accent-purple));
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .parnarav-ai-app pre {
-            background: #000 !important;
-            border: 1px solid var(--p-border-color);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-            overflow-x: auto;
-        }
+        .parnarav-ai-app pre { background: rgba(0,0,0,0.4) !important; border: 1px solid var(--p-border-color); border-radius: 8px; padding: 12px; margin: 10px 0; overflow-x: auto; }
         .parnarav-ai-app code { font-family: 'JetBrains Mono', monospace; }
 
-        @keyframes parnaravPulseMic {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-        }
-
-        @keyframes parnaravFadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes parnaravPulseMic { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        @keyframes parnaravFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 768px) {
             .parnarav-ai-app { height: 85vh; }
-            .parnarav-ai-app .sidebar {
-                position: absolute;
-                left: -100%;
-                top: 0;
-                bottom: 0;
-            }
-            .parnarav-ai-app .sidebar.open {
-                left: 0;
-                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            }
+            .parnarav-ai-app .sidebar { position: absolute; left: -100%; top: 0; bottom: 0; }
+            .parnarav-ai-app .sidebar.open { left: 0; box-shadow: 10px 0 30px rgba(0,0,0,0.8); }
             .parnarav-ai-app .mobile-menu-btn { display: block; }
             .parnarav-ai-app .message-row { max-width: 96%; }
+            .parnarav-ai-app .topbar { padding: 8px 10px; }
         }
     </style>
 </head>
@@ -657,7 +495,7 @@
         <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
     </div>
 
-    <!-- 2. Clean Header (Only Logo + Single Menu Button) -->
+    <!-- 2. Clean Header -->
     <header class="header">
         <a href="#" class="logo">
             <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
@@ -683,73 +521,28 @@
     <!-- 3. Dynamic Page View Area -->
     <main class="main-workspace">
 
-        <!-- HOME PAGE -->
         <div id="page-home" class="page-view active">
             <div class="home-grid">
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-wallet"></i> Financial Overview</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Overall financial summary & account stats.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-chart-candlestick"></i> Trading Live</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Live market stats & gainers/losers overview.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-chart-pie"></i> Investment Portfolio</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Mutual funds & asset distribution.</p>
-                </div>
-                <div class="home-card">
-                    <h3><i class="fa-solid fa-hand-holding-dollar"></i> Loans & Credit</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Active credit line & monthly EMI breakdown.</p>
-                </div>
+                <div class="home-card"><h3><i class="fa-solid fa-wallet"></i> Financial Overview</h3><p style="color:#94a3b8;font-size:0.85rem;">Overall financial summary & account stats.</p></div>
+                <div class="home-card"><h3><i class="fa-solid fa-chart-candlestick"></i> Trading Live</h3><p style="color:#94a3b8;font-size:0.85rem;">Live market stats & gainers/losers overview.</p></div>
+                <div class="home-card"><h3><i class="fa-solid fa-chart-pie"></i> Investment Portfolio</h3><p style="color:#94a3b8;font-size:0.85rem;">Mutual funds & asset distribution.</p></div>
+                <div class="home-card"><h3><i class="fa-solid fa-hand-holding-dollar"></i> Loans & Credit</h3><p style="color:#94a3b8;font-size:0.85rem;">Active credit line & monthly EMI breakdown.</p></div>
             </div>
-
-            <div class="blank-os-container">
-                <!-- HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
+            <div class="blank-os-container"></div>
         </div>
 
-        <!-- FINANCIAL PAGE -->
-        <div id="page-financial" class="page-view">
-            <div class="blank-os-container">
-                <!-- FINANCIAL OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
+        <div id="page-financial" class="page-view"><div class="blank-os-container"></div></div>
+        <div id="page-trading" class="page-view"><div class="blank-os-container"></div></div>
+        <div id="page-investment" class="page-view"><div class="blank-os-container"></div></div>
+        <div id="page-loans" class="page-view"><div class="blank-os-container"></div></div>
+        <div id="page-earning-tips" class="page-view"><div class="blank-os-container"></div></div>
 
-        <!-- TRADING PAGE -->
-        <div id="page-trading" class="page-view">
-            <div class="blank-os-container">
-                <!-- TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- INVESTMENT PAGE -->
-        <div id="page-investment" class="page-view">
-            <div class="blank-os-container">
-                <!-- INVESTMENT OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- LOANS PAGE -->
-        <div id="page-loans" class="page-view">
-            <div class="blank-os-container">
-                <!-- LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- EARNING TIPS PAGE -->
-        <div id="page-earning-tips" class="page-view">
-            <div class="blank-os-container">
-                <!-- EARNING TIPS OPERATING SYSTEM CODE YAHAN AAYEGA -->
-            </div>
-        </div>
-
-        <!-- ALPHA AI PAGE — yahi par Parnarav AI fit kiya gaya hai -->
+        <!-- ALPHA AI PAGE -->
         <div id="page-alpha-ai" class="page-view">
             <div class="blank-os-container" style="border-style:none; padding:0;">
 
                 <!-- ============== PARNARAV AI APP START ============== -->
-                <div class="parnarav-ai-app" id="parnaravAIRoot">
+                <div class="parnarav-ai-app" id="parnaravAIRoot" data-theme="dark">
 
                     <aside class="sidebar" id="p-sidebar">
                         <div class="brand-logo">
@@ -772,84 +565,69 @@
 
                         <div class="nav-section-title">Operating Modes & Roles</div>
                         <ul class="nav-list" id="p-navList">
-                            <li class="nav-item active" onclick="ParnaravApp.switchMode('OMNI', this)">
-                                <i class="fa-solid fa-brain"></i> Omni Super AI
-                            </li>
-                            <li class="nav-item" onclick="ParnaravApp.switchMode('FINANCE', this)">
-                                <i class="fa-solid fa-chart-line"></i> Trading & Finance
-                            </li>
-                            <li class="nav-item" onclick="ParnaravApp.switchMode('DEV', this)">
-                                <i class="fa-solid fa-code"></i> Coding Master
-                            </li>
-                            <li class="nav-item" onclick="ParnaravApp.switchMode('INTERVIEW', this)">
-                                <i class="fa-solid fa-user-tie"></i> Mock Interviewer
-                            </li>
-                            <li class="nav-item" onclick="ParnaravApp.switchMode('SALES', this)">
-                                <i class="fa-solid fa-handshake"></i> Sales Executive
-                            </li>
+                            <li class="nav-item active" onclick="ParnaravApp.switchMode('OMNI', this)"><i class="fa-solid fa-brain"></i><span class="fa-fallback">🧠</span> Omni Super AI</li>
+                            <li class="nav-item" onclick="ParnaravApp.switchMode('FINANCE', this)"><i class="fa-solid fa-chart-line"></i><span class="fa-fallback">📈</span> Trading & Finance</li>
+                            <li class="nav-item" onclick="ParnaravApp.switchMode('DEV', this)"><i class="fa-solid fa-code"></i><span class="fa-fallback">💻</span> Coding Master</li>
+                            <li class="nav-item" onclick="ParnaravApp.switchMode('INTERVIEW', this)"><i class="fa-solid fa-user-tie"></i><span class="fa-fallback">👔</span> Mock Interviewer</li>
+                            <li class="nav-item" onclick="ParnaravApp.switchMode('SALES', this)"><i class="fa-solid fa-handshake"></i><span class="fa-fallback">🤝</span> Sales Executive</li>
                         </ul>
 
                         <div class="tools-menu">
-                            <div style="font-size:0.72rem; font-weight:700; color:var(--p-accent-cyan); margin-bottom:8px; text-transform:uppercase;">
-                                Omni Knowledge Tools
-                            </div>
-                            <button class="tool-btn" onclick="ParnaravKnowledge.solveExamQuestion()">
-                                <i class="fa-solid fa-graduation-cap" style="color:var(--p-accent-purple)"></i> Exam Solver
-                            </button>
-                            <button class="tool-btn" onclick="ParnaravKnowledge.deepResearch()">
-                                <i class="fa-solid fa-book-open" style="color:var(--p-accent-cyan)"></i> Deep Research
-                            </button>
+                            <div style="font-size:0.72rem; font-weight:700; color:var(--p-accent-cyan); margin-bottom:8px; text-transform:uppercase;">Omni Knowledge Tools</div>
+                            <button class="tool-btn" onclick="ParnaravKnowledge.solveExamQuestion()"><i class="fa-solid fa-graduation-cap" style="color:var(--p-accent-purple)"></i> Exam Solver</button>
+                            <button class="tool-btn" onclick="ParnaravKnowledge.deepResearch()"><i class="fa-solid fa-book-open" style="color:var(--p-accent-cyan)"></i> Deep Research</button>
 
-                            <div style="font-size:0.72rem; font-weight:700; color:var(--p-accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">
-                                Finance Tools
-                            </div>
-                            <button class="tool-btn" onclick="ParnaravQuant.runAnalysis()">
-                                <i class="fa-solid fa-bolt" style="color:var(--p-accent-green)"></i> Quant Signals
-                            </button>
-                            <button class="tool-btn" onclick="ParnaravFinance.calcSIP()">
-                                <i class="fa-solid fa-calculator" style="color:var(--p-accent-cyan)"></i> SIP Calculator
-                            </button>
-                            <button class="tool-btn" onclick="ParnaravFinance.calcEMI()">
-                                <i class="fa-solid fa-house" style="color:var(--p-accent-yellow)"></i> Loan EMI Engine
-                            </button>
+                            <div style="font-size:0.72rem; font-weight:700; color:var(--p-accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">Finance Tools</div>
+                            <button class="tool-btn" onclick="ParnaravQuant.runAnalysis()"><i class="fa-solid fa-bolt" style="color:var(--p-accent-green)"></i> Quant Signals</button>
+                            <button class="tool-btn" onclick="ParnaravFinance.calcSIP()"><i class="fa-solid fa-calculator" style="color:var(--p-accent-cyan)"></i> SIP Calculator</button>
+                            <button class="tool-btn" onclick="ParnaravFinance.calcEMI()"><i class="fa-solid fa-house" style="color:var(--p-accent-yellow)"></i> Loan EMI Engine</button>
                         </div>
                     </aside>
 
                     <main class="workspace" id="p-workspaceMain">
+                        <div class="offline-banner" id="p-offlineBanner"><i class="fa-solid fa-wifi"></i> Connection lost — reply aane me dikkat ho sakti hai</div>
+
                         <header class="topbar">
                             <div style="display:flex; align-items:center; gap:10px;">
-                                <button class="mobile-menu-btn" id="p-mobileMenuBtn" onclick="ParnaravApp.toggleSidebar(event)">
-                                    <i class="fa-solid fa-bars"></i>
-                                </button>
-                                <div id="p-mode-indicator" style="font-weight: 700; font-size: 0.86rem;">
-                                    Parnarav AI: Omni Super AI Active
-                                </div>
+                                <button class="mobile-menu-btn" id="p-mobileMenuBtn" onclick="ParnaravApp.toggleSidebar(event)"><i class="fa-solid fa-bars"></i></button>
+                                <div id="p-mode-indicator" style="font-weight: 700; font-size: 0.86rem;">Parnarav AI: Omni Super AI Active</div>
                             </div>
 
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button class="voice-toggle-btn" id="p-voiceToggleBtn" onclick="ParnaravVoice.toggleVoice()">
-                                    <i class="fa-solid fa-volume-high"></i> <span id="p-voiceStatusText">Voice OFF</span>
-                                </button>
-                                <div class="status-badge">
-                                    <div class="status-dot"></div>
-                                    Super AI Active
-                                </div>
+                            <div class="topbar-actions">
+                                <select class="model-select" id="p-modelSelect" title="Response quality / model">
+                                    <option value="">Auto (Best)</option>
+                                    <option value="gpt-4o">GPT-4o</option>
+                                    <option value="gpt-4o-mini">GPT-4o mini</option>
+                                    <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
+                                </select>
+                                <button class="mini-btn" id="p-themeBtn" onclick="ParnaravApp.toggleTheme()" title="Light/Dark"><i class="fa-solid fa-moon"></i></button>
+                                <button class="mini-btn" id="p-soundBtn" onclick="ParnaravApp.toggleSound()" title="Reply sound"><i class="fa-solid fa-volume-xmark"></i></button>
+                                <button class="mini-btn" onclick="ParnaravApp.exportChat()" title="Export chat"><i class="fa-solid fa-download"></i></button>
+                                <button class="mini-btn danger" onclick="ParnaravApp.clearChat()" title="New / Clear chat"><i class="fa-solid fa-broom"></i></button>
+                                <button class="voice-toggle-btn mini-btn" id="p-voiceToggleBtn" onclick="ParnaravVoice.toggleVoice()"><i class="fa-solid fa-volume-high"></i> <span id="p-voiceStatusText">Voice OFF</span></button>
+                                <div class="status-badge"><div class="status-dot"></div> Super AI Active</div>
                             </div>
                         </header>
 
+                        <div class="chip-row" id="p-chipRow"></div>
+
                         <section class="chat-area" id="p-chatContainer">
-                            <!-- Dynamic Messages Loaded Here -->
+                            <button class="scroll-fab" id="p-scrollFab" onclick="ParnaravApp.scrollToBottom(true)">
+                                <i class="fa-solid fa-arrow-down"></i>
+                                <span class="badge" id="p-unreadBadge" style="display:none;">0</span>
+                            </button>
                         </section>
 
                         <footer class="input-wrapper">
+                            <div class="input-meta">
+                                <span id="p-charCount">0 chars</span>
+                                <span>Enter = Send · Shift+Enter = New line · Esc = Stop</span>
+                            </div>
                             <div class="input-box">
-                                <button class="btn-icon" id="p-micToggleBtn" title="Speak Input" onclick="ParnaravVoiceInput.toggleMic()">
-                                    <i class="fa-solid fa-microphone"></i>
-                                </button>
-                                <textarea id="p-userInput" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="ParnaravApp.handleKeyPress(event)"></textarea>
-                                <button class="btn-send" onclick="ParnaravApp.submitQuery()" title="Send Message">
-                                    <i class="fa-solid fa-paper-plane"></i>
-                                </button>
+                                <button class="btn-icon" id="p-micToggleBtn" title="Speak Input" onclick="ParnaravVoiceInput.toggleMic()"><i class="fa-solid fa-microphone"></i></button>
+                                <textarea id="p-userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="ParnaravApp.handleKeyPress(event)" oninput="ParnaravApp.handleInputChange()"></textarea>
+                                <button class="btn-icon" id="p-stopBtn" title="Stop generating" onclick="ParnaravApp.stopGeneration()" style="display:none;"><i class="fa-solid fa-stop"></i></button>
+                                <button class="btn-send" id="p-sendBtn" onclick="ParnaravApp.submitQuery()" title="Send Message"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </footer>
                     </main>
@@ -864,25 +642,17 @@
 
     <!-- ===== Global Finance ka apna JS (menu switching) ===== -->
     <script>
-        function toggleMenu() {
-            document.getElementById('menuDropdown').classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('menuDropdown').classList.toggle('active'); }
 
         function switchPage(pageId, element) {
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(p => p.classList.remove('active'));
-
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-            dropdownItems.forEach(i => i.classList.remove('active'));
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
 
             const targetPage = document.getElementById('page-' + pageId);
             if (targetPage) targetPage.classList.add('active');
-
             if (element) element.classList.add('active');
-
             document.getElementById('menuDropdown').classList.remove('active');
 
-            // Alpha AI page khulte hi Parnarav AI ko init kar do (sirf pehli baar)
             if (pageId === 'alpha-ai' && window.ParnaravApp && !window.__PARNARAV_INITED__) {
                 window.__PARNARAV_INITED__ = true;
                 ParnaravApp.init();
@@ -892,38 +662,80 @@
         window.onclick = function(event) {
             if (!event.target.matches('.menu-trigger-btn') && !event.target.matches('.menu-trigger-btn *')) {
                 const dropdown = document.getElementById('menuDropdown');
-                if (dropdown.classList.contains('active')) {
-                    dropdown.classList.remove('active');
-                }
+                if (dropdown.classList.contains('active')) dropdown.classList.remove('active');
             }
         }
     </script>
 
     <!-- =================================================================
-         🚀 PARNARAV AI ENGINE (sab IDs "p-" prefix ke saath, taaki
-         Global Finance ke IDs se conflict na ho)
+         🚀 PARNARAV AI ENGINE — 20 UPGRADES:
+         1. AI khud apna welcome message generate karta hai (hardcoded nahi)
+         2. Auto Mode Detection — sawal padhkar AI khud best mode choose karta hai
+         3. Model Selector (Auto / GPT-4o / GPT-4o mini / Claude 3.5)
+         4. Low-temperature accurate sampling — galat/random jawab kam
+         5. Typing indicator (animated dots)
+         6. Stop Generation button + Esc shortcut
+         7. Retry button jab reply fail ho jaye
+         8. Clear / New Chat button
+         9. Export chat as .txt
+         10. Dark / Light theme toggle
+         11. Auto-resize input textarea
+         12. Live character counter
+         13. Mode ke hisab se suggested quick-prompt chips
+         14. Har message par timestamp
+         15. Scroll-to-bottom floating button
+         16. Unread-message badge counter
+         17. Reply aane par sound ping (toggle-able)
+         18. Offline/no-internet banner
+         19. Keyboard shortcuts (Enter/Shift+Enter/Esc)
+         20. Font Awesome load-check + emoji fallback icons
     ================================================================== -->
     <script>
         const PARNARAV_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
 
-        // ---- Core AI connection (Puter.js) — bas yehi ek jagah AI se connect hota hai ----
+        const PARNARAV_CHIPS = {
+            OMNI: ["आज की बड़ी खबर बताओ", "एक कठिन टॉपिक आसान भाषा में समझाओ", "मेरे लिए एक टू-डू लिस्ट बनाओ"],
+            FINANCE: ["Nifty ka aaj ka trend samjhao", "SIP vs Lumpsum better kaunsa hai?", "Risk management ke 3 tips do"],
+            DEV: ["Is code ko optimize karo", "React vs Vue kaunsa better hai?", "Ek REST API design karo"],
+            INTERVIEW: ["Mera mock interview shuru karo", "System design ka ek sawal pucho", "Meri weakness kaise batau interview me?"],
+            SALES: ["Price objection handle karna sikhao", "Cold email draft karo", "Client ko follow-up message likho"]
+        };
+
+        // ---- Upgrade #20: Font Awesome reliability check ----
+        window.addEventListener('load', () => {
+            try {
+                const testIcon = document.querySelector('.parnarav-ai-app .nav-item i');
+                const root = document.getElementById('parnaravAIRoot');
+                if (testIcon && root) {
+                    const w = testIcon.getBoundingClientRect().width;
+                    if (!w || w < 4) root.classList.add('fa-missing');
+                }
+            } catch (e) { /* silent */ }
+        });
+
+        // ---- Core AI connection (Puter.js) ----
         const ParnaravOmniEngine = {
             chatHistory: [],
+            activeGenId: 0,
 
-            resetMemory: function() {
-                this.chatHistory = [];
-            },
+            resetMemory: function() { this.chatHistory = []; },
 
-            processChat: async function(userPrompt, systemInstruction, onChunkCallback) {
+            processChat: async function(userPrompt, systemInstruction, onChunkCallback, genId) {
                 if (this.chatHistory.length === 0 && systemInstruction) {
                     this.chatHistory.push({ role: "system", content: systemInstruction });
                 }
                 this.chatHistory.push({ role: "user", content: userPrompt });
 
+                const model = document.getElementById('p-modelSelect')?.value || undefined;
+                // Upgrade #4: low temperature = zyada accurate, kam "sampling mistakes"
+                const opts = { stream: true, temperature: 0.35 };
+                if (model) opts.model = model;
+
                 try {
-                    const responseStream = await puter.ai.chat(this.chatHistory, { stream: true });
+                    const responseStream = await puter.ai.chat(this.chatHistory, opts);
                     let fullReply = "";
                     for await (const part of responseStream) {
+                        if (genId !== this.activeGenId) return fullReply; // stopped by user
                         if (part?.text) {
                             fullReply += part.text;
                             if (onChunkCallback) onChunkCallback(fullReply);
@@ -932,51 +744,57 @@
                     this.chatHistory.push({ role: "assistant", content: fullReply });
                     return fullReply;
                 } catch (err) {
-                    console.warn("[ParnaravOmniEngine Non-Stream Fallback]:", err);
-                    const response = await puter.ai.chat(this.chatHistory);
-                    const textResponse = typeof response === 'string'
-                        ? response
-                        : (response?.message?.content || response?.text || "Error processing request.");
-                    this.chatHistory.push({ role: "assistant", content: textResponse });
-                    if (onChunkCallback) onChunkCallback(textResponse);
-                    return textResponse;
+                    console.warn("[ParnaravOmniEngine] retrying with default settings:", err);
+                    try {
+                        const response = await puter.ai.chat(this.chatHistory);
+                        const textResponse = typeof response === 'string'
+                            ? response
+                            : (response?.message?.content || response?.text || "Error processing request.");
+                        this.chatHistory.push({ role: "assistant", content: textResponse });
+                        if (onChunkCallback) onChunkCallback(textResponse);
+                        return textResponse;
+                    } catch (err2) {
+                        throw err2;
+                    }
+                }
+            },
+
+            // Upgrade #1: AI khud apna welcome card likhta hai
+            generateWelcome: async function(modeLabel, modeHint) {
+                try {
+                    const prompt = `Tum Parnarav AI ho. Mode "${modeLabel}" abhi active hua hai. User ke liye 2-3 line ka ek dostana Hindi/Hinglish welcome message likho jisme ye batao ki is mode me tum kis tarah madad kar sakte ho. ${modeHint} Sirf welcome message likho, kuch aur nahi.`;
+                    const response = await puter.ai.chat(prompt, { temperature: 0.5 });
+                    const text = typeof response === 'string' ? response : (response?.message?.content || response?.text || "");
+                    return text && text.trim().length > 5 ? text.trim() : null;
+                } catch (e) {
+                    return null; // fallback hardcoded message use hoga
                 }
             }
         };
 
-        // ---- Voice (Text-to-Speech) ----
+        // ---- Voice (TTS) ----
         const ParnaravVoice = {
             enabled: false,
             toggleVoice: function() {
                 this.enabled = !this.enabled;
                 const btn = document.getElementById('p-voiceToggleBtn');
                 const txt = document.getElementById('p-voiceStatusText');
-                if (this.enabled) {
-                    btn.classList.add('active');
-                    txt.innerText = "Voice ON";
-                    this.speak("वॉइस मोड सक्रिय कर दिया गया है।");
-                } else {
-                    btn.classList.remove('active');
-                    txt.innerText = "Voice OFF";
-                    window.speechSynthesis.cancel();
-                }
+                if (this.enabled) { btn.classList.add('active'); txt.innerText = "Voice ON"; this.speak("वॉइस मोड सक्रिय कर दिया गया है।"); }
+                else { btn.classList.remove('active'); txt.innerText = "Voice OFF"; window.speechSynthesis.cancel(); }
             },
             speak: function(text) {
                 if (!this.enabled || !('speechSynthesis' in window)) return;
                 window.speechSynthesis.cancel();
                 const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
                 const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'hi-IN';
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
+                utterance.lang = 'hi-IN'; utterance.rate = 1.0; utterance.pitch = 1.0;
                 window.speechSynthesis.speak(utterance);
             }
         };
 
-        // ---- Voice (Speech-to-Text) ----
+        // ---- Voice (STT) ----
         const ParnaravVoiceInput = {
-            recognition: null,
-            isListening: false,
+            recognition: null, isListening: false,
             init: function() {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!SpeechRecognition) return false;
@@ -987,7 +805,7 @@
                 this.recognition.onresult = (event) => {
                     const transcript = event.results[0][0].transcript;
                     const inputEl = document.getElementById('p-userInput');
-                    if (inputEl) inputEl.value = (inputEl.value ? inputEl.value + " " : "") + transcript;
+                    if (inputEl) { inputEl.value = (inputEl.value ? inputEl.value + " " : "") + transcript; ParnaravApp.handleInputChange(); }
                     this.stop();
                 };
                 this.recognition.onerror = () => this.stop();
@@ -995,19 +813,13 @@
                 return true;
             },
             toggleMic: function() {
-                if (!this.recognition && !this.init()) {
-                    alert("आपका ब्राउज़र वॉइस इनपुट सपोर्ट नहीं करता है।");
-                    return;
-                }
+                if (!this.recognition && !this.init()) { alert("आपका ब्राउज़र वॉइस इनपुट सपोर्ट नहीं करता है।"); return; }
                 this.isListening ? this.stop() : this.start();
             },
             start: function() {
                 if (!this.recognition) this.init();
-                try {
-                    this.recognition.start();
-                    this.isListening = true;
-                    document.getElementById('p-micToggleBtn')?.classList.add('listening');
-                } catch (e) { console.error("Mic start failed:", e); }
+                try { this.recognition.start(); this.isListening = true; document.getElementById('p-micToggleBtn')?.classList.add('listening'); }
+                catch (e) { console.error("Mic start failed:", e); }
             },
             stop: function() {
                 if (this.recognition && this.isListening) { try { this.recognition.stop(); } catch(e) {} }
@@ -1016,7 +828,6 @@
             }
         };
 
-        // ---- Knowledge / Finance quick tools ----
         const ParnaravKnowledge = {
             solveExamQuestion: function() {
                 const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल दर्ज करें:");
@@ -1036,13 +847,9 @@
             runAnalysis: function() {
                 const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
                 let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-chart-line"></i> QUANT DECISION ENGINE</div>
-                        • Asset Pair: <b>BTC/USD</b><br>
-                        • RSI (14 Period): <b>${rsi}</b><br>
-                        • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b>
-                    </div>`;
+                const html = `<div class="widget-card"><div class="widget-title"><i class="fa-solid fa-chart-line"></i> QUANT DECISION ENGINE</div>
+                    • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period): <b>${rsi}</b><br>
+                    • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
                 ParnaravUI.appendMsg(html, 'ai', null, '📊');
             }
         };
@@ -1055,12 +862,9 @@
                 let r = (rate / 100) / 12, n = years * 12;
                 let invested = amount * n;
                 let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-coins"></i> SIP PROJECTION ENGINE</div>
-                        • Total Invested: ₹${invested.toLocaleString()}<br>
-                        • Projected Corpus: <b style="color:var(--p-accent-green)">₹${Math.round(futureValue).toLocaleString()}</b>
-                    </div>`;
+                const html = `<div class="widget-card"><div class="widget-title"><i class="fa-solid fa-coins"></i> SIP PROJECTION ENGINE</div>
+                    • Total Invested: ₹${invested.toLocaleString()}<br>
+                    • Projected Corpus: <b style="color:var(--p-accent-green)">₹${Math.round(futureValue).toLocaleString()}</b></div>`;
                 ParnaravUI.appendMsg(html, 'ai', null, '💰');
             },
             calcEMI: function() {
@@ -1069,16 +873,12 @@
                 let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
                 let r = (rate / 12) / 100, n = years * 12;
                 let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-                const html = `
-                    <div class="widget-card">
-                        <div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
-                        • Monthly EMI: <b style="color:var(--p-accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month
-                    </div>`;
+                const html = `<div class="widget-card"><div class="widget-title"><i class="fa-solid fa-house"></i> LOAN EMI ENGINE</div>
+                    • Monthly EMI: <b style="color:var(--p-accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month</div>`;
                 ParnaravUI.appendMsg(html, 'ai', null, '🏦');
             }
         };
 
-        // ---- UI Manager ----
         const ParnaravUI = {
             appendMsg: function(content, sender, id = null, customAvatar = null) {
                 const container = document.getElementById('p-chatContainer');
@@ -1086,35 +886,46 @@
                 row.className = `message-row ${sender}`;
                 if (id) row.id = id;
                 let icon = sender === 'user' ? '👤' : (customAvatar || '🧠');
-                row.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${content}</div>`;
+                const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                row.innerHTML = `<div class="avatar">${icon}</div>
+                    <div class="msg-col">
+                        <div class="bubble">${content}</div>
+                        <span class="msg-time">${time}</span>
+                    </div>`;
                 container.appendChild(row);
-                container.scrollTop = container.scrollHeight;
+                ParnaravApp.scrollToBottom(true);
+                return row;
             },
-            renderActionBar: function(aiMsgId) {
+            renderActionBar: function(aiMsgId, retryText) {
                 const msgContainer = document.getElementById(aiMsgId);
                 if (!msgContainer) return;
                 const bubble = msgContainer.querySelector('.bubble');
                 if (!bubble || bubble.querySelector('.ai-action-bar')) return;
-                const actionBarHTML = `
-                    <div class="ai-action-bar">
+                const retryBtn = retryText ? `<button class="action-btn" onclick="ParnaravApp.retryQuery(this, ${JSON.stringify(retryText)})">🔁 Retry</button>` : '';
+                const actionBarHTML = `<div class="ai-action-bar">
                         <button class="action-btn" onclick="ParnaravApp.copyResponse(this)">📋 Copy</button>
                         <button class="action-btn" onclick="ParnaravVoice.speak(this.closest('.bubble').innerText)">🔊 Speak</button>
                         <button class="action-btn" onclick="this.style.color='#4ade80'">👍</button>
+                        ${retryBtn}
                     </div>`;
                 bubble.insertAdjacentHTML('beforeend', actionBarHTML);
             }
         };
 
-        // ---- Main App Controller ----
         const ParnaravApp = {
             currentMode: 'OMNI',
             initialized: false,
+            soundOn: false,
+            unread: 0,
 
             init: function() {
                 if (this.initialized) return;
                 this.initialized = true;
                 this.switchMode('OMNI', document.querySelector('.parnarav-ai-app .nav-item'));
                 this.setupOutsideClickListener();
+                this.setupScrollWatcher();
+                this.setupNetworkWatcher();
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.stopGeneration(); });
             },
 
             setupOutsideClickListener: function() {
@@ -1123,21 +934,121 @@
                     const mobileBtn = document.getElementById('p-mobileMenuBtn');
                     if (!sidebar || !mobileBtn) return;
                     if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
-                        if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) {
-                            this.closeSidebarMobile();
-                        }
+                        if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) this.closeSidebarMobile();
                     }
                 });
             },
 
+            // Upgrade #15 / #16
+            setupScrollWatcher: function() {
+                const area = document.getElementById('p-chatContainer');
+                const fab = document.getElementById('p-scrollFab');
+                area.addEventListener('scroll', () => {
+                    const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 60;
+                    fab.classList.toggle('show', !nearBottom);
+                    if (nearBottom) { this.unread = 0; this.updateUnreadBadge(); }
+                });
+            },
+            updateUnreadBadge: function() {
+                const badge = document.getElementById('p-unreadBadge');
+                if (this.unread > 0) { badge.style.display = 'flex'; badge.innerText = this.unread; }
+                else badge.style.display = 'none';
+            },
+            scrollToBottom: function(force) {
+                const area = document.getElementById('p-chatContainer');
+                const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 150;
+                if (force || nearBottom) {
+                    area.scrollTop = area.scrollHeight;
+                    this.unread = 0; this.updateUnreadBadge();
+                    document.getElementById('p-scrollFab').classList.remove('show');
+                } else {
+                    this.unread++; this.updateUnreadBadge();
+                    document.getElementById('p-scrollFab').classList.add('show');
+                }
+            },
+
+            // Upgrade #18
+            setupNetworkWatcher: function() {
+                const root = document.getElementById('parnaravAIRoot');
+                const setStatus = () => root.classList.toggle('is-offline', !navigator.onLine);
+                window.addEventListener('online', setStatus);
+                window.addEventListener('offline', setStatus);
+                setStatus();
+            },
+
+            // Upgrade #10
+            toggleTheme: function() {
+                const root = document.getElementById('parnaravAIRoot');
+                const btn = document.getElementById('p-themeBtn');
+                const isLight = root.getAttribute('data-theme') === 'light';
+                root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+                btn.innerHTML = isLight ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+            },
+
+            // Upgrade #17
+            toggleSound: function() {
+                this.soundOn = !this.soundOn;
+                const btn = document.getElementById('p-soundBtn');
+                btn.classList.toggle('active', this.soundOn);
+                btn.innerHTML = this.soundOn ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
+            },
+            playPing: function() {
+                if (!this.soundOn) return;
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const o = ctx.createOscillator(); const g = ctx.createGain();
+                    o.connect(g); g.connect(ctx.destination);
+                    o.frequency.value = 720; g.gain.value = 0.06;
+                    o.start(); setTimeout(() => { o.stop(); ctx.close(); }, 120);
+                } catch (e) { /* silent */ }
+            },
+
+            // Upgrade #9
+            exportChat: function() {
+                const bubbles = document.querySelectorAll('#p-chatContainer .message-row');
+                if (!bubbles.length) { alert("Export karne ke liye pehle kuch chat karo।"); return; }
+                let text = `Parnarav AI Chat Export — ${new Date().toLocaleString('en-IN')}\n\n`;
+                bubbles.forEach(row => {
+                    const who = row.classList.contains('user') ? 'You' : 'Parnarav AI';
+                    const bubble = row.querySelector('.bubble');
+                    if (bubble) text += `${who}: ${bubble.innerText.trim()}\n\n`;
+                });
+                const blob = new Blob([text], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `parnarav-ai-chat-${Date.now()}.txt`;
+                a.click();
+                URL.revokeObjectURL(a.href);
+            },
+
+            // Upgrade #8
+            clearChat: function() {
+                if (!confirm("Chat clear karke naya session shuru karein?")) return;
+                document.getElementById('p-chatContainer').innerHTML = `
+                    <button class="scroll-fab" id="p-scrollFab" onclick="ParnaravApp.scrollToBottom(true)">
+                        <i class="fa-solid fa-arrow-down"></i><span class="badge" id="p-unreadBadge" style="display:none;">0</span>
+                    </button>`;
+                ParnaravOmniEngine.resetMemory();
+                this.setupScrollWatcher();
+                this.renderDefaultWelcome(this.currentMode);
+            },
+
+            // Upgrade #11 / #12
+            handleInputChange: function() {
+                const ta = document.getElementById('p-userInput');
+                ta.style.height = 'auto';
+                ta.style.height = Math.min(ta.scrollHeight, 140) + 'px';
+                document.getElementById('p-charCount').innerText = `${ta.value.length} chars`;
+            },
+
             switchMode: function(mode, element) {
                 this.currentMode = mode;
-                if (element) {
-                    document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(el => el.classList.remove('active'));
-                    element.classList.add('active');
-                }
-                const chatContainer = document.getElementById('p-chatContainer');
-                chatContainer.innerHTML = '';
+                if (element) { document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
+                document.getElementById('p-chatContainer').innerHTML = `
+                    <button class="scroll-fab" id="p-scrollFab" onclick="ParnaravApp.scrollToBottom(true)">
+                        <i class="fa-solid fa-arrow-down"></i><span class="badge" id="p-unreadBadge" style="display:none;">0</span>
+                    </button>`;
+                this.setupScrollWatcher();
 
                 let titleName = "Omni Super AI Active";
                 if (mode === 'FINANCE') titleName = "Trading & Finance Active";
@@ -1146,38 +1057,64 @@
                 else if (mode === 'SALES') titleName = "Sales Executive Active";
 
                 document.getElementById('p-mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+                this.renderChips(mode);
                 this.renderDefaultWelcome(mode);
                 this.closeSidebarMobile();
             },
 
-            renderDefaultWelcome: function(mode) {
-                let welcomeText = "", avatarIcon = "🧠";
-                if (mode === 'FINANCE') {
-                    avatarIcon = "📈";
-                    welcomeText = `<b>📈 Trading & Finance Engine Active!</b><br>नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।<br><br>• <b>बाजार विश्लेषण:</b> ट्रेडिंग रणनीतियाँ, रिस्क मैनेजमेंट एवं मार्केट ट्रेंड्स।<br>• <b>फाइनेंशियल टूल्स:</b> SIP, EMI एवं क्वांट सिग्नल कैलकुलेटर उपलब्ध।`;
-                } else if (mode === 'DEV') {
-                    avatarIcon = "💻";
-                    welcomeText = `<b>💻 Coding Master Engine Active!</b><br>नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।<br><br>• <b>कोड जनरेशन:</b> किसी भी भाषा में ऑप्टिमाइज्ड, प्रोडक्शन-रेडी कोड व डिबगिंग।`;
-                } else if (mode === 'INTERVIEW') {
-                    avatarIcon = "👔";
-                    welcomeText = `<b>👔 Senior Mock Interviewer Active!</b><br>नमस्ते! मैं आपका सीनियर टेक्निकल इंटरव्यूअर हूँ। मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।`;
-                } else if (mode === 'SALES') {
-                    avatarIcon = "🤝";
-                    welcomeText = `<b>🤝 B2B Sales Executive Active!</b><br>नमस्ते! मैं आपका B2B Sales Expert हूँ। ऑब्जेक्शन हैंडलिंग का अभ्यास करें।`;
-                } else {
-                    welcomeText = `<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें।`;
-                }
+            // Upgrade #13
+            renderChips: function(mode) {
+                const row = document.getElementById('p-chipRow');
+                const chips = PARNARAV_CHIPS[mode] || PARNARAV_CHIPS.OMNI;
+                row.innerHTML = chips.map(c => `<button class="chip-btn" onclick="ParnaravApp.useChip(${JSON.stringify(c)})">${c}</button>`).join('');
+            },
+            useChip: function(text) {
+                document.getElementById('p-userInput').value = text;
+                this.handleInputChange();
+                this.submitQuery();
+            },
+
+            // Upgrade #1 + #2
+            renderDefaultWelcome: async function(mode) {
+                const fallback = {
+                    OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें।" },
+                    FINANCE: { icon: "📈", text: "<b>📈 Trading & Finance Engine Active!</b><br>नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।" },
+                    DEV: { icon: "💻", text: "<b>💻 Coding Master Engine Active!</b><br>नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।" },
+                    INTERVIEW: { icon: "👔", text: "<b>👔 Senior Mock Interviewer Active!</b><br>नमस्ते! मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।" },
+                    SALES: { icon: "🤝", text: "<b>🤝 B2B Sales Executive Active!</b><br>नमस्ते! ऑब्जेक्शन हैंडलिंग का अभ्यास करते हैं।" }
+                }[mode] || null;
 
                 const aiMsgId = 'p-ai-welcome-' + Date.now();
-                ParnaravUI.appendMsg(welcomeText, 'ai', aiMsgId, avatarIcon);
+                const row = ParnaravUI.appendMsg("<i>Welcome message taiyaar ho raha hai...</i>", 'ai', aiMsgId, fallback ? fallback.icon : "🧠");
+
+                // AI khud decide karke welcome likhta hai; fail ho to fallback dikhta hai
+                const aiWelcome = await ParnaravOmniEngine.generateWelcome(mode, "");
+                const bubble = row.querySelector('.bubble');
+                if (bubble) {
+                    bubble.innerHTML = aiWelcome
+                        ? (window.marked ? marked.parse(aiWelcome) : aiWelcome)
+                        : fallback.text;
+                }
                 ParnaravUI.renderActionBar(aiMsgId);
             },
 
-            handleKeyPress: function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.submitQuery();
+            // Upgrade #2: auto mode detection — AI khud tay karta hai sawal kis category ka hai
+            autoDetectMode: function(text) {
+                const t = text.toLowerCase();
+                const rules = [
+                    { mode: 'DEV', words: ['code', 'function', 'bug', 'error', 'python', 'javascript', 'api', 'sql', 'html', 'css', 'programming'] },
+                    { mode: 'FINANCE', words: ['nifty', 'sensex', 'stock', 'share', 'trading', 'sip', 'emi', 'loan', 'crypto', 'invest'] },
+                    { mode: 'INTERVIEW', words: ['interview', 'resume', 'job', 'hiring', 'career'] },
+                    { mode: 'SALES', words: ['sales', 'pitch', 'client', 'objection', 'deal', 'negotiat'] }
+                ];
+                for (const rule of rules) {
+                    if (rule.words.some(w => t.includes(w))) return rule.mode;
                 }
+                return null;
+            },
+
+            handleKeyPress: function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitQuery(); }
             },
 
             copyResponse: function(btn) {
@@ -1191,15 +1128,39 @@
                 });
             },
 
+            retryQuery: function(btn, originalText) {
+                document.getElementById('p-userInput').value = originalText;
+                this.submitQuery();
+            },
+
+            // Upgrade #6
+            stopGeneration: function() {
+                ParnaravOmniEngine.activeGenId++;
+                document.getElementById('p-stopBtn').style.display = 'none';
+                document.getElementById('p-sendBtn').disabled = false;
+            },
+
             submitQuery: async function() {
                 const input = document.getElementById('p-userInput');
                 if (!input) return;
                 const text = input.value.trim();
                 if (!text) return;
 
+                // Upgrade #2: OMNI mode me AI khud decide kar sakta hai ki mode switch karna hai
+                if (this.currentMode === 'OMNI') {
+                    const suggestedMode = this.autoDetectMode(text);
+                    if (suggestedMode) {
+                        const el = [...document.querySelectorAll('.parnarav-ai-app .nav-item')].find(li => li.textContent.trim().toLowerCase().includes(
+                            suggestedMode === 'DEV' ? 'coding' : suggestedMode === 'FINANCE' ? 'trading' : suggestedMode === 'INTERVIEW' ? 'interview' : 'sales'
+                        ));
+                        if (el) { this.currentMode = suggestedMode; document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(x => x.classList.remove('active')); el.classList.add('active'); document.getElementById('p-mode-indicator').innerText = `Parnarav AI: Auto-switched to ${suggestedMode}`; }
+                    }
+                }
+
                 const mode = this.currentMode;
-                ParnaravUI.appendMsg(text, 'user');
+                ParnaravUI.appendMsg(text.replace(/</g, '&lt;'), 'user');
                 input.value = '';
+                this.handleInputChange();
 
                 const aiMsgId = 'p-ai-' + Date.now();
                 let currentAvatar = '🧠';
@@ -1208,49 +1169,50 @@
                 else if (mode === 'DEV') currentAvatar = '💻';
                 else if (mode === 'FINANCE') currentAvatar = '📈';
 
-                ParnaravUI.appendMsg("<i>Thinking... ⚡</i>", 'ai', aiMsgId, currentAvatar);
+                const typingHtml = `<span class="typing-dots"><span></span><span></span><span></span></span>`;
+                ParnaravUI.appendMsg(typingHtml, 'ai', aiMsgId, currentAvatar);
 
                 let systemRolePrompt = "";
-                if (mode === 'INTERVIEW') {
-                    systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer. Ask strictly ONE question at a time, give constructive feedback before the next question. TONE: Professional, fair. CREATOR RULE: "${PARNARAV_CREATOR}".`;
-                } else if (mode === 'SALES') {
-                    systemRolePrompt = `ROLE: B2B SaaS Sales Executive. Handle objections, explain value proposition. TONE: Energetic, persuasive. CREATOR RULE: "${PARNARAV_CREATOR}".`;
-                } else if (mode === 'FINANCE') {
-                    systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. CREATOR RULE: "${PARNARAV_CREATOR}".`;
-                } else if (mode === 'DEV') {
-                    systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. CREATOR RULE: "${PARNARAV_CREATOR}".`;
-                } else {
-                    systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist. Adapt tone dynamically, switch between Hindi/Hinglish/English smoothly. CREATOR RULE: "${PARNARAV_CREATOR}".`;
-                }
+                if (mode === 'INTERVIEW') systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer. Ask strictly ONE question at a time, give constructive feedback before next question. Be precise, accurate, no filler. TONE: Professional, fair. CREATOR RULE: "${PARNARAV_CREATOR}".`;
+                else if (mode === 'SALES') systemRolePrompt = `ROLE: B2B SaaS Sales Executive. Handle objections, explain value proposition clearly and accurately. TONE: Energetic, persuasive. CREATOR RULE: "${PARNARAV_CREATOR}".`;
+                else if (mode === 'FINANCE') systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Give precise, well-reasoned, fact-checked answers — avoid speculative or random claims. CREATOR RULE: "${PARNARAV_CREATOR}".`;
+                else if (mode === 'DEV') systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. Give correct, working, well-tested code with no syntax errors. CREATOR RULE: "${PARNARAV_CREATOR}".`;
+                else systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist. Adapt tone dynamically between Hindi/Hinglish/English. Always give accurate, well-reasoned, top-quality answers — double-check facts before answering. CREATOR RULE: "${PARNARAV_CREATOR}".`;
 
                 const bubbleElement = document.getElementById(aiMsgId);
                 const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
+
+                const myGenId = ++ParnaravOmniEngine.activeGenId;
+                document.getElementById('p-stopBtn').style.display = 'flex';
+                document.getElementById('p-sendBtn').disabled = true;
 
                 try {
                     const finalReply = await ParnaravOmniEngine.processChat(text, systemRolePrompt, (streamedText) => {
                         if (bubble) {
                             bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
                             if (window.hljs) hljs.highlightAll();
+                            this.scrollToBottom(false);
                         }
-                    });
-                    if (bubbleElement) ParnaravUI.renderActionBar(aiMsgId);
+                    }, myGenId);
+
+                    if (myGenId === ParnaravOmniEngine.activeGenId && bubbleElement) {
+                        ParnaravUI.renderActionBar(aiMsgId);
+                        this.playPing();
+                    }
                     ParnaravVoice.speak(finalReply);
                 } catch (err) {
                     if (bubble) bubble.innerHTML = `**[System Error]** AI Connection Error: \`${err.message || err}\``;
+                    ParnaravUI.renderActionBar(aiMsgId, text);
+                } finally {
+                    document.getElementById('p-stopBtn').style.display = 'none';
+                    document.getElementById('p-sendBtn').disabled = false;
                 }
             },
 
-            toggleSidebar: function(e) {
-                if (e) e.stopPropagation();
-                document.getElementById('p-sidebar').classList.toggle('open');
-            },
-
-            closeSidebarMobile: function() {
-                document.getElementById('p-sidebar')?.classList.remove('open');
-            }
+            toggleSidebar: function(e) { if (e) e.stopPropagation(); document.getElementById('p-sidebar').classList.toggle('open'); },
+            closeSidebarMobile: function() { document.getElementById('p-sidebar')?.classList.remove('open'); }
         };
 
-        // Page load hote hi agar Alpha AI already active page hai to turant init kar do
         window.addEventListener('DOMContentLoaded', () => {
             const alphaPage = document.getElementById('page-alpha-ai');
             if (alphaPage && alphaPage.classList.contains('active')) {
