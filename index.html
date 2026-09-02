@@ -74,7 +74,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 4%;
+            padding: 0.8rem 3%;
             z-index: 1000;
         }
 
@@ -122,7 +122,7 @@
             display: none;
             position: absolute;
             top: 110%;
-            right: 4%;
+            right: 0;
             background: #0d131f;
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -174,9 +174,10 @@
             box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
         }
 
-        /* 3. Main Workspace Area */
+        /* 3. Main Workspace Area (Zero Extra Margins/Gaps) */
         .main-workspace {
-            padding: 1.5rem 4%;
+            padding: 0;
+            width: 100%;
             display: flex;
             justify-content: center;
         }
@@ -190,31 +191,30 @@
             display: block;
         }
 
-        /* Bull Image Banner Styling */
+        /* Full Size Bull Image Banner */
         .bull-hero-container {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            min-height: calc(100vh - 110px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
         }
 
         .bull-hero-img {
             width: 100%;
-            height: auto;
-            max-height: 80vh;
+            height: 100%;
+            min-height: 75vh;
+            max-height: 90vh;
             display: block;
             object-fit: cover;
+            object-position: center;
         }
 
         .blank-os-container {
             width: 100%;
-            min-height: 75vh;
+            min-height: 85vh;
             border: 2px dashed rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
             background: var(--bg-card);
         }
     </style>
@@ -267,7 +267,7 @@
 
         <div id="page-home" class="page-view active">
             <div class="bull-hero-container">
-                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80" alt="Stock Market Bull" class="bull-hero-img">
+                <img src="47961.png" alt="Bull Market" class="bull-hero-img">
             </div>
         </div>
 
@@ -326,7 +326,7 @@
             }
         }
 
-        // Real-time Dynamic Stock Price Fluctuation Simulation
+        // Dynamic Stock Price Fluctuation
         function updateLiveRates() {
             const valElements = document.querySelectorAll('.ticker-val');
             valElements.forEach(el => {
@@ -342,7 +342,6 @@
             });
         }
 
-        // Live Rates Update Every 2 Seconds
         setInterval(updateLiveRates, 2000);
     </script>
 </body>
