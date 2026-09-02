@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Finance - Alpha Edition</title>
+    <title>Global Finance - Compact Menu Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -30,7 +30,7 @@
             min-height: 100vh;
         }
 
-        /* --- 1. Top Stock Ticker Bar (Compact) --- */
+        /* 1. Top Stock Ticker Bar */
         .ticker-bar {
             background: #030508;
             border-bottom: 1px solid var(--border-color);
@@ -53,7 +53,7 @@
         .ticker-up { color: var(--accent-green); font-weight: 600; }
         .ticker-down { color: #ff5252; font-weight: 600; }
 
-        /* --- 2. Compact Sleek Header Navbar --- */
+        /* 2. Sleek Header with ONLY Logo and Menu Button */
         .header {
             position: sticky;
             top: 0;
@@ -63,7 +63,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.6rem 4%;
+            padding: 0.8rem 4%;
             z-index: 1000;
         }
 
@@ -74,72 +74,97 @@
             text-decoration: none;
             color: #fff;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
         }
 
         .logo-icon {
             color: var(--accent-green);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
-        /* Top Menu Buttons Row */
-        .navbar {
+        /* Main Single Menu Button */
+        .menu-trigger-btn {
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
             display: flex;
-            gap: 0.5rem;
-            list-style: none;
             align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: all 0.2s ease;
         }
 
-        .nav-btn {
+        .menu-trigger-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+            box-shadow: 0 0 18px var(--accent-green);
+        }
+
+        /* Popup Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 110%;
+            right: 4%;
+            background: #0d131f;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            flex-direction: column;
+            gap: 4px;
+            z-index: 2000;
+            backdrop-filter: blur(20px);
+        }
+
+        .dropdown-menu.active {
+            display: flex;
+        }
+
+        .dropdown-item {
+            background: transparent;
+            border: none;
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.82rem;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 0.88rem;
             font-weight: 500;
-            padding: 6px 14px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: transparent;
-            border: 1px solid transparent;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: var(--accent-green);
-            background: rgba(0, 230, 118, 0.08);
-            border-color: rgba(0, 230, 118, 0.2);
-        }
-
-        /* Premium Alpha AI Button Style */
-        .alpha-ai-btn {
-            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
-            border: 1px solid #00dfd8;
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.82rem;
             display: flex;
             align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            box-shadow: 0 0 12px rgba(0, 223, 216, 0.3);
-            transition: all 0.3s ease;
-            margin-left: 6px;
+            justify-content: space-between;
         }
 
-        .alpha-ai-btn i {
-            color: #00dfd8;
+        .dropdown-item:hover, .dropdown-item.active {
+            background: rgba(0, 230, 118, 0.1);
+            color: var(--accent-green);
         }
 
-        .alpha-ai-btn:hover, .alpha-ai-btn.active {
+        /* Glowing Alpha AI Option Inside Menu */
+        .alpha-ai-option {
+            background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(0, 223, 216, 0.2));
+            border: 1px solid #00dfd8;
+            color: #fff;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .alpha-ai-option:hover, .alpha-ai-option.active {
             background: var(--alpha-glow);
             color: #fff;
-            box-shadow: 0 0 20px rgba(0, 223, 216, 0.6);
-            transform: translateY(-1px);
+            box-shadow: 0 0 15px rgba(0, 223, 216, 0.5);
         }
 
-        /* --- 3. Workspace / Dynamic Page Views --- */
+        /* 3. Dynamic Page View Containers */
         .main-workspace {
             padding: 1.5rem 4%;
         }
@@ -152,10 +177,10 @@
             display: block;
         }
 
-        /* Home View Grid Layout (Mixed Content Overview) */
+        /* Home View Grid Overview */
         .home-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.2rem;
             margin-bottom: 1.5rem;
         }
@@ -176,7 +201,7 @@
             gap: 8px;
         }
 
-        /* Custom OS Blank Canvas */
+        /* Blank Canvas Container for custom OS Code */
         .blank-os-container {
             width: 100%;
             min-height: 75vh;
@@ -198,118 +223,137 @@
         <div class="ticker-item">BTC/USDT <span class="ticker-val">67,245.30</span> <span class="ticker-up">+1.25%</span></div>
     </div>
 
-    <!-- 2. Clean Compact Top Header Navigation -->
+    <!-- 2. Clean Header (Only Logo + Single Menu Button) -->
     <header class="header">
         <a href="#" class="logo">
             <i class="fa-solid fa-chart-line logo-icon"></i> GLOBAL FINANCE
         </a>
 
-        <ul class="navbar">
-            <li><button class="nav-btn active" onclick="switchPage('home', this)">Home</button></li>
-            <li><button class="nav-btn" onclick="switchPage('financial', this)">Financial</button></li>
-            <li><button class="nav-btn" onclick="switchPage('trading', this)">Trading</button></li>
-            <li><button class="nav-btn" onclick="switchPage('investment', this)">Investment</button></li>
-            <li><button class="nav-btn" onclick="switchPage('loans', this)">Loans</button></li>
-            <li><button class="nav-btn" onclick="switchPage('earning-tips', this)">Earning Tips</button></li>
-            <li>
-                <button class="alpha-ai-btn" onclick="switchPage('alpha-ai', this)">
-                    <i class="fa-solid fa-bolt-lightning"></i> Alpha AI
-                </button>
-            </li>
-        </ul>
+        <!-- Single Menu Button -->
+        <div style="position: relative;">
+            <button class="menu-trigger-btn" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i> Menu
+            </button>
+
+            <!-- Menu Popup Dropdown -->
+            <div class="dropdown-menu" id="menuDropdown">
+                <button class="dropdown-item active" onclick="switchPage('home', this)">Home <i class="fa-solid fa-house"></i></button>
+                <button class="dropdown-item" onclick="switchPage('financial', this)">Financial <i class="fa-solid fa-wallet"></i></button>
+                <button class="dropdown-item" onclick="switchPage('trading', this)">Trading <i class="fa-solid fa-chart-candlestick"></i></button>
+                <button class="dropdown-item" onclick="switchPage('investment', this)">Investment <i class="fa-solid fa-chart-pie"></i></button>
+                <button class="dropdown-item" onclick="switchPage('loans', this)">Loans <i class="fa-solid fa-hand-holding-dollar"></i></button>
+                <button class="dropdown-item" onclick="switchPage('earning-tips', this)">Earning Tips <i class="fa-solid fa-lightbulb"></i></button>
+                <button class="dropdown-item alpha-ai-option" onclick="switchPage('alpha-ai', this)">Alpha AI <i class="fa-solid fa-bolt-lightning"></i></button>
+            </div>
+        </div>
     </header>
 
-    <!-- 3. Dynamic Page Views (Operating Systems) -->
+    <!-- 3. Dynamic Page View Area -->
     <main class="main-workspace">
 
-        <!-- 1. HOME VIEW (Mixed Features Overview) -->
+        <!-- HOME PAGE (Mixed Feature Overview + Blank OS Area) -->
         <div id="page-home" class="page-view active">
             <div class="home-grid">
                 <div class="home-card">
                     <h3><i class="fa-solid fa-wallet"></i> Financial Overview</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Overall financial status, account balance, and stats mix view.</p>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Overall financial summary & account stats.</p>
                 </div>
                 <div class="home-card">
                     <h3><i class="fa-solid fa-chart-candlestick"></i> Trading Live</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Live stock tickers, gainers, losers, and market analysis.</p>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Live market stats & gainers/losers overview.</p>
                 </div>
                 <div class="home-card">
                     <h3><i class="fa-solid fa-chart-pie"></i> Investment Portfolio</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Mutual funds, stocks, and asset allocation breakdown.</p>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Mutual funds & asset distribution.</p>
                 </div>
                 <div class="home-card">
                     <h3><i class="fa-solid fa-hand-holding-dollar"></i> Loans & Credit</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem;">Active loans, monthly EMI status, and credit line tracker.</p>
+                    <p style="color: #94a3b8; font-size: 0.85rem;">Active credit line & monthly EMI breakdown.</p>
                 </div>
             </div>
 
-            <!-- Blank Area for Home Page Specific Code -->
             <div class="blank-os-container">
-                <!-- AAPKA HOME PAGE CUSTOM CODE YAHAN AAYEGA -->
+                <!-- HOME OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 2. FINANCIAL PAGE OS -->
+        <!-- FINANCIAL PAGE -->
         <div id="page-financial" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA FINANCIAL OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- FINANCIAL OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 3. TRADING PAGE OS -->
+        <!-- TRADING PAGE -->
         <div id="page-trading" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- TRADING OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 4. INVESTMENT PAGE OS -->
+        <!-- INVESTMENT PAGE -->
         <div id="page-investment" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA INVESTMENT OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- INVESTMENT OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 5. LOANS PAGE OS -->
+        <!-- LOANS PAGE -->
         <div id="page-loans" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- LOANS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 6. EARNING TIPS PAGE OS -->
+        <!-- EARNING TIPS PAGE -->
         <div id="page-earning-tips" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA EARNING TIPS OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- EARNING TIPS OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
-        <!-- 7. ALPHA AI PAGE OS -->
+        <!-- ALPHA AI PAGE -->
         <div id="page-alpha-ai" class="page-view">
             <div class="blank-os-container">
-                <!-- AAPKA ALPHA AI OPERATING SYSTEM CODE YAHAN AAYEGA -->
+                <!-- ALPHA AI OPERATING SYSTEM CODE YAHAN AAYEGA -->
             </div>
         </div>
 
     </main>
 
-    <!-- Page Switching Logic -->
     <script>
+        function toggleMenu() {
+            document.getElementById('menuDropdown').classList.toggle('active');
+        }
+
         function switchPage(pageId, element) {
             // Hide all pages
             const pages = document.querySelectorAll('.page-view');
             pages.forEach(p => p.classList.remove('active'));
 
-            // Remove active highlight from all header buttons
-            const buttons = document.querySelectorAll('.nav-btn, .alpha-ai-btn');
-            buttons.forEach(b => b.classList.remove('active'));
+            // Reset active menu item highlight
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(i => i.classList.remove('active'));
 
-            // Show selected page
+            // Activate target page
             const targetPage = document.getElementById('page-' + pageId);
             if (targetPage) targetPage.classList.add('active');
 
-            // Set active highlight on clicked button
+            // Highlight active menu item
             if (element) element.classList.add('active');
+
+            // Close dropdown menu automatically after selecting an option
+            document.getElementById('menuDropdown').classList.remove('active');
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-trigger-btn') && !event.target.matches('.menu-trigger-btn *')) {
+                const dropdown = document.getElementById('menuDropdown');
+                if (dropdown.classList.contains('active')) {
+                    dropdown.classList.remove('active');
+                }
+            }
         }
     </script>
 </body>
