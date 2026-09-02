@@ -36,9 +36,13 @@ img{display:block}
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
-.home-hero{position:relative;width:100%;height:calc(100vh - 108px);min-height:600px;margin:0;padding:0;overflow:hidden;background:#000}
-.home-hero img{position:absolute;left:0;top:0;width:100%;height:100%;margin:0;padding:0;border:0;display:block;object-fit:cover;object-position:center center}
-.home-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.04),transparent 35%,rgba(0,0,0,.15))}
+.home-hero{position:relative;width:100%;height:calc(100vh - 108px);min-height:750px;margin:0;padding:0;overflow:hidden;background:#000}
+.home-hero img{position:absolute;left:0;top:0;width:100%;height:100%;margin:0;padding:0;border:0;display:block;object-fit:cover;object-position:center center;filter:brightness(0.9)}
+.home-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.10),transparent 40%,rgba(0,0,0,.40))}
+.hero-stats-overlay{position:absolute;inset:0;pointer-events:none;z-index:10;padding:24px 3%;display:flex;flex-direction:column;justify-content:space-between}
+.stats-row{display:flex;justify-content:space-between;align-items:center;width:100%}
+.stat-card{background:rgba(5,8,13,.75);backdrop-filter:blur(12px);border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:12px 18px;color:#fff;font-size:13px;display:flex;flex-direction:column;gap:4px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.stat-card span{color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
 .empty-page{width:100%;min-height:calc(100vh - 108px);background:radial-gradient(circle at top,rgba(0,230,118,.04),transparent 42%),#0d131f}
 @media(max-width:768px){
 .ticker-wrap{height:34px}
@@ -49,18 +53,19 @@ main{width:100%;margin:0;padding:0}
 .logo i{font-size:18px}
 .menu-button{height:39px;padding:0 13px;font-size:13px}
 .menu-dropdown{top:49px;width:min(245px,calc(100vw - 28px))}
-.home-hero{height:calc(100vh - 96px);min-height:500px}
-.home-hero img{object-fit:cover;object-position:center center}
+.home-hero{height:calc(100vh - 96px);min-height:600px}
+.hero-stats-overlay{padding:16px}
+.stat-card{padding:8px 12px;font-size:11px}
 .empty-page{min-height:calc(100vh - 96px)}
 }
 @media(max-width:430px){
 .logo{font-size:13px}
 .menu-button{width:42px;padding:0}
 .menu-button span{display:none}
-.home-hero{min-height:480px}
+.home-hero{min-height:550px}
 }
 @media(min-width:1600px){
-.home-hero{height:calc(100vh - 108px);min-height:700px}
+.home-hero{height:calc(100vh - 108px);min-height:850px}
 }
 @media(prefers-reduced-motion:reduce){
 .ticker-move{animation:none}
@@ -105,6 +110,16 @@ main{width:100%;margin:0;padding:0}
 <section id="home" class="page active">
 <div class="home-hero">
 <img src="47961.png" alt="Global Finance Bull Market" onerror="imageError(this)">
+<div class="hero-stats-overlay">
+<div class="stats-row">
+<div class="stat-card"><span>Global Market Cap</span><strong>$2.85 Trillion</strong></div>
+<div class="stat-card"><span>Market Sentiment</span><strong class="up"><i class="fa-solid fa-arrow-trend-up"></i> Bullish (+2.4%)</strong></div>
+</div>
+<div class="stats-row">
+<div class="stat-card"><span>24H Volume</span><strong>$142.8 Billion</strong></div>
+<div class="stat-card"><span>AI Trading Accuracy</span><strong class="up">94.2%</strong></div>
+</div>
+</div>
 </div>
 </section>
 <section id="financial" class="page"><div class="empty-page"></div></section>
