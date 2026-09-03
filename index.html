@@ -3,25 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Global Finance - Live</title>
+<title>Global Finance - Real-Time Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
 img{display:block;width:100%}
 
-/* REAL-TIME TICKER */
-.ticker-wrap{width:100%;height:38px;overflow:hidden;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap;position:relative;z-index:2000}
-.ticker-move{height:100%;width:max-content;display:flex;align-items:center;gap:30px;padding-left:15px;animation:tickerMove 35s linear infinite}
-.ticker-move:hover{animation-play-state:paused}
-.ticker-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;flex-shrink:0}
-.ticker-value{color:#fff;font-weight:700;transition:color 0.3s ease, transform 0.3s ease}
-.up{color:#00e676;font-weight:700}
-.down{color:#ff5252;font-weight:700}
-.flash-up{color:#00e676!important;text-shadow:0 0 8px rgba(0,230,118,0.8)}
-.flash-down{color:#ff5252!important;text-shadow:0 0 8px rgba(255,82,82,0.8)}
-
-@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* TRADINGVIEW REAL-TIME TICKER CONTAINER */
+.ticker-wrap{width:100%;height:46px;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2000}
 
 /* HEADER */
 .header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.96);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,.08)}
@@ -48,36 +38,59 @@ main{width:100%;margin:0;padding:0}
 .page.active{display:block}
 
 .hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
-.hero-full-card img{width:100%;height:calc(100vh - 98px);min-height:500px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
+.hero-full-card img{width:100%;height:calc(100vh - 106px);min-height:500px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
 
 @media(max-width:480px){
 .header{padding:0 12px;height:56px}
 .logo{font-size:15px}
 .menu-button{height:34px;padding:0 12px;font-size:13px}
-.hero-full-card img{height:calc(100vh - 94px);min-height:450px}
+.hero-full-card img{height:calc(100vh - 102px);min-height:450px}
 }
 </style>
 </head>
 <body>
 
-<!-- REAL-TIME LIVE DATA TICKER -->
 <div class="ticker-wrap">
-<div class="ticker-move" id="tickerContainer">
-<div class="ticker-item">NIFTY 50 <span class="ticker-value up" id="niftyVal">24,834.85</span> <span class="up" id="niftyChange">+0.42%</span></div>
-<div class="ticker-item">SENSEX <span class="ticker-value up" id="sensexVal">81,157.73</span> <span class="up" id="sensexChange">+0.45%</span></div>
-<div class="ticker-item">BANK NIFTY <span class="ticker-value up" id="bankVal">51,230.10</span> <span class="up" id="bankChange">+0.30%</span></div>
-<div class="ticker-item">USD/INR <span class="ticker-value down" id="usdinrVal">83.28</span> <span class="down" id="usdinrChange">-0.10%</span></div>
-<div class="ticker-item">GOLD (MCX) <span class="ticker-value up" id="goldVal">72,145.00</span> <span class="up" id="goldChange">+0.15%</span></div>
-<div class="ticker-item">BTC/USDT <span class="ticker-value up" id="btcVal">67,245.30</span> <span class="up" id="btcChange">+1.25%</span></div>
-<div class="ticker-item">ETH/USDT <span class="ticker-value up" id="ethVal">3,245.67</span> <span class="up" id="ethChange">+0.88%</span></div>
-
-<div class="ticker-item">NIFTY 50 <span class="ticker-value up" id="niftyVal2">24,834.85</span> <span class="up" id="niftyChange2">+0.42%</span></div>
-<div class="ticker-item">SENSEX <span class="ticker-value up" id="sensexVal2">81,157.73</span> <span class="up" id="sensexChange2">+0.45%</span></div>
-<div class="ticker-item">BTC/USDT <span class="ticker-value up" id="btcVal2">67,245.30</span> <span class="up" id="btcChange2">+1.25%</span></div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
+      {
+        "description": "NIFTY 50",
+        "proName": "NSE:NIFTY"
+      },
+      {
+        "description": "SENSEX",
+        "proName": "BSE:SENSEX"
+      },
+      {
+        "description": "BITCOIN",
+        "proName": "BITSTAMP:BTCUSD"
+      },
+      {
+        "description": "ETHEREUM",
+        "proName": "BITSTAMP:ETHUSD"
+      },
+      {
+        "description": "USD/INR",
+        "proName": "FX_IDC:USDINR"
+      },
+      {
+        "description": "GOLD",
+        "proName": "MCX:GOLD1!"
+      }
+    ],
+    "showSymbolLogo": true,
+    "isTransparent": true,
+    "displayMode": "adaptive",
+    "colorTheme": "dark",
+    "locale": "in"
+  }
+    </script>
+  </div>
 </div>
-</div>
 
-<!-- HEADER -->
 <header class="header">
 <a href="#" class="logo" onclick="goHome(); return false;">
 <i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE
@@ -98,11 +111,10 @@ main{width:100%;margin:0;padding:0}
 </div>
 </header>
 
-<!-- MAIN CONTENT (FULL ONLINE BULL & TRADING IMAGE) -->
 <main>
 <section id="home" class="page active">
 <div class="hero-full-card">
-<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1600&q=80'">
+<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='47961.png'">
 </div>
 </section>
 
@@ -130,67 +142,6 @@ function openPage(e,t){
 function goHome(){openPage("home")}
 document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open")});
 document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open")});
-
-// REAL-TIME DATA STREAM & API CONNECTIVITY
-async function fetchRealtimeCrypto() {
-  try {
-    const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=["BTCUSDT","ETHUSDT"]');
-    if(res.ok){
-      const data = await res.json();
-      data.forEach(item => {
-        if(item.symbol === "BTCUSDT") updateLivePrice('btcVal', 'btcChange', parseFloat(item.lastPrice), parseFloat(item.priceChangePercent));
-        if(item.symbol === "ETHUSDT") updateLivePrice('ethVal', 'ethChange', parseFloat(item.lastPrice), parseFloat(item.priceChangePercent));
-      });
-    }
-  } catch(e) { console.log("Realtime fetch fallback active"); }
-}
-
-function updateLivePrice(valId, changeId, newPrice, changePercent) {
-  const elem = document.getElementById(valId);
-  const changeElem = document.getElementById(changeId);
-  if(!elem) return;
-  
-  const currentPrice = parseFloat(elem.textContent.replace(/,/g, ''));
-  elem.textContent = newPrice.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  
-  if(changeElem && changePercent !== undefined){
-    changeElem.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
-    changeElem.className = changePercent >= 0 ? 'up' : 'down';
-  }
-
-  if (newPrice > currentPrice) {
-    elem.classList.add('flash-up');
-    setTimeout(() => elem.classList.remove('flash-up'), 600);
-  } else if (newPrice < currentPrice) {
-    elem.classList.add('flash-down');
-    setTimeout(() => elem.classList.remove('flash-down'), 600);
-  }
-}
-
-function simulateRealtimeStock(id, changeId, baseVal) {
-  const elem = document.getElementById(id);
-  if(!elem) return;
-  const current = parseFloat(elem.textContent.replace(/,/g, ''));
-  const delta = (Math.random() - 0.49) * (current * 0.0008);
-  const updated = current + delta;
-  
-  updateLivePrice(id, changeId, updated, (updated > baseVal ? 0.42 : 0.38));
-  
-  const elem2 = document.getElementById(id + '2');
-  if(elem2) elem2.textContent = elem.textContent;
-}
-
-// Live Update Cycle
-setInterval(() => {
-  fetchRealtimeCrypto();
-  simulateRealtimeStock('niftyVal', 'niftyChange', 24800);
-  simulateRealtimeStock('sensexVal', 'sensexChange', 81100);
-  simulateRealtimeStock('bankVal', 'bankChange', 51200);
-  simulateRealtimeStock('usdinrVal', 'usdinrChange', 83.30);
-  simulateRealtimeStock('goldVal', 'goldChange', 72100);
-}, 1500);
-
-fetchRealtimeCrypto();
 </script>
 
 </body>
