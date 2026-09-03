@@ -1066,6 +1066,240 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
+<!-- ========================================== -->
+<!-- 1. CATEGORY CARDS - CSS STYLES             -->
+<!-- ========================================== -->
+<style>
+/* Main Category Container */
+.main-category-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.category-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-title i {
+  color: #00e676;
+}
+
+/* Category Grid Layout */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Individual Card Styling */
+.category-card {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  user-select: none;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 230, 118, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 230, 118, 0.25);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.category-card:active {
+  transform: scale(0.97);
+}
+
+.cat-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(0, 230, 118, 0.1);
+  color: #00e676;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.25s ease;
+}
+
+.category-card:hover .cat-icon-box {
+  background: #00e676;
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
+}
+
+.cat-text-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 2px 0;
+}
+
+.cat-text-info p {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Alpha AI Special Card Styling */
+.category-card.alpha-special-card {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(121, 40, 202, 0.3), rgba(0, 223, 216, 0.2));
+  border: 1px solid rgba(0, 223, 216, 0.4);
+}
+
+@media (min-width: 768px) {
+  .category-card.alpha-special-card {
+    grid-column: span 1;
+  }
+}
+
+.category-card.alpha-special-card .cat-icon-box {
+  background: linear-gradient(135deg, #7928ca, #00dfd8);
+  color: #ffffff;
+}
+
+.category-card.alpha-special-card:hover {
+  border-color: #00dfd8;
+  box-shadow: 0 10px 25px -5px rgba(0, 223, 216, 0.4);
+}
+
+.ai-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #7928ca, #00dfd8);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+</style>
+
+<!-- ========================================== -->
+<!-- 2. CATEGORY CARDS - HTML STRUCTURE          -->
+<!-- ========================================== -->
+<div class="main-category-wrapper">
+  <div class="category-title">
+    <i class="fa-solid fa-layer-group"></i> Main Categories
+  </div>
+  
+  <div class="category-grid">
+    
+    <!-- 1. Financial -->
+    <div class="category-card" onclick="handleCategoryClick('financial')">
+      <div class="cat-icon-box"><i class="fa-solid fa-wallet"></i></div>
+      <div class="cat-text-info">
+        <h3>Financial</h3>
+        <p>Money & Budgeting</p>
+      </div>
+    </div>
+
+    <!-- 2. Trading -->
+    <div class="category-card" onclick="handleCategoryClick('trading')">
+      <div class="cat-icon-box"><i class="fa-solid fa-chart-line"></i></div>
+      <div class="cat-text-info">
+        <h3>Trading</h3>
+        <p>Stocks & Forex</p>
+      </div>
+    </div>
+
+    <!-- 3. Investment -->
+    <div class="category-card" onclick="handleCategoryClick('investment')">
+      <div class="cat-icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+      <div class="cat-text-info">
+        <h3>Investment</h3>
+        <p>Mutual Funds & Crypto</p>
+      </div>
+    </div>
+
+    <!-- 4. Loans -->
+    <div class="category-card" onclick="handleCategoryClick('loans')">
+      <div class="cat-icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+      <div class="cat-text-info">
+        <h3>Loans</h3>
+        <p>Personal & Business</p>
+      </div>
+    </div>
+
+    <!-- 5. Earning Tips -->
+    <div class="category-card" onclick="handleCategoryClick('earning')">
+      <div class="cat-icon-box"><i class="fa-solid fa-lightbulb"></i></div>
+      <div class="cat-text-info">
+        <h3>Earning Tips</h3>
+        <p>Passive Income</p>
+      </div>
+    </div>
+
+    <!-- 6. Alpha AI (Special Feature Card) -->
+    <div class="category-card alpha-special-card" onclick="handleCategoryClick('alpha')">
+      <span class="ai-badge">PRO AI</span>
+      <div class="cat-icon-box"><i class="fa-solid fa-bolt"></i></div>
+      <div class="cat-text-info">
+        <h3>Alpha AI</h3>
+        <p>Smart Trading Signals</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- 3. CATEGORY CARDS - JAVASCRIPT LOGIC       -->
+<!-- ========================================== -->
+<script>
+function handleCategoryClick(pageId) {
+  // अगर आपकी वेबसाइट में openPage फ़ंक्शन है तो वह कॉल होगा
+  if (typeof openPage === 'function') {
+    openPage(pageId);
+  } else {
+    // बैकअप के लिए पेजों की दृश्यता बदलने का लॉजिक
+    document.querySelectorAll('.page').forEach(function(sec) {
+      sec.classList.remove('active');
+    });
+    var target = document.getElementById(pageId);
+    if (target) {
+      target.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+</script>
 
 </body>
 </html>
