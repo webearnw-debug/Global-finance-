@@ -32,19 +32,21 @@ img{display:block;width:100%}
 .alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.25),rgba(0,223,216,.2))}
 .alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff}
 
-/* MAIN FULL WIDTH EDGE-TO-EDGE COVERAGE */
+/* MAIN CONTENT */
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
+/* PERFECT COMPACT HERO IMAGE (आपकी खींची गई लाइन के अनुसार) */
 .hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
-.hero-full-card img{width:100%;height:calc(100vh - 106px);min-height:500px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
+.hero-full-card img{width:100%;height:220px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
 
 @media(max-width:480px){
 .header{padding:0 12px;height:56px}
 .logo{font-size:15px}
 .menu-button{height:34px;padding:0 12px;font-size:13px}
-.hero-full-card img{height:calc(100vh - 102px);min-height:450px}
+/* मोबाइल पर परफेक्ट बैनर हाइट */
+.hero-full-card img{height:200px}
 }
 </style>
 </head>
@@ -132,8 +134,8 @@ function openPage(e,t){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function goHome(){openPage("home")}
-document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open")});
-document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open")});
+document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open");});
+document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open");});
 </script>
 
 </body>
