@@ -6,12 +6,12 @@
 <title>Global Finance - Real-Time Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- ===== Parnarav AI ke liye zaroori libraries (sirf addition, kuch remove nahi kiya) ===== -->
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- ===== Parnarav AI ke liye zaroori libraries ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<!-- Puter Cloud AI Engine — Parnarav AI ka "system", direct browser se AI se connect karta hai -->
+<!-- Puter Cloud AI Engine — Parnarav AI ka "system" -->
 <script src="https://js.puter.com/v2/"></script>
 
 <style>
@@ -19,15 +19,12 @@
 html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
 img{display:block;width:100%}
 
-/* TRADINGVIEW REAL-TIME TICKER CONTAINER */
 .ticker-wrap{width:100%;height:46px;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2000}
 
-/* HEADER */
 .header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.96);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,.08)}
 .logo{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:16px;font-weight:800;letter-spacing:.5px}
 .logo i{color:#00e676;font-size:20px;filter:drop-shadow(0 0 8px rgba(0,230,118,.4))}
 
-/* MENU BUTTON & DROPDOWN */
 .menu-area{position:relative}
 .menu-button{height:38px;padding:0 16px;display:flex;align-items:center;justify-content:center;gap:8px;background:#00e676;color:#000;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 0 15px rgba(0,230,118,.3)}
 .menu-button:hover{background:#00c853;box-shadow:0 0 20px rgba(0,230,118,.5)}
@@ -41,25 +38,31 @@ img{display:block;width:100%}
 .alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.25),rgba(0,223,216,.2))}
 .alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff}
 
-/* MAIN CONTENT */
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
-/* PERFECT COMPACT HERO IMAGE (आपकी खींची गई लाइन के अनुसार) */
+/* ===== PREMIUM ULTRA-LUXURY HERO BANNER (har section ke liye) ===== */
 .hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
-.hero-full-card img{width:100%;height:220px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
+.hero-full-card img{width:100%;height:260px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none;filter:saturate(1.05) contrast(1.05)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(4,6,10,.92) 5%, rgba(4,6,10,.25) 55%, rgba(4,6,10,.05) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px 5% 22px}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;color:#e9c25f;letter-spacing:3px;font-size:10.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.hero-eyebrow::before{content:"";width:22px;height:1px;background:#e9c25f}
+.hero-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:#fff;letter-spacing:.3px;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+.hero-sub{color:#cbd5e1;font-size:13px;margin-top:8px;max-width:560px;line-height:1.6}
+.hero-goldline{width:56px;height:3px;background:linear-gradient(90deg,#e9c25f,#fff2c4);border-radius:3px;margin-top:14px}
 
 @media(max-width:480px){
 .header{padding:0 12px;height:56px}
 .logo{font-size:15px}
 .menu-button{height:34px;padding:0 12px;font-size:13px}
-/* मोबाइल पर परफेक्ट बैनर हाइट */
-.hero-full-card img{height:200px}
+.hero-full-card img{height:210px}
+.hero-title{font-size:22px}
+.hero-sub{font-size:12px}
 }
 </style>
 
-<!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar lagega, baaki page ko touch nahi karega ===== -->
+<!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar lagega ===== -->
 <style>
     .parnarav-ai-app {
         --p-bg-base: #030712; --p-bg-surface: #0b0f19; --p-bg-card: #111827;
@@ -147,6 +150,8 @@ main{width:100%;margin:0;padding:0}
 
     .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px 14px; line-height: 1.6; font-size: .88rem; word-wrap: break-word; overflow-x: auto; position: relative; }
     .parnarav-ai-app .bubble a { color: var(--p-accent-cyan); }
+    .parnarav-ai-app .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .82rem; }
+    .parnarav-ai-app .bubble th, .parnarav-ai-app .bubble td { border: 1px solid var(--p-border-color); padding: 6px 8px; text-align: left; }
     .parnarav-ai-app .user .bubble { background-color: #1e3a8a; border-color: #3b82f6; color: #fff; }
 
     .parnarav-ai-app .msg-time { font-size: .64rem; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
@@ -201,7 +206,6 @@ main{width:100%;margin:0;padding:0}
         .parnarav-ai-app .topbar { padding: 8px 10px; }
     }
 </style>
-
 </head>
 <body>
 
@@ -211,22 +215,10 @@ main{width:100%;margin:0;padding:0}
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
     {
     "symbols": [
-      {
-        "description": "SENSEX",
-        "proName": "BSE:SENSEX"
-      },
-      {
-        "description": "BITCOIN",
-        "proName": "BITSTAMP:BTCUSD"
-      },
-      {
-        "description": "ETHEREUM",
-        "proName": "BITSTAMP:ETHUSD"
-      },
-      {
-        "description": "USD/INR",
-        "proName": "FX_IDC:USDINR"
-      }
+      { "description": "SENSEX", "proName": "BSE:SENSEX" },
+      { "description": "BITCOIN", "proName": "BITSTAMP:BTCUSD" },
+      { "description": "ETHEREUM", "proName": "BITSTAMP:ETHUSD" },
+      { "description": "USD/INR", "proName": "FX_IDC:USDINR" }
     ],
     "showSymbolLogo": true,
     "isTransparent": true,
@@ -259,17 +251,79 @@ main{width:100%;margin:0;padding:0}
 </header>
 
 <main>
+
 <section id="home" class="page active">
 <div class="hero-full-card">
 <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='47961.png'">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Global Finance • Est. Excellence</div>
+<div class="hero-title">Wealth, Redefined.</div>
+<p class="hero-sub">Ultra-premium market intelligence, trading, investment aur AI-powered financial guidance — sab ek hi jagah.</p>
+<div class="hero-goldline"></div>
+</div>
 </div>
 </section>
 
-<section id="financial" class="page"></section>
-<section id="trading" class="page"></section>
-<section id="investment" class="page"></section>
-<section id="loans" class="page"></section>
-<section id="earning" class="page"></section>
+<section id="financial" class="page">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=1600&q=80" alt="Financial Overview">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Financial Overview</div>
+<div class="hero-title">Precision Wealth Management</div>
+<p class="hero-sub">Aapka poora financial snapshot — assets, liabilities aur net worth — ek premium dashboard me.</p>
+<div class="hero-goldline"></div>
+</div>
+</div>
+</section>
+
+<section id="trading" class="page">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=1600&q=80" alt="Trading Desk">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Live Trading Desk</div>
+<div class="hero-title">Trade at Institutional Speed</div>
+<p class="hero-sub">Real-time market data, technical signals aur pro-level trading tools ek hi screen par.</p>
+<div class="hero-goldline"></div>
+</div>
+</div>
+</section>
+
+<section id="investment" class="page">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80" alt="Investment Portfolio">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Investment Portfolio</div>
+<div class="hero-title">Build Generational Wealth</div>
+<p class="hero-sub">Mutual funds, equity aur alternative assets — long-term compounding ke liye curated portfolio.</p>
+<div class="hero-goldline"></div>
+</div>
+</div>
+</section>
+
+<section id="loans" class="page">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80" alt="Loans and Credit">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Loans & Credit</div>
+<div class="hero-title">Capital, On Your Terms</div>
+<p class="hero-sub">Best-in-class loan rates, EMI planning aur credit line management — bina kisi jhanjhat ke.</p>
+<div class="hero-goldline"></div>
+</div>
+</div>
+</section>
+
+<section id="earning" class="page">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80" alt="Earning Tips">
+<div class="hero-overlay">
+<div class="hero-eyebrow">Earning Intelligence</div>
+<div class="hero-title">Smarter Ways to Earn</div>
+<p class="hero-sub">Passive income, side-hustles aur wealth-building strategies — expert-curated tips.</p>
+<div class="hero-goldline"></div>
+</div>
+</div>
+</section>
+
 <section id="alpha" class="page">
 
     <!-- ============== PARNARAV AI APP START ============== -->
@@ -307,6 +361,11 @@ main{width:100%;margin:0;padding:0}
                 <button class="tool-btn" onclick="QuantEngine.runAnalysis()"><span class="ico" style="color:var(--p-accent-green)">⚡</span> Quant Signals</button>
                 <button class="tool-btn" onclick="FinancialEngine.calcSIP()"><span class="ico" style="color:var(--p-accent-cyan)">🧮</span> SIP Calculator</button>
                 <button class="tool-btn" onclick="FinancialEngine.calcEMI()"><span class="ico" style="color:var(--p-accent-yellow)">🏠</span> Loan EMI Engine</button>
+
+                <div style="font-size:.7rem; font-weight:700; color:#e9c25f; margin:12px 0 8px 0; text-transform:uppercase;">Website Control</div>
+                <button class="tool-btn" onclick="AppController.generateSiteReport()"><span class="ico">🧭</span> Full Website Report</button>
+                <button class="tool-btn" onclick="AppController.showLiveActivity()"><span class="ico">🟢</span> Live Activity Snapshot</button>
+                <button class="tool-btn" onclick="AppController.clearSiteLog()"><span class="ico">🗑️</span> Clear Activity Log</button>
 
                 <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-green); margin:12px 0 8px 0; text-transform:uppercase;">Display Settings</div>
                 <button class="tool-btn" onclick="AppController.toggleTheme()"><span class="ico">🌓</span> Light / Dark</button>
@@ -398,12 +457,71 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
 
 <!-- =================================================================
-     🚀 PARNARAV AI ENGINE — 50 upgrades wala poora engine.
-     Ye Alpha AI section jab bhi "active" hota hai (openPage('alpha',...)
-     se), pehli baar khulte hi khud init ho jaata hai — is ke liye upar
-     ke openPage() function me kuch bhi badla nahi gaya, sirf ek chhota
-     MutationObserver neeche add kiya gaya hai jo #alpha ka class badalna
-     "dekhta" hai.
+     🧭 SITE MONITOR — poori website ki activity (page visits, clicks,
+     chat) ko record karta hai (localStorage me, sirf is browser me,
+     kisi server ko kuch nahi bheja jaata). AI "Full Website Report"
+     button dabane par isi data se ek report bana kar deta hai.
+================================================================== -->
+<script>
+    const SiteMonitor = {
+        KEY: 'gf_site_activity_log_v1',
+        MAX: 600,
+
+        log: function(type, label, extra) {
+            const arr = this.getAll();
+            arr.push({ t: Date.now(), type, label: String(label || '').slice(0, 90), page: this.currentPage(), extra: extra || null });
+            const trimmed = arr.length > this.MAX ? arr.slice(arr.length - this.MAX) : arr;
+            try { localStorage.setItem(this.KEY, JSON.stringify(trimmed)); } catch (e) {}
+        },
+        getAll: function() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch (e) { return []; } },
+        currentPage: function() { const active = document.querySelector('main > .page.active'); return active ? active.id : 'unknown'; },
+        clear: function() { localStorage.removeItem(this.KEY); },
+
+        summarize: function() {
+            const arr = this.getAll();
+            const byPage = {}, byType = {}, byLabel = {};
+            arr.forEach(e => {
+                byPage[e.page] = (byPage[e.page] || 0) + 1;
+                byType[e.type] = (byType[e.type] || 0) + 1;
+                if (e.type === 'click') byLabel[e.label] = (byLabel[e.label] || 0) + 1;
+            });
+            const topClicks = Object.entries(byLabel).sort((a,b)=>b[1]-a[1]).slice(0,10);
+            return {
+                totalEvents: arr.length,
+                pageViews: byPage,
+                eventTypes: byType,
+                topClickedItems: topClicks,
+                sessionStarted: arr[0] ? new Date(arr[0].t).toLocaleString('en-IN') : null,
+                lastActivity: arr.length ? new Date(arr[arr.length-1].t).toLocaleString('en-IN') : null,
+                recentEvents: arr.slice(-30).map(e => `[${new Date(e.t).toLocaleTimeString('en-IN')}] ${e.type.toUpperCase()} on "${e.page}" — ${e.label}`)
+            };
+        }
+    };
+
+    let __lastLoggedPage = null;
+    (function watchAllPages() {
+        const mainEl = document.querySelector('main');
+        if (!mainEl) return;
+        const checkActive = () => {
+            const active = document.querySelector('main > .page.active');
+            const id = active ? active.id : null;
+            if (id && id !== __lastLoggedPage) { __lastLoggedPage = id; SiteMonitor.log('pageview', id); }
+        };
+        checkActive();
+        new MutationObserver(checkActive).observe(mainEl, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    })();
+
+    // Poori website ke har button/link/menu-click ko track karta hai
+    document.addEventListener('click', function(e) {
+        const t = e.target.closest('button, a, .menu-item, .nav-item');
+        if (!t) return;
+        const label = (t.innerText || t.getAttribute('aria-label') || t.getAttribute('title') || t.id || 'unknown').trim().replace(/\s+/g, ' ');
+        if (label) SiteMonitor.log('click', label);
+    }, true);
+</script>
+
+<!-- =================================================================
+     🚀 PARNARAV AI ENGINE
 ================================================================== -->
 <script>
     const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
@@ -447,18 +565,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                 if (onChunkCallback) onChunkCallback(textResponse);
                 return textResponse;
             }
-        },
-
-        generateStructuredData: async function(prompt) {
-            const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
-            return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
-        },
-
-        triggerAgenticTask: async function() {
-            const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
-            if (!userTask) return;
-            document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
-            AppController.submitQuery();
         },
 
         generateWelcome: async function(mode) {
@@ -529,14 +635,12 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         solveExamQuestion: function() {
             const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल दर्ज करें:");
             if (!q) return;
-            document.getElementById('userInput').value = `[Exam Solver]: इस प्रश्न का सटीक, चरणबद्ध हल प्रदान करें:\n${q}`;
-            AppController.submitQuery();
+            AppController.processMessage(`[Exam Solver]: इस प्रश्न का सटीक, चरणबद्ध हल प्रदान करें:\n${q}`);
         },
         deepResearch: function() {
             const topic = prompt("किस विषय पर डीप रिसर्च या विश्लेषण चाहिए?");
             if (!topic) return;
-            document.getElementById('userInput').value = `[Deep Research]: '${topic}' विषय पर विस्तृत विश्लेषण तैयार करें।`;
-            AppController.submitQuery();
+            AppController.processMessage(`[Deep Research]: '${topic}' विषय पर विस्तृत विश्लेषण तैयार करें।`);
         }
     };
 
@@ -595,6 +699,9 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             container.appendChild(row);
             AppController.updateMsgCount();
             AppController.scrollToBottom(true);
+            if (sender === 'user' || sender === 'ai') {
+                SiteMonitor.log('chat', `${sender}: ${(typeof content === 'string' ? content.replace(/<[^>]+>/g, '') : '').slice(0, 70)}`);
+            }
             return row;
         },
         renderActionBar: function(rowId, opts) {
@@ -967,6 +1074,87 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             document.getElementById('sendBtn').disabled = false;
         },
 
+        // Upgrade: Website Report — SiteMonitor ke data se AI khud report banata hai
+        generateSiteReport: function() {
+            const s = SiteMonitor.summarize();
+            if (!s.totalEvents) { alert("Abhi tak koi activity record nahi hui — pehle website use karo, phir report maango।"); return; }
+            const dataBlock = JSON.stringify(s, null, 2);
+            const prompt = `Tum Parnarav AI ho aur "Global Finance" website ke poore activity data ko control/monitor kar rahe ho. Neeche is website ka real activity log diya hai (page views, clicks, chat, recent events). Ek professional, structured Hindi/Hinglish report banao — headings ke saath — jisme ho:\n1. Overview (total events, session time)\n2. Sabse zyada dekhe gaye pages\n3. Sabse zyada click kiye gaye items\n4. User behaviour pattern ka insight\n5. Website ko behtar banane ke 2-3 practical suggestions\n\nActivity Data (JSON):\n${dataBlock}`;
+            this.processMessage(prompt, "📊 Poori website ki activity report dikhao");
+        },
+
+        // Upgrade: turant snapshot bina AI call ke (fast, local)
+        showLiveActivity: function() {
+            const s = SiteMonitor.summarize();
+            const pagesHtml = Object.entries(s.pageViews).map(([k,v]) => `${k}: <b>${v}</b>`).join(' · ') || 'Koi data nahi';
+            const clicksHtml = s.topClickedItems.map(([label, count]) => `• ${label} — <b>${count}x</b>`).join('<br>') || 'Koi click record nahi hua';
+            const html = `<div class="widget-card">
+                <div class="widget-title"><span class="ico">🟢</span> LIVE ACTIVITY SNAPSHOT</div>
+                • Total Events: <b>${s.totalEvents}</b><br>
+                • Session Started: <b>${s.sessionStarted || '-'}</b><br>
+                • Last Activity: <b>${s.lastActivity || '-'}</b><br>
+                • Page Views: ${pagesHtml}<br><br>
+                <b>Top Clicked:</b><br>${clicksHtml}
+            </div>`;
+            UIManager.appendMsg(html, 'ai', null, '🧭');
+        },
+
+        clearSiteLog: function() {
+            if (!confirm("Poora website activity log clear karein? Ye undo nahi ho sakta।")) return;
+            SiteMonitor.clear();
+            alert("Activity log clear ho gaya।");
+        },
+
+        // Shared message pipeline (tool buttons aur normal chat dono isi se guzarte hain)
+        processMessage: async function(promptText, displayText) {
+            const mode = this.currentMode;
+            const userRow = UIManager.appendMsg((displayText || promptText).replace(/</g, '&lt;'), 'user', null, null, promptText);
+            UIManager.renderActionBar(userRow.id, { isAi: false });
+
+            let currentAvatar = '🧠';
+            if (mode === 'INTERVIEW') currentAvatar = '👔';
+            else if (mode === 'SALES') currentAvatar = '🤝';
+            else if (mode === 'DEV') currentAvatar = '💻';
+            else if (mode === 'FINANCE') currentAvatar = '📈';
+
+            const typingHtml = `<span class="typing-dots"><span></span><span></span><span></span></span>`;
+            const aiRow = UIManager.appendMsg(typingHtml, 'ai', null, currentAvatar);
+            const aiMsgId = aiRow.id;
+
+            let systemRolePrompt = `ROLE: Universal General Knowledge & Website Control AI. Tumhe is website ("Global Finance") ka poora activity data dekhne aur uspar report banane ki permission hai. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, top-quality, structured answers. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            if (mode === 'INTERVIEW') systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer. Ask ONE question at a time, accurate feedback. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            else if (mode === 'SALES') systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            else if (mode === 'FINANCE') systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Precise, fact-checked. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            else if (mode === 'DEV') systemRolePrompt = `ROLE: Senior Software Architect. Correct, working code only. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+
+            const bubbleElement = document.getElementById(aiMsgId);
+            const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
+            const myGenId = ++GeminiOmniEngine.activeGenId;
+            document.getElementById('stopBtn').style.display = 'flex';
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                const finalReply = await GeminiOmniEngine.processChat(
+                    promptText, systemRolePrompt,
+                    (streamedText) => {
+                        if (bubble) {
+                            bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
+                            if (window.hljs) hljs.highlightAll();
+                            this.scrollToBottom(false);
+                        }
+                    }, myGenId
+                );
+                if (myGenId === GeminiOmniEngine.activeGenId && bubbleElement) UIManager.renderActionBar(aiMsgId, { isAi: true });
+                VoiceEngine.speak(finalReply);
+            } catch (err) {
+                if (bubble) bubble.innerHTML = `**[System Error]** Kuch गड़बड़ हुई: \`${err.message || err}\` — कृपया दोबारा कोशिश करें।`;
+                UIManager.renderActionBar(aiMsgId, { isAi: true, retryText: promptText });
+            } finally {
+                document.getElementById('stopBtn').style.display = 'none';
+                document.getElementById('sendBtn').disabled = false;
+            }
+        },
+
         submitQuery: async function() {
             const input = document.getElementById('userInput');
             if (!input) return;
@@ -989,75 +1177,15 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                 }
             }
 
-            const mode = this.currentMode;
-            const userRow = UIManager.appendMsg(text.replace(/</g, '&lt;'), 'user', null, null, text);
-            UIManager.renderActionBar(userRow.id, { isAi: false });
             input.value = ''; this.handleInputChange();
-
-            let currentAvatar = '🧠';
-            if (mode === 'INTERVIEW') currentAvatar = '👔';
-            else if (mode === 'SALES') currentAvatar = '🤝';
-            else if (mode === 'DEV') currentAvatar = '💻';
-            else if (mode === 'FINANCE') currentAvatar = '📈';
-
-            const typingHtml = `<span class="typing-dots"><span></span><span></span><span></span></span>`;
-            const aiRow = UIManager.appendMsg(typingHtml, 'ai', null, currentAvatar);
-            const aiMsgId = aiRow.id;
-
-            let systemRolePrompt = "";
-            if (mode === 'INTERVIEW') {
-                systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer.
-1. DUTY: Conduct a structured technical mock interview. Ask strictly ONE question at a time.
-2. FEEDBACK: Evaluate answers with constructive, accurate feedback before the next question.
-3. TONE: Professional, analytical, fair, supportive.
-4. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-            } else if (mode === 'SALES') {
-                systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist. Handle objections, explain value accurately. TONE: Energetic, persuasive. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-            } else if (mode === 'FINANCE') {
-                systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Precise, well-reasoned, fact-checked — avoid speculation. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-            } else if (mode === 'DEV') {
-                systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. Give correct, working, well-tested code with no syntax errors. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-            } else {
-                systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, top-quality answers — double-check facts, avoid guessing. CREATOR RULE: "${SYSTEM_CREATOR}".`;
-            }
-
-            const bubbleElement = document.getElementById(aiMsgId);
-            const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
-
-            const myGenId = ++GeminiOmniEngine.activeGenId;
-            document.getElementById('stopBtn').style.display = 'flex';
-            document.getElementById('sendBtn').disabled = true;
-
-            try {
-                const finalReply = await GeminiOmniEngine.processChat(
-                    text, systemRolePrompt,
-                    (streamedText) => {
-                        if (bubble) {
-                            bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
-                            if (window.hljs) hljs.highlightAll();
-                            this.scrollToBottom(false);
-                        }
-                    }, myGenId
-                );
-
-                if (myGenId === GeminiOmniEngine.activeGenId && bubbleElement) UIManager.renderActionBar(aiMsgId, { isAi: true });
-                VoiceEngine.speak(finalReply);
-            } catch (err) {
-                if (bubble) bubble.innerHTML = `**[System Error]** Kuch गड़बड़ हुई: \`${err.message || err}\` — कृपया दोबारा कोशिश करें।`;
-                UIManager.renderActionBar(aiMsgId, { isAi: true, retryText: text });
-            } finally {
-                document.getElementById('stopBtn').style.display = 'none';
-                document.getElementById('sendBtn').disabled = false;
-            }
+            await this.processMessage(text, null);
         },
 
         toggleSidebar: function(e) { if (e) e.stopPropagation(); document.getElementById('sidebar').classList.toggle('open'); },
         closeSidebarMobile: function() { document.getElementById('sidebar')?.classList.remove('open'); }
     };
 
-    // Pure addition: existing openPage()/menu code bilkul untouched hai.
-    // Ye observer sirf "dekhta" hai ki #alpha section kab active hota hai,
-    // aur pehli baar khulte hi Parnarav AI ko khud init kar deta hai.
+    // Alpha page active hote hi Parnarav AI khud init ho jaata hai
     (function watchAlphaPage() {
         const alphaSection = document.getElementById('alpha');
         if (!alphaSection) return;
@@ -1066,151 +1194,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
-<!-- ========================================== -->
-<!-- 1. CATEGORY CARDS - CSS STYLES             -->
-<!-- ========================================== -->
-<style>
-/* Main Category Container */
-.main-category-wrapper {
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 14px;
-  box-sizing: border-box;
-  font-family: Inter, Arial, sans-serif;
-}
-
-.category-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.category-title i {
-  color: #00e676;
-}
-
-/* Category Grid Layout */
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-@media (min-width: 768px) {
-  .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-}
-
-/* Individual Card Styling */
-.category-card {
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  user-select: none;
-}
-
-.category-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 230, 118, 0.4);
-  box-shadow: 0 10px 25px -5px rgba(0, 230, 118, 0.25);
-  background: rgba(15, 23, 42, 0.95);
-}
-
-.category-card:active {
-  transform: scale(0.97);
-}
-
-.cat-icon-box {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: rgba(0, 230, 118, 0.1);
-  color: #00e676;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: all 0.25s ease;
-}
-
-.category-card:hover .cat-icon-box {
-  background: #00e676;
-  color: #000;
-  box-shadow: 0 0 15px rgba(0, 230, 118, 0.6);
-}
-
-.cat-text-info h3 {
-  font-size: 15px;
-  font-weight: 700;
-  color: #f8fafc;
-  margin: 0 0 2px 0;
-}
-
-.cat-text-info p {
-  font-size: 11px;
-  color: #64748b;
-  font-weight: 500;
-  margin: 0;
-}
-
-/* Alpha AI Special Card Styling */
-.category-card.alpha-special-card {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(121, 40, 202, 0.3), rgba(0, 223, 216, 0.2));
-  border: 1px solid rgba(0, 223, 216, 0.4);
-}
-
-@media (min-width: 768px) {
-  .category-card.alpha-special-card {
-    grid-column: span 1;
-  }
-}
-
-.category-card.alpha-special-card .cat-icon-box {
-  background: linear-gradient(135deg, #7928ca, #00dfd8);
-  color: #ffffff;
-}
-
-.category-card.alpha-special-card:hover {
-  border-color: #00dfd8;
-  box-shadow: 0 10px 25px -5px rgba(0, 223, 216, 0.4);
-}
-
-.ai-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(135deg, #7928ca, #00dfd8);
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-</style>
-
 
 </body>
 </html>
