@@ -1194,40 +1194,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
-<script>
 
-function openPage(pageName){
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(function(page){
-        page.classList.remove("active");
-    });
-
-
-    const target =
-        document.getElementById(pageName);
-
-    if(target){
-        target.classList.add("active");
-    }
-
-
-    const menu =
-        document.getElementById("menuDropdown");
-
-    if(menu){
-        menu.classList.remove("open");
-    }
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
 
 </script>
 </body>
