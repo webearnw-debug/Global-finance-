@@ -1573,6 +1573,243 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
   }
 </script>
 
-    
+  <!-- ========================================================= -->
+<!-- COMPACT 10 FINANCIAL TOOLS FRAME (HERO PHOTO MATCHING)    -->
+<!-- Place directly under the Hero Photo                       -->
+<!-- ========================================================= -->
+
+<style>
+  .hero-tools-frame {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 24px;
+    border-radius: 24px;
+    background: radial-gradient(circle at top left, rgba(0, 230, 118, 0.08), rgba(8, 10, 12, 0.95)), 
+                url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 230, 118, 0.1);
+    backdrop-filter: blur(10px);
+    font-family: system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+
+  /* Compact Header Inside Frame */
+  .frame-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+  }
+
+  .frame-title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .frame-title span {
+    color: #00E676;
+  }
+
+  .frame-badge {
+    background: rgba(0, 230, 118, 0.15);
+    color: #00E676;
+    border: 1px solid rgba(0, 230, 118, 0.4);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* 10 Tools Box Grid (Fits inside hero height) */
+  .tools-compact-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  /* Compact Tool Item Box */
+  .compact-tool-item {
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .compact-tool-item:hover {
+    background: rgba(0, 230, 118, 0.15);
+    border-color: #00E676;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.25);
+  }
+
+  .compact-icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(0, 230, 118, 0.1);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .compact-icon-box svg {
+    width: 20px;
+    height: 20px;
+    stroke: #00E676;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .compact-tool-name {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .compact-tool-cat {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .cat-t { color: #00E676; } /* Trading */
+  .cat-i { color: #60a5fa; } /* Investment */
+  .cat-l { color: #fbbf24; } /* Loan */
+
+  /* Responsive for Mobile */
+  @media (max-width: 900px) {
+    .tools-compact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<div class="hero-tools-frame">
+  <!-- Top Bar Inside Photo Box -->
+  <div class="frame-header">
+    <div class="frame-title">
+      ⚡ <span>10 FINANCIAL TOOLS</span> ENGINE
+    </div>
+    <div class="frame-badge">TRADING • INVESTMENTS • LOANS</div>
+  </div>
+
+  <!-- 10 Compact Tools Grid Box -->
+  <div class="tools-compact-grid">
+
+    <!-- 1. Trading -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="compact-tool-name">AI Signals</div>
+      <div class="compact-tool-cat cat-t">Trading</div>
+    </div>
+
+    <!-- 2. Loan -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
+      </div>
+      <div class="compact-tool-name">EMI Calculator</div>
+      <div class="compact-tool-cat cat-l">Loans</div>
+    </div>
+
+    <!-- 3. Investment -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="compact-tool-name">Wealth Growth</div>
+      <div class="compact-tool-cat cat-i">Investment</div>
+    </div>
+
+    <!-- 4. Trading -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18M18 9l-5 5-4-4-3 3"/></svg>
+      </div>
+      <div class="compact-tool-name">Option Chain</div>
+      <div class="compact-tool-cat cat-t">Trading</div>
+    </div>
+
+    <!-- 5. Investment -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      </div>
+      <div class="compact-tool-name">Rebalancer</div>
+      <div class="compact-tool-cat cat-i">Investment</div>
+    </div>
+
+    <!-- 6. Loan -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><rect x="9" y="11" width="12" height="8" rx="2"/></svg>
+      </div>
+      <div class="compact-tool-name">Refinance Tool</div>
+      <div class="compact-tool-cat cat-l">Loans</div>
+    </div>
+
+    <!-- 7. Trading -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="compact-tool-name">Risk Sizer</div>
+      <div class="compact-tool-cat cat-t">Trading</div>
+    </div>
+
+    <!-- 8. Investment -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <div class="compact-tool-name">Stock Screener</div>
+      <div class="compact-tool-cat cat-i">Investment</div>
+    </div>
+
+    <!-- 9. Loan -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg>
+      </div>
+      <div class="compact-tool-name">Debt Payoff</div>
+      <div class="compact-tool-cat cat-l">Loans</div>
+    </div>
+
+    <!-- 10. Investment -->
+    <div class="compact-tool-item">
+      <div class="compact-icon-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="compact-tool-name">Dividend Yield</div>
+      <div class="compact-tool-cat cat-i">Investment</div>
+    </div>
+
+  </div>
+</div>
+  
 </body>
 </html>
