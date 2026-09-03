@@ -1195,149 +1195,126 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     })();
 </script>
 
-
-<!-- Financial Section Block -->
+<!-- Financial Section Decorative Header Block -->
 <style>
-  .financial-section {
-    padding: 30px 16px;
+  .financial-start-wrapper {
+    position: relative;
+    padding: 50px 20px 20px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    text-align: center;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  
-  .financial-title {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.5px;
+
+  /* Decorative Top Glowing Line */
+  .glow-divider {
+    width: 80%;
+    max-width: 600px;
+    height: 2px;
+    margin: 0 auto 35px auto;
+    background: linear-gradient(90deg, transparent, #00E676, transparent);
+    box-shadow: 0 0 15px #00E676;
   }
 
-  .live-dot {
+  /* Section Tag / Badge */
+  .financial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 230, 118, 0.08);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    color: #00E676;
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.15);
+    margin-bottom: 16px;
+  }
+
+  .badge-dot {
     width: 8px;
     height: 8px;
     background-color: #00E676;
     border-radius: 50%;
-    box-shadow: 0 0 10px #00E676;
-    display: inline-block;
+    animation: pulseGlow 2s infinite;
   }
 
-  .financial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-
-  .fin-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-  }
-
-  .fin-card:hover {
-    border-color: rgba(0, 230, 118, 0.4);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-  }
-
-  .fin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-
-  .fin-name {
-    color: #a0aec0;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .fin-badge {
-    font-size: 12px;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-  }
-
-  .badge-green {
-    background: rgba(0, 230, 118, 0.15);
-    color: #00E676;
-  }
-
-  .badge-red {
-    background: rgba(255, 82, 82, 0.15);
-    color: #ff5252;
-  }
-
-  .fin-price {
+  /* Main Section Title */
+  .financial-main-title {
     color: #ffffff;
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
   }
 
-  .fin-sub {
-    color: #718096;
-    font-size: 12px;
-    margin-top: 4px;
+  .financial-main-title span {
+    color: #00E676;
+    background: linear-gradient(180deg, #ffffff 0%, #00E676 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Subtitle Description */
+  .financial-desc {
+    color: #94a3b8;
+    font-size: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      opacity: 0.4;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+      box-shadow: 0 0 10px #00E676;
+    }
+    100% {
+      opacity: 0.4;
+      transform: scale(0.9);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .financial-main-title {
+      font-size: 24px;
+    }
+    .financial-desc {
+      font-size: 14px;
+    }
   }
 </style>
 
-<section class="financial-section">
-  <div class="financial-title">
-    <span class="live-dot"></span> Live Financial Overview
+<div class="financial-start-wrapper">
+  <!-- Glowing Divider Line -->
+  <div class="glow-divider"></div>
+
+  <!-- Decorative Badge -->
+  <div class="financial-badge">
+    <span class="badge-dot"></span>
+    Financial Cooperative System
   </div>
 
-  <div class="financial-grid">
-    <!-- Card 1: Sensex -->
-    <div class="fin-card">
-      <div class="fin-header">
-        <span class="fin-name">SENSEX (BSE)</span>
-        <span class="fin-badge badge-green">+0.48%</span>
-      </div>
-      <div class="fin-price">76,152.86</div>
-      <div class="fin-sub">Indian Equity Market</div>
-    </div>
+  <!-- Main Section Heading -->
+  <h2 class="financial-main-title">
+    Next-Gen <span>Financial Ecosystem</span>
+  </h2>
 
-    <!-- Card 2: Bitcoin -->
-    <div class="fin-card">
-      <div class="fin-header">
-        <span class="fin-name">BITCOIN (BTC)</span>
-        <span class="fin-badge badge-green">+2.15%</span>
-      </div>
-      <div class="fin-price">$78,743.00</div>
-      <div class="fin-sub">Global Crypto Asset</div>
-    </div>
+  <!-- Brief Description -->
+  <p class="financial-desc">
+    Yahan se shuru hota hai aapka complete financial management, smart market insights aur cooperative trading engine — sab ek hi जगह.
+  </p>
+</div>
 
-    <!-- Card 3: Ethereum -->
-    <div class="fin-card">
-      <div class="fin-header">
-        <span class="fin-name">ETHEREUM (ETH)</span>
-        <span class="fin-badge badge-red">-0.82%</span>
-      </div>
-      <div class="fin-price">$2,424.20</div>
-      <div class="fin-sub">Smart Contract Token</div>
-    </div>
-
-    <!-- Card 4: Gold -->
-    <div class="fin-card">
-      <div class="fin-header">
-        <span class="fin-name">GOLD (XAU/USD)</span>
-        <span class="fin-badge badge-green">+0.30%</span>
-      </div>
-      <div class="fin-price">$2,650.50</div>
-      <div class="fin-sub">Commodity Reserve</div>
-    </div>
-  </div>
-</section>
-
-
+    
 </body>
 </html>
