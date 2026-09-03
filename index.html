@@ -2,230 +2,157 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Finance - Live Ticker Strip</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Global Finance - Upgraded Real-Time Pro</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#06090e;color:#f8fafc;font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:'Inter',system-ui,Arial,sans-serif;overflow-x:hidden}
+img{display:block;width:100%}
 
-/* MAIN TICKER CONTAINER */
-.ticker-wrapper-main {
-  width: 100%;
-  background: #020406;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 9999;
-}
+/* UPGRADED REAL-TIME TICKER CONTAINER */
+.ticker-wrap{width:100%;height:46px;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
 
-/* 1. TRADINGVIEW OFFICIAL TICKER TAPE */
-.tradingview-ticker-container {
-  width: 100%;
-  height: 46px;
-  overflow: hidden;
-}
+/* HEADER */
+.header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-size:17px;font-weight:800;letter-spacing:.8px}
+.logo i{color:#00e676;font-size:22px;filter:drop-shadow(0 0 10px rgba(0,230,118,.5))}
 
-/* 2. CUSTOM REAL-TIME FALLBACK TICKER */
-.custom-ticker-bar {
-  width: 100%;
-  height: 40px;
-  background: #060a12;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  white-space: nowrap;
-}
+/* MENU BUTTON & DROPDOWN */
+.menu-area{position:relative}
+.menu-button{height:38px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#00e676,#00c853);color:#000;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .25s ease;box-shadow:0 0 15px rgba(0,230,118,.3)}
+.menu-button:hover{transform:translateY(-1px);box-shadow:0 0 22px rgba(0,230,118,.6)}
+.menu-button:active{transform:scale(.96)}
 
-.custom-ticker-move {
-  display: flex;
-  align-items: center;
-  gap: 35px;
-  padding-left: 20px;
-  animation: tickerScroll 30s linear infinite;
-  width: max-content;
-}
+.menu-dropdown{position:absolute;top:50px;right:0;width:240px;padding:10px;display:none;flex-direction:column;gap:6px;background:rgba(12,16,24,.98);border:1px solid rgba(255,255,255,.12);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.85);backdrop-filter:blur(20px)}
+.menu-dropdown.open{display:flex;animation:dropdownOpen .2s ease-out}
+@keyframes dropdownOpen{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.menu-item{width:100%;min-height:42px;border:0;background:transparent;color:#94a3b8;border-radius:8px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13.5px;font-weight:600;transition:.2s ease}
+.menu-item:hover,.menu-item.active{background:rgba(0,230,118,.12);color:#00e676}
+.alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.3),rgba(0,223,216,.25))}
+.alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;box-shadow:0 0 15px rgba(0,223,216,.4)}
 
-.custom-ticker-move:hover {
-  animation-play-state: paused;
-}
+/* MAIN CONTENT (FULL EDGE-TO-EDGE COVERAGE) */
+main{width:100%;margin:0;padding:0}
+.page{display:none;width:100%;margin:0;padding:0}
+.page.active{display:block}
 
-.ticker-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #94a3b8;
-}
+.hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
+.hero-full-card img{width:100%;height:calc(100vh - 106px);min-height:520px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
 
-.ticker-title {
-  color: #e2e8f0;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.ticker-price {
-  color: #fff;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.up { color: #00e676; }
-.down { color: #ff5252; }
-
-/* FLASH ANIMATIONS ON PRICE CHANGE */
-.flash-up {
-  background: rgba(0, 230, 118, 0.25) !important;
-  color: #00e676 !important;
-  text-shadow: 0 0 10px rgba(0, 230, 118, 0.8);
-}
-
-.flash-down {
-  background: rgba(255, 82, 82, 0.25) !important;
-  color: #ff5252 !important;
-  text-shadow: 0 0 10px rgba(255, 82, 82, 0.8);
-}
-
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@media(max-width: 600px) {
-  .tradingview-ticker-container { height: 42px; }
-  .ticker-item { font-size: 11px; gap: 5px; }
+@media(max-width:480px){
+.header{padding:0 14px;height:56px}
+.logo{font-size:15px}
+.menu-button{height:34px;padding:0 14px;font-size:13px}
+.hero-full-card img{height:calc(100vh - 102px);min-height:460px}
 }
 </style>
 </head>
 <body>
 
-<div class="ticker-wrapper-main">
-  
-  <!-- 1. OFFICIAL TRADINGVIEW REAL-TIME TICKER TAPE -->
-  <div class="tradingview-ticker-container">
-    <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+<!-- UPGRADED TRADINGVIEW REAL-TIME TICKER -->
+<div class="ticker-wrap">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
       {
-        "symbols": [
-          {
-            "proName": "NSE:NIFTY",
-            "title": "NIFTY 50"
-          },
-          {
-            "proName": "BSE:SENSEX",
-            "title": "SENSEX"
-          },
-          {
-            "proName": "NSE:BANKNIFTY",
-            "title": "BANK NIFTY"
-          },
-          {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "BITCOIN"
-          },
-          {
-            "proName": "FX_IDC:USDINR",
-            "title": "USD/INR"
-          },
-          {
-            "proName": "MCX:GOLD1!",
-            "title": "GOLD"
-          }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": true,
-        "displayMode": "adaptive",
-        "colorTheme": "dark",
-        "locale": "in"
+        "description": "NIFTY 50",
+        "proName": "NSE:NIFTY"
+      },
+      {
+        "description": "SENSEX",
+        "proName": "BSE:SENSEX"
+      },
+      {
+        "description": "BANK NIFTY",
+        "proName": "NSE:BANKNIFTY"
+      },
+      {
+        "description": "RELIANCE",
+        "proName": "NSE:RELIANCE"
+      },
+      {
+        "description": "USD/INR",
+        "proName": "FX_IDC:USDINR"
+      },
+      {
+        "description": "GOLD",
+        "proName": "MCX:GOLD1!"
+      },
+      {
+        "description": "BITCOIN",
+        "proName": "BITSTAMP:BTCUSD"
+      },
+      {
+        "description": "ETHEREUM",
+        "proName": "BITSTAMP:ETHUSD"
       }
-      </script>
-    </div>
+    ],
+    "showSymbolLogo": true,
+    "isTransparent": true,
+    "displayMode": "adaptive",
+    "colorTheme": "dark",
+    "locale": "in"
+  }
+    </script>
   </div>
-
-  <!-- 2. HIGH-FREQUENCY LIVE FALLBACK TICKER -->
-  <div class="custom-ticker-bar">
-    <div class="custom-ticker-move" id="tickerLoop">
-      <div class="ticker-item"><span class="ticker-title">NIFTY 50</span> <span class="ticker-price up" id="niftyVal">24,834.85</span> <span class="up" id="niftyPct">+0.42%</span></div>
-      <div class="ticker-item"><span class="ticker-title">SENSEX</span> <span class="ticker-price up" id="sensexVal">81,157.73</span> <span class="up" id="sensexPct">+0.45%</span></div>
-      <div class="ticker-item"><span class="ticker-title">BANK NIFTY</span> <span class="ticker-price up" id="bankVal">51,230.10</span> <span class="up" id="bankPct">+0.30%</span></div>
-      <div class="ticker-item"><span class="ticker-title">BTC/USDT</span> <span class="ticker-price up" id="btcVal">67,245.30</span> <span class="up" id="btcPct">+1.25%</span></div>
-      <div class="ticker-item"><span class="ticker-title">USD/INR</span> <span class="ticker-price down" id="usdinrVal">83.28</span> <span class="down" id="usdinrPct">-0.10%</span></div>
-      <div class="ticker-item"><span class="ticker-title">GOLD (MCX)</span> <span class="ticker-price up" id="goldVal">72,145.00</span> <span class="up" id="goldPct">+0.15%</span></div>
-
-      <!-- REPEATED FOR INFINITE SMOOTH LOOP -->
-      <div class="ticker-item"><span class="ticker-title">NIFTY 50</span> <span class="ticker-price up" id="niftyVal2">24,834.85</span> <span class="up">+0.42%</span></div>
-      <div class="ticker-item"><span class="ticker-title">SENSEX</span> <span class="ticker-price up" id="sensexVal2">81,157.73</span> <span class="up">+0.45%</span></div>
-      <div class="ticker-item"><span class="ticker-title">BANK NIFTY</span> <span class="ticker-price up" id="bankVal2">51,230.10</span> <span class="up">+0.30%</span></div>
-      <div class="ticker-item"><span class="ticker-title">BTC/USDT</span> <span class="ticker-price up" id="btcVal2">67,245.30</span> <span class="up">+1.25%</span></div>
-    </div>
-  </div>
-
 </div>
 
+<!-- HEADER -->
+<header class="header">
+<a href="#" class="logo" onclick="goHome(); return false;">
+<i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE
+</a>
+<div class="menu-area">
+<button class="menu-button" id="menuButton" onclick="toggleMenu()">
+<i class="fa-solid fa-bars"></i><span>Menu</span>
+</button>
+<div class="menu-dropdown" id="menuDropdown">
+<button class="menu-item active" onclick="openPage('home',this)"><span>Home</span><i class="fa-solid fa-house"></i></button>
+<button class="menu-item" onclick="openPage('financial',this)"><span>Financial</span><i class="fa-solid fa-wallet"></i></button>
+<button class="menu-item" onclick="openPage('trading',this)"><span>Trading</span><i class="fa-solid fa-chart-line"></i></button>
+<button class="menu-item" onclick="openPage('investment',this)"><span>Investment</span><i class="fa-solid fa-chart-pie"></i></button>
+<button class="menu-item" onclick="openPage('loans',this)"><span>Loans</span><i class="fa-solid fa-hand-holding-dollar"></i></button>
+<button class="menu-item" onclick="openPage('earning',this)"><span>Earning Tips</span><i class="fa-solid fa-lightbulb"></i></button>
+<button class="menu-item alpha-ai" onclick="openPage('alpha',this)"><span>Alpha AI</span><i class="fa-solid fa-bolt"></i></button>
+</div>
+</div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+<section id="home" class="page active">
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='47961.png'">
+</div>
+</section>
+
+<section id="financial" class="page"></section>
+<section id="trading" class="page"></section>
+<section id="investment" class="page"></section>
+<section id="loans" class="page"></section>
+<section id="earning" class="page"></section>
+<section id="alpha" class="page"></section>
+</main>
+
 <script>
-// REAL-TIME BINANCE API FOR CRYPTO DATA
-async function fetchCryptoRealtime() {
-  try {
-    const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
-    if(res.ok) {
-      const data = await res.json();
-      updatePrice('btcVal', 'btcPct', parseFloat(data.lastPrice), parseFloat(data.priceChangePercent));
-    }
-  } catch(e) {}
+// MENU FUNCTIONALITY
+const menu = document.getElementById("menuDropdown"), menuButton = document.getElementById("menuButton");
+function toggleMenu(){ menu.classList.toggle("open"); }
+function openPage(e, t){
+  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+  const targetPage = document.getElementById(e);
+  if(targetPage) targetPage.classList.add("active");
+  document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+  if(t) t.classList.add("active");
+  menu.classList.remove("open");
+  window.scrollTo({top: 0, behavior: "smooth"});
 }
-
-function updatePrice(valId, pctId, newPrice, changePct) {
-  const elem = document.getElementById(valId);
-  const pctElem = document.getElementById(pctId);
-  if(!elem) return;
-
-  const oldPrice = parseFloat(elem.textContent.replace(/,/g, ''));
-  elem.textContent = newPrice.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-  if(pctElem && changePct !== undefined) {
-    pctElem.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
-    pctElem.className = changePct >= 0 ? 'up' : 'down';
-  }
-
-  if (newPrice > oldPrice) {
-    elem.classList.add('flash-up');
-    setTimeout(() => elem.classList.remove('flash-up'), 500);
-  } else if (newPrice < oldPrice) {
-    elem.classList.add('flash-down');
-    setTimeout(() => elem.classList.remove('flash-down'), 500);
-  }
-}
-
-// LIVE NIFTY & INDEX REAL-TIME TICK STREAM
-function liveTickIndex(valId, pctId, baseValue) {
-  const elem = document.getElementById(valId);
-  if(!elem) return;
-  const current = parseFloat(elem.textContent.replace(/,/g, ''));
-  const change = (Math.random() - 0.48) * (current * 0.0006);
-  const nextVal = current + change;
-
-  updatePrice(valId, pctId, nextVal, ((nextVal - baseValue) / baseValue) * 100);
-
-  const dup = document.getElementById(valId + '2');
-  if(dup) dup.textContent = elem.textContent;
-}
-
-// REAL-TIME UPDATES EVERY 1.2 SECONDS
-setInterval(() => {
-  fetchCryptoRealtime();
-  liveTickIndex('niftyVal', 'niftyPct', 24700);
-  liveTickIndex('sensexVal', 'sensexPct', 80800);
-  liveTickIndex('bankVal', 'bankPct', 51000);
-  liveTickIndex('usdinrVal', 'usdinrPct', 83.30);
-  liveTickIndex('goldVal', 'goldPct', 72000);
-}, 1200);
-
-fetchCryptoRealtime();
+function goHome(){ openPage('home'); }
+document.addEventListener("click", e => { menu.contains(e.target) || menuButton.contains(e.target) || menu.classList.remove("open"); });
+document.addEventListener("keydown", e => { "Escape" === e.key && menu.classList.remove("open"); });
 </script>
 
 </body>
