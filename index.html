@@ -1195,303 +1195,384 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     })();
 </script>
 
-<!-- Financial Section Decorative Header Block -->
-<style>
-  .financial-start-wrapper {
-    position: relative;
-    padding: 50px 20px 20px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-
-  /* Decorative Top Glowing Line */
-  .glow-divider {
-    width: 80%;
-    max-width: 600px;
-    height: 2px;
-    margin: 0 auto 35px auto;
-    background: linear-gradient(90deg, transparent, #00E676, transparent);
-    box-shadow: 0 0 15px #00E676;
-  }
-
-  /* Section Tag / Badge */
-  .financial-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0, 230, 118, 0.08);
-    border: 1px solid rgba(0, 230, 118, 0.3);
-    color: #00E676;
-    padding: 6px 18px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    box-shadow: 0 0 15px rgba(0, 230, 118, 0.15);
-    margin-bottom: 16px;
-  }
-
-  .badge-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #00E676;
-    border-radius: 50%;
-    animation: pulseGlow 2s infinite;
-  }
-
-  /* Main Section Title */
-  .financial-main-title {
-    color: #ffffff;
-    font-size: 32px;
-    font-weight: 800;
-    margin: 0 0 12px 0;
-    line-height: 1.2;
-    letter-spacing: -0.5px;
-  }
-
-  .financial-main-title span {
-    color: #00E676;
-    background: linear-gradient(180deg, #ffffff 0%, #00E676 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Subtitle Description */
-  .financial-desc {
-    color: #94a3b8;
-    font-size: 15px;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  @keyframes pulseGlow {
-    0% {
-      opacity: 0.4;
-      transform: scale(0.9);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.2);
-      box-shadow: 0 0 10px #00E676;
-    }
-    100% {
-      opacity: 0.4;
-      transform: scale(0.9);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .financial-main-title {
-      font-size: 24px;
-    }
-    .financial-desc {
-      font-size: 14px;
-    }
-  }
-</style>
-
-<div class="financial-start-wrapper">
-  <!-- Glowing Divider Line -->
-  <div class="glow-divider"></div>
-
-  <!-- Decorative Badge -->
-  <div class="financial-badge">
-    <span class="badge-dot"></span>
-    Financial Cooperative System
-  </div>
-
-  <!-- Main Section Heading -->
-  <h2 class="financial-main-title">
-    Next-Gen <span>Financial Ecosystem</span>
-  </h2>
-
-  <!-- Brief Description -->
-  <p class="financial-desc">
-    Yahan se shuru hota hai aapka complete financial management, smart market insights aur cooperative trading engine — sab ek hi जगह.
-  </p>
-</div>
-
-  <!-- ========================================================= -->
-<!-- HOME PAGE ONLY: ULTRA-PREMIUM TICKER & STATS STRIP        -->
-<!-- Place this directly under the Hero Photo on Home Page     -->
+<!-- ========================================================= -->
+<!-- FINANCIAL TOOLS SECTION (10 TOOLS: TRADING, LOANS, INVEST) -->
+<!-- Place directly under Hero Photo                           -->
 <!-- ========================================================= -->
 
 <style>
-  /* Home Ticker Wrapper */
-  .home-ticker-wrapper {
-    width: 100%;
+  .fin-tools-wrapper {
     background: #080a0c;
-    border-top: 1px solid rgba(0, 230, 118, 0.25);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-    padding: 12px 0;
+    padding: 60px 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #ffffff;
     position: relative;
-    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
   }
 
-  /* Fade Overlay Gradients for Continuous Loop Effect */
-  .home-ticker-wrapper::before,
-  .home-ticker-wrapper::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 120px;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .home-ticker-wrapper::before {
-    left: 0;
-    background: linear-gradient(to right, #080a0c, transparent);
-  }
-  .home-ticker-wrapper::after {
-    right: 0;
-    background: linear-gradient(to left, #080a0c, transparent);
+  /* Top Lighting Line under Photo */
+  .top-lighting-line {
+    width: 90%;
+    max-width: 800px;
+    height: 3px;
+    margin: 0 auto 40px auto;
+    background: linear-gradient(90deg, transparent, #00E676, transparent);
+    box-shadow: 0 0 25px #00E676, 0 0 10px #00E676;
+    border-radius: 50%;
   }
 
-  /* Infinite Scroll Track */
-  .ticker-track {
-    display: flex;
-    width: max-content;
-    animation: scrollTicker 25s linear infinite;
-  }
-
-  .ticker-track:hover {
-    animation-play-state: paused;
-  }
-
-  .ticker-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 32px;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .ticker-symbol {
-    color: #94a3b8;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
-
-  .ticker-price {
-    color: #ffffff;
-    font-weight: 700;
-  }
-
-  .change-up {
-    color: #00E676;
-    background: rgba(0, 230, 118, 0.12);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .change-down {
-    color: #ff5252;
-    background: rgba(255, 82, 82, 0.12);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  @keyframes scrollTicker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* Home Institutional Stats Grid */
-  .home-stats-container {
+  /* Header Container with Side Categories */
+  .tools-header-container {
     max-width: 1200px;
-    margin: 35px auto 15px auto;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+    md-flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 20px;
-    font-family: system-ui, -apple-system, sans-serif;
   }
 
-  .stat-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 16px;
-    padding: 22px 16px;
-    text-align: center;
-    backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
+  @media (min-width: 768px) {
+    .tools-header-container {
+      flex-direction: row;
+      align-items: flex-end;
+    }
   }
 
-  .stat-card:hover {
-    border-color: rgba(0, 230, 118, 0.4);
-    box-shadow: 0 0 25px rgba(0, 230, 118, 0.15);
-    transform: translateY(-3px);
+  .header-left {
+    max-width: 600px;
   }
 
-  .stat-number {
-    font-size: 30px;
+  .tools-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 230, 118, 0.1);
+    border: 1px solid rgba(0, 230, 118, 0.4);
+    color: #00E676;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .main-tools-title {
+    font-size: 34px;
     font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .main-tools-title span {
+    color: #00E676;
     background: linear-gradient(180deg, #ffffff 0%, #00E676 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  .stat-label {
-    color: #94a3b8;
+  /* Side Tagline (Trading, Investment, Loan Details) */
+  .header-right-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 12px;
     font-size: 13px;
-    margin-top: 6px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+
+  /* 10 Tools Grid */
+  .tools-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  /* Individual Tool Card */
+  .tool-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .tool-card:hover {
+    border-color: #00E676;
+    box-shadow: 0 0 30px rgba(0, 230, 118, 0.2);
+    transform: translateY(-6px);
+  }
+
+  .tool-cat-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+  }
+
+  .cat-trading { background: rgba(0, 230, 118, 0.15); color: #00E676; }
+  .cat-invest { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+  .cat-loan { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+  /* Tool Visual / Center Image Box */
+  .tool-photo-box {
+    width: 70px;
+    height: 70px;
+    margin: 25px 0 16px 0;
+    border-radius: 18px;
+    background: radial-gradient(circle, rgba(0,230,118,0.15) 0%, rgba(0,0,0,0.6) 100%);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 15px rgba(0,230,118,0.2);
+  }
+
+  .tool-photo-box svg {
+    width: 32px;
+    height: 32px;
+    fill: none;
+    stroke: #00E676;
+    stroke-width: 2;
+  }
+
+  .tool-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+  }
+
+  .tool-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+  }
+
+  /* Launch Button Inside Card */
+  .launch-btn {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+  }
+
+  .tool-card:hover .launch-btn {
+    background: #00E676;
+    color: #000000;
+    border-color: #00E676;
+    font-weight: 700;
+  }
+
+  /* Interactive Modal/Popup when Tool is clicked */
+  .tool-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-box {
+    background: #0f172a;
+    border: 1px solid #00E676;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,230,118,0.3);
   }
 </style>
 
-<!-- 1. REAL-TIME CONTINUOUS TICKER (Home Exclusive) -->
-<div class="home-ticker-wrapper">
-  <div class="ticker-track">
-    <div class="ticker-item"><span class="ticker-symbol">SENSEX</span> <span class="ticker-price">76,152.86</span> <span class="change-up">+0.48%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">BTC/USD</span> <span class="ticker-price">$78,743.00</span> <span class="change-up">+2.15%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">ETH/USD</span> <span class="ticker-price">$2,424.20</span> <span class="change-down">-0.82%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">NASDAQ</span> <span class="ticker-price">18,647.45</span> <span class="change-up">+1.10%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$2,650.50</span> <span class="change-up">+0.30%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">S&P 500</span> <span class="ticker-price">5,626.02</span> <span class="change-up">+0.64%</span></div>
+<section class="fin-tools-wrapper">
+  <!-- Top Neon Lighting Divider -->
+  <div class="top-lighting-line"></div>
 
-    <!-- Duplicate for Seamless Infinite Loop -->
-    <div class="ticker-item"><span class="ticker-symbol">SENSEX</span> <span class="ticker-price">76,152.86</span> <span class="change-up">+0.48%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">BTC/USD</span> <span class="ticker-price">$78,743.00</span> <span class="change-up">+2.15%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">ETH/USD</span> <span class="ticker-price">$2,424.20</span> <span class="change-down">-0.82%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">NASDAQ</span> <span class="ticker-price">18,647.45</span> <span class="change-up">+1.10%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$2,650.50</span> <span class="change-up">+0.30%</span></div>
-    <div class="ticker-item"><span class="ticker-symbol">S&P 500</span> <span class="ticker-price">5,626.02</span> <span class="change-up">+0.64%</span></div>
+  <!-- Header Section -->
+  <div class="tools-header-container">
+    <div class="header-left">
+      <div class="tools-badge">⚡ Interactive Suite</div>
+      <h2 class="main-tools-title">Financial <span>Tools Engine</span></h2>
+    </div>
+
+    <!-- Side Category Indicators -->
+    <div class="header-right-tags">
+      <span class="tag-pill">📈 Trading Tools</span>
+      <span class="tag-pill">💼 Investment Suite</span>
+      <span class="tag-pill">🏦 Loan & Debt Tools</span>
+    </div>
+  </div>
+
+  <!-- 10 Financial Tools Grid -->
+  <div class="tools-grid">
+
+    <!-- Tool 1: Trading -->
+    <div class="tool-card" onclick="openTool('AI Live Trading Signals')">
+      <span class="tool-cat-tag cat-trading">Trading</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="tool-name">AI Trading Signals</h3>
+      <p class="tool-desc">Real-time Buy/Sell signals with entry, target & stop loss.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 2: Loan -->
+    <div class="tool-card" onclick="openTool('Smart Loan EMI Calculator')">
+      <span class="tool-cat-tag cat-loan">Loans</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" stroke-linecap="round"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/></svg>
+      </div>
+      <h3 class="tool-name">Smart EMI Calculator</h3>
+      <p class="tool-desc">Calculate home, car & personal loan interest savings.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 3: Investment -->
+    <div class="tool-card" onclick="openTool('Compound Wealth Estimator')">
+      <span class="tool-cat-tag cat-invest">Investment</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3 class="tool-name">Wealth Growth Planner</h3>
+      <p class="tool-desc">Multi-year SIP & compounding wealth projection engine.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 4: Trading -->
+    <div class="tool-card" onclick="openTool('Real-Time Option Chain')">
+      <span class="tool-cat-tag cat-trading">Trading</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18M18 9l-5 5-4-4-3 3"/></svg>
+      </div>
+      <h3 class="tool-name">Options Chain & Greeks</h3>
+      <p class="tool-desc">Live call/put open interest, delta & volatility analytics.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 5: Investment -->
+    <div class="tool-card" onclick="openTool('AI Portfolio Rebalancer')">
+      <span class="tool-cat-tag cat-invest">Investment</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      </div>
+      <h3 class="tool-name">Portfolio Rebalancer</h3>
+      <p class="tool-desc">Automated risk exposure adjustment & asset allocation.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 6: Loan -->
+    <div class="tool-card" onclick="openTool('Loan Refinance Analyzer')">
+      <span class="tool-cat-tag cat-loan">Loans</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><rect x="9" y="11" width="12" height="8" rx="2"/></svg>
+      </div>
+      <h3 class="tool-name">Refinance Analyzer</h3>
+      <p class="tool-desc">Compare current debt rates vs low-interest balance transfer.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 7: Trading -->
+    <div class="tool-card" onclick="openTool('Position Size & Risk Calculator')">
+      <span class="tool-cat-tag cat-trading">Trading</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3 class="tool-name">Risk & Position Sizer</h3>
+      <p class="tool-desc">Exact lot size calculator based on risk percentage & stop loss.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 8: Investment -->
+    <div class="tool-card" onclick="openTool('Global Asset Screener')">
+      <span class="tool-cat-tag cat-invest">Investment</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <h3 class="tool-name">AI Asset Screener</h3>
+      <p class="tool-desc">Filter top stocks, crypto & ETFs by technical parameters.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 9: Loan -->
+    <div class="tool-card" onclick="openTool('Debt Payoff Planner')">
+      <span class="tool-cat-tag cat-loan">Loans</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3 class="tool-name">Debt Clearance Engine</h3>
+      <p class="tool-desc">Snowball & Avalanche strategies to become debt-free faster.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+    <!-- Tool 10: Investment -->
+    <div class="tool-card" onclick="openTool('Passive Income Planner')">
+      <span class="tool-cat-tag cat-invest">Investment</span>
+      <div class="tool-photo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3 class="tool-name">Dividend Income Planner</h3>
+      <p class="tool-desc">Calculate monthly passive yield from dividend assets.</p>
+      <button class="launch-btn">Launch Tool ➔</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Interactive Launch Modal -->
+<div id="toolModal" class="tool-modal" onclick="closeTool()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div style="font-size: 32px; margin-bottom: 10px;">🚀</div>
+    <h3 id="modalTitle" style="color: #ffffff; margin-bottom: 10px;">Tool Name</h3>
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Tool engine is initializing live data feed...</p>
+    <button onclick="closeTool()" style="padding: 10px 24px; background: #00E676; color: #000; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">Close & Return</button>
   </div>
 </div>
 
-<!-- 2. PROOF OF SCALE STATS GRID (Home Exclusive) -->
-<div class="home-stats-container">
-  <div class="stat-card">
-    <div class="stat-number">$12.8B+</div>
-    <div class="stat-label">Assets Monitored</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number">&lt; 0.4ms</div>
-    <div class="stat-label">Execution Latency</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number">99.4%</div>
-    <div class="stat-label">AI Signal Accuracy</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-number">180+</div>
-    <div class="stat-label">Global Markets</div>
-  </div>
-</div>
-  
+<script>
+  function openTool(name) {
+    document.getElementById('modalTitle').innerText = name + ' Active';
+    document.getElementById('toolModal').style.display = 'flex';
+  }
+  function closeTool() {
+    document.getElementById('toolModal').style.display = 'none';
+  }
+</script>
+
+    
 </body>
 </html>
