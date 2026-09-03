@@ -3,54 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Global Finance - 100% Official Live Data</title>
+<title>Global Finance - Real-Time Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:'Inter',system-ui,Arial,sans-serif;overflow-x:hidden}
+html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
 img{display:block;width:100%}
 
-/* OFFICIAL TRADINGVIEW LIVE TICKER TAPE */
-.ticker-wrap{width:100%;height:46px;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
+/* TRADINGVIEW REAL-TIME TICKER CONTAINER */
+.ticker-wrap{width:100%;height:46px;background:#020406;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2000}
 
 /* HEADER */
-.header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
-.logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-size:17px;font-weight:800;letter-spacing:.8px}
-.logo i{color:#00e676;font-size:22px;filter:drop-shadow(0 0 10px rgba(0,230,118,.5))}
+.header{width:100%;height:60px;position:sticky;top:0;z-index:1500;display:flex;align-items:center;justify-content:space-between;padding:0 4%;background:rgba(6,9,14,.96);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:16px;font-weight:800;letter-spacing:.5px}
+.logo i{color:#00e676;font-size:20px;filter:drop-shadow(0 0 8px rgba(0,230,118,.4))}
 
 /* MENU BUTTON & DROPDOWN */
 .menu-area{position:relative}
-.menu-button{height:38px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#00e676,#00c853);color:#000;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .25s ease;box-shadow:0 0 15px rgba(0,230,118,.3)}
-.menu-button:hover{transform:translateY(-1px);box-shadow:0 0 22px rgba(0,230,118,.6)}
+.menu-button{height:38px;padding:0 16px;display:flex;align-items:center;justify-content:center;gap:8px;background:#00e676;color:#000;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;box-shadow:0 0 15px rgba(0,230,118,.3)}
+.menu-button:hover{background:#00c853;box-shadow:0 0 20px rgba(0,230,118,.5)}
 .menu-button:active{transform:scale(.96)}
 
-.menu-dropdown{position:absolute;top:50px;right:0;width:240px;padding:10px;display:none;flex-direction:column;gap:6px;background:rgba(12,16,24,.98);border:1px solid rgba(255,255,255,.12);border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.85);backdrop-filter:blur(20px)}
-.menu-dropdown.open{display:flex;animation:dropdownOpen .2s ease-out}
-@keyframes dropdownOpen{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.menu-item{width:100%;min-height:42px;border:0;background:transparent;color:#94a3b8;border-radius:8px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13.5px;font-weight:600;transition:.2s ease}
+.menu-dropdown{position:absolute;top:48px;right:0;width:230px;padding:8px;display:none;flex-direction:column;gap:4px;background:rgba(12,16,24,.98);border:1px solid rgba(255,255,255,.1);border-radius:12px;box-shadow:0 15px 40px rgba(0,0,0,.8);backdrop-filter:blur(20px)}
+.menu-dropdown.open{display:flex;animation:dropdownOpen .18s ease-out}
+@keyframes dropdownOpen{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.menu-item{width:100%;min-height:42px;border:0;background:transparent;color:#94a3b8;border-radius:8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:13px;font-weight:600;transition:.2s ease}
 .menu-item:hover,.menu-item.active{background:rgba(0,230,118,.12);color:#00e676}
-.alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.3),rgba(0,223,216,.25))}
-.alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;box-shadow:0 0 15px rgba(0,223,216,.4)}
+.alpha-ai{margin-top:4px;color:#fff;border:1px solid #00dfd8;background:linear-gradient(135deg,rgba(121,40,202,.25),rgba(0,223,216,.2))}
+.alpha-ai:hover,.alpha-ai.active{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff}
 
-/* MAIN CONTENT */
+/* MAIN FULL WIDTH EDGE-TO-EDGE COVERAGE */
 main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
 .hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
-.hero-full-card img{width:100%;height:calc(100vh - 106px);min-height:520px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
+.hero-full-card img{width:100%;height:calc(100vh - 106px);min-height:500px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none}
 
 @media(max-width:480px){
-.header{padding:0 14px;height:56px}
+.header{padding:0 12px;height:56px}
 .logo{font-size:15px}
-.menu-button{height:34px;padding:0 14px;font-size:13px}
-.hero-full-card img{height:calc(100vh - 102px);min-height:460px}
+.menu-button{height:34px;padding:0 12px;font-size:13px}
+.hero-full-card img{height:calc(100vh - 102px);min-height:450px}
 }
 </style>
 </head>
 <body>
 
-<!-- TRADINGVIEW OFFICIAL TICKER (OFFICIAL LIVE DATA FEED) -->
 <div class="ticker-wrap">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
@@ -66,12 +65,12 @@ main{width:100%;margin:0;padding:0}
         "proName": "BSE:SENSEX"
       },
       {
-        "description": "BANK NIFTY",
-        "proName": "NSE:BANKNIFTY"
+        "description": "BITCOIN",
+        "proName": "BITSTAMP:BTCUSD"
       },
       {
-        "description": "RELIANCE",
-        "proName": "NSE:RELIANCE"
+        "description": "ETHEREUM",
+        "proName": "BITSTAMP:ETHUSD"
       },
       {
         "description": "USD/INR",
@@ -80,10 +79,6 @@ main{width:100%;margin:0;padding:0}
       {
         "description": "GOLD",
         "proName": "MCX:GOLD1!"
-      },
-      {
-        "description": "BITCOIN",
-        "proName": "BITSTAMP:BTCUSD"
       }
     ],
     "showSymbolLogo": true,
@@ -96,7 +91,6 @@ main{width:100%;margin:0;padding:0}
   </div>
 </div>
 
-<!-- HEADER -->
 <header class="header">
 <a href="#" class="logo" onclick="goHome(); return false;">
 <i class="fa-solid fa-chart-line"></i>GLOBAL FINANCE
@@ -117,7 +111,6 @@ main{width:100%;margin:0;padding:0}
 </div>
 </header>
 
-<!-- MAIN CONTENT -->
 <main>
 <section id="home" class="page active">
 <div class="hero-full-card">
@@ -135,20 +128,20 @@ main{width:100%;margin:0;padding:0}
 
 <script>
 // MENU FUNCTIONALITY
-const menu = document.getElementById("menuDropdown"), menuButton = document.getElementById("menuButton");
-function toggleMenu(){ menu.classList.toggle("open"); }
-function openPage(e, t){
-  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
-  const targetPage = document.getElementById(e);
-  if(targetPage) targetPage.classList.add("active");
-  document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+const menu=document.getElementById("menuDropdown"),menuButton=document.getElementById("menuButton");
+function toggleMenu(){menu.classList.toggle("open")}
+function openPage(e,t){
+  document.querySelectorAll(".page").forEach(e=>{e.classList.remove("active")});
+  const n=document.getElementById(e);
+  if(n) n.classList.add("active");
+  document.querySelectorAll(".menu-item").forEach(e=>{e.classList.remove("active")});
   if(t) t.classList.add("active");
   menu.classList.remove("open");
-  window.scrollTo({top: 0, behavior: "smooth"});
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-function goHome(){ openPage('home'); }
-document.addEventListener("click", e => { menu.contains(e.target) || menuButton.contains(e.target) || menu.classList.remove("open"); });
-document.addEventListener("keydown", e => { "Escape" === e.key && menu.classList.remove("open"); });
+function goHome(){openPage("home")}
+document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open")});
+document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open")});
 </script>
 
 </body>
