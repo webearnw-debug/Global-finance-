@@ -1315,6 +1315,183 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
   </p>
 </div>
 
-    
+  <!-- ========================================================= -->
+<!-- HOME PAGE ONLY: ULTRA-PREMIUM TICKER & STATS STRIP        -->
+<!-- Place this directly under the Hero Photo on Home Page     -->
+<!-- ========================================================= -->
+
+<style>
+  /* Home Ticker Wrapper */
+  .home-ticker-wrapper {
+    width: 100%;
+    background: #080a0c;
+    border-top: 1px solid rgba(0, 230, 118, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    padding: 12px 0;
+    position: relative;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Fade Overlay Gradients for Continuous Loop Effect */
+  .home-ticker-wrapper::before,
+  .home-ticker-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 120px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .home-ticker-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #080a0c, transparent);
+  }
+  .home-ticker-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #080a0c, transparent);
+  }
+
+  /* Infinite Scroll Track */
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: scrollTicker 25s linear infinite;
+  }
+
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 32px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .ticker-symbol {
+    color: #94a3b8;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .ticker-price {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .change-up {
+    color: #00E676;
+    background: rgba(0, 230, 118, 0.12);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .change-down {
+    color: #ff5252;
+    background: rgba(255, 82, 82, 0.12);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  @keyframes scrollTicker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Home Institutional Stats Grid */
+  .home-stats-container {
+    max-width: 1200px;
+    margin: 35px auto 15px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 22px 16px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(0, 230, 118, 0.4);
+    box-shadow: 0 0 25px rgba(0, 230, 118, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .stat-number {
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(180deg, #ffffff 0%, #00E676 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+</style>
+
+<!-- 1. REAL-TIME CONTINUOUS TICKER (Home Exclusive) -->
+<div class="home-ticker-wrapper">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-symbol">SENSEX</span> <span class="ticker-price">76,152.86</span> <span class="change-up">+0.48%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">BTC/USD</span> <span class="ticker-price">$78,743.00</span> <span class="change-up">+2.15%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">ETH/USD</span> <span class="ticker-price">$2,424.20</span> <span class="change-down">-0.82%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">NASDAQ</span> <span class="ticker-price">18,647.45</span> <span class="change-up">+1.10%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$2,650.50</span> <span class="change-up">+0.30%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">S&P 500</span> <span class="ticker-price">5,626.02</span> <span class="change-up">+0.64%</span></div>
+
+    <!-- Duplicate for Seamless Infinite Loop -->
+    <div class="ticker-item"><span class="ticker-symbol">SENSEX</span> <span class="ticker-price">76,152.86</span> <span class="change-up">+0.48%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">BTC/USD</span> <span class="ticker-price">$78,743.00</span> <span class="change-up">+2.15%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">ETH/USD</span> <span class="ticker-price">$2,424.20</span> <span class="change-down">-0.82%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">NASDAQ</span> <span class="ticker-price">18,647.45</span> <span class="change-up">+1.10%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">GOLD</span> <span class="ticker-price">$2,650.50</span> <span class="change-up">+0.30%</span></div>
+    <div class="ticker-item"><span class="ticker-symbol">S&P 500</span> <span class="ticker-price">5,626.02</span> <span class="change-up">+0.64%</span></div>
+  </div>
+</div>
+
+<!-- 2. PROOF OF SCALE STATS GRID (Home Exclusive) -->
+<div class="home-stats-container">
+  <div class="stat-card">
+    <div class="stat-number">$12.8B+</div>
+    <div class="stat-label">Assets Monitored</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">&lt; 0.4ms</div>
+    <div class="stat-label">Execution Latency</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">99.4%</div>
+    <div class="stat-label">AI Signal Accuracy</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">180+</div>
+    <div class="stat-label">Global Markets</div>
+  </div>
+</div>
+  
 </body>
 </html>
