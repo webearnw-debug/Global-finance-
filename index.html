@@ -1196,6 +1196,96 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
 
 
-</script>
+<style>
+  .cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding: 0 16px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  @media (min-width: 640px) {
+    .cta-wrapper {
+      flex-direction: row;
+    }
+  }
+  .btn-primary {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: #00E676;
+    color: #000000;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.35);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    background-color: #00c853;
+    box-shadow: 0 0 28px rgba(0, 230, 118, 0.55);
+    transform: translateY(-2px);
+  }
+  .btn-secondary {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+  .btn-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+  }
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+</style>
+
+<div class="cta-wrapper">
+  <a href="#signals" class="btn-primary">
+    <span>Explore AI Signals</span>
+    <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+    </svg>
+  </a>
+
+  <a href="#markets" class="btn-secondary">
+    <span>View Live Markets</span>
+  </a>
+</div>
+
 </body>
 </html>
