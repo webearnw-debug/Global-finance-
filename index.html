@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Global Finance - Real-Time Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- ===== Parnarav AI ke liye zaroori libraries (sirf addition, kuch remove nahi kiya) ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- Puter Cloud AI Engine — Parnarav AI ka "system", direct browser se AI se connect karta hai -->
+<script src="https://js.puter.com/v2/"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#06090e;color:#f8fafc;font-family:Inter,Arial,Helvetica,sans-serif;overflow-x:hidden}
@@ -49,6 +58,150 @@ main{width:100%;margin:0;padding:0}
 .hero-full-card img{height:200px}
 }
 </style>
+
+<!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar lagega, baaki page ko touch nahi karega ===== -->
+<style>
+    .parnarav-ai-app {
+        --p-bg-base: #030712; --p-bg-surface: #0b0f19; --p-bg-card: #111827;
+        --p-accent-cyan: #38bdf8; --p-accent-purple: #c084fc; --p-accent-green: #4ade80;
+        --p-accent-red: #f87171; --p-accent-yellow: #fbbf24;
+        --p-text-main: #f9fafb; --p-text-muted: #9ca3af; --p-border-color: #1f2937;
+        --p-sidebar-width: 260px; --p-font-scale: 1;
+
+        width: 100%; height: 85vh; min-height: 560px;
+        background-color: var(--p-bg-base); color: var(--p-text-main);
+        overflow: hidden; display: flex; border-radius: 14px;
+        font-size: calc(16.5px * var(--p-font-scale)); line-height: 1.6;
+        position: relative; transition: background-color .3s ease, color .3s ease;
+    }
+
+    .parnarav-ai-app[data-theme="light"] {
+        --p-bg-base: #f4f6fb; --p-bg-surface: #ffffff; --p-bg-card: #ffffff;
+        --p-text-main: #0f172a; --p-text-muted: #64748b; --p-border-color: #e2e8f0;
+    }
+    .parnarav-ai-app[data-contrast="high"] { --p-border-color: #64748b; --p-text-muted: #d1d5db; }
+    .parnarav-ai-app[data-contrast="high"][data-theme="light"] { --p-border-color: #334155; --p-text-muted: #1e293b; }
+    .parnarav-ai-app.reduce-motion * { animation: none !important; transition: none !important; }
+
+    .parnarav-ai-app, .parnarav-ai-app * {
+        box-sizing: border-box;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .parnarav-ai-app strong, .parnarav-ai-app b { font-weight: 700; }
+    .parnarav-ai-app .ico { display: inline-flex; align-items: center; justify-content: center; line-height: 1; font-style: normal; }
+
+    .parnarav-ai-app .sidebar {
+        width: var(--p-sidebar-width); height: 100%;
+        background-color: var(--p-bg-surface); border-right: 1px solid var(--p-border-color);
+        padding: 16px; display: flex; flex-direction: column; flex-shrink: 0;
+        transition: all .3s cubic-bezier(.4,0,.2,1); z-index: 5; overflow-y: auto;
+    }
+    .parnarav-ai-app .brand-logo { font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .parnarav-ai-app .parnarav-brain-icon { width: 28px; height: 28px; vertical-align: middle; filter: drop-shadow(0 0 6px rgba(59,130,246,.4)); flex-shrink: 0; }
+    .parnarav-ai-app .nav-section-title { font-size: .68rem; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 6px 6px; }
+    .parnarav-ai-app .nav-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .parnarav-ai-app .nav-item { padding: 9px 12px; border-radius: 8px; color: var(--p-text-muted); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .82rem; transition: all .2s ease; }
+    .parnarav-ai-app .nav-item:hover, .parnarav-ai-app .nav-item.active { background-color: var(--p-bg-card); color: var(--p-accent-cyan); border: 1px solid var(--p-border-color); }
+    .parnarav-ai-app .tools-menu { margin-top: 14px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px; }
+    .parnarav-ai-app .tool-btn { width: 100%; background: rgba(148,163,184,.08); border: 1px solid var(--p-border-color); color: var(--p-text-main); padding: 8px 10px; border-radius: 8px; font-weight: 600; font-size: .76rem; cursor: pointer; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
+    .parnarav-ai-app .tool-btn:hover { border-color: var(--p-accent-cyan); color: var(--p-accent-cyan); }
+
+    .parnarav-ai-app .workspace { flex: 1; height: 100%; display: flex; flex-direction: column; min-width: 0; position: relative; }
+    .parnarav-ai-app .topbar { min-height: 54px; background-color: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; flex-shrink: 0; gap: 10px; flex-wrap: wrap; }
+    .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.15rem; cursor: pointer; }
+    .parnarav-ai-app .topbar-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .parnarav-ai-app .mini-btn { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .72rem; display: flex; align-items: center; gap: 5px; font-weight: 600; transition: all .2s ease; }
+    .parnarav-ai-app .mini-btn:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+    .parnarav-ai-app .mini-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+    .parnarav-ai-app .mini-btn.danger:hover { color: var(--p-accent-red); border-color: var(--p-accent-red); }
+    .parnarav-ai-app .voice-toggle-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+    .parnarav-ai-app .status-badge { display: flex; align-items: center; gap: 6px; font-size: .72rem; background: rgba(74,222,128,.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(74,222,128,.2); color: var(--p-accent-green); font-weight: 600; white-space: nowrap; }
+    .parnarav-ai-app .status-dot { width: 6px; height: 6px; background: var(--p-accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--p-accent-green); }
+
+    .parnarav-ai-app .offline-banner { display: none; background: rgba(248,113,113,.15); color: var(--p-accent-red); font-size: .72rem; font-weight: 600; text-align: center; padding: 5px; }
+    .parnarav-ai-app.is-offline .offline-banner { display: block; }
+
+    .parnarav-ai-app .search-bar { display: none; padding: 8px 14px; gap: 8px; background: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); }
+    .parnarav-ai-app .search-bar.open { display: flex; }
+    .parnarav-ai-app .search-bar input { flex: 1; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 8px; padding: 6px 10px; color: var(--p-text-main); outline: none; font-size: .8rem; }
+    .parnarav-ai-app mark { background: var(--p-accent-yellow); color: #1a1a1a; border-radius: 3px; padding: 0 2px; }
+
+    .parnarav-ai-app .pinned-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(251,191,36,.08); border-bottom: 1px solid var(--p-border-color); font-size: .72rem; color: var(--p-accent-yellow); cursor: pointer; }
+    .parnarav-ai-app .pinned-bar.show { display: flex; }
+    .parnarav-ai-app .pinned-bar span.txt { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .parnarav-ai-app .chat-area { flex: 1; padding: 18px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; position: relative; }
+    .parnarav-ai-app.density-compact .chat-area { gap: 8px; padding: 10px 12px; }
+    .parnarav-ai-app.density-compact .bubble { padding: 8px 12px; }
+
+    .parnarav-ai-app .message-row { display: flex; gap: 10px; max-width: 90%; animation: parnaravFadeIn .25s ease-in-out; }
+    .parnarav-ai-app .message-row.user { align-self: flex-end; flex-direction: row-reverse; }
+    .parnarav-ai-app .message-row.pinned .bubble { border-color: var(--p-accent-yellow); }
+
+    .parnarav-ai-app .avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; font-weight: 800; }
+    .parnarav-ai-app .user .avatar { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color: #fff; border: none; box-shadow: 0 0 10px rgba(59,130,246,.4); }
+
+    .parnarav-ai-app .msg-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .parnarav-ai-app .message-row.user .msg-col { align-items: flex-end; }
+
+    .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px 14px; line-height: 1.6; font-size: .88rem; word-wrap: break-word; overflow-x: auto; position: relative; }
+    .parnarav-ai-app .bubble a { color: var(--p-accent-cyan); }
+    .parnarav-ai-app .user .bubble { background-color: #1e3a8a; border-color: #3b82f6; color: #fff; }
+
+    .parnarav-ai-app .msg-time { font-size: .64rem; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
+    .parnarav-ai-app .msg-meta { font-size: .62rem; color: var(--p-text-muted); }
+
+    .parnarav-ai-app .widget-card { background: rgba(0,0,0,.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; }
+    .parnarav-ai-app .widget-title { color: var(--p-accent-purple); font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+
+    .parnarav-ai-app .ai-action-bar { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,.15); flex-wrap: wrap; }
+    .parnarav-ai-app .action-btn { background: rgba(148,163,184,.08); border: 1px solid rgba(148,163,184,.2); color: var(--p-text-muted); padding: 4px 9px; border-radius: 6px; cursor: pointer; font-size: 11px; transition: all .2s ease; display: inline-flex; align-items: center; gap: 4px; }
+    .parnarav-ai-app .action-btn:hover { background: rgba(255,255,255,.15); color: var(--p-text-main); }
+
+    .parnarav-ai-app .code-copy-btn { position: absolute; top: 6px; right: 6px; background: rgba(255,255,255,.1); border: 1px solid var(--p-border-color); color: var(--p-text-muted); font-size: 10px; padding: 2px 7px; border-radius: 5px; cursor: pointer; }
+    .parnarav-ai-app .code-copy-btn:hover { color: var(--p-accent-cyan); }
+    .parnarav-ai-app pre { position: relative; }
+
+    .parnarav-ai-app .typing-dots { display: inline-flex; gap: 4px; align-items: center; }
+    .parnarav-ai-app .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--p-accent-cyan); animation: parnaravTypingBlink 1.2s infinite ease-in-out; }
+    .parnarav-ai-app .typing-dots span:nth-child(2) { animation-delay: .2s; }
+    .parnarav-ai-app .typing-dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes parnaravTypingBlink { 0%,80%,100% { opacity:.25; transform:scale(.8);} 40% { opacity:1; transform:scale(1.15);} }
+
+    .parnarav-ai-app .scroll-fab-group { position: absolute; bottom: 12px; right: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 4; }
+    .parnarav-ai-app .scroll-fab { width: 34px; height: 34px; border-radius: 50%; background: var(--p-accent-cyan); color: #04121c; border: none; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 16px rgba(56,189,248,.4); position: relative; }
+    .parnarav-ai-app .scroll-fab.top { background: var(--p-bg-card); color: var(--p-text-main); border: 1px solid var(--p-border-color); }
+    .parnarav-ai-app .scroll-fab.show { display: flex; }
+    .parnarav-ai-app .scroll-fab .badge { position: absolute; top: -6px; right: -6px; background: var(--p-accent-red); color: #fff; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    .parnarav-ai-app .input-wrapper { padding: 10px 14px 12px; background: var(--p-bg-surface); border-top: 1px solid var(--p-border-color); flex-shrink: 0; }
+    .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: .66rem; color: var(--p-text-muted); padding: 0 4px 4px; flex-wrap: wrap; gap: 4px; }
+    .parnarav-ai-app .input-box { display: flex; align-items: flex-end; gap: 8px; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 6px 10px; }
+    .parnarav-ai-app .input-box:focus-within { border-color: var(--p-accent-cyan); }
+    .parnarav-ai-app textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--p-text-main); font-size: .88rem; resize: none; min-height: 38px; max-height: 140px; padding-top: 9px; line-height: 1.4; overflow-y: auto; }
+    .parnarav-ai-app .btn-icon { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s ease; flex-shrink: 0; }
+    .parnarav-ai-app .btn-icon:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
+    .parnarav-ai-app .btn-icon.listening { background: rgba(239,68,68,.2); border-color: #ef4444; color: #ef4444; animation: parnaravPulseMic 1.2s infinite; }
+    .parnarav-ai-app .btn-send { background: linear-gradient(135deg, var(--p-accent-cyan), var(--p-accent-purple)); border: none; width: 36px; height: 36px; border-radius: 8px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .parnarav-ai-app .btn-send:disabled { opacity: .5; cursor: not-allowed; }
+
+    .parnarav-ai-app pre { background: rgba(0,0,0,.45) !important; border: 1px solid var(--p-border-color); border-radius: 8px; padding: 12px; margin: 10px 0; overflow-x: auto; }
+    .parnarav-ai-app code { font-family: 'JetBrains Mono', monospace; }
+
+    @keyframes parnaravPulseMic { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239,68,68,.4);} 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239,68,68,0);} 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239,68,68,0);} }
+    @keyframes parnaravFadeIn { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+
+    @media (max-width: 768px) {
+        .parnarav-ai-app { height: 88vh; }
+        .parnarav-ai-app .sidebar { position: absolute; left: -100%; top: 0; bottom: 0; }
+        .parnarav-ai-app .sidebar.open { left: 0; box-shadow: 10px 0 30px rgba(0,0,0,.8); }
+        .parnarav-ai-app .mobile-menu-btn { display: block; }
+        .parnarav-ai-app .message-row { max-width: 96%; }
+        .parnarav-ai-app .topbar { padding: 8px 10px; }
+    }
+</style>
+
 </head>
 <body>
 
@@ -117,7 +270,113 @@ main{width:100%;margin:0;padding:0}
 <section id="investment" class="page"></section>
 <section id="loans" class="page"></section>
 <section id="earning" class="page"></section>
-<section id="alpha" class="page"></section>
+<section id="alpha" class="page">
+
+    <!-- ============== PARNARAV AI APP START ============== -->
+    <div style="padding:14px;">
+    <div class="parnarav-ai-app" id="parnaravAIRoot" data-theme="dark" data-contrast="normal">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-logo">
+                <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
+                    <defs>
+                        <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ef4444" /><stop offset="100%" stop-color="#b91c1c" /></linearGradient>
+                        <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3b82f6" /><stop offset="100%" stop-color="#1d4ed8" /></linearGradient>
+                    </defs>
+                    <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
+                    <path d="M34 10C42 10 49 15.5 50 23.5C54 24.8 57 28.5 57 33C57 36 55.5 38.8 53 40.5C54 42.8 53.8 45.5 52.5 47.8C50.5 51.2 46.5 53 43 53C41.5 53 40 52.5 38.8 51.7C37 54.5 34 56 34 56V10Z" fill="url(#rightBrainBlue)" />
+                </svg>
+                <span style="background: linear-gradient(135deg,#ff4d4d,#3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Parnarav AI</span>
+            </div>
+
+            <div class="nav-section-title">Operating Modes & Roles</div>
+            <ul class="nav-list" id="navList">
+                <li class="nav-item active" onclick="AppController.switchMode('OMNI', this)"><span class="ico">🧠</span> Omni Super AI</li>
+                <li class="nav-item" onclick="AppController.switchMode('FINANCE', this)"><span class="ico">📈</span> Trading & Finance</li>
+                <li class="nav-item" onclick="AppController.switchMode('DEV', this)"><span class="ico">💻</span> Coding Master</li>
+                <li class="nav-item" onclick="AppController.switchMode('INTERVIEW', this)"><span class="ico">👔</span> Mock Interviewer</li>
+                <li class="nav-item" onclick="AppController.switchMode('SALES', this)"><span class="ico">🤝</span> Sales Executive</li>
+            </ul>
+
+            <div class="tools-menu">
+                <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-cyan); margin-bottom:8px; text-transform:uppercase;">Omni Knowledge Tools</div>
+                <button class="tool-btn" onclick="OmniKnowledgeEngine.solveExamQuestion()"><span class="ico" style="color:var(--p-accent-purple)">🎓</span> Exam Solver</button>
+                <button class="tool-btn" onclick="OmniKnowledgeEngine.deepResearch()"><span class="ico" style="color:var(--p-accent-cyan)">📖</span> Deep Research</button>
+
+                <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-purple); margin:12px 0 8px 0; text-transform:uppercase;">Finance Tools</div>
+                <button class="tool-btn" onclick="QuantEngine.runAnalysis()"><span class="ico" style="color:var(--p-accent-green)">⚡</span> Quant Signals</button>
+                <button class="tool-btn" onclick="FinancialEngine.calcSIP()"><span class="ico" style="color:var(--p-accent-cyan)">🧮</span> SIP Calculator</button>
+                <button class="tool-btn" onclick="FinancialEngine.calcEMI()"><span class="ico" style="color:var(--p-accent-yellow)">🏠</span> Loan EMI Engine</button>
+
+                <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-green); margin:12px 0 8px 0; text-transform:uppercase;">Display Settings</div>
+                <button class="tool-btn" onclick="AppController.toggleTheme()"><span class="ico">🌓</span> Light / Dark</button>
+                <button class="tool-btn" onclick="AppController.toggleDensity()"><span class="ico">📏</span> Compact / Comfortable</button>
+                <button class="tool-btn" onclick="AppController.changeFontSize(1)"><span class="ico">🔠</span> Font Size A+</button>
+                <button class="tool-btn" onclick="AppController.changeFontSize(-1)"><span class="ico">🔡</span> Font Size A-</button>
+                <button class="tool-btn" onclick="AppController.toggleContrast()"><span class="ico">🌗</span> High Contrast</button>
+                <button class="tool-btn" onclick="AppController.toggleReduceMotion()"><span class="ico">🧘</span> Reduce Motion</button>
+            </div>
+        </aside>
+
+        <main class="workspace" id="workspaceMain">
+            <div class="offline-banner" id="offlineBanner"><span class="ico">📶</span> Connection lost — reply aane me dikkat ho sakti hai</div>
+
+            <header class="topbar">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="AppController.toggleSidebar(event)" aria-label="Menu"><span class="ico">☰</span></button>
+                    <div id="mode-indicator" style="font-weight: 700; font-size: 0.82rem;">Parnarav AI: Omni Super AI Active</div>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="status-badge" id="latencyBadge" title="Connection quality"><span class="status-dot"></span><span id="latencyText">checking…</span></span>
+                    <button class="mini-btn" onclick="AppController.toggleSearch()" title="Search chat" aria-label="Search"><span class="ico">🔎</span></button>
+                    <button class="mini-btn" onclick="AppController.shareChat()" title="Share chat" aria-label="Share"><span class="ico">📤</span></button>
+                    <button class="mini-btn" onclick="AppController.printChat()" title="Print chat" aria-label="Print"><span class="ico">🖨️</span></button>
+                    <button class="mini-btn" onclick="AppController.exportChat()" title="Export chat (.txt)" aria-label="Export"><span class="ico">⬇️</span></button>
+                    <button class="mini-btn danger" onclick="AppController.clearChat()" title="New / Clear chat" aria-label="Clear chat"><span class="ico">🧹</span></button>
+                    <button class="voice-toggle-btn mini-btn" id="voiceToggleBtn" onclick="VoiceEngine.toggleVoice()" aria-label="Toggle voice"><span class="ico">🔊</span> <span id="voiceStatusText">Voice OFF</span></button>
+                    <div class="status-badge" id="msgCountBadge"><div class="status-dot"></div> <span id="msgCountText">0 messages</span></div>
+                </div>
+            </header>
+
+            <div class="search-bar" id="searchBar">
+                <input type="text" id="searchInput" placeholder="Chat me search karein..." oninput="AppController.runSearch(this.value)">
+                <button class="mini-btn" onclick="AppController.toggleSearch()">✕</button>
+            </div>
+
+            <div class="pinned-bar" id="pinnedBar" onclick="AppController.jumpToPinned()">
+                <span class="ico">📌</span><span class="txt" id="pinnedText"></span><button class="mini-btn" onclick="event.stopPropagation(); AppController.unpin()">✕</button>
+            </div>
+
+            <section class="chat-area" id="chatContainer">
+                <div class="scroll-fab-group">
+                    <button class="scroll-fab top" id="scrollTopFab" onclick="AppController.scrollToTop()" title="Top" aria-label="Scroll to top"><span class="ico">⬆️</span></button>
+                    <button class="scroll-fab" id="scrollFab" onclick="AppController.scrollToBottom(true)" title="Bottom" aria-label="Scroll to bottom">
+                        <span class="ico">⬇️</span><span class="badge" id="unreadBadge" style="display:none;">0</span>
+                    </button>
+                </div>
+            </section>
+
+            <footer class="input-wrapper">
+                <div class="input-meta">
+                    <span id="charCount">0 chars</span>
+                    <span id="sessionTimer">Session: 0:00</span>
+                    <span>Enter = Send · Shift+Enter = New line · Esc = Stop</span>
+                </div>
+                <div class="input-box">
+                    <button class="btn-icon" id="micToggleBtn" title="Speak Input" onclick="VoiceInputEngine.toggleMic()" aria-label="Voice input"><span class="ico">🎤</span></button>
+                    <textarea id="userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="AppController.handleKeyPress(event)" oninput="AppController.handleInputChange()"></textarea>
+                    <button class="btn-icon" id="stopBtn" title="Stop generating" onclick="AppController.stopGeneration()" style="display:none;" aria-label="Stop"><span class="ico">⏹️</span></button>
+                    <button class="btn-send" id="sendBtn" onclick="AppController.submitQuery()" title="Send Message" aria-label="Send"><span class="ico">➤</span></button>
+                </div>
+            </footer>
+        </main>
+
+    </div>
+    </div>
+    <!-- ============== PARNARAV AI APP END ============== -->
+
+</section>
 </main>
 
 <script>
@@ -136,6 +395,676 @@ function openPage(e,t){
 function goHome(){openPage("home")}
 document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contains(e.target)||menu.classList.remove("open");});
 document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open");});
+</script>
+
+<!-- =================================================================
+     🚀 PARNARAV AI ENGINE — 50 upgrades wala poora engine.
+     Ye Alpha AI section jab bhi "active" hota hai (openPage('alpha',...)
+     se), pehli baar khulte hi khud init ho jaata hai — is ke liye upar
+     ke openPage() function me kuch bhi badla nahi gaya, sirf ek chhota
+     MutationObserver neeche add kiya gaya hai jo #alpha ka class badalna
+     "dekhta" hai.
+================================================================== -->
+<script>
+    const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
+    const PREFS_KEY = "parnarav_prefs_v3";
+    const DRAFT_KEY = "parnarav_draft_v3";
+    let pinnedMsgId = null;
+    let sessionStartTime = Date.now();
+    let lastUserMessage = null;
+
+    function loadPrefs() { try { return JSON.parse(localStorage.getItem(PREFS_KEY)) || {}; } catch (e) { return {}; } }
+    function savePrefs(p) { try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch (e) {} }
+
+    const GeminiOmniEngine = {
+        chatHistory: [],
+        activeGenId: 0,
+
+        resetMemory: function() { this.chatHistory = []; },
+
+        processChat: async function(userPrompt, systemInstruction, onChunkCallback, genId) {
+            if (this.chatHistory.length === 0 && systemInstruction) {
+                this.chatHistory.push({ role: "system", content: systemInstruction });
+            }
+            this.chatHistory.push({ role: "user", content: userPrompt });
+            const opts = { stream: true, temperature: 0.35 };
+
+            try {
+                const responseStream = await puter.ai.chat(this.chatHistory, opts);
+                let fullReply = "";
+                for await (const part of responseStream) {
+                    if (genId !== undefined && genId !== this.activeGenId) return fullReply;
+                    if (part?.text) { fullReply += part.text; if (onChunkCallback) onChunkCallback(fullReply); }
+                }
+                this.chatHistory.push({ role: "assistant", content: fullReply });
+                return fullReply;
+            } catch (err) {
+                console.warn("[GeminiOmniEngine] retrying with default settings:", err);
+                const response = await puter.ai.chat(this.chatHistory);
+                const textResponse = typeof response === 'string'
+                    ? response : (response?.message?.content || response?.text || "Error processing request.");
+                this.chatHistory.push({ role: "assistant", content: textResponse });
+                if (onChunkCallback) onChunkCallback(textResponse);
+                return textResponse;
+            }
+        },
+
+        generateStructuredData: async function(prompt) {
+            const systemPrompt = "तैयार डेटा को केवल शुद्ध और क्लीन JSON फॉर्मेट में ही रिटर्न करें।";
+            return await puter.ai.chat(`${systemPrompt}\n\nTask: ${prompt}`);
+        },
+
+        triggerAgenticTask: async function() {
+            const userTask = prompt("एजेंट को ऑटो-एक्ज़ीक्यूशन और सेल्फ-करेक्शन के लिए टास्क दें:");
+            if (!userTask) return;
+            document.getElementById('userInput').value = `[Agentic Loop Executing]: ${userTask}`;
+            AppController.submitQuery();
+        },
+
+        generateWelcome: async function(mode) {
+            try {
+                const prompt = `Tum Parnarav AI ho. Mode "${mode}" abhi active hua hai. User ke liye 2-3 line ka ek dostana Hindi/Hinglish welcome message likho jisme ye batao ki is mode me tum kis tarah madad kar sakte ho. Sirf welcome message likho, kuch aur nahi.`;
+                const response = await puter.ai.chat(prompt, { temperature: 0.5 });
+                const text = typeof response === 'string' ? response : (response?.message?.content || response?.text || "");
+                return text && text.trim().length > 5 ? text.trim() : null;
+            } catch (e) { return null; }
+        }
+    };
+
+    const VoiceEngine = {
+        enabled: false,
+        toggleVoice: function() {
+            this.enabled = !this.enabled;
+            const btn = document.getElementById('voiceToggleBtn');
+            const txt = document.getElementById('voiceStatusText');
+            if (this.enabled) { btn.classList.add('active'); txt.innerText = "Voice ON"; this.speak("वॉइस मोड सक्रिय कर दिया गया है।"); }
+            else { btn.classList.remove('active'); txt.innerText = "Voice OFF"; window.speechSynthesis.cancel(); }
+        },
+        speak: function(text) {
+            if (!this.enabled || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[*_#`~]/g, '').trim();
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'hi-IN'; utterance.rate = 1.0; utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+    };
+
+    const VoiceInputEngine = {
+        recognition: null, isListening: false,
+        init: function() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) { console.warn("Speech Recognition not supported."); return false; }
+            this.recognition = new SpeechRecognition();
+            this.recognition.continuous = false;
+            this.recognition.interimResults = false;
+            this.recognition.lang = 'hi-IN';
+            this.recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const inputEl = document.getElementById('userInput');
+                if (inputEl) { inputEl.value = (inputEl.value ? inputEl.value + " " : "") + transcript; AppController.handleInputChange(); }
+                this.stop();
+            };
+            this.recognition.onerror = () => this.stop();
+            this.recognition.onend = () => this.stop();
+            return true;
+        },
+        toggleMic: function() {
+            if (!this.recognition && !this.init()) { alert("आपका ब्राउज़र वॉइस इनपुट सपोर्ट नहीं करता है।"); return; }
+            this.isListening ? this.stop() : this.start();
+        },
+        start: function() {
+            if (!this.recognition) this.init();
+            try { this.recognition.start(); this.isListening = true; document.getElementById('micToggleBtn')?.classList.add('listening'); }
+            catch (e) { console.error("Mic start failed:", e); }
+        },
+        stop: function() {
+            if (this.recognition && this.isListening) { try { this.recognition.stop(); } catch(e) {} }
+            this.isListening = false;
+            document.getElementById('micToggleBtn')?.classList.remove('listening');
+        }
+    };
+
+    const OmniKnowledgeEngine = {
+        solveExamQuestion: function() {
+            const q = prompt("अपना रीजनिंग, मैथ्स या कॉम्पिटिटिव एग्जाम का सवाल दर्ज करें:");
+            if (!q) return;
+            document.getElementById('userInput').value = `[Exam Solver]: इस प्रश्न का सटीक, चरणबद्ध हल प्रदान करें:\n${q}`;
+            AppController.submitQuery();
+        },
+        deepResearch: function() {
+            const topic = prompt("किस विषय पर डीप रिसर्च या विश्लेषण चाहिए?");
+            if (!topic) return;
+            document.getElementById('userInput').value = `[Deep Research]: '${topic}' विषय पर विस्तृत विश्लेषण तैयार करें।`;
+            AppController.submitQuery();
+        }
+    };
+
+    const QuantEngine = {
+        runAnalysis: function() {
+            const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
+            let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE</div>
+                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period): <b>${rsi}</b><br>
+                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
+            UIManager.appendMsg(html, 'ai', null, '📊');
+        }
+    };
+
+    const FinancialEngine = {
+        calcSIP: function() {
+            let amount = parseFloat(prompt("Monthly SIP Amount (₹):", "10000")) || 10000;
+            let rate = parseFloat(prompt("Expected Return (%):", "15")) || 15;
+            let years = parseInt(prompt("Tenure (Years):", "10")) || 10;
+            let r = (rate / 100) / 12, n = years * 12;
+            let invested = amount * n;
+            let futureValue = amount * (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
+            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">🪙</span> SIP PROJECTION ENGINE</div>
+                • Total Invested: ₹${invested.toLocaleString()}<br>
+                • Projected Corpus: <b style="color:var(--p-accent-green)">₹${Math.round(futureValue).toLocaleString()}</b></div>`;
+            UIManager.appendMsg(html, 'ai', null, '💰');
+        },
+        calcEMI: function() {
+            let p = parseFloat(prompt("Loan Amount (₹):", "500000")) || 500000;
+            let rate = parseFloat(prompt("Interest Rate (%):", "8.5")) || 8.5;
+            let years = parseInt(prompt("Tenure (Years):", "5")) || 5;
+            let r = (rate / 12) / 100, n = years * 12;
+            let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">🏦</span> LOAN EMI ENGINE</div>
+                • Monthly EMI: <b style="color:var(--p-accent-cyan)">₹${Math.round(emi).toLocaleString()}</b>/month</div>`;
+            UIManager.appendMsg(html, 'ai', null, '🏦');
+        }
+    };
+
+    let msgSeq = 0;
+    const UIManager = {
+        appendMsg: function(content, sender, id = null, customAvatar = null, rawText = null) {
+            const container = document.getElementById('chatContainer');
+            const row = document.createElement('div');
+            msgSeq++;
+            row.className = `message-row ${sender}`;
+            row.id = id || `pmsg-${Date.now()}-${msgSeq}`;
+            row.dataset.raw = rawText || '';
+            let icon = sender === 'user' ? '👤' : (customAvatar || '🧠');
+            const time = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+            row.innerHTML = `<div class="avatar">${icon}</div>
+                <div class="msg-col">
+                    <div class="bubble">${content}</div>
+                    <span class="msg-time">${time}<span class="msg-meta" data-meta></span></span>
+                </div>`;
+            container.appendChild(row);
+            AppController.updateMsgCount();
+            AppController.scrollToBottom(true);
+            return row;
+        },
+        renderActionBar: function(rowId, opts) {
+            opts = opts || {};
+            const msgContainer = document.getElementById(rowId);
+            if (!msgContainer) return;
+            const bubble = msgContainer.querySelector('.bubble');
+            if (!bubble || bubble.querySelector('.ai-action-bar')) return;
+
+            bubble.querySelectorAll('pre').forEach(pre => {
+                if (pre.querySelector('.code-copy-btn')) return;
+                const btn = document.createElement('button');
+                btn.className = 'code-copy-btn'; btn.innerText = 'Copy';
+                btn.onclick = () => { navigator.clipboard.writeText(pre.innerText.replace('Copy','').trim()); btn.innerText = 'Copied!'; setTimeout(()=>btn.innerText='Copy', 1500); };
+                pre.appendChild(btn);
+            });
+
+            bubble.innerHTML = bubble.innerHTML.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+
+            const retryBtn = opts.retryText ? `<button class="action-btn" onclick="AppController.retryQuery(${JSON.stringify(opts.retryText)})">🔁 Retry</button>` : '';
+            const regenBtn = opts.isAi ? `<button class="action-btn" onclick="AppController.regenerate()">♻️ Regenerate</button>` : '';
+            const editBtn = !opts.isAi ? `<button class="action-btn" onclick="AppController.editMessage('${rowId}')">✏️ Edit</button>` : '';
+            const pinBtn = `<button class="action-btn" onclick="AppController.pinMessage('${rowId}')">📌 Pin</button>`;
+            const delBtn = `<button class="action-btn" onclick="AppController.deleteMessage('${rowId}')">🗑️ Delete</button>`;
+
+            const actionBarHTML = `<div class="ai-action-bar">
+                    <button class="action-btn" onclick="AppController.copyResponse(this)">📋 Copy</button>
+                    ${opts.isAi ? `<button class="action-btn" onclick="VoiceEngine.speak(this.closest('.bubble').innerText)">🔊 Speak</button>` : ''}
+                    <button class="action-btn" onclick="this.style.color='#4ade80'">👍</button>
+                    <button class="action-btn" onclick="this.style.color='#f87171'">👎</button>
+                    <button class="action-btn" onclick="this.style.color='#f472b6'">❤️</button>
+                    ${editBtn}${regenBtn}${retryBtn}${pinBtn}${delBtn}
+                </div>`;
+            bubble.insertAdjacentHTML('beforeend', actionBarHTML);
+
+            if (opts.isAi) {
+                const words = bubble.innerText.trim().split(/\s+/).filter(Boolean).length;
+                const mins = Math.max(1, Math.round(words / 200));
+                const meta = msgContainer.querySelector('[data-meta]');
+                if (meta) meta.innerText = ` · ${words} words · ~${mins} min read`;
+            }
+        }
+    };
+
+    const AppController = {
+        currentMode: 'OMNI',
+        unread: 0,
+        initialized: false,
+
+        init: function() {
+            if (this.initialized) return;
+            this.initialized = true;
+
+            const prefs = loadPrefs();
+            const root = document.getElementById('parnaravAIRoot');
+            if (prefs.theme) root.setAttribute('data-theme', prefs.theme);
+            if (prefs.contrast) root.setAttribute('data-contrast', prefs.contrast);
+            if (prefs.density === 'compact') root.classList.add('density-compact');
+            if (prefs.reduceMotion) root.classList.add('reduce-motion');
+            if (prefs.fontScale) root.style.setProperty('--p-font-scale', prefs.fontScale);
+
+            const startMode = prefs.lastMode || 'OMNI';
+            const navEl = [...document.querySelectorAll('.parnarav-ai-app .nav-item')].find((li, i) => (startMode === 'OMNI' && i === 0) || li.textContent.trim().toUpperCase().includes(startMode));
+            this.switchMode(startMode, navEl || document.querySelectorAll('.parnarav-ai-app .nav-item')[0]);
+
+            this.setupOutsideClickListener();
+            this.setupScrollWatcher();
+            this.setupNetworkWatcher();
+            this.setupSessionTimer();
+            this.checkLatency();
+            this.restoreDraft();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') this.stopGeneration();
+                if (e.ctrlKey && e.key === '/') { e.preventDefault(); document.getElementById('userInput').focus(); }
+                if (e.ctrlKey && e.key.toLowerCase() === 'k') { e.preventDefault(); this.clearChat(); }
+            });
+        },
+
+        setupOutsideClickListener: function() {
+            document.addEventListener('click', (event) => {
+                const sidebar = document.getElementById('sidebar');
+                const mobileBtn = document.getElementById('mobileMenuBtn');
+                if (!sidebar || !mobileBtn) return;
+                if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+                    if (!sidebar.contains(event.target) && !mobileBtn.contains(event.target)) this.closeSidebarMobile();
+                }
+            });
+        },
+
+        setupScrollWatcher: function() {
+            const area = document.getElementById('chatContainer');
+            const fab = document.getElementById('scrollFab');
+            area.addEventListener('scroll', () => {
+                const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 60;
+                fab.classList.toggle('show', !nearBottom);
+                document.getElementById('scrollTopFab').classList.toggle('show', area.scrollTop > 300);
+                if (nearBottom) { this.unread = 0; this.updateUnreadBadge(); }
+            });
+        },
+        updateUnreadBadge: function() {
+            const badge = document.getElementById('unreadBadge');
+            if (this.unread > 0) { badge.style.display = 'flex'; badge.innerText = this.unread; }
+            else badge.style.display = 'none';
+        },
+        scrollToBottom: function(force) {
+            const area = document.getElementById('chatContainer');
+            const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 150;
+            if (force || nearBottom) {
+                area.scrollTop = area.scrollHeight;
+                this.unread = 0; this.updateUnreadBadge();
+                document.getElementById('scrollFab').classList.remove('show');
+            } else { this.unread++; this.updateUnreadBadge(); document.getElementById('scrollFab').classList.add('show'); }
+        },
+        scrollToTop: function() { document.getElementById('chatContainer').scrollTop = 0; },
+
+        setupNetworkWatcher: function() {
+            const root = document.getElementById('parnaravAIRoot');
+            const setStatus = () => {
+                const wasOffline = root.classList.contains('is-offline');
+                root.classList.toggle('is-offline', !navigator.onLine);
+                if (wasOffline && navigator.onLine) this.checkLatency();
+            };
+            window.addEventListener('online', setStatus);
+            window.addEventListener('offline', setStatus);
+            setStatus();
+        },
+
+        checkLatency: async function() {
+            const el = document.getElementById('latencyText');
+            if (!navigator.onLine) { el.innerText = 'Offline'; return; }
+            const start = performance.now();
+            try {
+                await fetch('https://js.puter.com/v2/', { mode: 'no-cors', cache: 'no-store' });
+                const ms = Math.round(performance.now() - start);
+                el.innerText = ms < 400 ? `Fast (${ms}ms)` : `OK (${ms}ms)`;
+            } catch (e) { el.innerText = 'Unstable'; }
+        },
+
+        setupSessionTimer: function() {
+            setInterval(() => {
+                const secs = Math.floor((Date.now() - sessionStartTime) / 1000);
+                const m = Math.floor(secs / 60), s = secs % 60;
+                const el = document.getElementById('sessionTimer');
+                if (el) el.innerText = `Session: ${m}:${String(s).padStart(2,'0')}`;
+            }, 1000);
+        },
+
+        updateMsgCount: function() {
+            const count = document.querySelectorAll('#chatContainer .message-row').length;
+            document.getElementById('msgCountText').innerText = `${count} messages`;
+        },
+
+        toggleTheme: function() {
+            const root = document.getElementById('parnaravAIRoot');
+            const isLight = root.getAttribute('data-theme') === 'light';
+            root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            const p = loadPrefs(); p.theme = isLight ? 'dark' : 'light'; savePrefs(p);
+        },
+        toggleContrast: function() {
+            const root = document.getElementById('parnaravAIRoot');
+            const isHigh = root.getAttribute('data-contrast') === 'high';
+            root.setAttribute('data-contrast', isHigh ? 'normal' : 'high');
+            const p = loadPrefs(); p.contrast = isHigh ? 'normal' : 'high'; savePrefs(p);
+        },
+        toggleReduceMotion: function() {
+            const root = document.getElementById('parnaravAIRoot');
+            root.classList.toggle('reduce-motion');
+            const p = loadPrefs(); p.reduceMotion = root.classList.contains('reduce-motion'); savePrefs(p);
+        },
+        toggleDensity: function() {
+            const root = document.getElementById('parnaravAIRoot');
+            root.classList.toggle('density-compact');
+            const p = loadPrefs(); p.density = root.classList.contains('density-compact') ? 'compact' : 'comfortable'; savePrefs(p);
+        },
+        changeFontSize: function(dir) {
+            const root = document.getElementById('parnaravAIRoot');
+            let scale = parseFloat(getComputedStyle(root).getPropertyValue('--p-font-scale')) || 1;
+            scale = Math.min(1.3, Math.max(0.8, scale + dir * 0.05));
+            root.style.setProperty('--p-font-scale', scale.toFixed(2));
+            const p = loadPrefs(); p.fontScale = scale.toFixed(2); savePrefs(p);
+        },
+
+        exportChat: function() {
+            const rows = document.querySelectorAll('#chatContainer .message-row');
+            if (!rows.length) { alert("Export karne ke liye pehle kuch chat karo।"); return; }
+            let text = `Parnarav AI Chat Export — ${new Date().toLocaleString('en-IN')}\n\n`;
+            rows.forEach(row => {
+                const who = row.classList.contains('user') ? 'You' : 'Parnarav AI';
+                const bubble = row.querySelector('.bubble');
+                if (bubble) text += `${who}: ${bubble.innerText.trim()}\n\n`;
+            });
+            const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = `parnarav-ai-chat-${Date.now()}.txt`; a.click();
+            URL.revokeObjectURL(a.href);
+        },
+
+        printChat: function() { window.print(); },
+
+        shareChat: async function() {
+            const rows = document.querySelectorAll('#chatContainer .message-row');
+            let text = '';
+            rows.forEach(row => {
+                const who = row.classList.contains('user') ? 'You' : 'Parnarav AI';
+                const bubble = row.querySelector('.bubble');
+                if (bubble) text += `${who}: ${bubble.innerText.trim()}\n\n`;
+            });
+            if (navigator.share) { try { await navigator.share({ title: 'Parnarav AI Chat', text }); } catch (e) {} }
+            else { navigator.clipboard.writeText(text); alert("Share API is browser me nahi hai — chat clipboard me copy kar di gayi hai।"); }
+        },
+
+        clearChat: function() {
+            const hasMessages = document.querySelectorAll('#chatContainer .message-row').length > 0;
+            if (hasMessages && !confirm("Chat clear karke naya session shuru karein?")) return;
+            document.getElementById('chatContainer').innerHTML = `
+                <div class="scroll-fab-group">
+                    <button class="scroll-fab top" id="scrollTopFab" onclick="AppController.scrollToTop()"><span class="ico">⬆️</span></button>
+                    <button class="scroll-fab" id="scrollFab" onclick="AppController.scrollToBottom(true)">
+                        <span class="ico">⬇️</span><span class="badge" id="unreadBadge" style="display:none;">0</span>
+                    </button>
+                </div>`;
+            GeminiOmniEngine.resetMemory();
+            pinnedMsgId = null;
+            document.getElementById('pinnedBar').classList.remove('show');
+            sessionStartTime = Date.now();
+            this.setupScrollWatcher();
+            this.updateMsgCount();
+            this.renderDefaultWelcome(this.currentMode);
+        },
+
+        handleInputChange: function() {
+            const ta = document.getElementById('userInput');
+            ta.style.height = 'auto';
+            ta.style.height = Math.min(ta.scrollHeight, 140) + 'px';
+            document.getElementById('charCount').innerText = `${ta.value.length} chars`;
+            localStorage.setItem(DRAFT_KEY, ta.value);
+        },
+        restoreDraft: function() {
+            const draft = localStorage.getItem(DRAFT_KEY);
+            if (draft) { document.getElementById('userInput').value = draft; this.handleInputChange(); }
+        },
+
+        switchMode: function(mode, element) {
+            this.currentMode = mode;
+            if (element) { document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
+            document.getElementById('chatContainer').innerHTML = `
+                <div class="scroll-fab-group">
+                    <button class="scroll-fab top" id="scrollTopFab" onclick="AppController.scrollToTop()"><span class="ico">⬆️</span></button>
+                    <button class="scroll-fab" id="scrollFab" onclick="AppController.scrollToBottom(true)">
+                        <span class="ico">⬇️</span><span class="badge" id="unreadBadge" style="display:none;">0</span>
+                    </button>
+                </div>`;
+            this.setupScrollWatcher();
+
+            let titleName = "Omni Super AI Active";
+            if (mode === 'FINANCE') titleName = "Trading & Finance Active";
+            else if (mode === 'DEV') titleName = "Coding Master Active";
+            else if (mode === 'INTERVIEW') titleName = "Mock Interviewer Active";
+            else if (mode === 'SALES') titleName = "Sales Executive Active";
+
+            document.getElementById('mode-indicator').innerText = `Parnarav AI: ${titleName}`;
+            const p = loadPrefs(); p.lastMode = mode; savePrefs(p);
+            this.renderDefaultWelcome(mode);
+            this.closeSidebarMobile();
+        },
+
+        renderDefaultWelcome: async function(mode) {
+            const fallback = {
+                OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें।" },
+                FINANCE: { icon: "📈", text: "<b>📈 Trading & Finance Engine Active!</b><br>नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।" },
+                DEV: { icon: "💻", text: "<b>💻 Coding Master Engine Active!</b><br>नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।" },
+                INTERVIEW: { icon: "👔", text: "<b>👔 Senior Mock Interviewer Active!</b><br>नमस्ते! मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।" },
+                SALES: { icon: "🤝", text: "<b>🤝 B2B Sales Executive Active!</b><br>नमस्ते! ऑब्जेक्शन हैंडलिंग का अभ्यास करते हैं।" }
+            }[mode];
+
+            const row = UIManager.appendMsg("<i>Welcome message taiyaar ho raha hai...</i>", 'ai', null, fallback.icon);
+            const aiWelcome = await GeminiOmniEngine.generateWelcome(mode);
+            const bubble = row.querySelector('.bubble');
+            if (bubble) bubble.innerHTML = aiWelcome ? (window.marked ? marked.parse(aiWelcome) : aiWelcome) : fallback.text;
+            UIManager.renderActionBar(row.id, { isAi: true });
+        },
+
+        autoDetectMode: function(text) {
+            const t = text.toLowerCase();
+            const rules = [
+                { mode: 'DEV', words: ['code', 'function', 'bug', 'error', 'python', 'javascript', 'api', 'sql', 'html', 'css', 'programming'] },
+                { mode: 'FINANCE', words: ['nifty', 'sensex', 'stock', 'share', 'trading', 'sip', 'emi', 'loan', 'crypto', 'invest'] },
+                { mode: 'INTERVIEW', words: ['interview', 'resume', 'job', 'hiring', 'career'] },
+                { mode: 'SALES', words: ['sales', 'pitch', 'client', 'objection', 'deal', 'negotiat'] }
+            ];
+            for (const rule of rules) if (rule.words.some(w => t.includes(w))) return rule.mode;
+            return null;
+        },
+
+        handleKeyPress: function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitQuery(); } },
+
+        copyResponse: function(btn) {
+            const bubble = btn.closest('.bubble');
+            const clone = bubble.cloneNode(true);
+            const bar = clone.querySelector('.ai-action-bar'); if (bar) bar.remove();
+            navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+                btn.innerHTML = '✅ Copied!'; setTimeout(() => { btn.innerHTML = '📋 Copy'; }, 2000);
+            });
+        },
+
+        retryQuery: function(originalText) { document.getElementById('userInput').value = originalText; this.handleInputChange(); this.submitQuery(); },
+
+        regenerate: function() {
+            if (!lastUserMessage) { alert("Regenerate karne ke liye pehle koi sawal poocho।"); return; }
+            document.getElementById('userInput').value = lastUserMessage;
+            this.handleInputChange();
+            this.submitQuery();
+        },
+
+        editMessage: function(rowId) {
+            const row = document.getElementById(rowId);
+            if (!row) return;
+            const raw = row.dataset.raw || row.querySelector('.bubble').innerText;
+            document.getElementById('userInput').value = raw;
+            this.handleInputChange();
+            document.getElementById('userInput').focus();
+            row.remove();
+            this.updateMsgCount();
+        },
+
+        deleteMessage: function(rowId) {
+            const row = document.getElementById(rowId);
+            if (row && confirm("Ye message delete karein?")) { row.remove(); this.updateMsgCount(); }
+        },
+
+        pinMessage: function(rowId) {
+            const row = document.getElementById(rowId);
+            if (!row) return;
+            document.querySelectorAll('.message-row.pinned').forEach(r => r.classList.remove('pinned'));
+            row.classList.add('pinned');
+            pinnedMsgId = rowId;
+            const bar = document.getElementById('pinnedBar');
+            bar.classList.add('show');
+            document.getElementById('pinnedText').innerText = row.querySelector('.bubble').innerText.slice(0, 80);
+        },
+        unpin: function() {
+            if (pinnedMsgId) document.getElementById(pinnedMsgId)?.classList.remove('pinned');
+            pinnedMsgId = null;
+            document.getElementById('pinnedBar').classList.remove('show');
+        },
+        jumpToPinned: function() {
+            if (pinnedMsgId) document.getElementById(pinnedMsgId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        },
+
+        toggleSearch: function() {
+            const bar = document.getElementById('searchBar');
+            bar.classList.toggle('open');
+            if (bar.classList.contains('open')) document.getElementById('searchInput').focus();
+            else this.runSearch('');
+        },
+        runSearch: function(query) {
+            document.querySelectorAll('#chatContainer .bubble').forEach(bubble => {
+                const raw = bubble.dataset.originalHtml || bubble.innerHTML;
+                if (!bubble.dataset.originalHtml) bubble.dataset.originalHtml = raw;
+                if (!query) { bubble.innerHTML = bubble.dataset.originalHtml; return; }
+                const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+                bubble.innerHTML = bubble.dataset.originalHtml.replace(re, '<mark>$1</mark>');
+            });
+        },
+
+        stopGeneration: function() {
+            GeminiOmniEngine.activeGenId++;
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('sendBtn').disabled = false;
+        },
+
+        submitQuery: async function() {
+            const input = document.getElementById('userInput');
+            if (!input) return;
+            const text = input.value.trim();
+            if (!text) return;
+            lastUserMessage = text;
+            localStorage.removeItem(DRAFT_KEY);
+
+            if (this.currentMode === 'OMNI') {
+                const suggestedMode = this.autoDetectMode(text);
+                if (suggestedMode) {
+                    const labelMap = { DEV: 'coding', FINANCE: 'trading', INTERVIEW: 'interview', SALES: 'sales' };
+                    const el = [...document.querySelectorAll('.parnarav-ai-app .nav-item')].find(li => li.textContent.trim().toLowerCase().includes(labelMap[suggestedMode]));
+                    if (el) {
+                        this.currentMode = suggestedMode;
+                        document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(x => x.classList.remove('active'));
+                        el.classList.add('active');
+                        document.getElementById('mode-indicator').innerText = `Parnarav AI: Auto-switched to ${suggestedMode}`;
+                    }
+                }
+            }
+
+            const mode = this.currentMode;
+            const userRow = UIManager.appendMsg(text.replace(/</g, '&lt;'), 'user', null, null, text);
+            UIManager.renderActionBar(userRow.id, { isAi: false });
+            input.value = ''; this.handleInputChange();
+
+            let currentAvatar = '🧠';
+            if (mode === 'INTERVIEW') currentAvatar = '👔';
+            else if (mode === 'SALES') currentAvatar = '🤝';
+            else if (mode === 'DEV') currentAvatar = '💻';
+            else if (mode === 'FINANCE') currentAvatar = '📈';
+
+            const typingHtml = `<span class="typing-dots"><span></span><span></span><span></span></span>`;
+            const aiRow = UIManager.appendMsg(typingHtml, 'ai', null, currentAvatar);
+            const aiMsgId = aiRow.id;
+
+            let systemRolePrompt = "";
+            if (mode === 'INTERVIEW') {
+                systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer.
+1. DUTY: Conduct a structured technical mock interview. Ask strictly ONE question at a time.
+2. FEEDBACK: Evaluate answers with constructive, accurate feedback before the next question.
+3. TONE: Professional, analytical, fair, supportive.
+4. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            } else if (mode === 'SALES') {
+                systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist. Handle objections, explain value accurately. TONE: Energetic, persuasive. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            } else if (mode === 'FINANCE') {
+                systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Precise, well-reasoned, fact-checked — avoid speculation. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            } else if (mode === 'DEV') {
+                systemRolePrompt = `ROLE: Senior Software Architect and Master Programmer. Give correct, working, well-tested code with no syntax errors. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            } else {
+                systemRolePrompt = `ROLE: Universal General Knowledge & Omni AI Communication Specialist. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, top-quality answers — double-check facts, avoid guessing. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            }
+
+            const bubbleElement = document.getElementById(aiMsgId);
+            const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
+
+            const myGenId = ++GeminiOmniEngine.activeGenId;
+            document.getElementById('stopBtn').style.display = 'flex';
+            document.getElementById('sendBtn').disabled = true;
+
+            try {
+                const finalReply = await GeminiOmniEngine.processChat(
+                    text, systemRolePrompt,
+                    (streamedText) => {
+                        if (bubble) {
+                            bubble.innerHTML = window.marked ? marked.parse(streamedText) : streamedText;
+                            if (window.hljs) hljs.highlightAll();
+                            this.scrollToBottom(false);
+                        }
+                    }, myGenId
+                );
+
+                if (myGenId === GeminiOmniEngine.activeGenId && bubbleElement) UIManager.renderActionBar(aiMsgId, { isAi: true });
+                VoiceEngine.speak(finalReply);
+            } catch (err) {
+                if (bubble) bubble.innerHTML = `**[System Error]** Kuch गड़बड़ हुई: \`${err.message || err}\` — कृपया दोबारा कोशिश करें।`;
+                UIManager.renderActionBar(aiMsgId, { isAi: true, retryText: text });
+            } finally {
+                document.getElementById('stopBtn').style.display = 'none';
+                document.getElementById('sendBtn').disabled = false;
+            }
+        },
+
+        toggleSidebar: function(e) { if (e) e.stopPropagation(); document.getElementById('sidebar').classList.toggle('open'); },
+        closeSidebarMobile: function() { document.getElementById('sidebar')?.classList.remove('open'); }
+    };
+
+    // Pure addition: existing openPage()/menu code bilkul untouched hai.
+    // Ye observer sirf "dekhta" hai ki #alpha section kab active hota hai,
+    // aur pehli baar khulte hi Parnarav AI ko khud init kar deta hai.
+    (function watchAlphaPage() {
+        const alphaSection = document.getElementById('alpha');
+        if (!alphaSection) return;
+        const tryInit = () => { if (alphaSection.classList.contains('active')) AppController.init(); };
+        tryInit();
+        new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
+    })();
 </script>
 
 </body>
