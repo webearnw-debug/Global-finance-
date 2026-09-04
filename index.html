@@ -1798,6 +1798,69 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 })();
 </script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+.fin-calc-wrapper{width:100%;max-width:1200px;margin:30px auto;padding:0 16px;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;user-select:none}
+.fin-calc-card{background:linear-gradient(145deg,rgba(12,16,23,.95),rgba(18,24,38,.95));border:1px solid rgba(0,230,118,.25);border-radius:20px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 30px rgba(0,230,118,.08);position:relative;overflow:hidden;backdrop-filter:blur(16px)}
+.fin-calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00e676,#00dfd8,#7928ca)}
+.fin-calc-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:16px}
+.fin-title{font-size:18px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:10px}
+.fin-title-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,230,118,.15);color:#00e676;display:flex;align-items:center;justify-content:center;font-size:16px}
+.fin-tabs{display:flex;background:rgba(15,23,42,.8);border:1px solid rgba(255,255,255,.1);padding:4px;border-radius:12px;gap:4px}
+.fin-tab-btn{background:transparent;border:none;color:#94a3b8;padding:8px 16px;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer;transition:all .3s ease;text-transform:uppercase}
+.fin-tab-btn.active{background:#00e676;color:#000;box-shadow:0 0 15px rgba(0,230,118,.4)}
+.fin-calc-body{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:768px){.fin-calc-body{grid-template-columns:1.2fr .8fr}}
+.fin-input-group{margin-bottom:18px}
+.fin-label-wrap{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.fin-label{font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase}
+.fin-val-box{background:rgba(15,23,42,.9);border:1px solid rgba(0,230,118,.3);color:#00e676;padding:4px 10px;border-radius:6px;font-size:13px;font-weight:800}
+.fin-slider{width:100%;height:6px;border-radius:5px;background:#1e293b;outline:none;accent-color:#00e676;cursor:pointer}
+.fin-summary-card{background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+.fin-res-item{margin-bottom:14px;border-bottom:1px dashed rgba(255,255,255,.08);padding-bottom:10px}
+.fin-res-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.fin-res-lbl{font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase}
+.fin-res-val{font-size:18px;font-weight:800;color:#fff;margin-top:2px}
+.highlight-green{color:#00e676;font-size:22px;text-shadow:0 0 10px rgba(0,230,118,.3)}
+</style>
+
+<div id="finCalcSection" class="fin-calc-wrapper">
+  <div class="fin-calc-card">
+    <div class="fin-calc-header">
+      <h3 class="fin-title"><div class="fin-title-icon"><i class="fa-solid fa-calculator"></i></div>FINANCIAL CALCULATOR ENGINE</h3>
+      <div class="fin-tabs">
+        <button id="tabSip" class="fin-tab-btn active" onclick="switchFinTab('sip')">SIP Wealth</button>
+        <button id="tabEmi" class="fin-tab-btn" onclick="switchFinTab('emi')">Loan EMI</button>
+      </div>
+    </div>
+    <div class="fin-calc-body">
+      <div id="finControls"></div>
+      <div class="fin-summary-card"><div id="finSummaryContent"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function p(){var a=document.getElementById('alphaSignalSection')||document.getElementById('ultraCategoryWrapper')||document.querySelector('.hero-full-card'),t=document.getElementById('finCalcSection');if(a&&t)a.parentNode.insertBefore(t,a.nextSibling)}
+  let c='sip';const s={sip:{monthly:5000,rate:12,years:10},emi:{principal:500000,rate:9.5,years:5}};
+  window.switchFinTab=function(t){c=t;document.getElementById('tabSip').classList.toggle('active',t==='sip');document.getElementById('tabEmi').classList.toggle('active',t==='emi');r()};
+  function r(){
+    const ctrl=document.getElementById('finControls'),sum=document.getElementById('finSummaryContent');
+    if(c==='sip'){
+      ctrl.innerHTML=`<div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Monthly Investment</span><span class="fin-val-box">₹${s.sip.monthly.toLocaleString()}</span></div><input type="range" class="fin-slider" min="500" max="100000" step="500" value="${s.sip.monthly}" oninput="updateFinVal('sip','monthly',this.value)"></div><div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Expected Return Rate (p.a)</span><span class="fin-val-box">${s.sip.rate}%</span></div><input type="range" class="fin-slider" min="1" max="30" step="0.5" value="${s.sip.rate}" oninput="updateFinVal('sip','rate',this.value)"></div><div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Time Period</span><span class="fin-val-box">${s.sip.years} Years</span></div><input type="range" class="fin-slider" min="1" max="30" step="1" value="${s.sip.years}" oninput="updateFinVal('sip','years',this.value)"></div>`;
+      const P=s.sip.monthly,i=(s.sip.rate/12)/100,n=s.sip.years*12,inv=P*n,tot=P*((Math.pow(1+i,n)-1)/i)*(1+i),est=tot-inv;
+      sum.innerHTML=`<div class="fin-res-item"><span class="fin-res-lbl">Total Invested</span><div class="fin-res-val">₹${Math.round(inv).toLocaleString()}</div></div><div class="fin-res-item"><span class="fin-res-lbl">Estimated Wealth Gain</span><div class="fin-res-val" style="color:#00dfd8;">₹${Math.round(est).toLocaleString()}</div></div><div class="fin-res-item"><span class="fin-res-lbl">Total Maturity Value</span><div class="fin-res-val highlight-green">₹${Math.round(tot).toLocaleString()}</div></div>`;
+    }else{
+      ctrl.innerHTML=`<div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Loan Amount</span><span class="fin-val-box">₹${s.emi.principal.toLocaleString()}</span></div><input type="range" class="fin-slider" min="10000" max="10000000" step="10000" value="${s.emi.principal}" oninput="updateFinVal('emi','principal',this.value)"></div><div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Interest Rate (p.a)</span><span class="fin-val-box">${s.emi.rate}%</span></div><input type="range" class="fin-slider" min="1" max="24" step="0.1" value="${s.emi.rate}" oninput="updateFinVal('emi','rate',this.value)"></div><div class="fin-input-group"><div class="fin-label-wrap"><span class="fin-label">Loan Tenure</span><span class="fin-val-box">${s.emi.years} Years</span></div><input type="range" class="fin-slider" min="1" max="30" step="1" value="${s.emi.years}" oninput="updateFinVal('emi','years',this.value)"></div>`;
+      const P=s.emi.principal,rate=(s.emi.rate/12)/100,n=s.emi.years*12,emi=(P*rate*Math.pow(1+rate,n))/(Math.pow(1+rate,n)-1),tot=emi*n,int=tot-P;
+      sum.innerHTML=`<div class="fin-res-item"><span class="fin-res-lbl">Monthly EMI</span><div class="fin-res-val highlight-green">₹${Math.round(emi).toLocaleString()}</div></div><div class="fin-res-item"><span class="fin-res-lbl">Total Interest Payable</span><div class="fin-res-val" style="color:#ff5252;">₹${Math.round(int).toLocaleString()}</div></div><div class="fin-res-item"><span class="fin-res-lbl">Total Payment (Principal + Interest)</span><div class="fin-res-val" style="color:#fff;">₹${Math.round(tot).toLocaleString()}</div></div>`;
+    }
+  }
+  window.updateFinVal=function(t,k,v){s[t][k]=parseFloat(v);r()};
+  document.addEventListener("DOMContentLoaded",()=>{p();r()});p();r();
+})();
+</script>
 
 </body>
 </html>
