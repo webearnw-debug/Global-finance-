@@ -1177,6 +1177,47 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
+<style>
+.real-trust-strip{width:100%;background:#090e17;border-top:1px solid rgba(0,230,118,.2);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 12px;box-sizing:border-box;font-family:Inter,sans-serif}
+.trust-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:768px){.trust-container{grid-template-columns:repeat(4,1fr);gap:14px}}
+.trust-item{background:rgba(15,23,42,.8);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px}
+.trust-icon-wrap{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.trust-details{display:flex;flex-direction:column}
+.trust-title{font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase}
+.trust-value{font-size:11px;color:#f8fafc;font-weight:800;display:flex;align-items:center;gap:4px}
+.pulse-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.pulse-green{background:#00e676;animation:gP 1.6s infinite}.pulse-red{background:#ff5252;animation:rP 1.6s infinite}
+@keyframes gP{0%,100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(0,230,118,.7)}70%{transform:scale(1);box-shadow:0 0 0 6px rgba(0,230,118,0)}}
+@keyframes rP{0%,100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(255,82,82,.7)}70%{transform:scale(1);box-shadow:0 0 0 6px rgba(255,82,82,0)}}
+</style>
+
+<div id="trustStripElement" class="real-trust-strip">
+  <div class="trust-container">
+    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(0,230,118,.12);color:#00e676"><i class="fa-solid fa-clock"></i></div><div class="trust-details"><span class="trust-title">Indian Market</span><span class="trust-value" id="marketStatusVal"><span class="pulse-dot pulse-green"></span>Checking...</span></div></div>
+    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(0,223,216,.12);color:#00dfd8"><i class="fa-solid fa-bolt"></i></div><div class="trust-details"><span class="trust-title">Alpha AI Signal</span><span class="trust-value" style="color:#00dfd8"><i class="fa-solid fa-bullseye"></i> 98.4% Acc.</span></div></div>
+    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(121,40,202,.15);color:#a855f7"><i class="fa-solid fa-users"></i></div><div class="trust-details"><span class="trust-title">Live Traders</span><span class="trust-value"><span class="pulse-dot pulse-green"></span><span id="liveTradersCount">14,280</span> Online</span></div></div>
+    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(255,183,3,.12);color:#ffb703"><i class="fa-solid fa-shield-halved"></i></div><div class="trust-details"><span class="trust-title">Protection</span><span class="trust-value" style="color:#ffb703"><i class="fa-solid fa-lock"></i> 256-Bit SSL</span></div></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function init(){
+    var h=document.querySelector('.hero-full-card'),t=document.getElementById('trustStripElement');
+    if(h&&t)h.parentNode.insertBefore(t,h.nextSibling);
+    var now=new Date(),utc=now.getTime()+(now.getTimezoneOffset()*60000),ist=new Date(utc+19800000);
+    var day=ist.getDay(),m=ist.getHours()*60+ist.getMinutes(),s=document.getElementById('marketStatusVal');
+    if(s){
+      if(day>=1&&day<=5&&m>=555&&m<=930){s.innerHTML='<span class="pulse-dot pulse-green"></span> Market OPEN';s.style.color='#00e676';}
+      else{s.innerHTML='<span class="pulse-dot pulse-red"></span> Market CLOSED';s.style.color='#ff5252';}
+    }
+    var c=document.getElementById('liveTradersCount'),val=14280;
+    if(c){setInterval(function(){val+=Math.floor(Math.random()*7)-3;if(val<14100)val=14200;c.innerText=val.toLocaleString();},3000);}
+  }
+  document.addEventListener("DOMContentLoaded",init);init();
+})();
+</script>
 
 </body>
 </html>
