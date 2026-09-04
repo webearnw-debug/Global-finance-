@@ -42,104 +42,23 @@ main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
-/* ===== ULTRA-PREMIUM PURE-CSS HERO BANNERS (koi stock photo nahi — hamesha perfect load hoga) ===== */
-.hero-full-card{
-  width:100%; position:relative; overflow:hidden; min-height:280px;
-  background:
-    radial-gradient(circle at 15% 15%, var(--h-glow1,rgba(233,194,95,.16)), transparent 55%),
-    radial-gradient(circle at 85% 85%, var(--h-glow2,rgba(0,230,118,.09)), transparent 50%),
-    repeating-linear-gradient(135deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px, transparent 1px, transparent 34px),
-    linear-gradient(160deg,#05070c 0%,#0b0f1a 55%,#05070c 100%);
-  border-bottom:1px solid rgba(233,194,95,.12);
-}
-.hero-inner{position:relative; z-index:2; padding:42px 5% 36px; max-width:900px}
-.hero-emblem{
-  width:70px;height:70px;border-radius:20px;
-  background:linear-gradient(135deg,#161b28,#0a0d15);
-  border:1px solid rgba(233,194,95,.4);
-  display:flex;align-items:center;justify-content:center;font-size:32px;
-  margin-bottom:18px; box-shadow:0 0 34px rgba(233,194,95,.12), inset 0 0 18px rgba(233,194,95,.06);
-}
+/* ===== PREMIUM ULTRA-LUXURY HERO BANNER (har section ke liye) ===== */
+.hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
+.hero-full-card img{width:100%;height:260px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none;filter:saturate(1.05) contrast(1.05)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(4,6,10,.92) 5%, rgba(4,6,10,.25) 55%, rgba(4,6,10,.05) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px 5% 22px}
 .hero-eyebrow{display:flex;align-items:center;gap:8px;color:#e9c25f;letter-spacing:3px;font-size:10.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
 .hero-eyebrow::before{content:"";width:22px;height:1px;background:#e9c25f}
-.hero-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:.3px}
-.hero-sub{color:#cbd5e1;font-size:13.5px;margin-top:10px;max-width:560px;line-height:1.7}
-.hero-goldline{width:56px;height:3px;background:linear-gradient(90deg,#e9c25f,#fff2c4);border-radius:3px;margin-top:16px}
-
-/* Home page: sab categories ek hi banner me, gold badges ki tarah */
-.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.hero-badge{
-  display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);
-  border:1px solid rgba(233,194,95,.28);padding:9px 16px;border-radius:30px;
-  font-size:12.5px;font-weight:700;color:#e5e7eb;cursor:pointer;transition:.2s ease;
-}
-.hero-badge:hover{border-color:#e9c25f;color:#e9c25f;background:rgba(233,194,95,.1);transform:translateY(-2px)}
-.hero-badge .b-ico{font-size:16px}
-
-/* Bull hero — thoda alag, zyada dramatic glow (jaisa reference image me tha) */
-.hero-bull{min-height:340px}
-.hero-emblem-bull{
-  width:92px;height:92px;font-size:44px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #1c2a1f, #05070c 70%);
-  border:1px solid rgba(74,222,128,.45);
-  box-shadow:0 0 50px rgba(74,222,128,.28), 0 0 100px rgba(74,222,128,.12), inset 0 0 24px rgba(74,222,128,.15);
-  animation:bullGlowPulse 3.2s ease-in-out infinite;
-}
-@keyframes bullGlowPulse{
-  0%,100%{box-shadow:0 0 50px rgba(74,222,128,.28), 0 0 100px rgba(74,222,128,.12), inset 0 0 24px rgba(74,222,128,.15);}
-  50%{box-shadow:0 0 65px rgba(74,222,128,.42), 0 0 130px rgba(74,222,128,.2), inset 0 0 30px rgba(74,222,128,.22);}
-}
-
-/* ===== PREMIUM TOOLS GRID (Home ke photo ke neeche) ===== */
-.home-tools-section{padding:44px 5% 56px; background:linear-gradient(180deg,#05070c 0%,#080b12 100%);}
-.home-tools-heading-wrap{text-align:center; max-width:640px; margin:0 auto 34px;}
-.home-tools-eyebrow{color:#e9c25f; letter-spacing:3px; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:10px;}
-.home-tools-title{font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:#fff;}
-
-.tools-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:18px; max-width:1200px; margin:0 auto;}
-.tool-card{
-  background:linear-gradient(165deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
-  border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:22px 20px;
-  cursor:pointer; transition:.25s ease; position:relative; overflow:hidden;
-}
-.tool-card::before{
-  content:""; position:absolute; inset:0; border-radius:16px; padding:1px;
-  background:linear-gradient(135deg, rgba(233,194,95,0), rgba(233,194,95,0));
-  transition:.25s ease; pointer-events:none;
-}
-.tool-card:hover{
-  transform:translateY(-4px); border-color:rgba(233,194,95,.35);
-  box-shadow:0 16px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(233,194,95,.12);
-  background:linear-gradient(165deg, rgba(233,194,95,.05), rgba(255,255,255,.015));
-}
-.tool-card-icon{
-  width:46px;height:46px;border-radius:12px; display:flex; align-items:center; justify-content:center;
-  font-size:22px; margin-bottom:16px;
-  background:linear-gradient(135deg, color-mix(in srgb, var(--tc1) 25%, transparent), color-mix(in srgb, var(--tc2) 15%, transparent));
-  border:1px solid color-mix(in srgb, var(--tc1) 35%, transparent);
-}
-.tool-card-title{font-size:15.5px; font-weight:800; color:#fff; margin-bottom:6px;}
-.tool-card-desc{font-size:12.5px; color:#94a3b8; line-height:1.6; margin-bottom:14px;}
-.tool-card-link{font-size:12.5px; font-weight:700; color:#00e676; display:flex; align-items:center; gap:5px;}
-.tool-card-link span{transition:.2s ease;}
-.tool-card:hover .tool-card-link span{transform:translateX(4px);}
-
-.home-tools-footer{text-align:center; margin-top:38px; color:#e9c25f; font-size:12.5px; letter-spacing:1px; font-weight:600;}
+.hero-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:#fff;letter-spacing:.3px;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+.hero-sub{color:#cbd5e1;font-size:13px;margin-top:8px;max-width:560px;line-height:1.6}
+.hero-goldline{width:56px;height:3px;background:linear-gradient(90deg,#e9c25f,#fff2c4);border-radius:3px;margin-top:14px}
 
 @media(max-width:480px){
 .header{padding:0 12px;height:56px}
 .logo{font-size:15px}
 .menu-button{height:34px;padding:0 12px;font-size:13px}
-.hero-full-card{min-height:240px}
-.hero-bull{min-height:280px}
-.hero-inner{padding:32px 6% 28px}
-.hero-title{font-size:24px}
-.hero-sub{font-size:12.5px}
-.hero-emblem{width:58px;height:58px;font-size:26px;border-radius:16px}
-.hero-emblem-bull{width:70px;height:70px;font-size:34px}
-.home-tools-section{padding:32px 6% 40px}
-.home-tools-title{font-size:21px}
-.tools-grid{grid-template-columns:1fr}
+.hero-full-card img{height:210px}
+.hero-title{font-size:22px}
+.hero-sub{font-size:12px}
 }
 </style>
 
@@ -333,79 +252,22 @@ main{width:100%;margin:0;padding:0}
 
 <main>
 
-<!-- HOME — sabhi categories ek hi premium banner me -->
 <section id="home" class="page active">
-<div class="hero-full-card hero-bull" style="--h-glow1:rgba(74,222,128,.28); --h-glow2:rgba(233,194,95,.14);">
-<div class="hero-inner">
-<div class="hero-emblem hero-emblem-bull">🐂</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='47961.png'">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Global Finance • Est. Excellence</div>
 <div class="hero-title">Wealth, Redefined.</div>
 <p class="hero-sub">Ultra-premium market intelligence, trading, investment aur AI-powered financial guidance — sab ek hi jagah.</p>
 <div class="hero-goldline"></div>
 </div>
 </div>
-
-<!-- ===== PREMIUM TOOLS GRID (photo ke neeche) — har card asli page kholta hai ===== -->
-<div class="home-tools-section">
-<div class="home-tools-heading-wrap">
-<div class="home-tools-eyebrow">Intelligence • Tools • Markets</div>
-<div class="home-tools-title">Explore Global Finance</div>
-<div class="hero-goldline" style="margin:14px auto 0;"></div>
-</div>
-
-<div class="tools-grid">
-
-<div class="tool-card" onclick="openPage('financial', document.querySelectorAll('.menu-item')[1])">
-<div class="tool-card-icon" style="--tc1:#38bdf8;--tc2:#0ea5e9;">💼</div>
-<div class="tool-card-title">Financial Overview</div>
-<p class="tool-card-desc">Assets, liabilities aur net worth — poora snapshot ek dashboard me.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-<div class="tool-card" onclick="openPage('trading', document.querySelectorAll('.menu-item')[2])">
-<div class="tool-card-icon" style="--tc1:#4ade80;--tc2:#16a34a;">📊</div>
-<div class="tool-card-title">Live Trading Desk</div>
-<p class="tool-card-desc">Real-time market data aur institutional-speed trading tools.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-<div class="tool-card" onclick="openPage('alpha', document.querySelectorAll('.menu-item')[6])">
-<div class="tool-card-icon" style="--tc1:#c084fc;--tc2:#7928ca;">⚡</div>
-<div class="tool-card-title">AI Financial Advisor</div>
-<p class="tool-card-desc">Parnarav AI se personalized guidance, poori website ki report bhi.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-<div class="tool-card" onclick="openPage('investment', document.querySelectorAll('.menu-item')[3])">
-<div class="tool-card-icon" style="--tc1:#fbbf24;--tc2:#e9c25f;">📈</div>
-<div class="tool-card-title">Investment Portfolio</div>
-<p class="tool-card-desc">Mutual funds, equity aur long-term compounding strategies.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-<div class="tool-card" onclick="openPage('loans', document.querySelectorAll('.menu-item')[4])">
-<div class="tool-card-icon" style="--tc1:#60a5fa;--tc2:#2563eb;">🏦</div>
-<div class="tool-card-title">Loans & Credit</div>
-<p class="tool-card-desc">Best-in-class loan rates aur EMI planning, bina jhanjhat ke.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-<div class="tool-card" onclick="openPage('earning', document.querySelectorAll('.menu-item')[5])">
-<div class="tool-card-icon" style="--tc1:#f87171;--tc2:#ef4444;">💡</div>
-<div class="tool-card-title">Earning Intelligence</div>
-<p class="tool-card-desc">Passive income aur wealth-building ke expert-curated tips.</p>
-<div class="tool-card-link">Explore <span>→</span></div>
-</div>
-
-</div>
-<div class="home-tools-footer">Institutional Grade. Personal Approach.</div>
-</div>
 </section>
 
 <section id="financial" class="page">
-<div class="hero-full-card" style="--h-glow1:rgba(233,194,95,.2); --h-glow2:rgba(59,130,246,.08);">
-<div class="hero-inner">
-<div class="hero-emblem">💼</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=1600&q=80" alt="Financial Overview">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Financial Overview</div>
 <div class="hero-title">Precision Wealth Management</div>
 <p class="hero-sub">Aapka poora financial snapshot — assets, liabilities aur net worth — ek premium dashboard me.</p>
@@ -415,9 +277,9 @@ main{width:100%;margin:0;padding:0}
 </section>
 
 <section id="trading" class="page">
-<div class="hero-full-card" style="--h-glow1:rgba(0,230,118,.16); --h-glow2:rgba(233,194,95,.1);">
-<div class="hero-inner">
-<div class="hero-emblem">📊</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=1600&q=80" alt="Trading Desk">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Live Trading Desk</div>
 <div class="hero-title">Trade at Institutional Speed</div>
 <p class="hero-sub">Real-time market data, technical signals aur pro-level trading tools ek hi screen par.</p>
@@ -427,9 +289,9 @@ main{width:100%;margin:0;padding:0}
 </section>
 
 <section id="investment" class="page">
-<div class="hero-full-card" style="--h-glow1:rgba(192,132,252,.16); --h-glow2:rgba(233,194,95,.08);">
-<div class="hero-inner">
-<div class="hero-emblem">📈</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80" alt="Investment Portfolio">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Investment Portfolio</div>
 <div class="hero-title">Build Generational Wealth</div>
 <p class="hero-sub">Mutual funds, equity aur alternative assets — long-term compounding ke liye curated portfolio.</p>
@@ -439,9 +301,9 @@ main{width:100%;margin:0;padding:0}
 </section>
 
 <section id="loans" class="page">
-<div class="hero-full-card" style="--h-glow1:rgba(56,189,248,.16); --h-glow2:rgba(233,194,95,.1);">
-<div class="hero-inner">
-<div class="hero-emblem">🏦</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80" alt="Loans and Credit">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Loans & Credit</div>
 <div class="hero-title">Capital, On Your Terms</div>
 <p class="hero-sub">Best-in-class loan rates, EMI planning aur credit line management — bina kisi jhanjhat ke.</p>
@@ -451,9 +313,9 @@ main{width:100%;margin:0;padding:0}
 </section>
 
 <section id="earning" class="page">
-<div class="hero-full-card" style="--h-glow1:rgba(251,191,36,.2); --h-glow2:rgba(0,230,118,.08);">
-<div class="hero-inner">
-<div class="hero-emblem">💡</div>
+<div class="hero-full-card">
+<img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80" alt="Earning Tips">
+<div class="hero-overlay">
 <div class="hero-eyebrow">Earning Intelligence</div>
 <div class="hero-title">Smarter Ways to Earn</div>
 <p class="hero-sub">Passive income, side-hustles aur wealth-building strategies — expert-curated tips.</p>
@@ -504,9 +366,6 @@ main{width:100%;margin:0;padding:0}
                 <button class="tool-btn" onclick="AppController.generateSiteReport()"><span class="ico">🧭</span> Full Website Report</button>
                 <button class="tool-btn" onclick="AppController.showLiveActivity()"><span class="ico">🟢</span> Live Activity Snapshot</button>
                 <button class="tool-btn" onclick="AppController.clearSiteLog()"><span class="ico">🗑️</span> Clear Activity Log</button>
-                <div style="font-size:.66rem; color:var(--p-text-muted); padding:2px 4px 4px; line-height:1.5;">
-                    Tip: chat me seedha likho <b>"website report do"</b> — AI khud report bana dega.
-                </div>
 
                 <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-green); margin:12px 0 8px 0; text-transform:uppercase;">Display Settings</div>
                 <button class="tool-btn" onclick="AppController.toggleTheme()"><span class="ico">🌓</span> Light / Dark</button>
@@ -565,7 +424,7 @@ main{width:100%;margin:0;padding:0}
                 </div>
                 <div class="input-box">
                     <button class="btn-icon" id="micToggleBtn" title="Speak Input" onclick="VoiceInputEngine.toggleMic()" aria-label="Voice input"><span class="ico">🎤</span></button>
-                    <textarea id="userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें... (जैसे: website report do)" onkeydown="AppController.handleKeyPress(event)" oninput="AppController.handleInputChange()"></textarea>
+                    <textarea id="userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="AppController.handleKeyPress(event)" oninput="AppController.handleInputChange()"></textarea>
                     <button class="btn-icon" id="stopBtn" title="Stop generating" onclick="AppController.stopGeneration()" style="display:none;" aria-label="Stop"><span class="ico">⏹️</span></button>
                     <button class="btn-send" id="sendBtn" onclick="AppController.submitQuery()" title="Send Message" aria-label="Send"><span class="ico">➤</span></button>
                 </div>
@@ -598,10 +457,10 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
 
 <!-- =================================================================
-     🧭 SITE MONITOR — poori website ki activity ko record karta hai
-     (localStorage me, sirf is browser me, kisi server ko kuch nahi
-     bheja jaata). "Full Website Report" se ya chat me "website report
-     do" likh kar AI isi data se report banata hai.
+     🧭 SITE MONITOR — poori website ki activity (page visits, clicks,
+     chat) ko record karta hai (localStorage me, sirf is browser me,
+     kisi server ko kuch nahi bheja jaata). AI "Full Website Report"
+     button dabane par isi data se ek report bana kar deta hai.
 ================================================================== -->
 <script>
     const SiteMonitor = {
@@ -652,8 +511,9 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(checkActive).observe(mainEl, { subtree: true, attributes: true, attributeFilter: ['class'] });
     })();
 
+    // Poori website ke har button/link/menu-click ko track karta hai
     document.addEventListener('click', function(e) {
-        const t = e.target.closest('button, a, .menu-item, .nav-item, .hero-badge');
+        const t = e.target.closest('button, a, .menu-item, .nav-item');
         if (!t) return;
         const label = (t.innerText || t.getAttribute('aria-label') || t.getAttribute('title') || t.id || 'unknown').trim().replace(/\s+/g, ' ');
         if (label) SiteMonitor.log('click', label);
@@ -1111,7 +971,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 
         renderDefaultWelcome: async function(mode) {
             const fallback = {
-                OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें। (Tip: <b>website report do</b> likh kar poori site ki activity report bhi mangwa sakte hain।)" },
+                OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें।" },
                 FINANCE: { icon: "📈", text: "<b>📈 Trading & Finance Engine Active!</b><br>नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।" },
                 DEV: { icon: "💻", text: "<b>💻 Coding Master Engine Active!</b><br>नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।" },
                 INTERVIEW: { icon: "👔", text: "<b>👔 Senior Mock Interviewer Active!</b><br>नमस्ते! मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।" },
@@ -1135,11 +995,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             ];
             for (const rule of rules) if (rule.words.some(w => t.includes(w))) return rule.mode;
             return null;
-        },
-
-        // Upgrade: chat me "website report do" jaisi baat likhne par AI khud pehchan kar report deta hai
-        isReportRequest: function(text) {
-            return /(website|site)\s*(ki|ka|की|का)?\s*(report|activity|track|monitor)|activity\s*(report|log)|full\s*report|site\s*report|website\s*report|report\s*(do|de|dikhao|banao|chahiye)/i.test(text);
         },
 
         handleKeyPress: function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitQuery(); } },
@@ -1219,17 +1074,16 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             document.getElementById('sendBtn').disabled = false;
         },
 
-        generateSiteReport: function(displayLabel) {
+        // Upgrade: Website Report — SiteMonitor ke data se AI khud report banata hai
+        generateSiteReport: function() {
             const s = SiteMonitor.summarize();
-            if (!s.totalEvents) {
-                UIManager.appendMsg("<b>📊 Website Activity Report</b><br>Abhi tak koi activity record nahi hui — pehle website use karo (kuch pages kholo, buttons dabao), phir dobara report maango।", 'ai', null, '🧭');
-                return;
-            }
+            if (!s.totalEvents) { alert("Abhi tak koi activity record nahi hui — pehle website use karo, phir report maango।"); return; }
             const dataBlock = JSON.stringify(s, null, 2);
             const prompt = `Tum Parnarav AI ho aur "Global Finance" website ke poore activity data ko control/monitor kar rahe ho. Neeche is website ka real activity log diya hai (page views, clicks, chat, recent events). Ek professional, structured Hindi/Hinglish report banao — headings ke saath — jisme ho:\n1. Overview (total events, session time)\n2. Sabse zyada dekhe gaye pages\n3. Sabse zyada click kiye gaye items\n4. User behaviour pattern ka insight\n5. Website ko behtar banane ke 2-3 practical suggestions\n\nActivity Data (JSON):\n${dataBlock}`;
-            this.processMessage(prompt, displayLabel || "📊 Poori website ki activity report dikhao");
+            this.processMessage(prompt, "📊 Poori website ki activity report dikhao");
         },
 
+        // Upgrade: turant snapshot bina AI call ke (fast, local)
         showLiveActivity: function() {
             const s = SiteMonitor.summarize();
             const pagesHtml = Object.entries(s.pageViews).map(([k,v]) => `${k}: <b>${v}</b>`).join(' · ') || 'Koi data nahi';
@@ -1251,6 +1105,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             alert("Activity log clear ho gaya।");
         },
 
+        // Shared message pipeline (tool buttons aur normal chat dono isi se guzarte hain)
         processMessage: async function(promptText, displayText) {
             const mode = this.currentMode;
             const userRow = UIManager.appendMsg((displayText || promptText).replace(/</g, '&lt;'), 'user', null, null, promptText);
@@ -1307,13 +1162,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             if (!text) return;
             lastUserMessage = text;
             localStorage.removeItem(DRAFT_KEY);
-            input.value = ''; this.handleInputChange();
-
-            // Chat me hi "website report do" jaisa likhne par seedha report generate ho jaata hai
-            if (this.isReportRequest(text)) {
-                this.generateSiteReport(text);
-                return;
-            }
 
             if (this.currentMode === 'OMNI') {
                 const suggestedMode = this.autoDetectMode(text);
@@ -1329,6 +1177,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                 }
             }
 
+            input.value = ''; this.handleInputChange();
             await this.processMessage(text, null);
         },
 
@@ -1336,6 +1185,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         closeSidebarMobile: function() { document.getElementById('sidebar')?.classList.remove('open'); }
     };
 
+    // Alpha page active hote hi Parnarav AI khud init ho jaata hai
     (function watchAlphaPage() {
         const alphaSection = document.getElementById('alpha');
         if (!alphaSection) return;
