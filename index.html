@@ -1178,57 +1178,14 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     })();
 </script>
 
-
-<div id="realTradingStrip" style="width: 100%; background: #090e17; border-top: 1px solid rgba(0,230,118,0.2); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 8px 0; margin: 0 auto;">
-  <div class="tradingview-widget-container" style="width: 100%; max-width: 1200px; margin: 0 auto;">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {
-      "symbols": [
-        {
-          "description": "NIFTY 50",
-          "proName": "NSE:NIFTY"
-        },
-        {
-          "description": "SENSEX",
-          "proName": "BSE:SENSEX"
-        },
-        {
-          "description": "BITCOIN",
-          "proName": "BITSTAMP:BTCUSD"
-        },
-        {
-          "description": "USD / INR",
-          "proName": "FX_IDC:USDINR"
-        },
-        {
-          "description": "GOLD",
-          "proName": "MCX:GOLD1!"
-        }
-      ],
-      "showSymbolLogo": true,
-      "isTransparent": true,
-      "displayMode": "adaptive",
-      "colorTheme": "dark",
-      "locale": "in"
-    }
-    </script>
-  </div>
+<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 10px; background: #0c1018; padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <div style="font-size: 11px; color: #00e676; font-weight: 700;"><i class="fa-solid fa-bolt"></i> Real-Time Data</div>
+  <div style="font-size: 11px; color: #00dfd8; font-weight: 700;"><i class="fa-solid fa-robot"></i> AI Trading Signals</div>
+  <div style="font-size: 11px; color: #f8fafc; font-weight: 700;"><i class="fa-solid fa-chart-pie"></i> Free Analytics</div>
+  <div style="font-size: 11px; color: #ffb703; font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> 100% Secure</div>
 </div>
 
-<script>
-(function() {
-  function autoPlaceStrip() {
-    var heroCard = document.querySelector('.hero-full-card');
-    var strip = document.getElementById('realTradingStrip');
-    if (heroCard && strip) {
-      heroCard.parentNode.insertBefore(strip, heroCard.nextSibling);
-    }
-  }
-  document.addEventListener("DOMContentLoaded", autoPlaceStrip);
-  autoPlaceStrip();
-})();
-</script>
+
 
 </body>
 </html>
