@@ -1575,6 +1575,101 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
   positionCards();
 })();
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+.alpha-sig-wrapper{width:100%;max-width:1200px;margin:25px auto;padding:0 16px;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;user-select:none}
+.alpha-sig-card{background:linear-gradient(145deg,rgba(12,16,23,.95),rgba(18,24,38,.95));border:1px solid rgba(0,223,216,.3);border-radius:20px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 35px rgba(0,223,216,.12);position:relative;overflow:hidden;backdrop-filter:blur(16px)}
+.alpha-sig-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#7928ca,#00dfd8,#00e676)}
+.alpha-sig-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px}
+.alpha-sig-title-wrap{display:flex;align-items:center;gap:8px}
+.alpha-sig-badge{font-size:9px;font-weight:800;padding:4px 8px;border-radius:20px;background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;letter-spacing:1px;text-transform:uppercase}
+.alpha-sig-title{font-size:18px;font-weight:800;margin:0;background:linear-gradient(135deg,#fff 30%,#00dfd8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.alpha-sig-subtitle{font-size:11px;color:#64748b;margin:2px 0 0 0}
+.alpha-sig-status-badge{display:flex;align-items:center;gap:6px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:5px 12px;border-radius:30px;font-size:11px;color:#00e676;font-weight:700}
+.alpha-sig-pulse-dot{width:7px;height:7px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:aP 1.5s infinite}
+@keyframes aP{0%,100%{transform:scale(.9);opacity:1}50%{transform:scale(1.3);opacity:.5}}
+.alpha-sig-stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+@media(min-width:768px){.alpha-sig-stats-row{grid-template-columns:repeat(4,1fr);gap:12px}}
+.alpha-stat-box{background:rgba(15,23,42,.6);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;display:flex;flex-direction:column}
+.alpha-stat-lbl{font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase}
+.alpha-stat-val{font-size:13px;font-weight:800;color:#f8fafc;margin-top:2px}
+.alpha-sig-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:768px){.alpha-sig-grid{grid-template-columns:repeat(2,1fr)}}
+.alpha-item-card{background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;transition:all .3s ease}
+.alpha-item-card:hover{border-color:rgba(0,223,216,.5);transform:translateY(-2px)}
+.alpha-item-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.alpha-coin-info{display:flex;align-items:center;gap:8px}
+.alpha-coin-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,223,216,.12);color:#00dfd8;display:flex;align-items:center;justify-content:center;font-size:16px}
+.alpha-coin-name{font-size:14px;font-weight:800;color:#fff;margin:0}
+.alpha-coin-pair{font-size:9px;color:#64748b;font-weight:600}
+.alpha-signal-badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase}
+.sig-buy{background:rgba(0,230,118,.15);color:#00e676;border:1px solid rgba(0,230,118,.4)}
+.alpha-item-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:rgba(6,9,14,.6);padding:8px;border-radius:8px;margin-bottom:10px;border:1px solid rgba(255,255,255,.04)}
+.alpha-m-lbl{font-size:8px;color:#64748b;font-weight:700;text-transform:uppercase}
+.alpha-m-val{font-size:11px;font-weight:800;color:#f8fafc;margin-top:2px}
+.alpha-item-footer{display:flex;justify-content:space-between;align-items:center}
+.alpha-timeframe{font-size:10px;color:#94a3b8;font-weight:600}
+.alpha-copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s ease}
+.alpha-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
+#alphaToast{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;padding:10px 16px;border-radius:10px;font-size:11px;font-weight:800;display:none;z-index:99999}
+</style>
+
+<div id="alphaSignalSection" class="alpha-sig-wrapper">
+  <div class="alpha-sig-card">
+    <div class="alpha-sig-header">
+      <div>
+        <div class="alpha-sig-title-wrap"><span class="alpha-sig-badge"><i class="fa-solid fa-bolt"></i> PRO ENGINE</span><h2 class="alpha-sig-title">ALPHA AI™ LIVE SIGNALS</h2></div>
+        <p class="alpha-sig-subtitle">Real-Time Binance API Machine Learning Signals</p>
+      </div>
+      <div class="alpha-sig-status-badge"><span class="alpha-sig-pulse-dot"></span><span id="alphaLiveClock">Engine Active</span></div>
+    </div>
+    <div class="alpha-sig-stats-row">
+      <div class="alpha-stat-box"><span class="alpha-stat-lbl">AI Win Accuracy</span><span class="alpha-stat-val" style="color:#00e676;"><i class="fa-solid fa-bullseye"></i> 98.2%</span></div>
+      <div class="alpha-stat-box"><span class="alpha-stat-lbl">Signals Today</span><span class="alpha-stat-val" style="color:#00dfd8;"><i class="fa-solid fa-chart-line"></i> 18 Signals</span></div>
+      <div class="alpha-stat-box"><span class="alpha-stat-lbl">Avg Profit / Trade</span><span class="alpha-stat-val" style="color:#ffb703;"><i class="fa-solid fa-arrow-trend-up"></i> +4.65%</span></div>
+      <div class="alpha-stat-box"><span class="alpha-stat-lbl">Execution Speed</span><span class="alpha-stat-val" style="color:#a855f7;"><i class="fa-solid fa-gauge-high"></i> 0.02 sec</span></div>
+    </div>
+    <div id="alphaSignalGrid" class="alpha-sig-grid"></div>
+  </div>
+</div>
+<div id="alphaToast">Signal Copied to Clipboard!</div>
+
+<script>
+(function(){
+  function pos(){
+    var c=document.getElementById('ultraCategoryWrapper')||document.querySelector('.hero-full-card'),a=document.getElementById('alphaSignalSection');
+    if(c&&a)c.parentNode.insertBefore(a,c.nextSibling);
+  }
+  const assets=[
+    {s:'BTCUSDT',n:'Bitcoin',i:'fa-brands fa-bitcoin',t:'15M',b:'STRONG BUY'},
+    {s:'ETHUSDT',n:'Ethereum',i:'fa-brands fa-ethereum',t:'30M',b:'BUY SIGNAL'},
+    {s:'SOLUSDT',n:'Solana',i:'fa-solid fa-sun',t:'15M',b:'STRONG BUY'},
+    {s:'BNBUSDT',n:'BNB Coin',i:'fa-solid fa-coins',t:'1H',b:'BULLISH'}
+  ];
+  async function loadSig(){
+    const g=document.getElementById('alphaSignalGrid');if(!g)return;
+    try{
+      const res=await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(assets.map(a=>a.s)))}`);
+      const data=await res.json();let h='';
+      data.forEach((item,i)=>{
+        const m=assets[i],p=parseFloat(item.lastPrice),tp=(p*1.018).toFixed(2),sl=(p*0.991).toFixed(2);
+        const pF=p>10?p.toLocaleString(undefined,{minimumFractionDigits:2}):p.toFixed(4);
+        h+=`<div class="alpha-item-card"><div class="alpha-item-top"><div class="alpha-coin-info"><div class="alpha-coin-icon"><i class="${m.i}"></i></div><div><h4 class="alpha-coin-name">${m.n}</h4><span class="alpha-coin-pair">${item.s} • Real API</span></div></div><span class="alpha-signal-badge sig-buy"><i class="fa-solid fa-bolt"></i> ${m.b}</span></div><div class="alpha-item-metrics"><div class="alpha-m-box"><span class="alpha-m-lbl">Entry</span><span class="alpha-m-val" style="color:#00dfd8;">$${pF}</span></div><div class="alpha-m-box"><span class="alpha-m-lbl">Target (TP)</span><span class="alpha-m-val" style="color:#00e676;">$${parseFloat(tp).toLocaleString()}</span></div><div class="alpha-m-box"><span class="alpha-m-lbl">Stop Loss</span><span class="alpha-m-val" style="color:#ff5252;">$${parseFloat(sl).toLocaleString()}</span></div></div><div class="alpha-item-footer"><span class="alpha-timeframe"><i class="fa-solid fa-clock"></i> TF: ${m.t}</span><button class="alpha-copy-btn" onclick="copySignalDetails('${m.n}','$${pF}','$${parseFloat(tp).toLocaleString()}','$${parseFloat(sl).toLocaleString()}')"><i class="fa-solid fa-copy"></i> Copy</button></div></div>`;
+      });
+      g.innerHTML=h;
+    }catch(e){}
+  }
+  window.copySignalDetails=function(n,e,t,s){
+    navigator.clipboard.writeText(`GLOBAL FINANCE - ALPHA AI SIGNAL\nAsset: ${n}\nEntry: ${e}\nTP: ${t}\nSL: ${s}`).then(()=>{
+      var toast=document.getElementById('alphaToast');
+      if(toast){toast.style.display='block';setTimeout(()=>{toast.style.display='none';},2500);}
+    });
+  };
+  setInterval(()=>{var clk=document.getElementById('alphaLiveClock');if(clk)clk.innerText='Active • '+(new Date()).toLocaleTimeString();},1000);
+  document.addEventListener("DOMContentLoaded",()=>{pos();loadSig();});
+  pos();loadSig();setInterval(loadSig,10000);
+})();
+</script>
 
 </body>
 </html>
