@@ -2002,7 +2002,286 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
   calcLoan();
 })();
 </script>
+  <!-- ======================================================= -->
+<!-- 100% REAL CRYPTO FEAR & GREED INDEX (HOMEPAGE ONLY)     -->
+<!-- ======================================================= -->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+.fng-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  user-select: none;
+}
+
+.fng-card {
+  background: linear-gradient(145deg, rgba(12, 16, 23, 0.95), rgba(18, 24, 38, 0.95));
+  border: 1px solid rgba(0, 223, 216, 0.3);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 223, 216, 0.1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+}
+
+.fng-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff5252, #ffb703, #00dfd8, #00e676);
+}
+
+.fng-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.fng-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fng-badge {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #7928ca, #00dfd8);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.fng-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+@media(min-width: 768px) {
+  .fng-grid { grid-template-columns: 0.9fr 1.1fr; }
+}
+
+/* Semi-Circle Gauge Styling */
+.fng-gauge-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.fng-svg {
+  width: 220px;
+  height: 120px;
+}
+
+.fng-bg-arc {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+
+.fng-fill-arc {
+  fill: none;
+  stroke: #00dfd8;
+  stroke-width: 18;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+}
+
+.fng-score-display {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+
+.fng-score-num {
+  font-size: 38px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.fng-score-lbl {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* Stats Info Box */
+.fng-info-box {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.fng-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.fng-stat-row:last-child { border-bottom: none; }
+
+.fng-stat-lbl { font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+.fng-stat-val { font-size: 12px; color: #fff; font-weight: 800; }
+</style>
+
+<div id="cryptoFearGreedSection" class="fng-wrapper" style="display:none;">
+  <div class="fng-card">
+    <div class="fng-header">
+      <h3 class="fng-title">
+        <span class="fng-badge"><i class="fa-solid fa-gauge-high"></i> LIVE API</span>
+        CRYPTO FEAR & GREED INDEX
+      </h3>
+      <span id="fngLastUpdated" style="font-size:10px; color:#00e676; font-weight:700;">
+        <i class="fa-solid fa-circle-check"></i> Syncing Alternative.me API...
+      </span>
+    </div>
+
+    <div class="fng-grid">
+      <!-- Visual Gauge -->
+      <div class="fng-gauge-box">
+        <svg class="fng-svg" viewBox="0 0 200 110">
+          <path class="fng-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100" />
+          <path id="fngArcFill" class="fng-fill-arc" d="M 20 100 A 80 80 0 0 1 180 100" />
+        </svg>
+        <div class="fng-score-display">
+          <div id="fngValue" class="fng-score-num">--</div>
+          <div id="fngClass" class="fng-score-lbl" style="color: #64748b;">LOADING</div>
+        </div>
+      </div>
+
+      <!-- Live Metadata -->
+      <div class="fng-info-box">
+        <div class="fng-stat-row">
+          <span class="fng-stat-lbl">Market Sentiment</span>
+          <span id="fngStatusText" class="fng-stat-val" style="color:#00dfd8;">Fetching Data...</span>
+        </div>
+        <div class="fng-stat-row">
+          <span class="fng-stat-lbl">Data Source</span>
+          <span class="fng-stat-val">Alternative.me API</span>
+        </div>
+        <div class="fng-stat-row">
+          <span class="fng-stat-lbl">Update Cycle</span>
+          <span class="fng-stat-val">Every 24 Hours</span>
+        </div>
+        <div class="fng-stat-row">
+          <span class="fng-stat-lbl">Signal Output</span>
+          <span id="fngActionSignal" class="fng-stat-val" style="color:#fff;">--</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Strict Homepage Check
+  const path = window.location.pathname;
+  const isHomepage = path === '/' || path === '/index.html' || path.endsWith('/index.html') || path === '';
   
+  if (!isHomepage) return; // Exit if not homepage
+
+  const sec = document.getElementById('cryptoFearGreedSection');
+  if (sec) sec.style.display = 'block';
+
+  function positionSec() {
+    var anchor = document.getElementById('loanEngineSection') || document.getElementById('amfiMfSection') || document.getElementById('finCalcSection') || document.querySelector('.hero-full-card');
+    if (anchor && sec) anchor.parentNode.insertBefore(sec, anchor.nextSibling);
+  }
+
+  async function fetchRealFearGreed() {
+    try {
+      const res = await fetch('https://api.alternative.me/fng/?limit=1');
+      const json = await res.json();
+      
+      if (!json || !json.data || !json.data[0]) return;
+
+      const data = json.data[0];
+      const val = parseInt(data.value);
+      const classification = data.value_classification;
+
+      // Update Text Elements
+      document.getElementById('fngValue').innerText = val;
+      document.getElementById('fngClass').innerText = classification;
+      document.getElementById('fngStatusText').innerText = classification + ' (' + val + '/100)';
+      document.getElementById('fngLastUpdated').innerHTML = '<i class="fa-solid fa-circle-check"></i> Live API Connected';
+
+      // Determine Colors and Action Signals based on Real Score
+      let color = '#00dfd8';
+      let action = 'NEUTRAL / WAIT';
+
+      if (val <= 24) {
+        color = '#ff5252'; // Extreme Fear (Red)
+        action = 'STRONG ACCUMULATION ZONE';
+      } else if (val <= 46) {
+        color = '#ffb703'; // Fear (Orange/Yellow)
+        action = 'BUY ON DIPS';
+      } else if (val <= 54) {
+        color = '#00dfd8'; // Neutral (Cyan)
+        action = 'HOLD & MONITOR';
+      } else if (val <= 75) {
+        color = '#00e676'; // Greed (Green)
+        action = 'TAKE PARTIAL PROFITS';
+      } else {
+        color = '#00e676'; // Extreme Greed (Neon Green)
+        action = 'HIGH RISK / OVERBOUGHT';
+      }
+
+      // UI Color Updates
+      document.getElementById('fngClass').style.color = color;
+      document.getElementById('fngStatusText').style.color = color;
+      document.getElementById('fngActionSignal').style.color = color;
+      document.getElementById('fngActionSignal').innerText = action;
+
+      // Animate SVG Semi-Circle Arc (Max Arc Dashoffset = 283)
+      const arc = document.getElementById('fngArcFill');
+      if (arc) {
+        arc.style.stroke = color;
+        const offset = 283 - (283 * (val / 100));
+        arc.style.strokeDashoffset = offset;
+      }
+
+    } catch (e) {
+      console.log('Fear & Greed API Error:', e);
+      document.getElementById('fngStatusText').innerText = 'API Connection Error';
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => { positionSec(); fetchRealFearGreed(); });
+  positionSec(); 
+  fetchRealFearGreed();
+})();
+</script>
+
 </body>
 </html>
 
