@@ -1177,6 +1177,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
+
 <style>
 .real-trust-strip{width:100%;background:#090e17;border-top:1px solid rgba(0,230,118,.2);border-bottom:1px solid rgba(255,255,255,.08);padding:10px 12px;box-sizing:border-box;font-family:Inter,sans-serif}
 .trust-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -1194,28 +1195,68 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 
 <div id="trustStripElement" class="real-trust-strip">
   <div class="trust-container">
-    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(0,230,118,.12);color:#00e676"><i class="fa-solid fa-clock"></i></div><div class="trust-details"><span class="trust-title">Indian Market</span><span class="trust-value" id="marketStatusVal"><span class="pulse-dot pulse-green"></span>Checking...</span></div></div>
-    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(0,223,216,.12);color:#00dfd8"><i class="fa-solid fa-bolt"></i></div><div class="trust-details"><span class="trust-title">Alpha AI Signal</span><span class="trust-value" style="color:#00dfd8"><i class="fa-solid fa-bullseye"></i> 98.4% Acc.</span></div></div>
-    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(121,40,202,.15);color:#a855f7"><i class="fa-solid fa-users"></i></div><div class="trust-details"><span class="trust-title">Live Traders</span><span class="trust-value"><span class="pulse-dot pulse-green"></span><span id="liveTradersCount">14,280</span> Online</span></div></div>
-    <div class="trust-item"><div class="trust-icon-wrap" style="background:rgba(255,183,3,.12);color:#ffb703"><i class="fa-solid fa-shield-halved"></i></div><div class="trust-details"><span class="trust-title">Protection</span><span class="trust-value" style="color:#ffb703"><i class="fa-solid fa-lock"></i> 256-Bit SSL</span></div></div>
+    <div class="trust-item">
+      <div class="trust-icon-wrap" style="background:rgba(0,230,118,.12);color:#00e676"><i class="fa-solid fa-clock"></i></div>
+      <div class="trust-details"><span class="trust-title">NSE / BSE Status</span><span class="trust-value" id="marketStatusVal"><span class="pulse-dot pulse-green"></span> Checking...</span></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-wrap" style="background:rgba(247,147,26,.15);color:#f7931a"><i class="fa-brands fa-bitcoin"></i></div>
+      <div class="trust-details"><span class="trust-title">BTC/USD (Live API)</span><span class="trust-value" id="realBtcPrice" style="color:#f7931a">Loading...</span></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-wrap" style="background:rgba(0,223,216,.12);color:#00dfd8"><i class="fa-solid fa-bolt"></i></div>
+      <div class="trust-details"><span class="trust-title">Alpha AI Signal</span><span class="trust-value" style="color:#00dfd8"><i class="fa-solid fa-circle-check"></i> System Active</span></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-wrap" style="background:rgba(255,183,3,.12);color:#ffb703"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="trust-details"><span class="trust-title">Security Check</span><span class="trust-value" id="realSslStatus" style="color:#ffb703"><i class="fa-solid fa-lock"></i> SSL Secured</span></div>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
   function init(){
-    var h=document.querySelector('.hero-full-card'),t=document.getElementById('trustStripElement');
-    if(h&&t)h.parentNode.insertBefore(t,h.nextSibling);
-    var now=new Date(),utc=now.getTime()+(now.getTimezoneOffset()*60000),ist=new Date(utc+19800000);
-    var day=ist.getDay(),m=ist.getHours()*60+ist.getMinutes(),s=document.getElementById('marketStatusVal');
+    // 1. Position Strip Under Hero Image
+    var h = document.querySelector('.hero-full-card'), t = document.getElementById('trustStripElement');
+    if(h && t) h.parentNode.insertBefore(t, h.nextSibling);
+
+    // 2. Real Indian Market Hours Check (Mon-Fri, 9:15 AM - 3:30 PM IST)
+    var now = new Date(), utc = now.getTime() + (now.getTimezoneOffset() * 60000), ist = new Date(utc + 19800000);
+    var day = ist.getDay(), m = ist.getHours() * 60 + ist.getMinutes(), s = document.getElementById('marketStatusVal');
     if(s){
-      if(day>=1&&day<=5&&m>=555&&m<=930){s.innerHTML='<span class="pulse-dot pulse-green"></span> Market OPEN';s.style.color='#00e676';}
-      else{s.innerHTML='<span class="pulse-dot pulse-red"></span> Market CLOSED';s.style.color='#ff5252';}
+      if(day >= 1 && day <= 5 && m >= 555 && m <= 930){
+        s.innerHTML = '<span class="pulse-dot pulse-green"></span> Market OPEN';
+        s.style.color = '#00e676';
+      } else {
+        s.innerHTML = '<span class="pulse-dot pulse-red"></span> Market CLOSED';
+        s.style.color = '#ff5252';
+      }
     }
-    var c=document.getElementById('liveTradersCount'),val=14280;
-    if(c){setInterval(function(){val+=Math.floor(Math.random()*7)-3;if(val<14100)val=14200;c.innerText=val.toLocaleString();},3000);}
+
+    // 3. Real Live BTC Price from Binance Public API (No Fake Data)
+    function fetchBtc(){
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(d => {
+          var btcElem = document.getElementById('realBtcPrice');
+          if(btcElem && d.price) {
+            btcElem.innerText = '$' + parseFloat(d.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+          }
+        })
+        .catch(() => {});
+    }
+    fetchBtc();
+    setInterval(fetchBtc, 5000); // 5 सेकंड में असली मार्केट अपडेट
+
+    // 4. Real SSL Security Detection
+    var sslElem = document.getElementById('realSslStatus');
+    if(sslElem && window.location.protocol !== 'https:'){
+      sslElem.innerHTML = '<i class="fa-solid fa-unlock"></i> HTTP Connection';
+      sslElem.style.color = '#ff5252';
+    }
   }
-  document.addEventListener("DOMContentLoaded",init);init();
+  document.addEventListener("DOMContentLoaded", init); init();
 })();
 </script>
 
