@@ -2004,6 +2004,111 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
      
 
+<!-- =================================================================
+     💰 AD SLOTS — sirf Home page par, kahi aur nahi
+     Har box ke andar apna AdSense (ya kisi bhi ad network) ka
+     <script>/<ins> code paste karo, jahan "PASTE YOUR AD CODE HERE"
+     likha hai. Koi real ad khud-ba-khud nahi aayega jab tak tum apna
+     ad-network ka code yahan na daalo — ye sirf sahi size ke reserved
+     placeholder hain.
+================================================================== -->
+<style>
+.ad-slot-box{
+  background: rgba(255,255,255,.02);
+  border: 1px dashed rgba(148,163,184,.35);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #64748b;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 22px auto;
+  overflow: hidden;
+}
+.ad-slot-box .ad-slot-tag{ color:#e9c25f; font-size:9px; letter-spacing:1.5px; }
+
+/* Slot 1: Top Leaderboard */
+#adSlotTop{ width:728px; max-width:94%; height:90px; }
+@media(max-width:480px){ #adSlotTop{ height:50px; } }
+
+/* Slot 3: In-Feed Native */
+#adSlotInFeed{ width:728px; max-width:94%; min-height:90px; }
+
+/* Slot 4: Multiplex / Grid */
+#adSlotMultiplex{ width:100%; max-width:1200px; min-height:250px; }
+
+/* Slot 5 & 6: Sidebar (Square + Sticky), floating on desktop only */
+.ad-sidebar-stack{
+  position: fixed;
+  top: 130px;
+  right: 14px;
+  z-index: 900;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+}
+#adSlotSidebarSquare{ width:300px; height:250px; }
+#adSlotSidebarSticky{ width:300px; height:600px; position: sticky; top: 130px; }
+
+@media(min-width:1180px){
+  .ad-sidebar-stack{ display:flex; }
+}
+</style>
+
+<div id="adSlotTop" class="ad-slot-box"><span class="ad-slot-tag">Ad Slot #1 · 728×90 / Mobile 320×50</span><span>PASTE YOUR AD CODE HERE</span></div>
+<div id="adSlotInFeed" class="ad-slot-box"><span class="ad-slot-tag">Ad Slot #3 · In-Feed Native · 728×90</span><span>PASTE YOUR AD CODE HERE</span></div>
+<div id="adSlotMultiplex" class="ad-slot-box"><span class="ad-slot-tag">Ad Slot #4 · Multiplex / Grid Unit</span><span>PASTE YOUR AD CODE HERE</span></div>
+
+<div class="ad-sidebar-stack" id="adSidebarStack">
+  <div id="adSlotSidebarSquare" class="ad-slot-box"><span class="ad-slot-tag">Ad Slot #5 · 300×250</span><span>PASTE YOUR AD CODE HERE</span></div>
+  <div id="adSlotSidebarSticky" class="ad-slot-box"><span class="ad-slot-tag">Ad Slot #6 · Sticky 300×600</span><span>PASTE YOUR AD CODE HERE</span></div>
+</div>
+
+<script>
+(function(){
+  // Sirf Home page ke andar dikhne chahiye — isliye inhe #home ke
+  // andar hi (already maujood elements ke paas) insert kar rahe hain.
+  function placeAdSlots(){
+    var home = document.getElementById('home');
+    if(!home) return;
+
+    var top = document.getElementById('adSlotTop');
+    var inFeed = document.getElementById('adSlotInFeed');
+    var multiplex = document.getElementById('adSlotMultiplex');
+    var sidebar = document.getElementById('adSidebarStack');
+
+    // Slot 1: hero image ke turant baad, sabse upar wala jagah
+    var hero = home.querySelector('.hero-full-card');
+    if (hero && top) hero.parentNode.insertBefore(top, hero.nextSibling);
+
+    // Slot 3: category cards (agar hain) ke baad, warna tools grid ke baad
+    var afterCat = document.getElementById('ultraCategoryWrapper');
+    var toolsWrap = home.querySelector('.tools-grid-wrap');
+    var inFeedAnchor = afterCat || toolsWrap || hero;
+    if (inFeedAnchor && inFeed) inFeedAnchor.parentNode.insertBefore(inFeed, inFeedAnchor.nextSibling);
+
+    // Slot 4: home page ke sabse last module ke baad (jo bhi maujood ho)
+    var lastKnown = document.getElementById('loanEngineSection')
+                 || document.getElementById('finCalcSection')
+                 || document.getElementById('alphaSignalSection')
+                 || inFeedAnchor;
+    if (lastKnown && multiplex) lastKnown.parentNode.insertBefore(multiplex, lastKnown.nextSibling);
+
+    // Slot 5/6: floating sidebar, home ke andar hi rakha (taaki sirf Home par dikhe)
+    if (sidebar && home && sidebar.parentNode !== home) home.appendChild(sidebar);
+  }
+
+  document.addEventListener('DOMContentLoaded', placeAdSlots);
+  placeAdSlots();
+})();
+</script>
+
 </body>
 </html>
 
