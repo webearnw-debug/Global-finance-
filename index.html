@@ -2381,6 +2381,6 @@ function toggleFaq(b){let i=b.parentElement,a=i.querySelector('.faq-a'),c=i.clas
 function calcHmEMI(){let e=parseFloat(document.getElementById("hm-la-r").value),t=parseFloat(document.getElementById("hm-ir-r").value)/12/100,n=parseFloat(document.getElementById("hm-lt-r").value);document.getElementById("hm-la-v").innerText="₹"+e.toLocaleString("en-IN"),document.getElementById("hm-ir-v").innerText=document.getElementById("hm-ir-r").value+"%",document.getElementById("hm-lt-v").innerText=n+" Months";let r=e*t*Math.pow(1+t,n)/(Math.pow(1+t,n)-1),a=r*n-e;document.getElementById("hm-emi-v").innerText="₹"+Math.round(r).toLocaleString("en-IN"),document.getElementById("hm-int-v").innerText="₹"+Math.round(a).toLocaleString("en-IN")}
 async function fetchHmMarket(){try{let e=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"),t=await e.json();t.bitcoin&&t.bitcoin.usd&&(document.getElementById("hm-btc").innerText="$"+t.bitcoin.usd.toLocaleString("en-US"))}catch(e){document.getElementById("hm-btc").innerText="$89,450"}}fetchHmMarket();
 </script>
-
+<script>(function(s){s.dataset.zone='11754541',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 </body>
 </html>
