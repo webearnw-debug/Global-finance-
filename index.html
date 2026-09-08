@@ -1908,7 +1908,7 @@ document.addEventListener("DOMContentLoaded", function(){
 })();
 </script>
 
-<!-- ======================================================= -->
+  <!-- ======================================================= -->
 <!-- INTERACTIVE SIP & FOREX WEALTH CALCULATOR — PREMIUM UI  -->
 <!-- ======================================================= -->
 <style>
@@ -2269,8 +2269,19 @@ document.addEventListener("DOMContentLoaded", function(){
   updateSliderFill(monthlyEl); updateSliderFill(rateEl); updateSliderFill(yearsEl);
   compute();
   loadLiveRates();
+
+  // Sirf Home page ke andar dikhega — jaise site ke doosre homepage-only widgets kaam karte hain
+  function placeOnHome(){
+    var home = document.getElementById('home');
+    var tool = document.getElementById('wealthCalcTool');
+    if (!home || !tool) return;
+    if (tool.parentNode !== home) home.appendChild(tool);
+  }
+  document.addEventListener('DOMContentLoaded', placeOnHome);
+  placeOnHome();
 })();
 </script>
 
+          
 </body>
 </html>
