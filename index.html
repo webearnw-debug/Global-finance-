@@ -2617,10 +2617,354 @@ LxFooter.init();
 <script src="https://5gvci.com/act/files/tag.min.js?z=11760882" data-cfasync="false" async></script>
    <script>
    
-  <script>
-!(function(){function t(){let e=document.getElementById("financial")||document.querySelector(".financial")||document.querySelector('[data-section="financial"]');if(!e)for(let n of document.querySelectorAll("section, div"))if(n.id?.toLowerCase().includes("financial")||n.className?.toString().toLowerCase().includes("financial")){e=n;break}if(!e||document.getElementById("gf-financial-tax-engine"))return;const n=document.createElement("div");n.id="gf-financial-tax-engine",n.innerHTML=`<style>#gf-financial-tax-engine .gf-tax-wrapper{--tx-bg:#0b0d11;--tx-card:#12151c;--tx-border:rgba(255,255,255,.08);--tx-gold:#c9a869;--tx-accent:#00e599;--tx-text:#e9e7e1;--tx-muted:#82868f;background:var(--tx-bg);border:1px solid var(--tx-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;font-family:'Plus Jakarta Sans',sans-serif;color:var(--tx-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}#gf-financial-tax-engine .gf-tax-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--tx-border);padding-bottom:18px;margin-bottom:24px}#gf-financial-tax-engine .gf-tax-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--tx-gold);letter-spacing:.3px}#gf-financial-tax-engine .gf-tax-badge{background:rgba(0,229,153,.1);border:1px solid rgba(0,229,153,.3);color:var(--tx-accent);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.5px}#gf-financial-tax-engine .gf-tax-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}@media(max-width:768px){#gf-financial-tax-engine .gf-tax-grid{grid-template-columns:1fr}}#gf-financial-tax-engine .gf-tax-field{margin-bottom:20px}#gf-financial-tax-engine .gf-tax-label{display:flex;justify-content:space-between;font-size:13px;color:var(--tx-muted);margin-bottom:8px}#gf-financial-tax-engine .gf-tax-label span{color:var(--tx-text);font-weight:700}#gf-financial-tax-engine .gf-tax-input-wrap{position:relative;display:flex;align-items:center}#gf-financial-tax-engine .gf-tax-input-wrap span{position:absolute;left:14px;color:var(--tx-gold);font-weight:600;font-size:14px}#gf-financial-tax-engine .gf-tax-number{width:100%;background:var(--tx-card);border:1px solid var(--tx-border);color:var(--tx-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:0;transition:border-color .2s}#gf-financial-tax-engine .gf-tax-number:focus{border-color:var(--tx-gold)}#gf-financial-tax-engine .gf-tax-slider{width:100%;height:4px;background:var(--tx-border);border-radius:2px;outline:0;margin-top:10px;accent-color:var(--tx-accent);cursor:pointer}#gf-financial-tax-engine .gf-tax-results{background:var(--tx-card);border:1px solid var(--tx-border);border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:space-between}#gf-financial-tax-engine .gf-tax-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}#gf-financial-tax-engine .gf-regime-card{background:rgba(255,255,255,.02);border:1px solid var(--tx-border);padding:14px;border-radius:8px;text-align:center}#gf-financial-tax-engine .gf-regime-card.winner{border-color:var(--tx-accent);background:rgba(0,229,153,.04)}#gf-financial-tax-engine .gf-regime-name{font-size:11px;text-transform:uppercase;color:var(--tx-muted);letter-spacing:.5px}#gf-financial-tax-engine .gf-regime-val{font-size:18px;font-weight:700;color:var(--tx-text);margin:6px 0 2px}#gf-financial-tax-engine .gf-tax-recommendation{background:linear-gradient(135deg,rgba(201,168,105,.15) 0%,rgba(0,229,153,.08) 100%);border:1px solid var(--tx-gold);border-radius:8px;padding:14px;text-align:center}#gf-financial-tax-engine .gf-rec-title{font-size:12px;color:var(--tx-gold);font-weight:700;text-transform:uppercase}#gf-financial-tax-engine .gf-rec-amount{font-size:16px;font-weight:700;color:var(--tx-accent);margin-top:4px}</style><div class="gf-tax-wrapper"><div class="gf-tax-header"><div class="gf-tax-title">Tax Intelligence Engine</div><div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div></div><div class="gf-tax-grid"><div><div class="gf-tax-field"><div class="gf-tax-label">Annual Gross Income <span id="lblIncome">₹12,00,000</span></div><div class="gf-tax-input-wrap"><span>₹</span><input type="number" id="inpIncome" class="gf-tax-number" value="1200000" step="25000" oninput="runTaxCalc()"></div><input type="range" id="sldIncome" class="gf-tax-slider" min="300000" max="5000000" step="25000" value="1200000" oninput="syncTaxInput('income')"></div><div class="gf-tax-field"><div class="gf-tax-label">Old Regime Deductions (80C, HRA, 80D) <span id="lblDeduct">₹1,50,000</span></div><div class="gf-tax-input-wrap"><span>₹</span><input type="number" id="inpDeduct" class="gf-tax-number" value="150000" step="10000" oninput="runTaxCalc()"></div><input type="range" id="sldDeduct" class="gf-tax-slider" min="0" max="500000" step="10000" value="150000" oninput="syncTaxInput('deduct')"></div></div><div class="gf-tax-results"><div class="gf-tax-compare"><div class="gf-regime-card" id="cardOld"><div class="gf-regime-name">Old Regime</div><div class="gf-regime-val" id="valOldTax">₹0</div><div style="font-size:10px;color:var(--tx-muted)">Incl. ₹50k Std. Ded</div></div><div class="gf-regime-card" id="cardNew"><div class="gf-regime-name">New Regime</div><div class="gf-regime-val" id="valNewTax">₹0</div><div style="font-size:10px;color:var(--tx-muted)">Incl. ₹75k Std. Ded</div></div></div><div class="gf-tax-recommendation"><div class="gf-rec-title" id="recHeadline">Optimal Tax Strategy</div><div class="gf-rec-amount" id="recDetail">Calculating best regime...</div></div></div></div></div>`,e.appendChild(n),window.syncTaxInput=function(t){const e=document.getElementById("gf-financial-tax-engine");e&&(t==="income"?e.querySelector("#inpIncome").value=e.querySelector("#sldIncome").value:e.querySelector("#inpDeduct").value=e.querySelector("#sldDeduct").value,runTaxCalc())};function a(t,e){let n=Math.max(0,t-5e4-e);if(n<=5e5)return 0;let a=0;return n>25e4&&(a+=.05*Math.min(n-25e4,25e4)),n>5e5&&(a+=.2*Math.min(n-5e5,5e5)),n>1e6&&(a+=.3*(n-1e6)),Math.round(1.04*a)}function c(t){let e=Math.max(0,t-75e3);if(e<=7e5)return 0;let n=0;return e>3e5&&(n+=.05*Math.min(e-3e5,4e5)),e>7e5&&(n+=.1*Math.min(e-7e5,3e5)),e>1e6&&(n+=.15*Math.min(e-1e6,2e5)),e>12e5&&(n+=.2*Math.min(e-12e5,3e5)),e>15e5&&(n+=.3*(e-15e5)),Math.round(1.04*n)}window.runTaxCalc=function(){const t=document.getElementById("gf-financial-tax-engine");if(!t)return;let e=parseFloat(t.querySelector("#inpIncome").value)||0,n=parseFloat(t.querySelector("#inpDeduct").value)||0;t.querySelector("#sldIncome").value=e,t.querySelector("#sldDeduct").value=n,t.querySelector("#lblIncome").textContent="₹"+e.toLocaleString("en-IN"),t.querySelector("#lblDeduct").textContent="₹"+n.toLocaleString("en-IN");let r=a(e,n),o=c(e);t.querySelector("#valOldTax").textContent="₹"+r.toLocaleString("en-IN"),t.querySelector("#valNewTax").textContent="₹"+o.toLocaleString("en-IN");let s=t.querySelector("#cardOld"),i=t.querySelector("#cardNew"),l=t.querySelector("#recDetail");s.classList.remove("winner"),i.classList.remove("winner"),o<r?(i.classList.add("winner"),l.textContent=`New Regime saves you ₹${(r-o).toLocaleString("en-IN")}`):r<o?(s.classList.add("winner"),l.textContent=`Old Regime saves you ₹${(o-r).toLocaleString("en-IN")}`):l.textContent="Both Regimes result in equal tax liability"},runTaxCalc()}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",t):t()})();
+  
+  <!-- STRICTLY BOUND TO FINANCIAL SECTION ONLY -->
+<script>
+(function() {
+  function attachToFinancialSection() {
+    // 1. Target specifically the Financial Section
+    let financialSection = document.getElementById('financial') || 
+                           document.querySelector('.financial') || 
+                           document.querySelector('[data-section="financial"]');
+
+    if (!financialSection) {
+      // Secondary check: Find section with Financial headings
+      const elements = document.querySelectorAll('section, div');
+      for (let el of elements) {
+        if (el.id?.toLowerCase().includes('financial') || el.className?.toString().toLowerCase().includes('financial')) {
+          financialSection = el;
+          break;
+        }
+      }
+    }
+
+    // Do nothing if Financial section is not found or already injected
+    if (!financialSection || document.getElementById('gf-financial-tax-engine')) return;
+
+    // 2. Inject HTML & CSS (Scoped strictly to Financial section)
+    const container = document.createElement('div');
+    container.id = 'gf-financial-tax-engine';
+    container.innerHTML = `
+      <style>
+        #gf-financial-tax-engine .gf-tax-wrapper {
+          --tx-bg: #0b0d11;
+          --tx-card: #12151c;
+          --tx-border: rgba(255, 255, 255, 0.08);
+          --tx-gold: #c9a869;
+          --tx-accent: #00e599;
+          --tx-text: #e9e7e1;
+          --tx-muted: #82868f;
+          
+          background: var(--tx-bg);
+          border: 1px solid var(--tx-border);
+          border-radius: 16px;
+          padding: 28px;
+          max-width: 900px;
+          margin: 24px auto;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          color: var(--tx-text);
+          box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        #gf-financial-tax-engine .gf-tax-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid var(--tx-border);
+          padding-bottom: 18px;
+          margin-bottom: 24px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          font-weight: 700;
+          color: var(--tx-gold);
+          letter-spacing: 0.3px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-badge {
+          background: rgba(0, 229, 153, 0.1);
+          border: 1px solid rgba(0, 229, 153, 0.3);
+          color: var(--tx-accent);
+          font-size: 11px;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 20px;
+          letter-spacing: 0.5px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+        }
+
+        @media (max-width: 768px) {
+          #gf-financial-tax-engine .gf-tax-grid { grid-template-columns: 1fr; }
+        }
+
+        #gf-financial-tax-engine .gf-tax-field {
+          margin-bottom: 20px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-label {
+          display: flex;
+          justify-content: space-between;
+          font-size: 13px;
+          color: var(--tx-muted);
+          margin-bottom: 8px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-label span {
+          color: var(--tx-text);
+          font-weight: 700;
+        }
+
+        #gf-financial-tax-engine .gf-tax-input-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        #gf-financial-tax-engine .gf-tax-input-wrap span {
+          position: absolute;
+          left: 14px;
+          color: var(--tx-gold);
+          font-weight: 600;
+          font-size: 14px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-number {
+          width: 100%;
+          background: var(--tx-card);
+          border: 1px solid var(--tx-border);
+          color: var(--tx-text);
+          padding: 10px 14px 10px 30px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        #gf-financial-tax-engine .gf-tax-number:focus {
+          border-color: var(--tx-gold);
+        }
+
+        #gf-financial-tax-engine .gf-tax-slider {
+          width: 100%;
+          height: 4px;
+          background: var(--tx-border);
+          border-radius: 2px;
+          outline: none;
+          margin-top: 10px;
+          accent-color: var(--tx-accent);
+          cursor: pointer;
+        }
+
+        #gf-financial-tax-engine .gf-tax-results {
+          background: var(--tx-card);
+          border: 1px solid var(--tx-border);
+          border-radius: 12px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        #gf-financial-tax-engine .gf-tax-compare {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        #gf-financial-tax-engine .gf-regime-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid var(--tx-border);
+          padding: 14px;
+          border-radius: 8px;
+          text-align: center;
+        }
+
+        #gf-financial-tax-engine .gf-regime-card.winner {
+          border-color: var(--tx-accent);
+          background: rgba(0, 229, 153, 0.04);
+        }
+
+        #gf-financial-tax-engine .gf-regime-name {
+          font-size: 11px;
+          text-transform: uppercase;
+          color: var(--tx-muted);
+          letter-spacing: 0.5px;
+        }
+
+        #gf-financial-tax-engine .gf-regime-val {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--tx-text);
+          margin: 6px 0 2px;
+        }
+
+        #gf-financial-tax-engine .gf-tax-recommendation {
+          background: linear-gradient(135deg, rgba(201, 168, 105, 0.15) 0%, rgba(0, 229, 153, 0.08) 100%);
+          border: 1px solid var(--tx-gold);
+          border-radius: 8px;
+          padding: 14px;
+          text-align: center;
+        }
+
+        #gf-financial-tax-engine .gf-rec-title {
+          font-size: 12px;
+          color: var(--tx-gold);
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        #gf-financial-tax-engine .gf-rec-amount {
+          font-size: 16px;
+          font-weight: 700;
+          color: var(--tx-accent);
+          margin-top: 4px;
+        }
+      </style>
+
+      <div class="gf-tax-wrapper">
+        <div class="gf-tax-header">
+          <div class="gf-tax-title">Tax Intelligence Engine</div>
+          <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
+        </div>
+
+        <div class="gf-tax-grid">
+          <div>
+            <div class="gf-tax-field">
+              <div class="gf-tax-label">Annual Gross Income <span id="lblIncome">₹12,00,000</span></div>
+              <div class="gf-tax-input-wrap">
+                <span>₹</span>
+                <input type="number" id="inpIncome" class="gf-tax-number" value="1200000" step="25000" oninput="runTaxCalc()">
+              </div>
+              <input type="range" id="sldIncome" class="gf-tax-slider" min="300000" max="5000000" step="25000" value="1200000" oninput="syncTaxInput('income')">
+            </div>
+
+            <div class="gf-tax-field">
+              <div class="gf-tax-label">Old Regime Deductions (80C, HRA, 80D) <span id="lblDeduct">₹1,50,000</span></div>
+              <div class="gf-tax-input-wrap">
+                <span>₹</span>
+                <input type="number" id="inpDeduct" class="gf-tax-number" value="150000" step="10000" oninput="runTaxCalc()">
+              </div>
+              <input type="range" id="sldDeduct" class="gf-tax-slider" min="0" max="500000" step="10000" value="150000" oninput="syncTaxInput('deduct')">
+            </div>
+          </div>
+
+          <div class="gf-tax-results">
+            <div class="gf-tax-compare">
+              <div class="gf-regime-card" id="cardOld">
+                <div class="gf-regime-name">Old Regime</div>
+                <div class="gf-regime-val" id="valOldTax">₹0</div>
+                <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹50k Std. Ded</div>
+              </div>
+              <div class="gf-regime-card" id="cardNew">
+                <div class="gf-regime-name">New Regime</div>
+                <div class="gf-regime-val" id="valNewTax">₹0</div>
+                <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹75k Std. Ded</div>
+              </div>
+            </div>
+
+            <div class="gf-tax-recommendation">
+              <div class="gf-rec-title" id="recHeadline">Optimal Tax Strategy</div>
+              <div class="gf-rec-amount" id="recDetail">Calculating best regime...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    financialSection.appendChild(container);
+
+    // 3. Logic Execution Scoped Only to Financial Container
+    window.syncTaxInput = function(type) {
+      const root = document.getElementById('gf-financial-tax-engine');
+      if (!root) return;
+      if (type === 'income') {
+        root.querySelector('#inpIncome').value = root.querySelector('#sldIncome').value;
+      } else {
+        root.querySelector('#inpDeduct').value = root.querySelector('#sldDeduct').value;
+      }
+      runTaxCalc();
+    };
+
+    function calcOldTax(gross, deduct) {
+      let taxable = Math.max(0, gross - 50000 - deduct);
+      if (taxable <= 500000) return 0;
+      let tax = 0;
+      if (taxable > 250000) tax += Math.min(taxable - 250000, 250000) * 0.05;
+      if (taxable > 500000) tax += Math.min(taxable - 500000, 500000) * 0.20;
+      if (taxable > 1000000) tax += (taxable - 1000000) * 0.30;
+      return Math.round(tax * 1.04);
+    }
+
+    function calcNewTax(gross) {
+      let taxable = Math.max(0, gross - 75000);
+      if (taxable <= 700000) return 0;
+      let tax = 0;
+      if (taxable > 300000) tax += Math.min(taxable - 300000, 400000) * 0.05;
+      if (taxable > 700000) tax += Math.min(taxable - 700000, 300000) * 0.10;
+      if (taxable > 1000000) tax += Math.min(taxable - 1000000, 200000) * 0.15;
+      if (taxable > 1200000) tax += Math.min(taxable - 1200000, 300000) * 0.20;
+      if (taxable > 1500000) tax += (taxable - 1500000) * 0.30;
+      return Math.round(tax * 1.04);
+    }
+
+    window.runTaxCalc = function() {
+      const root = document.getElementById('gf-financial-tax-engine');
+      if (!root) return;
+
+      let gross = parseFloat(root.querySelector('#inpIncome').value) || 0;
+      let deduct = parseFloat(root.querySelector('#inpDeduct').value) || 0;
+
+      root.querySelector('#sldIncome').value = gross;
+      root.querySelector('#sldDeduct').value = deduct;
+      root.querySelector('#lblIncome').textContent = '₹' + gross.toLocaleString('en-IN');
+      root.querySelector('#lblDeduct').textContent = '₹' + deduct.toLocaleString('en-IN');
+
+      let oldTax = calcOldTax(gross, deduct);
+      let newTax = calcNewTax(gross);
+
+      root.querySelector('#valOldTax').textContent = '₹' + oldTax.toLocaleString('en-IN');
+      root.querySelector('#valNewTax').textContent = '₹' + newTax.toLocaleString('en-IN');
+
+      let cardOld = root.querySelector('#cardOld');
+      let cardNew = root.querySelector('#cardNew');
+      let recDetail = root.querySelector('#recDetail');
+
+      cardOld.classList.remove('winner');
+      cardNew.classList.remove('winner');
+
+      if (newTax < oldTax) {
+        cardNew.classList.add('winner');
+        let diff = oldTax - newTax;
+        recDetail.textContent = `New Regime saves you ₹${diff.toLocaleString('en-IN')}`;
+      } else if (oldTax < newTax) {
+        cardOld.classList.add('winner');
+        let diff = newTax - oldTax;
+        recDetail.textContent = `Old Regime saves you ₹${diff.toLocaleString('en-IN')}`;
+      } else {
+        recDetail.textContent = `Both Regimes result in equal tax liability`;
+      }
+    };
+
+    runTaxCalc();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachToFinancialSection);
+  } else {
+    attachToFinancialSection();
+  }
+})();
 </script>
-               
+             
 
 </body>
    
