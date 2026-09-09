@@ -2771,5 +2771,7 @@ LxFooter.init();
 </div>
 </div>
 <script>(function(){ var KEY = 'gf_welcome_seen_v1'; function alreadySeen(){ try { return localStorage.getItem(KEY) === '1'; } catch(e) { return false; } } function markSeen(){ try { localStorage.setItem(KEY, '1'); } catch(e) {} } function closeOverlay(){ var ov = document.getElementById('gwOverlay'); if (!ov) return; ov.classList.remove('show'); markSeen(); setTimeout(function(){ ov.remove(); }, 500); } function initWelcome(){ var ov = document.getElementById('gwOverlay'); if (!ov) return; if (alreadySeen()) { ov.remove(); return; } requestAnimationFrame(function(){ setTimeout(function(){ ov.classList.add('show'); }, 250); }); document.getElementById('gwEnter').addEventListener('click', closeOverlay); document.getElementById('gwSkip').addEventListener('click', closeOverlay); document.getElementById('gwClose').addEventListener('click', closeOverlay); ov.addEventListener('click', function(e){ if (e.target === ov) closeOverlay(); }); document.addEventListener('keydown', function esc(e){ if (e.key === 'Escape') { closeOverlay(); document.removeEventListener('keydown', esc); } }); } if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initWelcome); } else { initWelcome(); } })();</script>
+    <meta name="google-site-verification" content="e8UWOXrxUsP53ykPawoBbgU-nhX8kSFHJOknpae49K0" />
 </body>
+    
 </html>
