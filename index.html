@@ -2615,6 +2615,367 @@ LxFooter.init();
 </script>
 <script>(function(s){s.dataset.zone='11760886',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <script src="https://5gvci.com/act/files/tag.min.js?z=11760882" data-cfasync="false" async></script>
+<!-- ================= FINANCIAL SECTION: TAX ENGINE (REAL FY 2026-27 SLABS) ================= -->
+<style>
+.gf-tax-wrapper {
+  --tx-bg: #0b0d11;
+  --tx-card: #12151c;
+  --tx-border: rgba(255, 255, 255, 0.08);
+  --tx-gold: #c9a869;
+  --tx-accent: #00e599;
+  --tx-text: #e9e7e1;
+  --tx-muted: #82868f;
+  
+  background: var(--tx-bg);
+  border: 1px solid var(--tx-border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 900px;
+  margin: 24px auto;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--tx-text);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.gf-tax-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--tx-border);
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gf-tax-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--tx-gold);
+  letter-spacing: 0.3px;
+}
+
+.gf-tax-badge {
+  background: rgba(0, 229, 153, 0.1);
+  border: 1px solid rgba(0, 229, 153, 0.3);
+  color: var(--tx-accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.gf-tax-note {
+  font-size: 11px;
+  color: var(--tx-muted);
+  margin-bottom: 22px;
+  line-height: 1.6;
+  border-left: 2px solid var(--tx-border);
+  padding-left: 12px;
+}
+
+.gf-tax-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+@media (max-width: 768px) {
+  .gf-tax-grid { grid-template-columns: 1fr; }
+}
+
+.gf-tax-field {
+  margin-bottom: 20px;
+}
+
+.gf-tax-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--tx-muted);
+  margin-bottom: 8px;
+}
+
+.gf-tax-label span {
+  color: var(--tx-text);
+  font-weight: 700;
+}
+
+.gf-tax-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gf-tax-input-wrap span {
+  position: absolute;
+  left: 14px;
+  color: var(--tx-gold);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.gf-tax-number {
+  width: 100%;
+  background: var(--tx-card);
+  border: 1px solid var(--tx-border);
+  color: var(--tx-text);
+  padding: 10px 14px 10px 30px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.gf-tax-number:focus {
+  border-color: var(--tx-gold);
+}
+
+.gf-tax-slider {
+  width: 100%;
+  height: 4px;
+  background: var(--tx-border);
+  border-radius: 2px;
+  outline: none;
+  margin-top: 10px;
+  accent-color: var(--tx-accent);
+  cursor: pointer;
+}
+
+.gf-tax-results {
+  background: var(--tx-card);
+  border: 1px solid var(--tx-border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gf-tax-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.gf-regime-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--tx-border);
+  padding: 14px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.gf-regime-card.winner {
+  border-color: var(--tx-accent);
+  background: rgba(0, 229, 153, 0.04);
+}
+
+.gf-regime-name {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--tx-muted);
+  letter-spacing: 0.5px;
+}
+
+.gf-regime-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tx-text);
+  margin: 6px 0 2px;
+}
+
+.gf-tax-recommendation {
+  background: linear-gradient(135deg, rgba(201, 168, 105, 0.15) 0%, rgba(0, 229, 153, 0.08) 100%);
+  border: 1px solid var(--tx-gold);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+
+.gf-rec-title {
+  font-size: 12px;
+  color: var(--tx-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.gf-rec-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tx-accent);
+  margin-top: 4px;
+}
+</style>
+
+<div class="gf-tax-wrapper" id="gfTaxEngineSection">
+  <div class="gf-tax-header">
+    <div class="gf-tax-title">Tax Intelligence Engine</div>
+    <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
+  </div>
+
+  <div class="gf-tax-note">
+    Based on Union Budget 2025 slabs (carried forward unchanged into FY 2026–27): New Regime — ₹75,000 standard deduction, nil tax up to ₹12,00,000 taxable income (Section 87A rebate with marginal relief). Old Regime — ₹50,000 standard deduction, nil tax up to ₹5,00,000 taxable income. 4% Health & Education Cess applied on both.
+  </div>
+
+  <div class="gf-tax-grid">
+    <div>
+      <div class="gf-tax-field">
+        <div class="gf-tax-label">Annual Gross Income <span id="lblIncome">₹12,00,000</span></div>
+        <div class="gf-tax-input-wrap">
+          <span>₹</span>
+          <input type="number" id="inpIncome" class="gf-tax-number" value="1200000" step="25000" oninput="runTaxCalc()">
+        </div>
+        <input type="range" id="sldIncome" class="gf-tax-slider" min="300000" max="5000000" step="25000" value="1200000" oninput="syncTaxInput('income')">
+      </div>
+
+      <div class="gf-tax-field">
+        <div class="gf-tax-label">Old Regime Deductions (80C, HRA, 80D) <span id="lblDeduct">₹1,50,000</span></div>
+        <div class="gf-tax-input-wrap">
+          <span>₹</span>
+          <input type="number" id="inpDeduct" class="gf-tax-number" value="150000" step="10000" oninput="runTaxCalc()">
+        </div>
+        <input type="range" id="sldDeduct" class="gf-tax-slider" min="0" max="500000" step="10000" value="150000" oninput="syncTaxInput('deduct')">
+      </div>
+    </div>
+
+    <div class="gf-tax-results">
+      <div class="gf-tax-compare">
+        <div class="gf-regime-card" id="cardOld">
+          <div class="gf-regime-name">Old Regime</div>
+          <div class="gf-regime-val" id="valOldTax">₹0</div>
+          <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹50k Std. Ded</div>
+        </div>
+        <div class="gf-regime-card" id="cardNew">
+          <div class="gf-regime-name">New Regime</div>
+          <div class="gf-regime-val" id="valNewTax">₹0</div>
+          <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹75k Std. Ded</div>
+        </div>
+      </div>
+
+      <div class="gf-tax-recommendation">
+        <div class="gf-rec-title" id="recHeadline">Optimal Tax Strategy</div>
+        <div class="gf-rec-amount" id="recDetail">Calculating best regime...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function syncTaxInput(type) {
+  if (type === 'income') {
+    document.getElementById('inpIncome').value = document.getElementById('sldIncome').value;
+  } else {
+    document.getElementById('inpDeduct').value = document.getElementById('sldDeduct').value;
+  }
+  runTaxCalc();
+}
+
+// ---- OLD REGIME: slabs unchanged for FY 2025-26 / FY 2026-27 ----
+// 0-2.5L Nil | 2.5-5L 5% | 5-10L 20% | Above 10L 30% | Std. Deduction ₹50,000
+// Section 87A rebate: taxable income up to ₹5,00,000 -> zero tax (with marginal relief at the edge)
+function calcOldTax(gross, deduct) {
+  let taxable = Math.max(0, gross - 50000 - deduct);
+  let rebateLimit = 500000;
+
+  let rawTax = 0;
+  if (taxable > 250000) rawTax += Math.min(taxable - 250000, 250000) * 0.05;
+  if (taxable > 500000) rawTax += Math.min(taxable - 500000, 500000) * 0.20;
+  if (taxable > 1000000) rawTax += (taxable - 1000000) * 0.30;
+
+  let tax;
+  if (taxable <= rebateLimit) {
+    tax = 0;
+  } else {
+    // Marginal relief near the rebate threshold
+    let excess = taxable - rebateLimit;
+    tax = rawTax > excess ? excess : rawTax;
+  }
+  return Math.round(tax * 1.04); // 4% Health & Education Cess
+}
+
+// ---- NEW REGIME (default): Budget 2025 slabs, carried into FY 2026-27 ----
+// 0-4L Nil | 4-8L 5% | 8-12L 10% | 12-16L 15% | 16-20L 20% | 20-24L 25% | Above 24L 30%
+// Std. Deduction ₹75,000 | Section 87A rebate: taxable income up to ₹12,00,000 -> zero tax (with marginal relief)
+function calcNewTax(gross) {
+  let taxable = Math.max(0, gross - 75000);
+  let rebateLimit = 1200000;
+
+  let rawTax = 0;
+  if (taxable > 400000)  rawTax += Math.min(taxable - 400000, 400000) * 0.05;
+  if (taxable > 800000)  rawTax += Math.min(taxable - 800000, 400000) * 0.10;
+  if (taxable > 1200000) rawTax += Math.min(taxable - 1200000, 400000) * 0.15;
+  if (taxable > 1600000) rawTax += Math.min(taxable - 1600000, 400000) * 0.20;
+  if (taxable > 2000000) rawTax += Math.min(taxable - 2000000, 400000) * 0.25;
+  if (taxable > 2400000) rawTax += (taxable - 2400000) * 0.30;
+
+  let tax;
+  if (taxable <= rebateLimit) {
+    tax = 0;
+  } else {
+    // Marginal relief near the ₹12L rebate threshold
+    let excess = taxable - rebateLimit;
+    tax = rawTax > excess ? excess : rawTax;
+  }
+  return Math.round(tax * 1.04); // 4% Health & Education Cess
+}
+
+function runTaxCalc() {
+  let gross = parseFloat(document.getElementById('inpIncome').value) || 0;
+  let deduct = parseFloat(document.getElementById('inpDeduct').value) || 0;
+
+  document.getElementById('sldIncome').value = gross;
+  document.getElementById('sldDeduct').value = deduct;
+  document.getElementById('lblIncome').textContent = '₹' + gross.toLocaleString('en-IN');
+  document.getElementById('lblDeduct').textContent = '₹' + deduct.toLocaleString('en-IN');
+
+  let oldTax = calcOldTax(gross, deduct);
+  let newTax = calcNewTax(gross);
+
+  document.getElementById('valOldTax').textContent = '₹' + oldTax.toLocaleString('en-IN');
+  document.getElementById('valNewTax').textContent = '₹' + newTax.toLocaleString('en-IN');
+
+  let cardOld = document.getElementById('cardOld');
+  let cardNew = document.getElementById('cardNew');
+  let recDetail = document.getElementById('recDetail');
+
+  cardOld.classList.remove('winner');
+  cardNew.classList.remove('winner');
+
+  if (newTax < oldTax) {
+    cardNew.classList.add('winner');
+    let diff = oldTax - newTax;
+    recDetail.textContent = `New Regime saves you ₹${diff.toLocaleString('en-IN')}`;
+  } else if (oldTax < newTax) {
+    cardOld.classList.add('winner');
+    let diff = newTax - oldTax;
+    recDetail.textContent = `Old Regime saves you ₹${diff.toLocaleString('en-IN')}`;
+  } else {
+    recDetail.textContent = `Both Regimes result in equal tax liability`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', runTaxCalc);
+runTaxCalc();
+
+// ---- Sirf "Financial" page ke andar dikhega, kahi aur nahi ----
+(function(){
+  function placeOnFinancialPage(){
+    var financialPage = document.getElementById('financial');
+    var tool = document.getElementById('gfTaxEngineSection');
+    if (!financialPage || !tool) return;
+    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
+  }
+  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
+  placeOnFinancialPage();
+})();
+</script>
+
+   
    <script>
       
   
