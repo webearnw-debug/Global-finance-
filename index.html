@@ -2975,7 +2975,463 @@ runTaxCalc();
 })();
 </script>
 
-   
+  <!-- ================= ULTRA-LUXURY LIVE ASSET ALLOCATION ENGINE ================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+.gf-asset-engine-root {
+  --as-bg: #07090e;
+  --as-card: rgba(15, 18, 26, 0.75);
+  --as-border: rgba(201, 168, 105, 0.18);
+  --as-border-glow: rgba(0, 229, 153, 0.25);
+  --as-gold: #c9a869;
+  --as-gold-glow: rgba(201, 168, 105, 0.4);
+  --as-emerald: #00e599;
+  --as-cyan: #00d2ff;
+  --as-purple: #a855f7;
+  --as-text: #f1f3f9;
+  --as-muted: #808797;
+  
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: radial-gradient(circle at 80% 10%, rgba(201, 168, 105, 0.07) 0%, transparent 50%),
+              radial-gradient(circle at 10% 90%, rgba(0, 229, 153, 0.05) 0%, transparent 50%),
+              var(--as-bg);
+  border: 1px solid var(--as-border);
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 920px;
+  margin: 24px auto;
+  color: var(--as-text);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(201, 168, 105, 0.05);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.gf-asset-engine-root::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--as-gold), var(--as-emerald), transparent);
+  opacity: 0.8;
+}
+
+/* Header Section */
+.gf-ast-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.gf-ast-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 30%, var(--as-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.4px;
+}
+
+.gf-ast-badge {
+  background: rgba(0, 229, 153, 0.08);
+  border: 1px solid rgba(0, 229, 153, 0.3);
+  color: var(--as-emerald);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 30px;
+  letter-spacing: 0.6px;
+  box-shadow: 0 0 12px rgba(0, 229, 153, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gf-ast-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--as-emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--as-emerald);
+  animation: gfPulse 1.8s infinite;
+}
+
+@keyframes gfPulse {
+  0% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.4; transform: scale(0.9); }
+}
+
+/* Presets Bar */
+.gf-ast-presets {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.gf-preset-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--as-muted);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.gf-preset-btn:hover, .gf-preset-btn.active {
+  background: rgba(201, 168, 105, 0.12);
+  border-color: var(--as-gold);
+  color: var(--as-gold);
+  box-shadow: 0 0 15px rgba(201, 168, 105, 0.15);
+}
+
+/* Main Grid Layout */
+.gf-ast-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .gf-ast-grid { grid-template-columns: 1fr; }
+}
+
+/* Input Fields */
+.gf-ast-field {
+  margin-bottom: 16px;
+}
+
+.gf-ast-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--as-muted);
+  margin-bottom: 6px;
+}
+
+.gf-ast-label .p-badge {
+  color: var(--as-emerald);
+  font-weight: 700;
+  background: rgba(0, 229, 153, 0.1);
+  padding: 1px 7px;
+  border-radius: 4px;
+}
+
+.gf-ast-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gf-ast-input-wrap span {
+  position: absolute;
+  left: 12px;
+  color: var(--as-gold);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.gf-ast-input {
+  width: 100%;
+  background: var(--as-card);
+  border: 1px solid var(--as-border);
+  color: var(--as-text);
+  padding: 10px 12px 10px 28px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.gf-ast-input:focus {
+  border-color: var(--as-emerald);
+  box-shadow: 0 0 15px rgba(0, 229, 153, 0.2);
+}
+
+/* Visualizer Card (Chart Side) */
+.gf-ast-chart-card {
+  background: var(--as-card);
+  border: 1px solid var(--as-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.gf-chart-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.gf-chart-center-val {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.gf-chart-center-val .lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--as-muted);
+  letter-spacing: 0.8px;
+}
+
+.gf-chart-center-val .amt {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--as-emerald);
+  margin-top: 2px;
+  text-shadow: 0 0 10px rgba(0, 229, 153, 0.3);
+}
+
+/* Metrics Footer */
+.gf-ast-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.gf-metric-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.gf-metric-box .m-title {
+  font-size: 10px;
+  color: var(--as-muted);
+  text-transform: uppercase;
+}
+
+.gf-metric-box .m-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--as-gold);
+  margin-top: 3px;
+}
+</style>
+
+<div class="gf-asset-engine-root" id="gfAssetWrapper">
+  <div class="gf-ast-header">
+    <div class="gf-ast-title">Live Asset Allocation</div>
+    <div class="gf-ast-badge">Real-Time Visualizer</div>
+  </div>
+
+  <!-- Presets -->
+  <div class="gf-ast-presets">
+    <button class="gf-preset-btn active" onclick="applyAssetPreset('growth')">Aggressive Growth</button>
+    <button class="gf-preset-btn" onclick="applyAssetPreset('balanced')">HNW Balanced</button>
+    <button class="gf-preset-btn" onclick="applyAssetPreset('conservative')">Capital Preservation</button>
+  </div>
+
+  <div class="gf-ast-grid">
+    <!-- Left Inputs -->
+    <div>
+      <div class="gf-ast-field">
+        <div class="gf-ast-label"><span>Stocks & Mutual Funds</span><span class="p-badge" id="pStocks">0%</span></div>
+        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpStocks" class="gf-ast-input" value="600000" step="25000" oninput="updateAssetVisuals()"></div>
+      </div>
+
+      <div class="gf-ast-field">
+        <div class="gf-ast-label"><span>Fixed Income & Bonds</span><span class="p-badge" id="pBonds">0%</span></div>
+        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpBonds" class="gf-ast-input" value="200000" step="10000" oninput="updateAssetVisuals()"></div>
+      </div>
+
+      <div class="gf-ast-field">
+        <div class="gf-ast-label"><span>Gold & Commodities</span><span class="p-badge" id="pGold">0%</span></div>
+        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpGold" class="gf-ast-input" value="100000" step="5000" oninput="updateAssetVisuals()"></div>
+      </div>
+
+      <div class="gf-ast-field">
+        <div class="gf-ast-label"><span>Real Estate Asset</span><span class="p-badge" id="pRE">0%</span></div>
+        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpRE" class="gf-ast-input" value="250000" step="25000" oninput="updateAssetVisuals()"></div>
+      </div>
+
+      <div class="gf-ast-field">
+        <div class="gf-ast-label"><span>Crypto & Digital Assets</span><span class="p-badge" id="pCrypto">0%</span></div>
+        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpCrypto" class="gf-ast-input" value="50000" step="5000" oninput="updateAssetVisuals()"></div>
+      </div>
+    </div>
+
+    <!-- Right Live Doughnut Visualizer -->
+    <div class="gf-ast-chart-card">
+      <div class="gf-chart-container">
+        <canvas id="gfAssetDoughnut"></canvas>
+        <div class="gf-chart-center-val">
+          <div class="lbl">Total Value</div>
+          <div class="amt" id="valTotalNetWorth">₹0</div>
+        </div>
+      </div>
+
+      <div class="gf-ast-metrics">
+        <div class="gf-metric-box">
+          <div class="m-title">Portfolio Risk Score</div>
+          <div class="m-val" id="valRiskScore">Moderate</div>
+        </div>
+        <div class="gf-metric-box">
+          <div class="m-title">Diversification Index</div>
+          <div class="m-val" id="valDivIndex">88/100</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js Engine CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+let gfChart = null;
+
+function initAssetEngine() {
+  const ctx = document.getElementById('gfAssetDoughnut').getContext('2d');
+  
+  gfChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Stocks/MFs', 'Fixed Income', 'Gold', 'Real Estate', 'Crypto'],
+      datasets: [{
+        data: [600000, 200000, 100000, 250000, 50000],
+        backgroundColor: [
+          '#00e599', // Emerald
+          '#c9a869', // Gold
+          '#f59e0b', // Amber Gold
+          '#00d2ff', // Cyan
+          '#a855f7'  // Purple
+        ],
+        borderWidth: 3,
+        borderColor: '#0f121a',
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#07090e',
+          borderColor: 'rgba(201, 168, 105, 0.3)',
+          borderWidth: 1,
+          titleColor: '#c9a869',
+          bodyColor: '#f1f3f9',
+          padding: 10,
+          displayColors: true
+        }
+      },
+      cutout: '76%'
+    }
+  });
+
+  updateAssetVisuals();
+}
+
+function updateAssetVisuals() {
+  if (!gfChart) return;
+
+  const root = document.getElementById('gfAssetWrapper');
+  let st = parseFloat(root.querySelector('#inpStocks').value) || 0;
+  let bd = parseFloat(root.querySelector('#inpBonds').value) || 0;
+  let gd = parseFloat(root.querySelector('#inpGold').value) || 0;
+  let re = parseFloat(root.querySelector('#inpRE').value) || 0;
+  let cr = parseFloat(root.querySelector('#inpCrypto').value) || 0;
+
+  let total = st + bd + gd + re + cr;
+
+  // Center Total Counter
+  root.querySelector('#valTotalNetWorth').textContent = '₹' + total.toLocaleString('en-IN');
+
+  // Percentage Pills
+  if (total > 0) {
+    root.querySelector('#pStocks').textContent = Math.round((st / total) * 100) + '%';
+    root.querySelector('#pBonds').textContent = Math.round((bd / total) * 100) + '%';
+    root.querySelector('#pGold').textContent = Math.round((gd / total) * 100) + '%';
+    root.querySelector('#pRE').textContent = Math.round((re / total) * 100) + '%';
+    root.querySelector('#pCrypto').textContent = Math.round((cr / total) * 100) + '%';
+  }
+
+  // Risk Score Logic
+  let equityCryptoRatio = (st + cr) / (total || 1);
+  let riskLabel = "Conservative";
+  if (equityCryptoRatio > 0.65) riskLabel = "Aggressive";
+  else if (equityCryptoRatio > 0.35) riskLabel = "Moderate";
+  root.querySelector('#valRiskScore').textContent = riskLabel;
+
+  // Chart Update
+  gfChart.data.datasets[0].data = [st, bd, gd, re, cr];
+  gfChart.update();
+}
+
+function applyAssetPreset(type) {
+  const root = document.getElementById('gfAssetWrapper');
+  const btns = root.querySelectorAll('.gf-preset-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  if (type === 'growth') {
+    root.querySelector('#inpStocks').value = 700000;
+    root.querySelector('#inpBonds').value = 150000;
+    root.querySelector('#inpGold').value = 50000;
+    root.querySelector('#inpRE').value = 50000;
+    root.querySelector('#inpCrypto').value = 50000;
+  } else if (type === 'balanced') {
+    root.querySelector('#inpStocks').value = 400000;
+    root.querySelector('#inpBonds').value = 300000;
+    root.querySelector('#inpGold').value = 150000;
+    root.querySelector('#inpRE').value = 120000;
+    root.querySelector('#inpCrypto').value = 30000;
+  } else if (type === 'conservative') {
+    root.querySelector('#inpStocks').value = 200000;
+    root.querySelector('#inpBonds').value = 500000;
+    root.querySelector('#inpGold').value = 200000;
+    root.querySelector('#inpRE').value = 100000;
+    root.querySelector('#inpCrypto').value = 0;
+  }
+
+  updateAssetVisuals();
+}
+
+document.addEventListener('DOMContentLoaded', initAssetEngine);
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initAssetEngine();
+}
+
+// ---- Sirf "Financial" page ke andar dikhega, kahi aur nahi ----
+(function(){
+  function placeOnFinancialPage(){
+    var financialPage = document.getElementById('financial');
+    var tool = document.getElementById('gfAssetWrapper');
+    if (!financialPage || !tool) return;
+    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
+  }
+  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
+  placeOnFinancialPage();
+})();
+</script>
+ 
    <script>
       
   
