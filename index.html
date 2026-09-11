@@ -4033,33 +4033,45 @@ function obsQuickPrompt(text) {
   document.getElementById('obsInputText').value = text;
   obsSendAiMsg()
 </script>
-<!-- ALPHA AI FINANCIAL MODULE INTEGRATOR -->
+<!-- ALPHA AI FINANCIAL-ONLY MODE LOCKER -->
 <script>
-(function mountAlphaAiToFinancial() {
-  // 1. अपने मौजूदा Alpha AI वाले एलिमेंट की ID या Class यहाँ डालें (e.g. '#my-alpha-ai')
-  var EXISTING_ALPHA_SELECTOR = '#alpha-ai-financial-model'; 
+(function () {
+  function mountFinancialOnlyAlpha() {
+    var financialContainer = document.getElementById('financial');
+    // 1. अपने Alpha AI वाले मुख्य कंटेनर की ID यहाँ डालें
+    var originalAlpha = document.querySelector('#alpha-ai-container'); 
 
-  function initAlphaMount() {
-    var financialPage = document.getElementById('financial');
-    var originalAlpha = document.querySelector(EXISTING_ALPHA_SELECTOR);
+    if (!financialContainer || !originalAlpha) return;
 
-    if (!financialPage || !originalAlpha) return;
+    // Alpha AI को क्लोन करें ताकि यह ओरिजिनल जगह पर भी रहे
+    var financialAlpha = originalAlpha.cloneNode(true);
+    financialAlpha.id = 'alpha-ai-financial-locked';
 
-    // ओरिजिनल Alpha AI को क्लोन करके financial पेज में लगाना
-    var alphaClone = originalAlpha.cloneNode(true);
-    alphaClone.id = 'alpha-ai-financial-mounted'; // Duplicate ID Conflict से बचने के लिए
-    alphaClone.style.display = 'block';
+    // 2. मोड स्विच/ड्रॉपडाउन को ढूंढकर "Financial" पर स्विच करें और ड्रॉपडाउन छुपा दें
+    var modeSwitcher = financialAlpha.querySelector('.model-selector, select, .mode-dropdown');
+    if (modeSwitcher) {
+      modeSwitcher.value = 'financial'; // फ़ाइनेंशियल मोड सेट करें
+      modeSwitcher.style.display = 'none'; // मोड बदलने वाला ऑप्शन छुपाएं
+    }
 
-    financialPage.appendChild(alphaClone);
+    // अगर कोई एक्टिव मोड का टेक्स्ट लेबल है तो उसे 'Financial AI' पर सेट करें
+    var modeLabel = financialAlpha.querySelector('.active-mode-label');
+    if (modeLabel) modeLabel.innerText = 'MODE: FINANCIAL AI';
+
+    // Container में ऐड और डिस्प्ले करें
+    financialContainer.appendChild(financialAlpha);
+    financialAlpha.style.display = 'block';
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAlphaMount);
+    document.addEventListener('DOMContentLoaded', mountFinancialOnlyAlpha);
   } else {
-    initAlphaMount();
+    mountFinancialOnlyAlpha();
   }
 })();
 </script>
+
+
 
 
 </body>
