@@ -3859,113 +3859,107 @@ function placeTopRetailersOnFinancial() {
 document.addEventListener('DOMContentLoaded', placeTopRetailersOnFinancial);
 placeTopRetailersOnFinancial();
 </script>
-<!-- OBSIDIAN ASSET ALLOCATION MATRIX (FINANCIAL ONLY) -->
-<div id="obsAssetMatrixSection" style="display:none;">
+<!-- OBSIDIAN REAL-TIME LIVE MARKET WATCH (NO KEY REQUIRED, FINANCIAL ONLY) -->
+<div id="obsRealMarketSection" style="display:none;">
   <style>
-    .obs-mat-wrap { max-width: 900px; margin: 35px auto; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0d0e12 100%); border: 1px solid rgba(212,175,55,0.25); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(212,175,55,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; position: relative; overflow: hidden; }
-    .obs-mat-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
+    .obs-mkt-wrap { max-width: 900px; margin: 35px auto; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0d0e12 100%); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(212,175,55,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; text-align: center; position: relative; overflow: hidden; }
+    .obs-mkt-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
     
-    .obs-mat-hdr { text-align: center; margin-bottom: 24px; }
-    .obs-mat-tag { display: inline-block; padding: 3px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-    .obs-mat-hdr h4 { color: #fff; font-size: 20px; margin: 0 0 4px; font-weight: 600; }
-    .obs-mat-hdr p { color: #8a8d93; font-size: 11.5px; margin: 0; }
+    .obs-mkt-tag { display: inline-block; padding: 3px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .obs-mkt-wrap h4 { color: #fff; font-size: 20px; margin: 0 0 4px; font-weight: 600; }
+    .obs-mkt-wrap p { color: #8a8d93; font-size: 11.5px; margin: 0 0 22px; }
     
-    /* Selector Tabs */
-    .obs-mat-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
-    .obs-mat-tab { background: #040406; border: 1px solid rgba(255,255,255,0.08); color: #8a8d93; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
-    .obs-mat-tab.active, .obs-mat-tab:hover { background: rgba(212,175,55,0.12); border-color: #d4af37; color: #d4af37; }
+    .obs-mkt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .obs-mkt-card { background: #040406; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 12px; text-align: center; transition: all 0.3s ease; }
+    .obs-mkt-card:hover { border-color: #d4af37; transform: translateY(-2px); }
+    .obs-mkt-card h5 { color: #8a8d93; font-size: 11px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .obs-mkt-price { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
+    .obs-mkt-change { font-size: 11px; font-weight: 600; }
+    .obs-up { color: #00ff88; }
+    .obs-down { color: #ff5252; }
     
-    /* Allocation Progress Bars */
-    .obs-mat-bars { display: flex; flex-direction: column; gap: 14px; }
-    .obs-bar-item { display: flex; flex-direction: column; gap: 5px; }
-    .obs-bar-info { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: #cccccc; }
-    .obs-bar-info span { color: #d4af37; }
-    .obs-bar-bg { background: #040406; border: 1px solid rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; position: relative; }
-    .obs-bar-fill { background: linear-gradient(90deg, #aa820a 0%, #d4af37 100%); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 4px; }
-    
-    .obs-mat-note { text-align: center; margin-top: 20px; font-size: 10px; color: #555860; letter-spacing: 0.5px; }
+    @media(max-width: 600px) { .obs-mkt-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 
-  <div class="obs-mat-wrap">
-    <div class="obs-mat-hdr">
-      <span class="obs-mat-tag">PORTFOLIO ARCHITECTURE</span>
-      <h4>Institutional Allocation Matrix</h4>
-      <p>Select an investment mandate to reveal optimal capital distribution weights.</p>
-    </div>
+  <div class="obs-mkt-wrap">
+    <span class="obs-mkt-tag">LIVE API FEED</span>
+    <h4>Institutional Market Watch</h4>
+    <p>Real-time live pricing fetched directly from decentralized market endpoints.</p>
 
-    <!-- Tier Selectors -->
-    <div class="obs-mat-tabs">
-      <button class="obs-mat-tab active" onclick="setObsMatrix('preservation', this)">Wealth Preservation</button>
-      <button class="obs-mat-tab" onclick="setObsMatrix('balanced', this)">Balanced Compounder</button>
-      <button class="obs-mat-tab" onclick="setObsMatrix('growth', this)">Aggressive Alpha</button>
-    </div>
-
-    <!-- Dynamic Bars -->
-    <div class="obs-mat-bars">
-      <div class="obs-bar-item">
-        <div class="obs-bar-info"><span>Equities & Index Assets</span><strong id="obsEqVal">20%</strong></div>
-        <div class="obs-bar-bg"><div id="obsEqBar" class="obs-bar-fill" style="width: 20%;"></div></div>
+    <div class="obs-mkt-grid">
+      <div class="obs-mkt-card">
+        <h5>Gold (PAXG / USD)</h5>
+        <div id="obsGoldPrice" class="obs-mkt-price">Updating...</div>
+        <div id="obsGoldChange" class="obs-mkt-change">--</div>
       </div>
 
-      <div class="obs-bar-item">
-        <div class="obs-bar-info"><span>Gold & Hard Assets</span><strong id="obsGoldVal">40%</strong></div>
-        <div class="obs-bar-bg"><div id="obsGoldBar" class="obs-bar-fill" style="width: 40%;"></div></div>
+      <div class="obs-mkt-card">
+        <h5>Bitcoin (BTC / USD)</h5>
+        <div id="obsBtcPrice" class="obs-mkt-price">Updating...</div>
+        <div id="obsBtcChange" class="obs-mkt-change">--</div>
       </div>
 
-      <div class="obs-bar-item">
-        <div class="obs-bar-info"><span>Fixed Income & Private Debt</span><strong id="obsDebtVal">30%</strong></div>
-        <div class="obs-bar-bg"><div id="obsDebtBar" class="obs-bar-fill" style="width: 30%;"></div></div>
+      <div class="obs-mkt-card">
+        <h5>Ethereum (ETH / USD)</h5>
+        <div id="obsEthPrice" class="obs-mkt-price">Updating...</div>
+        <div id="obsEthChange" class="obs-mkt-change">--</div>
       </div>
 
-      <div class="obs-bar-item">
-        <div class="obs-bar-info"><span>Liquid Cash Reserves</span><strong id="obsCashVal">10%</strong></div>
-        <div class="obs-bar-bg"><div id="obsCashBar" class="obs-bar-fill" style="width: 10%;"></div></div>
+      <div class="obs-mkt-card">
+        <h5>Solana (SOL / USD)</h5>
+        <div id="obsSolPrice" class="obs-mkt-price">Updating...</div>
+        <div id="obsSolChange" class="obs-mkt-change">--</div>
       </div>
-    </div>
-
-    <div class="obs-mat-note">
-      ✦ Institutional guidelines based on global macro risk-hedging frameworks.
     </div>
   </div>
 </div>
 
 <script>
-var obsMatrixData = {
-  preservation: { eq: 20, gold: 40, debt: 30, cash: 10 },
-  balanced: { eq: 50, gold: 20, debt: 20, cash: 10 },
-  growth: { eq: 70, gold: 10, debt: 10, cash: 10 }
-};
-
-function setObsMatrix(type, btn) {
-  var tabs = document.querySelectorAll('.obs-mat-tab');
-  tabs.forEach(function(t){ t.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-
-  var d = obsMatrixData[type];
-  document.getElementById('obsEqVal').innerText = d.eq + '%';
-  document.getElementById('obsEqBar').style.width = d.eq + '%';
-
-  document.getElementById('obsGoldVal').innerText = d.gold + '%';
-  document.getElementById('obsGoldBar').style.width = d.gold + '%';
-
-  document.getElementById('obsDebtVal').innerText = d.debt + '%';
-  document.getElementById('obsDebtBar').style.width = d.debt + '%';
-
-  document.getElementById('obsCashVal').innerText = d.cash + '%';
-  document.getElementById('obsCashBar').style.width = d.cash + '%';
+function fetchRealMarketData() {
+  var url = 'https://api.coingecko.com/api/v3/simple/price?ids=pax-gold,bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true';
+  
+  fetch(url)
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      updateAssetCard('obsGold', data['pax-gold']);
+      updateAssetCard('obsBtc', data['bitcoin']);
+      updateAssetCard('obsEth', data['ethereum']);
+      updateAssetCard('obsSol', data['solana']);
+    })
+    .catch(function(err) {
+      console.error('API Fetch Error:', err);
+    });
 }
 
-function placeAssetMatrixOnFinancial() {
+function updateAssetCard(prefix, asset) {
+  if (!asset) return;
+  var price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(asset.usd);
+  var change = asset.usd_24h_change.toFixed(2);
+  
+  var priceEl = document.getElementById(prefix + 'Price');
+  var changeEl = document.getElementById(prefix + 'Change');
+  
+  if (priceEl) priceEl.innerText = price;
+  if (changeEl) {
+    var isPositive = change >= 0;
+    changeEl.innerText = (isPositive ? '+' : '') + change + '% (24h)';
+    changeEl.className = 'obs-mkt-change ' + (isPositive ? 'obs-up' : 'obs-down');
+  }
+}
+
+function placeRealMarketOnFinancial() {
   var fin = document.getElementById('financial');
-  var sec = document.getElementById('obsAssetMatrixSection');
+  var sec = document.getElementById('obsRealMarketSection');
   if (!fin || !sec) return;
   if (sec.parentNode !== fin) fin.appendChild(sec);
   sec.style.display = 'block';
+  fetchRealMarketData();
 }
 
-document.addEventListener('DOMContentLoaded', placeAssetMatrixOnFinancial);
-placeAssetMatrixOnFinancial();
+document.addEventListener('DOMContentLoaded', placeRealMarketOnFinancial);
+placeRealMarketOnFinancial();
 </script>
+
 
 </body>
    
