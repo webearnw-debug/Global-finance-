@@ -3690,21 +3690,44 @@ gfRenderArticles();
 gfPlaceArticleStreamOnFinancial();
 </script>
  
- <!-- OBSIDIAN VIP SUBSTACK (FIXED FOR FINANCIAL PAGES) -->
-<div class="obs-vip-box">
-  <style>
-    .obs-vip-box{background:linear-gradient(135deg,#08080a 0%,#121318 100%);border:1px solid rgba(212,175,55,.35);border-radius:14px;padding:30px 20px;max-width:720px;margin:40px auto;box-shadow:0 12px 40px rgba(0,0,0,.85),inset 0 1px 0 rgba(212,175,55,.2);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#e5e5e5;text-align:center;position:relative;overflow:hidden}.obs-vip-box::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}.obs-badge{display:inline-block;padding:3px 10px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.3);border-radius:20px;color:#d4af37;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:12px}.obs-vip-box h3{color:#fff;font-size:20px;font-weight:600;margin:0 0 6px 0;letter-spacing:-.2px}.obs-vip-box p{color:#8a8d93;font-size:12px;line-height:1.5;margin:0 0 20px 0;max-width:500px;margin-left:auto;margin-right:auto}.obs-form{display:flex;gap:8px;max-width:440px;margin:0 auto}.obs-input{flex:1;background:#030304;border:1px solid #222328;border-radius:7px;padding:11px 14px;color:#fff;font-size:12px;outline:0;transition:all .3s ease}.obs-input:focus{border-color:#d4af37;box-shadow:0 0 8px rgba(212,175,55,.25)}.obs-btn{background:linear-gradient(135deg,#d4af37 0%,#aa820a 100%);color:#000;font-weight:800;font-size:12px;padding:11px 18px;border:0;border-radius:7px;cursor:pointer;white-space:nowrap;transition:transform .2s}.obs-btn:hover{transform:scale(1.02)}.obs-lock{font-size:10px;color:#555860;margin-top:10px;display:block}@media(max-width:480px){.obs-form{flex-direction:column}.obs-btn{width:100%}}
-  </style>
+ <!-- OBSIDIAN VIP SUBSTACK (CSS-LOCKED TO FINANCE PAGES ONLY) -->
+<style>
+  .obs-vip-box { display: none !important; } /* पूरी साइट पर डिफ़ॉल्ट बंद */
+  body.finance-page .obs-vip-box {
+    display: block !important; /* सिर्फ finance-page क्लास वाले बॉडी पर ही दिखेगा */
+    background: linear-gradient(135deg,#08080a 0%,#121318 100%);
+    border: 1px solid rgba(212,175,55,.35);
+    border-radius: 14px;
+    padding: 30px 20px;
+    max-width: 720px;
+    margin: 40px auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,.85),inset 0 1px 0 rgba(212,175,55,.2);
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    color: #e5e5e5;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .obs-vip-box::before { content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:50%; height:1px; background:linear-gradient(90deg,transparent,#d4af37,transparent); }
+  .obs-badge { display:inline-block; padding:3px 10px; background:rgba(212,175,55,.08); border:1px solid rgba(212,175,55,.3); border-radius:20px; color:#d4af37; font-size:10px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; margin-bottom:12px; }
+  .obs-vip-box h3 { color:#fff; font-size:20px; font-weight:600; margin:0 0 6px 0; }
+  .obs-vip-box p { color:#8a8d93; font-size:12px; line-height:1.5; margin:0 0 20px 0; }
+  .obs-form { display:flex; gap:8px; max-width:440px; margin:0 auto; }
+  .obs-input { flex:1; background:#030304; border:1px solid #222328; border-radius:7px; padding:11px 14px; color:#fff; font-size:12px; outline:0; }
+  .obs-input:focus { border-color:#d4af37; }
+  .obs-btn { background:linear-gradient(135deg,#d4af37 0%,#aa820a 100%); color:#000; font-weight:800; font-size:12px; padding:11px 18px; border:0; border-radius:7px; cursor:pointer; }
+  .obs-lock { font-size:10px; color:#555860; margin-top:10px; display:block; }
+  @media(max-width:480px){ .obs-form { flex-direction:column; } }
+</style>
 
+<div class="obs-vip-box">
   <span class="obs-badge">VIP WEALTH DISPATCH</span>
   <h3>Institutional Insights. Direct to Your Inbox.</h3>
-  <p>Join high-net-worth readers receiving our private weekly breakdowns on tax optimization, global asset allocation, and macro trends.</p>
-
+  <p>Join high-net-worth readers receiving our private weekly breakdowns on tax optimization and asset allocation.</p>
   <form action="https://YOURSUBDOMAIN.substack.com/api/v1/free?nojs=true" method="post" target="_blank" class="obs-form">
     <input type="email" name="email" class="obs-input" placeholder="Enter official email..." required>
     <button type="submit" class="obs-btn">Get Access &#10140;</button>
   </form>
-
   <span class="obs-lock">&#128274; Zero Spam. Unsubscribe anytime with 1-click.</span>
 </div>
 
