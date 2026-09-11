@@ -3959,6 +3959,123 @@ function placeRealMarketOnFinancial() {
 document.addEventListener('DOMContentLoaded', placeRealMarketOnFinancial);
 placeRealMarketOnFinancial();
 </script>
+<!-- OBSIDIAN ALPHA FINANCIAL AI ASSISTANT (FINANCIAL ONLY) -->
+<div id="obsAlphaAiSection" style="display:none;">
+  <style>
+    .obs-ai-wrap { max-width: 900px; margin: 40px auto 20px; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0e0f14 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 18px; box-shadow: 0 20px 60px rgba(0,0,0,0.95), inset 0 1px 0 rgba(212,175,55,0.2); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; position: relative; overflow: hidden; }
+    .obs-ai-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
+    
+    .obs-ai-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 16px; margin-bottom: 20px; }
+    .obs-ai-title { display: flex; align-items: center; gap: 10px; }
+    .obs-ai-badge { padding: 3px 10px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
+    .obs-ai-title h4 { color: #fff; font-size: 18px; margin: 0; font-weight: 600; letter-spacing: -0.3px; }
+    
+    .obs-ai-status { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #00ff88; font-weight: 600; }
+    .obs-ai-dot { width: 7px; height: 7px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 8px #00ff88; animation: obsPulse 2s infinite; }
+    @keyframes obsPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Chat Messages Window */
+    .obs-ai-box { background: #030305; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; height: 240px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; scrollbar-width: thin; scrollbar-color: #d4af37 #030305; }
+    .obs-msg { max-width: 80%; padding: 10px 14px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
+    .obs-msg.system { background: #0c0d12; border: 1px solid rgba(212,175,55,0.25); color: #d8d8d8; align-self: flex-start; border-bottom-left-radius: 2px; }
+    .obs-msg.user { background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%); color: #000; font-weight: 600; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+    /* Quick Chips */
+    .obs-ai-chips { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .obs-chip { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #8a8d93; padding: 5px 12px; border-radius: 15px; font-size: 10.5px; cursor: pointer; transition: all 0.2s; }
+    .obs-chip:hover { border-color: #d4af37; color: #d4af37; background: rgba(212,175,55,0.05); }
+
+    /* Input Controls */
+    .obs-ai-form { display: flex; gap: 8px; }
+    .obs-ai-input { flex: 1; background: #030304; border: 1px solid #22232a; border-radius: 8px; padding: 12px 14px; color: #fff; font-size: 12px; outline: none; transition: border-color 0.3s; }
+    .obs-ai-input:focus { border-color: #d4af37; }
+    .obs-ai-btn { background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%); color: #000; font-weight: 800; font-size: 12px; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
+    .obs-ai-btn:hover { opacity: 0.9; }
+
+    @media(max-width: 600px) { .obs-ai-hdr { flex-direction: column; align-items: flex-start; gap: 8px; } }
+  </style>
+
+  <div class="obs-ai-wrap">
+    <div class="obs-ai-hdr">
+      <div class="obs-ai-title">
+        <span class="obs-ai-badge">ALPHA INTELLIGENCE</span>
+        <h4>Financial AI Terminal</h4>
+      </div>
+      <div class="obs-ai-status">
+        <span class="obs-ai-dot"></span> ALPHA CORE ACTIVE
+      </div>
+    </div>
+
+    <!-- Live Chat Window -->
+    <div class="obs-ai-box" id="obsChatBox">
+      <div class="obsmsg system">
+        <strong>Alpha AI:</strong> Welcome. I am your Obsidian Financial Assistant. Ask me about tax optimization, portfolio structuring, or macro trends.
+      </div>
+    </div>
+
+    <!-- Quick Prompts -->
+    <div class="obs-ai-chips">
+      <div class="obs-chip" onclick="obsQuickPrompt('Explain Tax-Loss Harvesting')">💡 Tax Optimization</div>
+      <div class="obs-chip" onclick="obsQuickPrompt('How to allocate 100k portfolio?')">📊 Asset Allocation</div>
+      <div class="obs-chip" onclick="obsQuickPrompt('Current Gold vs Equities outlook')">📈 Macro Market Trends</div>
+    </div>
+
+    <!-- Input Form -->
+    <form class="obs-ai-form" onsubmit="obsSendAiMsg(event)">
+      <input type="text" id="obsInputText" class="obs-ai-input" placeholder="Query Alpha AI Terminal..." required>
+      <button type="submit" class="obs-ai-btn">Consult ➔</button>
+    </form>
+  </div>
+</div>
+
+<script>
+function obsQuickPrompt(text) {
+  document.getElementById('obsInputText').value = text;
+  obsSendAiMsg();
+}
+
+function obsSendAiMsg(e) {
+  if (e) e.preventDefault();
+  var input = document.getElementById('obsInputText');
+  var query = input.value.trim();
+  if (!query) return;
+
+  var chatBox = document.getElementById('obsChatBox');
+
+  // User Message
+  var userDiv = document.createElement('div');
+  userDiv.className = 'obs-msg user';
+  userDiv.innerText = query;
+  chatBox.appendChild(userDiv);
+
+  input.value = '';
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Simulated AI Response
+  setTimeout(function() {
+    var aiDiv = document.createElement('div');
+    aiDiv.className = 'obs-msg system';
+    aiDiv.innerHTML = '<strong>Alpha AI:</strong> Analyzing query regarding "<em>' + gfEscapeHtml(query) + '</em>"... Accessing institutional archives. Refer to our published wealth guides above for full strategy frameworks.';
+    chatBox.appendChild(aiDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 600);
+}
+
+function gfEscapeHtml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function placeAlphaAiOnFinancial() {
+  var fin = document.getElementById('financial');
+  var sec = document.getElementById('obsAlphaAiSection');
+  if (!fin || !sec) return;
+  if (sec.parentNode !== fin) fin.appendChild(sec);
+  sec.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', placeAlphaAiOnFinancial);
+placeAlphaAiOnFinancial();
+</script>
 
 
 </body>
