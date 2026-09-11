@@ -3735,6 +3735,42 @@ document.addEventListener('DOMContentLoaded', placeVipSubstackOnFinancial);
 placeVipSubstackOnFinancial();
 </script>
 
+<!-- OBSIDIAN LUXURY WEALTH CALCULATOR (COMPRESSED) -->
+<div id="obsWealthCalcSection" style="display:none;">
+  <style>
+    .obs-calc-wrap{max-width:850px;margin:40px auto;padding:28px 24px;background:linear-gradient(145deg,#08080a 0%,#111217 100%);border:1px solid rgba(212,175,55,.3);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.9),inset 0 1px 0 rgba(212,175,55,.15);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e5e5e5;position:relative;overflow:hidden}.obs-calc-wrap::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}.obs-calc-hdr{text-align:center;margin-bottom:28px}.obs-calc-hdr .tag{display:inline-block;padding:3px 12px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.25);border-radius:20px;color:#d4af37;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}.obs-calc-hdr h3{color:#fff;font-size:22px;font-weight:600;margin:0 0 6px 0;letter-spacing:-.3px}.obs-calc-hdr p{color:#8a8d93;font-size:12px;margin:0}.obs-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.obs-calc-inputs{display:flex;flex-direction:column;gap:16px}.obs-field-group{display:flex;flex-direction:column;gap:6px}.obs-field-group label{font-size:11px;color:#a0a3a8;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;justify-content:space-between}.obs-field-group label span{color:#d4af37}.obs-calc-input{background:#030304;border:1px solid #22232a;border-radius:8px;padding:10px 14px;color:#fff;font-size:13px;outline:0;transition:all .3s}.obs-calc-input:focus{border-color:#d4af37;box-shadow:0 0 10px rgba(212,175,55,.2)}.obs-calc-output{background:#040406;border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:24px;text-align:center;position:relative}.obs-calc-output .lbl{font-size:11px;color:#787b83;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}.obs-calc-output .val{font-size:32px;font-weight:800;color:#d4af37;margin:10px 0;letter-spacing:-.5px;text-shadow:0 0 15px rgba(212,175,55,.2)}.obs-calc-breakdown{display:flex;justify-content:space-around;border-top:1px solid #1a1b22;padding-top:14px;margin-top:14px}.obs-calc-breakdown div{display:flex;flex-direction:column;gap:3px}.obs-calc-breakdown small{font-size:9.5px;color:#5f626a;text-transform:uppercase;letter-spacing:1px}.obs-calc-breakdown strong{font-size:13px;color:#e5e5e5;font-weight:600}@media(max-width:700px){.obs-calc-grid{grid-template-columns:1fr}.obs-calc-output .val{font-size:26px}}
+  </style>
+
+  <div class="obs-calc-wrap">
+    <div class="obs-calc-hdr">
+      <span class="tag">INSTITUTIONAL MODEL</span>
+      <h3>Wealth Freedom Engine</h3>
+      <p>Project your portfolio compounding trajectory in real-time.</p>
+    </div>
+    <div class="obs-calc-grid">
+      <div class="obs-calc-inputs">
+        <div class="obs-field-group"><label>Starting Balance ($)</label><input type="number" id="obsInitVal" class="obs-calc-input" value="10000" oninput="runObsCalculator()"></div>
+        <div class="obs-field-group"><label>Monthly Contribution ($)</label><input type="number" id="obsMonthlyVal" class="obs-calc-input" value="500" oninput="runObsCalculator()"></div>
+        <div class="obs-field-group"><label>Time Horizon (Years) <span id="obsYearsLbl">10 Yrs</span></label><input type="range" id="obsYearsVal" min="1" max="40" value="10" class="obs-calc-input" style="padding:0;cursor:pointer;" oninput="runObsCalculator()"></div>
+        <div class="obs-field-group"><label>Expected Annual Return (%) <span id="obsRateLbl">8%</span></label><input type="range" id="obsRateVal" min="1" max="25" value="8" class="obs-calc-input" style="padding:0;cursor:pointer;" oninput="runObsCalculator()"></div>
+      </div>
+      <div class="obs-calc-output">
+        <span class="lbl">Projected Net Worth</span>
+        <div class="val" id="obsTotalVal">$0</div>
+        <div class="obs-calc-breakdown">
+          <div><small>Total Invested</small><strong id="obsPrincipalVal">$0</strong></div>
+          <div><small>Est. Compound Growth</small><strong id="obsInterestVal" style="color:#00ff88;">$0</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function runObsCalculator(){var i=parseFloat(document.getElementById('obsInitVal').value)||0,m=parseFloat(document.getElementById('obsMonthlyVal').value)||0,y=parseInt(document.getElementById('obsYearsVal').value)||1,r=parseFloat(document.getElementById('obsRateVal').value)||1;document.getElementById('obsYearsLbl').innerText=y+' Yrs';document.getElementById('obsRateLbl').innerText=r+'%';var rate=r/100/12,n=y*12,fv=i*Math.pow(1+rate,n)+m*((Math.pow(1+rate,n)-1)/rate),inv=i+(m*n),growth=fv-inv,fmt=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});document.getElementById('obsTotalVal').innerText=fmt.format(fv);document.getElementById('obsPrincipalVal').innerText=fmt.format(inv);document.getElementById('obsInterestVal').innerText=fmt.format(growth>0?growth:0);}
+function placeCalcSectionOnFinancial(){var fin=document.getElementById('financial'),sec=document.getElementById('obsWealthCalcSection');if(!fin||!sec)return;if(sec.parentNode!==fin)fin.appendChild(sec);sec.style.display='block';runObsCalculator();}
+document.addEventListener('DOMContentLoaded',placeCalcSectionOnFinancial);placeCalcSectionOnFinancial();
+</script>
 
 </body>
    
