@@ -4031,50 +4031,34 @@ placeRealMarketOnFinancial();
 <script>
 function obsQuickPrompt(text) {
   document.getElementById('obsInputText').value = text;
-  obsSendAiMsg();
-}
+  obsSendAiMsg()
+</script>
+<!-- ALPHA AI FINANCIAL MODULE INTEGRATOR -->
+<script>
+(function mountAlphaAiToFinancial() {
+  // 1. अपने मौजूदा Alpha AI वाले एलिमेंट की ID या Class यहाँ डालें (e.g. '#my-alpha-ai')
+  var EXISTING_ALPHA_SELECTOR = '#alpha-ai-financial-model'; 
 
-function obsSendAiMsg(e) {
-  if (e) e.preventDefault();
-  var input = document.getElementById('obsInputText');
-  var query = input.value.trim();
-  if (!query) return;
+  function initAlphaMount() {
+    var financialPage = document.getElementById('financial');
+    var originalAlpha = document.querySelector(EXISTING_ALPHA_SELECTOR);
 
-  var chatBox = document.getElementById('obsChatBox');
+    if (!financialPage || !originalAlpha) return;
 
-  // User Message
-  var userDiv = document.createElement('div');
-  userDiv.className = 'obs-msg user';
-  userDiv.innerText = query;
-  chatBox.appendChild(userDiv);
+    // ओरिजिनल Alpha AI को क्लोन करके financial पेज में लगाना
+    var alphaClone = originalAlpha.cloneNode(true);
+    alphaClone.id = 'alpha-ai-financial-mounted'; // Duplicate ID Conflict से बचने के लिए
+    alphaClone.style.display = 'block';
 
-  input.value = '';
-  chatBox.scrollTop = chatBox.scrollHeight;
+    financialPage.appendChild(alphaClone);
+  }
 
-  // Simulated AI Response
-  setTimeout(function() {
-    var aiDiv = document.createElement('div');
-    aiDiv.className = 'obs-msg system';
-    aiDiv.innerHTML = '<strong>Alpha AI:</strong> Analyzing query regarding "<em>' + gfEscapeHtml(query) + '</em>"... Accessing institutional archives. Refer to our published wealth guides above for full strategy frameworks.';
-    chatBox.appendChild(aiDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 600);
-}
-
-function gfEscapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-function placeAlphaAiOnFinancial() {
-  var fin = document.getElementById('financial');
-  var sec = document.getElementById('obsAlphaAiSection');
-  if (!fin || !sec) return;
-  if (sec.parentNode !== fin) fin.appendChild(sec);
-  sec.style.display = 'block';
-}
-
-document.addEventListener('DOMContentLoaded', placeAlphaAiOnFinancial);
-placeAlphaAiOnFinancial();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAlphaMount);
+  } else {
+    initAlphaMount();
+  }
+})();
 </script>
 
 
