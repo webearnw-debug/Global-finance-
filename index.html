@@ -3499,7 +3499,144 @@ document.addEventListener("DOMContentLoaded", function() {
     financialSection.insertAdjacentHTML('beforeend', affiliateWidgetHTML);
   }
 });
-    
+    <!-- FINANCIAL ARTICLES BOX — you add posts, unlimited via Load More -->
+<style>
+#gfArticleStreamSection{max-width:900px;margin:50px auto;padding:0 15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+#gfArticleStreamSection .gf-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e1e;padding-bottom:14px;margin-bottom:22px}
+#gfArticleStreamSection .gf-hdr h3{color:#fff;font-size:20px;font-weight:700;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
+#gfArticleStreamSection .gf-hdr h3 span{color:#d4af37}
+#gfArticleStreamSection .gf-hdr small{color:#5f5f5f;font-size:11px;font-weight:600;letter-spacing:1px}
+
+#gfArticleBox{background:linear-gradient(180deg,#0b0b0b 0%,#070707 100%);border:1px solid #1a1a1a;border-radius:16px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+#articleContainer{display:flex;flex-direction:column;gap:10px;padding:8px}
+
+.obsidian-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:border-color .2s ease}
+.obsidian-card:hover{border-color:#2a2a2a}
+.obsidian-card .cat{color:#d4af37;font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
+.obsidian-card h4{color:#f1f1f1;margin:6px 0 4px;font-size:14.5px;font-weight:600}
+.obsidian-card p{color:#787878;font-size:11.5px;margin:0;line-height:1.4}
+
+.gf-read-link{background:#141414;border:1px solid #d4af37;color:#d4af37;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .2s ease}
+.gf-read-link:hover{background:#d4af37;color:#0a0a0a}
+
+#gfEmptyState{text-align:center;padding:46px 20px;color:#4a4a4a}
+#gfEmptyState .ic{font-size:26px;margin-bottom:10px;color:#333}
+#gfEmptyState .t{font-size:13.5px;font-weight:700;color:#666}
+#gfEmptyState .s{font-size:11.5px;margin-top:4px;color:#444}
+
+#loadMoreBtn{background:linear-gradient(180deg,#151515 0%,#0d0d0d 100%);border:1px solid #d4af37;color:#d4af37;padding:12px 32px;border-radius:30px;font-weight:700;font-size:12.5px;letter-spacing:1px;cursor:pointer;transition:all .3s ease;box-shadow:0 0 15px rgba(212,175,55,.12)}
+#loadMoreBtn:hover{box-shadow:0 0 20px rgba(212,175,55,.25)}
+#loadMoreBtn:disabled{cursor:default}
+</style>
+
+<div id="gfArticleStreamSection">
+
+  <div class="gf-hdr">
+    <h3><span>◈</span> Exclusive Financial Intelligence</h3>
+    <small>GLOBAL ARCHIVE</small>
+  </div>
+
+  <div id="gfArticleBox">
+    <div id="articleContainer"></div>
+    <div id="gfEmptyState" style="display:none;">
+      <div class="ic">◈</div>
+      <div class="t">Coming soon</div>
+      <div class="s">Articles will appear here once added</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:26px;" id="gfLoadMoreWrap">
+    <button onclick="loadMoreObsidianArticles()" id="loadMoreBtn">LOAD MORE GUIDES ✦</button>
+  </div>
+
+</div>
+
+<script>
+/* =====================================================================
+   YAHAN APNE POSTS ADD KARO — jitne chaho utne, koi limit nahi
+   Har object: { category, title, desc, link }
+   Pehle 15 turant dikhenge, baaki "Load More" click par khulenge
+   ===================================================================== */
+var gfPosts = [
+  // { category: 'Tax Strategy', title: 'Aapka Title', desc: 'Chhota description', link: 'https://...' },
+];
+
+var GF_INITIAL_COUNT = 15;
+
+function gfEscape(s){
+  var d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function gfBuildCard(post, hidden){
+  var url = (post.link || '').trim();
+  var linkHtml = url
+    ? '<a href="' + gfEscape(url) + '" class="gf-read-link" target="_blank" rel="nofollow noopener">Read →</a>'
+    : '<span class="gf-read-link" style="pointer-events:none;opacity:.4;border-color:#3a3a3a;color:#666;">Coming soon</span>';
+
+  return '<div class="obsidian-card" style="display:' + (hidden ? 'none' : 'flex') + ';">' +
+    '<div>' +
+      '<span class="cat">' + (gfEscape(post.category) || 'CATEGORY') + '</span>' +
+      '<h4>' + (gfEscape(post.title) || 'Post title') + '</h4>' +
+      '<p>' + gfEscape(post.desc) + '</p>' +
+    '</div>' +
+    linkHtml +
+  '</div>';
+}
+
+function gfRenderArticles(){
+  var container = document.getElementById('articleContainer');
+  var empty = document.getElementById('gfEmptyState');
+  var loadMoreWrap = document.getElementById('gfLoadMoreWrap');
+  if (!container) return;
+
+  if (!gfPosts.length) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    loadMoreWrap.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  var html = '';
+  gfPosts.forEach(function(p, i){
+    html += gfBuildCard(p, i >= GF_INITIAL_COUNT);
+  });
+  container.innerHTML = html;
+
+  loadMoreWrap.style.display = gfPosts.length > GF_INITIAL_COUNT ? 'block' : 'none';
+}
+
+function loadMoreObsidianArticles() {
+  var cards = document.querySelectorAll('#articleContainer .obsidian-card');
+  for (var i = GF_INITIAL_COUNT; i < cards.length; i++) {
+    cards[i].style.display = 'flex';
+  }
+  var btn = document.getElementById('loadMoreBtn');
+  btn.innerText = 'ALL GUIDES LOADED ✓';
+  btn.style.borderColor = '#00ff88';
+  btn.style.color = '#00ff88';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+}
+
+// Sirf "Financial" page ke andar dikhega, kahi aur nahi
+function gfPlaceArticleStreamOnFinancial() {
+  var financialPage = document.getElementById('financial');
+  var section = document.getElementById('gfArticleStreamSection');
+  if (!financialPage || !section) return;
+  if (section.parentNode !== financialPage) financialPage.appendChild(section);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  gfRenderArticles();
+  gfPlaceArticleStreamOnFinancial();
+});
+gfRenderArticles();
+gfPlaceArticleStreamOnFinancial();
+</script>
+
 
    <script>
       
