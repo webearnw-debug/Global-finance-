@@ -3859,6 +3859,113 @@ function placeTopRetailersOnFinancial() {
 document.addEventListener('DOMContentLoaded', placeTopRetailersOnFinancial);
 placeTopRetailersOnFinancial();
 </script>
+<!-- OBSIDIAN ASSET ALLOCATION MATRIX (FINANCIAL ONLY) -->
+<div id="obsAssetMatrixSection" style="display:none;">
+  <style>
+    .obs-mat-wrap { max-width: 900px; margin: 35px auto; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0d0e12 100%); border: 1px solid rgba(212,175,55,0.25); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(212,175,55,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; position: relative; overflow: hidden; }
+    .obs-mat-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
+    
+    .obs-mat-hdr { text-align: center; margin-bottom: 24px; }
+    .obs-mat-tag { display: inline-block; padding: 3px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .obs-mat-hdr h4 { color: #fff; font-size: 20px; margin: 0 0 4px; font-weight: 600; }
+    .obs-mat-hdr p { color: #8a8d93; font-size: 11.5px; margin: 0; }
+    
+    /* Selector Tabs */
+    .obs-mat-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .obs-mat-tab { background: #040406; border: 1px solid rgba(255,255,255,0.08); color: #8a8d93; padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+    .obs-mat-tab.active, .obs-mat-tab:hover { background: rgba(212,175,55,0.12); border-color: #d4af37; color: #d4af37; }
+    
+    /* Allocation Progress Bars */
+    .obs-mat-bars { display: flex; flex-direction: column; gap: 14px; }
+    .obs-bar-item { display: flex; flex-direction: column; gap: 5px; }
+    .obs-bar-info { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: #cccccc; }
+    .obs-bar-info span { color: #d4af37; }
+    .obs-bar-bg { background: #040406; border: 1px solid rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; position: relative; }
+    .obs-bar-fill { background: linear-gradient(90deg, #aa820a 0%, #d4af37 100%); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 4px; }
+    
+    .obs-mat-note { text-align: center; margin-top: 20px; font-size: 10px; color: #555860; letter-spacing: 0.5px; }
+  </style>
+
+  <div class="obs-mat-wrap">
+    <div class="obs-mat-hdr">
+      <span class="obs-mat-tag">PORTFOLIO ARCHITECTURE</span>
+      <h4>Institutional Allocation Matrix</h4>
+      <p>Select an investment mandate to reveal optimal capital distribution weights.</p>
+    </div>
+
+    <!-- Tier Selectors -->
+    <div class="obs-mat-tabs">
+      <button class="obs-mat-tab active" onclick="setObsMatrix('preservation', this)">Wealth Preservation</button>
+      <button class="obs-mat-tab" onclick="setObsMatrix('balanced', this)">Balanced Compounder</button>
+      <button class="obs-mat-tab" onclick="setObsMatrix('growth', this)">Aggressive Alpha</button>
+    </div>
+
+    <!-- Dynamic Bars -->
+    <div class="obs-mat-bars">
+      <div class="obs-bar-item">
+        <div class="obs-bar-info"><span>Equities & Index Assets</span><strong id="obsEqVal">20%</strong></div>
+        <div class="obs-bar-bg"><div id="obsEqBar" class="obs-bar-fill" style="width: 20%;"></div></div>
+      </div>
+
+      <div class="obs-bar-item">
+        <div class="obs-bar-info"><span>Gold & Hard Assets</span><strong id="obsGoldVal">40%</strong></div>
+        <div class="obs-bar-bg"><div id="obsGoldBar" class="obs-bar-fill" style="width: 40%;"></div></div>
+      </div>
+
+      <div class="obs-bar-item">
+        <div class="obs-bar-info"><span>Fixed Income & Private Debt</span><strong id="obsDebtVal">30%</strong></div>
+        <div class="obs-bar-bg"><div id="obsDebtBar" class="obs-bar-fill" style="width: 30%;"></div></div>
+      </div>
+
+      <div class="obs-bar-item">
+        <div class="obs-bar-info"><span>Liquid Cash Reserves</span><strong id="obsCashVal">10%</strong></div>
+        <div class="obs-bar-bg"><div id="obsCashBar" class="obs-bar-fill" style="width: 10%;"></div></div>
+      </div>
+    </div>
+
+    <div class="obs-mat-note">
+      ✦ Institutional guidelines based on global macro risk-hedging frameworks.
+    </div>
+  </div>
+</div>
+
+<script>
+var obsMatrixData = {
+  preservation: { eq: 20, gold: 40, debt: 30, cash: 10 },
+  balanced: { eq: 50, gold: 20, debt: 20, cash: 10 },
+  growth: { eq: 70, gold: 10, debt: 10, cash: 10 }
+};
+
+function setObsMatrix(type, btn) {
+  var tabs = document.querySelectorAll('.obs-mat-tab');
+  tabs.forEach(function(t){ t.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  var d = obsMatrixData[type];
+  document.getElementById('obsEqVal').innerText = d.eq + '%';
+  document.getElementById('obsEqBar').style.width = d.eq + '%';
+
+  document.getElementById('obsGoldVal').innerText = d.gold + '%';
+  document.getElementById('obsGoldBar').style.width = d.gold + '%';
+
+  document.getElementById('obsDebtVal').innerText = d.debt + '%';
+  document.getElementById('obsDebtBar').style.width = d.debt + '%';
+
+  document.getElementById('obsCashVal').innerText = d.cash + '%';
+  document.getElementById('obsCashBar').style.width = d.cash + '%';
+}
+
+function placeAssetMatrixOnFinancial() {
+  var fin = document.getElementById('financial');
+  var sec = document.getElementById('obsAssetMatrixSection');
+  if (!fin || !sec) return;
+  if (sec.parentNode !== fin) fin.appendChild(sec);
+  sec.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', placeAssetMatrixOnFinancial);
+placeAssetMatrixOnFinancial();
+</script>
 
 </body>
    
