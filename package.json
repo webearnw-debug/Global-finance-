@@ -1,0 +1,27 @@
+{
+  "name": "global-finance",
+  "version": "1.0.0",
+  "description": "Global Finance - Real-Time Live",
+  "main": "chat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate": "html-validate index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webearnw-debug/Global-finance-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webearnw-debug/Global-finance-/issues"
+  },
+  "homepage": "https://github.com/webearnw-debug/Global-finance-#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "html-validate": "^11.15.0"
+  }
+}
