@@ -4071,6 +4071,173 @@ function obsQuickPrompt(text) {
 })();
 </script>
 
+<!-- ================= AI CONCIERGE LAUNCH CARD — TRADING & FINANCE MODE ================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+.gf-ai-launch {
+  --gl-bg: #07090e;
+  --gl-panel: rgba(15, 18, 26, 0.7);
+  --gl-gold: #c9a869;
+  --gl-emerald: #00e599;
+  --gl-text: #f1f3f9;
+  --gl-muted: #838a99;
+  --gl-hair: rgba(255, 255, 255, 0.08);
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative;
+  background:
+    radial-gradient(120% 140% at 85% 0%, rgba(0, 229, 153, 0.07) 0%, transparent 55%),
+    radial-gradient(90% 120% at 10% 100%, rgba(201, 168, 105, 0.08) 0%, transparent 55%),
+    var(--gl-bg);
+  border: 1px solid rgba(201, 168, 105, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 900px;
+  margin: 26px auto;
+  color: var(--gl-text);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.gf-ai-launch::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gl-gold), var(--gl-emerald), transparent);
+  opacity: 0.7;
+}
+
+.gl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.gl-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.gl-icon {
+  flex-shrink: 0;
+  width: 54px; height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(201, 168, 105, 0.18), rgba(0, 229, 153, 0.1));
+  border: 1px solid rgba(201, 168, 105, 0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 20px rgba(201, 168, 105, 0.15);
+}
+
+.gl-copy .gl-eyebrow {
+  font-size: 11px; font-weight: 700; color: var(--gl-emerald);
+  letter-spacing: 0.4px; margin-bottom: 5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.gl-eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gl-emerald); box-shadow: 0 0 8px var(--gl-emerald);
+}
+
+.gl-copy h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px; font-weight: 700;
+  background: linear-gradient(135deg, #fff 30%, var(--gl-gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin: 0 0 5px;
+  letter-spacing: 0.2px;
+}
+
+.gl-copy p {
+  font-size: 12.5px; color: var(--gl-muted); line-height: 1.55; margin: 0;
+  max-width: 460px;
+}
+
+.gl-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 9px;
+  background: linear-gradient(135deg, var(--gl-gold), #a9895a);
+  color: #08090b;
+  font-weight: 800; font-size: 13px;
+  padding: 13px 24px;
+  border: none; border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 8px 24px rgba(201, 168, 105, 0.25);
+  white-space: nowrap;
+}
+.gl-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201, 168, 105, 0.4);
+}
+.gl-btn svg { width: 15px; height: 15px; }
+
+@media (max-width: 620px) {
+  .gf-ai-launch { padding: 24px; }
+  .gl-row { flex-direction: column; align-items: stretch; }
+  .gl-btn { justify-content: center; }
+}
+</style>
+
+<div class="gf-ai-launch" id="gfAiLaunchSection">
+  <div class="gl-row">
+    <div class="gl-left">
+      <div class="gl-icon">🧠</div>
+      <div class="gl-copy">
+        <div class="gl-eyebrow"><span class="gl-eyebrow-dot"></span>Parnarav AI · Concierge</div>
+        <h3>Trading &amp; Finance Assistant</h3>
+        <p>Get quant signals, EMI breakdowns, and market-aware answers from Parnarav AI's dedicated Trading &amp; Finance mode — one tap away.</p>
+      </div>
+    </div>
+    <button class="gl-btn" onclick="gfLaunchFinanceAI()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      Launch Assistant
+    </button>
+  </div>
+</div>
+
+<script>
+function gfLaunchFinanceAI(){
+  // Alpha AI page par le jao
+  if (typeof openPage === 'function') {
+    openPage('alpha');
+  } else {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var alphaPage = document.getElementById('alpha');
+    if (alphaPage) alphaPage.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Thoda ruk kar seedha "Trading & Finance" mode switch karo
+  // (Parnarav AI ko pehle initialize hone ka time do)
+  setTimeout(function(){
+    var navItems = document.querySelectorAll('.parnarav-ai-app .nav-item');
+    var financeItem = null;
+    navItems.forEach(function(li){
+      if (li.textContent.trim().toUpperCase().indexOf('FINANCE') !== -1) financeItem = li;
+    });
+    if (financeItem) financeItem.click();
+  }, 150);
+}
+
+// Sirf "Financial" page ke andar dikhega, kahi aur nahi
+(function(){
+  function placeOnFinancialPage(){
+    var financialPage = document.getElementById('financial');
+    var card = document.getElementById('gfAiLaunchSection');
+    if (!financialPage || !card) return;
+    if (card.parentNode !== financialPage) financialPage.appendChild(card);
+  }
+  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
+  placeOnFinancialPage();
+})();
+</script>
 
 
 
