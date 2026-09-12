@@ -4238,6 +4238,86 @@ function gfLaunchFinanceAI(){
   placeOnFinancialPage();
 })();
 </script>
+<!-- OBSIDIAN REAL-TIME MARKET SESSIONS & COMPLIANCE (FINANCIAL ONLY) -->
+<div id="obsRealMarketSessions" style="display:none;">
+  <style>
+    .obs-sess-wrap { max-width: 900px; margin: 35px auto 15px; padding: 22px 20px; background: linear-gradient(145deg, #050507 0%, #0c0d11 100%); border: 1px solid rgba(212,175,55,.25); border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,.85); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; }
+    .obs-sess-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 12px; margin-bottom: 16px; }
+    .obs-sess-title { font-size: 10px; font-weight: 800; color: #d4af37; letter-spacing: 1.8px; text-transform: uppercase; }
+    .obs-clock { font-size: 11px; color: #8a8d93; font-family: monospace; }
+    .obs-sess-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 18px; }
+    .obs-sess-card { background: #030305; border: 1px solid rgba(255,255,255,.05); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .obs-sess-name { font-size: 11.5px; font-weight: 600; color: #d0d0d0; }
+    .obs-sess-time { font-size: 9.5px; color: #6c6f78; margin-top: 2px; }
+    .obs-status-badge { font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 12px; letter-spacing: .5px; }
+    .obs-status-open { background: rgba(0,255,136,.1); border: 1px solid rgba(0,255,136,.3); color: #00ff88; }
+    .obs-status-closed { background: rgba(255,82,82,.1); border: 1px solid rgba(255,82,82,.3); color: #ff5252; }
+    .obs-disc-text { font-size: 10px; color: #555860; line-height: 1.5; text-align: center; border-top: 1px solid rgba(255,255,255,.05); padding-top: 14px; }
+    .obs-disc-text strong { color: #8a8d93; }
+  </style>
+
+  <div class="obs-sess-wrap">
+    <div class="obs-sess-hdr">
+      <span class="obs-sess-title">✦ INSTITUTIONAL SESSION MONITOR</span>
+      <span id="obsUtcClock" class="obs-clock">UTC: --:--:--</span>
+    </div>
+
+    <div class="obs-sess-grid">
+      <div class="obs-sess-card">
+        <div><div class="obs-sess-name">London Session</div><div class="obs-sess-time">08:00 - 16:30 UTC</div></div>
+        <span id="sessLondon" class="obs-status-badge obs-status-closed">CLOSED</span>
+      </div>
+      <div class="obs-sess-card">
+        <div><div class="obs-sess-name">New York Session</div><div class="obs-sess-time">13:30 - 20:00 UTC</div></div>
+        <span id="sessNY" class="obs-status-badge obs-status-closed">CLOSED</span>
+      </div>
+      <div class="obs-sess-card">
+        <div><div class="obs-sess-name">Tokyo Session</div><div class="obs-sess-time">00:00 - 09:00 UTC</div></div>
+        <span id="sessTokyo" class="obs-status-badge obs-status-closed">CLOSED</span>
+      </div>
+      <div class="obs-sess-card">
+        <div><div class="obs-sess-name">Sydney Session</div><div class="obs-sess-time">22:00 - 07:00 UTC</div></div>
+        <span id="sessSydney" class="obs-status-badge obs-status-closed">CLOSED</span>
+      </div>
+    </div>
+
+    <div class="obs-disc-text">
+      <strong>Institutional Risk Warning & Affiliate Compliance:</strong> Market sessions, live feeds, and investment models are purely educational. Trading and asset allocation carry financial risk. Affiliate merchant links (including Flipkart, Myntra, Ajio) generate referral revenue without extra cost to users.
+    </div>
+  </div>
+</div>
+
+<script>
+function updateRealMarketSessions() {
+  var now = new Date(), h = now.getUTCHours(), m = now.getUTCMinutes(), s = now.getUTCSeconds(), t = h + (m / 60);
+  var clockEl = document.getElementById('obsUtcClock');
+  if (clockEl) clockEl.innerText = 'UTC: ' + String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  
+  setSessStatus('sessLondon', t >= 8 && t < 16.5);
+  setSessStatus('sessNY', t >= 13.5 && t < 20);
+  setSessStatus('sessTokyo', t >= 0 && t < 9);
+  setSessStatus('sessSydney', t >= 22 || t < 7);
+}
+
+function setSessStatus(id, isOpen) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerText = isOpen ? 'OPEN' : 'CLOSED';
+  el.className = 'obs-status-badge ' + (isOpen ? 'obs-status-open' : 'obs-status-closed');
+}
+
+function placeSessionsOnFinancialOnly() {
+  var fin = document.getElementById('financial'), sec = document.getElementById('obsRealMarketSessions');
+  if (!fin || !sec) return;
+  if (sec.parentNode !== fin) fin.appendChild(sec);
+  sec.style.display = 'block';
+  updateRealMarketSessions();
+  setInterval(updateRealMarketSessions, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', placeSessionsOnFinancialOnly);
+placeSessionsOnFinancialOnly();
+</script>
 
 
 
