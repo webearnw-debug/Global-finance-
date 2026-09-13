@@ -4371,7 +4371,88 @@ placeSessionsOnFinancialOnly();
   })();
 </script>
 
+```html
+<section id="live-trading-desk" style="position:relative;max-width:1400px;margin:20px auto;padding:18px;background:#030508;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.95);overflow:hidden;font-family:'Plus Jakarta Sans',sans-serif;color:#f1f5f9;box-sizing:border-box">
+  <style>
+    #live-trading-desk *{box-sizing:border-box;margin:0;padding:0}
+    #live-trading-desk input::-webkit-outer-spin-button,#live-trading-desk input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    #live-trading-desk input[type=number]{-moz-appearance:textfield}
+    @keyframes pulseGlow{0%{transform:scale(.95);box-shadow:0 0 0 0 rgba(0,230,153,.8)}70%{transform:scale(1.1);box-shadow:0 0 0 10px rgba(0,230,153,0)}100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(0,230,153,0)}}
+    @media (max-width:992px){#live-trading-desk .grid-main{grid-template-columns:1fr !important}#live-trading-desk .chart-box,#live-trading-desk .signal-box{height:420px !important}}
+  </style>
 
+  <div style="position:absolute;top:-15%;left:10%;width:350px;height:350px;background:radial-gradient(circle,#00e699 0%,transparent 70%);filter:blur(110px);opacity:.35;pointer-events:none"></div>
+  <div style="position:absolute;bottom:-10%;right:5%;width:350px;height:350px;background:radial-gradient(circle,#ffb800 0%,transparent 70%);filter:blur(110px);opacity:.35;pointer-events:none"></div>
+
+  <div style="position:relative;z-index:1;background:rgba(12,16,25,.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 20px;margin-bottom:16px;box-shadow:inset 0 1px 1px rgba(255,255,255,.1),0 15px 35px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="width:8px;height:8px;background:#00e699;border-radius:50%;animation:pulseGlow 1.8s infinite ease-in-out;display:inline-block"></span>
+      <span style="font-size:.72rem;font-weight:700;letter-spacing:2px;color:#f1f5f9;text-transform:uppercase">INSTITUTIONAL LIVE DESK & SIGNALS</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.08)">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:#f1f5f9">BTC / USDT</span>
+      <span style="color:#ffb800;background:rgba(255,184,0,.12);font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:1px">PRO FEED</span>
+    </div>
+  </div>
+
+  <div class="grid-main" style="position:relative;z-index:1;display:grid;grid-template-columns:2.5fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="chart-box" style="background:rgba(12,16,25,.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:12px;height:540px;box-shadow:0 15px 35px rgba(0,0,0,.6)">
+      <div id="tv_chart_container" style="height:100%;width:100%;border-radius:12px;overflow:hidden;background:#080b12"></div>
+    </div>
+    <div class="signal-box" style="background:rgba(12,16,25,.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:12px;height:540px;box-shadow:0 15px 35px rgba(0,0,0,.6);overflow:hidden">
+      <div class="tradingview-widget-container" style="height:100%;width:100%">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+        {"interval":"15m","width":"100%","isTransparent":true,"height":"100%","symbol":"BITSTAMP:BTCUSD","showIntervalTabs":true,"displayMode":"single","locale":"in","colorTheme":"dark"}
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:relative;z-index:1;background:rgba(12,16,25,.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;box-shadow:0 15px 35px rgba(0,0,0,.6)">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:8px">
+      <span style="width:7px;height:7px;background:#ffb800;border-radius:50%;box-shadow:0 0 8px #ffb800"></span>
+      <h3 style="font-size:.78rem;letter-spacing:1.5px;color:#f1f5f9;text-transform:uppercase;font-weight:700">Position & Risk Calculator</h3>
+    </div>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+      <div>
+        <label style="font-size:.7rem;color:#64748b;display:block;margin-bottom:4px;font-weight:600">Balance ($)</label>
+        <input type="number" id="accBalance" value="1000" style="width:100%;padding:8px 10px;background:#080b12;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.85rem;outline:none" oninput="calcRisk()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#64748b;display:block;margin-bottom:4px;font-weight:600">Risk (%)</label>
+        <input type="number" id="riskPct" value="1" style="width:100%;padding:8px 10px;background:#080b12;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.85rem;outline:none" oninput="calcRisk()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#64748b;display:block;margin-bottom:4px;font-weight:600">Entry ($)</label>
+        <input type="number" id="entryPrice" value="60000" style="width:100%;padding:8px 10px;background:#080b12;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.85rem;outline:none" oninput="calcRisk()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#64748b;display:block;margin-bottom:4px;font-weight:600">Stop Loss ($)</label>
+        <input type="number" id="slPrice" value="59000" style="width:100%;padding:8px 10px;background:#080b12;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.85rem;outline:none" oninput="calcRisk()">
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:12px;background:rgba(0,230,153,.04);border:1px solid rgba(0,230,153,.18);border-radius:10px;display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:8px">
+      <div style="text-align:center">
+        <span style="font-size:.65rem;color:#64748b;display:block;font-weight:600;letter-spacing:.5px">MAX RISK AMOUNT</span>
+        <span id="resRiskAmt" style="font-size:1.05rem;font-weight:700;color:#ff4d4d">$10.00</span>
+      </div>
+      <div style="text-align:center">
+        <span style="font-size:.65rem;color:#64748b;display:block;font-weight:600;letter-spacing:.5px">POSITION SIZE (UNITS)</span>
+        <span id="resPosSize" style="font-size:1.05rem;font-weight:700;color:#00e699">0.0100 Units</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget({"autosize":true,"symbol":"BITSTAMP:BTCUSD","interval":"15","timezone":"Asia/Kolkata","theme":"dark","style":"1","locale":"in","enable_publishing":false,"allow_symbol_change":true,"container_id":"tv_chart_container","backgroundColor":"rgba(8,11,18,1)","gridColor":"rgba(255,255,255,0.03)"});
+    function calcRisk(){let b=parseFloat(document.getElementById('accBalance').value)||0,r=parseFloat(document.getElementById('riskPct').value)||0,e=parseFloat(document.getElementById('entryPrice').value)||0,sl=parseFloat(document.getElementById('slPrice').value)||0,amt=(b*r)/100,d=Math.abs(e-sl),size=d>0?(amt/d):0;document.getElementById('resRiskAmt').innerText='$'+amt.toFixed(2);document.getElementById('resPosSize').innerText=size.toFixed(4)+' Units';}
+  </script>
+</section>
+```
 </body>
    
     
