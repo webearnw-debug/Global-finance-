@@ -4288,6 +4288,382 @@ function gfLaunchFinanceAI(){
 </div>
 
 <script>
+<!-- ================= GLOBAL FINANCE: EXCLUSIVE TRADING DESK SECTION ================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+/* Scoped Section Wrapper: Applies ONLY inside #gf-trading-desk-section */
+#gf-trading-desk-section {
+  --gf-bg: #04060a;
+  --gf-surface: rgba(11, 15, 25, 0.75);
+  --gf-border: rgba(255, 255, 255, 0.08);
+  --gf-green: #00e676;
+  --gf-red: #ff3b5c;
+  --gf-gold: #ffb800;
+  --gf-text: #f1f5f9;
+  --gf-muted: #7c8797;
+  
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative;
+  max-width: 1400px;
+  margin: 30px auto;
+  padding: 24px;
+  background: var(--gf-bg);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+  color: var(--gf-text);
+  overflow: hidden;
+}
+
+/* Background Soft Neon Glows */
+#gf-trading-desk-section::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--gf-green) 0%, transparent 70%);
+  filter: blur(130px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+#gf-trading-desk-section::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: 5%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--gf-gold) 0%, transparent 70%);
+  filter: blur(130px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Hero Title Section from Screenshot */
+#gf-trading-desk-section .gf-hero-box {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+  padding: 24px;
+  background: var(--gf-surface);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--gf-border);
+  border-radius: 20px;
+}
+
+#gf-trading-desk-section .gf-tag {
+  color: var(--gf-gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+#gf-trading-desk-section .gf-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  color: #fff;
+}
+
+#gf-trading-desk-section .gf-sub {
+  color: var(--gf-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* XM Trading Banner Integration */
+#gf-trading-desk-section .gf-ad-banner {
+  margin-top: 16px;
+  background: #090e17;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#gf-trading-desk-section .gf-ad-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--gf-muted);
+}
+
+#gf-trading-desk-section .gf-ad-badge {
+  color: var(--gf-red);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+#gf-trading-desk-section .gf-ad-btn {
+  background: var(--gf-green);
+  color: #000;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+#gf-trading-desk-section .gf-ad-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Main Grid Layout */
+#gf-trading-desk-section .gf-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+@media(max-width: 992px) {
+  #gf-trading-desk-section .gf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Trading Card Style */
+#gf-trading-desk-section .gf-card {
+  background: var(--gf-surface);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--gf-border);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* Chart Controls */
+#gf-trading-desk-section .gf-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--gf-border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#gf-trading-desk-section .gf-pulse {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+#gf-trading-desk-section .gf-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--gf-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--gf-green);
+}
+
+#gf-trading-desk-section .gf-select {
+  background: var(--gf-bg);
+  border: 1px solid var(--gf-border);
+  color: var(--gf-text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Calculator Style */
+#gf-trading-desk-section .gf-calc-field {
+  margin-bottom: 12px;
+}
+
+#gf-trading-desk-section .gf-calc-label {
+  font-size: 0.75rem;
+  color: var(--gf-muted);
+  margin-bottom: 6px;
+  display: block;
+}
+
+#gf-trading-desk-section .gf-calc-input {
+  width: 100%;
+  background: var(--gf-bg);
+  border: 1px solid var(--gf-border);
+  color: var(--gf-text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#gf-trading-desk-section .gf-calc-input:focus {
+  border-color: var(--gf-green);
+}
+
+#gf-trading-desk-section .gf-res-box {
+  margin-top: 16px;
+  padding: 14px;
+  background: rgba(0, 230, 118, 0.05);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  border-radius: 12px;
+  text-align: center;
+}
+
+#gf-trading-desk-section .gf-res-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gf-green);
+}
+</style>
+
+<section id="gf-trading-desk-section">
+
+  <!-- HERO BANNER (MATCHES SCREENSHOT) -->
+  <div class="gf-hero-box">
+    <span class="gf-tag">—— LIVE TRADING DESK</span>
+    <h1 class="gf-title">Trade at Institutional Speed</h1>
+    <p class="gf-sub">Real-time market data, technical signals aur pro-level trading tools ek hi screen par.</p>
+
+    <!-- XM Bonus Ad Strip -->
+    <div class="gf-ad-banner">
+      <div class="gf-ad-info">
+        <span>✔ No Deposit Required</span>
+        <span>✔ Withdraw Profits</span>
+        <span>✔ Stable Leverage</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="gf-ad-badge">XM Get $30 Trading Bonus</span>
+        <a href="#" class="gf-ad-btn">Claim Bonus</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN TRADING MODULES -->
+  <div class="gf-grid">
+    
+    <!-- LIVE TRADINGVIEW CHART -->
+    <div class="gf-card">
+      <div class="gf-card-head">
+        <div class="gf-pulse"><span class="gf-dot"></span> REAL-TIME CHART</div>
+        <select class="gf-select" onchange="changeGfSymbol(this.value)">
+          <option value="BITSTAMP:BTCUSD">BTC / USD</option>
+          <option value="BITSTAMP:ETHUSD">ETH / USD</option>
+          <option value="FX_IDC:EURUSD">EUR / USD</option>
+          <option value="BSE:SENSEX">SENSEX</option>
+          <option value="NSE:NIFTY">NIFTY 50</option>
+        </select>
+      </div>
+      <div style="height:520px;border-radius:12px;overflow:hidden;background:#080b12;">
+        <div id="gf_tv_chart" style="height:100%;width:100%;"></div>
+      </div>
+    </div>
+
+    <!-- POSITION SIZE & RISK CALCULATOR -->
+    <div class="gf-card">
+      <div class="gf-card-head">
+        <div class="gf-pulse" style="color:var(--gf-gold);">⚡ RISK CALCULATOR</div>
+      </div>
+
+      <div class="gf-calc-field">
+        <label class="gf-calc-label">Account Balance ($)</label>
+        <input type="number" id="gfBalance" class="gf-calc-input" value="10000" oninput="runGfCalc()">
+      </div>
+
+      <div class="gf-calc-field">
+        <label class="gf-calc-label">Risk Per Trade (%)</label>
+        <input type="number" id="gfRiskPct" class="gf-calc-input" value="1" oninput="runGfCalc()">
+      </div>
+
+      <div class="gf-calc-field">
+        <label class="gf-calc-label">Entry Price ($)</label>
+        <input type="number" id="gfEntry" class="gf-calc-input" value="65000" oninput="runGfCalc()">
+      </div>
+
+      <div class="gf-calc-field">
+        <label class="gf-calc-label">Stop Loss ($)</label>
+        <input type="number" id="gfStop" class="gf-calc-input" value="64000" oninput="runGfCalc()">
+      </div>
+
+      <div class="gf-res-box">
+        <span class="gf-calc-label" style="text-transform:uppercase;">Max Risk Amount</span>
+        <div class="gf-res-val" id="gfRiskAmt" style="color:var(--gf-red);">$100.00</div>
+      </div>
+
+      <div class="gf-res-box" style="margin-top:10px;">
+        <span class="gf-calc-label" style="text-transform:uppercase;">Position Size (Units)</span>
+        <div class="gf-res-val" id="gfPosSize">0.1000 Units</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SCRIPTS -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+(function(){
+  var gfWidget = null;
+
+  function loadGfChart(symbol) {
+    var box = document.getElementById('gf_tv_chart');
+    if (!box) return;
+    box.innerHTML = '';
+    gfWidget = new TradingView.widget({
+      "autosize": true,
+      "symbol": symbol || "BITSTAMP:BTCUSD",
+      "interval": "15",
+      "timezone": "Asia/Kolkata",
+      "theme": "dark",
+      "style": "1",
+      "locale": "in",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "container_id": "gf_tv_chart",
+      "backgroundColor": "rgba(8,11,18,1)",
+      "gridColor": "rgba(255,255,255,0.03)"
+    });
+  }
+
+  window.changeGfSymbol = function(sym) {
+    loadGfChart(sym);
+  };
+
+  window.runGfCalc = function() {
+    var bal = parseFloat(document.getElementById('gfBalance').value) || 0;
+    var risk = parseFloat(document.getElementById('gfRiskPct').value) || 0;
+    var entry = parseFloat(document.getElementById('gfEntry').value) || 0;
+    var stop = parseFloat(document.getElementById('gfStop').value) || 0;
+
+    var riskAmt = bal * (risk / 100);
+    var diff = Math.abs(entry - stop);
+    var posSize = diff > 0 ? (riskAmt / diff) : 0;
+
+    document.getElementById('gfRiskAmt').innerText = '$' + riskAmt.toFixed(2);
+    document.getElementById('gfPosSize').innerText = posSize.toFixed(4) + ' Units';
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loadGfChart("BITSTAMP:BTCUSD");
+    runGfCalc();
+  });
+})();
+</script>
 
 </body>
    
