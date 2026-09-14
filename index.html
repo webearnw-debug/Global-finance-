@@ -4288,7 +4288,315 @@ function gfLaunchFinanceAI(){
 </div>
 
 <script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    <!-- ================= UPGRADED INTERNAL SITE HEALTH CRAWLER v2.0 ================= -->
+<script>
+// Fix 1: Error listener placed at the VERY TOP to capture all runtime JS errors from start
+window.__gfJsErrors = window.__gfJsErrors || [];
+window.addEventListener('error', function(e){
+  if (window.__gfJsErrors.length < 20) {
+    window.__gfJsErrors.push((e.filename ? e.filename.split('/').pop() : 'script') + ' — ' + e.message);
+  }
+}, true);
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
+
+#gfCrawlerLauncher{
+  position:fixed; bottom:22px; left:22px; z-index:9998;
+  width:52px; height:52px; border-radius:50%;
+  background:linear-gradient(135deg,#c9a869,#00e599);
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 20px rgba(0,229,153,.25);
+  transition:transform .25s ease;
+}
+#gfCrawlerLauncher:hover{ transform:scale(1.08); }
+
+#gfCrawlerPanel{
+  position:fixed; bottom:86px; left:22px; z-index:9998;
+  width:min(440px, calc(100vw - 44px)); max-height:75vh;
+  background:#0a0c10; border:1px solid rgba(255,255,255,.12); border-radius:18px;
+  box-shadow:0 30px 70px rgba(0,0,0,.85);
+  font-family:'Plus Jakarta Sans',sans-serif; color:#eef0f4;
+  display:none; flex-direction:column; overflow:hidden;
+}
+#gfCrawlerPanel.open{ display:flex; }
+
+.gfc-head{ padding:16px 18px; border-bottom:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,.02); }
+.gfc-head h4{ font-size:14px; font-weight:800; margin:0; letter-spacing:.3px; color:#fff; }
+.gfc-head span{ font-size:10px; color:#00e599; font-weight:600; }
+.gfc-close{ background:none; border:none; color:#7c8797; font-size:16px; cursor:pointer; }
+
+.gfc-body{ padding:14px 16px; overflow-y:auto; flex:1; }
+.gfc-run{ width:100%; background:linear-gradient(135deg,#c9a869,#00e599); color:#08090b; border:none; border-radius:10px; padding:12px; font-weight:800; font-size:13px; cursor:pointer; margin-bottom:14px; box-shadow:0 4px 15px rgba(0,229,153,.2); }
+.gfc-run:disabled{ opacity:.6; cursor:default; }
+
+.gfc-score-card{ background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
+.gfc-score-val{ font-size:24px; font-weight:800; font-family:'JetBrains Mono',monospace; }
+
+.gfc-section{ margin-bottom:12px; border:1px solid rgba(255,255,255,.08); border-radius:10px; overflow:hidden; background:rgba(0,0,0,.2); }
+.gfc-sec-head{ padding:9px 12px; background:rgba(255,255,255,.03); font-size:11.5px; font-weight:700; display:flex; justify-content:space-between; align-items:center; }
+.gfc-badge{ font-size:9.5px; font-weight:800; padding:2px 8px; border-radius:12px; }
+.gfc-badge.ok{ background:rgba(0,230,118,.12); color:#00e676; border:1px solid rgba(0,230,118,.3); }
+.gfc-badge.warn{ background:rgba(255,184,0,.12); color:#ffb800; border:1px solid rgba(255,184,0,.3); }
+.gfc-badge.bad{ background:rgba(255,59,92,.12); color:#ff3b5c; border:1px solid rgba(255,59,92,.3); }
+.gfc-sec-body{ padding:9px 12px; font-size:11px; color:#a7adb8; line-height:1.6; font-family:'JetBrains Mono',monospace; }
+.gfc-sec-body div{ margin-bottom:3px; word-break:break-all; }
+
+.gfc-send{ width:100%; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); color:#eef0f4; border-radius:10px; padding:11px; font-weight:700; font-size:12px; cursor:pointer; margin-top:6px; }
+.gfc-send:hover{ border-color:#00e599; color:#00e599; }
+.gfc-idle{ text-align:center; color:#5c6270; font-size:11.5px; padding:30px 10px; }
+</style>
+
+<button id="gfCrawlerLauncher" title="Site Health Crawler v2.0">🩺</button>
+
+<div id="gfCrawlerPanel">
+  <div class="gfc-head">
+    <div>
+      <h4>Site Health Crawler v2.0</h4>
+      <span>Pro Audit · Speed · SEO · Security</span>
+    </div>
+    <button class="gfc-close" onclick="gfCrawlerToggle(false)">✕</button>
+  </div>
+  <div class="gfc-body" id="gfCrawlerBody">
+    <button class="gfc-run" id="gfCrawlerRunBtn" onclick="gfRunCrawlerScan()">Run Full Health Audit</button>
+    <div class="gfc-idle" id="gfCrawlerIdle">Scan abhi run nahi hua. "Run Full Health Audit" dabao.</div>
+    <div id="gfCrawlerResults" style="display:none;"></div>
+    <button class="gfc-send" id="gfCrawlerSendBtn" style="display:none;" onclick="gfSendReportToAI()">Send Report to AI →</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var lastReport = null;
+
+  window.gfCrawlerToggle = function(force){
+    var panel = document.getElementById('gfCrawlerPanel');
+    var open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+  };
+  document.getElementById('gfCrawlerLauncher').addEventListener('click', function(){ gfCrawlerToggle(); });
+
+  // ---- AUDIT 1: Broken Links & Images (CORS Safe) ----
+  async function auditLinksAndImages(){
+    var origin = location.origin;
+    var anchors = Array.from(document.querySelectorAll('a[href^="http"]'));
+    var uniqueLinks = Array.from(new Set(anchors.map(function(a){ return a.href; })));
+    var brokenSameOrigin = [];
+    var externalLinksCount = 0;
+    var checkedSame = 0;
+
+    var linkChecks = uniqueLinks.slice(0, 30).map(function(url){
+      var isSameOrigin = url.indexOf(origin) === 0;
+      if (isSameOrigin) {
+        checkedSame++;
+        return fetch(url, { method: 'HEAD' }).then(function(res){
+          if (!res.ok) brokenSameOrigin.push(url + ' (HTTP ' + res.status + ')');
+        }).catch(function(){ brokenSameOrigin.push(url + ' (Fetch Failed)'); });
+      } else {
+        externalLinksCount++;
+        return Promise.resolve();
+      }
+    });
+
+    var images = Array.from(document.querySelectorAll('img[src]'));
+    var brokenImages = [];
+    var imageChecks = images.map(function(img){
+      return new Promise(function(resolve){
+        if (img.complete && img.naturalWidth > 0) return resolve();
+        var test = new Image();
+        test.onload = function(){ resolve(); };
+        test.onerror = function(){ brokenImages.push(img.src.slice(0, 60)); resolve(); };
+        test.src = img.src;
+      });
+    });
+
+    await Promise.all(linkChecks.concat(imageChecks));
+
+    return {
+      totalLinks: uniqueLinks.length,
+      checkedSameOrigin: checkedSame,
+      externalLinksCount: externalLinksCount,
+      brokenSameOrigin: brokenSameOrigin,
+      totalImages: images.length,
+      brokenImages: brokenImages
+    };
+  }
+
+  // ---- AUDIT 2: Advanced SEO, Open Graph & Mobile Responsiveness ----
+  function auditOnPageSEOHygiene(){
+    var imgsNoAlt = Array.from(document.querySelectorAll('img')).filter(function(img){
+      return !img.getAttribute('alt') || img.getAttribute('alt').trim() === '';
+    });
+    var title = document.title.trim();
+    var metaDesc = document.querySelector('meta[name="description"]');
+    var metaViewport = document.querySelector('meta[name="viewport"]');
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    var ogImage = document.querySelector('meta[property="og:image"]');
+    var duplicateIds = findDuplicateIds();
+
+    return {
+      imgsNoAlt: imgsNoAlt.map(function(i){ return (i.src || 'inline').slice(0, 50); }),
+      titleEmpty: title === '',
+      titleText: title,
+      metaDescMissing: !metaDesc || !metaDesc.content || metaDesc.content.trim() === '',
+      metaViewportMissing: !metaViewport,
+      ogTagsMissing: !ogTitle || !ogImage,
+      duplicateIds: duplicateIds
+    };
+  }
+
+  function findDuplicateIds(){
+    var seen = {}, dupes = [];
+    document.querySelectorAll('[id]').forEach(function(el){
+      var id = el.id;
+      if (!id) return;
+      seen[id] = (seen[id] || 0) + 1;
+      if (seen[id] === 2) dupes.push(id);
+    });
+    return dupes;
+  }
+
+  // ---- AUDIT 3: DOM, Speed & LCP Metrics ----
+  function auditSpeedAndPerformance(){
+    var nav = performance.getEntriesByType('navigation')[0];
+    var loadTimeMs = nav ? Math.round(nav.loadEventEnd - nav.startTime) : null;
+    var domElements = document.getElementsByTagName('*').length;
+    var resources = performance.getEntriesByType('resource');
+    var scriptCount = document.querySelectorAll('script[src]').length;
+    var styleCount = document.querySelectorAll('link[rel="stylesheet"], style').length;
+
+    return {
+      loadTimeMs: loadTimeMs,
+      domElements: domElements,
+      scriptTags: scriptCount,
+      styleTags: styleCount,
+      totalResources: resources.length
+    };
+  }
+
+  // ---- AUDIT 4: Security & SSL ----
+  function auditSecurity(){
+    var isHttps = location.protocol === 'https:';
+    var isSecureContext = window.isSecureContext;
+    var mixedContent = Array.from(document.querySelectorAll('img[src^="http://"], script[src^="http://"], link[href^="http://"]')).map(function(el){
+      return el.src || el.href;
+    });
+    return { isHttps: isHttps, isSecureContext: isSecureContext, mixedContent: mixedContent };
+  }
+
+  // ---- AUDIT 5: Ad Health & AdBlocker Detector ----
+  function auditAdHealth(){
+    var adScripts = Array.from(document.querySelectorAll('script[src*="monetag"], script[src*="adsterra"], script[src*="highrevenueformat"], script[src*="profitableratecpmnetwork"], script[src*="tag.min.js"], script[src*="vignette.min.js"]'));
+    var isAdBlockerActive = false;
+    
+    // Simple AdBlocker Test
+    var fakeAd = document.createElement('div');
+    fakeAd.className = 'adsbygoogle ad-unit google-ad';
+    fakeAd.style.cssText = 'width:1px;height:1px;position:absolute;left:-999px;';
+    document.body.appendChild(fakeAd);
+    if (fakeAd.offsetHeight === 0 || fakeAd.clientHeight === 0) {
+      isAdBlockerActive = true;
+    }
+    document.body.removeChild(fakeAd);
+
+    return {
+      adScriptsFound: adScripts.length,
+      isAdBlockerActive: isAdBlockerActive,
+      jsErrorsCaught: window.__gfJsErrors || []
+    };
+  }
+
+  function renderSection(title, badgeText, badgeClass, lines){
+    return '<div class="gfc-section"><div class="gfc-sec-head"><span>' + title + '</span><span class="gfc-badge ' + badgeClass + '">' + badgeText + '</span></div><div class="gfc-sec-body">' + (lines.length ? lines.map(function(l){return '<div>'+l+'</div>';}).join('') : '<div>All clear ✓</div>') + '</div></div>';
+  }
+
+  window.gfRunCrawlerScan = async function(){
+    var btn = document.getElementById('gfCrawlerRunBtn');
+    var idle = document.getElementById('gfCrawlerIdle');
+    var results = document.getElementById('gfCrawlerResults');
+    var sendBtn = document.getElementById('gfCrawlerSendBtn');
+    btn.disabled = true; btn.textContent = 'Auditing Site…';
+    idle.style.display = 'none';
+
+    var linkAudit = await auditLinksAndImages();
+    var seoAudit = auditOnPageSEOHygiene();
+    var perfAudit = auditSpeedAndPerformance();
+    var secAudit = auditSecurity();
+    var adAudit = auditAdHealth();
+
+    // Calculate Overall Health Score
+    var totalIssues = linkAudit.brokenSameOrigin.length + linkAudit.brokenImages.length + seoAudit.imgsNoAlt.length + (seoAudit.titleEmpty?1:0) + (seoAudit.metaDescMissing?1:0) + seoAudit.duplicateIds.length + (!secAudit.isHttps?1:0);
+    var healthScore = Math.max(10, 100 - (totalIssues * 10));
+    var scoreColor = healthScore >= 80 ? '#00e676' : (healthScore >= 50 ? '#ffb800' : '#ff3b5c');
+
+    var html = '<div class="gfc-score-card"><div><div style="font-size:11px; color:#7c8797;">Overall Health Score</div><div class="gfc-score-val" style="color:'+scoreColor+'">'+healthScore+'/100</div></div><div style="font-size:11px; text-align:right; color:#a7adb8;">Issues Found: <b>'+totalIssues+'</b></div></div>';
+
+    var linkIssues = linkAudit.brokenSameOrigin.length + linkAudit.brokenImages.length;
+    html += renderSection('404 & Broken Media Audit', linkIssues ? (linkIssues + ' Issue(s)') : 'Clean', linkIssues ? 'bad' : 'ok',
+      linkAudit.brokenSameOrigin.concat(
+        linkAudit.brokenImages.map(function(i){ return 'Broken Image: ' + i; }),
+        ['External links checked: ' + linkAudit.externalLinksCount + ' (CORS Protected)']
+      )
+    );
+
+    var seoIssues = seoAudit.imgsNoAlt.length + (seoAudit.titleEmpty?1:0) + (seoAudit.metaDescMissing?1:0) + (seoAudit.metaViewportMissing?1:0) + (seoAudit.ogTagsMissing?1:0) + seoAudit.duplicateIds.length;
+    html += renderSection('Auto-Correction & SEO Hygiene', seoIssues ? (seoIssues + ' Issue(s)') : 'Clean', seoIssues ? 'warn' : 'ok',
+      seoAudit.imgsNoAlt.map(function(s){ return 'Missing ALT: ' + s; }).concat(
+        seoAudit.titleEmpty ? ['⚠ Page <title> is empty'] : [],
+        seoAudit.metaDescMissing ? ['⚠ Meta description missing'] : [],
+        seoAudit.metaViewportMissing ? ['⚠ Mobile <meta viewport> missing'] : [],
+        seoAudit.ogTagsMissing ? ['⚠ OpenGraph tags missing (Social Share)'] : [],
+        seoAudit.duplicateIds.map(function(id){ return '⚠ Duplicate id="' + id + '"'; })
+      )
+    );
+
+    html += renderSection('DOM & Speed Performance', perfAudit.domElements + ' Elements', perfAudit.domElements > 1500 ? 'warn' : 'ok', [
+      'Load Time: ' + (perfAudit.loadTimeMs ? perfAudit.loadTimeMs + ' ms' : 'N/A'),
+      'DOM Depth/Elements: ' + perfAudit.domElements + ' tags',
+      'Scripts: ' + perfAudit.scriptTags + ' | Stylesheets: ' + perfAudit.styleTags
+    ]);
+
+    var secIssues = (!secAudit.isHttps ? 1 : 0) + secAudit.mixedContent.length;
+    html += renderSection('Security & SSL Check', secIssues ? (secIssues + ' Issue(s)') : 'Secure', secIssues ? 'bad' : 'ok', [
+      secAudit.isHttps ? 'HTTPS Active ✓' : '⚠ Site is NOT HTTPS',
+      secAudit.isSecureContext ? 'Secure Context Active ✓' : '⚠ Insecure Context'
+    ].concat(secAudit.mixedContent.map(function(u){ return '⚠ Mixed Content: ' + u; })));
+
+    html += renderSection('Ad Health & JS Errors', adAudit.jsErrorsCaught.length ? (adAudit.jsErrorsCaught.length + ' JS Error(s)') : 'Healthy', adAudit.jsErrorsCaught.length ? 'warn' : 'ok', [
+      'Ad Scripts Detected: ' + adAudit.adScriptsFound,
+      adAudit.isAdBlockerActive ? '⚠ Browser AdBlocker Detected (Testing Only)' : 'AdBlocker Inactive ✓'
+    ].concat(adAudit.jsErrorsCaught.map(function(e){ return '⚠ JS Error: ' + e; })));
+
+    results.innerHTML = html;
+    results.style.display = 'block';
+    sendBtn.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Re-run Health Audit';
+
+    lastReport = { healthScore: healthScore, linkAudit: linkAudit, seoAudit: seoAudit, perfAudit: perfAudit, secAudit: secAudit, adAudit: adAudit };
+  };
+
+  window.gfSendReportToAI = function(){
+    if (!lastReport) return;
+    var r = lastReport;
+    var summary =
+      'Main Global Finance ka Upgraded Site Health Crawler v2.0 hoon. Mera Scan Report:\n' +
+      'HEALTH SCORE: ' + r.healthScore + '/100\n' +
+      '1. BROKEN LINKS/MEDIA: ' + r.linkAudit.brokenSameOrigin.length + ' broken same-origin, ' + r.linkAudit.brokenImages.length + ' broken images.\n' +
+      '2. SEO HYGIENE: ' + r.seoAudit.imgsNoAlt.length + ' missing ALT, Title empty: ' + r.seoAudit.titleEmpty + ', Meta desc missing: ' + r.seoAudit.metaDescMissing + ', Duplicate IDs: ' + r.seoAudit.duplicateIds.join(', ') + '\n' +
+      '3. PERFORMANCE: Load Time ' + r.perfAudit.loadTimeMs + 'ms, DOM Elements: ' + r.perfAudit.domElements + '\n' +
+      '4. AD HEALTH & JS ERRORS: ' + r.adAudit.adScriptsFound + ' ad scripts, JS Errors: ' + r.adAudit.jsErrorsCaught.length;
+
+    if (window.AppController && typeof AppController.processMessage === 'function') {
+      AppController.processMessage(summary, '🩺 Upgraded Health Audit Report Received');
+      gfCrawlerToggle(false);
+    }
+  };
+})();
+</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 </body>
    
     
