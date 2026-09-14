@@ -464,7 +464,65 @@ document.addEventListener("click",e=>{menu.contains(e.target)||menuButton.contai
 document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove("open");});
 </script>
 
+<!-- =================================================================
+     🧭 SITE MONITOR — poori website ki activity ko record karta hai
+================================================================== -->
+<script>
+    const SiteMonitor = {
+        KEY: 'gf_site_activity_log_v1',
+        MAX: 600,
 
+        log: function(type, label, extra) {
+            const arr = this.getAll();
+            arr.push({ t: Date.now(), type, label: String(label || '').slice(0, 90), page: this.currentPage(), extra: extra || null });
+            const trimmed = arr.length > this.MAX ? arr.slice(arr.length - this.MAX) : arr;
+            try { localStorage.setItem(this.KEY, JSON.stringify(trimmed)); } catch (e) {}
+        },
+        getAll: function() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch (e) { return []; } },
+        currentPage: function() { const active = document.querySelector('main > .page.active'); return active ? active.id : 'unknown'; },
+        clear: function() { localStorage.removeItem(this.KEY); },
+
+        summarize: function() {
+            const arr = this.getAll();
+            const byPage = {}, byType = {}, byLabel = {};
+            arr.forEach(e => {
+                byPage[e.page] = (byPage[e.page] || 0) + 1;
+                byType[e.type] = (byType[e.type] || 0) + 1;
+                if (e.type === 'click') byLabel[e.label] = (byLabel[e.label] || 0) + 1;
+            });
+            const topClicks = Object.entries(byLabel).sort((a,b)=>b[1]-a[1]).slice(0,10);
+            return {
+                totalEvents: arr.length,
+                pageViews: byPage,
+                eventTypes: byType,
+                topClickedItems: topClicks,
+                sessionStarted: arr[0] ? new Date(arr[0].t).toLocaleString('en-IN') : null,
+                lastActivity: arr.length ? new Date(arr[arr.length-1].t).toLocaleString('en-IN') : null,
+                recentEvents: arr.slice(-30).map(e => `[${new Date(e.t).toLocaleTimeString('en-IN')}] ${e.type.toUpperCase()} on "${e.page}" — ${e.label}`)
+            };
+        }
+    };
+
+    let __lastLoggedPage = null;
+    (function watchAllPages() {
+        const mainEl = document.querySelector('main');
+        if (!mainEl) return;
+        const checkActive = () => {
+            const active = document.querySelector('main > .page.active');
+            const id = active ? active.id : null;
+            if (id && id !== __lastLoggedPage) { __lastLoggedPage = id; SiteMonitor.log('pageview', id); }
+        };
+        checkActive();
+        new MutationObserver(checkActive).observe(mainEl, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    })();
+
+    document.addEventListener('click', function(e) {
+        const t = e.target.closest('button, a, .menu-item, .nav-item');
+        if (!t) return;
+        const label = (t.innerText || t.getAttribute('aria-label') || t.getAttribute('title') || t.id || 'unknown').trim().replace(/\s+/g, ' ');
+        if (label) SiteMonitor.log('click', label);
+    }, true);
+</script>
 
 <!-- =================================================================
      🚀 PARNARAV AI ENGINE
@@ -4230,12 +4288,8 @@ function gfLaunchFinanceAI(){
 </div>
 
 <script>
-   
-          
-</script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ript>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 </body>
-   
    
     
 </html>
