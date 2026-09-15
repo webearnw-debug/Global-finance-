@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-   <!-- CDN Preconnect (Speed Booster) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://images.unsplash.com">
 
-   <meta name="google-site-verification" content="e8UWOXrxUsP53ykPawoBbgU-nhX8kSFHJOknpae49K0" /> 
+<meta name="google-site-verification" content="e8UWOXrxUsP53ykPawoBbgU-nhX8kSFHJOknpae49K0" />
 <meta charset="UTF-8">
-    <meta name="monetag" content="6b098bf3ddc0d3accc984616446926ff">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Global Finance - Real-Time Live</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- ===== Parnarav AI ke liye zaroori libraries ===== -->
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/tokyo-night-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<!-- Puter Cloud AI Engine — Parnarav AI ka "system" -->
-<script src="https://js.puter.com/v2/"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -50,7 +45,6 @@ main{width:100%;margin:0;padding:0}
 .page{display:none;width:100%;margin:0;padding:0}
 .page.active{display:block}
 
-/* ===== PREMIUM ULTRA-LUXURY HERO BANNER (har section ke liye) ===== */
 .hero-full-card{width:100%;margin:0;padding:0;overflow:hidden;background:#000;position:relative}
 .hero-full-card img{width:100%;height:260px;display:block;object-fit:cover;object-position:center;margin:0;padding:0;border:none;filter:saturate(1.05) contrast(1.05)}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(4,6,10,.92) 5%, rgba(4,6,10,.25) 55%, rgba(4,6,10,.05) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px 5% 22px}
@@ -70,7 +64,6 @@ main{width:100%;margin:0;padding:0}
 }
 </style>
 
-<!-- ===== Parnarav AI CSS — sirf .parnarav-ai-app ke andar lagega ===== -->
 <style>
     .parnarav-ai-app {
         --p-bg-base: #030712; --p-bg-surface: #0b0f19; --p-bg-card: #111827;
@@ -263,7 +256,7 @@ main{width:100%;margin:0;padding:0}
 <!-- HOME -->
 <section id="home" class="page active">
 <div class="hero-full-card">
-<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart" onerror="this.src='47961.png'">
+<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80" alt="Global Finance Trading Chart">
 <div class="hero-overlay">
 <div class="hero-eyebrow">Global Finance • Est. Excellence</div>
 <div class="hero-title">Wealth, Redefined.</div>
@@ -371,10 +364,6 @@ main{width:100%;margin:0;padding:0}
                 <button class="tool-btn" onclick="FinancialEngine.calcSIP()"><span class="ico" style="color:var(--p-accent-cyan)">🧮</span> SIP Calculator</button>
                 <button class="tool-btn" onclick="FinancialEngine.calcEMI()"><span class="ico" style="color:var(--p-accent-yellow)">🏠</span> Loan EMI Engine</button>
 
-                <div style="font-size:.66rem; color:var(--p-text-muted); padding:10px 4px 2px; line-height:1.5; border-top:1px solid var(--p-border-color); margin-top:10px;">
-                    Tip: chat me seedha likho <b>"website report do"</b> — AI khud poori website ki activity report bana dega.
-                </div>
-
                 <div style="font-size:.7rem; font-weight:700; color:var(--p-accent-green); margin:12px 0 8px 0; text-transform:uppercase;">Display Settings</div>
                 <button class="tool-btn" onclick="AppController.toggleTheme()"><span class="ico">🌓</span> Light / Dark</button>
                 <button class="tool-btn" onclick="AppController.toggleDensity()"><span class="ico">📏</span> Compact / Comfortable</button>
@@ -432,7 +421,7 @@ main{width:100%;margin:0;padding:0}
                 </div>
                 <div class="input-box">
                     <button class="btn-icon" id="micToggleBtn" title="Speak Input" onclick="VoiceInputEngine.toggleMic()" aria-label="Voice input"><span class="ico">🎤</span></button>
-                    <textarea id="userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें... (जैसे: website report do)" onkeydown="AppController.handleKeyPress(event)" oninput="AppController.handleInputChange()"></textarea>
+                    <textarea id="userInput" rows="1" placeholder="यहाँ अपना सवाल या मैसेज दर्ज करें..." onkeydown="AppController.handleKeyPress(event)" oninput="AppController.handleInputChange()"></textarea>
                     <button class="btn-icon" id="stopBtn" title="Stop generating" onclick="AppController.stopGeneration()" style="display:none;" aria-label="Stop"><span class="ico">⏹️</span></button>
                     <button class="btn-send" id="sendBtn" onclick="AppController.submitQuery()" title="Send Message" aria-label="Send"><span class="ico">➤</span></button>
                 </div>
@@ -465,72 +454,48 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
 
 <!-- =================================================================
-     🧭 SITE MONITOR — poori website ki activity ko record karta hai
-================================================================== -->
-<script>
-    const SiteMonitor = {
-        KEY: 'gf_site_activity_log_v1',
-        MAX: 600,
-
-        log: function(type, label, extra) {
-            const arr = this.getAll();
-            arr.push({ t: Date.now(), type, label: String(label || '').slice(0, 90), page: this.currentPage(), extra: extra || null });
-            const trimmed = arr.length > this.MAX ? arr.slice(arr.length - this.MAX) : arr;
-            try { localStorage.setItem(this.KEY, JSON.stringify(trimmed)); } catch (e) {}
-        },
-        getAll: function() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch (e) { return []; } },
-        currentPage: function() { const active = document.querySelector('main > .page.active'); return active ? active.id : 'unknown'; },
-        clear: function() { localStorage.removeItem(this.KEY); },
-
-        summarize: function() {
-            const arr = this.getAll();
-            const byPage = {}, byType = {}, byLabel = {};
-            arr.forEach(e => {
-                byPage[e.page] = (byPage[e.page] || 0) + 1;
-                byType[e.type] = (byType[e.type] || 0) + 1;
-                if (e.type === 'click') byLabel[e.label] = (byLabel[e.label] || 0) + 1;
-            });
-            const topClicks = Object.entries(byLabel).sort((a,b)=>b[1]-a[1]).slice(0,10);
-            return {
-                totalEvents: arr.length,
-                pageViews: byPage,
-                eventTypes: byType,
-                topClickedItems: topClicks,
-                sessionStarted: arr[0] ? new Date(arr[0].t).toLocaleString('en-IN') : null,
-                lastActivity: arr.length ? new Date(arr[arr.length-1].t).toLocaleString('en-IN') : null,
-                recentEvents: arr.slice(-30).map(e => `[${new Date(e.t).toLocaleTimeString('en-IN')}] ${e.type.toUpperCase()} on "${e.page}" — ${e.label}`)
-            };
-        }
-    };
-
-    let __lastLoggedPage = null;
-    (function watchAllPages() {
-        const mainEl = document.querySelector('main');
-        if (!mainEl) return;
-        const checkActive = () => {
-            const active = document.querySelector('main > .page.active');
-            const id = active ? active.id : null;
-            if (id && id !== __lastLoggedPage) { __lastLoggedPage = id; SiteMonitor.log('pageview', id); }
-        };
-        checkActive();
-        new MutationObserver(checkActive).observe(mainEl, { subtree: true, attributes: true, attributeFilter: ['class'] });
-    })();
-
-    document.addEventListener('click', function(e) {
-        const t = e.target.closest('button, a, .menu-item, .nav-item');
-        if (!t) return;
-        const label = (t.innerText || t.getAttribute('aria-label') || t.getAttribute('title') || t.id || 'unknown').trim().replace(/\s+/g, ' ');
-        if (label) SiteMonitor.log('click', label);
-    }, true);
-</script>
-
-<!-- =================================================================
      🚀 PARNARAV AI ENGINE
+     NOTE: This used to call Puter.js's free hosted model. That has been
+     removed. Plug your own AI API in callAIProvider() below.
 ================================================================== -->
 <script>
     const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
     const PREFS_KEY = "parnarav_prefs_v3";
     const DRAFT_KEY = "parnarav_draft_v3";
+
+    // ======= PUT YOUR OWN AI API CONFIG HERE =======
+    // Example: Anthropic Messages API, OpenAI-compatible endpoint, or your own backend.
+    // Never ship a real secret key inside client-side HTML in production — proxy this
+    // call through your own server so the key isn't exposed in the browser.
+    const AI_CONFIG = {
+        endpoint: "https://api.anthropic.com/v1/messages", // <-- change if using a different provider
+        apiKey: "YOUR_API_KEY_HERE",                         // <-- put your API key here
+        model: "claude-sonnet-4-6"
+    };
+
+    async function callAIProvider(messages) {
+        // messages: [{role:'system'|'user'|'assistant', content:'...'}]
+        const systemMsg = messages.find(m => m.role === 'system');
+        const chatMsgs = messages.filter(m => m.role !== 'system')
+            .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
+
+        const response = await fetch(AI_CONFIG.endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: AI_CONFIG.model,
+                max_tokens: 1000,
+                system: systemMsg ? systemMsg.content : undefined,
+                messages: chatMsgs
+            })
+        });
+
+        if (!response.ok) throw new Error("AI request failed: " + response.status);
+        const data = await response.json();
+        const textBlock = (data.content || []).find(b => b.type === "text");
+        return textBlock ? textBlock.text : "";
+    }
+
     let pinnedMsgId = null;
     let sessionStartTime = Date.now();
     let lastUserMessage = null;
@@ -538,7 +503,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     function loadPrefs() { try { return JSON.parse(localStorage.getItem(PREFS_KEY)) || {}; } catch (e) { return {}; } }
     function savePrefs(p) { try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch (e) {} }
 
-    const GeminiOmniEngine = {
+    const AIEngine = {
         chatHistory: [],
         activeGenId: 0,
 
@@ -549,33 +514,24 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                 this.chatHistory.push({ role: "system", content: systemInstruction });
             }
             this.chatHistory.push({ role: "user", content: userPrompt });
-            const opts = { stream: true, temperature: 0.35 };
 
             try {
-                const responseStream = await puter.ai.chat(this.chatHistory, opts);
-                let fullReply = "";
-                for await (const part of responseStream) {
-                    if (genId !== undefined && genId !== this.activeGenId) return fullReply;
-                    if (part?.text) { fullReply += part.text; if (onChunkCallback) onChunkCallback(fullReply); }
-                }
+                const fullReply = await callAIProvider(this.chatHistory);
+                if (genId !== undefined && genId !== this.activeGenId) return fullReply;
+                if (onChunkCallback) onChunkCallback(fullReply);
                 this.chatHistory.push({ role: "assistant", content: fullReply });
                 return fullReply;
             } catch (err) {
-                console.warn("[GeminiOmniEngine] retrying with default settings:", err);
-                const response = await puter.ai.chat(this.chatHistory);
-                const textResponse = typeof response === 'string'
-                    ? response : (response?.message?.content || response?.text || "Error processing request.");
-                this.chatHistory.push({ role: "assistant", content: textResponse });
-                if (onChunkCallback) onChunkCallback(textResponse);
-                return textResponse;
+                const msg = "**[Configuration needed]** Alpha AI abhi kisi live model se connected nahi hai. `AI_CONFIG.apiKey` me apni API key daalein — file ke top par `PARNARAV AI ENGINE` section me.";
+                if (onChunkCallback) onChunkCallback(msg);
+                return msg;
             }
         },
 
         generateWelcome: async function(mode) {
             try {
                 const prompt = `Tum Parnarav AI ho. Mode "${mode}" abhi active hua hai. User ke liye 2-3 line ka ek dostana Hindi/Hinglish welcome message likho jisme ye batao ki is mode me tum kis tarah madad kar sakte ho. Sirf welcome message likho, kuch aur nahi.`;
-                const response = await puter.ai.chat(prompt, { temperature: 0.5 });
-                const text = typeof response === 'string' ? response : (response?.message?.content || response?.text || "");
+                const text = await callAIProvider([{ role: "user", content: prompt }]);
                 return text && text.trim().length > 5 ? text.trim() : null;
             } catch (e) { return null; }
         }
@@ -652,9 +608,10 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         runAnalysis: function() {
             const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
             let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE</div>
-                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period): <b>${rsi}</b><br>
-                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
+            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (illustrative)</div>
+                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period, simulated): <b>${rsi}</b><br>
+                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b><br>
+                <span style="color:var(--p-text-muted);font-size:.7rem">For real live RSI/EMA data see the Trading & Finance page.</span></div>`;
             UIManager.appendMsg(html, 'ai', null, '📊');
         }
     };
@@ -703,9 +660,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             container.appendChild(row);
             AppController.updateMsgCount();
             AppController.scrollToBottom(true);
-            if (sender === 'user' || sender === 'ai') {
-                SiteMonitor.log('chat', `${sender}: ${(typeof content === 'string' ? content.replace(/<[^>]+>/g, '') : '').slice(0, 70)}`);
-            }
             return row;
         },
         renderActionBar: function(rowId, opts) {
@@ -839,7 +793,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             if (!navigator.onLine) { el.innerText = 'Offline'; return; }
             const start = performance.now();
             try {
-                await fetch('https://js.puter.com/v2/', { mode: 'no-cors', cache: 'no-store' });
+                await fetch('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', { mode: 'no-cors', cache: 'no-store' });
                 const ms = Math.round(performance.now() - start);
                 el.innerText = ms < 400 ? `Fast (${ms}ms)` : `OK (${ms}ms)`;
             } catch (e) { el.innerText = 'Unstable'; }
@@ -928,7 +882,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                         <span class="ico">⬇️</span><span class="badge" id="unreadBadge" style="display:none;">0</span>
                     </button>
                 </div>`;
-            GeminiOmniEngine.resetMemory();
+            AIEngine.resetMemory();
             pinnedMsgId = null;
             document.getElementById('pinnedBar').classList.remove('show');
             sessionStartTime = Date.now();
@@ -975,7 +929,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 
         renderDefaultWelcome: async function(mode) {
             const fallback = {
-                OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें। (Tip: <b>website report do</b> likh kar poori site ki activity report bhi mangwa sakte hain।)" },
+                OMNI: { icon: "🧠", text: "<b>🧠 Omni Super AI Engine Active!</b><br>नमस्ते! मैं आपका यूनिवर्सल AI असिस्टेंट हूँ। किसी भी भाषा में बेझिझक सवाल पूछें।" },
                 FINANCE: { icon: "📈", text: "<b>📈 Trading & Finance Engine Active!</b><br>नमस्ते! मैं आपका क्वांट एवं फाइनेंशियल AI हूँ।" },
                 DEV: { icon: "💻", text: "<b>💻 Coding Master Engine Active!</b><br>नमस्ते! मैं आपका सॉफ्टवेयर आर्किटेक्ट AI हूँ।" },
                 INTERVIEW: { icon: "👔", text: "<b>👔 Senior Mock Interviewer Active!</b><br>नमस्ते! मैं आपसे एक-एक करके तकनीकी प्रश्न पूछूँगा।" },
@@ -983,7 +937,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             }[mode];
 
             const row = UIManager.appendMsg("<i>Welcome message taiyaar ho raha hai...</i>", 'ai', null, fallback.icon);
-            const aiWelcome = await GeminiOmniEngine.generateWelcome(mode);
+            const aiWelcome = await AIEngine.generateWelcome(mode);
             const bubble = row.querySelector('.bubble');
             if (bubble) bubble.innerHTML = aiWelcome ? (window.marked ? marked.parse(aiWelcome) : aiWelcome) : fallback.text;
             UIManager.renderActionBar(row.id, { isAi: true });
@@ -999,10 +953,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             ];
             for (const rule of rules) if (rule.words.some(w => t.includes(w))) return rule.mode;
             return null;
-        },
-
-        isReportRequest: function(text) {
-            return /(website|site)\s*(ki|ka|की|का)?\s*(report|activity|track|monitor)|activity\s*(report|log)|full\s*report|site\s*report|website\s*report|report\s*(do|de|dikhao|banao|chahiye)/i.test(text);
         },
 
         handleKeyPress: function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitQuery(); } },
@@ -1077,20 +1027,9 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         },
 
         stopGeneration: function() {
-            GeminiOmniEngine.activeGenId++;
+            AIEngine.activeGenId++;
             document.getElementById('stopBtn').style.display = 'none';
             document.getElementById('sendBtn').disabled = false;
-        },
-
-        generateSiteReport: function(displayLabel) {
-            const s = SiteMonitor.summarize();
-            if (!s.totalEvents) {
-                UIManager.appendMsg("<b>📊 Website Activity Report</b><br>Abhi tak koi activity record nahi hui — pehle website use karo (kuch pages kholo, buttons dabao), phir dobara report maango।", 'ai', null, '🧭');
-                return;
-            }
-            const dataBlock = JSON.stringify(s, null, 2);
-            const prompt = `Tum Parnarav AI ho aur "Global Finance" website ke poore activity data ko control/monitor kar rahe ho. Neeche is website ka real activity log diya hai (page views, clicks, chat, recent events). Ek professional, structured Hindi/Hinglish report banao — headings ke saath — jisme ho:\n1. Overview (total events, session time)\n2. Sabse zyada dekhe gaye pages\n3. Sabse zyada click kiye gaye items\n4. User behaviour pattern ka insight\n5. Website ko behtar banane ke 2-3 practical suggestions\n\nActivity Data (JSON):\n${dataBlock}`;
-            this.processMessage(prompt, displayLabel || "📊 Poori website ki activity report dikhao");
         },
 
         processMessage: async function(promptText, displayText) {
@@ -1108,7 +1047,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             const aiRow = UIManager.appendMsg(typingHtml, 'ai', null, currentAvatar);
             const aiMsgId = aiRow.id;
 
-            let systemRolePrompt = `ROLE: Universal General Knowledge & Website Control AI. Tumhe is website ("Global Finance") ka poora activity data dekhne aur uspar report banane ki permission hai. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, top-quality, structured answers. CREATOR RULE: "${SYSTEM_CREATOR}".`;
+            let systemRolePrompt = `ROLE: Universal General Knowledge Assistant. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, structured answers. CREATOR RULE: "${SYSTEM_CREATOR}".`;
             if (mode === 'INTERVIEW') systemRolePrompt = `ROLE: Senior Tech Lead & Mock Interviewer. Ask ONE question at a time, accurate feedback. CREATOR RULE: "${SYSTEM_CREATOR}".`;
             else if (mode === 'SALES') systemRolePrompt = `ROLE: B2B SaaS Sales Executive & Persuasion Specialist. CREATOR RULE: "${SYSTEM_CREATOR}".`;
             else if (mode === 'FINANCE') systemRolePrompt = `ROLE: Quantitative & Financial Trading AI Specialist. Precise, fact-checked. CREATOR RULE: "${SYSTEM_CREATOR}".`;
@@ -1116,12 +1055,12 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 
             const bubbleElement = document.getElementById(aiMsgId);
             const bubble = bubbleElement ? bubbleElement.querySelector('.bubble') : null;
-            const myGenId = ++GeminiOmniEngine.activeGenId;
+            const myGenId = ++AIEngine.activeGenId;
             document.getElementById('stopBtn').style.display = 'flex';
             document.getElementById('sendBtn').disabled = true;
 
             try {
-                const finalReply = await GeminiOmniEngine.processChat(
+                const finalReply = await AIEngine.processChat(
                     promptText, systemRolePrompt,
                     (streamedText) => {
                         if (bubble) {
@@ -1131,7 +1070,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                         }
                     }, myGenId
                 );
-                if (myGenId === GeminiOmniEngine.activeGenId && bubbleElement) UIManager.renderActionBar(aiMsgId, { isAi: true });
+                if (myGenId === AIEngine.activeGenId && bubbleElement) UIManager.renderActionBar(aiMsgId, { isAi: true });
                 VoiceEngine.speak(finalReply);
             } catch (err) {
                 if (bubble) bubble.innerHTML = `**[System Error]** Kuch गड़बड़ हुई: \`${err.message || err}\` — कृपया दोबारा कोशिश करें।`;
@@ -1150,11 +1089,6 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             lastUserMessage = text;
             localStorage.removeItem(DRAFT_KEY);
             input.value = ''; this.handleInputChange();
-
-            if (this.isReportRequest(text)) {
-                this.generateSiteReport(text);
-                return;
-            }
 
             if (this.currentMode === 'OMNI') {
                 const suggestedMode = this.autoDetectMode(text);
@@ -1185,410 +1119,113 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
         new MutationObserver(tryInit).observe(alphaSection, { attributes: true, attributeFilter: ['class'] });
     })();
 </script>
+
 <!-- ======================================================= -->
-<!-- ULTRA-PREMIUM CATEGORY CARDS WITH HD IMAGES (SINGLE CODE)-->
+<!-- ULTRA-PREMIUM CATEGORY CARDS WITH HD IMAGES -->
 <!-- ======================================================= -->
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
-
-.ultra-cat-wrapper {
-  width: 100%;
-  max-width: 1200px;
-  margin: 25px auto;
-  padding: 0 16px;
-  box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  user-select: none;
-}
-
-.ultra-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
-
-.ultra-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ultra-title-dot {
-  width: 8px;
-  height: 8px;
-  background: #00e676;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #00e676;
-}
-
-.ultra-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-
-@media (min-width: 768px) {
-  .ultra-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-}
-
-/* Individual Card Design */
-.ultra-card {
-  position: relative;
-  height: 170px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #0c1017;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-/* HD Background Image & Zoom Effect */
-.ultra-card-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: brightness(0.7) contrast(1.1);
-}
-
-/* Dark Gradient Overlay for High Readability */
-.ultra-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(6, 9, 14, 0.2) 0%, rgba(6, 9, 14, 0.85) 60%, rgba(6, 9, 14, 0.98) 100%);
-  transition: background 0.4s ease;
-}
-
-/* Hover States */
-.ultra-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: rgba(0, 230, 118, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 230, 118, 0.25), 0 0 15px rgba(0, 230, 118, 0.2);
-}
-
-.ultra-card:hover .ultra-card-img {
-  transform: scale(1.12);
-}
-
-.ultra-card:hover .ultra-card-overlay {
-  background: linear-gradient(180deg, rgba(6, 9, 14, 0.1) 0%, rgba(6, 9, 14, 0.75) 50%, rgba(6, 9, 14, 0.95) 100%);
-}
-
-.ultra-card:active {
-  transform: scale(0.97);
-}
-
-/* Top Floating Elements */
-.ultra-top-bar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 2;
-}
-
-.ultra-icon-box {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #00e676;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.ultra-card:hover .ultra-icon-box {
-  background: #00e676;
-  color: #000;
-  box-shadow: 0 0 20px rgba(0, 230, 118, 0.8);
-  border-color: #00e676;
-}
-
-.ultra-badge {
-  font-size: 9px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 30px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f8fafc;
-}
-
-/* Card Bottom Content */
-.ultra-card-content {
-  position: absolute;
-  bottom: 12px;
-  left: 14px;
-  right: 14px;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
-.ultra-text-group h3 {
-  font-size: 16px;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 3px 0;
-  letter-spacing: -0.2px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
-
-.ultra-text-group p {
-  font-size: 11px;
-  color: #94a3b8;
-  margin: 0;
-  font-weight: 600;
-}
-
-.ultra-arrow-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 12px;
-  transition: all 0.3s ease;
-}
-
-.ultra-card:hover .ultra-arrow-btn {
-  background: #00e676;
-  color: #000;
-  transform: translateX(4px);
-}
-
-/* ALPHA AI Special Card Styling */
-.ultra-card.alpha-card {
-  border-color: rgba(0, 223, 216, 0.4);
-}
-
-.ultra-card.alpha-card:hover {
-  border-color: #00dfd8;
-  box-shadow: 0 20px 40px rgba(0, 223, 216, 0.3), 0 0 20px rgba(0, 223, 216, 0.3);
-}
-
-.ultra-card.alpha-card .ultra-icon-box {
-  color: #00dfd8;
-}
-
-.ultra-card.alpha-card:hover .ultra-icon-box {
-  background: linear-gradient(135deg, #7928ca, #00dfd8);
-  color: #fff;
-  box-shadow: 0 0 25px rgba(0, 223, 216, 0.8);
-}
-
-.ultra-card.alpha-card .ultra-badge {
-  background: linear-gradient(135deg, #7928ca, #00dfd8);
-  color: #fff;
-  border: none;
-}
-
-.ultra-card.alpha-card:hover .ultra-arrow-btn {
-  background: #00dfd8;
-  color: #000;
-}
+.ultra-cat-wrapper{width:100%;max-width:1200px;margin:25px auto;padding:0 16px;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;user-select:none}
+.ultra-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.ultra-title{font-size:13px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:10px}
+.ultra-title-dot{width:8px;height:8px;background:#00e676;border-radius:50%;box-shadow:0 0 10px #00e676}
+.ultra-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (min-width: 768px){.ultra-grid{grid-template-columns:repeat(3,1fr);gap:20px}}
+.ultra-card{position:relative;height:170px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0c1017;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ultra-card-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1);filter:brightness(.7) contrast(1.1)}
+.ultra-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,9,14,.2) 0%,rgba(6,9,14,.85) 60%,rgba(6,9,14,.98) 100%);transition:background .4s ease}
+.ultra-card:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(0,230,118,.6);box-shadow:0 20px 40px rgba(0,230,118,.25),0 0 15px rgba(0,230,118,.2)}
+.ultra-card:hover .ultra-card-img{transform:scale(1.12)}
+.ultra-card:hover .ultra-card-overlay{background:linear-gradient(180deg,rgba(6,9,14,.1) 0%,rgba(6,9,14,.75) 50%,rgba(6,9,14,.95) 100%)}
+.ultra-card:active{transform:scale(.97)}
+.ultra-top-bar{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.ultra-icon-box{width:38px;height:38px;border-radius:12px;background:rgba(15,23,42,.65);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#00e676;font-size:16px;transition:all .3s ease}
+.ultra-card:hover .ultra-icon-box{background:#00e676;color:#000;box-shadow:0 0 20px rgba(0,230,118,.8);border-color:#00e676}
+.ultra-badge{font-size:9px;font-weight:800;padding:4px 10px;border-radius:30px;text-transform:uppercase;letter-spacing:.8px;background:rgba(15,23,42,.65);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);color:#f8fafc}
+.ultra-card-content{position:absolute;bottom:12px;left:14px;right:14px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between}
+.ultra-text-group h3{font-size:16px;font-weight:800;color:#ffffff;margin:0 0 3px 0;letter-spacing:-.2px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.ultra-text-group p{font-size:11px;color:#94a3b8;margin:0;font-weight:600}
+.ultra-arrow-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#ffffff;font-size:12px;transition:all .3s ease}
+.ultra-card:hover .ultra-arrow-btn{background:#00e676;color:#000;transform:translateX(4px)}
+.ultra-card.alpha-card{border-color:rgba(0,223,216,.4)}
+.ultra-card.alpha-card:hover{border-color:#00dfd8;box-shadow:0 20px 40px rgba(0,223,216,.3),0 0 20px rgba(0,223,216,.3)}
+.ultra-card.alpha-card .ultra-icon-box{color:#00dfd8}
+.ultra-card.alpha-card:hover .ultra-icon-box{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;box-shadow:0 0 25px rgba(0,223,216,.8)}
+.ultra-card.alpha-card .ultra-badge{background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;border:none}
+.ultra-card.alpha-card:hover .ultra-arrow-btn{background:#00dfd8;color:#000}
 </style>
 
-<!-- CATEGORY CARDS HTML -->
 <div id="ultraCategoryWrapper" class="ultra-cat-wrapper">
-  
   <div class="ultra-section-header">
-    <div class="ultra-title">
-      <span class="ultra-title-dot"></span> Main Categories
-    </div>
+    <div class="ultra-title"><span class="ultra-title-dot"></span> Main Categories</div>
   </div>
-
   <div class="ultra-grid">
-
-    <!-- 1. FINANCIAL -->
     <div class="ultra-card" onclick="handleCategoryClick('financial')">
       <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Financial" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-      
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-wallet"></i></div>
-        <span class="ultra-badge">Wealth</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3>Financial</h3>
-          <p>Money & Budgeting</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-wallet"></i></div><span class="ultra-badge">Wealth</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Financial</h3><p>Money & Budgeting</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
-    <!-- 2. TRADING -->
     <div class="ultra-card" onclick="handleCategoryClick('trading')">
       <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80" alt="Trading" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-chart-line"></i></div>
-        <span class="ultra-badge" style="color:#00e676;">Hot Market</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3>Trading</h3>
-          <p>Stocks, Forex & Nifty</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-chart-line"></i></div><span class="ultra-badge" style="color:#00e676;">Hot Market</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Trading</h3><p>Stocks, Forex & Nifty</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
-    <!-- 3. INVESTMENT -->
     <div class="ultra-card" onclick="handleCategoryClick('investment')">
       <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80" alt="Investment" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-chart-pie"></i></div>
-        <span class="ultra-badge">Crypto & MF</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3>Investment</h3>
-          <p>High Returns Strategy</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-chart-pie"></i></div><span class="ultra-badge">Crypto & MF</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Investment</h3><p>High Returns Strategy</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
-    <!-- 4. LOANS -->
     <div class="ultra-card" onclick="handleCategoryClick('loans')">
       <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Loans" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-building-columns"></i></div>
-        <span class="ultra-badge">Low Interest</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3>Loans</h3>
-          <p>Personal & Business</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-building-columns"></i></div><span class="ultra-badge">Low Interest</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Loans</h3><p>Personal & Business</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
-    <!-- 5. EARNING TIPS -->
     <div class="ultra-card" onclick="handleCategoryClick('earning')">
       <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80" alt="Earning Tips" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-sack-dollar"></i></div>
-        <span class="ultra-badge" style="color:#ffb703;">Passive Income</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3>Earning Tips</h3>
-          <p>Online Money Guide</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-sack-dollar"></i></div><span class="ultra-badge" style="color:#ffb703;">Passive Income</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Earning Tips</h3><p>Online Money Guide</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
-    <!-- 6. ALPHA AI (SPECIAL PRO FEATURE CARD) -->
     <div class="ultra-card alpha-card" onclick="handleCategoryClick('alpha')">
       <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Alpha AI" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
-
-      <div class="ultra-top-bar">
-        <div class="ultra-icon-box"><i class="fa-solid fa-bolt"></i></div>
-        <span class="ultra-badge">PRO AI 98% ACC</span>
-      </div>
-
-      <div class="ultra-card-content">
-        <div class="ultra-text-group">
-          <h3 style="background: linear-gradient(135deg, #ffffff, #00dfd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Alpha AI</h3>
-          <p style="color:#00dfd8;">Smart Trading Signals</p>
-        </div>
-        <div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div>
-      </div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-bolt"></i></div><span class="ultra-badge">PRO AI ASSISTANT</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3 style="background: linear-gradient(135deg, #ffffff, #00dfd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Alpha AI</h3><p style="color:#00dfd8;">Smart Trading Assistant</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-
   </div>
 </div>
 
 <script>
 (function() {
-  // AUTO POSITIONING: Automatically inserts these cards under the Home Image (.hero-full-card)
   function positionCards() {
     var heroCard = document.querySelector('.hero-full-card');
     var catWrapper = document.getElementById('ultraCategoryWrapper');
-    if (heroCard && catWrapper) {
-      // Insert right after heroCard or after the Trust Strip if present
-      var trustStrip = document.getElementById('realTradingStrip') || document.getElementById('trustStripElement');
-      var insertAfter = trustStrip ? trustStrip : heroCard;
-      insertAfter.parentNode.insertBefore(catWrapper, insertAfter.nextSibling);
-    }
+    if (heroCard && catWrapper) heroCard.parentNode.insertBefore(catWrapper, heroCard.nextSibling);
   }
-
-  // CATEGORY CLICK HANDLER
   window.handleCategoryClick = function(pageId) {
-    if (typeof openPage === 'function') {
-      openPage(pageId);
-    } else {
-      document.querySelectorAll('.page').forEach(function(sec) {
-        sec.classList.remove('active');
-      });
+    if (typeof openPage === 'function') openPage(pageId);
+    else {
+      document.querySelectorAll('.page').forEach(function(sec){ sec.classList.remove('active'); });
       var target = document.getElementById(pageId);
-      if (target) {
-        target.classList.add('active');
-      }
+      if (target) target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-
   document.addEventListener("DOMContentLoaded", positionCards);
   positionCards();
 })();
 </script>
-  <!-- ======================================================= -->
-<!-- 100% REAL RSI (14) + EMA (9) TECHNICAL ANALYSIS ENGINE  -->
+
+<!-- ======================================================= -->
+<!-- REAL RSI (14) + EMA (9) TECHNICAL ANALYSIS ENGINE (live Binance data) -->
 <!-- ======================================================= -->
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 .rsi-engine-wrapper{width:100%;max-width:1200px;margin:25px auto;padding:0 16px;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;user-select:none}
 .rsi-card{background:linear-gradient(145deg,rgba(12,16,23,.95),rgba(18,24,38,.95));border:1px solid rgba(0,223,216,.3);border-radius:20px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 35px rgba(0,223,216,.12);position:relative;overflow:hidden;backdrop-filter:blur(16px)}
 .rsi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#7928ca,#00dfd8,#00e676)}
@@ -1627,8 +1264,8 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
   <div class="rsi-card">
     <div class="rsi-header">
       <div>
-        <div class="rsi-title-wrap"><span class="rsi-badge"><i class="fa-solid fa-chart-line"></i> MATH ENGINE</span><h2 class="rsi-title">REAL RSI (14) + EMA (9) SIGNALS</h2></div>
-        <p class="rsi-subtitle">100% Calculated Live Technical Indicators (15m Candlesticks)</p>
+        <div class="rsi-title-wrap"><span class="rsi-badge"><i class="fa-solid fa-chart-line"></i> MATH ENGINE</span><h2 class="rsi-title">LIVE RSI (14) + EMA (9)</h2></div>
+        <p class="rsi-subtitle">Calculated from live 15-minute candles. Educational only — not financial advice.</p>
       </div>
       <div class="rsi-status-badge"><span class="rsi-pulse-dot"></span><span id="rsiLiveClock">Engine Active</span></div>
     </div>
@@ -1637,7 +1274,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     </div>
   </div>
 </div>
-<div id="rsiToast">Real Signal Copied to Clipboard!</div>
+<div id="rsiToast">Signal Copied to Clipboard!</div>
 
 <script>
 (function(){
@@ -1653,82 +1290,54 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     {symbol:'BNBUSDT',name:'BNB Coin',icon:'fa-solid fa-coins'}
   ];
 
-  // 1. Math Function: Calculate Real RSI (14 Period)
   function calculateRSI(closes, period = 14) {
     if (closes.length <= period) return 50;
     let gains = 0, losses = 0;
     for (let i = 1; i <= period; i++) {
       let diff = closes[i] - closes[i - 1];
-      if (diff >= 0) gains += diff;
-      else losses -= diff;
+      if (diff >= 0) gains += diff; else losses -= diff;
     }
-    let avgGain = gains / period;
-    let avgLoss = losses / period;
-
+    let avgGain = gains / period, avgLoss = losses / period;
     for (let i = period + 1; i < closes.length; i++) {
       let diff = closes[i] - closes[i - 1];
-      if (diff >= 0) {
-        avgGain = (avgGain * 13 + diff) / 14;
-        avgLoss = (avgLoss * 13) / 14;
-      } else {
-        avgGain = (avgGain * 13) / 14;
-        avgLoss = (avgLoss * 13 - diff) / 14;
-      }
+      if (diff >= 0) { avgGain = (avgGain * 13 + diff) / 14; avgLoss = (avgLoss * 13) / 14; }
+      else { avgGain = (avgGain * 13) / 14; avgLoss = (avgLoss * 13 - diff) / 14; }
     }
     if (avgLoss === 0) return 100;
     let rs = avgGain / avgLoss;
     return (100 - (100 / (1 + rs))).toFixed(2);
   }
 
-  // 2. Math Function: Calculate Real EMA (9 Period)
   function calculateEMA(closes, period = 9) {
     if (closes.length < period) return closes[closes.length - 1];
     let k = 2 / (period + 1);
     let ema = closes.slice(0, period).reduce((a, b) => a + b, 0) / period;
-    for (let i = period; i < closes.length; i++) {
-      ema = (closes[i] * k) + (ema * (1 - k));
-    }
+    for (let i = period; i < closes.length; i++) ema = (closes[i] * k) + (ema * (1 - k));
     return ema;
   }
 
-  // 3. Fetch Real K-Lines & Compute
   async function computeRealSignals() {
     const grid = document.getElementById('rsiSignalGrid');
     if(!grid) return;
-
     let htmlContent = '';
-
     for(let asset of assets) {
       try {
-        // Fetch 50 candles (15 minute timeframe) from Binance Public API
         let res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${asset.symbol}&interval=15m&limit=50`);
         let klines = await res.json();
-        
-        let closes = klines.map(k => parseFloat(k[4])); // Closing Prices
+        let closes = klines.map(k => parseFloat(k[4]));
         let currentPrice = closes[closes.length - 1];
-        
         let rsiVal = parseFloat(calculateRSI(closes, 14));
         let emaVal = calculateEMA(closes, 9);
 
-        // Real Technical Decision Logic
         let signalType = 'NEUTRAL / HOLD';
         let badgeClass = 'sig-neutral-real';
         let targetPrice = (currentPrice * 1.015).toFixed(2);
         let stopLoss = (currentPrice * 0.992).toFixed(2);
 
-        if (rsiVal < 38 && currentPrice > emaVal) {
-          signalType = 'STRONG BUY';
-          badgeClass = 'sig-buy-real';
-        } else if (rsiVal < 45) {
-          signalType = 'BUY SIGNAL';
-          badgeClass = 'sig-buy-real';
-        } else if (rsiVal > 62 && currentPrice < emaVal) {
-          signalType = 'STRONG SELL';
-          badgeClass = 'sig-sell-real';
-        } else if (rsiVal > 55) {
-          signalType = 'SELL SIGNAL';
-          badgeClass = 'sig-sell-real';
-        }
+        if (rsiVal < 38 && currentPrice > emaVal) { signalType = 'STRONG BUY'; badgeClass = 'sig-buy-real'; }
+        else if (rsiVal < 45) { signalType = 'BUY SIGNAL'; badgeClass = 'sig-buy-real'; }
+        else if (rsiVal > 62 && currentPrice < emaVal) { signalType = 'STRONG SELL'; badgeClass = 'sig-sell-real'; }
+        else if (rsiVal > 55) { signalType = 'SELL SIGNAL'; badgeClass = 'sig-sell-real'; }
 
         let priceFormatted = currentPrice > 10 ? currentPrice.toLocaleString(undefined, {minimumFractionDigits:2}) : currentPrice.toFixed(4);
 
@@ -1737,54 +1346,29 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             <div class="rsi-item-top">
               <div class="rsi-coin-info">
                 <div class="rsi-coin-icon"><i class="${asset.icon}"></i></div>
-                <div>
-                  <h4 class="rsi-coin-name">${asset.name}</h4>
-                  <span class="rsi-coin-pair">${asset.symbol} • 15M K-Line</span>
-                </div>
+                <div><h4 class="rsi-coin-name">${asset.name}</h4><span class="rsi-coin-pair">${asset.symbol} • 15M K-Line</span></div>
               </div>
               <span class="rsi-sig-badge ${badgeClass}"><i class="fa-solid fa-chart-line"></i> ${signalType}</span>
             </div>
-
             <div class="rsi-metrics">
-              <div class="rsi-m-box">
-                <span class="rsi-m-lbl">Live Price</span>
-                <span class="rsi-m-val" style="color:#00dfd8;">$${priceFormatted}</span>
-              </div>
-              <div class="rsi-m-box">
-                <span class="rsi-m-lbl">RSI (14)</span>
-                <span class="rsi-m-val" style="color:${rsiVal < 38 ? '#00e676' : rsiVal > 62 ? '#ff5252' : '#ffb703'};">${rsiVal}</span>
-              </div>
-              <div class="rsi-m-box">
-                <span class="rsi-m-lbl">EMA (9)</span>
-                <span class="rsi-m-val" style="color:#f8fafc;">$${emaVal > 10 ? emaVal.toLocaleString(undefined, {maximumFractionDigits:2}) : emaVal.toFixed(4)}</span>
-              </div>
+              <div class="rsi-m-box"><span class="rsi-m-lbl">Live Price</span><span class="rsi-m-val" style="color:#00dfd8;">$${priceFormatted}</span></div>
+              <div class="rsi-m-box"><span class="rsi-m-lbl">RSI (14)</span><span class="rsi-m-val" style="color:${rsiVal < 38 ? '#00e676' : rsiVal > 62 ? '#ff5252' : '#ffb703'};">${rsiVal}</span></div>
+              <div class="rsi-m-box"><span class="rsi-m-lbl">EMA (9)</span><span class="rsi-m-val" style="color:#f8fafc;">$${emaVal > 10 ? emaVal.toLocaleString(undefined, {maximumFractionDigits:2}) : emaVal.toFixed(4)}</span></div>
             </div>
-
             <div class="rsi-item-footer">
-              <span class="rsi-timeframe"><i class="fa-solid fa-shield-halved"></i> TP: $${parseFloat(targetPrice).toLocaleString()} | SL: $${parseFloat(stopLoss).toLocaleString()}</span>
-              <button class="rsi-copy-btn" onclick="copyRsiSignal('${asset.name}', '$${priceFormatted}', '${rsiVal}', '${signalType}')">
-                <i class="fa-solid fa-copy"></i> Copy Math Data
-              </button>
+              <span class="rsi-timeframe"><i class="fa-solid fa-shield-halved"></i> Ref TP: $${parseFloat(targetPrice).toLocaleString()} | SL: $${parseFloat(stopLoss).toLocaleString()}</span>
+              <button class="rsi-copy-btn" onclick="copyRsiSignal('${asset.name}', '$${priceFormatted}', '${rsiVal}', '${signalType}')"><i class="fa-solid fa-copy"></i> Copy</button>
             </div>
-          </div>
-        `;
-      } catch(e) {
-        console.log('Error fetching indicator data:', e);
-      }
+          </div>`;
+      } catch(e) { console.log('Error fetching indicator data:', e); }
     }
-
-    if(htmlContent !== '') {
-      grid.innerHTML = htmlContent;
-    }
+    if(htmlContent !== '') grid.innerHTML = htmlContent;
   }
 
   window.copyRsiSignal = function(name, price, rsi, signal) {
     navigator.clipboard.writeText(`GLOBAL FINANCE - TECHNICAL SIGNAL\nAsset: ${name}\nPrice: ${price}\nRSI(14): ${rsi}\nDecision: ${signal}`).then(() => {
       var toast = document.getElementById('rsiToast');
-      if(toast) {
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2500);
-      }
+      if(toast) { toast.style.display = 'block'; setTimeout(() => { toast.style.display = 'none'; }, 2500); }
     });
   };
 
@@ -1793,358 +1377,99 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     if(clk) clk.innerText = 'Engine Active • ' + (new Date()).toLocaleTimeString();
   }, 1000);
 
-  document.addEventListener("DOMContentLoaded", () => {
-    positionSection();
-    computeRealSignals();
-  });
-
+  document.addEventListener("DOMContentLoaded", () => { positionSection(); computeRealSignals(); });
   positionSection();
   computeRealSignals();
-
-  // Re-calculate real RSI & EMA every 15 seconds
   setInterval(computeRealSignals, 15000);
 })();
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
-.fin-calc-wrapper{width:100%;max-width:1200px;margin:30px auto;padding:0 16px;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif;user-select:none}
-.fin-calc-card{background:linear-gradient(145deg,rgba(12,16,23,.95),rgba(18,24,38,.95));border:1px solid rgba(0,230,118,.25);border-radius:20px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.7),0 0 30px rgba(0,230,118,.08);position:relative;overflow:hidden;backdrop-filter:blur(16px)}
-.fin-calc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00e676,#00dfd8,#7928ca)}
-.fin-calc-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:16px}
-.fin-title{font-size:18px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:10px}
-.fin-title-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,230,118,.15);color:#00e676;display:flex;align-items:center;justify-content:center;font-size:16px}
-.fin-tabs{display:flex;background:rgba(15,23,42,.8);border:1px solid rgba(255,255,255,.1);padding:4px;border-radius:12px;gap:4px}
-.fin-tab-btn{background:transparent;border:none;color:#94a3b8;padding:8px 16px;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer;transition:all .3s ease;text-transform:uppercase}
-.fin-tab-btn.active{background:#00e676;color:#000;box-shadow:0 0 15px rgba(0,230,118,.4)}
-.fin-calc-body{display:grid;grid-template-columns:1fr;gap:24px}
-@media(min-width:768px){.fin-calc-body{grid-template-columns:1.2fr .8fr}}
-.fin-input-group{margin-bottom:18px}
-.fin-label-wrap{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.fin-label{font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase}
-.fin-val-box{background:rgba(15,23,42,.9);border:1px solid rgba(0,230,118,.3);color:#00e676;padding:4px 10px;bor
-document.addEventListener("DOMContentLoaded", function(){
-    initForexEngine();
-    calcCrorepati();
-  });
-  initForexEngine();
-  calcCrorepati();
-})();
-</script>
-  
-
 <!-- ======================================================= -->
-<!-- HOMEPAGE EXCLUSIVE: REAL CARD BG PHOTO LUXURY GRID      -->
+<!-- INTERACTIVE SIP & FOREX WEALTH CALCULATOR (Home page, live FX) -->
 <!-- ======================================================= -->
 <style>
-.fx-suite{background:radial-gradient(120% 120% at 50% 0%,rgba(15,23,42,0.98) 0%,rgba(5,8,16,0.99) 100%);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,215,0,0.25);border-radius:28px;padding:26px;margin:25px 0;box-shadow:0 30px 60px -15px rgba(0,0,0,0.9),0 0 30px rgba(0,243,255,0.08);font-family:'Plus Jakarta Sans',sans-serif;color:#f8fafc;position:relative;overflow:hidden}
-.fx-suite::before{content:'';position:absolute;top:-100px;right:-100px;width:280px;height:280px;background:radial-gradient(circle,rgba(0,243,255,0.18),transparent 70%);pointer-events:none}
-.fx-suite::after{content:'';position:absolute;bottom:-100px;left:-100px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,215,0,0.12),transparent 70%);pointer-events:none}
-.fx-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:16px;position:relative;z-index:2}
-.fx-title-wrap{display:flex;align-items:center;gap:12px}
-.fx-title-icon{width:36px;height:36px;background:linear-gradient(135deg,rgba(0,243,255,0.2),rgba(0,255,157,0.2));border:1px solid rgba(0,243,255,0.4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 15px rgba(0,243,255,0.2)}
-.fx-title{font-size:19px;font-weight:800;letter-spacing:-0.4px;background:linear-gradient(90deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.fx-pill{font-size:10px;color:#00f3ff;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(0,243,255,0.1);border:1px solid rgba(0,243,255,0.3);padding:5px 12px;border-radius:30px;box-shadow:0 0 12px rgba(0,243,255,0.15)}
-.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;position:relative;z-index:2}
-.fx-card{border:1px solid rgba(255,255,255,0.15);border-radius:22px;padding:22px;position:relative;display:flex;flex-direction:column;justify-content:space-between;transition:all .4s cubic-bezier(.16,1,.3,1);overflow:hidden;background-size:cover;background-position:center}
-.fx-card-1{background-image:linear-gradient(160deg,rgba(10,14,26,0.88),rgba(15,23,42,0.92)),url('https://images.unsplash.com/photo-1578670812003-60745e2c2ea9?auto=format&fit=crop&w=600&q=80')}
-.fx-card-2{background-image:linear-gradient(160deg,rgba(10,14,26,0.88),rgba(15,23,42,0.92)),url('https://images.unsplash.com/photo-1639133694967-640f255f10fc?auto=format&fit=crop&w=600&q=80')}
-.fx-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,243,255,0.6),rgba(255,215,0,0.6),transparent);opacity:0;transition:opacity .4s ease}
-.fx-card:hover{border-color:rgba(0,243,255,0.5);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.9),0 0 25px rgba(0,243,255,0.2)}
-.fx-card:hover::before{opacity:1}
-.fx-badge{position:absolute;top:18px;right:18px;background:linear-gradient(90deg,rgba(255,215,0,0.25),rgba(255,165,0,0.25));color:#ffd700;border:1px solid rgba(255,215,0,0.5);font-size:9px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.8px;text-transform:uppercase;box-shadow:0 0 10px rgba(255,215,0,0.2);backdrop-filter:blur(8px)}
-.fx-bank{font-size:11px;font-weight:800;color:#00f3ff;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;text-shadow:0 2px 4px rgba(0,0,0,0.8)}
-.fx-card-title{font-size:17px;font-weight:800;color:#fff;margin-bottom:16px;line-height:1.35;text-shadow:0 2px 4px rgba(0,0,0,0.8)}
-.fx-list{list-style:none;padding:0;margin:0 0 22px 0;font-size:12px;color:#cbd5e1}
-.fx-list li{margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;line-height:1.45;text-shadow:0 1px 3px rgba(0,0,0,0.9)}
-.fx-list li::before{content:'✦';color:#00ff9d;font-size:11px;margin-top:1px;text-shadow:0 0 8px rgba(0,255,157,0.8)}
-.fx-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-align:center;background:linear-gradient(90deg,#00f3ff,#00ff9d);color:#030712;font-size:13px;font-weight:800;padding:13px 0;border-radius:14px;text-decoration:none;letter-spacing:.6px;box-shadow:0 6px 25px rgba(0,243,255,0.35);transition:all .3s ease;position:relative;overflow:hidden}
-.fx-btn:hover{opacity:.95;box-shadow:0 8px 30px rgba(0,243,255,0.55);transform:scale(1.02)}
-</style>
-
-<div class="fx-suite" id="fxSuiteSection">
-  <div class="fx-hdr">
-    <div class="fx-title-wrap">
-      <div class="fx-title-icon">💎</div>
-      <div class="fx-title">Exclusive Bank Card Offers</div>
-    </div>
-    <span class="fx-pill">● Instant Digital Approval</span>
-  </div>
-
-  <div class="fx-grid">
-    <div class="fx-card fx-card-1">
-      <span class="fx-badge">HIGH APPROVAL</span>
-      <div>
-        <div class="fx-bank">TIER-1 BANKING</div>
-        <div class="fx-card-title">Premium Cash & Rewards Card</div>
-        <ul class="fx-list">
-          <li>Instant Online Video KYC & Fast Approval</li>
-          <li>Complimentary Airport Lounge Access</li>
-          <li>Exclusive Cashback & Reward Accelerator</li>
-        </ul>
-      </div>
-      <a href="https://bitli.in/vixPQOc" class="fx-btn" target="_blank" rel="nofollow">APPLY NOW ➔</a>
-    </div>
-
-    <div class="fx-card fx-card-2">
-      <span class="fx-badge">ZERO ANNUAL FEE</span>
-      <div>
-        <div class="fx-bank">EXCLUSIVE OFFER</div>
-        <div class="fx-card-title">Instant Cash & Lifestyle Pass</div>
-        <ul class="fx-list">
-          <li>10X Rewards on E-Commerce & Dining</li>
-          <li>1% Fuel Surcharge Waiver & Zero Fee</li>
-          <li>Minimal CIBIL & Hassle-Free Process</li>
-        </ul>
-      </div>
-      <a href="https://bitli.in/Jf3nxv3" class="fx-btn" target="_blank" rel="nofollow">APPLY NOW ➔</a>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  // Sirf Home page ke andar dikhega — jaise site ke doosre homepage-only widgets kaam karte hain
-  function placeFxSuiteOnHome(){
-    var home = document.getElementById('home');
-    var fx = document.getElementById('fxSuiteSection');
-    if (!home || !fx) return;
-    if (fx.parentNode !== home) home.appendChild(fx);
-  }
-  document.addEventListener('DOMContentLoaded', placeFxSuiteOnHome);
-  placeFxSuiteOnHome();
-})();
-</script>
-
-  <!-- ======================================================= -->
-<!-- INTERACTIVE SIP & FOREX WEALTH CALCULATOR — PREMIUM UI  -->
-<!-- ======================================================= -->
-<style>
-.wct{
-  --wct-bg-0: #05070b;
-  --wct-bg-1: #0b0f16;
-  --wct-panel: #0d1219;
-  --wct-line: rgba(255,255,255,0.07);
-  --wct-amber: #cf9b5e;
-  --wct-amber-2: #ecc98f;
-  --wct-teal: #2fc9a8;
-  --wct-teal-2: #7fe6cd;
-  --wct-ink: #f2efe9;
-  --wct-muted: #8d94a1;
-  --wct-mono: 'JetBrains Mono', monospace;
-  --wct-sans: 'Plus Jakarta Sans', sans-serif;
-
-  position:relative;
-  background:
-    radial-gradient(90% 140% at 100% 0%, rgba(47,201,168,0.07) 0%, transparent 55%),
-    radial-gradient(70% 120% at 0% 100%, rgba(207,155,94,0.08) 0%, transparent 55%),
-    linear-gradient(180deg, var(--wct-bg-1) 0%, var(--wct-bg-0) 100%);
-  border:1px solid var(--wct-line);
-  border-radius:24px;
-  padding:2px;
-  margin:28px 0;
-  font-family:var(--wct-sans);
-  color:var(--wct-ink);
-  overflow:hidden;
-  box-shadow:0 40px 90px -30px rgba(0,0,0,0.9);
-}
-.wct-inner{ padding:28px; position:relative; z-index:2; }
-
-.wct-head{
-  display:flex; align-items:flex-start; justify-content:space-between;
-  gap:16px; flex-wrap:wrap; margin-bottom:26px;
-}
+.wct{--wct-bg-0:#05070b;--wct-bg-1:#0b0f16;--wct-panel:#0d1219;--wct-line:rgba(255,255,255,.07);--wct-amber:#cf9b5e;--wct-amber-2:#ecc98f;--wct-teal:#2fc9a8;--wct-teal-2:#7fe6cd;--wct-ink:#f2efe9;--wct-muted:#8d94a1;--wct-mono:'JetBrains Mono',monospace;--wct-sans:'Plus Jakarta Sans',sans-serif;position:relative;background:radial-gradient(90% 140% at 100% 0%,rgba(47,201,168,.07) 0%,transparent 55%),radial-gradient(70% 120% at 0% 100%,rgba(207,155,94,.08) 0%,transparent 55%),linear-gradient(180deg,var(--wct-bg-1) 0%,var(--wct-bg-0) 100%);border:1px solid var(--wct-line);border-radius:24px;padding:2px;margin:28px 0;font-family:var(--wct-sans);color:var(--wct-ink);overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.wct-inner{padding:28px;position:relative;z-index:2}
+.wct-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
 .wct-head-text{max-width:520px}
-.wct-eyebrow{
-  font-size:11.5px; font-weight:700; color:var(--wct-teal-2);
-  letter-spacing:0.2px; margin-bottom:6px; display:flex; align-items:center; gap:7px;
-}
-.wct-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--wct-teal);box-shadow:0 0 10px rgba(47,201,168,0.8)}
-.wct-title{
-  font-size:22px; font-weight:800; letter-spacing:-0.3px; line-height:1.25;
-  color:#fff;
-}
+.wct-eyebrow{font-size:11.5px;font-weight:700;color:var(--wct-teal-2);letter-spacing:.2px;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.wct-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--wct-teal);box-shadow:0 0 10px rgba(47,201,168,.8)}
+.wct-title{font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.25;color:#fff}
 .wct-sub{font-size:13px;color:var(--wct-muted);margin-top:7px;line-height:1.55;max-width:460px}
-.wct-badge{
-  flex-shrink:0;
-  display:flex; align-items:center; gap:7px;
-  background:linear-gradient(135deg, rgba(236,201,143,0.14), rgba(47,201,168,0.1));
-  border:1px solid rgba(236,201,143,0.35);
-  color:var(--wct-amber-2);
-  font-size:11.5px; font-weight:700;
-  padding:8px 14px; border-radius:30px;
-}
+.wct-badge{flex-shrink:0;display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,rgba(236,201,143,.14),rgba(47,201,168,.1));border:1px solid rgba(236,201,143,.35);color:var(--wct-amber-2);font-size:11.5px;font-weight:700;padding:8px 14px;border-radius:30px}
 .wct-badge svg{width:13px;height:13px}
-
-.wct-grid{
-  display:grid; grid-template-columns:1.15fr 1fr; gap:26px;
-}
-@media(max-width:840px){ .wct-grid{grid-template-columns:1fr} }
-
-/* ---- INPUT PANEL ---- */
-.wct-panel{
-  background:var(--wct-panel);
-  border:1px solid var(--wct-line);
-  border-radius:18px;
-  padding:22px;
-}
-.wct-field{ margin-bottom:22px; }
-.wct-field:last-child{ margin-bottom:0; }
-.wct-field-top{
-  display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;
-}
-.wct-field-label{ font-size:12.5px; color:var(--wct-muted); font-weight:600; }
-.wct-field-value{
-  font-family:var(--wct-mono); font-size:14.5px; font-weight:600; color:var(--wct-amber-2);
-  letter-spacing:-0.2px;
-}
-.wct-slider{
-  -webkit-appearance:none; appearance:none;
-  width:100%; height:4px; border-radius:4px; outline:none; cursor:pointer;
-  background:linear-gradient(90deg, var(--wct-teal) 0%, var(--wct-teal) var(--wct-fill,50%), rgba(255,255,255,0.08) var(--wct-fill,50%), rgba(255,255,255,0.08) 100%);
-  transition:background .1s linear;
-}
-.wct-slider::-webkit-slider-thumb{
-  -webkit-appearance:none; appearance:none;
-  width:17px; height:17px; border-radius:50%;
-  background:#fff;
-  border:3px solid var(--wct-teal);
-  box-shadow:0 2px 10px rgba(0,0,0,0.6), 0 0 0 4px rgba(47,201,168,0.15);
-  cursor:pointer;
-  transition:transform .15s ease;
-}
-.wct-slider::-webkit-slider-thumb:hover{ transform:scale(1.12); }
-.wct-slider::-moz-range-thumb{
-  width:17px; height:17px; border-radius:50%; background:#fff;
-  border:3px solid var(--wct-teal); cursor:pointer;
-}
-.wct-slider::-moz-range-track{ height:4px; border-radius:4px; background:rgba(255,255,255,0.08); }
-
-.wct-field-scale{
-  display:flex; justify-content:space-between; margin-top:6px;
-  font-size:10px; color:rgba(141,148,161,0.6); font-family:var(--wct-mono);
-}
-
-.wct-select-row{ display:flex; gap:10px; margin-top:4px; }
-.wct-select{
-  flex:1; background:rgba(255,255,255,0.03); border:1px solid var(--wct-line);
-  color:var(--wct-ink); border-radius:10px; padding:10px 12px; font-size:13px;
-  font-family:var(--wct-sans); outline:none; cursor:pointer;
-}
-.wct-select:focus{ border-color:var(--wct-teal); }
-
-/* ---- RESULT PANEL ---- */
-.wct-result{
-  background:var(--wct-panel);
-  border:1px solid var(--wct-line);
-  border-radius:18px;
-  padding:24px;
-  display:flex; flex-direction:column; align-items:center;
-  text-align:center;
-}
-.wct-ring-wrap{ position:relative; width:172px; height:172px; margin-bottom:6px; }
-.wct-ring{
-  width:172px; height:172px; border-radius:50%;
-  background:conic-gradient(var(--wct-teal) calc(var(--wct-gained,32) * 1%), var(--wct-amber) 0);
-  transition:background .5s cubic-bezier(.16,1,.3,1);
-  display:flex; align-items:center; justify-content:center;
-  position:relative;
-}
-.wct-ring::after{
-  content:''; position:absolute; inset:15px; border-radius:50%;
-  background:var(--wct-panel);
-  box-shadow:inset 0 2px 10px rgba(0,0,0,0.5);
-}
-.wct-ring-center{ position:relative; z-index:2; }
-.wct-ring-figure{
-  font-family:var(--wct-mono); font-size:19px; font-weight:700; color:#fff; letter-spacing:-0.4px;
-}
-.wct-ring-label{ font-size:9.5px; color:var(--wct-muted); text-transform:uppercase; letter-spacing:1px; margin-top:3px; }
-
-.wct-legend{ display:flex; gap:18px; margin-top:14px; margin-bottom:20px; }
-.wct-legend-item{ display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--wct-muted); }
-.wct-legend-dot{ width:8px; height:8px; border-radius:50%; }
-
-.wct-stat-row{
-  width:100%; display:flex; justify-content:space-between; align-items:baseline;
-  padding:13px 0; border-top:1px solid var(--wct-line);
-}
-.wct-stat-row:first-of-type{ border-top:1px solid var(--wct-line); }
-.wct-stat-label{ font-size:12px; color:var(--wct-muted); }
-.wct-stat-value{ font-family:var(--wct-mono); font-size:15px; font-weight:700; color:var(--wct-ink); }
-.wct-stat-value.pos{ color:var(--wct-teal-2); }
-
-.wct-fx-panel{
-  width:100%; margin-top:16px; padding-top:16px; border-top:1px solid var(--wct-line);
-}
-.wct-fx-title{ font-size:11px; color:var(--wct-muted); margin-bottom:10px; text-align:left; }
-.wct-fx-value{
-  display:flex; align-items:baseline; justify-content:space-between;
-  background:rgba(236,201,143,0.06);
-  border:1px solid rgba(236,201,143,0.2);
-  border-radius:12px; padding:14px 16px;
-}
-.wct-fx-amount{ font-family:var(--wct-mono); font-size:20px; font-weight:800; color:var(--wct-amber-2); }
-.wct-fx-rate{ font-size:10.5px; color:var(--wct-muted); font-family:var(--wct-mono); }
-.wct-fx-status{ font-size:9.5px; color:var(--wct-teal-2); margin-top:8px; text-align:right; }
-
-@media(max-width:480px){
-  .wct-inner{padding:20px}
-  .wct-title{font-size:19px}
-  .wct-panel,.wct-result{padding:18px}
-}
+.wct-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:26px}
+@media(max-width:840px){.wct-grid{grid-template-columns:1fr}}
+.wct-panel{background:var(--wct-panel);border:1px solid var(--wct-line);border-radius:18px;padding:22px}
+.wct-field{margin-bottom:22px}
+.wct-field:last-child{margin-bottom:0}
+.wct-field-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.wct-field-label{font-size:12.5px;color:var(--wct-muted);font-weight:600}
+.wct-field-value{font-family:var(--wct-mono);font-size:14.5px;font-weight:600;color:var(--wct-amber-2);letter-spacing:-.2px}
+.wct-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;outline:none;cursor:pointer;background:linear-gradient(90deg,var(--wct-teal) 0%,var(--wct-teal) var(--wct-fill,50%),rgba(255,255,255,.08) var(--wct-fill,50%),rgba(255,255,255,.08) 100%);transition:background .1s linear}
+.wct-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:17px;height:17px;border-radius:50%;background:#fff;border:3px solid var(--wct-teal);box-shadow:0 2px 10px rgba(0,0,0,.6),0 0 0 4px rgba(47,201,168,.15);cursor:pointer;transition:transform .15s ease}
+.wct-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+.wct-slider::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:#fff;border:3px solid var(--wct-teal);cursor:pointer}
+.wct-slider::-moz-range-track{height:4px;border-radius:4px;background:rgba(255,255,255,.08)}
+.wct-field-scale{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:rgba(141,148,161,.6);font-family:var(--wct-mono)}
+.wct-select-row{display:flex;gap:10px;margin-top:4px}
+.wct-select{flex:1;background:rgba(255,255,255,.03);border:1px solid var(--wct-line);color:var(--wct-ink);border-radius:10px;padding:10px 12px;font-size:13px;font-family:var(--wct-sans);outline:none;cursor:pointer}
+.wct-select:focus{border-color:var(--wct-teal)}
+.wct-result{background:var(--wct-panel);border:1px solid var(--wct-line);border-radius:18px;padding:24px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.wct-ring-wrap{position:relative;width:172px;height:172px;margin-bottom:6px}
+.wct-ring{width:172px;height:172px;border-radius:50%;background:conic-gradient(var(--wct-teal) calc(var(--wct-gained,32) * 1%),var(--wct-amber) 0);transition:background .5s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;position:relative}
+.wct-ring::after{content:'';position:absolute;inset:15px;border-radius:50%;background:var(--wct-panel);box-shadow:inset 0 2px 10px rgba(0,0,0,.5)}
+.wct-ring-center{position:relative;z-index:2}
+.wct-ring-figure{font-family:var(--wct-mono);font-size:19px;font-weight:700;color:#fff;letter-spacing:-.4px}
+.wct-ring-label{font-size:9.5px;color:var(--wct-muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+.wct-legend{display:flex;gap:18px;margin-top:14px;margin-bottom:20px}
+.wct-legend-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--wct-muted)}
+.wct-legend-dot{width:8px;height:8px;border-radius:50%}
+.wct-stat-row{width:100%;display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-top:1px solid var(--wct-line)}
+.wct-stat-label{font-size:12px;color:var(--wct-muted)}
+.wct-stat-value{font-family:var(--wct-mono);font-size:15px;font-weight:700;color:var(--wct-ink)}
+.wct-stat-value.pos{color:var(--wct-teal-2)}
+.wct-fx-panel{width:100%;margin-top:16px;padding-top:16px;border-top:1px solid var(--wct-line)}
+.wct-fx-title{font-size:11px;color:var(--wct-muted);margin-bottom:10px;text-align:left}
+.wct-fx-value{display:flex;align-items:baseline;justify-content:space-between;background:rgba(236,201,143,.06);border:1px solid rgba(236,201,143,.2);border-radius:12px;padding:14px 16px}
+.wct-fx-amount{font-family:var(--wct-mono);font-size:20px;font-weight:800;color:var(--wct-amber-2)}
+.wct-fx-rate{font-size:10.5px;color:var(--wct-muted);font-family:var(--wct-mono)}
+.wct-fx-status{font-size:9.5px;color:var(--wct-teal-2);margin-top:8px;text-align:right}
+@media(max-width:480px){.wct-inner{padding:20px}.wct-title{font-size:19px}.wct-panel,.wct-result{padding:18px}}
 </style>
 
 <div class="wct" id="wealthCalcTool">
   <div class="wct-inner">
-
     <div class="wct-head">
       <div class="wct-head-text">
         <div class="wct-eyebrow"><span class="wct-eyebrow-dot"></span>Most recommended tool</div>
         <div class="wct-title">Interactive SIP &amp; Forex Wealth Calculator</div>
-        <p class="wct-sub">Project your SIP's maturity value and see it converted into any major currency in real time — one calculator for growth and global purchasing power.</p>
+        <p class="wct-sub">Project your SIP's maturity value and see it converted into any major currency in real time.</p>
       </div>
       <div class="wct-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
         Live market rates
       </div>
     </div>
-
     <div class="wct-grid">
-
-      <!-- INPUTS -->
       <div class="wct-panel">
         <div class="wct-field">
-          <div class="wct-field-top">
-            <span class="wct-field-label">Monthly investment</span>
-            <span class="wct-field-value" id="wctMonthlyVal">₹5,000</span>
-          </div>
+          <div class="wct-field-top"><span class="wct-field-label">Monthly investment</span><span class="wct-field-value" id="wctMonthlyVal">₹5,000</span></div>
           <input type="range" class="wct-slider" id="wctMonthly" min="500" max="100000" step="500" value="5000">
           <div class="wct-field-scale"><span>₹500</span><span>₹1,00,000</span></div>
         </div>
-
         <div class="wct-field">
-          <div class="wct-field-top">
-            <span class="wct-field-label">Expected annual return</span>
-            <span class="wct-field-value" id="wctRateVal">12%</span>
-          </div>
+          <div class="wct-field-top"><span class="wct-field-label">Expected annual return</span><span class="wct-field-value" id="wctRateVal">12%</span></div>
           <input type="range" class="wct-slider" id="wctRate" min="1" max="30" step="0.5" value="12">
           <div class="wct-field-scale"><span>1%</span><span>30%</span></div>
         </div>
-
         <div class="wct-field">
-          <div class="wct-field-top">
-            <span class="wct-field-label">Investment horizon</span>
-            <span class="wct-field-value" id="wctYearsVal">10 yrs</span>
-          </div>
+          <div class="wct-field-top"><span class="wct-field-label">Investment horizon</span><span class="wct-field-value" id="wctYearsVal">10 yrs</span></div>
           <input type="range" class="wct-slider" id="wctYears" min="1" max="35" step="1" value="10">
           <div class="wct-field-scale"><span>1 yr</span><span>35 yrs</span></div>
         </div>
-
         <div class="wct-field">
-          <div class="wct-field-top">
-            <span class="wct-field-label">View maturity value in</span>
-          </div>
+          <div class="wct-field-top"><span class="wct-field-label">View maturity value in</span></div>
           <div class="wct-select-row">
             <select class="wct-select" id="wctCurrency">
               <option value="USD">USD — US Dollar</option>
@@ -2158,2207 +1483,11 @@ document.addEventListener("DOMContentLoaded", function(){
           </div>
         </div>
       </div>
-
-      <!-- RESULT -->
       <div class="wct-result">
         <div class="wct-ring-wrap">
           <div class="wct-ring" id="wctRing">
-            <div class="wct-ring-center">
-              <div class="wct-ring-figure" id="wctRingFigure">₹0</div>
-              <div class="wct-ring-label">Maturity value</div>
-            </div>
+            <div class="wct-ring-center"><div class="wct-ring-figure" id="wctRingFigure">₹0</div><div class="wct-ring-label">Maturity value</div></div>
           </div>
         </div>
-
         <div class="wct-legend">
-          <div class="wct-legend-item"><span class="wct-legend-dot" style="background:var(--wct-amber)"></span>Invested</div>
-          <div class="wct-legend-item"><span class="wct-legend-dot" style="background:var(--wct-teal)"></span>Growth</div>
-        </div>
-
-        <div class="wct-stat-row">
-          <span class="wct-stat-label">Total invested</span>
-          <span class="wct-stat-value" id="wctInvested">₹0</span>
-        </div>
-        <div class="wct-stat-row">
-          <span class="wct-stat-label">Wealth gained</span>
-          <span class="wct-stat-value pos" id="wctGained">₹0</span>
-        </div>
-
-        <div class="wct-fx-panel">
-          <div class="wct-fx-title">Maturity value abroad</div>
-          <div class="wct-fx-value">
-            <span class="wct-fx-amount" id="wctFxAmount">—</span>
-            <span class="wct-fx-rate" id="wctFxRate">fetching rate…</span>
-          </div>
-          <div class="wct-fx-status" id="wctFxStatus">Connecting to live rates…</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  var monthlyEl = document.getElementById('wctMonthly');
-  var rateEl = document.getElementById('wctRate');
-  var yearsEl = document.getElementById('wctYears');
-  var currencyEl = document.getElementById('wctCurrency');
-
-  var fxRates = { USD:0.0114, EUR:0.0106, GBP:0.0090, AED:0.0419, SGD:0.0148, AUD:0.0177, CAD:0.0157 };
-  var fxLive = false;
-
-  function fmtINR(n){
-    return '₹' + Math.round(n).toLocaleString('en-IN');
-  }
-  function fmtFx(n, code){
-    var symbols = { USD:'$', EUR:'€', GBP:'£', AED:'AED ', SGD:'S$', AUD:'A$', CAD:'C$' };
-    var sym = symbols[code] || '';
-    return sym + n.toLocaleString('en-IN', {maximumFractionDigits: n >= 1000 ? 0 : 2});
-  }
-  function updateSliderFill(el){
-    var pct = ((el.value - el.min) / (el.max - el.min)) * 100;
-    el.style.setProperty('--wct-fill', pct + '%');
-  }
-
-  function compute(){
-    var monthly = parseFloat(monthlyEl.value);
-    var ratePct = parseFloat(rateEl.value);
-    var years = parseInt(yearsEl.value, 10);
-    var currency = currencyEl.value;
-
-    document.getElementById('wctMonthlyVal').textContent = '₹' + monthly.toLocaleString('en-IN');
-    document.getElementById('wctRateVal').textContent = ratePct + '%';
-    document.getElementById('wctYearsVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
-    updateSliderFill(monthlyEl); updateSliderFill(rateEl); updateSliderFill(yearsEl);
-
-    var r = (ratePct / 100) / 12;
-    var n = years * 12;
-    var invested = monthly * n;
-    var maturity = monthly * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-    var gained = maturity - invested;
-    var gainedPct = Math.max(4, Math.min(96, (gained / maturity) * 100));
-
-    document.getElementById('wctRing').style.setProperty('--wct-gained', gainedPct.toFixed(1));
-    document.getElementById('wctRingFigure').textContent = fmtINR(maturity);
-    document.getElementById('wctInvested').textContent = fmtINR(invested);
-    document.getElementById('wctGained').textContent = '+' + fmtINR(gained);
-
-    var rate = fxRates[currency] || 0;
-    var fxValue = maturity * rate;
-    document.getElementById('wctFxAmount').textContent = fmtFx(fxValue, currency);
-    document.getElementById('wctFxRate').textContent = '1 INR ≈ ' + rate.toFixed(4) + ' ' + currency;
-    document.getElementById('wctFxStatus').textContent = fxLive
-      ? 'Live market rate'
-      : 'Reference rate — connecting…';
-  }
-
-  async function loadLiveRates(){
-    try {
-      var res = await fetch('https://open.er-api.com/v6/latest/INR');
-      var data = await res.json();
-      if (data && data.rates) {
-        Object.keys(fxRates).forEach(function(code){
-          if (data.rates[code]) fxRates[code] = data.rates[code];
-        });
-        fxLive = true;
-      }
-    } catch (e) {
-      fxLive = false;
-    }
-    compute();
-  }
-
-  [monthlyEl, rateEl, yearsEl].forEach(function(el){
-    el.addEventListener('input', compute);
-  });
-  currencyEl.addEventListener('change', compute);
-
-  updateSliderFill(monthlyEl); updateSliderFill(rateEl); updateSliderFill(yearsEl);
-  compute();
-  loadLiveRates();
-
-  // Sirf Home page ke andar dikhega — jaise site ke doosre homepage-only widgets kaam karte hain
-  function placeOnHome(){
-    var home = document.getElementById('home');
-    var tool = document.getElementById('wealthCalcTool');
-    if (!home || !tool) return;
-    if (tool.parentNode !== home) home.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnHome);
-  placeOnHome();
-})();
-</script>
-<script>
-function calcHmEMI(){let e=parseFloat(document.getElementById("hm-la-r").value),t=parseFloat(document.getElementById("hm-ir-r").value)/12/100,n=parseFloat(document.getElementById("hm-lt-r").value);document.getElementById("hm-la-v").innerText="₹"+e.toLocaleString("en-IN"),document.getElementById("hm-ir-v").innerText=document.getElementById("hm-ir-r").value+"%",document.getElementById("hm-lt-v").innerText=n+" Months";let r=e*t*Math.pow(1+t,n)/(Math.pow(1+t,n)-1),a=r*n-e;document.getElementById("hm-emi-v").innerText="₹"+Math.round(r).toLocaleString("en-IN"),document.getElementById("hm-int-v").innerText="₹"+Math.round(a).toLocaleString("en-IN")}
-async function fetchHmMarket(){try{let e=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"),t=await e.json();t.bitcoin&&t.bitcoin.usd&&(document.getElementById("hm-btc").innerText="$"+t.bitcoin.usd.toLocaleString("en-US"))}catch(e){document.getElementById("hm-btc").innerText="$89,450"}}fetchHmMarket();
-</script>
-     <style>
-.hm-suite{
-  position:relative;
-  border:1px solid rgba(214,178,122,0.2);
-  border-radius:32px;
-  padding:2px;
-  margin:20px 0;
-  box-shadow:0 35px 70px -15px rgba(0,0,0,0.95),0 0 35px rgba(47,201,168,0.08);
-  font-family:'Plus Jakarta Sans',sans-serif;
-  color:#f8fafc;
-  overflow:hidden;
-  isolation:isolate;
-}
-.hm-suite-bg{
-  position:absolute; inset:0; z-index:-2;
-  background-image:url('https://images.unsplash.com/photo-1486607303850-bc051a4ffad4?auto=format&fit=crop&w=1400&q=65');
-  background-size:cover; background-position:center;
-  filter:saturate(1.05) contrast(1.05) brightness(0.75);
-}
-.hm-suite-scrim{
-  position:absolute; inset:0; z-index:-1;
-  background:
-    linear-gradient(180deg, rgba(4,6,11,0.90) 0%, rgba(6,9,16,0.94) 45%, rgba(3,5,9,0.98) 100%),
-    radial-gradient(120% 90% at 15% 0%, rgba(47,201,168,0.10) 0%, transparent 55%),
-    radial-gradient(90% 90% at 100% 100%, rgba(214,178,122,0.10) 0%, transparent 55%);
-}
-.hm-inner{ position:relative; z-index:2; padding:26px; }
-
-.hm-tb{background:rgba(255,255,255,.03);border:1px solid rgba(47,201,168,0.22);border-radius:18px;padding:12px 18px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;font-size:11px;color:#cbd5e1;margin-bottom:22px;gap:10px;backdrop-filter:blur(6px)}
-.hm-bg-wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.hm-bg{color:#7fe6cd;font-weight:800;display:flex;align-items:center;gap:5px;letter-spacing:.3px}
-.hm-sec-h{font-size:16px;font-weight:800;color:#fff;margin:24px 0 14px 0;display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
-.hm-trk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:24px}
-.hm-card{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:6px;transition:all .3s ease;backdrop-filter:blur(4px)}
-.hm-card:hover{border-color:rgba(47,201,168,.4);transform:translateY(-3px);box-shadow:0 12px 25px rgba(0,0,0,.7)}
-.hm-lbl{font-size:10px;font-weight:800;color:#94a3b8;letter-spacing:.8px;text-transform:uppercase}
-.hm-val{font-size:19px;font-weight:800;color:#7fe6cd;text-shadow:0 0 12px rgba(47,201,168,.3)}
-.hm-badge{font-size:9px;font-weight:800;color:#e3c691;background:rgba(214,178,122,.12);border:1px solid rgba(214,178,122,.3);padding:3px 8px;border-radius:20px;width:fit-content}
-.hm-emi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;margin-bottom:24px}
-.hm-box{background:rgba(15,20,30,.55);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:20px;backdrop-filter:blur(6px)}
-.hm-inplbl{font-size:12px;font-weight:700;color:#94a3b8;display:flex;justify-content:space-between;margin-bottom:8px}
-.hm-inpval{color:#e3c691;font-weight:800}
-.hm-inp{width:100%;height:6px;border-radius:6px;background:#1e293b;outline:none;-webkit-appearance:none;accent-color:#d6b27a;margin-bottom:16px;cursor:pointer}
-.hm-res-box{background:linear-gradient(135deg,rgba(214,178,122,.14),rgba(47,201,168,.07));border:1px solid rgba(214,178,122,.35);border-radius:18px;padding:16px;text-align:center}
-.hm-res-v{font-size:24px;font-weight:800;color:#e3c691;margin-top:4px;text-shadow:0 0 15px rgba(214,178,122,.4)}
-.hm-tbl-wrap{overflow-x:auto;background:rgba(10,14,22,.7);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;backdrop-filter:blur(6px)}
-.hm-tbl{width:100%;border-collapse:collapse;text-align:left;font-size:12px;color:#f8fafc}
-.hm-tbl th{padding:12px 14px;color:#e3c691;border-bottom:1px solid rgba(255,255,255,.1);text-transform:uppercase;font-size:9.5px;letter-spacing:1px;font-weight:800}
-.hm-tbl td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
-.hm-btn{background:linear-gradient(90deg,#ecc98f,#2fc9a8);color:#04121c;padding:8px 16px;border-radius:12px;font-weight:800;text-decoration:none;font-size:11px;display:inline-flex;align-items:center;gap:4px;box-shadow:0 4px 15px rgba(47,201,168,.2);transition:transform .2s}
-.hm-btn:hover{transform:scale(1.05)}
-
-@media(max-width:480px){
-  .hm-inner{padding:18px}
-}
-</style>
-
-<div class="hm-suite" id="hmSuiteSection">
-  <div class="hm-suite-bg"></div>
-  <div class="hm-suite-scrim"></div>
-  <div class="hm-inner">
-
-  <div class="hm-tb"><div class="hm-bg-wrap"><span class="hm-bg">🔒 256-Bit SSL Encrypted</span><span class="hm-bg" style="color:#7fe6cd">🛡️ Bank Verified Offers</span><span class="hm-bg" style="color:#e3c691">★ Instant Approval Eligibility</span></div><div>📅 Market Rates Updated: <strong>2026</strong></div></div>
-  
-  <div class="hm-sec-h">⚡ Real-Time Financial Intelligence</div>
-  <div class="hm-trk-grid">
-    <div class="hm-card"><div class="hm-lbl">SBI / HDFC Max FD Rate</div><div class="hm-val">7.75% p.a.</div><div class="hm-badge">✓ Verified Bank Rate</div></div>
-    <div class="hm-card"><div class="hm-lbl">Min Home Loan Rate</div><div class="hm-val">8.35% p.a.</div><div class="hm-badge">✦ Repo Rate Aligned</div></div>
-    <div class="hm-card"><div class="hm-lbl">Bitcoin / USD (Live)</div><div class="hm-val" id="hm-btc">Loading...</div><div class="hm-badge">● Live Public API</div></div>
-    <div class="hm-card"><div class="hm-lbl">Min Personal Loan Rate</div><div class="hm-val">10.49% p.a.</div><div class="hm-badge">★ Pre-Approved</div></div>
-  </div>
-
-  <div class="hm-sec-h" style="color:#e3c691">🧮 Personal Loan EMI & Approval Simulator</div>
-  <div class="hm-emi-grid">
-    <div class="hm-box">
-      <div class="hm-inplbl">Loan Amount: <span class="hm-inpval" id="hm-la-v">₹3,00,000</span></div>
-      <input type="range" min="10000" max="1500000" step="10000" value="300000" class="hm-inp" id="hm-la-r" oninput="calcHmEMI()">
-      <div class="hm-inplbl">Interest Rate (p.a): <span class="hm-inpval" id="hm-ir-v">10.5%</span></div>
-      <input type="range" min="8" max="24" step="0.5" value="10.5" class="hm-inp" id="hm-ir-r" oninput="calcHmEMI()">
-      <div class="hm-inplbl">Tenure: <span class="hm-inpval" id="hm-lt-v">36 Months</span></div>
-      <input type="range" min="6" max="60" step="6" value="36" class="hm-inp" id="hm-lt-r" oninput="calcHmEMI()">
-    </div>
-    <div class="hm-box" style="display:flex;flex-direction:column;justify-content:center">
-      <div class="hm-res-box"><div style="font-size:10px;color:#94a3b8;text-transform:uppercase;font-weight:700">Exact Monthly EMI</div><div class="hm-res-v" id="hm-emi-v">₹9,754</div></div>
-      <div class="hm-res-box" style="margin-top:10px;background:rgba(47,201,168,.08);border-color:rgba(47,201,168,.35)"><div style="font-size:10px;color:#7fe6cd;text-transform:uppercase;font-weight:700">Total Interest Payable</div><div style="font-size:18px;font-weight:800;color:#7fe6cd;margin-top:4px" id="hm-int-v">₹51,144</div></div>
-    </div>
-  </div>
-
-  <div class="hm-sec-h">👑 Premier Real Credit Card Directory</div>
-  <div class="hm-tbl-wrap">
-    <table class="hm-tbl">
-      <thead><tr><th>Card Pass</th><th>Annual Fee</th><th>Key Reward Benefit</th><th>Approval Status</th><th>Direct Application</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Tier-1 Elite Pass</strong></td><td><span style="color:#7fe6cd">₹0 (Lifetime Free)</span></td><td>10X Shopping & Free Lounge Access</td><td><span style="color:#7fe6cd">⚡ Instant Video KYC</span></td><td><a href="https://bitli.in/A3hjOvq" class="hm-btn" target="_blank" rel="nofollow">Apply Now ➔</a></td></tr>
-        <tr><td><strong>Cashback Edge Card</strong></td><td>₹499 (Waived)</td><td>5% Direct Cashback on All Online Spends</td><td><span style="color:#7fe6cd">★ High Approval Rate</span></td><td><a href="https://bitli.in/bAA3M1K" class="hm-btn" target="_blank" rel="nofollow">Apply Now ➔</a></td></tr>
-        <tr><td><strong>Zero-Fee Freedom Pass</strong></td><td><span style="color:#7fe6cd">₹0 (Lifetime Free)</span></td><td>0% Interest on ATM Cash & Reward Points</td><td><span style="color:#7fe6cd">⚡ Pre-Approved Offer</span></td><td><a href="https://bitli.in/HcZdwFn" class="hm-btn" target="_blank" rel="nofollow">Apply Now ➔</a></td></tr>
-        <tr><td><strong>Travel Privilege Card</strong></td><td>₹999 (Reward Match)</td><td>Complimentary Flight & Hotel Voucher Perks</td><td><span style="color:#e3c691">★ Fast Digital Verification</span></td><td><a href="https://bitli.in/6tK8Wx4" class="hm-btn" target="_blank" rel="nofollow">Apply Now ➔</a></td></tr>
-        <tr><td><strong>Instant Express Pass</strong></td><td>₹0 Joining Fee</td><td>Instant Rewards & Fuel Surcharge Waiver</td><td><span style="color:#7fe6cd">⚡ Instant Approval</span></td><td><a href="https://bitli.in/tpj1C83" class="hm-btn" target="_blank" rel="nofollow">Apply Now ➔</a></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  </div>
-</div>
-
-<script>
-function calcHmEMI(){let e=parseFloat(document.getElementById("hm-la-r").value),t=parseFloat(document.getElementById("hm-ir-r").value)/12/100,n=parseFloat(document.getElementById("hm-lt-r").value);document.getElementById("hm-la-v").innerText="₹"+e.toLocaleString("en-IN"),document.getElementById("hm-ir-v").innerText=document.getElementById("hm-ir-r").value+"%",document.getElementById("hm-lt-v").innerText=n+" Months";let r=e*t*Math.pow(1+t,n)/(Math.pow(1+t,n)-1),a=r*n-e;document.getElementById("hm-emi-v").innerText="₹"+Math.round(r).toLocaleString("en-IN"),document.getElementById("hm-int-v").innerText="₹"+Math.round(a).toLocaleString("en-IN")}
-async function fetchHmMarket(){try{let e=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"),t=await e.json();t.bitcoin&&t.bitcoin.usd&&(document.getElementById("hm-btc").innerText="$"+t.bitcoin.usd.toLocaleString("en-US"))}catch(e){document.getElementById("hm-btc").innerText="$89,450"}}
-fetchHmMarket();
-
-(function(){
-  // Sirf Home page ke andar dikhega — jaise site ke doosre homepage-only widgets kaam karte hain
-  function placeHmSuiteOnHome(){
-    var home = document.getElementById('home');
-    var hm = document.getElementById('hmSuiteSection');
-    if (!home || !hm) return;
-    if (hm.parentNode !== home) home.appendChild(hm);
-  }
-  document.addEventListener('DOMContentLoaded', placeHmSuiteOnHome);
-  placeHmSuiteOnHome();
-})();
-</script>
-  
- 
-
-  
-<script>(function(s){s.dataset.zone='11759200',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-   
-      
-
-<!-- ===== SINGLE-FILE INTEGRATED FOOTER WITH FULL LEGAL CONTENT ===== -->
-<style>
-.gf-ftr{--gf-ink:#08090b;--gf-panel:#0c0e11;--gf-text:#e9e7e1;--gf-muted:#82868f;--gf-hair:rgba(255,255,255,.09);--gf-gold:#b9976a;width:100%;position:relative;background:linear-gradient(180deg,rgba(6,7,9,.97) 0%,rgba(4,5,7,.99) 100%),url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;color:var(--gf-muted);font-family:'Plus Jakarta Sans',sans-serif;padding:64px 6% 28px;border-top:1px solid var(--gf-hair)}
-.gf-ftr-wrap{max-width:1180px;margin:0 auto;position:relative;z-index:2}
-.gf-mast{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:8px}
-.gf-word{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gf-text);letter-spacing:.2px}
-.gf-word span{color:var(--gf-gold)}
-.gf-tag{font-size:12.5px;color:var(--gf-muted);margin-top:6px;max-width:360px;line-height:1.6}
-.gf-status-line{font-size:11.5px;color:var(--gf-muted);text-align:right}
-.gf-status-line b{color:var(--gf-text);font-weight:600}
-.gf-status-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#5c8a6b;margin-right:6px;vertical-align:middle}
-.gf-rule{height:1px;background:var(--gf-hair);margin:26px 0 40px}
-.gf-cols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
-@media(max-width:900px){.gf-cols{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.gf-cols{grid-template-columns:1fr}}
-.gf-col h4{font-size:12.5px;font-weight:700;color:var(--gf-text);margin-bottom:16px;letter-spacing:.2px}
-.gf-col p{font-size:12.5px;line-height:1.7;color:var(--gf-muted)}
-.gf-col-note{font-size:12px;line-height:1.75;color:#a8ada2;border-left:2px solid var(--gf-hair);padding-left:12px;margin-top:12px}
-.gf-col-note b{color:var(--gf-text);font-weight:600}
-.gf-links{list-style:none;padding:0;margin:0}
-.gf-links li{margin-bottom:10px}
-.gf-links a{color:var(--gf-muted);text-decoration:none;font-size:13px;cursor:pointer;background:none;border:none;padding:0;font-family:inherit;display:inline-block;transition:color .2s ease;border-bottom:1px solid transparent}
-.gf-links a:hover{color:var(--gf-text);border-bottom-color:var(--gf-gold)}
-.gf-region{background:transparent;border:1px solid var(--gf-hair);color:var(--gf-text);padding:8px 12px;border-radius:2px;font-size:12.5px;outline:none;cursor:pointer;font-family:inherit}
-.gf-region:focus{border-color:var(--gf-gold)}
-.gf-disclaimer{font-size:11px;line-height:1.7;color:#6b7078;border-top:1px solid var(--gf-hair);padding-top:20px;margin-bottom:20px}
-.gf-disclaimer b{color:#8b9099}
-.gf-btm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:11.5px;color:#5e626a;border-top:1px solid var(--gf-hair);padding-top:18px}
-@media(max-width:600px){.gf-btm{flex-direction:column;align-items:flex-start}}
-
-.gf-legalpage{max-width:720px;margin:50px auto;padding:0 20px 70px;font-family:'Plus Jakarta Sans',sans-serif;color:#dcdad4}
-.gf-legalpage h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:#f2f0ea;margin-bottom:4px}
-.gf-lp-updated{font-size:11px;color:#6b7078;margin-bottom:30px}
-.gf-legalpage h2{font-size:15px;font-weight:700;color:#c9a869;margin:28px 0 10px}
-.gf-legalpage p,.gf-legalpage li{font-size:13.5px;line-height:1.8;color:#c2c0ba}
-.gf-legalpage ul{padding-left:20px;margin-bottom:12px}
-.gf-lp-back{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b9976a;text-decoration:none;font-size:12.5px;font-weight:600;cursor:pointer;background:none;border:none;font-family:inherit;border-bottom:1px solid rgba(185,151,106,.3)}
-.gf-lp-back:hover{color:#d8bd8e}
-.gf-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:#14171c;border:1px solid var(--gf-hair);color:#e9e7e1;padding:10px 18px;border-radius:3px;font-size:12px;font-weight:600;box-shadow:0 20px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.16,1,.3,1);z-index:99999}
-.gf-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-</style>
-
-<footer class="gf-ftr" id="lxFooterSection">
-  <div class="gf-ftr-wrap">
-    <div class="gf-mast">
-      <div><div class="gf-word">Global<span> Finance</span></div><p class="gf-tag">Market intelligence, lending tools and AI-assisted financial guidance, built for the modern Indian investor.</p></div>
-      <div class="gf-status-line">
-        <div><span class="gf-status-dot"></span><b id="lxLatencyStatus">Checking live status…</b></div>
-        <div style="margin-top:8px"><select class="gf-region" id="lxRegionSelect" onchange="LxFooter.setRegion(this.value)"><option value="global">Global — USD $</option><option value="in">India — INR ₹</option><option value="eu">Europe — EUR €</option><option value="uk">United Kingdom — GBP £</option></select></div>
-      </div>
-    </div>
-    <div class="gf-rule"></div>
-    <div class="gf-cols">
-      <div class="gf-col"><h4>Alpha AI Intelligence</h4><p>An advanced in-house engine, Parnarav AI, is built into this site for trading insight, planning and everyday questions.</p><div class="gf-col-note"><b>Opening it:</b> use the Menu button in the header, then select Alpha AI to start a session.</div></div>
-      <div class="gf-col"><h4>Guides & Articles</h4><p>Every credit card guide, financial article and market explainer we publish lives behind the Menu button in the header.</p><div class="gf-col-note">Select any category from there to read the full library.</div></div>
-      <div class="gf-col"><h4>Legal & Governance</h4><ul class="gf-links"><li><a onclick="LxFooter.openLegal('privacy')">Privacy Policy</a></li><li><a onclick="LxFooter.openLegal('terms')">Terms of Service</a></li><li><a onclick="LxFooter.openLegal('disclaimer')">Financial Disclaimer</a></li><li><a onclick="LxFooter.openLegal('security')">Security & Data Practices</a></li><li><a onclick="LxFooter.openLegal('about')">About Us</a></li><li><a onclick="LxFooter.openLegal('contact')">Contact Us</a></li></ul></div>
-      <div class="gf-col"><h4>Security</h4><p>256-bit SSL encryption end to end. Live market data is synced continuously; no card, CVV or OTP data is ever stored by us.</p><div class="gf-col-note">Verified for AdSense and standard ad-network placement.</div></div>
-    </div>
-    <div class="gf-disclaimer"><b>Institutional Financial Disclaimer.</b> Global Finance presents financial data for educational and informational purposes only, and is not an official representative of any bank or financial institution. Read the relevant terms and conditions carefully before choosing any credit card or loan product.</div>
-    <div class="gf-btm"><div>© 2026 Global Finance Inc. All rights reserved.</div><div>Built to an international standard</div></div>
-  </div>
-</footer>
-<div class="gf-toast" id="lxToast"></div>
-
-<script>
-const LxFooter = {
-  regionLabels: { global:'Global — USD $', in:'India — INR ₹', eu:'Europe — EUR €', uk:'United Kingdom — GBP £' },
-  toast(msg){ const t=document.getElementById('lxToast'); if(t){ t.textContent=msg; t.classList.add('show'); clearTimeout(this._timer); this._timer=setTimeout(()=>t.classList.remove('show'),2200); } },
-  setRegion(code){ try{ localStorage.setItem('gf_region_pref',code); }catch(e){} this.toast('Region set to '+(this.regionLabels[code]||code)); },
-  restoreRegion(){ try{ const saved=localStorage.getItem('gf_region_pref'), sel=document.getElementById('lxRegionSelect'); saved&&sel&&(sel.value=saved); }catch(e){} },
-  async checkLatency(){ const el=document.getElementById('lxLatencyStatus'); if(!el)return; if(!navigator.onLine){ el.textContent='Offline'; return; } const start=performance.now(); try{ await fetch('https://js.puter.com/v2/',{mode:'no-cors',cache:'no-store'}); el.textContent='Systems active — '+Math.round(performance.now()-start)+'ms'; }catch(e){ el.textContent='Reconnecting…'; } },
-
-  legalContent: {
-    privacy: {
-      title: 'Privacy Policy',
-      body: `
-        <p><strong>Effective Date:</strong> September 09, 2026<br><strong>Location:</strong> Himachal Pradesh, India<br><strong>Contact:</strong> webearnw@gmail.com</p>
-        <p>Global Finance is committed to protecting user privacy. We collect minimal non-personally identifiable technical data—such as IP addresses, browser specifications, page view duration, and network latency metrics—to optimize portal performance and security.</p>
-        <h2>Interactive Tools & AI Queries</h2>
-        <p>All calculations performed via our EMI Simulators, Rate Comparison Engines, or Alpha AI query interfaces are processed ephemerally. We do not store sensitive user queries, bank account details, or personal financial records on our servers.</p>
-        <h2>Advertising & Cookie Disclosure</h2>
-        <p>We partner with third-party programmatic ad networks, including Monetag and Google AdSense. These networks may use cookies and web beacons to display contextual advertisements, evaluate ad efficiency, and prevent click fraud. Users retain full rights to block or modify cookie permissions via browser settings.</p>
-        <h2>Data Encryption & User Rights</h2>
-        <p>All data traffic is encrypted via TLS 1.3 standards. In compliance with GDPR and CCPA standards, users can request the deletion or extraction of diagnostic server interaction logs by contacting our compliance team.</p>
-      `
-    },
-    terms: {
-      title: 'Terms of Service',
-      body: `
-        <p><strong>Effective Date:</strong> September 09, 2026</p>
-        <p>By accessing or interacting with Global Finance, you agree to comply with these Terms of Service, along with all applicable local and international data governance laws.</p>
-        <h2>Intellectual Property Rights</h2>
-        <p>All portal assets—including custom CSS stylesheets, UI components, financial algorithms, Alpha AI integration layers, and unique comparison tables—are proprietary assets of Global Finance. Reverse engineering, content scraping, or unauthorized redistribution of source code is strictly prohibited.</p>
-        <h2>Prohibited User Conduct</h2>
-        <p>Users are prohibited from using automated bots, executing click-fraud schemes against Monetag/AdSense units, or attempting unauthorized security penetration/DDoS testing against server endpoints.</p>
-        <h2>Jurisdiction & Governing Law</h2>
-        <p>These terms are governed and construed in accordance with the jurisdictional legal framework of Himachal Pradesh, India.</p>
-      `
-    },
-    disclaimer: {
-      title: 'Financial Disclaimer',
-      body: `
-        <p><strong>Regulatory Status:</strong> Institutional Notice (2026)</p>
-        <p><strong>Non-Advisory Status:</strong> Global Finance is an independent financial analytics and media portal. We are NOT a SEBI-registered investment advisor, licensed bank, credit broker, or certified tax consultant.</p>
-        <h2>Informational & Educational Functions</h2>
-        <p>All interest rates, loan APR figures, Fixed Deposit yield projections, credit card rewards summaries, and AI-generated responses provided on this portal serve strictly educational and informational functions. Nothing hosted on this platform constitutes a binding financial offer, investment solicitation, or legal recommendation.</p>
-        <h2>User Verification Mandate</h2>
-        <p>Banking rates change frequently. Users are required to verify final interest rates, joining fees, and eligibility criteria directly on the official websites of the respective banks or financial institutions before executing legal or financial applications.</p>
-        <h2>Affiliate & Revenue Disclosure</h2>
-        <p>Global Finance receives monetary compensation from advertising networks (Monetag/AdSense) and banking referral programs when users view ads or apply for credit products through links hosted on this site.</p>
-      `
-    },
-    security: {
-      title: 'Security & Data Practices',
-      body: `
-        <p><strong>Security Framework:</strong> Bank-Grade Infrastructure</p>
-        <h2>Encryption & Server Protocols</h2>
-        <p>Global Finance is hosted on Vercel's Edge CDN Network. All data transmitted between user devices and our servers is secured using 256-Bit SSL / TLS 1.3 encryption, ensuring protection against interception, spoofing, and man-in-the-middle attacks.</p>
-        <h2>Zero Data Retention Policy</h2>
-        <p>We operate under a strict zero-retention policy for sensitive financial credentials. Our platform never requests, processes, or stores Bank account passwords, UPI PINs, Credit/Debit card CVVs, or Credit score login credentials (CIBIL/Experian).</p>
-        <h2>API Integration Security</h2>
-        <p>Real-time financial feeds (such as crypto metrics and banking rate tables) are fetched using authenticated, read-only enterprise API endpoints over secure HTTPS connection channels.</p>
-      `
-    },
-    about: {
-      title: 'About Us',
-      body: `
-        <p><strong>Global Finance</strong> was established to provide global users with high-speed, institutional-grade financial data, real-time banking analytics, credit card comparison frameworks, and AI-driven market intelligence.</p>
-        <h2>What We Build</h2>
-        <ul>
-          <li><strong>Real-time Analytics:</strong> Sub-second access to credit card rewards models, personal loan APR simulators, and deposit rate trackers.</li>
-          <li><strong>Alpha AI Terminal:</strong> A lightweight artificial intelligence assistant designed to answer complex financial queries and assist with debt calculations.</li>
-          <li><strong>Speed-First Design:</strong> Built on custom HTML/CSS/Vanilla JS architecture hosted on Edge CDN networks to deliver sub-second loading speeds globally.</li>
-        </ul>
-        <h2>Transparency Standard</h2>
-        <p>We believe in open, free access to financial calculators and guides, supported by transparent, non-intrusive ad monetization.</p>
-      `
-    },
-    contact: {
-      title: 'Contact Us',
-      body: `
-        <p>For general inquiries, corporate queries, or regulatory compliance requests, please use the operational contacts below:</p>
-        <ul>
-          <li><strong>Official Entity:</strong> Global Finance Portal</li>
-          <li><strong>Portal Address:</strong> <a href="https://global-finance-eight.vercel.app/" style="color:#b9976a" target="_blank">https://global-finance-eight.vercel.app/</a></li>
-          <li><strong>Official Support Email:</strong> <a href="mailto:webearnw@gmail.com" style="color:#b9976a">webearnw@gmail.com</a></li>
-          <li><strong>Operational Base:</strong> Himachal Pradesh, India</li>
-          <li><strong>Response SLAs:</strong> All inquiries and legal notices are reviewed and responded to within 24 to 48 operational hours.</li>
-        </ul>
-      `
-    }
-  },
-
-  openLegal(key){
-    const data = this.legalContent[key];
-    if(!data) return;
-    const main = document.querySelector('main') || document.body;
-    let page = document.getElementById('lxlp-' + key);
-    if(!page){
-      page = document.createElement('section');
-      page.id = 'lxlp-' + key;
-      page.className = 'page';
-      page.innerHTML = `
-        <div class="gf-legalpage">
-          <button class="gf-lp-back" onclick="document.querySelectorAll('.page').forEach(s=>s.classList.remove('active'));const h=document.getElementById('home');if(h)h.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">← Back to Home</button>
-          <h1>${data.title}</h1>
-          <div class="gf-lp-updated">Last updated — September 2026</div>
-          ${data.body}
-        </div>
-      `;
-      main.appendChild(page);
-    }
-    document.querySelectorAll('.page').forEach(s => s.classList.remove('active'));
-    page.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  },
-
-  init(){
-    this.restoreRegion();
-    this.checkLatency();
-    setInterval(() => this.checkLatency(), 30000);
-    const home = document.getElementById('home');
-    const ftr = document.getElementById('lxFooterSection');
-    if(home && ftr && ftr.parentNode !== home) home.appendChild(ftr);
-  }
-};
-
-document.addEventListener('DOMContentLoaded', () => LxFooter.init());
-LxFooter.init();
-</script>
-<script>(function(s){s.dataset.zone='11760886',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-<script src="https://5gvci.com/act/files/tag.min.js?z=11760882" data-cfasync="false" async></script>
-<!-- ================= FINANCIAL SECTION: TAX ENGINE (REAL FY 2026-27 SLABS) ================= -->
-<style>
-.gf-tax-wrapper {
-  --tx-bg: #0b0d11;
-  --tx-card: #12151c;
-  --tx-border: rgba(255, 255, 255, 0.08);
-  --tx-gold: #c9a869;
-  --tx-accent: #00e599;
-  --tx-text: #e9e7e1;
-  --tx-muted: #82868f;
-  
-  background: var(--tx-bg);
-  border: 1px solid var(--tx-border);
-  border-radius: 16px;
-  padding: 28px;
-  max-width: 900px;
-  margin: 24px auto;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  color: var(--tx-text);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-}
-
-.gf-tax-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--tx-border);
-  padding-bottom: 18px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.gf-tax-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--tx-gold);
-  letter-spacing: 0.3px;
-}
-
-.gf-tax-badge {
-  background: rgba(0, 229, 153, 0.1);
-  border: 1px solid rgba(0, 229, 153, 0.3);
-  color: var(--tx-accent);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
-}
-
-.gf-tax-note {
-  font-size: 11px;
-  color: var(--tx-muted);
-  margin-bottom: 22px;
-  line-height: 1.6;
-  border-left: 2px solid var(--tx-border);
-  padding-left: 12px;
-}
-
-.gf-tax-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-}
-
-@media (max-width: 768px) {
-  .gf-tax-grid { grid-template-columns: 1fr; }
-}
-
-.gf-tax-field {
-  margin-bottom: 20px;
-}
-
-.gf-tax-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: var(--tx-muted);
-  margin-bottom: 8px;
-}
-
-.gf-tax-label span {
-  color: var(--tx-text);
-  font-weight: 700;
-}
-
-.gf-tax-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.gf-tax-input-wrap span {
-  position: absolute;
-  left: 14px;
-  color: var(--tx-gold);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.gf-tax-number {
-  width: 100%;
-  background: var(--tx-card);
-  border: 1px solid var(--tx-border);
-  color: var(--tx-text);
-  padding: 10px 14px 10px 30px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.gf-tax-number:focus {
-  border-color: var(--tx-gold);
-}
-
-.gf-tax-slider {
-  width: 100%;
-  height: 4px;
-  background: var(--tx-border);
-  border-radius: 2px;
-  outline: none;
-  margin-top: 10px;
-  accent-color: var(--tx-accent);
-  cursor: pointer;
-}
-
-.gf-tax-results {
-  background: var(--tx-card);
-  border: 1px solid var(--tx-border);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.gf-tax-compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.gf-regime-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--tx-border);
-  padding: 14px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.gf-regime-card.winner {
-  border-color: var(--tx-accent);
-  background: rgba(0, 229, 153, 0.04);
-}
-
-.gf-regime-name {
-  font-size: 11px;
-  text-transform: uppercase;
-  color: var(--tx-muted);
-  letter-spacing: 0.5px;
-}
-
-.gf-regime-val {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--tx-text);
-  margin: 6px 0 2px;
-}
-
-.gf-tax-recommendation {
-  background: linear-gradient(135deg, rgba(201, 168, 105, 0.15) 0%, rgba(0, 229, 153, 0.08) 100%);
-  border: 1px solid var(--tx-gold);
-  border-radius: 8px;
-  padding: 14px;
-  text-align: center;
-}
-
-.gf-rec-title {
-  font-size: 12px;
-  color: var(--tx-gold);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.gf-rec-amount {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--tx-accent);
-  margin-top: 4px;
-}
-</style>
-
-<div class="gf-tax-wrapper" id="gfTaxEngineSection">
-  <div class="gf-tax-header">
-    <div class="gf-tax-title">Tax Intelligence Engine</div>
-    <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
-  </div>
-
-  <div class="gf-tax-note">
-    Based on Union Budget 2025 slabs (carried forward unchanged into FY 2026–27): New Regime — ₹75,000 standard deduction, nil tax up to ₹12,00,000 taxable income (Section 87A rebate with marginal relief). Old Regime — ₹50,000 standard deduction, nil tax up to ₹5,00,000 taxable income. 4% Health & Education Cess applied on both.
-  </div>
-
-  <div class="gf-tax-grid">
-    <div>
-      <div class="gf-tax-field">
-        <div class="gf-tax-label">Annual Gross Income <span id="lblIncome">₹12,00,000</span></div>
-        <div class="gf-tax-input-wrap">
-          <span>₹</span>
-          <input type="number" id="inpIncome" class="gf-tax-number" value="1200000" step="25000" oninput="runTaxCalc()">
-        </div>
-        <input type="range" id="sldIncome" class="gf-tax-slider" min="300000" max="5000000" step="25000" value="1200000" oninput="syncTaxInput('income')">
-      </div>
-
-      <div class="gf-tax-field">
-        <div class="gf-tax-label">Old Regime Deductions (80C, HRA, 80D) <span id="lblDeduct">₹1,50,000</span></div>
-        <div class="gf-tax-input-wrap">
-          <span>₹</span>
-          <input type="number" id="inpDeduct" class="gf-tax-number" value="150000" step="10000" oninput="runTaxCalc()">
-        </div>
-        <input type="range" id="sldDeduct" class="gf-tax-slider" min="0" max="500000" step="10000" value="150000" oninput="syncTaxInput('deduct')">
-      </div>
-    </div>
-
-    <div class="gf-tax-results">
-      <div class="gf-tax-compare">
-        <div class="gf-regime-card" id="cardOld">
-          <div class="gf-regime-name">Old Regime</div>
-          <div class="gf-regime-val" id="valOldTax">₹0</div>
-          <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹50k Std. Ded</div>
-        </div>
-        <div class="gf-regime-card" id="cardNew">
-          <div class="gf-regime-name">New Regime</div>
-          <div class="gf-regime-val" id="valNewTax">₹0</div>
-          <div style="font-size:10px; color:var(--tx-muted)">Incl. ₹75k Std. Ded</div>
-        </div>
-      </div>
-
-      <div class="gf-tax-recommendation">
-        <div class="gf-rec-title" id="recHeadline">Optimal Tax Strategy</div>
-        <div class="gf-rec-amount" id="recDetail">Calculating best regime...</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function syncTaxInput(type) {
-  if (type === 'income') {
-    document.getElementById('inpIncome').value = document.getElementById('sldIncome').value;
-  } else {
-    document.getElementById('inpDeduct').value = document.getElementById('sldDeduct').value;
-  }
-  runTaxCalc();
-}
-
-// ---- OLD REGIME: slabs unchanged for FY 2025-26 / FY 2026-27 ----
-// 0-2.5L Nil | 2.5-5L 5% | 5-10L 20% | Above 10L 30% | Std. Deduction ₹50,000
-// Section 87A rebate: taxable income up to ₹5,00,000 -> zero tax (with marginal relief at the edge)
-function calcOldTax(gross, deduct) {
-  let taxable = Math.max(0, gross - 50000 - deduct);
-  let rebateLimit = 500000;
-
-  let rawTax = 0;
-  if (taxable > 250000) rawTax += Math.min(taxable - 250000, 250000) * 0.05;
-  if (taxable > 500000) rawTax += Math.min(taxable - 500000, 500000) * 0.20;
-  if (taxable > 1000000) rawTax += (taxable - 1000000) * 0.30;
-
-  let tax;
-  if (taxable <= rebateLimit) {
-    tax = 0;
-  } else {
-    // Marginal relief near the rebate threshold
-    let excess = taxable - rebateLimit;
-    tax = rawTax > excess ? excess : rawTax;
-  }
-  return Math.round(tax * 1.04); // 4% Health & Education Cess
-}
-
-// ---- NEW REGIME (default): Budget 2025 slabs, carried into FY 2026-27 ----
-// 0-4L Nil | 4-8L 5% | 8-12L 10% | 12-16L 15% | 16-20L 20% | 20-24L 25% | Above 24L 30%
-// Std. Deduction ₹75,000 | Section 87A rebate: taxable income up to ₹12,00,000 -> zero tax (with marginal relief)
-function calcNewTax(gross) {
-  let taxable = Math.max(0, gross - 75000);
-  let rebateLimit = 1200000;
-
-  let rawTax = 0;
-  if (taxable > 400000)  rawTax += Math.min(taxable - 400000, 400000) * 0.05;
-  if (taxable > 800000)  rawTax += Math.min(taxable - 800000, 400000) * 0.10;
-  if (taxable > 1200000) rawTax += Math.min(taxable - 1200000, 400000) * 0.15;
-  if (taxable > 1600000) rawTax += Math.min(taxable - 1600000, 400000) * 0.20;
-  if (taxable > 2000000) rawTax += Math.min(taxable - 2000000, 400000) * 0.25;
-  if (taxable > 2400000) rawTax += (taxable - 2400000) * 0.30;
-
-  let tax;
-  if (taxable <= rebateLimit) {
-    tax = 0;
-  } else {
-    // Marginal relief near the ₹12L rebate threshold
-    let excess = taxable - rebateLimit;
-    tax = rawTax > excess ? excess : rawTax;
-  }
-  return Math.round(tax * 1.04); // 4% Health & Education Cess
-}
-
-function runTaxCalc() {
-  let gross = parseFloat(document.getElementById('inpIncome').value) || 0;
-  let deduct = parseFloat(document.getElementById('inpDeduct').value) || 0;
-
-  document.getElementById('sldIncome').value = gross;
-  document.getElementById('sldDeduct').value = deduct;
-  document.getElementById('lblIncome').textContent = '₹' + gross.toLocaleString('en-IN');
-  document.getElementById('lblDeduct').textContent = '₹' + deduct.toLocaleString('en-IN');
-
-  let oldTax = calcOldTax(gross, deduct);
-  let newTax = calcNewTax(gross);
-
-  document.getElementById('valOldTax').textContent = '₹' + oldTax.toLocaleString('en-IN');
-  document.getElementById('valNewTax').textContent = '₹' + newTax.toLocaleString('en-IN');
-
-  let cardOld = document.getElementById('cardOld');
-  let cardNew = document.getElementById('cardNew');
-  let recDetail = document.getElementById('recDetail');
-
-  cardOld.classList.remove('winner');
-  cardNew.classList.remove('winner');
-
-  if (newTax < oldTax) {
-    cardNew.classList.add('winner');
-    let diff = oldTax - newTax;
-    recDetail.textContent = `New Regime saves you ₹${diff.toLocaleString('en-IN')}`;
-  } else if (oldTax < newTax) {
-    cardOld.classList.add('winner');
-    let diff = newTax - oldTax;
-    recDetail.textContent = `Old Regime saves you ₹${diff.toLocaleString('en-IN')}`;
-  } else {
-    recDetail.textContent = `Both Regimes result in equal tax liability`;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', runTaxCalc);
-runTaxCalc();
-
-// ---- Sirf "Financial" page ke andar dikhega, kahi aur nahi ----
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var tool = document.getElementById('gfTaxEngineSection');
-    if (!financialPage || !tool) return;
-    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
-</script>
-
-  <!-- ================= ULTRA-LUXURY LIVE ASSET ALLOCATION ENGINE ================= -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
-
-.gf-asset-engine-root {
-  --as-bg: #07090e;
-  --as-card: rgba(15, 18, 26, 0.75);
-  --as-border: rgba(201, 168, 105, 0.18);
-  --as-border-glow: rgba(0, 229, 153, 0.25);
-  --as-gold: #c9a869;
-  --as-gold-glow: rgba(201, 168, 105, 0.4);
-  --as-emerald: #00e599;
-  --as-cyan: #00d2ff;
-  --as-purple: #a855f7;
-  --as-text: #f1f3f9;
-  --as-muted: #808797;
-  
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: radial-gradient(circle at 80% 10%, rgba(201, 168, 105, 0.07) 0%, transparent 50%),
-              radial-gradient(circle at 10% 90%, rgba(0, 229, 153, 0.05) 0%, transparent 50%),
-              var(--as-bg);
-  border: 1px solid var(--as-border);
-  border-radius: 20px;
-  padding: 28px;
-  max-width: 920px;
-  margin: 24px auto;
-  color: var(--as-text);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(201, 168, 105, 0.05);
-  backdrop-filter: blur(16px);
-  position: relative;
-  overflow: hidden;
-}
-
-.gf-asset-engine-root::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--as-gold), var(--as-emerald), transparent);
-  opacity: 0.8;
-}
-
-/* Header Section */
-.gf-ast-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  padding-bottom: 18px;
-  margin-bottom: 22px;
-}
-
-.gf-ast-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff 30%, var(--as-gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 0.4px;
-}
-
-.gf-ast-badge {
-  background: rgba(0, 229, 153, 0.08);
-  border: 1px solid rgba(0, 229, 153, 0.3);
-  color: var(--as-emerald);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 30px;
-  letter-spacing: 0.6px;
-  box-shadow: 0 0 12px rgba(0, 229, 153, 0.15);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.gf-ast-badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--as-emerald);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--as-emerald);
-  animation: gfPulse 1.8s infinite;
-}
-
-@keyframes gfPulse {
-  0% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0.4; transform: scale(0.9); }
-}
-
-/* Presets Bar */
-.gf-ast-presets {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.gf-preset-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--as-muted);
-  padding: 7px 14px;
-  border-radius: 8px;
-  font-size: 11.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.gf-preset-btn:hover, .gf-preset-btn.active {
-  background: rgba(201, 168, 105, 0.12);
-  border-color: var(--as-gold);
-  color: var(--as-gold);
-  box-shadow: 0 0 15px rgba(201, 168, 105, 0.15);
-}
-
-/* Main Grid Layout */
-.gf-ast-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 28px;
-  align-items: center;
-}
-
-@media (max-width: 768px) {
-  .gf-ast-grid { grid-template-columns: 1fr; }
-}
-
-/* Input Fields */
-.gf-ast-field {
-  margin-bottom: 16px;
-}
-
-.gf-ast-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--as-muted);
-  margin-bottom: 6px;
-}
-
-.gf-ast-label .p-badge {
-  color: var(--as-emerald);
-  font-weight: 700;
-  background: rgba(0, 229, 153, 0.1);
-  padding: 1px 7px;
-  border-radius: 4px;
-}
-
-.gf-ast-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.gf-ast-input-wrap span {
-  position: absolute;
-  left: 12px;
-  color: var(--as-gold);
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.gf-ast-input {
-  width: 100%;
-  background: var(--as-card);
-  border: 1px solid var(--as-border);
-  color: var(--as-text);
-  padding: 10px 12px 10px 28px;
-  border-radius: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.gf-ast-input:focus {
-  border-color: var(--as-emerald);
-  box-shadow: 0 0 15px rgba(0, 229, 153, 0.2);
-}
-
-/* Visualizer Card (Chart Side) */
-.gf-ast-chart-card {
-  background: var(--as-card);
-  border: 1px solid var(--as-border);
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.gf-chart-container {
-  position: relative;
-  width: 220px;
-  height: 220px;
-}
-
-.gf-chart-center-val {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  pointer-events: none;
-}
-
-.gf-chart-center-val .lbl {
-  font-size: 10px;
-  text-transform: uppercase;
-  color: var(--as-muted);
-  letter-spacing: 0.8px;
-}
-
-.gf-chart-center-val .amt {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--as-emerald);
-  margin-top: 2px;
-  text-shadow: 0 0 10px rgba(0, 229, 153, 0.3);
-}
-
-/* Metrics Footer */
-.gf-ast-metrics {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  width: 100%;
-  margin-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 14px;
-}
-
-.gf-metric-box {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 10px;
-  text-align: center;
-}
-
-.gf-metric-box .m-title {
-  font-size: 10px;
-  color: var(--as-muted);
-  text-transform: uppercase;
-}
-
-.gf-metric-box .m-val {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--as-gold);
-  margin-top: 3px;
-}
-</style>
-
-<div class="gf-asset-engine-root" id="gfAssetWrapper">
-  <div class="gf-ast-header">
-    <div class="gf-ast-title">Live Asset Allocation</div>
-    <div class="gf-ast-badge">Real-Time Visualizer</div>
-  </div>
-
-  <!-- Presets -->
-  <div class="gf-ast-presets">
-    <button class="gf-preset-btn active" onclick="applyAssetPreset('growth')">Aggressive Growth</button>
-    <button class="gf-preset-btn" onclick="applyAssetPreset('balanced')">HNW Balanced</button>
-    <button class="gf-preset-btn" onclick="applyAssetPreset('conservative')">Capital Preservation</button>
-  </div>
-
-  <div class="gf-ast-grid">
-    <!-- Left Inputs -->
-    <div>
-      <div class="gf-ast-field">
-        <div class="gf-ast-label"><span>Stocks & Mutual Funds</span><span class="p-badge" id="pStocks">0%</span></div>
-        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpStocks" class="gf-ast-input" value="600000" step="25000" oninput="updateAssetVisuals()"></div>
-      </div>
-
-      <div class="gf-ast-field">
-        <div class="gf-ast-label"><span>Fixed Income & Bonds</span><span class="p-badge" id="pBonds">0%</span></div>
-        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpBonds" class="gf-ast-input" value="200000" step="10000" oninput="updateAssetVisuals()"></div>
-      </div>
-
-      <div class="gf-ast-field">
-        <div class="gf-ast-label"><span>Gold & Commodities</span><span class="p-badge" id="pGold">0%</span></div>
-        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpGold" class="gf-ast-input" value="100000" step="5000" oninput="updateAssetVisuals()"></div>
-      </div>
-
-      <div class="gf-ast-field">
-        <div class="gf-ast-label"><span>Real Estate Asset</span><span class="p-badge" id="pRE">0%</span></div>
-        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpRE" class="gf-ast-input" value="250000" step="25000" oninput="updateAssetVisuals()"></div>
-      </div>
-
-      <div class="gf-ast-field">
-        <div class="gf-ast-label"><span>Crypto & Digital Assets</span><span class="p-badge" id="pCrypto">0%</span></div>
-        <div class="gf-ast-input-wrap"><span>₹</span><input type="number" id="inpCrypto" class="gf-ast-input" value="50000" step="5000" oninput="updateAssetVisuals()"></div>
-      </div>
-    </div>
-
-    <!-- Right Live Doughnut Visualizer -->
-    <div class="gf-ast-chart-card">
-      <div class="gf-chart-container">
-        <canvas id="gfAssetDoughnut"></canvas>
-        <div class="gf-chart-center-val">
-          <div class="lbl">Total Value</div>
-          <div class="amt" id="valTotalNetWorth">₹0</div>
-        </div>
-      </div>
-
-      <div class="gf-ast-metrics">
-        <div class="gf-metric-box">
-          <div class="m-title">Portfolio Risk Score</div>
-          <div class="m-val" id="valRiskScore">Moderate</div>
-        </div>
-        <div class="gf-metric-box">
-          <div class="m-title">Diversification Index</div>
-          <div class="m-val" id="valDivIndex">88/100</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Chart.js Engine CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-let gfChart = null;
-
-function initAssetEngine() {
-  const ctx = document.getElementById('gfAssetDoughnut').getContext('2d');
-  
-  gfChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Stocks/MFs', 'Fixed Income', 'Gold', 'Real Estate', 'Crypto'],
-      datasets: [{
-        data: [600000, 200000, 100000, 250000, 50000],
-        backgroundColor: [
-          '#00e599', // Emerald
-          '#c9a869', // Gold
-          '#f59e0b', // Amber Gold
-          '#00d2ff', // Cyan
-          '#a855f7'  // Purple
-        ],
-        borderWidth: 3,
-        borderColor: '#0f121a',
-        hoverOffset: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#07090e',
-          borderColor: 'rgba(201, 168, 105, 0.3)',
-          borderWidth: 1,
-          titleColor: '#c9a869',
-          bodyColor: '#f1f3f9',
-          padding: 10,
-          displayColors: true
-        }
-      },
-      cutout: '76%'
-    }
-  });
-
-  updateAssetVisuals();
-}
-
-function updateAssetVisuals() {
-  if (!gfChart) return;
-
-  const root = document.getElementById('gfAssetWrapper');
-  let st = parseFloat(root.querySelector('#inpStocks').value) || 0;
-  let bd = parseFloat(root.querySelector('#inpBonds').value) || 0;
-  let gd = parseFloat(root.querySelector('#inpGold').value) || 0;
-  let re = parseFloat(root.querySelector('#inpRE').value) || 0;
-  let cr = parseFloat(root.querySelector('#inpCrypto').value) || 0;
-
-  let total = st + bd + gd + re + cr;
-
-  // Center Total Counter
-  root.querySelector('#valTotalNetWorth').textContent = '₹' + total.toLocaleString('en-IN');
-
-  // Percentage Pills
-  if (total > 0) {
-    root.querySelector('#pStocks').textContent = Math.round((st / total) * 100) + '%';
-    root.querySelector('#pBonds').textContent = Math.round((bd / total) * 100) + '%';
-    root.querySelector('#pGold').textContent = Math.round((gd / total) * 100) + '%';
-    root.querySelector('#pRE').textContent = Math.round((re / total) * 100) + '%';
-    root.querySelector('#pCrypto').textContent = Math.round((cr / total) * 100) + '%';
-  }
-
-  // Risk Score Logic
-  let equityCryptoRatio = (st + cr) / (total || 1);
-  let riskLabel = "Conservative";
-  if (equityCryptoRatio > 0.65) riskLabel = "Aggressive";
-  else if (equityCryptoRatio > 0.35) riskLabel = "Moderate";
-  root.querySelector('#valRiskScore').textContent = riskLabel;
-
-  // Chart Update
-  gfChart.data.datasets[0].data = [st, bd, gd, re, cr];
-  gfChart.update();
-}
-
-function applyAssetPreset(type) {
-  const root = document.getElementById('gfAssetWrapper');
-  const btns = root.querySelectorAll('.gf-preset-btn');
-  btns.forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-
-  if (type === 'growth') {
-    root.querySelector('#inpStocks').value = 700000;
-    root.querySelector('#inpBonds').value = 150000;
-    root.querySelector('#inpGold').value = 50000;
-    root.querySelector('#inpRE').value = 50000;
-    root.querySelector('#inpCrypto').value = 50000;
-  } else if (type === 'balanced') {
-    root.querySelector('#inpStocks').value = 400000;
-    root.querySelector('#inpBonds').value = 300000;
-    root.querySelector('#inpGold').value = 150000;
-    root.querySelector('#inpRE').value = 120000;
-    root.querySelector('#inpCrypto').value = 30000;
-  } else if (type === 'conservative') {
-    root.querySelector('#inpStocks').value = 200000;
-    root.querySelector('#inpBonds').value = 500000;
-    root.querySelector('#inpGold').value = 200000;
-    root.querySelector('#inpRE').value = 100000;
-    root.querySelector('#inpCrypto').value = 0;
-  }
-
-  updateAssetVisuals();
-}
-
-document.addEventListener('DOMContentLoaded', initAssetEngine);
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  initAssetEngine();
-}
-
-// ---- Sirf "Financial" page ke andar dikhega, kahi aur nahi ----
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var tool = document.getElementById('gfAssetWrapper');
-    if (!financialPage || !tool) return;
-    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
-</script>
- <script src="https://pl31262489.profitableratecpmnetwork.com/f8/db/f7/f8dbf71ae3d6f52ea3c5003852631273.js"></script>
-<script>
-  atOptions = {
-    'key' : '59a6ac99ae71033ea0a63df798381680',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highrevenueformat.com/59a6ac99ae71033ea0a63df798381680/invoke.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const financialSection = document.getElementById("financial");
-  
-  if (financialSection) {
-    const affiliateWidgetHTML = `
-      <style>
-      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Playfair+Display:wght@700&display=swap');
-      .gf-cmp-root{--bg:#06080d;--card:rgba(13,16,24,0.85);--gold:#c9a869;--emerald:#00e599;--txt:#f1f3f9;--m:#808797;font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);border:1px solid rgba(201,168,105,0.2);border-radius:18px;padding:20px;max-width:820px;margin:20px auto;color:var(--txt);box-shadow:0 20px 50px rgba(0,0,0,0.9);backdrop-filter:blur(16px);position:relative;overflow:hidden}
-      .gf-cmp-head{text-align:center;margin-bottom:16px}
-      .gf-cmp-tag{display:inline-block;background:rgba(201,168,105,0.1);border:1px solid rgba(201,168,105,0.3);color:var(--gold);font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-      .gf-cmp-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;background:linear-gradient(135deg,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0}
-      .gf-cmp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-      .gf-cmp-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:all .3s ease}
-      .gf-cmp-card:hover{transform:translateY(-3px);border-color:var(--emerald);box-shadow:0 12px 30px rgba(0,229,153,0.15)}
-      .gf-cmp-card.gold:hover{border-color:var(--gold);box-shadow:0 12px 30px rgba(201,168,105,0.15)}
-      .gf-cmp-ctag{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:4px;width:fit-content;margin-bottom:10px}
-      .tag-e{background:rgba(0,229,153,0.1);color:var(--emerald);border:1px solid rgba(0,229,153,0.3)}
-      .tag-g{background:rgba(201,168,105,0.1);color:var(--gold);border:1px solid rgba(201,168,105,0.3)}
-      .gf-cmp-h3{font-size:15px;font-weight:700;color:#fff;margin:0 0 4px}
-      .gf-cmp-p{font-size:11.5px;color:var(--m);line-height:1.4;margin:0 0 14px}
-      .gf-cmp-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:10px 0;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:all .3s ease}
-      .btn-e{background:rgba(0,229,153,0.1);border:1px solid var(--emerald);color:var(--emerald)}
-      .btn-e:hover{background:var(--emerald);color:#06080d;box-shadow:0 0 15px rgba(0,229,153,0.4)}
-      .btn-g{background:rgba(201,168,105,0.1);border:1px solid var(--gold);color:var(--gold)}
-      .btn-g:hover{background:var(--gold);color:#06080d;box-shadow:0 0 15px rgba(201,168,105,0.4)}
-      </style>
-
-      <div class="gf-cmp-root">
-        <div class="gf-cmp-head">
-          <span class="gf-cmp-tag">Verified Partners</span>
-          <h2 class="gf-cmp-title">Executive Wealth Solutions</h2>
-        </div>
-        <div class="gf-cmp-grid">
-          <div class="gf-cmp-card">
-            <div>
-              <span class="gf-cmp-ctag tag-e">Institutional Choice</span>
-              <h3 class="gf-cmp-h3">Wealth Portal I</h3>
-              <p class="gf-cmp-p">Zero-commission investing, direct equity allocation, & instant digital onboarding.</p>
-            </div>
-            <a href="https://bitli.in/1aSNIHI" target="_blank" rel="nofollow" class="gf-cmp-btn btn-e">Access Portal ➔</a>
-          </div>
-          <div class="gf-cmp-card gold">
-            <div>
-              <span class="gf-cmp-ctag tag-g">Executive Tier</span>
-              <h3 class="gf-cmp-h3">Wealth Portal II</h3>
-              <p class="gf-cmp-p">Premium credit privileges, tax-optimized tools, & exclusive reward accelerators.</p>
-            </div>
-            <a href="https://bitli.in/zhGUsE8" target="_blank" rel="nofollow" class="gf-cmp-btn btn-g">Claim Privileges ➔</a>
-          </div>
-        </div>
-      </div>
-    `;
-
-    financialSection.insertAdjacentHTML('beforeend', affiliateWidgetHTML);
-  }
-});
-    <!-- FINANCIAL ARTICLES BOX — you add posts, unlimited via Load More -->
-<style>
-#gfArticleStreamSection{max-width:900px;margin:50px auto;padding:0 15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-#gfArticleStreamSection .gf-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e1e;padding-bottom:14px;margin-bottom:22px}
-#gfArticleStreamSection .gf-hdr h3{color:#fff;font-size:20px;font-weight:700;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
-#gfArticleStreamSection .gf-hdr h3 span{color:#d4af37}
-#gfArticleStreamSection .gf-hdr small{color:#5f5f5f;font-size:11px;font-weight:600;letter-spacing:1px}
-
-#gfArticleBox{background:linear-gradient(180deg,#0b0b0b 0%,#070707 100%);border:1px solid #1a1a1a;border-radius:16px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
-#articleContainer{display:flex;flex-direction:column;gap:10px;padding:8px}
-
-.obsidian-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:border-color .2s ease}
-.obsidian-card:hover{border-color:#2a2a2a}
-.obsidian-card .cat{color:#d4af37;font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
-.obsidian-card h4{color:#f1f1f1;margin:6px 0 4px;font-size:14.5px;font-weight:600}
-.obsidian-card p{color:#787878;font-size:11.5px;margin:0;line-height:1.4}
-
-.gf-read-link{background:#141414;border:1px solid #d4af37;color:#d4af37;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .2s ease}
-.gf-read-link:hover{background:#d4af37;color:#0a0a0a}
-
-#gfEmptyState{text-align:center;padding:46px 20px;color:#4a4a4a}
-#gfEmptyState .ic{font-size:26px;margin-bottom:10px;color:#333}
-#gfEmptyState .t{font-size:13.5px;font-weight:700;color:#666}
-#gfEmptyState .s{font-size:11.5px;margin-top:4px;color:#444}
-
-#loadMoreBtn{background:linear-gradient(180deg,#151515 0%,#0d0d0d 100%);border:1px solid #d4af37;color:#d4af37;padding:12px 32px;border-radius:30px;font-weight:700;font-size:12.5px;letter-spacing:1px;cursor:pointer;transition:all .3s ease;box-shadow:0 0 15px rgba(212,175,55,.12)}
-#loadMoreBtn:hover{box-shadow:0 0 20px rgba(212,175,55,.25)}
-#loadMoreBtn:disabled{cursor:default}
-</style>
-
-<div id="gfArticleStreamSection">
-
-  <div class="gf-hdr">
-    <h3><span>◈</span> Exclusive Financial Intelligence</h3>
-    <small>GLOBAL ARCHIVE</small>
-  </div>
-
-  <div id="gfArticleBox">
-    <div id="articleContainer"></div>
-    <div id="gfEmptyState" style="display:none;">
-      <div class="ic">◈</div>
-      <div class="t">Coming soon</div>
-      <div class="s">Articles will appear here once added</div>
-    </div>
-  </div>
-
-  <div style="text-align:center;margin-top:26px;" id="gfLoadMoreWrap">
-    <button onclick="loadMoreObsidianArticles()" id="loadMoreBtn">LOAD MORE GUIDES ✦</button>
-  </div>
-
-</div>
-
-</script>
-   <!-- FINANCIAL ARTICLES BOX — you add posts, unlimited via Load More -->
-<style>
-#gfArticleStreamSection{max-width:900px;margin:50px auto;padding:0 15px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
-#gfArticleStreamSection .gf-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e1e;padding-bottom:14px;margin-bottom:22px}
-#gfArticleStreamSection .gf-hdr h3{color:#fff;font-size:20px;font-weight:700;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
-#gfArticleStreamSection .gf-hdr h3 span{color:#d4af37}
-#gfArticleStreamSection .gf-hdr small{color:#5f5f5f;font-size:11px;font-weight:600;letter-spacing:1px}
-
-#gfArticleBox{background:linear-gradient(180deg,#0b0b0b 0%,#070707 100%);border:1px solid #1a1a1a;border-radius:16px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
-#articleContainer{display:flex;flex-direction:column;gap:10px;padding:8px}
-
-.obsidian-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:border-color .2s ease}
-.obsidian-card:hover{border-color:#2a2a2a}
-.obsidian-card .cat{color:#d4af37;font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
-.obsidian-card h4{color:#f1f1f1;margin:6px 0 4px;font-size:14.5px;font-weight:600}
-.obsidian-card p{color:#787878;font-size:11.5px;margin:0;line-height:1.4}
-
-.gf-read-link{background:#141414;border:1px solid #d4af37;color:#d4af37;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .2s ease}
-.gf-read-link:hover{background:#d4af37;color:#0a0a0a}
-
-#gfEmptyState{text-align:center;padding:46px 20px;color:#4a4a4a}
-#gfEmptyState .ic{font-size:26px;margin-bottom:10px;color:#333}
-#gfEmptyState .t{font-size:13.5px;font-weight:700;color:#666}
-#gfEmptyState .s{font-size:11.5px;margin-top:4px;color:#444}
-
-#loadMoreBtn{background:linear-gradient(180deg,#151515 0%,#0d0d0d 100%);border:1px solid #d4af37;color:#d4af37;padding:12px 32px;border-radius:30px;font-weight:700;font-size:12.5px;letter-spacing:1px;cursor:pointer;transition:all .3s ease;box-shadow:0 0 15px rgba(212,175,55,.12)}
-#loadMoreBtn:hover{box-shadow:0 0 20px rgba(212,175,55,.25)}
-#loadMoreBtn:disabled{cursor:default}
-</style>
-
-<div id="gfArticleStreamSection">
-
-  <div class="gf-hdr">
-    <h3><span>◈</span> Exclusive Financial Intelligence</h3>
-    <small>GLOBAL ARCHIVE</small>
-  </div>
-
-  <div id="gfArticleBox">
-    <div id="articleContainer"></div>
-    <div id="gfEmptyState" style="display:none;">
-      <div class="ic">◈</div>
-      <div class="t">Coming soon</div>
-      <div class="s">Articles will appear here once added</div>
-    </div>
-  </div>
-
-  <div style="text-align:center;margin-top:26px;" id="gfLoadMoreWrap">
-    <button onclick="loadMoreObsidianArticles()" id="loadMoreBtn">LOAD MORE GUIDES ✦</button>
-  </div>
-
-</div>
-
-<script>
-/* =====================================================================
-   YAHAN APNE POSTS ADD KARO — jitne chaho utne, koi limit nahi
-   Har object: { category, title, desc, link }
-   Pehle 15 turant dikhenge, baaki "Load More" click par khulenge
-   ===================================================================== */
-var gfPosts = [
-  // { category: 'Tax Strategy', title: 'Aapka Title', desc: 'Chhota description', link: 'https://...' },
-];
-
-var GF_INITIAL_COUNT = 15;
-
-function gfEscape(s){
-  var d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
-}
-
-function gfBuildCard(post, hidden){
-  var url = (post.link || '').trim();
-  var linkHtml = url
-    ? '<a href="' + gfEscape(url) + '" class="gf-read-link" target="_blank" rel="nofollow noopener">Read →</a>'
-    : '<span class="gf-read-link" style="pointer-events:none;opacity:.4;border-color:#3a3a3a;color:#666;">Coming soon</span>';
-
-  return '<div class="obsidian-card" style="display:' + (hidden ? 'none' : 'flex') + ';">' +
-    '<div>' +
-      '<span class="cat">' + (gfEscape(post.category) || 'CATEGORY') + '</span>' +
-      '<h4>' + (gfEscape(post.title) || 'Post title') + '</h4>' +
-      '<p>' + gfEscape(post.desc) + '</p>' +
-    '</div>' +
-    linkHtml +
-  '</div>';
-}
-
-function gfRenderArticles(){
-  var container = document.getElementById('articleContainer');
-  var empty = document.getElementById('gfEmptyState');
-  var loadMoreWrap = document.getElementById('gfLoadMoreWrap');
-  if (!container) return;
-
-  if (!gfPosts.length) {
-    container.innerHTML = '';
-    empty.style.display = 'block';
-    loadMoreWrap.style.display = 'none';
-    return;
-  }
-
-  empty.style.display = 'none';
-  var html = '';
-  gfPosts.forEach(function(p, i){
-    html += gfBuildCard(p, i >= GF_INITIAL_COUNT);
-  });
-  container.innerHTML = html;
-
-  loadMoreWrap.style.display = gfPosts.length > GF_INITIAL_COUNT ? 'block' : 'none';
-}
-
-function loadMoreObsidianArticles() {
-  var cards = document.querySelectorAll('#articleContainer .obsidian-card');
-  for (var i = GF_INITIAL_COUNT; i < cards.length; i++) {
-    cards[i].style.display = 'flex';
-  }
-  var btn = document.getElementById('loadMoreBtn');
-  btn.innerText = 'ALL GUIDES LOADED ✓';
-  btn.style.borderColor = '#00ff88';
-  btn.style.color = '#00ff88';
-  btn.style.opacity = '0.7';
-  btn.disabled = true;
-}
-
-// Sirf "Financial" page ke andar dikhega, kahi aur nahi
-function gfPlaceArticleStreamOnFinancial() {
-  var financialPage = document.getElementById('financial');
-  var section = document.getElementById('gfArticleStreamSection');
-  if (!financialPage || !section) return;
-  if (section.parentNode !== financialPage) financialPage.appendChild(section);
-}
-
-document.addEventListener('DOMContentLoaded', function(){
-  gfRenderArticles();
-  gfPlaceArticleStreamOnFinancial();
-});
-gfRenderArticles();
-gfPlaceArticleStreamOnFinancial();
-</script>
- 
- <!-- OBSIDIAN VIP SUBSTACK CARD (FINANCIAL SECTION ONLY) -->
-<div id="obsVipSubstackSection" class="obs-vip-card" style="display:none;">
-  <style>
-    .obs-vip-card{background:linear-gradient(135deg,#08080a 0%,#121318 100%);border:1px solid rgba(212,175,55,0.35);border-radius:14px;padding:30px 20px;max-width:720px;margin:40px auto;box-shadow:0 12px 40px rgba(0,0,0,0.85);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#e5e5e5;text-align:center;position:relative;overflow:hidden}
-    .obs-vip-card::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}
-    .obs-badge{display:inline-block;padding:3px 10px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.3);border-radius:20px;color:#d4af37;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:12px}
-    .obs-vip-card h3{color:#fff;font-size:20px;font-weight:600;margin:0 0 6px 0;letter-spacing:-0.2px}
-    .obs-vip-card p{color:#8a8d93;font-size:12px;line-height:1.5;margin:0 0 20px 0;max-width:500px;margin-left:auto;margin-right:auto}
-    .obs-form{display:flex;gap:8px;max-width:440px;margin:0 auto}
-    .obs-input{flex:1;background:#030304;border:1px solid #222328;border-radius:7px;padding:11px 14px;color:#fff;font-size:12px;outline:none}
-    .obs-input:focus{border-color:#d4af37}
-    .obs-btn{background:linear-gradient(135deg,#d4af37 0%,#aa820a 100%);color:#000;font-weight:800;font-size:12px;padding:11px 18px;border:none;border-radius:7px;cursor:pointer;white-space:nowrap}
-    .obs-lock{font-size:10px;color:#555860;margin-top:10px;display:block}
-    @media(max-width:480px){.obs-form{flex-direction:column}.obs-btn{width:100%}}
-  </style>
-
-  <span class="obs-badge">VIP WEALTH DISPATCH</span>
-  <h3>Institutional Insights. Direct to Your Inbox.</h3>
-  <p>Join high-net-worth readers receiving our private weekly breakdowns on tax optimization, global asset allocation, and macro trends.</p>
-
-  <form action="https://YOURSUBDOMAIN.substack.com/api/v1/free?nojs=true" method="post" target="_blank" class="obs-form">
-    <input type="email" name="email" class="obs-input" placeholder="Enter official email..." required>
-    <button type="submit" class="obs-btn">Get Access ➔</button>
-  </form>
-
-  <span class="obs-lock">🔒 Zero Spam. Unsubscribe anytime with 1-click.</span>
-</div>
-
-<script>
-function placeVipSubstackOnFinancial() {
-  var financialPage = document.getElementById('financial');
-  var section = document.getElementById('obsVipSubstackSection');
-  if (!financialPage || !section) return;
-  
-  // Is box ko id="financial" ke andar shift karke visible karega
-  if (section.parentNode !== financialPage) {
-    financialPage.appendChild(section);
-  }
-  section.style.display = 'block';
-}
-
-document.addEventListener('DOMContentLoaded', placeVipSubstackOnFinancial);
-placeVipSubstackOnFinancial();
-</script>
-
-<!-- OBSIDIAN LUXURY WEALTH CALCULATOR (COMPRESSED) -->
-<div id="obsWealthCalcSection" style="display:none;">
-  <style>
-    .obs-calc-wrap{max-width:850px;margin:40px auto;padding:28px 24px;background:linear-gradient(145deg,#08080a 0%,#111217 100%);border:1px solid rgba(212,175,55,.3);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.9),inset 0 1px 0 rgba(212,175,55,.15);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e5e5e5;position:relative;overflow:hidden}.obs-calc-wrap::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}.obs-calc-hdr{text-align:center;margin-bottom:28px}.obs-calc-hdr .tag{display:inline-block;padding:3px 12px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.25);border-radius:20px;color:#d4af37;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}.obs-calc-hdr h3{color:#fff;font-size:22px;font-weight:600;margin:0 0 6px 0;letter-spacing:-.3px}.obs-calc-hdr p{color:#8a8d93;font-size:12px;margin:0}.obs-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.obs-calc-inputs{display:flex;flex-direction:column;gap:16px}.obs-field-group{display:flex;flex-direction:column;gap:6px}.obs-field-group label{font-size:11px;color:#a0a3a8;font-weight:600;text-transform:uppercase;letter-spacing:.8px;display:flex;justify-content:space-between}.obs-field-group label span{color:#d4af37}.obs-calc-input{background:#030304;border:1px solid #22232a;border-radius:8px;padding:10px 14px;color:#fff;font-size:13px;outline:0;transition:all .3s}.obs-calc-input:focus{border-color:#d4af37;box-shadow:0 0 10px rgba(212,175,55,.2)}.obs-calc-output{background:#040406;border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:24px;text-align:center;position:relative}.obs-calc-output .lbl{font-size:11px;color:#787b83;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}.obs-calc-output .val{font-size:32px;font-weight:800;color:#d4af37;margin:10px 0;letter-spacing:-.5px;text-shadow:0 0 15px rgba(212,175,55,.2)}.obs-calc-breakdown{display:flex;justify-content:space-around;border-top:1px solid #1a1b22;padding-top:14px;margin-top:14px}.obs-calc-breakdown div{display:flex;flex-direction:column;gap:3px}.obs-calc-breakdown small{font-size:9.5px;color:#5f626a;text-transform:uppercase;letter-spacing:1px}.obs-calc-breakdown strong{font-size:13px;color:#e5e5e5;font-weight:600}@media(max-width:700px){.obs-calc-grid{grid-template-columns:1fr}.obs-calc-output .val{font-size:26px}}
-  </style>
-
-  <div class="obs-calc-wrap">
-    <div class="obs-calc-hdr">
-      <span class="tag">INSTITUTIONAL MODEL</span>
-      <h3>Wealth Freedom Engine</h3>
-      <p>Project your portfolio compounding trajectory in real-time.</p>
-    </div>
-    <div class="obs-calc-grid">
-      <div class="obs-calc-inputs">
-        <div class="obs-field-group"><label>Starting Balance ($)</label><input type="number" id="obsInitVal" class="obs-calc-input" value="10000" oninput="runObsCalculator()"></div>
-        <div class="obs-field-group"><label>Monthly Contribution ($)</label><input type="number" id="obsMonthlyVal" class="obs-calc-input" value="500" oninput="runObsCalculator()"></div>
-        <div class="obs-field-group"><label>Time Horizon (Years) <span id="obsYearsLbl">10 Yrs</span></label><input type="range" id="obsYearsVal" min="1" max="40" value="10" class="obs-calc-input" style="padding:0;cursor:pointer;" oninput="runObsCalculator()"></div>
-        <div class="obs-field-group"><label>Expected Annual Return (%) <span id="obsRateLbl">8%</span></label><input type="range" id="obsRateVal" min="1" max="25" value="8" class="obs-calc-input" style="padding:0;cursor:pointer;" oninput="runObsCalculator()"></div>
-      </div>
-      <div class="obs-calc-output">
-        <span class="lbl">Projected Net Worth</span>
-        <div class="val" id="obsTotalVal">$0</div>
-        <div class="obs-calc-breakdown">
-          <div><small>Total Invested</small><strong id="obsPrincipalVal">$0</strong></div>
-          <div><small>Est. Compound Growth</small><strong id="obsInterestVal" style="color:#00ff88;">$0</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function runObsCalculator(){var i=parseFloat(document.getElementById('obsInitVal').value)||0,m=parseFloat(document.getElementById('obsMonthlyVal').value)||0,y=parseInt(document.getElementById('obsYearsVal').value)||1,r=parseFloat(document.getElementById('obsRateVal').value)||1;document.getElementById('obsYearsLbl').innerText=y+' Yrs';document.getElementById('obsRateLbl').innerText=r+'%';var rate=r/100/12,n=y*12,fv=i*Math.pow(1+rate,n)+m*((Math.pow(1+rate,n)-1)/rate),inv=i+(m*n),growth=fv-inv,fmt=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});document.getElementById('obsTotalVal').innerText=fmt.format(fv);document.getElementById('obsPrincipalVal').innerText=fmt.format(inv);document.getElementById('obsInterestVal').innerText=fmt.format(growth>0?growth:0);}
-function placeCalcSectionOnFinancial(){var fin=document.getElementById('financial'),sec=document.getElementById('obsWealthCalcSection');if(!fin||!sec)return;if(sec.parentNode!==fin)fin.appendChild(sec);sec.style.display='block';runObsCalculator();}
-document.addEventListener('DOMContentLoaded',placeCalcSectionOnFinancial);placeCalcSectionOnFinancial();
-</script>
-<!-- OBSIDIAN TOP RETAILERS SHOWCASE (FINANCIAL ONLY) -->
-<div id="obsTopRetailersSection" style="display:none;">
-  <style>
-    .obs-ret-wrap { max-width: 900px; margin: 35px auto; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0f1015 100%); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(212,175,55,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; position: relative; overflow: hidden; }
-    .obs-ret-wrap::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
-    
-    .obs-ret-hdr { text-align: center; margin-bottom: 26px; }
-    .obs-ret-tag { display: inline-block; padding: 3px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-    .obs-ret-hdr h4 { color: #fff; font-size: 20px; margin: 0 0 5px; font-weight: 600; letter-spacing: -0.3px; }
-    .obs-ret-hdr p { color: #8a8d93; font-size: 11.5px; margin: 0; }
-    
-    .obs-ret-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
-    .obs-ret-card { background: #040406; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 12px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; transition: all 0.3s ease; }
-    .obs-ret-card:hover { border-color: #d4af37; box-shadow: 0 8px 25px rgba(212,175,55,0.15); transform: translateY(-3px); }
-    .obs-ret-card .icon { font-size: 22px; margin-bottom: 8px; }
-    .obs-ret-card h5 { color: #f0f0f0; font-size: 13px; margin: 0 0 4px; font-weight: 600; }
-    .obs-ret-card p { color: #6c6f78; font-size: 10.5px; margin: 0 0 14px; line-height: 1.3; }
-    
-    .obs-ret-btn { display: inline-block; width: 100%; background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%); color: #000; padding: 8px 0; border-radius: 6px; font-size: 11px; font-weight: 800; text-decoration: none; letter-spacing: 0.3px; transition: opacity 0.2s; }
-    .obs-ret-btn:hover { opacity: 0.9; }
-    
-    @media(max-width: 600px) { .obs-ret-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width: 400px) { .obs-ret-grid { grid-template-columns: 1fr; } }
-  </style>
-
-  <div class="obs-ret-wrap">
-    <div class="obs-ret-hdr">
-      <span class="obs-ret-tag">VERIFIED INSTITUTIONAL STORES</span>
-      <h4>Executive Retail & Lifestyle Partners</h4>
-      <p>Direct access to global merchants, premium tech, and lifestyle archives.</p>
-    </div>
-
-    <div class="obs-ret-grid">
-      <!-- Flipkart -->
-      <div class="obs-ret-card">
-        <div class="icon">🛍️</div>
-        <h5>Flipkart Flagship</h5>
-        <p>Electronics, appliances & daily retail access.</p>
-        <a href="https://fktr.in/86ImxPY" target="_blank" rel="nofollow noopener" class="obs-ret-btn">Explore Store ➔</a>
-      </div>
-
-      <!-- Myntra -->
-      <div class="obs-ret-card">
-        <div class="icon">👔</div>
-        <h5>Myntra Luxe</h5>
-        <p>Premium executive wardrobe & apparel.</p>
-        <a href="https://myntr.it/rnvWokn" target="_blank" rel="nofollow noopener" class="obs-ret-btn">Explore Store ➔</a>
-      </div>
-
-      <!-- Ajio -->
-      <div class="obs-ret-card">
-        <div class="icon">✨</div>
-        <h5>Ajio International</h5>
-        <p>Luxury fashion brands & lifestyle accessories.</p>
-        <a href="https://ajiio.in/DX3lq7Z" target="_blank" rel="nofollow noopener" class="obs-ret-btn">Explore Store ➔</a>
-      </div>
-
-      <!-- Bitli Vault 1 -->
-      <div class="obs-ret-card">
-        <div class="icon">⚡</div>
-        <h5>Executive Gear</h5>
-        <p>Desk setups, workspace gear & essentials.</p>
-        <a href="https://bitli.in/Ys3dcoM" target="_blank" rel="nofollow noopener" class="obs-ret-btn">Access Gear ➔</a>
-      </div>
-
-      <!-- Bitli Vault 2 -->
-      <div class="obs-ret-card">
-        <div class="icon">💎</div>
-        <h5>Elite Vault</h5>
-        <p>Curated high-value lifestyle tools.</p>
-        <a href="https://bitli.in/e2VysQv" target="_blank" rel="nofollow noopener" class="obs-ret-btn">Access Vault ➔</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function placeTopRetailersOnFinancial() {
-  var fin = document.getElementById('financial');
-  var sec = document.getElementById('obsTopRetailersSection');
-  if (!fin || !sec) return;
-  if (sec.parentNode !== fin) fin.appendChild(sec);
-  sec.style.display = 'block';
-}
-
-document.addEventListener('DOMContentLoaded', placeTopRetailersOnFinancial);
-placeTopRetailersOnFinancial();
-</script>
-<!-- OBSIDIAN REAL-TIME LIVE MARKET WATCH (NO KEY REQUIRED, FINANCIAL ONLY) -->
-<div id="obsRealMarketSection" style="display:none;">
-  <style>
-    .obs-mkt-wrap { max-width: 900px; margin: 35px auto; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0d0e12 100%); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 1px 0 rgba(212,175,55,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; text-align: center; position: relative; overflow: hidden; }
-    .obs-mkt-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
-    
-    .obs-mkt-tag { display: inline-block; padding: 3px 12px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-    .obs-mkt-wrap h4 { color: #fff; font-size: 20px; margin: 0 0 4px; font-weight: 600; }
-    .obs-mkt-wrap p { color: #8a8d93; font-size: 11.5px; margin: 0 0 22px; }
-    
-    .obs-mkt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
-    .obs-mkt-card { background: #040406; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 12px; text-align: center; transition: all 0.3s ease; }
-    .obs-mkt-card:hover { border-color: #d4af37; transform: translateY(-2px); }
-    .obs-mkt-card h5 { color: #8a8d93; font-size: 11px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 1px; }
-    .obs-mkt-price { font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
-    .obs-mkt-change { font-size: 11px; font-weight: 600; }
-    .obs-up { color: #00ff88; }
-    .obs-down { color: #ff5252; }
-    
-    @media(max-width: 600px) { .obs-mkt-grid { grid-template-columns: repeat(2, 1fr); } }
-  </style>
-
-  <div class="obs-mkt-wrap">
-    <span class="obs-mkt-tag">LIVE API FEED</span>
-    <h4>Institutional Market Watch</h4>
-    <p>Real-time live pricing fetched directly from decentralized market endpoints.</p>
-
-    <div class="obs-mkt-grid">
-      <div class="obs-mkt-card">
-        <h5>Gold (PAXG / USD)</h5>
-        <div id="obsGoldPrice" class="obs-mkt-price">Updating...</div>
-        <div id="obsGoldChange" class="obs-mkt-change">--</div>
-      </div>
-
-      <div class="obs-mkt-card">
-        <h5>Bitcoin (BTC / USD)</h5>
-        <div id="obsBtcPrice" class="obs-mkt-price">Updating...</div>
-        <div id="obsBtcChange" class="obs-mkt-change">--</div>
-      </div>
-
-      <div class="obs-mkt-card">
-        <h5>Ethereum (ETH / USD)</h5>
-        <div id="obsEthPrice" class="obs-mkt-price">Updating...</div>
-        <div id="obsEthChange" class="obs-mkt-change">--</div>
-      </div>
-
-      <div class="obs-mkt-card">
-        <h5>Solana (SOL / USD)</h5>
-        <div id="obsSolPrice" class="obs-mkt-price">Updating...</div>
-        <div id="obsSolChange" class="obs-mkt-change">--</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function fetchRealMarketData() {
-  var url = 'https://api.coingecko.com/api/v3/simple/price?ids=pax-gold,bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true';
-  
-  fetch(url)
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      updateAssetCard('obsGold', data['pax-gold']);
-      updateAssetCard('obsBtc', data['bitcoin']);
-      updateAssetCard('obsEth', data['ethereum']);
-      updateAssetCard('obsSol', data['solana']);
-    })
-    .catch(function(err) {
-      console.error('API Fetch Error:', err);
-    });
-}
-
-function updateAssetCard(prefix, asset) {
-  if (!asset) return;
-  var price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(asset.usd);
-  var change = asset.usd_24h_change.toFixed(2);
-  
-  var priceEl = document.getElementById(prefix + 'Price');
-  var changeEl = document.getElementById(prefix + 'Change');
-  
-  if (priceEl) priceEl.innerText = price;
-  if (changeEl) {
-    var isPositive = change >= 0;
-    changeEl.innerText = (isPositive ? '+' : '') + change + '% (24h)';
-    changeEl.className = 'obs-mkt-change ' + (isPositive ? 'obs-up' : 'obs-down');
-  }
-}
-
-function placeRealMarketOnFinancial() {
-  var fin = document.getElementById('financial');
-  var sec = document.getElementById('obsRealMarketSection');
-  if (!fin || !sec) return;
-  if (sec.parentNode !== fin) fin.appendChild(sec);
-  sec.style.display = 'block';
-  fetchRealMarketData();
-}
-
-document.addEventListener('DOMContentLoaded', placeRealMarketOnFinancial);
-placeRealMarketOnFinancial();
-</script>
-<!-- OBSIDIAN ALPHA FINANCIAL AI ASSISTANT (FINANCIAL ONLY) -->
-<div id="obsAlphaAiSection" style="display:none;">
-  <style>
-    .obs-ai-wrap { max-width: 900px; margin: 40px auto 20px; padding: 28px 20px; background: linear-gradient(145deg, #060608 0%, #0e0f14 100%); border: 1px solid rgba(212,175,55,0.35); border-radius: 18px; box-shadow: 0 20px 60px rgba(0,0,0,0.95), inset 0 1px 0 rgba(212,175,55,0.2); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; position: relative; overflow: hidden; }
-    .obs-ai-wrap::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); }
-    
-    .obs-ai-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 16px; margin-bottom: 20px; }
-    .obs-ai-title { display: flex; align-items: center; gap: 10px; }
-    .obs-ai-badge { padding: 3px 10px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; color: #d4af37; font-size: 9.5px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; }
-    .obs-ai-title h4 { color: #fff; font-size: 18px; margin: 0; font-weight: 600; letter-spacing: -0.3px; }
-    
-    .obs-ai-status { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: #00ff88; font-weight: 600; }
-    .obs-ai-dot { width: 7px; height: 7px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 8px #00ff88; animation: obsPulse 2s infinite; }
-    @keyframes obsPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-    /* Chat Messages Window */
-    .obs-ai-box { background: #030305; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; height: 240px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; scrollbar-width: thin; scrollbar-color: #d4af37 #030305; }
-    .obs-msg { max-width: 80%; padding: 10px 14px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
-    .obs-msg.system { background: #0c0d12; border: 1px solid rgba(212,175,55,0.25); color: #d8d8d8; align-self: flex-start; border-bottom-left-radius: 2px; }
-    .obs-msg.user { background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%); color: #000; font-weight: 600; align-self: flex-end; border-bottom-right-radius: 2px; }
-
-    /* Quick Chips */
-    .obs-ai-chips { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .obs-chip { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #8a8d93; padding: 5px 12px; border-radius: 15px; font-size: 10.5px; cursor: pointer; transition: all 0.2s; }
-    .obs-chip:hover { border-color: #d4af37; color: #d4af37; background: rgba(212,175,55,0.05); }
-
-    /* Input Controls */
-    .obs-ai-form { display: flex; gap: 8px; }
-    .obs-ai-input { flex: 1; background: #030304; border: 1px solid #22232a; border-radius: 8px; padding: 12px 14px; color: #fff; font-size: 12px; outline: none; transition: border-color 0.3s; }
-    .obs-ai-input:focus { border-color: #d4af37; }
-    .obs-ai-btn { background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%); color: #000; font-weight: 800; font-size: 12px; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; }
-    .obs-ai-btn:hover { opacity: 0.9; }
-
-    @media(max-width: 600px) { .obs-ai-hdr { flex-direction: column; align-items: flex-start; gap: 8px; } }
-  </style>
-
-  <div class="obs-ai-wrap">
-    <div class="obs-ai-hdr">
-      <div class="obs-ai-title">
-        <span class="obs-ai-badge">ALPHA INTELLIGENCE</span>
-        <h4>Financial AI Terminal</h4>
-      </div>
-      <div class="obs-ai-status">
-        <span class="obs-ai-dot"></span> ALPHA CORE ACTIVE
-      </div>
-    </div>
-
-    <!-- Live Chat Window -->
-    <div class="obs-ai-box" id="obsChatBox">
-      <div class="obsmsg system">
-        <strong>Alpha AI:</strong> Welcome. I am your Obsidian Financial Assistant. Ask me about tax optimization, portfolio structuring, or macro trends.
-      </div>
-    </div>
-
-    <!-- Quick Prompts -->
-    <div class="obs-ai-chips">
-      <div class="obs-chip" onclick="obsQuickPrompt('Explain Tax-Loss Harvesting')">💡 Tax Optimization</div>
-      <div class="obs-chip" onclick="obsQuickPrompt('How to allocate 100k portfolio?')">📊 Asset Allocation</div>
-      <div class="obs-chip" onclick="obsQuickPrompt('Current Gold vs Equities outlook')">📈 Macro Market Trends</div>
-    </div>
-
-    <!-- Input Form -->
-    <form class="obs-ai-form" onsubmit="obsSendAiMsg(event)">
-      <input type="text" id="obsInputText" class="obs-ai-input" placeholder="Query Alpha AI Terminal..." required>
-      <button type="submit" class="obs-ai-btn">Consult ➔</button>
-    </form>
-  </div>
-</div>
-
-<script>
-function obsQuickPrompt(text) {
-  document.getElementById('obsInputText').value = text;
-  obsSendAiMsg()
-</script>
-<!-- ALPHA AI FINANCIAL-ONLY MODE LOCKER -->
-<script>
-(function () {
-  function mountFinancialOnlyAlpha() {
-    var financialContainer = document.getElementById('financial');
-    // 1. अपने Alpha AI वाले मुख्य कंटेनर की ID यहाँ डालें
-    var originalAlpha = document.querySelector('#alpha-ai-container'); 
-
-    if (!financialContainer || !originalAlpha) return;
-
-    // Alpha AI को क्लोन करें ताकि यह ओरिजिनल जगह पर भी रहे
-    var financialAlpha = originalAlpha.cloneNode(true);
-    financialAlpha.id = 'alpha-ai-financial-locked';
-
-    // 2. मोड स्विच/ड्रॉपडाउन को ढूंढकर "Financial" पर स्विच करें और ड्रॉपडाउन छुपा दें
-    var modeSwitcher = financialAlpha.querySelector('.model-selector, select, .mode-dropdown');
-    if (modeSwitcher) {
-      modeSwitcher.value = 'financial'; // फ़ाइनेंशियल मोड सेट करें
-      modeSwitcher.style.display = 'none'; // मोड बदलने वाला ऑप्शन छुपाएं
-    }
-
-    // अगर कोई एक्टिव मोड का टेक्स्ट लेबल है तो उसे 'Financial AI' पर सेट करें
-    var modeLabel = financialAlpha.querySelector('.active-mode-label');
-    if (modeLabel) modeLabel.innerText = 'MODE: FINANCIAL AI';
-
-    // Container में ऐड और डिस्प्ले करें
-    financialContainer.appendChild(financialAlpha);
-    financialAlpha.style.display = 'block';
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mountFinancialOnlyAlpha);
-  } else {
-    mountFinancialOnlyAlpha();
-  }
-})();
-</script>
-
-<!-- ================= AI CONCIERGE LAUNCH CARD — TRADING & FINANCE MODE ================= -->
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:wght@700&display=swap');
-
-.gf-ai-launch {
-  --gl-bg: #07090e;
-  --gl-panel: rgba(15, 18, 26, 0.7);
-  --gl-gold: #c9a869;
-  --gl-emerald: #00e599;
-  --gl-text: #f1f3f9;
-  --gl-muted: #838a99;
-  --gl-hair: rgba(255, 255, 255, 0.08);
-
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  position: relative;
-  background:
-    radial-gradient(120% 140% at 85% 0%, rgba(0, 229, 153, 0.07) 0%, transparent 55%),
-    radial-gradient(90% 120% at 10% 100%, rgba(201, 168, 105, 0.08) 0%, transparent 55%),
-    var(--gl-bg);
-  border: 1px solid rgba(201, 168, 105, 0.2);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 900px;
-  margin: 26px auto;
-  color: var(--gl-text);
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-}
-
-.gf-ai-launch::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gl-gold), var(--gl-emerald), transparent);
-  opacity: 0.7;
-}
-
-.gl-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 26px;
-  flex-wrap: wrap;
-}
-
-.gl-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex: 1;
-  min-width: 260px;
-}
-
-.gl-icon {
-  flex-shrink: 0;
-  width: 54px; height: 54px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(201, 168, 105, 0.18), rgba(0, 229, 153, 0.1));
-  border: 1px solid rgba(201, 168, 105, 0.35);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 0 20px rgba(201, 168, 105, 0.15);
-}
-
-.gl-copy .gl-eyebrow {
-  font-size: 11px; font-weight: 700; color: var(--gl-emerald);
-  letter-spacing: 0.4px; margin-bottom: 5px;
-  display: flex; align-items: center; gap: 6px;
-}
-.gl-eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--gl-emerald); box-shadow: 0 0 8px var(--gl-emerald);
-}
-
-.gl-copy h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 21px; font-weight: 700;
-  background: linear-gradient(135deg, #fff 30%, var(--gl-gold) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin: 0 0 5px;
-  letter-spacing: 0.2px;
-}
-
-.gl-copy p {
-  font-size: 12.5px; color: var(--gl-muted); line-height: 1.55; margin: 0;
-  max-width: 460px;
-}
-
-.gl-btn {
-  flex-shrink: 0;
-  display: inline-flex; align-items: center; gap: 9px;
-  background: linear-gradient(135deg, var(--gl-gold), #a9895a);
-  color: #08090b;
-  font-weight: 800; font-size: 13px;
-  padding: 13px 24px;
-  border: none; border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(.16,1,.3,1);
-  box-shadow: 0 8px 24px rgba(201, 168, 105, 0.25);
-  white-space: nowrap;
-}
-.gl-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(201, 168, 105, 0.4);
-}
-.gl-btn svg { width: 15px; height: 15px; }
-
-@media (max-width: 620px) {
-  .gf-ai-launch { padding: 24px; }
-  .gl-row { flex-direction: column; align-items: stretch; }
-  .gl-btn { justify-content: center; }
-}
-</style>
-
-<div class="gf-ai-launch" id="gfAiLaunchSection">
-  <div class="gl-row">
-    <div class="gl-left">
-      <div class="gl-icon">🧠</div>
-      <div class="gl-copy">
-        <div class="gl-eyebrow"><span class="gl-eyebrow-dot"></span>Parnarav AI · Concierge</div>
-        <h3>Trading &amp; Finance Assistant</h3>
-        <p>Get quant signals, EMI breakdowns, and market-aware answers from Parnarav AI's dedicated Trading &amp; Finance mode — one tap away.</p>
-      </div>
-    </div>
-    <button class="gl-btn" onclick="gfLaunchFinanceAI()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-      Launch Assistant
-    </button>
-  </div>
-</div>
-
-<script>
-function gfLaunchFinanceAI(){
-  // Alpha AI page par le jao
-  if (typeof openPage === 'function') {
-    openPage('alpha');
-  } else {
-    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-    var alphaPage = document.getElementById('alpha');
-    if (alphaPage) alphaPage.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Thoda ruk kar seedha "Trading & Finance" mode switch karo
-  // (Parnarav AI ko pehle initialize hone ka time do)
-  setTimeout(function(){
-    var navItems = document.querySelectorAll('.parnarav-ai-app .nav-item');
-    var financeItem = null;
-    navItems.forEach(function(li){
-      if (li.textContent.trim().toUpperCase().indexOf('FINANCE') !== -1) financeItem = li;
-    });
-    if (financeItem) financeItem.click();
-  }, 150);
-}
-
-// Sirf "Financial" page ke andar dikhega, kahi aur nahi
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var card = document.getElementById('gfAiLaunchSection');
-    if (!financialPage || !card) return;
-    if (card.parentNode !== financialPage) financialPage.appendChild(card);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
-</script>
-<!-- OBSIDIAN REAL-TIME MARKET SESSIONS & COMPLIANCE (FINANCIAL ONLY) -->
-<div id="obsRealMarketSessions" style="display:none;">
-  <style>
-    .obs-sess-wrap { max-width: 900px; margin: 35px auto 15px; padding: 22px 20px; background: linear-gradient(145deg, #050507 0%, #0c0d11 100%); border: 1px solid rgba(212,175,55,.25); border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,.85); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e5e5e5; }
-    .obs-sess-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 12px; margin-bottom: 16px; }
-    .obs-sess-title { font-size: 10px; font-weight: 800; color: #d4af37; letter-spacing: 1.8px; text-transform: uppercase; }
-    .obs-clock { font-size: 11px; color: #8a8d93; font-family: monospace; }
-    .obs-sess-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 18px; }
-    .obs-sess-card { background: #030305; border: 1px solid rgba(255,255,255,.05); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .obs-sess-name { font-size: 11.5px; font-weight: 600; color: #d0d0d0; }
-    .obs-sess-time { font-size: 9.5px; color: #6c6f78; margin-top: 2px; }
-    .obs-status-badge { font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 12px; letter-spacing: .5px; }
-    .obs-status-open { background: rgba(0,255,136,.1); border: 1px solid rgba(0,255,136,.3); color: #00ff88; }
-    .obs-status-closed { background: rgba(255,82,82,.1); border: 1px solid rgba(255,82,82,.3); color: #ff5252; }
-    .obs-disc-text { font-size: 10px; color: #555860; line-height: 1.5; text-align: center; border-top: 1px solid rgba(255,255,255,.05); padding-top: 14px; }
-    .obs-disc-text strong { color: #8a8d93; }
-  </style>
-
-  <div class="obs-sess-wrap">
-    <div class="obs-sess-hdr">
-      <span class="obs-sess-title">✦ INSTITUTIONAL SESSION MONITOR</span>
-      <span id="obsUtcClock" class="obs-clock">UTC: --:--:--</span>
-    </div>
-
-    <div class="obs-sess-grid">
-      <div class="obs-sess-card">
-        <div><div class="obs-sess-name">London Session</div><div class="obs-sess-time">08:00 - 16:30 UTC</div></div>
-        <span id="sessLondon" class="obs-status-badge obs-status-closed">CLOSED</span>
-      </div>
-      <div class="obs-sess-card">
-        <div><div class="obs-sess-name">New York Session</div><div class="obs-sess-time">13:30 - 20:00 UTC</div></div>
-        <span id="sessNY" class="obs-status-badge obs-status-closed">CLOSED</span>
-      </div>
-      <div class="obs-sess-card">
-        <div><div class="obs-sess-name">Tokyo Session</div><div class="obs-sess-time">00:00 - 09:00 UTC</div></div>
-        <span id="sessTokyo" class="obs-status-badge obs-status-closed">CLOSED</span>
-      </div>
-      <div class="obs-sess-card">
-        <div><div class="obs-sess-name">Sydney Session</div><div class="obs-sess-time">22:00 - 07:00 UTC</div></div>
-        <span id="sessSydney" class="obs-status-badge obs-status-closed">CLOSED</span>
-      </div>
-    </div>
-
-    <div class="obs-disc-text">
-      <strong>Institutional Risk Warning & Affiliate Compliance:</strong> Market sessions, live feeds, and investment models are purely educational. Trading and asset allocation carry financial risk. Affiliate merchant links (including Flipkart, Myntra, Ajio) generate referral revenue without extra cost to users.
-    </div>
-  </div>
-</div>
-
-<script>
-    <!-- ================= LIVE TRADING DESK: CHART + POSITION SIZE & RISK CALCULATOR ================= -->
-<style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');.gf-tdesk{--td-bg:#05070a;--td-panel:#0b0e14;--td-hair:rgba(255,255,255,.08);--td-green:#00e676;--td-red:#ff3b5c;--td-gold:#ffb800;--td-text:#f1f5f9;--td-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;position:relative;max-width:1400px;margin:24px auto;padding:20px;background:var(--td-bg);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.9)}.gf-tdesk::before{content:'';position:absolute;top:-15%;left:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-green) 0%,transparent 70%);filter:blur(120px);opacity:.35;pointer-events:none}.gf-tdesk::after{content:'';position:absolute;bottom:-15%;right:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-red) 0%,transparent 70%);filter:blur(120px);opacity:.28;pointer-events:none}.td-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.55fr 1fr;gap:20px}@media(max-width:980px){.td-inner{grid-template-columns:1fr}}.td-chart-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:18px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6)}.td-chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--td-hair);flex-wrap:wrap;gap:10px}.td-live{display:flex;align-items:center;gap:9px}.td-dot{width:8px;height:8px;background:var(--td-green);border-radius:50%;box-shadow:0 0 10px var(--td-green);animation:tdPulse 1.6s infinite}@keyframes tdPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}.td-live span{color:var(--td-text);font-size:11px;font-weight:800;letter-spacing:1.6px}.td-sym-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);padding:6px 14px;border-radius:100px;border:1px solid var(--td-hair)}.td-sym-badge span:first-child{color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}.td-pro{color:var(--td-gold);background:rgba(255,184,0,.1);font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:1px}.td-symbol-select{background:transparent;border:1px solid var(--td-hair);color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 10px;border-radius:8px;outline:none;cursor:pointer}.td-symbol-select:focus{border-color:var(--td-green)}.td-chart-box{width:100%;height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--td-hair);background:#080b12}@media(max-width:600px){.td-chart-box{height:400px}}.td-calc-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:20px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6);display:flex;flex-direction:column}.td-calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--td-hair)}.td-calc-title{color:var(--td-text);font-size:13px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:8px}.td-calc-title svg{width:15px;height:15px;color:var(--td-gold)}.td-dir-toggle{display:flex;background:rgba(255,255,255,.03);border:1px solid var(--td-hair);border-radius:9px;padding:3px;gap:3px}.td-dir-btn{background:transparent;border:none;color:var(--td-muted);font-size:10.5px;font-weight:800;letter-spacing:.5px;padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .2s ease}.td-dir-btn.long.active{background:rgba(0,230,118,.15);color:var(--td-green);box-shadow:0 0 10px rgba(0,230,118,.15)}.td-dir-btn.short.active{background:rgba(255,59,92,.15);color:var(--td-red);box-shadow:0 0 10px rgba(255,59,92,.15)}.td-field{margin-bottom:14px}.td-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--td-muted);margin-bottom:6px;font-weight:600}.td-input-wrap{position:relative}.td-input-wrap span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--td-gold);font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace}.td-input{width:100%;background:var(--td-panel);border:1px solid var(--td-hair);color:var(--td-text);padding:9px 11px 9px 26px;border-radius:8px;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s ease}.td-input:focus{border-color:var(--td-green);box-shadow:0 0 12px rgba(0,230,118,.15)}.td-results{margin-top:6px;border-top:1px solid var(--td-hair);padding-top:14px}.td-res-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}.td-res-label{font-size:11.5px;color:var(--td-muted)}.td-res-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--td-text)}.td-res-val.pos{color:var(--td-green)}.td-res-val.neg{color:var(--td-red)}.td-summary{margin-top:10px;background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(255,184,0,.05));border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:14px;text-align:center}.td-summary-label{font-size:10px;color:var(--td-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}.td-summary-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--td-green);margin-top:4px}.td-warn{margin-top:10px;font-size:10.5px;color:var(--td-red);text-align:center;display:none}.td-warn.show{display:block}</style>
-<div class="gf-tdesk" id="gfTradeDeskSection">
-<div class="td-inner">
-<!-- LIVE CHART -->
-<div class="td-chart-panel">
-<div class="td-chart-head">
-<div class="td-live"><span class="td-dot"></span><span>INSTITUTIONAL LIVE DESK</span></div>
-<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-<div class="td-sym-badge"><span id="tdSymLabel">BTC / USDT</span><span class="td-pro">PRO</span></div>
-<select class="td-symbol-select" id="tdSymbolSelect" onchange="gfChangeSymbol(this.value)">
-<option value="BITSTAMP:BTCUSD">BTC / USD</option>
-<option value="BITSTAMP:ETHUSD">ETH / USD</option>
-<option value="FX_IDC:EURUSD">EUR / USD</option>
-<option value="FX_IDC:USDINR">USD / INR</option>
-<option value="BSE:SENSEX">SENSEX</option>
-<option value="NSE:NIFTY">NIFTY 50</option>
-</select>
-</div>
-</div>
-<div class="td-chart-box"><div id="tradingview_chart" style="height:100%;width:100%;"></div></div>
-</div>
-<!-- POSITION SIZE & RISK CALCULATOR -->
-<div class="td-calc-panel">
-<div class="td-calc-head">
-<div class="td-calc-title">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
-POSITION SIZE &amp; RISK
-</div>
-<div class="td-dir-toggle">
-<button class="td-dir-btn long active" id="tdLongBtn" onclick="gfSetDirection('long')">LONG</button>
-<button class="td-dir-btn short" id="tdShortBtn" onclick="gfSetDirection('short')">SHORT</button>
-</div>
-</div>
-<div class="td-field">
-<div class="td-label">Account Balance</div>
-<div class="td-input-wrap"><span>₹</span><input type="number" id="tdBalance" class="td-input" value="100000" step="1000" oninput="gfCalcPosition()"></div>
-</div>
-<div class="td-field">
-<div class="td-label">Risk per Trade <span id="tdRiskPctLabel" style="color:var(--td-text)">1%</span></div>
-<input type="range" id="tdRiskPct" min="0.25" max="10" step="0.25" value="1" oninput="gfCalcPosition()" style="width:100%;accent-color:var(--td-green);cursor:pointer">
-</div>
-<div class="td-field">
-<div class="td-label">Entry Price</div>
-<div class="td-input-wrap"><span>₹</span><input type="number" id="tdEntry" class="td-input" value="6250000" step="100" oninput="gfCalcPosition()"></div>
-</div>
-<div class="td-field">
-<div class="td-label">Stop Loss Price</div>
-<div class="td-input-wrap"><span>₹</span><input type="number" id="tdStop" class="td-input" value="6187500" step="100" oninput="gfCalcPosition()"></div>
-</div>
-<div class="td-field">
-<div class="td-label">Take Profit Price <span style="color:var(--td-muted)">(optional)</span></div>
-<div class="td-input-wrap"><span>₹</span><input type="number" id="tdTarget" class="td-input" value="6375000" step="100" oninput="gfCalcPosition()"></div>
-</div>
-<div class="td-warn" id="tdWarn">⚠ Stop loss must differ from entry price</div>
-<div class="td-results">
-<div class="td-res-row"><span class="td-res-label">Risk Amount</span><span class="td-res-val neg" id="tdRiskAmt">₹0</span></div>
-<div class="td-res-row"><span class="td-res-label">Risk per Unit</span><span class="td-res-val" id="tdRiskUnit">₹0</span></div>
-<div class="td-res-row"><span class="td-res-label">Position Value</span><span class="td-res-val" id="tdPosValue">₹0</span></div>
-<div class="td-res-row"><span class="td-res-label">Reward : Risk</span><span class="td-res-val pos" id="tdRR">—</span></div>
-</div>
-<div class="td-summary">
-<div class="td-summary-label">Position Size (Units)</div>
-<div class="td-summary-val" id="tdPosSize">0</div>
-</div>
-</div>
-</div>
-</div>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script>(function(){ var tdWidget = null; var direction = 'long'; function initChart(symbol){ var container = document.getElementById('tradingview_chart'); if (!container) return; container.innerHTML = ''; tdWidget = new TradingView.widget({ autosize: true, symbol: symbol || 'BITSTAMP:BTCUSD', interval: '15', timezone: 'Asia/Kolkata', theme: 'dark', style: '1', locale: 'in', enable_publishing: false, allow_symbol_change: true, container_id: 'tradingview_chart', backgroundColor: 'rgba(8,11,18,1)', gridColor: 'rgba(255,255,255,0.03)' }); } window.gfChangeSymbol = function(symbol){ document.getElementById('tdSymLabel').textContent = symbol.split(':')[1] || symbol; initChart(symbol); }; window.gfSetDirection = function(dir){ direction = dir; document.getElementById('tdLongBtn').classList.toggle('active', dir === 'long'); document.getElementById('tdShortBtn').classList.toggle('active', dir === 'short'); gfCalcPosition(); }; window.gfCalcPosition = function(){ var balance = parseFloat(document.getElementById('tdBalance').value) || 0; var riskPct = parseFloat(document.getElementById('tdRiskPct').value) || 0; var entry = parseFloat(document.getElementById('tdEntry').value) || 0; var stop = parseFloat(document.getElementById('tdStop').value) || 0; var target = parseFloat(document.getElementById('tdTarget').value) || 0; document.getElementById('tdRiskPctLabel').textContent = riskPct + '%'; var warnEl = document.getElementById('tdWarn'); var riskPerUnit = Math.abs(entry - stop); if (riskPerUnit === 0 || entry <= 0) { warnEl.classList.add('show'); document.getElementById('tdRiskAmt').textContent = '₹0'; document.getElementById('tdRiskUnit').textContent = '₹0'; document.getElementById('tdPosValue').textContent = '₹0'; document.getElementById('tdPosSize').textContent = '0'; document.getElementById('tdRR').textContent = '—'; return; } warnEl.classList.remove('show'); var riskAmount = balance * (riskPct / 100); var positionSize = riskAmount / riskPerUnit; var positionValue = positionSize * entry; document.getElementById('tdRiskAmt').textContent = '₹' + Math.round(riskAmount).toLocaleString('en-IN'); document.getElementById('tdRiskUnit').textContent = '₹' + riskPerUnit.toLocaleString('en-IN', {maximumFractionDigits: 2}); document.getElementById('tdPosValue').textContent = '₹' + Math.round(positionValue).toLocaleString('en-IN'); document.getElementById('tdPosSize').textContent = positionSize.toLocaleString('en-IN', {maximumFractionDigits: 6}); var rrEl = document.getElementById('tdRR'); if (target > 0) { var rewardPerUnit = Math.abs(target - entry); var rr = rewardPerUnit / riskPerUnit; rrEl.textContent = '1 : ' + rr.toFixed(2); rrEl.className = 'td-res-val ' + (rr >= 1.5 ? 'pos' : 'neg'); } else { rrEl.textContent = '—'; rrEl.className = 'td-res-val'; } }; var chartStarted = false; function placeOnTradingPage(){ var tradingPage = document.getElementById('trading'); var section = document.getElementById('gfTradeDeskSection'); if (!tradingPage || !section) return false; if (section.parentNode !== tradingPage) tradingPage.appendChild(section); return true; } function tryStartWhenActive(){ var tradingPage = document.getElementById('trading'); if (!tradingPage) return; if (tradingPage.classList.contains('active') && !chartStarted) { chartStarted = true; initChart('BITSTAMP:BTCUSD'); gfCalcPosition(); } } function boot(){ placeOnTradingPage(); tryStartWhenActive(); var tradingPage = document.getElementById('trading'); if (tradingPage) { new MutationObserver(tryStartWhenActive).observe(tradingPage, { attributes: true, attributeFilter: ['class'] }); } } document.addEventListener('DOMContentLoaded', boot); boot(); })();</script>
-</body>
-   
-    
-</html>
+          <div class="wct-legend-item"><span class="wct-legend-dot" style="background:var(--
