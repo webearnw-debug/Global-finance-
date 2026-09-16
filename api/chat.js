@@ -1,50 +1,72 @@
-// Vercel Serverless Function — keeps the real Anthropic API key on the server.
+// Vercel Serverless Function — uses Google Gemini's FREE tier (no credit card needed).
+// This replaces the previous Anthropic-based version of this same file.
 //
-// WHERE THIS FILE GOES: put it at  api/chat.js  in the root of your repo
-// (same level as your HTML file, in a folder literally named "api"). Vercel
-// auto-detects anything under /api as a serverless function — no extra config
-// needed, even for a plain static site.
+// WHERE THIS FILE GOES: api/chat.js in the root of your repo (same as before —
+// just replace the old file's content with this).
 //
-// HOW TO SET THE KEY: do NOT type your real key into any file you commit.
-// Instead — Vercel dashboard → your project → Settings → Environment Variables
-// → Add New → Name: ANTHROPIC_API_KEY, Value: <your real key> → Save → Redeploy.
-// The key then lives only on Vercel's servers and is injected at runtime via
-// process.env, so git and GitHub's secret scanning never see it.
+// HOW TO GET A FREE KEY (no card):
+//   1. Go to https://aistudio.google.com and sign in with any Google account.
+//   2. Click "Get API key" in the left sidebar -> "Create API key".
+//   3. Copy the key (starts with "AIza...").
+//
+// HOW TO SET IT: Vercel dashboard -> your project -> Settings -> Environment
+// Variables -> Add New -> Name: GEMINI_API_KEY, Value: <the key you copied>
+// -> Save. Then push any small change (or re-save this file) so Vercel builds
+// a fresh deployment that picks up the variable.
+//
+// The front-end (your big HTML file) does NOT need to change — it still sends
+// {model, system, messages} and expects {content:[{type:"text", text}]} back.
+// This file receives that, calls Gemini, and reshapes Gemini's reply into that
+// same format, so nothing else in your site needs to be touched.
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
+    res.status(405).json({ error: { message: "Method not allowed" } });
     return;
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: "ANTHROPIC_API_KEY is not set in Vercel environment variables" });
+    res.status(500).json({ error: { message: "GEMINI_API_KEY is not set in Vercel environment variables" } });
     return;
   }
 
   try {
-    const { model, system, messages, max_tokens } = req.body || {};
+    const { system, messages, max_tokens } = req.body || {};
 
-    const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
+    const chatMessages = [];
+    if (system) chatMessages.push({ role: "system", content: system });
+    (messages || []).forEach(function (m) {
+      chatMessages.push({ role: m.role, content: m.content });
+    });
+
+    const geminiRes = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01"
+        "Authorization": "Bearer " + apiKey
       },
       body: JSON.stringify({
-        model: model || "claude-sonnet-4-6",
-        max_tokens: max_tokens || 1000,
-        system: system || undefined,
-        messages: messages || []
+        model: "gemini-2.5-flash", // free-tier model. If Google renames/retires it, change only this line.
+        messages: chatMessages,
+        max_tokens: max_tokens || 1000
       })
     });
 
-    const data = await anthropicRes.json();
-    // Forward Anthropic's response (and status) straight through to the browser.
-    res.status(anthropicRes.status).json(data);
+    const data = await geminiRes.json();
+
+    if (!geminiRes.ok) {
+      res.status(geminiRes.status).json({ error: data.error || data });
+      return;
+    }
+
+    const text = (data.choices && data.choices[0] && data.choices[0].message)
+      ? data.choices[0].message.content
+      : "";
+
+    // Reshape Gemini's reply into the same shape the front-end already expects.
+    res.status(200).json({ content: [{ type: "text", text: text }] });
   } catch (err) {
-    res.status(500).json({ error: "Upstream request failed", detail: String(err) });
+    res.status(500).json({ error: { message: "Upstream request failed: " + String(err) } });
   }
 };
