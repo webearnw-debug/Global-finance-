@@ -47,7 +47,7 @@ module.exports = async function handler(req, res) {
         "Authorization": "Bearer " + apiKey
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash", // free-tier model. If Google renames/retires it, change only this line.
+        model: "gemini-3.6-flash", // free-tier model. If Google renames/retires it, change only this line.
         messages: chatMessages,
         max_tokens: max_tokens || 1000
       })
