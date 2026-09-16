@@ -495,7 +495,8 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             let detail = "HTTP " + response.status;
             try {
                 const errData = await response.json();
-                if (errData.error && errData.error.message) detail = errData.error.message;
+
+if (errData.error && errData.error.message) detail = errData.error.message;
                 else if (typeof errData.error === "string") detail = errData.error;
                 else detail = JSON.stringify(errData);
             } catch (e) { /* keep default detail */ }
@@ -1038,6 +1039,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 
         stopGeneration: function() {
             AIEngine.activeGenId++;
+
             document.getElementById('stopBtn').style.display = 'none';
             document.getElementById('sendBtn').disabled = false;
         },
@@ -1326,6 +1328,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     for (let i = period; i < closes.length; i++) ema = (closes[i] * k) + (ema * (1 - k));
     return ema;
   }
+  window.ParnaravQuant = { calculateRSI: calculateRSI, calculateEMA: calculateEMA };
 
   async function computeRealSignals() {
     const grid = document.getElementById('rsiSignalGrid');
@@ -1375,6 +1378,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     }
     if(htmlContent !== '') grid.innerHTML = htmlContent;
   }
+  window.ParnaravComputeRealSignals = computeRealSignals;
 
   window.copyRsiSignal = function(name, price, rsi, signal) {
     navigator.clipboard.writeText(`GLOBAL FINANCE - TECHNICAL SIGNAL\nAsset: ${name}\nPrice: ${price}\nRSI(14): ${rsi}\nDecision: ${signal}`).then(() => {
@@ -1388,10 +1392,16 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     if(clk) clk.innerText = 'Engine Active • ' + (new Date()).toLocaleTimeString();
   }, 1000);
 
-  document.addEventListener("DOMContentLoaded", () => { positionSection(); computeRealSignals(); });
-  positionSection();
-  computeRealSignals();
-  setInterval(computeRealSignals, 15000);
+  var rsiBooted = false;
+  function bootRsiOnce(){
+    if (rsiBooted) return;
+    rsiBooted = true;
+    positionSection();
+    computeRealSignals();
+    setInterval(computeRealSignals, 15000);
+  }
+  document.addEventListener("DOMContentLoaded", bootRsiOnce);
+  if (document.readyState !== 'loading') bootRsiOnce();
 })();
 </script>
 
@@ -1460,7 +1470,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
       <div class="wct-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
         Live market rates
-      </div>
+          </div>
     </div>
     <div class="wct-grid">
       <div class="wct-panel">
@@ -1865,6 +1875,8 @@ const LxFooter = {
   },
 
   init(){
+    if (this._inited) return;
+    this._inited = true;
     this.restoreRegion();
     this.checkLatency();
     setInterval(() => this.checkLatency(), 30000);
@@ -1875,7 +1887,7 @@ const LxFooter = {
 };
 
 document.addEventListener('DOMContentLoaded', () => LxFooter.init());
-LxFooter.init();
+if (document.readyState !== 'loading') LxFooter.init();
 </script>
 
 <!-- ================= FINANCIAL PAGE: TAX ENGINE (FY 2026-27 SLABS) ================= -->
@@ -2066,21 +2078,20 @@ runTaxCalc();
       <div class="gf-chart-container">
         <canvas id="gfAssetDoughnut"></canvas>
         <div class="gf-chart-center-val"><div class="lbl">Total Value</div><div class="amt" id="valTotalNetWorth">₹0</div></div>
-      </div>
-      <div class="gf-ast-metrics">
-        <div class="gf-metric-box"><div class="m-title">Portfolio Risk Score</div><div class="m-val" id="valRiskScore">Moderate</div></div>
-        <div class="gf-metric-box"><div class="m-title">Diversification Index</div><div class="m-val" id="valDivIndex">88/100</div></div>
-      </div>
+            </div>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <script>
 let gfChart = null;
 
 function initAssetEngine() {
-  const ctx = document.getElementById('gfAssetDoughnut').getContext('2d');
+  const canvasEl = document.getElementById('gfAssetDoughnut');
+  if (!canvasEl || typeof Chart === 'undefined') return;
+  if (gfChart) return; // already initialised, don't create duplicate chart instances
+  const ctx = canvasEl.getContext('2d');
   gfChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -2203,16 +2214,19 @@ function updateAssetCard(prefix, asset) {
     changeEl.className = 'obs-mkt-change ' + (isPositive ? 'obs-up' : 'obs-down');
   }
 }
+var _realMarketBooted = false;
 function placeRealMarketOnFinancial() {
   var fin = document.getElementById('financial');
   var sec = document.getElementById('obsRealMarketSection');
   if (!fin || !sec) return;
   if (sec.parentNode !== fin) fin.appendChild(sec);
   sec.style.display = 'block';
+  if (_realMarketBooted) return;
+  _realMarketBooted = true;
   fetchRealMarketData();
 }
 document.addEventListener('DOMContentLoaded', placeRealMarketOnFinancial);
-placeRealMarketOnFinancial();
+if (document.readyState !== 'loading') placeRealMarketOnFinancial();
 </script>
 
 <!-- ================= FINANCIAL PAGE: TRADING SESSION CLOCK (bug fixed — JS was missing) ================= -->
@@ -2285,20 +2299,22 @@ placeRealMarketOnFinancial();
     sec.style.display = 'block';
   }
 
-  document.addEventListener('DOMContentLoaded', function(){
+  var sessionsBooted = false;
+  function bootSessionsOnce(){
+    if (sessionsBooted) return;
+    sessionsBooted = true;
     placeSessionsOnFinancial();
     updateSessions();
     setInterval(updateSessions, 1000);
-  });
-  placeSessionsOnFinancial();
-  updateSessions();
-  setInterval(updateSessions, 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSessionsOnce);
+  if (document.readyState !== 'loading') bootSessionsOnce();
 })();
 </script>
 
 <!-- ================= FINANCIAL PAGE: AI CONCIERGE LAUNCH CARD ================= -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:wght@700&display=swap');
 .gf-ai-launch{--gl-bg:#07090e;--gl-gold:#c9a869;--gl-emerald:#00e599;--gl-text:#f1f3f9;--gl-muted:#838a99;font-family:'Plus Jakarta Sans',sans-serif;position:relative;background:radial-gradient(120% 140% at 85% 0%,rgba(0,229,153,.07) 0%,transparent 55%),radial-gradient(90% 120% at 10% 100%,rgba(201,168,105,.08) 0%,transparent 55%),var(--gl-bg);border:1px solid rgba(201,168,105,.2);border-radius:20px;padding:30px;max-width:900px;margin:26px auto;color:var(--gl-text);box-shadow:0 30px 70px rgba(0,0,0,.8);overflow:hidden}
 .gf-ai-launch::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gl-gold),var(--gl-emerald),transparent);opacity:.7}
 .gl-row{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap}
@@ -2494,7 +2510,7 @@ gfPlaceArticleStreamOnFinancial();
 </div>
 </div>
 </div>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js" defer></script>
 <script>(function(){
   var tdWidget = null; var direction = 'long';
   function initChart(symbol){
@@ -2569,4 +2585,3 @@ gfPlaceArticleStreamOnFinancial();
 
 </body>
 </html>
- 
