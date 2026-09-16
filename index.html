@@ -469,7 +469,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     // ANTHROPIC_API_KEY environment variable. Nothing secret sits in this HTML
     // file, so GitHub's secret scanning won't block your push, and no one can
     // steal the key via "View Page Source".
-       const AI_CONFIG = {
+    const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
     };
@@ -2054,7 +2054,7 @@ runTaxCalc();
 .gf-chart-center-val .lbl{font-size:10px;text-transform:uppercase;color:var(--as-muted);letter-spacing:.8px}
 .gf-chart-center-val .amt{font-size:17px;font-weight:800;color:var(--as-emerald);margin-top:2px}
 .gf-ast-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:20px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px}
-.gf-metric-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
+    .gf-metric-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
    .gf-metric-box .m-title{font-size:10px;color:var(--as-muted);text-transform:uppercase}
 .gf-metric-box .m-val{font-size:14px;font-weight:700;color:var(--as-gold);margin-top:3px}
 </style>
@@ -2102,6 +2102,7 @@ function initAssetEngine() {
   });
   updateAssetVisuals();
 }
+
 function updateAssetVisuals() {
   if (!gfChart) return;
   const root = document.getElementById('gfAssetWrapper');
