@@ -469,7 +469,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     // ANTHROPIC_API_KEY environment variable. Nothing secret sits in this HTML
     // file, so GitHub's secret scanning won't block your push, and no one can
     // steal the key via "View Page Source".
-    const AI_CONFIG = {
+       const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
     };
@@ -2102,7 +2102,6 @@ function initAssetEngine() {
   });
   updateAssetVisuals();
 }
-
 function updateAssetVisuals() {
   if (!gfChart) return;
   const root = document.getElementById('gfAssetWrapper');
