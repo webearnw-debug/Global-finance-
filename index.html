@@ -337,13 +337,6 @@ main{width:100%;margin:0;padding:0}
                 <svg class="parnarav-brain-icon" viewBox="0 0 64 64" fill="none">
                     <defs>
                         <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ef4444" /><stop offset="100%" stop-color="#b91c1c" /></linearGradient>
-                        <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3b82f6" /><stop offset="100%" stop-color="#1d4ed8" /></linearGradien
-                                                                                                                                                                                        t>
-
-
-
-                          <defs>
-                        <linearGradient id="leftBrainRed" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ef4444" /><stop offset="100%" stop-color="#b91c1c" /></linearGradient>
                         <linearGradient id="rightBrainBlue" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3b82f6" /><stop offset="100%" stop-color="#1d4ed8" /></linearGradient>
                     </defs>
                     <path d="M30 10C22 10 15 15.5 14 23.5C10 24.8 7 28.5 7 33C7 36 8.5 38.8 11 40.5C10 42.8 10.2 45.5 11.5 47.8C13.5 51.2 17.5 53 21 53C22.5 53 24 52.5 25.2 51.7C27 54.5 30 56 30 56V10Z" fill="url(#leftBrainRed)" />
@@ -465,7 +458,8 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
      NOTE: This used to call Puter.js's free hosted model. That has been
      removed. Plug your own AI API in callAIProvider() below.
 ================================================================== -->
-<script>
+
+    <script>
     const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
     const PREFS_KEY = "parnarav_prefs_v3";
     const DRAFT_KEY = "parnarav_draft_v3";
@@ -475,7 +469,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     // ANTHROPIC_API_KEY environment variable. Nothing secret sits in this HTML
     // file, so GitHub's secret scanning won't block your push, and no one can
     // steal the key via "View Page Source".
-    const AI_CONFIG = { 
+    const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
     };
@@ -497,7 +491,16 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
             })
         });
 
-        if (!response.ok) throw new Error("AI request failed: " + response.status);
+        if (!response.ok) {
+            let detail = "HTTP " + response.status;
+            try {
+                const errData = await response.json();
+                if (errData.error && errData.error.message) detail = errData.error.message;
+                else if (typeof errData.error === "string") detail = errData.error;
+                else detail = JSON.stringify(errData);
+            } catch (e) { /* keep default detail */ }
+            throw new Error(detail);
+        }
         const data = await response.json();
         const textBlock = (data.content || []).find(b => b.type === "text");
         return textBlock ? textBlock.text : "";
@@ -529,7 +532,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
                 this.chatHistory.push({ role: "assistant", content: fullReply });
                 return fullReply;
             } catch (err) {
-                const msg = "**[Configuration needed]** Alpha AI abhi kisi live model se connected nahi hai. Vercel project ke Settings → Environment Variables me `ANTHROPIC_API_KEY` set karein (dekhein api/chat.js), phir dobara deploy karke try karein.";
+                const msg = "**[Configuration needed]** Alpha AI abhi connect nahi ho paya.\n\n**Exact error:** `" + (err && err.message ? err.message : err) + "`\n\nYe screenshot Claude ko dikhao — usse exact wajah pata chal jaayegi.";
                 if (onChunkCallback) onChunkCallback(msg);
                 return msg;
             }
@@ -1128,7 +1131,8 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 </script>
 
 <!-- ======================================================= -->
-<!-- ULTRA-PREMIUM CATEGORY CARDS WITH HD IMAGES -->
+
+    <!-- ULTRA-PREMIUM CATEGORY CARDS WITH HD IMAGES -->
 <!-- ======================================================= -->
 
 <style>
@@ -1361,7 +1365,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
               <div class="rsi-m-box"><span class="rsi-m-lbl">Live Price</span><span class="rsi-m-val" style="color:#00dfd8;">$${priceFormatted}</span></div>
               <div class="rsi-m-box"><span class="rsi-m-lbl">RSI (14)</span><span class="rsi-m-val" style="color:${rsiVal < 38 ? '#00e676' : rsiVal > 62 ? '#ff5252' : '#ffb703'};">${rsiVal}</span></div>
               <div class="rsi-m-box"><span class="rsi-m-lbl">EMA (9)</span><span class="rsi-m-val" style="color:#f8fafc;">$${emaVal > 10 ? emaVal.toLocaleString(undefined, {maximumFractionDigits:2}) : emaVal.toFixed(4)}</span></div>
-              </div>
+            </div>
             <div class="rsi-item-footer">
               <span class="rsi-timeframe"><i class="fa-solid fa-shield-halved"></i> Ref TP: $${parseFloat(targetPrice).toLocaleString()} | SL: $${parseFloat(stopLoss).toLocaleString()}</span>
               <button class="rsi-copy-btn" onclick="copyRsiSignal('${asset.name}', '$${priceFormatted}', '${rsiVal}', '${signalType}')"><i class="fa-solid fa-copy"></i> Copy</button>
@@ -1632,6 +1636,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
       <div class="hm-card"><div class="hm-lbl">Typical Home Loan Rate</div><div class="hm-val">8.35% p.a.</div><div class="hm-badge">Indicative only</div></div>
       <div class="hm-card"><div class="hm-lbl">Bitcoin / USD (Live)</div><div class="hm-val" id="hm-btc">Loading...</div><div class="hm-badge">● Live public API</div></div>
       <div class="hm-card"><div class="hm-lbl">Typical Personal Loan Rate</div><div class="hm-val">10.49% p.a.</div><div class="hm-badge">Indicative only</div></div>
+
     </div>
 
     <div class="hm-sec-h" style="color:#e3c691">🧮 Personal Loan EMI Simulator</div>
@@ -2034,11 +2039,11 @@ runTaxCalc();
 .gf-ast-chart-card{background:var(--as-card);border:1px solid var(--as-border);border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;position:relative}
 .gf-chart-container{position:relative;width:220px;height:220px}
 .gf-chart-center-val{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-    .gf-chart-center-val .lbl{font-size:10px;text-transform:uppercase;color:var(--as-muted);letter-spacing:.8px}
+.gf-chart-center-val .lbl{font-size:10px;text-transform:uppercase;color:var(--as-muted);letter-spacing:.8px}
 .gf-chart-center-val .amt{font-size:17px;font-weight:800;color:var(--as-emerald);margin-top:2px}
 .gf-ast-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:20px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px}
 .gf-metric-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
-.gf-metric-box .m-title{font-size:10px;color:var(--as-muted);text-transform:uppercase}
+   .gf-metric-box .m-title{font-size:10px;color:var(--as-muted);text-transform:uppercase}
 .gf-metric-box .m-val{font-size:14px;font-weight:700;color:var(--as-gold);margin-top:3px}
 </style>
 
@@ -2390,7 +2395,8 @@ function gfLaunchFinanceAI(){
 </div>
 
 <script>
-/* Add your own posts here — { category, title, desc, link } */
+
+   /* Add your own posts here — { category, title, desc, link } */
 var gfPosts = [
   // { category: 'Tax Strategy', title: 'Your title', desc: 'Short description', link: 'https://...' },
 ];
@@ -2563,3 +2569,4 @@ gfPlaceArticleStreamOnFinancial();
 
 </body>
 </html>
+ 
