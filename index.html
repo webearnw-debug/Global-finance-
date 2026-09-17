@@ -538,7 +538,8 @@ if (errData.error && errData.error.message) detail = errData.error.message;
                 return msg;
             }
         },
-generateWelcome: async function(mode) {
+
+        generateWelcome: async function(mode) {
             try {
                 const prompt = `Tum Parnarav AI ho. Mode "${mode}" abhi active hua hai. User ke liye 2-3 line ka ek dostana Hindi/Hinglish welcome message likho jisme ye batao ki is mode me tum kis tarah madad kar sakte ho. Sirf welcome message likho, kuch aur nahi.`;
                 const text = await callAIProvider([{ role: "user", content: prompt }]);
@@ -1042,8 +1043,7 @@ generateWelcome: async function(mode) {
             document.getElementById('stopBtn').style.display = 'none';
             document.getElementById('sendBtn').disabled = false;
         },
-
-        processMessage: async function(promptText, displayText) {
+processMessage: async function(promptText, displayText) {
             const mode = this.currentMode;
             const userRow = UIManager.appendMsg((displayText || promptText).replace(/</g, '&lt;'), 'user', null, null, promptText);
             UIManager.renderActionBar(userRow.id, { isAi: false });
@@ -1191,7 +1191,13 @@ generateWelcome: async function(mode) {
       <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-chart-pie"></i></div><span class="ultra-badge">Crypto & MF</span></div>
       <div class="ultra-card-content"><div class="ultra-text-group"><h3>Investment</h3><p>High Returns Strategy</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-     <div class="ultra-card" onclick="handleCategoryClick('earning')">
+    <div class="ultra-card" onclick="handleCategoryClick('loans')">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Loans" class="ultra-card-img">
+      <div class="ultra-card-overlay"></div>
+      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-building-columns"></i></div><span class="ultra-badge">Low Interest</span></div>
+      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Loans</h3><p>Personal & Business</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
+    </div>
+    <div class="ultra-card" onclick="handleCategoryClick('earning')">
       <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80" alt="Earning Tips" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
       <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-sack-dollar"></i></div><span class="ultra-badge" style="color:#ffb703;">Passive Income</span></div>
@@ -1871,7 +1877,7 @@ const LxFooter = {
     if (this._inited) return;
     this._inited = true;
     this.restoreRegion();
-      this.checkLatency();
+    this.checkLatency();
     setInterval(() => this.checkLatency(), 30000);
     const home = document.getElementById('home');
     const ftr = document.getElementById('lxFooterSection');
@@ -1912,7 +1918,7 @@ if (document.readyState !== 'loading') LxFooter.init();
 </style>
 
 <div class="gf-tax-wrapper" id="gfTaxEngineSection">
-  <div class="gf-tax-header">
+    <div class="gf-tax-header">
     <div class="gf-tax-title">Tax Estimator</div>
     <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
   </div>
@@ -2508,7 +2514,7 @@ gfPlaceArticleStreamOnFinancial();
   function initChart(symbol){
     var container = document.getElementById('tradingview_chart');
     if (!container || typeof TradingView === 'undefined') return;
-      container.innerHTML = '';
+    container.innerHTML = '';
     tdWidget = new TradingView.widget({ autosize: true, symbol: symbol || 'BITSTAMP:BTCUSD', interval: '15', timezone: 'Asia/Kolkata', theme: 'dark', style: '1', locale: 'in', enable_publishing: false, allow_symbol_change: true, container_id: 'tradingview_chart', backgroundColor: 'rgba(8,11,18,1)', gridColor: 'rgba(255,255,255,0.03)' });
   }
   window.gfChangeSymbol = function(symbol){ document.getElementById('tdSymLabel').textContent = symbol.split(':')[1] || symbol; initChart(symbol); };
@@ -2574,7 +2580,6 @@ gfPlaceArticleStreamOnFinancial();
   document.addEventListener('DOMContentLoaded', boot);
   boot();
 })();</script>
- 
 
 </body>
 </html>
