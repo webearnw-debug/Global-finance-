@@ -2574,6 +2574,275 @@ gfPlaceArticleStreamOnFinancial();
   document.addEventListener('DOMContentLoaded', boot);
   boot();
 })();</script>
+<!-- Financial News Widget Component -->
+<div id="financialNewsWidget" class="finance-news-container" style="display: none;">
+  <div class="fnews-header">
+    <div class="fnews-title-wrapper">
+      <i class="fas fa-newspaper fnews-icon"></i>
+      <h3>Live Financial & Market News</h3>
+    </div>
+    <span class="fnews-badge">Real-Time</span>
+  </div>
+  
+  <div class="fnews-filter-tabs">
+    <button class="fnews-tab active" onclick="filterFinancialNews('all')">All</button>
+    <button class="fnews-tab" onclick="filterFinancialNews('crypto')">Crypto</button>
+    <button class="fnews-tab" onclick="filterFinancialNews('stocks')">Stocks</button>
+    <button class="fnews-tab" onclick="filterFinancialNews('economy')">Economy</button>
+  </div>
+
+  <div id="fnewsContentGrid" class="fnews-grid">
+    <!-- Dynamic News Cards Will Be Injected Here -->
+    <div class="fnews-loader">
+      <div class="fnews-spinner"></div>
+      <p>Fetching latest market headlines...</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .finance-news-container {
+    background: #121824;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 24px 0;
+    color: #f8fafc;
+    font-family: inherit;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  .fnews-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 12px;
+  }
+
+  .fnews-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fnews-icon {
+    color: #38bdf8;
+    font-size: 1.25rem;
+  }
+
+  .fnews-title-wrapper h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .fnews-badge {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .fnews-filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .fnews-tab {
+    background: #1e293b;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .fnews-tab:hover, .fnews-tab.active {
+    background: #38bdf8;
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  .fnews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .fnews-card {
+    background: #1a2234;
+    border: 1px solid #283548;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .fnews-card:hover {
+    transform: translateY(-2px);
+    border-color: #38bdf8;
+  }
+
+  .fnews-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+
+  .fnews-card-title:hover {
+    color: #38bdf8;
+  }
+
+  .fnews-card-snippet {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .fnews-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #64748b;
+    border-top: 1px solid #222e42;
+    padding-top: 8px;
+  }
+
+  .fnews-source {
+    color: #38bdf8;
+    font-weight: 500;
+  }
+
+  .fnews-loader {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+  }
+
+  .fnews-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #1e293b;
+    border-top: 3px solid #38bdf8;
+    border-radius: 50%;
+    animation: fnewsSpin 0.8s linear infinite;
+    margin: 0 auto 10px auto;
+  }
+
+  @keyframes fnewsSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+(function() {
+  // Mock live financial news data pool categorized by tags
+  const rawNewsData = [
+    { category: "crypto", title: "Bitcoin Surges Past Key Resistance Level as Institutional Inflows Grow", snippet: "Crypto markets experience strong bullish momentum as major spot ETFs register record daily net inflows.", source: "CoinDesk", time: "10m ago", url: "#" },
+    { category: "stocks", title: "Global Stock Markets Rally Amid Expectations of Central Bank Rate Cuts", snippet: "Equities climbed higher globally today following cooling inflation reports and positive corporate earnings announcements.", source: "Bloomberg", time: "25m ago", url: "#" },
+    { category: "economy", title: "Federal Reserve Hints at Steady Monetary Policy Path for Q4", snippet: "The central bank remains data-dependent while assessing labor market resilience and consumer price stability indices.", source: "Reuters", time: "1h ago", url: "#" },
+    { category: "crypto", title: "Ethereum Layer-2 Network Activity Reaches New Transaction Highs", snippet: "Gas fees stay low across primary rollup networks, resulting in increased decentralized application (dApp) usage.", source: "Decrypt", time: "2h ago", url: "#" },
+    { category: "stocks", title: "Tech Giants Lead Wall Street Higher Driven by AI Infrastructure Demands", snippet: "Semiconductor and cloud computing firms continue outperforming standard indexes amid heavy capital expenditure cycles.", source: "CNBC", time: "3h ago", url: "#" },
+    { category: "economy", title: "Global Supply Chain Pressures Ease Further Heading Into Year-End", snippet: "Freight shipping costs normalize across major trans-Pacific trade lanes, easing cost-push pressures for retailers.", source: "Financial Times", time: "4h ago", url: "#" }
+  ];
+
+  let currentCategory = 'all';
+
+  window.filterFinancialNews = function(category) {
+    currentCategory = category;
+    
+    // Update active tab styling
+    document.querySelectorAll('.fnews-tab').forEach(tab => {
+      tab.classList.remove('active');
+      if(tab.textContent.toLowerCase() === category || (category === 'all' && tab.textContent === 'All')) {
+        tab.classList.add('active');
+      }
+    });
+
+    renderNewsGrid();
+  };
+
+  function renderNewsGrid() {
+    const grid = document.getElementById('fnewsContentGrid');
+    if (!grid) return;
+
+    const filtered = currentCategory === 'all' 
+      ? rawNewsData 
+      : rawNewsData.filter(item => item.category === currentCategory);
+
+    let html = '';
+    filtered.forEach(item => {
+      html += `
+        <div class="fnews-card">
+          <div>
+            <a href="${item.url}" target="_blank" class="fnews-card-title">${item.title}</a>
+            <p class="fnews-card-snippet">${item.snippet}</p>
+          </div>
+          <div class="fnews-card-footer">
+            <span class="fnews-source">${item.source}</span>
+            <span>${item.time}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    grid.innerHTML = html;
+  }
+
+  // Hook into your existing multi-page router to check if user is currently on the "Financial" page
+  function checkFinancialPageVisibility() {
+    const widget = document.getElementById('financialNewsWidget');
+    if (!widget) return;
+
+    // Check visibility based on your app's page routing/display state logic 
+    // (e.g. if the financial section/page container is currently active)
+    const financialSection = document.getElementById('financial') || document.querySelector('.page-financial') || document.getElementById('financialPage');
+    
+    // Fallback: checks if the element's display is block/visible or if URL hash is #financial
+    const isFinancialActive = window.location.hash === '#financial' || 
+      (financialSection && window.getComputedStyle(financialSection).display !== 'none');
+
+    // If your app uses custom section toggling functions, you can also toggle directly.
+    // For universal integration, we make it visible if hash matches or if user navigates to financial tab.
+    if (isFinancialActive || window.location.pathname.includes('financial')) {
+      widget.style.display = 'block';
+      renderNewsGrid();
+    } else {
+      // Keep hidden on other pages like Home, Trading, Loans, etc.
+      widget.style.display = 'none';
+    }
+  }
+
+  // Run on load and listen to route modifications/hash changes
+  document.addEventListener("DOMContentLoaded", () => {
+    checkFinancialPageVisibility();
+    setInterval(checkFinancialPageVisibility, 500); // Poll page route state smoothly
+  });
+
+  window.addEventListener('hashchange', checkFinancialPageVisibility);
+})();
+</script>
   
 
 </body>
