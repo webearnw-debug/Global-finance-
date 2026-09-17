@@ -70,7 +70,7 @@ main{width:100%;margin:0;padding:0}
         --p-accent-cyan: #38bdf8; --p-accent-purple: #c084fc; --p-accent-green: #4ade80;
         --p-accent-red: #f87171; --p-accent-yellow: #fbbf24;
         --p-text-main: #f9fafb; --p-text-muted: #9ca3af; --p-border-color: #1f2937;
-        --p-sidebar-width: 260px; --p-font-scale: 1.18;
+        --p-sidebar-width: 260px; --p-font-scale: 1;
 
         width: 100%; height: 85vh; min-height: 560px;
         background-color: var(--p-bg-base); color: var(--p-text-main);
@@ -101,41 +101,41 @@ main{width:100%;margin:0;padding:0}
         padding: 16px; display: flex; flex-direction: column; flex-shrink: 0;
         transition: all .3s cubic-bezier(.4,0,.2,1); z-index: 5; overflow-y: auto;
     }
-    .parnarav-ai-app .brand-logo { font-size: 1.05em; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .parnarav-ai-app .brand-logo { font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .parnarav-ai-app .parnarav-brain-icon { width: 28px; height: 28px; vertical-align: middle; filter: drop-shadow(0 0 6px rgba(59,130,246,.4)); flex-shrink: 0; }
-    .parnarav-ai-app .nav-section-title { font-size: .68em; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 6px 6px; }
+    .parnarav-ai-app .nav-section-title { font-size: .68rem; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 6px 6px; }
     .parnarav-ai-app .nav-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .parnarav-ai-app .nav-item { padding: 12px 14px; border-radius: 10px; color: var(--p-text-muted); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .82em; transition: all .2s ease; }
+    .parnarav-ai-app .nav-item { padding: 9px 12px; border-radius: 8px; color: var(--p-text-muted); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .82rem; transition: all .2s ease; }
     .parnarav-ai-app .nav-item:hover, .parnarav-ai-app .nav-item.active { background-color: var(--p-bg-card); color: var(--p-accent-cyan); border: 1px solid var(--p-border-color); }
     .parnarav-ai-app .tools-menu { margin-top: 14px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px; }
-    .parnarav-ai-app .tool-btn { width: 100%; background: rgba(148,163,184,.08); border: 1px solid var(--p-border-color); color: var(--p-text-main); padding: 8px 10px; border-radius: 8px; font-weight: 600; font-size: .76em; cursor: pointer; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
+    .parnarav-ai-app .tool-btn { width: 100%; background: rgba(148,163,184,.08); border: 1px solid var(--p-border-color); color: var(--p-text-main); padding: 8px 10px; border-radius: 8px; font-weight: 600; font-size: .76rem; cursor: pointer; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
     .parnarav-ai-app .tool-btn:hover { border-color: var(--p-accent-cyan); color: var(--p-accent-cyan); }
 
     .parnarav-ai-app .workspace { flex: 1; height: 100%; display: flex; flex-direction: column; min-width: 0; position: relative; }
     .parnarav-ai-app .topbar { min-height: 54px; background-color: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; flex-shrink: 0; gap: 10px; flex-wrap: wrap; }
-    .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.15em; cursor: pointer; }
+    .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.15rem; cursor: pointer; }
     .parnarav-ai-app .topbar-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .parnarav-ai-app .mini-btn { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .72em; display: flex; align-items: center; gap: 5px; font-weight: 600; transition: all .2s ease; }
+    .parnarav-ai-app .mini-btn { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .72rem; display: flex; align-items: center; gap: 5px; font-weight: 600; transition: all .2s ease; }
     .parnarav-ai-app .mini-btn:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .mini-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .mini-btn.danger:hover { color: var(--p-accent-red); border-color: var(--p-accent-red); }
     .parnarav-ai-app .voice-toggle-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
-    .parnarav-ai-app .status-badge { display: flex; align-items: center; gap: 6px; font-size: .72em; background: rgba(74,222,128,.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(74,222,128,.2); color: var(--p-accent-green); font-weight: 600; white-space: nowrap; }
+    .parnarav-ai-app .status-badge { display: flex; align-items: center; gap: 6px; font-size: .72rem; background: rgba(74,222,128,.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(74,222,128,.2); color: var(--p-accent-green); font-weight: 600; white-space: nowrap; }
     .parnarav-ai-app .status-dot { width: 6px; height: 6px; background: var(--p-accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--p-accent-green); }
 
-    .parnarav-ai-app .offline-banner { display: none; background: rgba(248,113,113,.15); color: var(--p-accent-red); font-size: .72em; font-weight: 600; text-align: center; padding: 5px; }
+    .parnarav-ai-app .offline-banner { display: none; background: rgba(248,113,113,.15); color: var(--p-accent-red); font-size: .72rem; font-weight: 600; text-align: center; padding: 5px; }
     .parnarav-ai-app.is-offline .offline-banner { display: block; }
 
     .parnarav-ai-app .search-bar { display: none; padding: 8px 14px; gap: 8px; background: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); }
     .parnarav-ai-app .search-bar.open { display: flex; }
-    .parnarav-ai-app .search-bar input { flex: 1; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 8px; padding: 6px 10px; color: var(--p-text-main); outline: none; font-size: .8em; }
+    .parnarav-ai-app .search-bar input { flex: 1; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 8px; padding: 6px 10px; color: var(--p-text-main); outline: none; font-size: .8rem; }
     .parnarav-ai-app mark { background: var(--p-accent-yellow); color: #1a1a1a; border-radius: 3px; padding: 0 2px; }
 
-    .parnarav-ai-app .pinned-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(251,191,36,.08); border-bottom: 1px solid var(--p-border-color); font-size: .72em; color: var(--p-accent-yellow); cursor: pointer; }
+    .parnarav-ai-app .pinned-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(251,191,36,.08); border-bottom: 1px solid var(--p-border-color); font-size: .72rem; color: var(--p-accent-yellow); cursor: pointer; }
     .parnarav-ai-app .pinned-bar.show { display: flex; }
     .parnarav-ai-app .pinned-bar span.txt { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    .parnarav-ai-app .chat-area { flex: 1; padding: 20px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; scroll-behavior: smooth; position: relative; }
+    .parnarav-ai-app .chat-area { flex: 1; padding: 18px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; position: relative; }
     .parnarav-ai-app.density-compact .chat-area { gap: 8px; padding: 10px 12px; }
     .parnarav-ai-app.density-compact .bubble { padding: 8px 12px; }
 
@@ -143,22 +143,22 @@ main{width:100%;margin:0;padding:0}
     .parnarav-ai-app .message-row.user { align-self: flex-end; flex-direction: row-reverse; }
     .parnarav-ai-app .message-row.pinned .bubble { border-color: var(--p-accent-yellow); }
 
-    .parnarav-ai-app .avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: .9em; flex-shrink: 0; font-weight: 800; }
+    .parnarav-ai-app .avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; font-weight: 800; }
     .parnarav-ai-app .user .avatar { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color: #fff; border: none; box-shadow: 0 0 10px rgba(59,130,246,.4); }
 
     .parnarav-ai-app .msg-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .parnarav-ai-app .message-row.user .msg-col { align-items: flex-end; }
 
-    .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 14px; padding: 16px 18px; line-height: 1.65; font-size: .88em; word-wrap: break-word; overflow-x: auto; position: relative; }
+    .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px 14px; line-height: 1.6; font-size: .88rem; word-wrap: break-word; overflow-x: auto; position: relative; }
     .parnarav-ai-app .bubble a { color: var(--p-accent-cyan); }
-    .parnarav-ai-app .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .82em; }
+    .parnarav-ai-app .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .82rem; }
     .parnarav-ai-app .bubble th, .parnarav-ai-app .bubble td { border: 1px solid var(--p-border-color); padding: 6px 8px; text-align: left; }
     .parnarav-ai-app .user .bubble { background-color: #1e3a8a; border-color: #3b82f6; color: #fff; }
 
-    .parnarav-ai-app .msg-time { font-size: .64em; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
-    .parnarav-ai-app .msg-meta { font-size: .62em; color: var(--p-text-muted); }
+    .parnarav-ai-app .msg-time { font-size: .64rem; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
+    .parnarav-ai-app .msg-meta { font-size: .62rem; color: var(--p-text-muted); }
 
-    .parnarav-ai-app .widget-card { background: rgba(0,0,0,.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8em; }
+    .parnarav-ai-app .widget-card { background: rgba(0,0,0,.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; }
     .parnarav-ai-app .widget-title { color: var(--p-accent-purple); font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 
     .parnarav-ai-app .ai-action-bar { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,.15); flex-wrap: wrap; }
@@ -182,10 +182,10 @@ main{width:100%;margin:0;padding:0}
     .parnarav-ai-app .scroll-fab .badge { position: absolute; top: -6px; right: -6px; background: var(--p-accent-red); color: #fff; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     .parnarav-ai-app .input-wrapper { padding: 10px 14px 12px; background: var(--p-bg-surface); border-top: 1px solid var(--p-border-color); flex-shrink: 0; }
-    .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: .66em; color: var(--p-text-muted); padding: 0 4px 4px; flex-wrap: wrap; gap: 4px; }
+    .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: .66rem; color: var(--p-text-muted); padding: 0 4px 4px; flex-wrap: wrap; gap: 4px; }
     .parnarav-ai-app .input-box { display: flex; align-items: flex-end; gap: 8px; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 6px 10px; }
     .parnarav-ai-app .input-box:focus-within { border-color: var(--p-accent-cyan); }
-    .parnarav-ai-app textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--p-text-main); font-size: .88em; resize: none; min-height: 38px; max-height: 140px; padding-top: 9px; line-height: 1.4; overflow-y: auto; }
+    .parnarav-ai-app textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--p-text-main); font-size: .88rem; resize: none; min-height: 38px; max-height: 140px; padding-top: 9px; line-height: 1.4; overflow-y: auto; }
     .parnarav-ai-app .btn-icon { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s ease; flex-shrink: 0; }
     .parnarav-ai-app .btn-icon:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .btn-icon.listening { background: rgba(239,68,68,.2); border-color: #ef4444; color: #ef4444; animation: parnaravPulseMic 1.2s infinite; }
@@ -460,7 +460,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 ================================================================== -->
 
     <script>
-    const SYSTEM_CREATOR = "मुझे केशव ने बनाया है।";
+    const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
     const PREFS_KEY = "parnarav_prefs_v3";
     const DRAFT_KEY = "parnarav_draft_v3";
 
@@ -469,23 +469,25 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     // ANTHROPIC_API_KEY environment variable. Nothing secret sits in this HTML
     // file, so GitHub's secret scanning won't block your push, and no one can
     // steal the key via "View Page Source".
-    const AI_CONFIG = {
+       const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
     };
 
-    async function callAIProvider(messages, systemInstruction) {
-        // messages: [{role:'user'|'assistant', content:'...'}] — the current mode's
-        // system prompt is passed separately and sent fresh with EVERY request, so
-        // switching modes actually changes how the AI behaves right away.
+    async function callAIProvider(messages) {
+        // messages: [{role:'system'|'user'|'assistant', content:'...'}]
+        const systemMsg = messages.find(m => m.role === 'system');
+        const chatMsgs = messages.filter(m => m.role !== 'system')
+            .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
+
         const response = await fetch(AI_CONFIG.endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 model: AI_CONFIG.model,
                 max_tokens: 1000,
-                system: systemInstruction || undefined,
-                messages: messages
+                system: systemMsg ? systemMsg.content : undefined,
+                messages: chatMsgs
             })
         });
 
@@ -519,10 +521,13 @@ if (errData.error && errData.error.message) detail = errData.error.message;
         resetMemory: function() { this.chatHistory = []; },
 
         processChat: async function(userPrompt, systemInstruction, onChunkCallback, genId) {
+            if (this.chatHistory.length === 0 && systemInstruction) {
+                this.chatHistory.push({ role: "system", content: systemInstruction });
+            }
             this.chatHistory.push({ role: "user", content: userPrompt });
 
             try {
-                const fullReply = await callAIProvider(this.chatHistory, systemInstruction);
+                const fullReply = await callAIProvider(this.chatHistory);
                 if (genId !== undefined && genId !== this.activeGenId) return fullReply;
                 if (onChunkCallback) onChunkCallback(fullReply);
                 this.chatHistory.push({ role: "assistant", content: fullReply });
@@ -533,8 +538,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
                 return msg;
             }
         },
-
-        generateWelcome: async function(mode) {
+generateWelcome: async function(mode) {
             try {
                 const prompt = `Tum Parnarav AI ho. Mode "${mode}" abhi active hua hai. User ke liye 2-3 line ka ek dostana Hindi/Hinglish welcome message likho jisme ye batao ki is mode me tum kis tarah madad kar sakte ho. Sirf welcome message likho, kuch aur nahi.`;
                 const text = await callAIProvider([{ role: "user", content: prompt }]);
@@ -609,25 +613,16 @@ if (errData.error && errData.error.message) detail = errData.error.message;
             AppController.processMessage(`[Deep Research]: '${topic}' विषय पर विस्तृत विश्लेषण तैयार करें।`);
         }
     };
-const QuantEngine = {
-        runAnalysis: async function() {
-            UIManager.appendMsg(`<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE</div>Live BTC data fetch ho raha hai...</div>`, 'ai', null, '📊');
-            try {
-                let res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=50');
-                let klines = await res.json();
-                let closes = klines.map(k => parseFloat(k[4]));
-                let rsi = parseFloat(window.ParnaravQuant.calculateRSI(closes, 14));
-                let ema = window.ParnaravQuant.calculateEMA(closes, 9);
-                let price = closes[closes.length - 1];
-                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-                const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (live)</div>
-                    • Asset Pair: <b>BTC/USD</b><br>• Live Price: <b>$${price.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
-                    • RSI (14, live): <b>${rsi}</b> | EMA(9): <b>$${ema.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
-                    • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
-                UIManager.appendMsg(html, 'ai', null, '📊');
-            } catch (e) {
-                UIManager.appendMsg(`<div class="widget-card">Live data fetch fail ho gaya. Dobara try karein.</div>`, 'ai', null, '📊');
-            }
+
+    const QuantEngine = {
+        runAnalysis: function() {
+            const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
+            let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (illustrative)</div>
+                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period, simulated): <b>${rsi}</b><br>
+                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b><br>
+                <span style="color:var(--p-text-muted);font-size:.7rem">For real live RSI/EMA data see the Trading & Finance page.</span></div>`;
+            UIManager.appendMsg(html, 'ai', null, '📊');
         }
     };
 
@@ -690,7 +685,7 @@ const QuantEngine = {
                 btn.className = 'code-copy-btn'; btn.innerText = 'Copy';
                 btn.onclick = () => { navigator.clipboard.writeText(pre.innerText.replace('Copy','').trim()); btn.innerText = 'Copied!'; setTimeout(()=>btn.innerText='Copy', 1500); };
                 pre.appendChild(btn);
-                });
+            });
 
             bubble.innerHTML = bubble.innerHTML.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
@@ -920,7 +915,6 @@ const QuantEngine = {
 
         switchMode: function(mode, element) {
             this.currentMode = mode;
-            AIEngine.resetMemory(); // fresh conversation per mode, matching the visual chat reset below
             if (element) { document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
             document.getElementById('chatContainer').innerHTML = `
                 <div class="scroll-fab-group">
@@ -1197,13 +1191,7 @@ const QuantEngine = {
       <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-chart-pie"></i></div><span class="ultra-badge">Crypto & MF</span></div>
       <div class="ultra-card-content"><div class="ultra-text-group"><h3>Investment</h3><p>High Returns Strategy</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-    <div class="ultra-card" onclick="handleCategoryClick('loans')">
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Loans" class="ultra-card-img">
-      <div class="ultra-card-overlay"></div>
-      <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-building-columns"></i></div><span class="ultra-badge">Low Interest</span></div>
-      <div class="ultra-card-content"><div class="ultra-text-group"><h3>Loans</h3><p>Personal & Business</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
-    </div>
-    <div class="ultra-card" onclick="handleCategoryClick('earning')">
+     <div class="ultra-card" onclick="handleCategoryClick('earning')">
       <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=600&q=80" alt="Earning Tips" class="ultra-card-img">
       <div class="ultra-card-overlay"></div>
       <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-sack-dollar"></i></div><span class="ultra-badge" style="color:#ffb703;">Passive Income</span></div>
@@ -1274,7 +1262,7 @@ const QuantEngine = {
 .rsi-item-footer{display:flex;justify-content:space-between;align-items:center}
 .rsi-timeframe{font-size:10px;color:#94a3b8;font-weight:600}
 .rsi-copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s ease}
-    .rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
+.rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
 #rsiToast{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;padding:10px 16px;border-radius:10px;font-size:11px;font-weight:800;display:none;z-index:99999}
 </style>
 
@@ -1297,7 +1285,7 @@ const QuantEngine = {
 <script>
 (function(){
   function positionSection(){
-      var c=document.getElementById('ultraCategoryWrapper')||document.querySelector('.hero-full-card'),a=document.getElementById('alphaSignalSection');
+    var c=document.getElementById('ultraCategoryWrapper')||document.querySelector('.hero-full-card'),a=document.getElementById('alphaSignalSection');
     if(c&&a)c.parentNode.insertBefore(a,c.nextSibling);
   }
 
@@ -1647,10 +1635,10 @@ const QuantEngine = {
 
     <div class="hm-sec-h">⚡ Reference Rate Tracker</div>
     <div class="hm-trk-grid">
-      <div class="hm-card"><div class="hm-lbl">Best FD Rate (top banks, Sep 2026)</div><div class="hm-val">7.40% p.a.</div><div class="hm-badge">Check with your bank</div></div>
-      <div class="hm-card"><div class="hm-lbl">Starting Home Loan Rate (PSU banks, Sep 2026)</div><div class="hm-val">7.35% p.a.</div><div class="hm-badge">Indicative only</div></div>
+      <div class="hm-card"><div class="hm-lbl">Typical FD Rate (indicative)</div><div class="hm-val">7.75% p.a.</div><div class="hm-badge">Check with your bank</div></div>
+      <div class="hm-card"><div class="hm-lbl">Typical Home Loan Rate</div><div class="hm-val">8.35% p.a.</div><div class="hm-badge">Indicative only</div></div>
       <div class="hm-card"><div class="hm-lbl">Bitcoin / USD (Live)</div><div class="hm-val" id="hm-btc">Loading...</div><div class="hm-badge">● Live public API</div></div>
-      <div class="hm-card"><div class="hm-lbl">Starting Personal Loan Rate (top banks, Sep 2026)</div><div class="hm-val">9.99% p.a.</div><div class="hm-badge">Indicative only</div></div>
+      <div class="hm-card"><div class="hm-lbl">Typical Personal Loan Rate</div><div class="hm-val">10.49% p.a.</div><div class="hm-badge">Indicative only</div></div>
 
     </div>
 
@@ -1883,7 +1871,7 @@ const LxFooter = {
     if (this._inited) return;
     this._inited = true;
     this.restoreRegion();
-    this.checkLatency();
+      this.checkLatency();
     setInterval(() => this.checkLatency(), 30000);
     const home = document.getElementById('home');
     const ftr = document.getElementById('lxFooterSection');
@@ -2107,7 +2095,6 @@ function initAssetEngine() {
   });
   updateAssetVisuals();
 }
-
 function updateAssetVisuals() {
   if (!gfChart) return;
   const root = document.getElementById('gfAssetWrapper');
@@ -2147,7 +2134,7 @@ function applyAssetPreset(type, evt) {
   else if (type === 'balanced') { root.querySelector('#inpStocks').value = 400000; root.querySelector('#inpBonds').value = 300000; root.querySelector('#inpGold').value = 150000; root.querySelector('#inpRE').value = 120000; root.querySelector('#inpCrypto').value = 30000; }
   else if (type === 'conservative') { root.querySelector('#inpStocks').value = 200000; root.querySelector('#inpBonds').value = 500000; root.querySelector('#inpGold').value = 200000; root.querySelector('#inpRE').value = 100000; root.querySelector('#inpCrypto').value = 0; }
 
-    updateAssetVisuals();
+  updateAssetVisuals();
 }
 
 document.addEventListener('DOMContentLoaded', initAssetEngine);
@@ -2474,7 +2461,7 @@ gfPlaceArticleStreamOnFinancial();
 
 <!-- ================= TRADING PAGE: LIVE CHART + POSITION SIZE & RISK CALCULATOR ================= -->
 <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');.gf-tdesk{--td-bg:#05070a;--td-panel:#0b0e14;--td-hair:rgba(255,255,255,.08);--td-green:#00e676;--td-red:#ff3b5c;--td-gold:#ffb800;--td-text:#f1f5f9;--td-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;position:relative;max-width:1400px;margin:24px auto;padding:20px;background:var(--td-bg);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.9)}.gf-tdesk::before{content:'';position:absolute;top:-15%;left:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-green) 0%,transparent 70%);filter:blur(120px);opacity:.35;pointer-events:none}.gf-tdesk::after{content:'';position:absolute;bottom:-15%;right:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-red) 0%,transparent 70%);filter:blur(120px);opacity:.28;pointer-events:none}.td-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.55fr 1fr;gap:20px}@media(max-width:980px){.td-inner{grid-template-columns:1fr}}.td-chart-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:18px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6)}.td-chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--td-hair);flex-wrap:wrap;gap:10px}.td-live{display:flex;align-items:center;gap:9px}.td-dot{width:8px;height:8px;background:var(--td-green);border-radius:50%;box-shadow:0 0 10px var(--td-green);animation:tdPulse 1.6s infinite}@keyframes tdPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}.td-live span{color:var(--td-text);font-size:11px;font-weight:800;letter-spacing:1.6px}.td-sym-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);padding:6px 14px;border-radius:100px;border:1px solid var(--td-hair)}.td-sym-badge span:first-child{color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}.td-pro{color:var(--td-gold);background:rgba(255,184,0,.1);font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:1px}.td-symbol-select{background:transparent;border:1px solid var(--td-hair);color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 10px;border-radius:8px;outline:none;cursor:pointer}.td-symbol-select:focus{border-color:var(--td-green)}.td-chart-box{width:100%;height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--td-hair);background:#080b12}@media(max-width:600px){.td-chart-box{height:400px}}.td-calc-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:20px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6);display:flex;flex-direction:column}.td-calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--td-hair)}.td-calc-title{color:var(--td-text);font-size:13px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:8px}.td-calc-title svg{width:15px;height:15px;color:var(--td-gold)}.td-dir-toggle{display:flex;background:rgba(255,255,255,.03);border:1px solid var(--td-hair);border-radius:9px;padding:3px;gap:3px}.td-dir-btn{background:transparent;border:none;color:var(--td-muted);font-size:10.5px;font-weight:800;letter-spacing:.5px;padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .2s ease}.td-dir-btn.long.active{background:rgba(0,230,118,.15);color:var(--td-green);box-shadow:0 0 10px rgba(0,230,118,.15)}.td-dir-btn.short.active{background:rgba
-  (255,59,92,.15);color:var(--td-red);box-shadow:0 0 10px rgba(255,59,92,.15)}.td-field{margin-bottom:14px}.td-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--td-muted);margin-bottom:6px;font-weight:600}.td-input-wrap{position:relative}.td-input-wrap span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--td-gold);font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace}.td-input{width:100%;background:var(--td-panel);border:1px solid var(--td-hair);color:var(--td-text);padding:9px 11px 9px 26px;border-radius:8px;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s ease}.td-input:focus{border-color:var(--td-green)}.td-results{margin-top:6px;border-top:1px solid var(--td-hair);padding-top:14px}.td-res-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}.td-res-label{font-size:11.5px;color:var(--td-muted)}.td-res-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--td-text)}.td-res-val.pos{color:var(--td-green)}.td-res-val.neg{color:var(--td-red)}.td-summary{margin-top:10px;background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(255,184,0,.05));border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:14px;text-align:center}.td-summary-label{font-size:10px;color:var(--td-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}.td-summary-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--td-green);margin-top:4px}.td-warn{margin-top:10px;font-size:10.5px;color:var(--td-red);text-align:center;display:none}.td-warn.show{display:block}</style>
+(255,59,92,.15);color:var(--td-red);box-shadow:0 0 10px rgba(255,59,92,.15)}.td-field{margin-bottom:14px}.td-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--td-muted);margin-bottom:6px;font-weight:600}.td-input-wrap{position:relative}.td-input-wrap span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--td-gold);font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace}.td-input{width:100%;background:var(--td-panel);border:1px solid var(--td-hair);color:var(--td-text);padding:9px 11px 9px 26px;border-radius:8px;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s ease}.td-input:focus{border-color:var(--td-green)}.td-results{margin-top:6px;border-top:1px solid var(--td-hair);padding-top:14px}.td-res-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}.td-res-label{font-size:11.5px;color:var(--td-muted)}.td-res-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--td-text)}.td-res-val.pos{color:var(--td-green)}.td-res-val.neg{color:var(--td-red)}.td-summary{margin-top:10px;background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(255,184,0,.05));border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:14px;text-align:center}.td-summary-label{font-size:10px;color:var(--td-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}.td-summary-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--td-green);margin-top:4px}.td-warn{margin-top:10px;font-size:10.5px;color:var(--td-red);text-align:center;display:none}.td-warn.show{display:block}</style>
 <div class="gf-tdesk" id="gfTradeDeskSection">
 <div class="td-inner">
 <div class="td-chart-panel">
@@ -2521,7 +2508,7 @@ gfPlaceArticleStreamOnFinancial();
   function initChart(symbol){
     var container = document.getElementById('tradingview_chart');
     if (!container || typeof TradingView === 'undefined') return;
-    container.innerHTML = '';
+      container.innerHTML = '';
     tdWidget = new TradingView.widget({ autosize: true, symbol: symbol || 'BITSTAMP:BTCUSD', interval: '15', timezone: 'Asia/Kolkata', theme: 'dark', style: '1', locale: 'in', enable_publishing: false, allow_symbol_change: true, container_id: 'tradingview_chart', backgroundColor: 'rgba(8,11,18,1)', gridColor: 'rgba(255,255,255,0.03)' });
   }
   window.gfChangeSymbol = function(symbol){ document.getElementById('tdSymLabel').textContent = symbol.split(':')[1] || symbol; initChart(symbol); };
@@ -2588,16 +2575,5 @@ gfPlaceArticleStreamOnFinancial();
   boot();
 })();</script>
 
-<style id="gf-readability-boost">
-.rsi-badge,.rsi-coin-pair,.td-pro,.hm-badge,.obs-sess-title{font-size:12px!important}
-.obs-mkt-tag,.obs-sess-time,.obs-status-badge,.gf-disclaimer,.obs-disc-text,.wct-fx-status,.rsi-m-lbl{font-size:12.5px!important}
-.rsi-subtitle,.rsi-sig-badge,.rsi-timeframe,.rsi-copy-btn,.wct-field-scale,.hm-lbl,.gf-tax-badge,.gf-regime-name,.gf-metric-box .m-title,.gf-ast-badge,.td-summary-label,.action-btn,.gf-lp-updated{font-size:13px!important}
-.hm-tb,.gf-tax-note,.gf-preset-btn,.obs-mkt-card h5,.obs-mkt-change,.obs-clock,.td-live span{font-size:13.5px!important}
-.rsi-m-val,.wct-fx-rate,.obs-mkt-wrap p,.obsidian-card p,#gfEmptyState .s,.td-sym-badge span:first-child,.td-symbol-select,.td-label,.td-res-label,.gf-status-line,.gf-btm{font-size:14px!important}
-.gf-ast-label,.gf-tag,.gf-col p,.gf-lp-back{font-size:14.5px!important}
-.gf-links a{font-size:15px!important}
-</style>
-
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
