@@ -2574,14 +2574,14 @@ gfPlaceArticleStreamOnFinancial();
   document.addEventListener('DOMContentLoaded', boot);
   boot();
 })();</script>
-<!-- Financial News Widget Component -->
-<div id="financialNewsWidget" class="finance-news-container" style="display: none;">
+  <!-- Financial News Widget (Auto-detecting Financial Section) -->
+<div id="financialNewsWidget" class="fnews-container">
   <div class="fnews-header">
     <div class="fnews-title-wrapper">
       <i class="fas fa-newspaper fnews-icon"></i>
       <h3>Live Financial & Market News</h3>
     </div>
-    <span class="fnews-badge">Real-Time</span>
+    <span class="fnews-badge">Live Updates</span>
   </div>
   
   <div class="fnews-filter-tabs">
@@ -2592,24 +2592,23 @@ gfPlaceArticleStreamOnFinancial();
   </div>
 
   <div id="fnewsContentGrid" class="fnews-grid">
-    <!-- Dynamic News Cards Will Be Injected Here -->
-    <div class="fnews-loader">
-      <div class="fnews-spinner"></div>
-      <p>Fetching latest market headlines...</p>
-    </div>
+    <!-- News content dynamically loads here -->
   </div>
 </div>
 
 <style>
-  .finance-news-container {
+  /* Base Container Styles */
+  .fnews-container {
     background: #121824;
     border: 1px solid #1e293b;
     border-radius: 12px;
     padding: 20px;
-    margin: 24px 0;
+    margin: 20px 0;
     color: #f8fafc;
     font-family: inherit;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .fnews-header {
@@ -2639,12 +2638,12 @@ gfPlaceArticleStreamOnFinancial();
   }
 
   .fnews-badge {
-    background: rgba(56, 189, 248, 0.1);
+    background: rgba(56, 189, 248, 0.15);
     color: #38bdf8;
     font-size: 0.75rem;
-    padding: 4px 8px;
+    padding: 4px 10px;
     border-radius: 6px;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
   }
 
@@ -2652,6 +2651,7 @@ gfPlaceArticleStreamOnFinancial();
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
   }
 
   .fnews-tab {
@@ -2673,7 +2673,7 @@ gfPlaceArticleStreamOnFinancial();
 
   .fnews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px;
   }
 
@@ -2700,6 +2700,7 @@ gfPlaceArticleStreamOnFinancial();
     margin: 0 0 8px 0;
     line-height: 1.4;
     text-decoration: none;
+    display: block;
   }
 
   .fnews-card-title:hover {
@@ -2711,10 +2712,6 @@ gfPlaceArticleStreamOnFinancial();
     color: #94a3b8;
     margin: 0 0 12px 0;
     line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .fnews-card-footer {
@@ -2731,118 +2728,96 @@ gfPlaceArticleStreamOnFinancial();
     color: #38bdf8;
     font-weight: 500;
   }
-
-  .fnews-loader {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 30px;
-    color: #94a3b8;
-  }
-
-  .fnews-spinner {
-    width: 28px;
-    height: 28px;
-    border: 3px solid #1e293b;
-    border-top: 3px solid #38bdf8;
-    border-radius: 50%;
-    animation: fnewsSpin 0.8s linear infinite;
-    margin: 0 auto 10px auto;
-  }
-
-  @keyframes fnewsSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 </style>
 
 <script>
 (function() {
-  // Mock live financial news data pool categorized by tags
-  const rawNewsData = [
-    { category: "crypto", title: "Bitcoin Surges Past Key Resistance Level as Institutional Inflows Grow", snippet: "Crypto markets experience strong bullish momentum as major spot ETFs register record daily net inflows.", source: "CoinDesk", time: "10m ago", url: "#" },
-    { category: "stocks", title: "Global Stock Markets Rally Amid Expectations of Central Bank Rate Cuts", snippet: "Equities climbed higher globally today following cooling inflation reports and positive corporate earnings announcements.", source: "Bloomberg", time: "25m ago", url: "#" },
-    { category: "economy", title: "Federal Reserve Hints at Steady Monetary Policy Path for Q4", snippet: "The central bank remains data-dependent while assessing labor market resilience and consumer price stability indices.", source: "Reuters", time: "1h ago", url: "#" },
-    { category: "crypto", title: "Ethereum Layer-2 Network Activity Reaches New Transaction Highs", snippet: "Gas fees stay low across primary rollup networks, resulting in increased decentralized application (dApp) usage.", source: "Decrypt", time: "2h ago", url: "#" },
-    { category: "stocks", title: "Tech Giants Lead Wall Street Higher Driven by AI Infrastructure Demands", snippet: "Semiconductor and cloud computing firms continue outperforming standard indexes amid heavy capital expenditure cycles.", source: "CNBC", time: "3h ago", url: "#" },
-    { category: "economy", title: "Global Supply Chain Pressures Ease Further Heading Into Year-End", snippet: "Freight shipping costs normalize across major trans-Pacific trade lanes, easing cost-push pressures for retailers.", source: "Financial Times", time: "4h ago", url: "#" }
+  const newsData = [
+    { category: "stocks", title: "Sensex & Nifty Gain Momentum Led by Banking & IT Stocks", snippet: "Indian benchmark indices opened higher following favorable global market cues and steady FII inflows.", source: "Market Watch", time: "15m ago" },
+    { category: "crypto", title: "Bitcoin Holds Strong Above Key Support Level Amid Trading Volume Spike", snippet: "Institutional demand and spot crypto market trading volumes continue to push market sentiment upwards.", source: "Coin Desk", time: "30m ago" },
+    { category: "economy", title: "RBI Keeps Key Interest Rates Stable in Latest Monetary Assessment", snippet: "Central bank maintains growth projections while monitoring inflation indicators and retail liquidity.", source: "Financial Express", time: "1h ago" },
+    { category: "stocks", title: "Global Tech Stocks Rally Ahead of Quarterly Earnings Reports", snippet: "Semiconductor and AI-driven cloud infrastructure providers lead the gainers list across global exchanges.", source: "Reuters", time: "2h ago" },
+    { category: "crypto", title: "Ethereum Layer-2 Networks Process Record Daily Transaction Volume", snippet: "Decentralized finance protocols report lower gas fees and surging active user wallet counts.", source: "Crypto News", time: "3h ago" },
+    { category: "economy", title: "Global Supply Chain Index Shows Further Normalization of Freight Costs", snippet: "Logistics and shipping overhead costs fall back towards pre-pandemic baseline figures.", source: "Bloomberg", time: "4h ago" }
   ];
 
-  let currentCategory = 'all';
+  let activeCat = 'all';
 
-  window.filterFinancialNews = function(category) {
-    currentCategory = category;
-    
-    // Update active tab styling
-    document.querySelectorAll('.fnews-tab').forEach(tab => {
-      tab.classList.remove('active');
-      if(tab.textContent.toLowerCase() === category || (category === 'all' && tab.textContent === 'All')) {
-        tab.classList.add('active');
+  window.filterFinancialNews = function(cat) {
+    activeCat = cat;
+    document.querySelectorAll('.fnews-tab').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.toLowerCase() === cat || (cat === 'all' && btn.textContent === 'All')) {
+        btn.classList.add('active');
       }
     });
-
-    renderNewsGrid();
+    renderNews();
   };
 
-  function renderNewsGrid() {
+  function renderNews() {
     const grid = document.getElementById('fnewsContentGrid');
     if (!grid) return;
 
-    const filtered = currentCategory === 'all' 
-      ? rawNewsData 
-      : rawNewsData.filter(item => item.category === currentCategory);
-
-    let html = '';
-    filtered.forEach(item => {
-      html += `
-        <div class="fnews-card">
-          <div>
-            <a href="${item.url}" target="_blank" class="fnews-card-title">${item.title}</a>
-            <p class="fnews-card-snippet">${item.snippet}</p>
-          </div>
-          <div class="fnews-card-footer">
-            <span class="fnews-source">${item.source}</span>
-            <span>${item.time}</span>
-          </div>
+    const items = activeCat === 'all' ? newsData : newsData.filter(x => x.category === activeCat);
+    
+    grid.innerHTML = items.map(item => `
+      <div class="fnews-card">
+        <div>
+          <a href="#" class="fnews-card-title" onclick="event.preventDefault();">${item.title}</a>
+          <p class="fnews-card-snippet">${item.snippet}</p>
         </div>
-      `;
-    });
-
-    grid.innerHTML = html;
+        <div class="fnews-card-footer">
+          <span class="fnews-source">${item.source}</span>
+          <span>${item.time}</span>
+        </div>
+      </div>
+    `).join('');
   }
 
-  // Hook into your existing multi-page router to check if user is currently on the "Financial" page
-  function checkFinancialPageVisibility() {
+  // Pure Page Visibility Detector Logic
+  function autoToggleFinancialWidget() {
     const widget = document.getElementById('financialNewsWidget');
     if (!widget) return;
 
-    // Check visibility based on your app's page routing/display state logic 
-    // (e.g. if the financial section/page container is currently active)
-    const financialSection = document.getElementById('financial') || document.querySelector('.page-financial') || document.getElementById('financialPage');
-    
-    // Fallback: checks if the element's display is block/visible or if URL hash is #financial
-    const isFinancialActive = window.location.hash === '#financial' || 
-      (financialSection && window.getComputedStyle(financialSection).display !== 'none');
+    // 1. Target financial container in your template
+    const finSection = document.getElementById('financial') || 
+                       document.getElementById('financialPage') || 
+                       document.querySelector('.financial-page') || 
+                       document.querySelector('[data-page="financial"]');
 
-    // If your app uses custom section toggling functions, you can also toggle directly.
-    // For universal integration, we make it visible if hash matches or if user navigates to financial tab.
-    if (isFinancialActive || window.location.pathname.includes('financial')) {
+    // 2. Check URL Hash or active state
+    const hash = window.location.hash.toLowerCase();
+    const isFinHash = hash.includes('financial') || hash.includes('finance');
+
+    let shouldShow = false;
+
+    if (isFinHash) {
+      shouldShow = true;
+    } else if (finSection) {
+      const display = window.getComputedStyle(finSection).display;
+      if (display !== 'none' && display !== '') {
+        shouldShow = true;
+      }
+    }
+
+    // Default Fallback: If no single-page routing hash is found, show it directly inside the target container
+    if (shouldShow || !window.location.hash) {
       widget.style.display = 'block';
-      renderNewsGrid();
     } else {
-      // Keep hidden on other pages like Home, Trading, Loans, etc.
       widget.style.display = 'none';
     }
   }
 
-  // Run on load and listen to route modifications/hash changes
-  document.addEventListener("DOMContentLoaded", () => {
-    checkFinancialPageVisibility();
-    setInterval(checkFinancialPageVisibility, 500); // Poll page route state smoothly
+  document.addEventListener('DOMContentLoaded', () => {
+    renderNews();
+    autoToggleFinancialWidget();
   });
 
-  window.addEventListener('hashchange', checkFinancialPageVisibility);
+  window.addEventListener('hashchange', autoToggleFinancialWidget);
+  setInterval(autoToggleFinancialWidget, 800);
 })();
 </script>
+
   
 
 </body>
