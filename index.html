@@ -611,14 +611,24 @@ if (errData.error && errData.error.message) detail = errData.error.message;
     };
 
     const QuantEngine = {
-        runAnalysis: function() {
-            const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
-            let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (illustrative)</div>
-                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period, simulated): <b>${rsi}</b><br>
-                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b><br>
-                <span style="color:var(--p-text-muted);font-size:.7rem">For real live RSI/EMA data see the Trading & Finance page.</span></div>`;
-            UIManager.appendMsg(html, 'ai', null, '📊');
+        runAnalysis: async function() {
+            UIManager.appendMsg(`<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE</div>Live BTC data fetch ho raha hai...</div>`, 'ai', null, '📊');
+            try {
+                let res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=50');
+                let klines = await res.json();
+                let closes = klines.map(k => parseFloat(k[4]));
+                let rsi = parseFloat(window.ParnaravQuant.calculateRSI(closes, 14));
+                let ema = window.ParnaravQuant.calculateEMA(closes, 9);
+                let price = closes[closes.length - 1];
+                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+                const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (live)</div>
+                    • Asset Pair: <b>BTC/USD</b><br>• Live Price: <b>$${price.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
+                    • RSI (14, live): <b>${rsi}</b> | EMA(9): <b>$${ema.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
+                    • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
+                UIManager.appendMsg(html, 'ai', null, '📊');
+            } catch (e) {
+                UIManager.appendMsg(`<div class="widget-card">Live data fetch fail ho gaya. Dobara try karein.</div>`, 'ai', null, '📊');
+            }
         }
     };
 
@@ -1685,7 +1695,6 @@ async function fetchHmMarket(){
 }
 calcHmEMI();
 fetchHmMarket();
-
 (function(){
   function placeHmSuiteOnHome(){
     var home = document.getElementById('home');
@@ -2574,10 +2583,20 @@ gfPlaceArticleStreamOnFinancial();
     tryStartWhenActive();
     var tradingPage = document.getElementById('trading');
     if (tradingPage) new MutationObserver(tryStartWhenActive).observe(tradingPage, { attributes: true, attributeFilter: ['class'] });
-  }
+      }
   document.addEventListener('DOMContentLoaded', boot);
   boot();
 })();</script>
+
+<style id="gf-readability-boost">
+.rsi-badge,.rsi-coin-pair,.td-pro,.hm-badge,.obs-sess-title{font-size:12px!important}
+.obs-mkt-tag,.obs-sess-time,.obs-status-badge,.gf-disclaimer,.obs-disc-text,.wct-fx-status,.rsi-m-lbl{font-size:12.5px!important}
+.rsi-subtitle,.rsi-sig-badge,.rsi-timeframe,.rsi-copy-btn,.wct-field-scale,.hm-lbl,.gf-tax-badge,.gf-regime-name,.gf-metric-box .m-title,.gf-ast-badge,.td-summary-label,.action-btn,.gf-lp-updated{font-size:13px!important}
+.hm-tb,.gf-tax-note,.gf-preset-btn,.obs-mkt-card h5,.obs-mkt-change,.obs-clock,.td-live span{font-size:13.5px!important}
+.rsi-m-val,.wct-fx-rate,.obs-mkt-wrap p,.obsidian-card p,#gfEmptyState .s,.td-sym-badge span:first-child,.td-symbol-select,.td-label,.td-res-label,.gf-status-line,.gf-btm{font-size:14px!important}
+.gf-ast-label,.gf-tag,.gf-col p,.gf-lp-back{font-size:14.5px!important}
+.gf-links a{font-size:15px!important}
+</style>
 
 </body>
 </html>
