@@ -2574,251 +2574,79 @@ gfPlaceArticleStreamOnFinancial();
   document.addEventListener('DOMContentLoaded', boot);
   boot();
 })();</script>
-  <!-- Financial News Widget (Auto-detecting Financial Section) -->
-<div id="financialNewsWidget" class="fnews-container">
-  <div class="fnews-header">
-    <div class="fnews-title-wrapper">
-      <i class="fas fa-newspaper fnews-icon"></i>
-      <h3>Live Financial & Market News</h3>
-    </div>
-    <span class="fnews-badge">Live Updates</span>
-  </div>
-  
-  <div class="fnews-filter-tabs">
-    <button class="fnews-tab active" onclick="filterFinancialNews('all')">All</button>
-    <button class="fnews-tab" onclick="filterFinancialNews('crypto')">Crypto</button>
-    <button class="fnews-tab" onclick="filterFinancialNews('stocks')">Stocks</button>
-    <button class="fnews-tab" onclick="filterFinancialNews('economy')">Economy</button>
-  </div>
+ // Financial News Widget Injector Function
+function renderFinancialNewsWidget() {
+  const mount = document.getElementById('financialNewsMountPoint');
+  if (!mount) return;
 
-  <div id="fnewsContentGrid" class="fnews-grid">
-    <!-- News content dynamically loads here -->
-  </div>
-</div>
-
-<style>
-  /* Base Container Styles */
-  .fnews-container {
-    background: #121824;
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    color: #f8fafc;
-    font-family: inherit;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .fnews-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    border-bottom: 1px solid #1e293b;
-    padding-bottom: 12px;
-  }
-
-  .fnews-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .fnews-icon {
-    color: #38bdf8;
-    font-size: 1.25rem;
-  }
-
-  .fnews-title-wrapper h3 {
-    margin: 0;
-    font-size: 1.15rem;
-    font-weight: 600;
-  }
-
-  .fnews-badge {
-    background: rgba(56, 189, 248, 0.15);
-    color: #38bdf8;
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .fnews-filter-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-
-  .fnews-tab {
-    background: #1e293b;
-    border: none;
-    color: #94a3b8;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .fnews-tab:hover, .fnews-tab.active {
-    background: #38bdf8;
-    color: #0f172a;
-    font-weight: 600;
-  }
-
-  .fnews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  .fnews-card {
-    background: #1a2234;
-    border: 1px solid #283548;
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-
-  .fnews-card:hover {
-    transform: translateY(-2px);
-    border-color: #38bdf8;
-  }
-
-  .fnews-card-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #f1f5f9;
-    margin: 0 0 8px 0;
-    line-height: 1.4;
-    text-decoration: none;
-    display: block;
-  }
-
-  .fnews-card-title:hover {
-    color: #38bdf8;
-  }
-
-  .fnews-card-snippet {
-    font-size: 0.82rem;
-    color: #94a3b8;
-    margin: 0 0 12px 0;
-    line-height: 1.4;
-  }
-
-  .fnews-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-    color: #64748b;
-    border-top: 1px solid #222e42;
-    padding-top: 8px;
-  }
-
-  .fnews-source {
-    color: #38bdf8;
-    font-weight: 500;
-  }
-</style>
-
-<script>
-(function() {
-  const newsData = [
-    { category: "stocks", title: "Sensex & Nifty Gain Momentum Led by Banking & IT Stocks", snippet: "Indian benchmark indices opened higher following favorable global market cues and steady FII inflows.", source: "Market Watch", time: "15m ago" },
-    { category: "crypto", title: "Bitcoin Holds Strong Above Key Support Level Amid Trading Volume Spike", snippet: "Institutional demand and spot crypto market trading volumes continue to push market sentiment upwards.", source: "Coin Desk", time: "30m ago" },
-    { category: "economy", title: "RBI Keeps Key Interest Rates Stable in Latest Monetary Assessment", snippet: "Central bank maintains growth projections while monitoring inflation indicators and retail liquidity.", source: "Financial Express", time: "1h ago" },
-    { category: "stocks", title: "Global Tech Stocks Rally Ahead of Quarterly Earnings Reports", snippet: "Semiconductor and AI-driven cloud infrastructure providers lead the gainers list across global exchanges.", source: "Reuters", time: "2h ago" },
-    { category: "crypto", title: "Ethereum Layer-2 Networks Process Record Daily Transaction Volume", snippet: "Decentralized finance protocols report lower gas fees and surging active user wallet counts.", source: "Crypto News", time: "3h ago" },
-    { category: "economy", title: "Global Supply Chain Index Shows Further Normalization of Freight Costs", snippet: "Logistics and shipping overhead costs fall back towards pre-pandemic baseline figures.", source: "Bloomberg", time: "4h ago" }
-  ];
-
-  let activeCat = 'all';
-
-  window.filterFinancialNews = function(cat) {
-    activeCat = cat;
-    document.querySelectorAll('.fnews-tab').forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.textContent.toLowerCase() === cat || (cat === 'all' && btn.textContent === 'All')) {
-        btn.classList.add('active');
-      }
-    });
-    renderNews();
-  };
-
-  function renderNews() {
-    const grid = document.getElementById('fnewsContentGrid');
-    if (!grid) return;
-
-    const items = activeCat === 'all' ? newsData : newsData.filter(x => x.category === activeCat);
-    
-    grid.innerHTML = items.map(item => `
-      <div class="fnews-card">
-        <div>
-          <a href="#" class="fnews-card-title" onclick="event.preventDefault();">${item.title}</a>
-          <p class="fnews-card-snippet">${item.snippet}</p>
+  mount.innerHTML = `
+    <div class="fnews-wrapper">
+      <div class="fnews-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <i class="fas fa-newspaper" style="color:#38bdf8;"></i>
+          <h3 style="margin:0; font-size:1.1rem; color:#f8fafc;">Live Financial News</h3>
         </div>
-        <div class="fnews-card-footer">
-          <span class="fnews-source">${item.source}</span>
-          <span>${item.time}</span>
+        <span class="fnews-badge">REAL-TIME</span>
+      </div>
+
+      <div class="fnews-grid">
+        <div class="fnews-card">
+          <h4 class="fnews-title">Sensex & Nifty Hit New Intraday Peak</h4>
+          <p class="fnews-text">Banking and IT sectors lead market gains following positive global cues and FII inflows.</p>
+          <div class="fnews-meta"><span>Market Watch</span> • <span>15m ago</span></div>
+        </div>
+
+        <div class="fnews-card">
+          <h4 class="fnews-title">Bitcoin Holds Strong Above Key Support Level</h4>
+          <p class="fnews-text">Institutional demand and ETF buying pressure keep crypto trading volume elevated.</p>
+          <div class="fnews-meta"><span>CoinDesk</span> • <span>30m ago</span></div>
+        </div>
+
+        <div class="fnews-card">
+          <h4 class="fnews-title">RBI Keeps Interest Rates Unchanged</h4>
+          <p class="fnews-text">Central bank maintains balanced policy stance while keeping close track of inflation metrics.</p>
+          <div class="fnews-meta"><span>Reuters</span> • <span>1h ago</span></div>
         </div>
       </div>
-    `).join('');
-  }
+    </div>
+  `;
+}
 
-  // Pure Page Visibility Detector Logic
-  function autoToggleFinancialWidget() {
-    const widget = document.getElementById('financialNewsWidget');
-    if (!widget) return;
+// Global CSS Injection for News Widget
+const newsStyle = document.createElement('style');
+newsStyle.innerHTML = `
+  .fnews-wrapper { background: #121824; border: 1px solid #1e293b; border-radius: 12px; padding: 18px; margin: 20px 0; }
+  .fnews-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 15px; }
+  .fnews-badge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+  .fnews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .fnews-card { background: #1a2234; border: 1px solid #283548; padding: 14px; border-radius: 8px; }
+  .fnews-title { margin: 0 0 6px 0; font-size: 0.95rem; color: #38bdf8; font-weight: 600; }
+  .fnews-text { margin: 0 0 10px 0; font-size: 0.82rem; color: #94a3b8; line-height: 1.4; }
+  .fnews-meta { font-size: 0.75rem; color: #64748b; display: flex; justify-content: space-between; }
+`;
+document.head.appendChild(newsStyle);
 
-    // 1. Target financial container in your template
-    const finSection = document.getElementById('financial') || 
-                       document.getElementById('financialPage') || 
-                       document.querySelector('.financial-page') || 
-                       document.querySelector('[data-page="financial"]');
-
-    // 2. Check URL Hash or active state
-    const hash = window.location.hash.toLowerCase();
-    const isFinHash = hash.includes('financial') || hash.includes('finance');
-
-    let shouldShow = false;
-
-    if (isFinHash) {
-      shouldShow = true;
-    } else if (finSection) {
-      const display = window.getComputedStyle(finSection).display;
-      if (display !== 'none' && display !== '') {
-        shouldShow = true;
-      }
-    }
-
-    // Default Fallback: If no single-page routing hash is found, show it directly inside the target container
-    if (shouldShow || !window.location.hash) {
-      widget.style.display = 'block';
-    } else {
-      widget.style.display = 'none';
+// Navigation tab handler Hook
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('a') || e.target.closest('button');
+  if (target) {
+    const text = target.innerText.toLowerCase();
+    const href = target.getAttribute('href') || '';
+    
+    // Agar click "financial" par hua hai
+    if (text.includes('financial') || href.includes('financial')) {
+      setTimeout(renderFinancialNewsWidget, 100);
     }
   }
+});
 
-  document.addEventListener('DOMContentLoaded', () => {
-    renderNews();
-    autoToggleFinancialWidget();
-  });
-
-  window.addEventListener('hashchange', autoToggleFinancialWidget);
-  setInterval(autoToggleFinancialWidget, 800);
-})();
-</script>
-
-  
+// Direct Page Load Verification
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash.includes('financial') || window.location.href.includes('financial')) {
+    renderFinancialNewsWidget();
+  }
+});
+ 
 
 </body>
 </html>
