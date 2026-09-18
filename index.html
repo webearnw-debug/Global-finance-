@@ -4789,7 +4789,294 @@ tx4LevCalc();
  
 <script>
           
-  
+  <!-- =======================================================
+     PREMIUM POSTS SECTION — TRADING PAGE ONLY
+     Fully self-contained, data-mount="trading" — will only ever
+     land on the Trading page.
+
+     TO ADD A POST: scroll down to the `gfTradingPosts` array in the
+     <script> below and add one object per post. That's it.
+     TO REMOVE A POST: delete its object from the array.
+     TO REMOVE THE WHOLE SECTION: delete this entire block.
+======================================================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+.gftp-section{
+  --gftp-bg:#07090e; --gftp-card:#0d1119; --gftp-border:rgba(255,255,255,.08);
+  --gftp-gold:#c9a869; --gftp-gold-2:#ecc98f; --gftp-emerald:#00e599; --gftp-cyan:#38bdf8;
+  --gftp-text:#f4f2ee; --gftp-muted:#8b9099;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  max-width:1180px; margin:48px auto; padding:0 20px;
+  color:var(--gftp-text);
+}
+
+.gftp-head{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  flex-wrap:wrap; gap:16px; margin-bottom:32px;
+  border-bottom:1px solid var(--gftp-border); padding-bottom:22px;
+}
+.gftp-eyebrow{
+  display:flex; align-items:center; gap:8px; font-size:11px; font-weight:800;
+  letter-spacing:2.5px; text-transform:uppercase; color:var(--gftp-emerald); margin-bottom:8px;
+}
+.gftp-eyebrow::before{content:"";width:22px;height:1px;background:var(--gftp-emerald)}
+.gftp-title{
+  font-family:'Playfair Display',serif; font-size:34px; font-weight:700;
+  letter-spacing:-.3px; color:#fff;
+}
+.gftp-sub{font-size:13px; color:var(--gftp-muted); margin-top:8px; max-width:480px; line-height:1.6}
+.gftp-count{
+  font-size:11px; font-weight:700; color:var(--gftp-muted); letter-spacing:1px;
+  text-transform:uppercase; white-space:nowrap;
+}
+
+/* ---- Featured (hero) card ---- */
+.gftp-featured{
+  position:relative; display:grid; grid-template-columns:1.1fr 1fr; gap:0;
+  background:var(--gftp-card); border:1px solid var(--gftp-border); border-radius:22px;
+  overflow:hidden; margin-bottom:36px; box-shadow:0 30px 70px rgba(0,0,0,.55);
+  transition:border-color .35s ease, box-shadow .35s ease;
+}
+.gftp-featured:hover{border-color:rgba(0,230,118,.4); box-shadow:0 40px 90px rgba(0,0,0,.7), 0 0 40px rgba(0,230,118,.08)}
+.gftp-featured-img{position:relative; min-height:320px; overflow:hidden; background:#050608}
+.gftp-featured-img img{
+  width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+  transition:transform .6s cubic-bezier(.16,1,.3,1); filter:saturate(1.05) contrast(1.05) brightness(.85);
+}
+.gftp-featured:hover .gftp-featured-img img{transform:scale(1.06)}
+.gftp-featured-img::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(7,9,14,0) 0%, rgba(7,9,14,.15) 85%, rgba(7,9,14,.5) 100%);
+}
+.gftp-featured-body{padding:38px 40px; display:flex; flex-direction:column; justify-content:center}
+.gftp-fbadge{
+  display:inline-flex; align-items:center; gap:6px; width:fit-content;
+  font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 12px; border-radius:20px; margin-bottom:16px;
+  background:linear-gradient(135deg, rgba(0,230,118,.16), rgba(56,189,248,.1));
+  border:1px solid rgba(0,230,118,.35); color:var(--gftp-emerald);
+}
+.gftp-featured-title{
+  font-family:'Playfair Display',serif; font-size:27px; font-weight:700; line-height:1.28;
+  color:#fff; margin-bottom:14px; letter-spacing:-.2px;
+}
+.gftp-featured-excerpt{font-size:13.5px; line-height:1.75; color:var(--gftp-muted); margin-bottom:22px}
+.gftp-meta{display:flex; align-items:center; gap:14px; font-size:11.5px; color:var(--gftp-muted); margin-bottom:22px}
+.gftp-meta span{display:flex; align-items:center; gap:5px}
+.gftp-dot{width:3px; height:3px; border-radius:50%; background:var(--gftp-muted)}
+.gftp-cta{
+  display:inline-flex; align-items:center; gap:9px; width:fit-content;
+  background:linear-gradient(135deg, var(--gftp-emerald), #00a35f); color:#031a10;
+  font-weight:800; font-size:12.5px; letter-spacing:.3px; padding:12px 22px;
+  border-radius:10px; text-decoration:none; transition:all .3s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 8px 20px rgba(0,230,118,.22);
+}
+.gftp-cta:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,230,118,.4)}
+.gftp-cta svg{width:13px; height:13px; transition:transform .25s ease}
+.gftp-cta:hover svg{transform:translateX(3px)}
+
+/* ---- Grid of regular cards ---- */
+.gftp-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px}
+@media(max-width:960px){.gftp-grid{grid-template-columns:repeat(2, 1fr)}}
+@media(max-width:640px){.gftp-grid{grid-template-columns:1fr} .gftp-featured{grid-template-columns:1fr} .gftp-featured-img{min-height:200px}}
+
+.gftp-card{
+  background:var(--gftp-card); border:1px solid var(--gftp-border); border-radius:18px;
+  overflow:hidden; display:flex; flex-direction:column; text-decoration:none; color:inherit;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease, box-shadow .35s ease;
+}
+.gftp-card:hover{transform:translateY(-6px); border-color:rgba(56,189,248,.35); box-shadow:0 24px 50px rgba(0,0,0,.6), 0 0 30px rgba(56,189,248,.08)}
+.gftp-card-img{position:relative; height:170px; overflow:hidden; background:#050608}
+.gftp-card-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); filter:saturate(1.05) contrast(1.05) brightness(.82)}
+.gftp-card:hover .gftp-card-img img{transform:scale(1.08)}
+.gftp-card-body{padding:20px 20px 22px; display:flex; flex-direction:column; flex:1}
+.gftp-badge{
+  display:inline-flex; width:fit-content; font-size:9.5px; font-weight:800;
+  letter-spacing:1.2px; text-transform:uppercase; padding:4px 10px; border-radius:20px;
+  background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.25); color:var(--gftp-cyan);
+  margin-bottom:12px;
+}
+.gftp-card-title{
+  font-family:'Playfair Display',serif; font-size:16.5px; font-weight:700; line-height:1.35;
+  color:#fff; margin-bottom:8px;
+}
+.gftp-card-excerpt{font-size:12px; line-height:1.65; color:var(--gftp-muted); margin-bottom:16px; flex:1}
+.gftp-card-foot{display:flex; justify-content:space-between; align-items:center; font-size:10.5px; color:var(--gftp-muted); border-top:1px solid var(--gftp-border); padding-top:14px}
+.gftp-read{display:flex; align-items:center; gap:5px; font-weight:700; color:var(--gftp-emerald)}
+.gftp-read svg{width:11px; height:11px; transition:transform .25s ease}
+.gftp-card:hover .gftp-read svg{transform:translateX(3px)}
+
+/* ---- Empty state ---- */
+.gftp-empty{
+  text-align:center; padding:60px 20px; border:1px dashed var(--gftp-border); border-radius:18px;
+  color:var(--gftp-muted);
+}
+.gftp-empty .ic{font-size:28px; margin-bottom:12px; opacity:.5}
+.gftp-empty .t{font-size:14px; font-weight:700; color:#cfd3da}
+.gftp-empty .s{font-size:12px; margin-top:6px}
+
+/* ---- Load more ---- */
+.gftp-more-wrap{text-align:center; margin-top:32px}
+.gftp-more-btn{
+  background:rgba(255,255,255,.03); border:1px solid rgba(0,230,118,.4); color:var(--gftp-emerald);
+  padding:13px 34px; border-radius:30px; font-weight:700; font-size:12.5px; letter-spacing:1px;
+  text-transform:uppercase; cursor:pointer; transition:all .3s ease;
+}
+.gftp-more-btn:hover{background:rgba(0,230,118,.1); box-shadow:0 0 20px rgba(0,230,118,.15)}
+.gftp-more-btn:disabled{opacity:.5; cursor:default}
+</style>
+
+<section class="gftp-section" data-mount="trading" id="gfTradingPostsSection">
+  <div class="gftp-head">
+    <div>
+      <div class="gftp-eyebrow">Trading Desk Journal</div>
+      <div class="gftp-title">Trading Insights</div>
+      <p class="gftp-sub">Setups, strategy breakdowns and market reads — for the Trading desk.</p>
+    </div>
+    <div class="gftp-count" id="gftpCount"></div>
+  </div>
+
+  <div id="gftpFeaturedWrap"></div>
+  <div class="gftp-grid" id="gftpGrid"></div>
+  <div id="gftpEmptyWrap"></div>
+  <div class="gftp-more-wrap" id="gftpMoreWrap" style="display:none;">
+    <button class="gftp-more-btn" id="gftpMoreBtn" onclick="GFTradingPosts.loadMore()">Load More Posts</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  /* ================================================================
+     ADD YOUR TRADING POSTS HERE — one object per post. The widget
+     auto-sorts by `date` (newest first) and always features the
+     latest one at the top automatically.
+
+     Fields:
+       title    - post title (required)
+       excerpt  - 1-2 line summary (required)
+       link     - full URL to the post (required)
+       image    - a photo URL (required for the card visuals)
+       category - short tag, e.g. "BTC/USD", "Strategy", "Risk"
+       date     - "YYYY-MM-DD" (used for sorting + displayed date)
+       readTime - e.g. "4 min read" (optional, cosmetic only)
+  ================================================================= */
+  var gfTradingPosts = [
+    // {
+    //   title: "Reading the BTC 15-Minute Chart: A Live Breakdown",
+    //   excerpt: "Walking through the exact support/resistance zones and RSI signals that shaped this week's setup.",
+    //   link: "https://example.com/btc-15m-breakdown",
+    //   image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80",
+    //   category: "BTC/USD",
+    //   date: "2026-09-15",
+    //   readTime: "5 min read"
+    // },
+  ];
+
+  var PAGE_SIZE = 6; // regular cards per "page" (featured post shown separately)
+  var visibleCount = PAGE_SIZE;
+
+  function esc(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function fmtDate(dateStr){
+    if(!dateStr) return '';
+    var d = new Date(dateStr + 'T00:00:00');
+    if(isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  var arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  function featuredCardHtml(post){
+    var img = post.image ? '<img src="' + esc(post.image) + '" alt="' + esc(post.title) + '" loading="lazy">' : '';
+    return '' +
+      '<a class="gftp-featured" href="' + esc(post.link) + '" target="_blank" rel="noopener">' +
+        '<div class="gftp-featured-img">' + img + '</div>' +
+        '<div class="gftp-featured-body">' +
+          '<span class="gftp-fbadge">★ Featured' + (post.category ? ' · ' + esc(post.category) : '') + '</span>' +
+          '<div class="gftp-featured-title">' + esc(post.title) + '</div>' +
+          '<div class="gftp-featured-excerpt">' + esc(post.excerpt) + '</div>' +
+          '<div class="gftp-meta">' +
+            (post.date ? '<span>' + fmtDate(post.date) + '</span>' : '') +
+            (post.date && post.readTime ? '<span class="gftp-dot"></span>' : '') +
+            (post.readTime ? '<span>' + esc(post.readTime) + '</span>' : '') +
+          '</div>' +
+          '<span class="gftp-cta">Read Full Story ' + arrowSvg + '</span>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function cardHtml(post){
+    var img = post.image ? '<img src="' + esc(post.image) + '" alt="' + esc(post.title) + '" loading="lazy">' : '';
+    return '' +
+      '<a class="gftp-card" href="' + esc(post.link) + '" target="_blank" rel="noopener">' +
+        '<div class="gftp-card-img">' + img + '</div>' +
+        '<div class="gftp-card-body">' +
+          (post.category ? '<span class="gftp-badge">' + esc(post.category) + '</span>' : '') +
+          '<div class="gftp-card-title">' + esc(post.title) + '</div>' +
+          '<div class="gftp-card-excerpt">' + esc(post.excerpt) + '</div>' +
+          '<div class="gftp-card-foot">' +
+            '<span>' + fmtDate(post.date) + '</span>' +
+            '<span class="gftp-read">Read ' + arrowSvg + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function render(){
+    var featuredWrap = document.getElementById('gftpFeaturedWrap');
+    var grid = document.getElementById('gftpGrid');
+    var emptyWrap = document.getElementById('gftpEmptyWrap');
+    var moreWrap = document.getElementById('gftpMoreWrap');
+    var countEl = document.getElementById('gftpCount');
+
+    var sorted = gfTradingPosts.slice().sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+
+    if(!sorted.length){
+      featuredWrap.innerHTML = '';
+      grid.innerHTML = '';
+      moreWrap.style.display = 'none';
+      countEl.textContent = '';
+      emptyWrap.innerHTML = '<div class="gftp-empty"><div class="ic">✦</div><div class="t">No trading posts published yet</div><div class="s">Add your first post to the gfTradingPosts list in this widget\'s code.</div></div>';
+      return;
+    }
+    emptyWrap.innerHTML = '';
+
+    countEl.textContent = sorted.length + (sorted.length === 1 ? ' post' : ' posts');
+
+    var featured = sorted[0];
+    var rest = sorted.slice(1);
+
+    featuredWrap.innerHTML = featuredCardHtml(featured);
+
+    var shown = rest.slice(0, visibleCount);
+    grid.innerHTML = shown.map(cardHtml).join('');
+
+    if(rest.length > visibleCount){
+      moreWrap.style.display = 'block';
+      document.getElementById('gftpMoreBtn').disabled = false;
+      document.getElementById('gftpMoreBtn').textContent = 'Load More Posts';
+    } else {
+      moreWrap.style.display = rest.length > PAGE_SIZE ? 'block' : 'none';
+      if(rest.length > PAGE_SIZE){
+        document.getElementById('gftpMoreBtn').disabled = true;
+        document.getElementById('gftpMoreBtn').textContent = 'All Posts Loaded ✓';
+      }
+    }
+  }
+
+  window.GFTradingPosts = {
+    loadMore: function(){
+      visibleCount += PAGE_SIZE;
+      render();
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', render);
+  if (document.readyState !== 'loading') render();
+})();
+</script>
+
 </script>
 
 </body>
