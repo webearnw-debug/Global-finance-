@@ -2530,6 +2530,231 @@ gfRenderArticles();
 .gf-ast-label,.gf-tag,.gf-col p,.gf-lp-back{font-size:14.5px!important}
 .gf-links a{font-size:15px!important}
 </style>
+<!-- Financial Page Mount Target Container -->
+<div data-mount="financial"></div>
+
+<!-- Complete Script & Styles Injector -->
+<script>
+(function() {
+  // Global CSS Injection for High-End Dark UI
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .pro-fin-container {
+      background: #0d1117;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 24px 0;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    
+    .pro-fin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .pro-fin-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .pro-live-pulse {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      animation: pulseGlow 1.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Custom Insights Grid Layout */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .insight-card {
+      background: linear-gradient(135deg, #161e2e 0%, #0f172a 100%);
+      border: 1px solid #243146;
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-4px);
+      border-color: #38bdf8;
+      box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.15);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+    }
+    .insight-card.bullish::before { background: #10b981; }
+    .insight-card.bearish::before { background: #f43f5e; }
+    .insight-card.neutral::before { background: #38bdf8; }
+
+    .insight-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .bullish .insight-tag { color: #10b981; }
+    .bearish .insight-tag { color: #f43f5e; }
+    .neutral .insight-tag { color: #38bdf8; }
+
+    .insight-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin: 0 0 8px 0;
+      line-height: 1.35;
+    }
+
+    .insight-desc {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* TradingView Live News Wrapper */
+    .tv-news-wrapper {
+      background: #0f172a;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+      overflow: hidden;
+      min-height: 480px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Core Render Engine
+  function initFinancialModule() {
+    const target = document.querySelector('[data-mount="financial"]');
+    if (!target) return;
+
+    // Direct HTML Injection into target data-mount="financial"
+    target.innerHTML = `
+      <div class="pro-fin-container">
+        <!-- Module Header -->
+        <div class="pro-fin-header">
+          <h2 class="pro-fin-title">
+            <i class="fas fa-chart-line" style="color: #38bdf8;"></i>
+            Market Intelligence & Live Feed
+          </h2>
+          <div class="pro-live-pulse">
+            <span class="pulse-dot"></span>
+            LIVE SYSTEM CONNECTED
+          </div>
+        </div>
+
+        <!-- Custom AI & Market Insights Cards Grid -->
+        <div style="margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+          Custom Market Insights
+        </div>
+
+        <div class="insights-grid">
+          <!-- Card 1: Macro Bullish Signal -->
+          <div class="insight-card bullish">
+            <span class="insight-tag">Macro Insight • Bullish</span>
+            <h4 class="insight-title">Global Rate Cuts Spark Liquidity Surge</h4>
+            <p class="insight-desc">Central bank balance sheet expansion is accelerating global capital flows into high-yield equities and tech indices.</p>
+          </div>
+
+          <!-- Card 2: Sector Risk Analysis -->
+          <div class="insight-card bearish">
+            <span class="insight-tag">Risk Assessment • Volatile</span>
+            <h4 class="insight-title">Energy Sector Resistance Near Peak</h4>
+            <p class="insight-desc">Crude futures face supply-side friction. Dynamic trailing stop-loss is recommended on energy options positions.</p>
+          </div>
+
+          <!-- Card 3: Crypto & Quantitative Metrics -->
+          <div class="insight-card neutral">
+            <span class="insight-tag">Quant Signal • Neutral</span>
+            <h4 class="insight-title">BTC Institutional Accumulation Phase</h4>
+            <p class="insight-desc">On-chain order book depth indicates major spot accumulation between key Fibonacci support levels.</p>
+          </div>
+        </div>
+
+        <!-- Live International Financial News Stream -->
+        <div style="margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+          International Live News Feed
+        </div>
+
+        <div class="tv-news-wrapper" id="tvNewsEmbedContainer">
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+            {
+              "feedMode": "all_symbols",
+              "isTransparent": true,
+              "displayMode": "regular",
+              "width": "100%",
+              "height": "500",
+              "colorTheme": "dark",
+              "locale": "en"
+            }
+            <\/script>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Automatic Mount Listener & Router Observer
+  document.addEventListener('DOMContentLoaded', initFinancialModule);
+
+  // Global Mutation Observer for Dynamic SPA/Router Tab Switching
+  const observer = new MutationObserver(() => {
+    const target = document.querySelector('[data-mount="financial"]');
+    if (target && target.children.length === 0) {
+      initFinancialModule();
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 
 </body>
 </html>
