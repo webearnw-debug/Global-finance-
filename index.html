@@ -4876,7 +4876,7 @@ function tx5LoadMorePosts() {
 document.addEventListener('DOMContentLoaded', function(){ tx5RenderPosts(); });
 tx5RenderPosts();
 </script>       
-<!-- ================= TRADING PAGE: EMBEDDED ALPHA AI CHAT BOX ================= -->
+    <!-- ================= TRADING PAGE: EMBEDDED ALPHA AI (FINANCE MODE) CHAT BOX ================= -->
 <style>
 .tx6-ai{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(56,189,248,.2);border-radius:22px;padding:0;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8);overflow:hidden}
 .tx6-ai-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(56,189,248,.06),rgba(192,132,252,.04))}
@@ -4916,12 +4916,12 @@ tx5RenderPosts();
   <div class="tx6-ai-hdr">
     <div class="tx6-ai-title-wrap">
       <div class="tx6-ai-icon">🧠</div>
-      <div><div class="tx6-ai-title">Ask Alpha AI</div><div class="tx6-ai-sub">Trading &amp; market questions, answered live</div></div>
+      <div><div class="tx6-ai-title">Alpha AI — Trading &amp; Finance</div><div class="tx6-ai-sub">Same assistant as your Alpha AI page, Finance mode</div></div>
     </div>
     <div class="tx6-ai-badge"><span class="tx6-ai-dot"></span>ONLINE</div>
   </div>
   <div class="tx6-ai-chat-area" id="tx6AiChatArea">
-    <div class="tx6-ai-msg-row"><div class="tx6-ai-avatar">🧠</div><div class="tx6-ai-bubble">नमस्ते! मैं Alpha AI हूँ — trading, technical analysis, risk management, या इस page के किसी भी widget के बारे में पूछो। कैसे मदद करूं?</div></div>
+    <div class="tx6-ai-msg-row"><div class="tx6-ai-avatar">📈</div><div class="tx6-ai-bubble">नमस्ते! मैं आपका Trading &amp; Finance AI हूँ — यही वही Alpha AI है जो Alpha AI page पर FINANCE mode में चलता है। Technical analysis, risk management, या इस page के किसी widget के बारे में पूछो।</div></div>
   </div>
   <div class="tx6-ai-suggestions">
     <button class="tx6-ai-chip" onclick="tx6AskSuggestion('Is this a good time to buy BTC right now based on RSI?')">RSI पर BTC कैसा है?</button>
@@ -4932,20 +4932,17 @@ tx5RenderPosts();
     <textarea id="tx6AiInput" rows="1" placeholder="Trading ke baare mein kuch bhi pucho…" onkeydown="tx6AiHandleKey(event)" oninput="tx6AiAutoGrow(this)"></textarea>
     <button class="tx6-ai-send-btn" id="tx6AiSendBtn" onclick="tx6AiSend()">➤</button>
   </div>
-  <div class="tx6-ai-footer-note">Powered by the same Alpha AI engine as the full assistant · केशव ने बनाया है</div>
+  <div class="tx6-ai-footer-note">Same Alpha AI engine, same conversation memory as the FINANCE mode on the Alpha AI page</div>
 </div>
 <script>
 (function(){
-  var tx6History = [];
-  var tx6SystemPrompt = "ROLE: Quantitative & Financial Trading AI Specialist embedded directly in the Trading section of Global Finance. Give precise, fact-checked, concise answers about trading, technical analysis, risk management, position sizing, and markets. Adapt tone between Hindi/Hinglish/English based on how the user writes. Keep answers focused and practical — this is a compact chat box, not a long essay space. CREATOR RULE: \"मुझे केशव ने बनाया है।\"";
-
   function tx6Escape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
   function tx6AppendMsg(text, sender){
     var area = document.getElementById('tx6AiChatArea');
     var row = document.createElement('div');
     row.className = 'tx6-ai-msg-row ' + sender;
-    var icon = sender === 'user' ? '👤' : '🧠';
+    var icon = sender === 'user' ? '👤' : '📈';
     row.innerHTML = '<div class="tx6-ai-avatar">'+icon+'</div><div class="tx6-ai-bubble">'+(sender==='user' ? tx6Escape(text) : (window.marked ? marked.parse(text) : tx6Escape(text)))+'</div>';
     area.appendChild(row);
     area.scrollTop = area.scrollHeight;
@@ -4972,19 +4969,27 @@ tx5RenderPosts();
     if (!text) return;
     var sendBtn = document.getElementById('tx6AiSendBtn');
 
+    if (typeof AppController === 'undefined' || typeof AIEngine === 'undefined') {
+      tx6AppendMsg(text, 'user');
+      tx6AppendMsg('**[Setup needed]** Ye box seedha Alpha AI ke FINANCE mode se connected hai, lekin us mode ka engine abhi page par load nahi hua. Ek baar Alpha AI page khol lo taaki engine initialize ho jaaye, fir yahan try karo.', 'ai');
+      return;
+    }
+
+    // Force Alpha AI's real engine into FINANCE mode so this box talks to the exact same assistant
+    AppController.currentMode = 'FINANCE';
+
     tx6AppendMsg(text, 'user');
-    tx6History.push({ role: 'user', content: text });
     input.value = ''; input.style.height = 'auto';
     sendBtn.disabled = true;
 
     var typingRow = tx6AppendMsg('<span class="tx6-ai-typing"><span></span><span></span><span></span></span>', 'ai');
     var bubble = typingRow.querySelector('.tx6-ai-bubble');
 
+    var financeSystemPrompt = 'ROLE: Quantitative & Financial Trading AI Specialist. Precise, fact-checked. CREATOR RULE: "मुझे केशव ने बनाया है।".';
+
     try {
-      if (typeof callAIProvider !== 'function') throw new Error('AI engine not loaded on this page yet.');
-      var reply = await callAIProvider(tx6History, tx6SystemPrompt);
+      var reply = await AIEngine.processChat(text, financeSystemPrompt, null, undefined);
       bubble.innerHTML = window.marked ? marked.parse(reply) : tx6Escape(reply);
-      tx6History.push({ role: 'assistant', content: reply });
     } catch (err) {
       bubble.innerHTML = '**[Configuration needed]** Alpha AI abhi connect nahi ho paya.<br><br>**Error:** `' + (err && err.message ? err.message : err) + '`';
     } finally {
@@ -4993,6 +4998,7 @@ tx5RenderPosts();
     }
   };
 })();
+</script>
 </script>
 </body>
 </html>
