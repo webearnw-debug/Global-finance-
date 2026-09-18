@@ -3642,5 +3642,92 @@ nxDelayCalc();
   if (document.readyState !== 'loading') nxGoalCalc();
 })();
 </script>
+<!-- ================= FINANCIAL PAGE: DEDICATED FOOTER ================= -->
+<style>
+.nx-fin-footer{max-width:920px;margin:40px auto 20px;background:linear-gradient(180deg,#070a10 0%,#050609 100%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.6)}
+.nx-fin-footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:20px}
+.nx-fin-footer-brand{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.nx-fin-footer-brand span{color:#d6b27a}
+.nx-fin-footer-tag{font-size:11.5px;color:#8891a1;margin-top:6px;max-width:340px;line-height:1.6}
+.nx-fin-footer-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00d9b5;font-weight:700}
+.nx-fin-footer-dot{width:6px;height:6px;background:#00d9b5;border-radius:50%;box-shadow:0 0 8px #00d9b5;animation:nxFinPulse 1.6s infinite}
+@keyframes nxFinPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.nx-fin-footer-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:22px}
+@media(max-width:700px){.nx-fin-footer-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.nx-fin-footer-cols{grid-template-columns:1fr}}
+.nx-fin-footer-col h5{font-size:11.5px;font-weight:800;color:#d6b27a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.nx-fin-footer-links{list-style:none;padding:0;margin:0}
+.nx-fin-footer-links li{margin-bottom:9px}
+.nx-fin-footer-links a{color:#8891a1;font-size:12.5px;text-decoration:none;cursor:pointer;transition:color .2s ease;border-bottom:1px solid transparent}
+.nx-fin-footer-links a:hover{color:#00d9b5;border-bottom-color:#00d9b5}
+.nx-fin-footer-disclaimer{font-size:10.5px;line-height:1.7;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:14px}
+.nx-fin-footer-disclaimer b{color:#8891a1}
+.nx-fin-footer-btm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+.nx-fin-footer-security{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.nx-fin-footer-sec-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#8891a1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:5px 12px;border-radius:20px}
+</style>
+<div class="nx-fin-footer" id="nxFinFooterSection" data-mount="financial">
+  <div class="nx-fin-footer-top">
+    <div>
+      <div class="nx-fin-footer-brand">Global<span> Finance</span> — Financial Suite</div>
+      <p class="nx-fin-footer-tag">Every calculator, tracker and live feed on this page runs client-side against real public market data. Nothing you enter here is ever stored on our servers.</p>
+    </div>
+    <div class="nx-fin-footer-live"><span class="nx-fin-footer-dot"></span>ALL TOOLS LIVE</div>
+  </div>
+
+  <div class="nx-fin-footer-cols">
+    <div class="nx-fin-footer-col">
+      <h5>Planning Tools</h5>
+      <ul class="nx-fin-footer-links">
+        <li><a onclick="nxFinScrollTo('gfTaxEngineSection')">Tax Estimator</a></li>
+        <li><a onclick="nxFinScrollTo('nxFireSection')">FIRE Calculator</a></li>
+        <li><a onclick="nxFinScrollTo('nxGoalSection')">Goal-Based Planner</a></li>
+        <li><a onclick="nxFinScrollTo('nxDelaySection')">Cost of Delay Calculator</a></li>
+        <li><a onclick="nxFinScrollTo('nxProjSection')">SIP &amp; Lumpsum Projection</a></li>
+      </ul>
+    </div>
+    <div class="nx-fin-footer-col">
+      <h5>Portfolio &amp; Risk</h5>
+      <ul class="nx-fin-footer-links">
+        <li><a onclick="nxFinScrollTo('gfAssetWrapper')">Asset Allocation</a></li>
+        <li><a onclick="nxFinScrollTo('nxRebalSection')">Rebalancing Calculator</a></li>
+        <li><a onclick="nxFinScrollTo('nxVarSection')">Risk / VaR Analyzer</a></li>
+        <li><a onclick="nxFinScrollTo('nxCorrSection')">Correlation Matrix</a></li>
+        <li><a onclick="nxFinScrollTo('nxDebtSection')">Debt Snowball Visualizer</a></li>
+      </ul>
+    </div>
+    <div class="nx-fin-footer-col">
+      <h5>Live Market Data</h5>
+      <ul class="nx-fin-footer-links">
+        <li><a onclick="nxFinScrollTo('obsRealMarketSection')">Live Market Watch</a></li>
+        <li><a onclick="nxFinScrollTo('nxFngSection')">Fear &amp; Greed Index</a></li>
+        <li><a onclick="nxFinScrollTo('nxFxSection')">Forex Converter</a></li>
+        <li><a onclick="nxFinScrollTo('nxNewsSection')">Market News Feed</a></li>
+        <li><a onclick="nxFinScrollTo('nxCalSection')">Economic Calendar</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nx-fin-footer-security">
+    <span class="nx-fin-footer-sec-badge">🔒 256-bit SSL</span>
+    <span class="nx-fin-footer-sec-badge">🛡️ No data stored server-side</span>
+    <span class="nx-fin-footer-sec-badge">📡 Public market APIs only</span>
+    <span class="nx-fin-footer-sec-badge">🧮 Read-only calculations</span>
+  </div>
+
+  <div class="nx-fin-footer-disclaimer"><b>Disclaimer.</b> All figures on this page — tax estimates, FIRE targets, SIP projections, risk metrics — are generated for educational purposes using standard financial formulas and live public market data. Global Finance is not a SEBI-registered investment advisor, bank, or tax consultant. Always verify final numbers with a licensed professional before making financial decisions.</div>
+
+  <div class="nx-fin-footer-btm">
+    <div>© 2026 Global Finance Inc. Financial Suite</div>
+    <div>Powered by Alpha AI · live public data feeds</div>
+  </div>
+</div>
+<script>
+function nxFinScrollTo(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+    
 </body>
 </html>
