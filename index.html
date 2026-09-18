@@ -4999,6 +4999,90 @@ tx5RenderPosts();
   };
 })();
 </script>
+<!-- ================= TRADING PAGE: DEDICATED FOOTER ================= -->
+<style>
+.tx7-fin-footer{max-width:920px;margin:40px auto 20px;background:linear-gradient(180deg,#070a10 0%,#050609 100%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.6)}
+.tx7-fin-footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:20px}
+.tx7-fin-footer-brand{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.tx7-fin-footer-brand span{color:#00e676}
+.tx7-fin-footer-tag{font-size:11.5px;color:#8891a1;margin-top:6px;max-width:340px;line-height:1.6}
+.tx7-fin-footer-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.tx7-fin-footer-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:tx7Pulse 1.6s infinite}
+@keyframes tx7Pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.tx7-fin-footer-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:22px}
+@media(max-width:700px){.tx7-fin-footer-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.tx7-fin-footer-cols{grid-template-columns:1fr}}
+.tx7-fin-footer-col h5{font-size:11.5px;font-weight:800;color:#00e676;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.tx7-fin-footer-links{list-style:none;padding:0;margin:0}
+.tx7-fin-footer-links li{margin-bottom:9px}
+.tx7-fin-footer-links a{color:#8891a1;font-size:12.5px;text-decoration:none;cursor:pointer;transition:color .2s ease;border-bottom:1px solid transparent}
+.tx7-fin-footer-links a:hover{color:#00e676;border-bottom-color:#00e676}
+.tx7-fin-footer-disclaimer{font-size:10.5px;line-height:1.7;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:14px}
+.tx7-fin-footer-disclaimer b{color:#8891a1}
+.tx7-fin-footer-btm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+.tx7-fin-footer-security{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.tx7-fin-footer-sec-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#8891a1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:5px 12px;border-radius:20px}
+</style>
+<div class="tx7-fin-footer" id="tx7TradingFooterSection" data-mount="trading">
+  <div class="tx7-fin-footer-top">
+    <div>
+      <div class="tx7-fin-footer-brand">Global<span> Finance</span> — Trading Desk</div>
+      <p class="tx7-fin-footer-tag">Every chart, calculator and live feed on this desk runs against real public market data. Your journal and paper trades stay private in your own browser — nothing is stored on our servers.</p>
+    </div>
+    <div class="tx7-fin-footer-live"><span class="tx7-fin-footer-dot"></span>ALL SYSTEMS LIVE</div>
+  </div>
+
+  <div class="tx7-fin-footer-cols">
+    <div class="tx7-fin-footer-col">
+      <h5>Charts &amp; Signals</h5>
+      <ul class="tx7-fin-footer-links">
+        <li><a onclick="tx7ScrollTo('gfTradeDeskSection')">Live Chart &amp; Position Size</a></li>
+        <li><a onclick="tx7ScrollTo('tx2GaugeSection')">Technical Analysis Gauge</a></li>
+        <li><a onclick="tx7ScrollTo('tx2BookSection')">Order Book &amp; Trade Pressure</a></li>
+        <li><a onclick="tx7ScrollTo('tx4WatchSection')">Live Watchlist</a></li>
+      </ul>
+    </div>
+    <div class="tx7-fin-footer-col">
+      <h5>Risk &amp; Practice</h5>
+      <ul class="tx7-fin-footer-links">
+        <li><a onclick="tx7ScrollTo('tx2SimSection')">Risk/Reward Simulator</a></li>
+        <li><a onclick="tx7ScrollTo('tx4LevSection')">Leverage &amp; Margin Calculator</a></li>
+        <li><a onclick="tx7ScrollTo('tx4PaperSection')">Paper Trading Tracker</a></li>
+        <li><a onclick="tx7ScrollTo('tx2JournalSection')">Trading Journal</a></li>
+      </ul>
+    </div>
+    <div class="tx7-fin-footer-col">
+      <h5>Learn &amp; Stay Updated</h5>
+      <ul class="tx7-fin-footer-links">
+        <li><a onclick="tx7ScrollTo('tx2CheatSection')">Trading Cheat-Sheet</a></li>
+        <li><a onclick="tx7ScrollTo('tx3NewsSection')">Live Market News</a></li>
+        <li><a onclick="tx7ScrollTo('tx5PostsSection')">Trading Guides &amp; Posts</a></li>
+        <li><a onclick="tx7ScrollTo('tx6AiSection')">Ask Alpha AI</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tx7-fin-footer-security">
+    <span class="tx7-fin-footer-sec-badge">🔒 256-bit SSL</span>
+    <span class="tx7-fin-footer-sec-badge">💾 Journal &amp; paper trades stay local</span>
+    <span class="tx7-fin-footer-sec-badge">📡 Public market APIs only</span>
+    <span class="tx7-fin-footer-sec-badge">🎮 Paper trading uses virtual money</span>
+  </div>
+
+  <div class="tx7-fin-footer-disclaimer"><b>Risk Disclaimer.</b> Trading involves substantial risk of loss and is not suitable for every investor. All technical signals, gauges, and simulations on this desk are for educational purposes only and do not constitute financial advice. Leveraged products carry a high risk of rapid loss. Global Finance is not a SEBI-registered investment advisor or broker.</div>
+
+  <div class="tx7-fin-footer-btm">
+    <div>© 2026 Global Finance Inc. Trading Desk</div>
+    <div>Powered by Alpha AI · live public market data</div>
+  </div>
+</div>
+<script>
+function tx7ScrollTo(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+    
 </script>
 </body>
 </html>
