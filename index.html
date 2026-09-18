@@ -5401,6 +5401,153 @@ function tx7ScrollTo(id){
   if (document.readyState !== 'loading') setTimeout(iv1StepRender, 100);
 })();
 </script>  
+    <!-- ================= INVESTMENT PAGE: TOP MUTUAL FUNDS DIRECTORY ================= -->
+<style>
+.iv2-funds{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(214,178,122,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv2-funds-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.iv2-funds-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv2-funds-badge{font-size:10px;font-weight:800;color:#d6b27a;background:rgba(214,178,122,.1);border:1px solid rgba(214,178,122,.3);padding:4px 10px;border-radius:20px}
+.iv2-funds-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.iv2-funds-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.iv2-funds-tab{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:7px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer}
+.iv2-funds-tab.active{border-color:#d6b27a;color:#d6b27a;background:rgba(214,178,122,.08)}
+.iv2-funds-list{display:flex;flex-direction:column;gap:9px}
+.iv2-funds-row{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:border-color .2s ease}
+.iv2-funds-row:hover{border-color:#d6b27a}
+.iv2-funds-name{font-size:13px;font-weight:700;color:#fff}
+.iv2-funds-type{font-size:10.5px;color:#8891a1;margin-top:2px}
+.iv2-funds-cagr{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:#00e676;text-align:right}
+.iv2-funds-cagr-label{font-size:9.5px;color:#8891a1;text-align:right;margin-top:2px}
+.iv2-funds-empty{text-align:center;color:#8891a1;font-size:12.5px;padding:24px}
+</style>
+<div class="iv2-funds" id="iv2FundsSection" data-mount="investment">
+  <div class="iv2-funds-hdr"><div class="iv2-funds-title">Top Mutual Funds Directory</div><div class="iv2-funds-badge">REFERENCE LIST</div></div>
+  <div class="iv2-funds-note">Fund names and CAGR figures below are commonly-cited reference data for well-known Indian mutual fund schemes as of recent years — not a live NAV feed (no free live API exists for scheme-level data without a paid provider). Always verify current NAV, expense ratio, and returns on the AMC's official site or a platform like Groww/Coin/AMFI before investing.</div>
+  <div class="iv2-funds-tabs">
+    <button class="iv2-funds-tab active" onclick="iv2FundsFilter('all',this)">All</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('large',this)">Large-Cap</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('flexi',this)">Flexi-Cap</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('mid',this)">Mid-Cap</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('small',this)">Small-Cap</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('index',this)">Index Fund</button>
+    <button class="iv2-funds-tab" onclick="iv2FundsFilter('debt',this)">Debt</button>
+  </div>
+  <div class="iv2-funds-list" id="iv2FundsList"></div>
+</div>
+<script>
+(function(){
+  /* Apni list yahan edit/add karo — { name, type, cat, cagr } */
+  var iv2Funds = [
+    { name:'HDFC Top 100 Fund', type:'Large-Cap Equity', cat:'large', cagr:'13.2% (5Y)' },
+    { name:'ICICI Prudential Bluechip Fund', type:'Large-Cap Equity', cat:'large', cagr:'12.8% (5Y)' },
+    { name:'SBI Bluechip Fund', type:'Large-Cap Equity', cat:'large', cagr:'12.1% (5Y)' },
+    { name:'Parag Parikh Flexi Cap Fund', type:'Flexi-Cap Equity', cat:'flexi', cagr:'18.5% (5Y)' },
+    { name:'HDFC Flexi Cap Fund', type:'Flexi-Cap Equity', cat:'flexi', cagr:'15.9% (5Y)' },
+    { name:'Kotak Flexicap Fund', type:'Flexi-Cap Equity', cat:'flexi', cagr:'14.3% (5Y)' },
+    { name:'Motilal Oswal Midcap Fund', type:'Mid-Cap Equity', cat:'mid', cagr:'22.4% (5Y)' },
+    { name:'Kotak Emerging Equity Fund', type:'Mid-Cap Equity', cat:'mid', cagr:'19.7% (5Y)' },
+    { name:'Nippon India Small Cap Fund', type:'Small-Cap Equity', cat:'small', cagr:'24.6% (5Y)' },
+    { name:'SBI Small Cap Fund', type:'Small-Cap Equity', cat:'small', cagr:'21.8% (5Y)' },
+    { name:'UTI Nifty 50 Index Fund', type:'Index Fund (Nifty 50)', cat:'index', cagr:'12.9% (5Y)' },
+    { name:'HDFC Index Fund Sensex Plan', type:'Index Fund (Sensex)', cat:'index', cagr:'12.6% (5Y)' },
+    { name:'ICICI Prudential Corporate Bond Fund', type:'Debt Fund', cat:'debt', cagr:'7.1% (5Y)' },
+    { name:'HDFC Short Term Debt Fund', type:'Debt Fund', cat:'debt', cagr:'6.8% (5Y)' }
+  ];
+
+  function iv2FundsEscape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  window.iv2FundsFilter = function(cat, el){
+    document.querySelectorAll('#iv2FundsSection .iv2-funds-tab').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    iv2RenderFunds(cat);
+  };
+
+  function iv2RenderFunds(filter){
+    var wrap = document.getElementById('iv2FundsList');
+    var list = filter==='all' ? iv2Funds : iv2Funds.filter(function(f){return f.cat===filter;});
+    if (!list.length) { wrap.innerHTML = '<div class="iv2-funds-empty">No funds in this category yet.</div>'; return; }
+    wrap.innerHTML = list.map(function(f){
+      return '<div class="iv2-funds-row"><div><div class="iv2-funds-name">'+iv2FundsEscape(f.name)+'</div><div class="iv2-funds-type">'+iv2FundsEscape(f.type)+'</div></div><div><div class="iv2-funds-cagr">'+iv2FundsEscape(f.cagr)+'</div><div class="iv2-funds-cagr-label">reference CAGR</div></div></div>';
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ iv2RenderFunds('all'); });
+  iv2RenderFunds('all');
+})();
+</script>
+
+<!-- ================= INVESTMENT PAGE: GOLD INVESTMENT FORM COMPARATOR ================= -->
+<style>
+.iv2-gold{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,215,0,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv2-gold-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.iv2-gold-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv2-gold-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#ffd700;font-weight:700}
+.iv2-gold-dot{width:6px;height:6px;background:#ffd700;border-radius:50%;box-shadow:0 0 8px #ffd700;animation:iv2GoldPulse 1.5s infinite}
+@keyframes iv2GoldPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.iv2-gold-price-bar{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(214,178,122,.05));border:1px solid rgba(255,215,0,.25);border-radius:12px;padding:14px;text-align:center;margin-bottom:18px}
+.iv2-gold-price-bar .l{font-size:10.5px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.iv2-gold-price-bar .v{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800;color:#ffd700;margin-top:4px}
+.iv2-gold-table{width:100%;border-collapse:collapse}
+.iv2-gold-table th{font-size:10.5px;color:#8891a1;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.iv2-gold-table td{font-size:12px;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.iv2-gold-table tr:last-child td{border-bottom:none}
+.iv2-gold-form-name{font-weight:700;color:#fff;font-size:13px}
+.iv2-gold-pro{color:#00e676;font-size:11px}
+.iv2-gold-con{color:#ff9f9f;font-size:11px}
+.iv2-gold-scroll{overflow-x:auto}
+</style>
+<div class="iv2-gold" id="iv2GoldSection" data-mount="investment">
+  <div class="iv2-gold-hdr"><div class="iv2-gold-title">Gold Investment: Which Form Suits You?</div><div class="iv2-gold-live"><span class="iv2-gold-dot"></span>LIVE PRICE</div></div>
+  <div class="iv2-gold-price-bar"><div class="l">Live Gold Price (via tokenized gold, PAXG/USD)</div><div class="v" id="iv2GoldLivePrice">Loading…</div></div>
+  <div class="iv2-gold-scroll">
+    <table class="iv2-gold-table">
+      <tr><th>Form</th><th>Pros</th><th>Cons</th></tr>
+      <tr>
+        <td class="iv2-gold-form-name">Physical Gold<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Jewellery / Coins / Bars</span></td>
+        <td class="iv2-gold-pro">✓ Tangible asset<br>✓ Can be used as jewellery<br>✓ No demat account needed</td>
+        <td class="iv2-gold-con">✗ Making charges (5-25%)<br>✗ Storage &amp; theft risk<br>✗ Purity concerns</td>
+      </tr>
+      <tr>
+        <td class="iv2-gold-form-name">Digital Gold<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">via apps (Paytm, PhonePe etc.)</span></td>
+        <td class="iv2-gold-pro">✓ Buy from ₹1<br>✓ 24k purity guaranteed<br>✓ Instant buy/sell</td>
+        <td class="iv2-gold-con">✗ Storage fee after ~5 yrs<br>✗ Not SEBI-regulated<br>✗ 3% GST on purchase</td>
+      </tr>
+      <tr>
+        <td class="iv2-gold-form-name">Gold ETF</td>
+        <td class="iv2-gold-pro">✓ SEBI-regulated<br>✓ Low expense ratio<br>✓ Highly liquid (stock exchange)</td>
+        <td class="iv2-gold-con">✗ Needs demat account<br>✗ Brokerage on each trade<br>✗ No physical delivery</td>
+      </tr>
+      <tr>
+        <td class="iv2-gold-form-name">Sovereign Gold Bond (SGB)</td>
+        <td class="iv2-gold-pro">✓ 2.5% p.a. extra interest<br>✓ Tax-free gains if held to maturity<br>✓ Govt-backed, zero default risk</td>
+        <td class="iv2-gold-con">✗ 8-year lock-in (5 yr early exit)<br>✗ New tranches only at RBI windows<br>✗ Less liquid than ETFs</td>
+      </tr>
+      <tr>
+        <td class="iv2-gold-form-name">Gold Mutual Fund</td>
+        <td class="iv2-gold-pro">✓ No demat needed<br>✓ SIP option available<br>✓ Auto-invests in Gold ETFs</td>
+        <td class="iv2-gold-con">✗ Slightly higher expense ratio than ETF<br>✗ Indirect exposure (fund-of-fund)</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<script>
+(function(){
+  async function iv2LoadGoldPrice(){
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT');
+      var data = await res.json();
+      var price = parseFloat(data.price);
+      document.getElementById('iv2GoldLivePrice').textContent = '$'+price.toLocaleString(undefined,{maximumFractionDigits:2})+' / oz';
+    } catch(e) {
+      document.getElementById('iv2GoldLivePrice').textContent = 'Feed unavailable — retrying…';
+    }
+  }
+  var iv2GoldBooted = false;
+  function iv2GoldBoot(){ if (iv2GoldBooted) return; iv2GoldBooted = true; iv2LoadGoldPrice(); setInterval(iv2LoadGoldPrice, 15000); }
+  document.addEventListener('DOMContentLoaded', iv2GoldBoot);
+  if (document.readyState !== 'loading') iv2GoldBoot();
+})();
+</script>
 </script>
 </body>
 </html>
