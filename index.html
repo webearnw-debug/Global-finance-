@@ -2007,7 +2007,7 @@ function runTaxCalc() {
 
   if (newTax < oldTax) { cardNew.classList.add('winner'); recDetail.textContent = `New Regime saves you ₹${(oldTax-newTax).toLocaleString('en-IN')}`; }
   else if (oldTax < newTax) { cardOld.classList.add('winner'); recDetail.textContent = `Old Regime saves you ₹${(newTax-oldTax).toLocaleString('en-IN')}`; }
-  else { recDetail.textContent = `Both Regimes result in equal tax liability`; }
+    else { recDetail.textContent = `Both Regimes result in equal tax liability`; }
 }
 
 document.addEventListener('DOMContentLoaded', runTaxCalc);
@@ -2561,25 +2561,5 @@ gfPlaceArticleStreamOnFinancial();
   var chartStarted = false;
   function placeOnTradingPage(){
     var tradingPage = document.getElementById('trading');
-    var section = document.getElementById('gfTradeDeskSection');
-    if (!tradingPage || !section) return false;
-    if (section.parentNode !== tradingPage) tradingPage.appendChild(section);
-    return true;
-  }
-  function tryStartWhenActive(){
-    var tradingPage = document.getElementById('trading');
-    if (!tradingPage) return;
-    if (tradingPage.classList.contains('active') && !chartStarted) { chartStarted = true; initChart('BITSTAMP:BTCUSD'); gfCalcPosition(); }
-  }
-  function boot(){
-    placeOnTradingPage();
-    tryStartWhenActive();
-    var tradingPage = document.getElementById('trading');
-    if (tradingPage) new MutationObserver(tryStartWhenActive).observe(tradingPage, { attributes: true, attributeFilter: ['class'] });
-  }
-  document.addEventListener('DOMContentLoaded', boot);
-  boot();
-})();</script>
-
-</body>
-</html>
+    var section = document
+      
