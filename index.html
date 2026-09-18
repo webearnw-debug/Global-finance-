@@ -4564,6 +4564,228 @@ function tx4LevCalc(){
 document.addEventListener('DOMContentLoaded', tx4LevCalc);
 tx4LevCalc();
 </script>
-    
+   <!-- =======================================================
+     TRADING PAGE: FEAR & GREED INDEX (live, alternative.me API)
+     Paste this whole block anywhere in your file — data-mount="trading"
+     will auto-place it inside the Trading page.
+======================================================= -->
+<style>
+.fg-wrap{--fg-bg:#0b0e14;--fg-border:rgba(255,255,255,.08);--fg-text:#f1f5f9;--fg-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;max-width:900px;margin:24px auto;padding:24px;background:var(--fg-bg);border:1px solid var(--fg-border);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.fg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.fg-title{font-size:18px;font-weight:800;color:#fff}
+.fg-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676;letter-spacing:.5px;text-transform:uppercase}
+.fg-body{display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center}
+.fg-gauge-wrap{position:relative;width:200px;height:110px}
+.fg-gauge-wrap svg{width:100%;height:100%}
+.fg-needle{transform-origin:100px 100px;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.fg-value{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:34px;font-weight:800;color:#fff}
+.fg-label{text-align:center;font-size:13px;font-weight:700;margin-top:2px}
+.fg-info{flex:1;min-width:220px}
+.fg-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--fg-muted);margin-top:6px;padding:0 4px}
+.fg-desc{font-size:12.5px;color:var(--fg-muted);line-height:1.6;margin-top:10px}
+.fg-updated{font-size:10.5px;color:var(--fg-muted);margin-top:12px}
+</style>
+
+<div class="fg-wrap" data-mount="trading" id="fgIndexWidget">
+  <div class="fg-head">
+    <div class="fg-title">Crypto Fear &amp; Greed Index</div>
+    <div class="fg-badge">Live · Alternative.me</div>
+  </div>
+  <div class="fg-body">
+    <div>
+      <div class="fg-gauge-wrap">
+        <svg viewBox="0 0 200 110">
+          <defs>
+            <linearGradient id="fgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff3b5c"/>
+              <stop offset="25%" stop-color="#ffb800"/>
+              <stop offset="50%" stop-color="#f8fafc"/>
+              <stop offset="75%" stop-color="#7ee6cd"/>
+              <stop offset="100%" stop-color="#00e676"/>
+            </linearGradient>
+          </defs>
+          <path d="M10,100 A90,90 0 0,1 190,100" fill="none" stroke="url(#fgGrad)" stroke-width="14" stroke-linecap="round"/>
+          <line id="fgNeedle" class="fg-needle" x1="100" y1="100" x2="100" y2="25" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="100" cy="100" r="7" fill="#fff"/>
+        </svg>
+        <div class="fg-value" id="fgValueText">--</div>
+      </div>
+      <div class="fg-label" id="fgLabelText" style="color:#7c8797;">Loading…</div>
+    </div>
+    <div class="fg-info">
+      <div class="fg-scale"><span>Extreme Fear</span><span>Neutral</span><span>Extreme Greed</span></div>
+      <div class="fg-desc">Measures overall crypto market sentiment from 0 (extreme fear — people are panic-selling) to 100 (extreme greed — people are FOMO-buying). Often used as a contrarian signal: extreme fear can mark good entries, extreme greed can mark good exits.</div>
+      <div class="fg-updated" id="fgUpdatedText"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  async function loadFearGreed(){
+    var valueEl = document.getElementById('fgValueText');
+    var labelEl = document.getElementById('fgLabelText');
+    var needleEl = document.getElementById('fgNeedle');
+    var updatedEl = document.getElementById('fgUpdatedText');
+    try{
+      var res = await fetch('https://api.alternative.me/fng/?limit=1');
+      var data = await res.json();
+      var item = data && data.data && data.data[0];
+      if(!item) throw new Error('no data');
+      var val = parseInt(item.value, 10);
+      var label = item.value_classification;
+      valueEl.textContent = val;
+      labelEl.textContent = label;
+      var colors = { 'Extreme Fear':'#ff3b5c', 'Fear':'#ffb800', 'Neutral':'#f8fafc', 'Greed':'#7ee6cd', 'Extreme Greed':'#00e676' };
+      labelEl.style.color = colors[label] || '#f1f5f9';
+      // Map 0-100 to -90deg..+90deg needle rotation (0 = far left, 100 = far right)
+      var angle = (val / 100) * 180 - 90;
+      needleEl.style.transform = 'rotate(' + angle + 'deg)';
+      var d = new Date(parseInt(item.timestamp, 10) * 1000);
+      updatedEl.textContent = 'Updated: ' + d.toLocaleString('en-IN');
+    } catch(e){
+      valueEl.textContent = '--';
+      labelEl.textContent = 'Unavailable — retrying…';
+    }
+  }
+  var fgBooted = false;
+  function bootFg(){
+    if (fgBooted) return;
+    fgBooted = true;
+    loadFearGreed();
+    setInterval(loadFearGreed, 5 * 60 * 1000); // refresh every 5 min
+  }
+  document.addEventListener('DOMContentLoaded', bootFg);
+  if (document.readyState !== 'loading') bootFg();
+})();
+</script>
+
+
+<!-- =======================================================
+     TRADING PAGE: TOP GAINERS / LOSERS (24h, live Binance data)
+======================================================= -->
+<style>
+.gl-wrap{--gl-bg:#0b0e14;--gl-border:rgba(255,255,255,.08);--gl-text:#f1f5f9;--gl-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;max-width:900px;margin:24px auto;padding:24px;background:var(--gl-bg);border:1px solid var(--gl-border);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.gl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.gl-title{font-size:18px;font-weight:800;color:#fff}
+.gl-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00e676;letter-spacing:.5px;text-transform:uppercase}
+.gl-tabs{display:flex;gap:8px;margin-bottom:14px}
+.gl-tab{background:rgba(255,255,255,.03);border:1px solid var(--gl-border);color:var(--gl-muted);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+.gl-tab.active{background:rgba(0,230,118,.1);border-color:#00e676;color:#00e676}
+.gl-list{display:flex;flex-direction:column;gap:8px}
+.gl-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.02);border:1px solid var(--gl-border);border-radius:10px;padding:10px 14px}
+.gl-sym{font-weight:700;color:#fff;font-size:13.5px}
+.gl-price{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gl-muted)}
+.gl-chg{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13.5px;padding:3px 9px;border-radius:6px}
+.gl-chg.up{color:#00e676;background:rgba(0,230,118,.1)}
+.gl-chg.down{color:#ff3b5c;background:rgba(255,59,92,.1)}
+.gl-loading{text-align:center;color:var(--gl-muted);font-size:12.5px;padding:20px}
+</style>
+
+<div class="gl-wrap" data-mount="trading" id="gainersLosersWidget">
+  <div class="gl-head">
+    <div class="gl-title">Top Movers (24h)</div>
+    <div class="gl-badge">Live · Binance</div>
+  </div>
+  <div class="gl-tabs">
+    <button class="gl-tab active" id="glTabGainers" onclick="GLWidget.show('gainers')">🔥 Gainers</button>
+    <button class="gl-tab" id="glTabLosers" onclick="GLWidget.show('losers')">❄️ Losers</button>
+  </div>
+  <div class="gl-list" id="glList"><div class="gl-loading">Loading movers…</div></div>
+</div>
+
+<script>
+(function(){
+  var gainers = [], losers = [], currentTab = 'gainers';
+
+  function fmtPrice(p){
+    return p >= 1 ? p.toLocaleString(undefined,{maximumFractionDigits:2}) : p.toFixed(6);
+  }
+
+  function render(){
+    var list = document.getElementById('glList');
+    var data = currentTab === 'gainers' ? gainers : losers;
+    if(!data.length){ list.innerHTML = '<div class="gl-loading">No data available</div>'; return; }
+    var html = '';
+    data.forEach(function(item){
+      var isUp = parseFloat(item.priceChangePercent) >= 0;
+      html += '<div class="gl-row">' +
+        '<div><div class="gl-sym">' + item.symbol.replace('USDT','/USDT') + '</div>' +
+        '<div class="gl-price">$' + fmtPrice(parseFloat(item.lastPrice)) + '</div></div>' +
+        '<div class="gl-chg ' + (isUp ? 'up' : 'down') + '">' + (isUp ? '+' : '') + parseFloat(item.priceChangePercent).toFixed(2) + '%</div>' +
+        '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  window.GLWidget = {
+    show: function(tab){
+      currentTab = tab;
+      document.getElementById('glTabGainers').classList.toggle('active', tab === 'gainers');
+      document.getElementById('glTabLosers').classList.toggle('active', tab === 'losers');
+      render();
+    }
+  };
+
+  async function loadMovers(){
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+      var all = await res.json();
+      var usdtPairs = all.filter(function(t){
+        return t.symbol.endsWith('USDT') &&
+               !t.symbol.includes('UP') && !t.symbol.includes('DOWN') &&
+               !t.symbol.includes('BULL') && !t.symbol.includes('BEAR') &&
+               parseFloat(t.quoteVolume) > 5000000; // filter low-liquidity noise
+      });
+      usdtPairs.sort(function(a,b){ return parseFloat(b.priceChangePercent) - parseFloat(a.priceChangePercent); });
+      gainers = usdtPairs.slice(0, 8);
+      losers = usdtPairs.slice(-8).reverse();
+      render();
+    } catch(e){
+      document.getElementById('glList').innerHTML = '<div class="gl-loading">Live data fetch failed — retrying…</div>';
+    }
+  }
+
+  var glBooted = false;
+  function bootGl(){
+    if (glBooted) return;
+    glBooted = true;
+    loadMovers();
+    setInterval(loadMovers, 60 * 1000); // refresh every 1 min
+  }
+  document.addEventListener('DOMContentLoaded', bootGl);
+  if (document.readyState !== 'loading') bootGl();
+})();
+</script>
+
+
+<!-- =======================================================
+     TRADING PAGE: ECONOMIC CALENDAR (fully live, auto-updating)
+     Uses Investing.com's free public embed widget — real events,
+     with live actual/forecast/previous values as they're released.
+     No API key, no backend, nothing to edit manually.
+======================================================= -->
+<style>
+.ec-wrap{--ec-bg:#0b0e14;--ec-border:rgba(255,255,255,.08);--ec-text:#f1f5f9;--ec-muted:#7c8797;--ec-gold:#c9a869;font-family:'Plus Jakarta Sans',sans-serif;max-width:900px;margin:24px auto;padding:20px;background:var(--ec-bg);border:1px solid var(--ec-border);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.ec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.ec-title{font-size:18px;font-weight:800;color:#fff}
+.ec-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;background:rgba(201,168,105,.12);border:1px solid rgba(201,168,105,.3);color:var(--ec-gold);letter-spacing:.5px;text-transform:uppercase}
+.ec-frame-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--ec-border)}
+.ec-frame-wrap iframe{width:100%;height:480px;border:0;display:block}
+.ec-note{font-size:10.5px;color:var(--ec-muted);margin-top:10px;text-align:right}
+</style>
+
+<div class="ec-wrap" data-mount="trading" id="ecCalendarWidget">
+  <div class="ec-head">
+    <div class="ec-title">Economic Calendar</div>
+    <div class="ec-badge">Live · Investing.com</div>
+  </div>
+  <div class="ec-frame-wrap">
+    <iframe src="https://sslecal2.investing.com/?ecoDayBackground=%23000000&columns=exc_flag,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=5,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=21&lang=1"
+      frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+  </div>
+  <div class="ec-note">Events, actual/forecast/previous values, and importance (impact) update live as data releases.</div>
+</div>
+ 
 </body>
 </html>
