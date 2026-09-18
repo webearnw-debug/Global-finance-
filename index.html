@@ -4236,7 +4236,334 @@ function tx3ResetDesk(){
 }
 </script>
 
+<!-- ================= TRADING PAGE: LIVE MULTI-SYMBOL WATCHLIST ================= -->
+<style>
+.tx4-watch{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,230,118,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx4-watch-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx4-watch-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx4-watch-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.tx4-watch-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:tx4Pulse 1.5s infinite}
+@keyframes tx4Pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.tx4-watch-list{display:flex;flex-direction:column;gap:8px}
+.tx4-watch-row{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:14px;background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .2s ease}
+.tx4-watch-row:hover{border-color:#00e676}
+.tx4-watch-row.active{border-color:#00e676;background:rgba(0,230,118,.05)}
+.tx4-watch-icon{width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.tx4-watch-name{font-size:13px;font-weight:700;color:#fff}
+.tx4-watch-pair{font-size:10.5px;color:#8891a1;font-family:'JetBrains Mono',monospace}
+.tx4-watch-price{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#fff;text-align:right;white-space:nowrap}
+.tx4-watch-change{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:right;white-space:nowrap;min-width:72px}
+.tx4-watch-change.pos{color:#00e676}
+.tx4-watch-change.neg{color:#ff5252}
+</style>
+<div class="tx4-watch" id="tx4WatchSection" data-mount="trading">
+  <div class="tx4-watch-hdr"><div class="tx4-watch-title">Live Watchlist</div><div class="tx4-watch-live"><span class="tx4-watch-dot"></span>LIVE · BINANCE</div></div>
+  <div class="tx4-watch-list" id="tx4WatchList">
+    <div style="text-align:center;color:#8891a1;padding:20px;font-size:12.5px;">Loading live prices…</div>
+  </div>
+</div>
+<script>
+(function(){
+  var tx4WatchAssets = [
+    { symbol:'BTCUSDT', name:'Bitcoin', pair:'BTC/USDT', icon:'₿', tvSymbol:'BITSTAMP:BTCUSD' },
+    { symbol:'ETHUSDT', name:'Ethereum', pair:'ETH/USDT', icon:'Ξ', tvSymbol:'BITSTAMP:ETHUSD' },
+    { symbol:'SOLUSDT', name:'Solana', pair:'SOL/USDT', icon:'◎', tvSymbol:'BINANCE:SOLUSDT' },
+    { symbol:'BNBUSDT', name:'BNB', pair:'BNB/USDT', icon:'◆', tvSymbol:'BINANCE:BNBUSDT' }
+  ];
+  window.tx4ActiveWatchSymbol = 'BTCUSDT';
 
+  window.tx4WatchSelect = function(asset){
+    tx4ActiveWatchSymbol = asset.symbol;
+    document.querySelectorAll('#tx4WatchList .tx4-watch-row').forEach(function(r){ r.classList.remove('active'); });
+    var row = document.getElementById('tx4row-'+asset.symbol);
+    if (row) row.classList.add('active');
+
+    // Sync with existing Trading Desk chart + gauge + order book if present
+    var tdSelect = document.getElementById('tdSymbolSelect');
+    if (tdSelect) {
+      var opt = [...tdSelect.options].find(function(o){ return o.value.indexOf(asset.symbol.replace('USDT','USD')) > -1 || o.value === asset.tvSymbol; });
+      if (opt) { tdSelect.value = opt.value; if (typeof gfChangeSymbol === 'function') gfChangeSymbol(opt.value); }
+    }
+    var gaugeSelect = document.getElementById('tx2GaugeSymbol');
+    if (gaugeSelect) {
+      var gopt = [...gaugeSelect.options].find(function(o){ return o.value === asset.tvSymbol; });
+      if (gopt) { gaugeSelect.value = gopt.value; if (typeof tx2LoadGauge === 'function') tx2LoadGauge(); }
+    }
+    var bookSelect = document.getElementById('tx2BookSymbol');
+    if (bookSelect) {
+      var bopt = [...bookSelect.options].find(function(o){ return o.value === asset.symbol; });
+      if (bopt) { bookSelect.value = bopt.value; if (typeof tx2BookRestart === 'function') tx2BookRestart(); }
+    }
+  };
+
+  async function tx4LoadWatchlist(){
+    try {
+      var symbols = tx4WatchAssets.map(function(a){return a.symbol;});
+      var res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=' + encodeURIComponent(JSON.stringify(symbols)));
+      var data = await res.json();
+      var priceMap = {};
+      data.forEach(function(d){ priceMap[d.symbol] = d; });
+
+      var html = tx4WatchAssets.map(function(a){
+        var d = priceMap[a.symbol];
+        if (!d) return '';
+        var price = parseFloat(d.lastPrice);
+        var change = parseFloat(d.priceChangePercent);
+        var isPos = change >= 0;
+        var priceFmt = price > 10 ? price.toLocaleString(undefined,{maximumFractionDigits:2}) : price.toFixed(4);
+        return '<div class="tx4-watch-row" id="tx4row-'+a.symbol+'" onclick=\'tx4WatchSelect('+JSON.stringify(a)+')\'>'+
+          '<div class="tx4-watch-icon">'+a.icon+'</div>'+
+          '<div><div class="tx4-watch-name">'+a.name+'</div><div class="tx4-watch-pair">'+a.pair+'</div></div>'+
+          '<div class="tx4-watch-price">$'+priceFmt+'</div>'+
+          '<div class="tx4-watch-change '+(isPos?'pos':'neg')+'">'+(isPos?'+':'')+change.toFixed(2)+'%</div>'+
+          '</div>';
+      }).join('');
+      document.getElementById('tx4WatchList').innerHTML = html;
+      var activeRow = document.getElementById('tx4row-'+tx4ActiveWatchSymbol);
+      if (activeRow) activeRow.classList.add('active');
+    } catch(e) { console.log('watchlist error', e); }
+  }
+  var tx4WatchBooted = false;
+  function tx4WatchBoot(){ if (tx4WatchBooted) return; tx4WatchBooted = true; tx4LoadWatchlist(); setInterval(tx4LoadWatchlist, 8000); }
+  document.addEventListener('DOMContentLoaded', tx4WatchBoot);
+  if (document.readyState !== 'loading') tx4WatchBoot();
+})();
+</script>
+
+<!-- ================= TRADING PAGE: PAPER TRADING / VIRTUAL P&L TRACKER ================= -->
+<style>
+.tx4-paper{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,184,0,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx4-paper-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx4-paper-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx4-paper-badge{font-size:10px;font-weight:800;color:#ffb800;background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);padding:4px 10px;border-radius:20px}
+.tx4-paper-balance{display:flex;justify-content:space-between;align-items:center;background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.tx4-paper-balance-item{text-align:center}
+.tx4-paper-balance-item .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.tx4-paper-balance-item .v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;margin-top:3px}
+.tx4-paper-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:16px}
+@media(max-width:700px){.tx4-paper-form{grid-template-columns:1fr 1fr}}
+.tx4-paper-form select,.tx4-paper-form input{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:9px 11px;border-radius:8px;font-size:12.5px;font-family:'JetBrains Mono',monospace;outline:none}
+.tx4-paper-buy{background:linear-gradient(135deg,#00e676,#00c853);color:#04120a;font-weight:800;border:none;border-radius:8px;cursor:pointer;font-size:12.5px;padding:9px 14px}
+.tx4-paper-positions{display:flex;flex-direction:column;gap:10px}
+.tx4-paper-pos-row{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center}
+@media(max-width:700px){.tx4-paper-pos-row{grid-template-columns:1fr 1fr;font-size:11.5px}}
+.tx4-paper-pos-sym{font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;align-items:center;gap:6px}
+.tx4-paper-pos-dir{font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px}
+.tx4-paper-pos-dir.long{background:rgba(0,230,118,.12);color:#00e676}
+.tx4-paper-pos-dir.short{background:rgba(255,82,82,.12);color:#ff5252}
+.tx4-paper-pos-pl{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px}
+.tx4-paper-pos-pl.pos{color:#00e676}
+.tx4-paper-pos-pl.neg{color:#ff5252}
+.tx4-paper-close-btn{background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);color:#ff5c7a;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:10.5px;font-weight:700}
+.tx4-paper-empty{text-align:center;color:#8891a1;font-size:12.5px;padding:20px}
+</style>
+<div class="tx4-paper" id="tx4PaperSection" data-mount="trading">
+  <div class="tx4-paper-hdr"><div class="tx4-paper-title">Paper Trading Tracker</div><div class="tx4-paper-badge">VIRTUAL · NO REAL MONEY</div></div>
+  <div class="tx4-paper-balance">
+    <div class="tx4-paper-balance-item"><div class="l">Virtual Balance</div><div class="v" id="tx4PaperBalance" style="color:#fff">₹1,00,000</div></div>
+    <div class="tx4-paper-balance-item"><div class="l">Open P&amp;L</div><div class="v" id="tx4PaperOpenPL" style="color:#00e676">₹0</div></div>
+    <div class="tx4-paper-balance-item"><div class="l">Realized P&amp;L</div><div class="v" id="tx4PaperRealizedPL" style="color:#00e676">₹0</div></div>
+    <div class="tx4-paper-balance-item"><div class="l">Net Worth</div><div class="v" id="tx4PaperNetWorth" style="color:#ffb800">₹1,00,000</div></div>
+    <button class="tx4-paper-close-btn" onclick="tx4PaperResetAccount()" style="align-self:center;">Reset Account</button>
+  </div>
+  <div class="tx4-paper-form">
+    <select id="tx4PaperSymbol">
+      <option value="BTCUSDT">BTC/USDT</option>
+      <option value="ETHUSDT">ETH/USDT</option>
+      <option value="SOLUSDT">SOL/USDT</option>
+      <option value="BNBUSDT">BNB/USDT</option>
+    </select>
+    <select id="tx4PaperDirection"><option value="long">Long</option><option value="short">Short</option></select>
+    <input type="number" id="tx4PaperQty" placeholder="Qty in ₹ (e.g. 10000)" value="10000">
+    <button class="tx4-paper-buy" onclick="tx4PaperOpenPosition()">Open Position</button>
+  </div>
+  <div class="tx4-paper-positions" id="tx4PaperPositions"><div class="tx4-paper-empty">No open positions — place a virtual trade above.</div></div>
+</div>
+<script>
+(function(){
+  var TX4_PAPER_KEY = 'nx_paper_trading_v1';
+  var tx4LivePrices = {};
+
+  function tx4LoadState(){
+    try {
+      var raw = JSON.parse(localStorage.getItem(TX4_PAPER_KEY));
+      if (raw) return raw;
+    } catch(e) {}
+    return { balance: 100000, realizedPL: 0, positions: [] };
+  }
+  function tx4SaveState(state){ try { localStorage.setItem(TX4_PAPER_KEY, JSON.stringify(state)); } catch(e) {} }
+
+  window.tx4PaperOpenPosition = function(){
+    var symbol = document.getElementById('tx4PaperSymbol').value;
+    var direction = document.getElementById('tx4PaperDirection').value;
+    var qtyValue = parseFloat(document.getElementById('tx4PaperQty').value);
+    if (!qtyValue || qtyValue <= 0) { alert('Valid amount daalo.'); return; }
+    var state = tx4LoadState();
+    if (qtyValue > state.balance) { alert('Insufficient virtual balance.'); return; }
+    var entryPrice = tx4LivePrices[symbol];
+    if (!entryPrice) { alert('Live price abhi load ho rahi hai, thoda ruk kar try karo.'); return; }
+
+    state.balance -= qtyValue;
+    state.positions.push({ id: Date.now(), symbol: symbol, direction: direction, amount: qtyValue, entryPrice: entryPrice, openedAt: new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}) });
+    tx4SaveState(state);
+    document.getElementById('tx4PaperQty').value = '10000';
+    tx4RenderPaper();
+  };
+
+  window.tx4PaperClosePosition = function(id){
+    var state = tx4LoadState();
+    var pos = state.positions.find(function(p){ return p.id === id; });
+    if (!pos) return;
+    var currentPrice = tx4LivePrices[pos.symbol] || pos.entryPrice;
+    var priceChangePct = (currentPrice - pos.entryPrice) / pos.entryPrice;
+    var pl = pos.direction === 'long' ? pos.amount * priceChangePct : pos.amount * -priceChangePct;
+    state.balance += pos.amount + pl;
+    state.realizedPL += pl;
+    state.positions = state.positions.filter(function(p){ return p.id !== id; });
+    tx4SaveState(state);
+    tx4RenderPaper();
+  };
+
+  window.tx4PaperResetAccount = function(){
+    if (!confirm('Poora virtual account reset kar dein? Saari open positions aur history clear ho jaayegi.')) return;
+    tx4SaveState({ balance: 100000, realizedPL: 0, positions: [] });
+    tx4RenderPaper();
+  };
+
+  function tx4RenderPaper(){
+    var state = tx4LoadState();
+    var openPL = 0;
+    var posHtml = '';
+    if (!state.positions.length) {
+      posHtml = '<div class="tx4-paper-empty">No open positions — place a virtual trade above.</div>';
+    } else {
+      posHtml = state.positions.map(function(p){
+        var currentPrice = tx4LivePrices[p.symbol] || p.entryPrice;
+        var priceChangePct = (currentPrice - p.entryPrice) / p.entryPrice;
+        var pl = p.direction === 'long' ? p.amount * priceChangePct : p.amount * -priceChangePct;
+        openPL += pl;
+        var isPos = pl >= 0;
+        return '<div class="tx4-paper-pos-row">'+
+          '<div><div class="tx4-paper-pos-sym">'+p.symbol.replace('USDT','/USDT')+' <span class="tx4-paper-pos-dir '+p.direction+'">'+p.direction+'</span></div><div style="font-size:10px;color:#8891a1;margin-top:3px;">Entry: $'+p.entryPrice.toLocaleString(undefined,{maximumFractionDigits:2})+' · '+p.openedAt+'</div></div>'+
+          '<div style="font-size:11px;color:#8891a1;">₹'+p.amount.toLocaleString('en-IN')+'</div>'+
+          '<div class="tx4-paper-pos-pl '+(isPos?'pos':'neg')+'">'+(isPos?'+':'')+'₹'+Math.round(pl).toLocaleString('en-IN')+'</div>'+
+          '<button class="tx4-paper-close-btn" onclick="tx4PaperClosePosition('+p.id+')">Close</button>'+
+          '</div>';
+      }).join('');
+    }
+    document.getElementById('tx4PaperPositions').innerHTML = posHtml;
+    document.getElementById('tx4PaperBalance').textContent = '₹'+Math.round(state.balance).toLocaleString('en-IN');
+    var openPLEl = document.getElementById('tx4PaperOpenPL');
+    openPLEl.textContent = (openPL>=0?'+':'')+'₹'+Math.round(openPL).toLocaleString('en-IN');
+    openPLEl.style.color = openPL>=0 ? '#00e676' : '#ff5252';
+    var realizedEl = document.getElementById('tx4PaperRealizedPL');
+    realizedEl.textContent = (state.realizedPL>=0?'+':'')+'₹'+Math.round(state.realizedPL).toLocaleString('en-IN');
+    realizedEl.style.color = state.realizedPL>=0 ? '#00e676' : '#ff5252';
+    document.getElementById('tx4PaperNetWorth').textContent = '₹'+Math.round(state.balance + openPL).toLocaleString('en-IN');
+  }
+
+  async function tx4LoadPrices(){
+    try {
+      var symbols = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT'];
+      var res = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=' + encodeURIComponent(JSON.stringify(symbols)));
+      var data = await res.json();
+      data.forEach(function(d){ tx4LivePrices[d.symbol] = parseFloat(d.price); });
+      tx4RenderPaper();
+    } catch(e) { console.log('paper price load error', e); }
+  }
+
+  var tx4PaperBooted = false;
+  function tx4PaperBoot(){ if (tx4PaperBooted) return; tx4PaperBooted = true; tx4LoadPrices(); tx4RenderPaper(); setInterval(tx4LoadPrices, 5000); }
+  document.addEventListener('DOMContentLoaded', tx4PaperBoot);
+  if (document.readyState !== 'loading') tx4PaperBoot();
+})();
+</script>
+
+<!-- ================= TRADING PAGE: LEVERAGE & MARGIN CALCULATOR ================= -->
+<style>
+.tx4-lev{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,82,82,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx4-lev-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx4-lev-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx4-lev-badge{font-size:10px;font-weight:800;color:#ff5252;background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);padding:4px 10px;border-radius:20px}
+.tx4-lev-warn{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,82,82,.3);padding-left:10px}
+.tx4-lev-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.tx4-lev-grid{grid-template-columns:1fr}}
+.tx4-lev-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
+.tx4-lev-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.tx4-lev-field-top span{color:#ff9f43;font-weight:700}
+.tx4-lev-field input[type=range]{width:100%;accent-color:#ff5252;cursor:pointer}
+.tx4-lev-dir-row{display:flex;gap:8px;margin-bottom:16px}
+.tx4-lev-dir-btn{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:9px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer;text-align:center}
+.tx4-lev-dir-btn.long.active{border-color:#00e676;color:#00e676;background:rgba(0,230,118,.08)}
+.tx4-lev-dir-btn.short.active{border-color:#ff5252;color:#ff5252;background:rgba(255,82,82,.08)}
+.tx4-lev-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.tx4-lev-stat{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center}
+.tx4-lev-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.tx4-lev-stat .v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;margin-top:4px;color:#fff}
+.tx4-lev-stat.liq .v{color:#ff5252}
+.tx4-lev-danger{margin-top:14px;background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.3);border-radius:12px;padding:12px;text-align:center;font-size:11.5px;color:#ff9f9f}
+</style>
+<div class="tx4-lev" id="tx4LevSection" data-mount="trading">
+  <div class="tx4-lev-hdr"><div class="tx4-lev-title">Leverage &amp; Margin Calculator</div><div class="tx4-lev-badge">HIGH RISK TOOL</div></div>
+  <div class="tx4-lev-warn">Leveraged trading amplifies both gains and losses. This calculator is for educational sizing only — always confirm exact liquidation mechanics with your actual exchange, as fees and funding rates can shift the real liquidation price.</div>
+  <div class="tx4-lev-dir-row">
+    <button class="tx4-lev-dir-btn long active" id="tx4LevLongBtn" onclick="tx4LevSetDir('long')">LONG</button>
+    <button class="tx4-lev-dir-btn short" id="tx4LevShortBtn" onclick="tx4LevSetDir('short')">SHORT</button>
+  </div>
+  <div class="tx4-lev-grid">
+    <div class="tx4-lev-field"><div class="tx4-lev-field-top"><span>Account Balance</span><span id="tx4LevBalV">₹1,00,000</span></div><input type="range" id="tx4LevBal" min="1000" max="5000000" step="1000" value="100000" oninput="tx4LevCalc()"></div>
+    <div class="tx4-lev-field"><div class="tx4-lev-field-top"><span>Leverage</span><span id="tx4LevMultV">10x</span></div><input type="range" id="tx4LevMult" min="1" max="125" step="1" value="10" oninput="tx4LevCalc()"></div>
+    <div class="tx4-lev-field"><div class="tx4-lev-field-top"><span>Margin Used</span><span id="tx4LevMarginV">₹10,000</span></div><input type="range" id="tx4LevMargin" min="500" max="500000" step="500" value="10000" oninput="tx4LevCalc()"></div>
+    <div class="tx4-lev-field"><div class="tx4-lev-field-top"><span>Entry Price</span><span id="tx4LevEntryV">₹62,50,000</span></div><input type="range" id="tx4LevEntry" min="1000" max="10000000" step="1000" value="6250000" oninput="tx4LevCalc()"></div>
+  </div>
+  <div class="tx4-lev-stats">
+    <div class="tx4-lev-stat"><div class="l">Position Size</div><div class="v" id="tx4LevPosSize">₹0</div></div>
+    <div class="tx4-lev-stat"><div class="l">Position Units</div><div class="v" id="tx4LevUnits">0</div></div>
+    <div class="tx4-lev-stat liq"><div class="l">Est. Liquidation Price</div><div class="v" id="tx4LevLiqPrice">₹0</div></div>
+    <div class="tx4-lev-stat"><div class="l">Distance to Liquidation</div><div class="v" id="tx4LevLiqDist">0%</div></div>
+  </div>
+  <div class="tx4-lev-danger" id="tx4LevDangerMsg"></div>
+</div>
+<script>
+function tx4LevSetDir(dir){
+  window.tx4LevDirection = dir;
+  document.getElementById('tx4LevLongBtn').classList.toggle('active', dir==='long');
+  document.getElementById('tx4LevShortBtn').classList.toggle('active', dir==='short');
+  tx4LevCalc();
+}
+window.tx4LevDirection = 'long';
+function tx4LevCalc(){
+  var bal = parseFloat(document.getElementById('tx4LevBal').value);
+  var mult = parseFloat(document.getElementById('tx4LevMult').value);
+  var margin = parseFloat(document.getElementById('tx4LevMargin').value);
+  var entry = parseFloat(document.getElementById('tx4LevEntry').value);
+
+  document.getElementById('tx4LevBalV').textContent = '₹'+bal.toLocaleString('en-IN');
+  document.getElementById('tx4LevMultV').textContent = mult+'x';
+  document.getElementById('tx4LevMarginV').textContent = '₹'+margin.toLocaleString('en-IN');
+  document.getElementById('tx4LevEntryV').textContent = '₹'+entry.toLocaleString('en-IN');
+
+  if (margin > bal) { margin = bal; document.getElementById('tx4LevMargin').value = bal; document.getElementById('tx4LevMarginV').textContent = '₹'+bal.toLocaleString('en-IN'); }
+
+  var positionSize = margin * mult;
+  var units = positionSize / entry;
+  var maintenanceMarginRate = 0.005; // simplified 0.5% maintenance margin assumption, exchange-agnostic estimate
+  var liqDistancePct = (1/mult) - maintenanceMarginRate;
+  var liqPrice = window.tx4LevDirection === 'long' ? entry * (1 - liqDistancePct) : entry * (1 + liqDistancePct);
+
+  document.getElementById('tx4LevPosSize').textContent = '₹'+Math.round(positionSize).toLocaleString('en-IN');
+  document.getElementById('tx4LevUnits').textContent = units.toFixed(6);
+  document.getElementById('tx4LevLiqPrice').textContent = '₹'+Math.round(liqPrice).toLocaleString('en-IN');
+  document.getElementById('tx4LevLiqDist').textContent = (liqDistancePct*100).toFixed(2)+'%';
+
+  var dangerEl = document.getElementById('tx4LevDangerMsg');
+  if (mult >= 50) dangerEl.textContent = '⚠ Extreme leverage — a tiny '+(liqDistancePct*100).toFixed(1)+'% move against you wipes out this position entirely.';
+  else if (mult >= 20) dangerEl.textContent = '⚠ High leverage — normal daily volatility can easily trigger liquidation at this setting.';
+  else dangerEl.textContent = 'At '+mult+'x, price needs to move ~'+(liqDistancePct*100).toFixed(1)+'% against you to reach liquidation.';
+}
+document.addEventListener('DOMContentLoaded', tx4LevCalc);
+tx4LevCalc();
+</script>
     
 </body>
 </html>
