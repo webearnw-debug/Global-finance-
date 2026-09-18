@@ -4786,6 +4786,296 @@ tx4LevCalc();
   </div>
   <div class="ec-note">Events, actual/forecast/previous values, and importance (impact) update live as data releases.</div>
 </div>
- 
+ <!-- =======================================================
+     PREMIUM POSTS / INSIGHTS SECTION
+     Fully self-contained. data-mount="home" by default — change
+     to "financial" / "trading" / "investment" / "loans" / "earning"
+     / "alpha" if you want it on a different page instead.
+
+     TO ADD A POST: scroll down to the `gfPosts` array in the
+     <script> below and add one object per post. That's it — the
+     grid, featured card, dates and everything else builds itself.
+     TO REMOVE A POST: delete its object from the array.
+     TO REMOVE THE WHOLE SECTION: delete this entire block.
+======================================================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+.gfp-section{
+  --gfp-bg:#07090e; --gfp-card:#0d1119; --gfp-border:rgba(255,255,255,.08);
+  --gfp-gold:#c9a869; --gfp-gold-2:#ecc98f; --gfp-emerald:#00e599;
+  --gfp-text:#f4f2ee; --gfp-muted:#8b9099;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  max-width:1180px; margin:48px auto; padding:0 20px;
+  color:var(--gfp-text);
+}
+
+.gfp-head{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  flex-wrap:wrap; gap:16px; margin-bottom:32px;
+  border-bottom:1px solid var(--gfp-border); padding-bottom:22px;
+}
+.gfp-eyebrow{
+  display:flex; align-items:center; gap:8px; font-size:11px; font-weight:800;
+  letter-spacing:2.5px; text-transform:uppercase; color:var(--gfp-gold); margin-bottom:8px;
+}
+.gfp-eyebrow::before{content:"";width:22px;height:1px;background:var(--gfp-gold)}
+.gfp-title{
+  font-family:'Playfair Display',serif; font-size:34px; font-weight:700;
+  letter-spacing:-.3px; color:#fff;
+}
+.gfp-sub{font-size:13px; color:var(--gfp-muted); margin-top:8px; max-width:480px; line-height:1.6}
+.gfp-count{
+  font-size:11px; font-weight:700; color:var(--gfp-muted); letter-spacing:1px;
+  text-transform:uppercase; white-space:nowrap;
+}
+
+/* ---- Featured (hero) card ---- */
+.gfp-featured{
+  position:relative; display:grid; grid-template-columns:1.1fr 1fr; gap:0;
+  background:var(--gfp-card); border:1px solid var(--gfp-border); border-radius:22px;
+  overflow:hidden; margin-bottom:36px; box-shadow:0 30px 70px rgba(0,0,0,.55);
+  transition:border-color .35s ease, box-shadow .35s ease;
+}
+.gfp-featured:hover{border-color:rgba(201,168,105,.4); box-shadow:0 40px 90px rgba(0,0,0,.7), 0 0 40px rgba(201,168,105,.08)}
+.gfp-featured-img{position:relative; min-height:320px; overflow:hidden; background:#050608}
+.gfp-featured-img img{
+  width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+  transition:transform .6s cubic-bezier(.16,1,.3,1); filter:saturate(1.05) contrast(1.05) brightness(.85);
+}
+.gfp-featured:hover .gfp-featured-img img{transform:scale(1.06)}
+.gfp-featured-img::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(7,9,14,0) 0%, rgba(7,9,14,.15) 85%, rgba(7,9,14,.5) 100%);
+}
+.gfp-featured-body{padding:38px 40px; display:flex; flex-direction:column; justify-content:center}
+.gfp-fbadge{
+  display:inline-flex; align-items:center; gap:6px; width:fit-content;
+  font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 12px; border-radius:20px; margin-bottom:16px;
+  background:linear-gradient(135deg, rgba(201,168,105,.18), rgba(0,229,153,.1));
+  border:1px solid rgba(201,168,105,.35); color:var(--gfp-gold-2);
+}
+.gfp-featured-title{
+  font-family:'Playfair Display',serif; font-size:27px; font-weight:700; line-height:1.28;
+  color:#fff; margin-bottom:14px; letter-spacing:-.2px;
+}
+.gfp-featured-excerpt{font-size:13.5px; line-height:1.75; color:var(--gfp-muted); margin-bottom:22px}
+.gfp-meta{display:flex; align-items:center; gap:14px; font-size:11.5px; color:var(--gfp-muted); margin-bottom:22px}
+.gfp-meta span{display:flex; align-items:center; gap:5px}
+.gfp-dot{width:3px; height:3px; border-radius:50%; background:var(--gfp-muted)}
+.gfp-cta{
+  display:inline-flex; align-items:center; gap:9px; width:fit-content;
+  background:linear-gradient(135deg, var(--gfp-gold), #a9895a); color:#08090b;
+  font-weight:800; font-size:12.5px; letter-spacing:.3px; padding:12px 22px;
+  border-radius:10px; text-decoration:none; transition:all .3s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 8px 20px rgba(201,168,105,.22);
+}
+.gfp-cta:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(201,168,105,.4)}
+.gfp-cta svg{width:13px; height:13px; transition:transform .25s ease}
+.gfp-cta:hover svg{transform:translateX(3px)}
+
+/* ---- Grid of regular cards ---- */
+.gfp-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px}
+@media(max-width:960px){.gfp-grid{grid-template-columns:repeat(2, 1fr)}}
+@media(max-width:640px){.gfp-grid{grid-template-columns:1fr} .gfp-featured{grid-template-columns:1fr} .gfp-featured-img{min-height:200px}}
+
+.gfp-card{
+  background:var(--gfp-card); border:1px solid var(--gfp-border); border-radius:18px;
+  overflow:hidden; display:flex; flex-direction:column; text-decoration:none; color:inherit;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease, box-shadow .35s ease;
+}
+.gfp-card:hover{transform:translateY(-6px); border-color:rgba(0,229,153,.35); box-shadow:0 24px 50px rgba(0,0,0,.6), 0 0 30px rgba(0,229,153,.07)}
+.gfp-card-img{position:relative; height:170px; overflow:hidden; background:#050608}
+.gfp-card-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); filter:saturate(1.05) contrast(1.05) brightness(.82)}
+.gfp-card:hover .gfp-card-img img{transform:scale(1.08)}
+.gfp-card-body{padding:20px 20px 22px; display:flex; flex-direction:column; flex:1}
+.gfp-badge{
+  display:inline-flex; width:fit-content; font-size:9.5px; font-weight:800;
+  letter-spacing:1.2px; text-transform:uppercase; padding:4px 10px; border-radius:20px;
+  background:rgba(0,229,153,.08); border:1px solid rgba(0,229,153,.25); color:var(--gfp-emerald);
+  margin-bottom:12px;
+}
+.gfp-card-title{
+  font-family:'Playfair Display',serif; font-size:16.5px; font-weight:700; line-height:1.35;
+  color:#fff; margin-bottom:8px;
+}
+.gfp-card-excerpt{font-size:12px; line-height:1.65; color:var(--gfp-muted); margin-bottom:16px; flex:1}
+.gfp-card-foot{display:flex; justify-content:space-between; align-items:center; font-size:10.5px; color:var(--gfp-muted); border-top:1px solid var(--gfp-border); padding-top:14px}
+.gfp-read{display:flex; align-items:center; gap:5px; font-weight:700; color:var(--gfp-gold-2)}
+.gfp-read svg{width:11px; height:11px; transition:transform .25s ease}
+.gfp-card:hover .gfp-read svg{transform:translateX(3px)}
+
+/* ---- Empty state ---- */
+.gfp-empty{
+  text-align:center; padding:60px 20px; border:1px dashed var(--gfp-border); border-radius:18px;
+  color:var(--gfp-muted);
+}
+.gfp-empty .ic{font-size:28px; margin-bottom:12px; opacity:.5}
+.gfp-empty .t{font-size:14px; font-weight:700; color:#cfd3da}
+.gfp-empty .s{font-size:12px; margin-top:6px}
+
+/* ---- Load more ---- */
+.gfp-more-wrap{text-align:center; margin-top:32px}
+.gfp-more-btn{
+  background:rgba(255,255,255,.03); border:1px solid rgba(201,168,105,.4); color:var(--gfp-gold-2);
+  padding:13px 34px; border-radius:30px; font-weight:700; font-size:12.5px; letter-spacing:1px;
+  text-transform:uppercase; cursor:pointer; transition:all .3s ease;
+}
+.gfp-more-btn:hover{background:rgba(201,168,105,.1); box-shadow:0 0 20px rgba(201,168,105,.15)}
+.gfp-more-btn:disabled{opacity:.5; cursor:default}
+</style>
+
+<section class="gfp-section" data-mount="home" id="gfPostsSection">
+  <div class="gfp-head">
+    <div>
+      <div class="gfp-eyebrow">Global Finance Insights</div>
+      <div class="gfp-title">Latest Posts</div>
+      <p class="gfp-sub">Market analysis, guides and updates — curated and published regularly.</p>
+    </div>
+    <div class="gfp-count" id="gfpCount"></div>
+  </div>
+
+  <div id="gfpFeaturedWrap"></div>
+  <div class="gfp-grid" id="gfpGrid"></div>
+  <div id="gfpEmptyWrap"></div>
+  <div class="gfp-more-wrap" id="gfpMoreWrap" style="display:none;">
+    <button class="gfp-more-btn" id="gfpMoreBtn" onclick="GFPosts.loadMore()">Load More Posts</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  /* ================================================================
+     ADD YOUR POSTS HERE — one object per post. Newest first is not
+     required; the widget auto-sorts by `date` (newest first) and
+     always features the very latest one at the top automatically.
+
+     Fields:
+       title    - post title (required)
+       excerpt  - 1-2 line summary (required)
+       link     - full URL to the post (required)
+       image    - a photo URL (required for the nice card look;
+                  use any hosted image link — Unsplash, your CMS, etc.)
+       category - short tag, e.g. "Markets", "Tax", "Crypto"
+       date     - "YYYY-MM-DD" (used for sorting + the displayed date)
+       readTime - e.g. "4 min read" (optional, cosmetic only)
+  ================================================================= */
+  var gfPosts = [
+    // {
+    //   title: "How the New Tax Slabs Actually Change Your Take-Home Pay",
+    //   excerpt: "A plain-English walkthrough of FY 2026-27 slabs, with real salary examples so you know exactly what changes for you.",
+    //   link: "https://example.com/tax-slabs-2026",
+    //   image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
+    //   category: "Tax",
+    //   date: "2026-09-10",
+    //   readTime: "6 min read"
+    // },
+  ];
+
+  var PAGE_SIZE = 6; // regular cards per "page" (featured post shown separately)
+  var visibleCount = PAGE_SIZE;
+
+  function esc(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function fmtDate(dateStr){
+    if(!dateStr) return '';
+    var d = new Date(dateStr + 'T00:00:00');
+    if(isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  var arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  function featuredCardHtml(post){
+    var img = post.image ? '<img src="' + esc(post.image) + '" alt="' + esc(post.title) + '" loading="lazy">' : '';
+    return '' +
+      '<a class="gfp-featured" href="' + esc(post.link) + '" target="_blank" rel="noopener">' +
+        '<div class="gfp-featured-img">' + img + '</div>' +
+        '<div class="gfp-featured-body">' +
+          '<span class="gfp-fbadge">★ Featured' + (post.category ? ' · ' + esc(post.category) : '') + '</span>' +
+          '<div class="gfp-featured-title">' + esc(post.title) + '</div>' +
+          '<div class="gfp-featured-excerpt">' + esc(post.excerpt) + '</div>' +
+          '<div class="gfp-meta">' +
+            (post.date ? '<span>' + fmtDate(post.date) + '</span>' : '') +
+            (post.date && post.readTime ? '<span class="gfp-dot"></span>' : '') +
+            (post.readTime ? '<span>' + esc(post.readTime) + '</span>' : '') +
+          '</div>' +
+          '<span class="gfp-cta">Read Full Story ' + arrowSvg + '</span>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function cardHtml(post){
+    var img = post.image ? '<img src="' + esc(post.image) + '" alt="' + esc(post.title) + '" loading="lazy">' : '';
+    return '' +
+      '<a class="gfp-card" href="' + esc(post.link) + '" target="_blank" rel="noopener">' +
+        '<div class="gfp-card-img">' + img + '</div>' +
+        '<div class="gfp-card-body">' +
+          (post.category ? '<span class="gfp-badge">' + esc(post.category) + '</span>' : '') +
+          '<div class="gfp-card-title">' + esc(post.title) + '</div>' +
+          '<div class="gfp-card-excerpt">' + esc(post.excerpt) + '</div>' +
+          '<div class="gfp-card-foot">' +
+            '<span>' + fmtDate(post.date) + '</span>' +
+            '<span class="gfp-read">Read ' + arrowSvg + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>';
+  }
+
+  function render(){
+    var featuredWrap = document.getElementById('gfpFeaturedWrap');
+    var grid = document.getElementById('gfpGrid');
+    var emptyWrap = document.getElementById('gfpEmptyWrap');
+    var moreWrap = document.getElementById('gfpMoreWrap');
+    var countEl = document.getElementById('gfpCount');
+
+    var sorted = gfPosts.slice().sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+
+    if(!sorted.length){
+      featuredWrap.innerHTML = '';
+      grid.innerHTML = '';
+      moreWrap.style.display = 'none';
+      countEl.textContent = '';
+      emptyWrap.innerHTML = '<div class="gfp-empty"><div class="ic">✦</div><div class="t">No posts published yet</div><div class="s">Add your first post to the gfPosts list in this widget\'s code.</div></div>';
+      return;
+    }
+    emptyWrap.innerHTML = '';
+
+    countEl.textContent = sorted.length + (sorted.length === 1 ? ' post' : ' posts');
+
+    var featured = sorted[0];
+    var rest = sorted.slice(1);
+
+    featuredWrap.innerHTML = featuredCardHtml(featured);
+
+    var shown = rest.slice(0, visibleCount);
+    grid.innerHTML = shown.map(cardHtml).join('');
+
+    if(rest.length > visibleCount){
+      moreWrap.style.display = 'block';
+      document.getElementById('gfpMoreBtn').disabled = false;
+      document.getElementById('gfpMoreBtn').textContent = 'Load More Posts';
+    } else {
+      moreWrap.style.display = rest.length > PAGE_SIZE ? 'block' : 'none';
+      if(rest.length > PAGE_SIZE){
+        document.getElementById('gfpMoreBtn').disabled = true;
+        document.getElementById('gfpMoreBtn').textContent = 'All Posts Loaded ✓';
+      }
+    }
+  }
+
+  window.GFPosts = {
+    loadMore: function(){
+      visibleCount += PAGE_SIZE;
+      render();
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', render);
+  if (document.readyState !== 'loading') render();
+})();
+</script>
+
 </body>
 </html>
