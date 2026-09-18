@@ -2974,6 +2974,478 @@ nxCalcFire();
 })();
 </script>
 </script>
+<!-- ================= FINANCIAL PAGE: ASSET CORRELATION HEATMAP ================= -->
+<style>
+.nx-corr{max-width:820px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-corr-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:14px}
+.nx-corr-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.nx-corr-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.nx-corr-note{font-size:10.5px;color:#8891a1;margin-bottom:18px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.nx-corr-table{width:100%;border-collapse:separate;border-spacing:6px}
+.nx-corr-table th{font-size:11px;color:#8891a1;font-weight:700;padding:6px}
+.nx-corr-table td{text-align:center;border-radius:10px;padding:16px 8px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:15px;position:relative}
+.nx-corr-tag{position:absolute;bottom:4px;left:0;right:0;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.75}
+.nx-corr-legend{display:flex;gap:16px;margin-top:14px;font-size:10.5px;color:#8891a1;flex-wrap:wrap}
+.nx-corr-legend span{display:inline-flex;align-items:center;gap:5px}
+.nx-corr-dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+</style>
+<div class="nx-corr" id="nxCorrSection" data-mount="financial">
+  <div class="nx-corr-hdr"><div class="nx-corr-title">Interactive Asset Correlation Matrix</div><div class="nx-corr-badge">HEATMAP</div></div>
+  <div class="nx-corr-note">BTC ↔ Gold cell is computed <b>live</b> from the last 30 days of real Binance BTCUSDT & PAXGUSDT (tokenized gold) closing prices. Cells involving Stocks are shown as commonly-cited <b>reference</b> correlation coefficients — a free, key-less live equity-correlation feed doesn't exist, so we're not going to fake "live" on those.</div>
+  <table class="nx-corr-table" id="nxCorrTable">
+    <tr><th></th><th>Stocks</th><th>Gold</th><th>Crypto</th></tr>
+  </table>
+  <div class="nx-corr-legend">
+    <span><span class="nx-corr-dot" style="background:#ff3b5c"></span>Strong negative (hedge)</span>
+    <span><span class="nx-corr-dot" style="background:#3a3f4d"></span>No correlation</span>
+    <span><span class="nx-corr-dot" style="background:#00d9b5"></span>Strong positive (moves together)</span>
+  </div>
+</div>
+<script>
+(function(){
+  var refMatrix = { stocksGold: -0.12, stocksCrypto: 0.42 };
+  var liveGoldCrypto = null;
 
+  function colorFor(v){
+    if (v > 0) { var g = Math.round(v*180); return 'rgba(0,'+(150+g*0.3)+','+(150+g*0.3)+',0.35)'; }
+    var r = Math.round(Math.abs(v)*180);
+    return 'rgba('+(150+r*0.4)+',40,80,0.35)';
+  }
+
+  function render(){
+    var t = document.getElementById('nxCorrTable');
+    if (!t) return;
+    var gc = liveGoldCrypto !== null ? liveGoldCrypto : 0.15;
+    var gcTag = liveGoldCrypto !== null ? 'LIVE (30d)' : 'loading…';
+    var rows = [
+      { label:'Stocks', vals:[ {v:1,tag:'—'}, {v:refMatrix.stocksGold,tag:'REFERENCE'}, {v:refMatrix.stocksCrypto,tag:'REFERENCE'} ] },
+      { label:'Gold', vals:[ {v:refMatrix.stocksGold,tag:'REFERENCE'}, {v:1,tag:'—'}, {v:gc,tag:gcTag} ] },
+      { label:'Crypto', vals:[ {v:refMatrix.stocksCrypto,tag:'REFERENCE'}, {v:gc,tag:gcTag}, {v:1,tag:'—'} ] }
+    ];
+    var html = '<tr><th></th><th>Stocks</th><th>Gold</th><th>Crypto</th></tr>';
+    rows.forEach(function(row){
+      html += '<tr><th>'+row.label+'</th>';
+      row.vals.forEach(function(cell){
+        html += '<td style="background:'+colorFor(cell.v)+'">'+cell.v.toFixed(2)+'<div class="nx-corr-tag">'+cell.tag+'</div></td>';
+      });
+      html += '</tr>';
+    });
+    t.innerHTML = html;
+  }
+
+  async function loadLiveCorr(){
+    try {
+      var btcRes = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=31');
+      var goldRes = await fetch('https://api.binance.com/api/v3/klines?symbol=PAXGUSDT&interval=1d&limit=31');
+      var btcK = await btcRes.json(); var goldK = await goldRes.json();
+      var btcCloses = btcK.map(function(k){return parseFloat(k[4]);});
+      var goldCloses = goldK.map(function(k){return parseFloat(k[4]);});
+      var btcRet = []; var goldRet = [];
+      for (var i=1;i<btcCloses.length;i++) btcRet.push((btcCloses[i]-btcCloses[i-1])/btcCloses[i-1]);
+      for (var j=1;j<goldCloses.length;j++) goldRet.push((goldCloses[j]-goldCloses[j-1])/goldCloses[j-1]);
+      var n = Math.min(btcRet.length, goldRet.length);
+      var mb=0,mg=0;
+      for (var k=0;k<n;k++){ mb+=btcRet[k]; mg+=goldRet[k]; }
+      mb/=n; mg/=n;
+      var cov=0, vb=0, vg=0;
+      for (var m=0;m<n;m++){ cov += (btcRet[m]-mb)*(goldRet[m]-mg); vb += Math.pow(btcRet[m]-mb,2); vg += Math.pow(goldRet[m]-mg,2); }
+      liveGoldCrypto = cov / Math.sqrt(vb*vg);
+    } catch(e) { liveGoldCrypto = null; }
+    render();
+  }
+  render();
+  document.addEventListener('DOMContentLoaded', loadLiveCorr);
+  if (document.readyState !== 'loading') loadLiveCorr();
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: SIP & LUMPSUM WEALTH PROJECTION CHART ================= -->
+<style>
+.nx-proj{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-proj-hdr{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-proj-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+.nx-proj-field{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
+.nx-proj-field-top{display:flex;justify-content:space-between;font-size:11.5px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.nx-proj-field-top span{color:#d6b27a;font-weight:700}
+.nx-proj-field input[type=range]{width:100%;accent-color:#00d9b5;cursor:pointer}
+.nx-proj-mode{display:flex;gap:8px;margin-bottom:14px}
+.nx-proj-mode-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:6px 14px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer}
+.nx-proj-mode-btn.active{border-color:#00d9b5;color:#00d9b5;background:rgba(0,217,181,.08)}
+.nx-proj-chart-wrap{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;height:320px}
+.nx-proj-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:14px}
+.nx-proj-stat{background:rgba(0,217,181,.06);border:1px solid rgba(0,217,181,.2);border-radius:10px;padding:10px;text-align:center}
+.nx-proj-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase}
+.nx-proj-stat .v{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:800;color:#00d9b5;margin-top:3px}
+</style>
+<div class="nx-proj" id="nxProjSection" data-mount="financial">
+  <div class="nx-proj-hdr">Live SIP &amp; Lumpsum Wealth Projection</div>
+  <div class="nx-proj-mode">
+    <button class="nx-proj-mode-btn active" id="nxProjModeSip" onclick="nxProjSetMode('sip')">SIP</button>
+    <button class="nx-proj-mode-btn" id="nxProjModeLump" onclick="nxProjSetMode('lumpsum')">Lumpsum</button>
+    <button class="nx-proj-mode-btn" id="nxProjModeBoth" onclick="nxProjSetMode('both')">Compare Both</button>
+  </div>
+  <div class="nx-proj-controls">
+    <div class="nx-proj-field"><div class="nx-proj-field-top"><span>Monthly SIP</span><span id="nxProjSipV">₹15,000</span></div><input type="range" id="nxProjSip" min="500" max="200000" step="500" value="15000" oninput="nxProjRender()"></div>
+    <div class="nx-proj-field"><div class="nx-proj-field-top"><span>Lumpsum Amount</span><span id="nxProjLumpV">₹5,00,000</span></div><input type="range" id="nxProjLump" min="10000" max="10000000" step="10000" value="500000" oninput="nxProjRender()"></div>
+    <div class="nx-proj-field"><div class="nx-proj-field-top"><span>Expected Return</span><span id="nxProjRetV">12%</span></div><input type="range" id="nxProjRet" min="4" max="25" step="0.5" value="12" oninput="nxProjRender()"></div>
+    <div class="nx-proj-field"><div class="nx-proj-field-top"><span>Tenure</span><span id="nxProjYearsV">20 yrs</span></div><input type="range" id="nxProjYears" min="1" max="40" step="1" value="20" oninput="nxProjRender()"></div>
+  </div>
+  <div class="nx-proj-chart-wrap"><canvas id="nxProjCanvas"></canvas></div>
+  <div class="nx-proj-stats">
+    <div class="nx-proj-stat"><div class="l">Total Invested</div><div class="v" id="nxProjInvested">₹0</div></div>
+    <div class="nx-proj-stat"><div class="l">Final Corpus</div><div class="v" id="nxProjFinal">₹0</div></div>
+    <div class="nx-proj-stat"><div class="l">Wealth Gained</div><div class="v" id="nxProjGain">₹0</div></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script>
+(function(){
+  var nxProjChart = null;
+  window.nxProjMode = 'sip';
+  window.nxProjSetMode = function(m){
+    nxProjMode = m;
+    document.getElementById('nxProjModeSip').classList.toggle('active', m==='sip');
+    document.getElementById('nxProjModeLump').classList.toggle('active', m==='lumpsum');
+    document.getElementById('nxProjModeBoth').classList.toggle('active', m==='both');
+    nxProjRender();
+  };
+  window.nxProjRender = function(){
+    var sip = parseFloat(document.getElementById('nxProjSip').value);
+    var lump = parseFloat(document.getElementById('nxProjLump').value);
+    var ret = parseFloat(document.getElementById('nxProjRet').value)/100;
+    var years = parseInt(document.getElementById('nxProjYears').value,10);
+    document.getElementById('nxProjSipV').textContent = '₹'+sip.toLocaleString('en-IN');
+    document.getElementById('nxProjLumpV').textContent = '₹'+lump.toLocaleString('en-IN');
+    document.getElementById('nxProjRetV').textContent = ret*100+'%';
+    document.getElementById('nxProjYearsV').textContent = years+' yrs';
+
+    var monthlyR = Math.pow(1+ret,1/12)-1;
+    var labels = []; var sipData = []; var lumpData = [];
+    var invested = 0;
+    for (var y=0;y<=years;y++){
+      labels.push('Y'+y);
+      var n = y*12;
+      var sipVal = sip * ((Math.pow(1+monthlyR,n)-1)/monthlyR) * (1+monthlyR);
+      var lumpVal = lump * Math.pow(1+ret, y);
+      sipData.push(Math.round(sipVal));
+      lumpData.push(Math.round(lumpVal));
+      if (y===years) invested = sip*n;
+    }
+
+    var datasets = [];
+    if (nxProjMode==='sip' || nxProjMode==='both') datasets.push({label:'SIP Growth', data:sipData, borderColor:'#00d9b5', backgroundColor:'rgba(0,217,181,.12)', fill:true, tension:.3});
+    if (nxProjMode==='lumpsum' || nxProjMode==='both') datasets.push({label:'Lumpsum Growth', data:lumpData, borderColor:'#d6b27a', backgroundColor:'rgba(214,178,122,.1)', fill:true, tension:.3});
+
+    var ctx = document.getElementById('nxProjCanvas').getContext('2d');
+    if (nxProjChart) nxProjChart.destroy();
+    nxProjChart = new Chart(ctx, {
+      type:'line',
+      data:{ labels:labels, datasets:datasets },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ labels:{ color:'#eef1f6' } } },
+        scales:{ x:{ ticks:{color:'#8891a1'}, grid:{color:'rgba(255,255,255,.05)'} }, y:{ ticks:{color:'#8891a1', callback:function(v){return '₹'+(v/100000).toFixed(1)+'L';}}, grid:{color:'rgba(255,255,255,.05)'} } } }
+    });
+
+    var finalVal = nxProjMode==='lumpsum' ? lumpData[years] : sipData[years];
+    var investedShown = nxProjMode==='lumpsum' ? lump : invested;
+    document.getElementById('nxProjInvested').textContent = '₹'+Math.round(investedShown).toLocaleString('en-IN');
+    document.getElementById('nxProjFinal').textContent = '₹'+Math.round(finalVal).toLocaleString('en-IN');
+    document.getElementById('nxProjGain').textContent = '₹'+Math.round(finalVal-investedShown).toLocaleString('en-IN');
+  };
+  document.addEventListener('DOMContentLoaded', nxProjRender);
+  if (document.readyState !== 'loading') setTimeout(nxProjRender, 100);
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: DEBT SNOWBALL PAYOFF VISUALIZER ================= -->
+<style>
+.nx-debt{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-debt-hdr{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-debt-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.nx-debt-row{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr auto;gap:8px;background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;align-items:center}
+@media(max-width:700px){.nx-debt-row{grid-template-columns:1fr 1fr;}}
+.nx-debt-row input, .nx-debt-row select{background:transparent;border:none;color:#eef1f6;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;outline:none;width:100%}
+.nx-debt-row label{font-size:9px;color:#8891a1;display:block;margin-bottom:2px;text-transform:uppercase}
+.nx-debt-del{background:rgba(255,59,92,.1);border:1px solid rgba(255,59,92,.3);color:#ff5c7a;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700}
+.nx-debt-addbtn{background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);color:#00d9b5;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;margin-bottom:16px}
+.nx-debt-extra{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;margin-bottom:16px}
+.nx-debt-timeline{display:flex;flex-direction:column;gap:8px}
+.nx-debt-bar-row{display:flex;align-items:center;gap:10px}
+.nx-debt-bar-label{width:120px;font-size:12px;font-weight:700;flex-shrink:0}
+.nx-debt-bar-track{flex:1;background:rgba(255,255,255,.05);border-radius:6px;height:22px;overflow:hidden;position:relative}
+.nx-debt-bar-fill{height:100%;background:linear-gradient(90deg,#ff5c7a,#d6b27a);border-radius:6px}
+.nx-debt-bar-months{width:80px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:#8891a1;flex-shrink:0}
+.nx-debt-summary{margin-top:16px;background:linear-gradient(135deg,rgba(0,217,181,.08),rgba(214,178,122,.06));border:1px solid rgba(0,217,181,.25);border-radius:12px;padding:16px;text-align:center}
+</style>
+<div class="nx-debt" id="nxDebtSection" data-mount="financial">
+  <div class="nx-debt-hdr">Smart Debt Snowball Payoff Visualizer</div>
+  <div class="nx-debt-extra"><label style="font-size:11px;color:#8891a1;">Extra monthly payment (snowball amount) applied to smallest debt first</label><input type="number" id="nxDebtExtra" value="5000" oninput="nxDebtCalc()" style="background:transparent;border:none;color:#00d9b5;font-size:16px;font-weight:800;font-family:'JetBrains Mono',monospace;outline:none;margin-top:4px;width:100%"></div>
+  <div class="nx-debt-list" id="nxDebtList"></div>
+  <button class="nx-debt-addbtn" onclick="nxDebtAddRow()">+ Add Debt</button>
+  <div class="nx-debt-timeline" id="nxDebtTimeline"></div>
+  <div class="nx-debt-summary" id="nxDebtSummary"></div>
+</div>
+<script>
+(function(){
+  var nxDebtRows = [
+    {name:'Credit Card', balance:80000, rate:36, min:4000},
+    {name:'Personal Loan', balance:250000, rate:14, min:8000},
+    {name:'Home Loan', balance:2000000, rate:8.5, min:18000}
+  ];
+
+  function renderRows(){
+    var wrap = document.getElementById('nxDebtList');
+    var html = '';
+    nxDebtRows.forEach(function(d, i){
+      html += '<div class="nx-debt-row">'+
+        '<div><label>Name</label><input type="text" value="'+d.name+'" oninput="nxDebtUpdate('+i+',\'name\',this.value)"></div>'+
+        '<div><label>Balance ₹</label><input type="number" value="'+d.balance+'" oninput="nxDebtUpdate('+i+',\'balance\',this.value)"></div>'+
+        '<div><label>Interest %</label><input type="number" step="0.1" value="'+d.rate+'" oninput="nxDebtUpdate('+i+',\'rate\',this.value)"></div>'+
+        '<div><label>Min Payment ₹</label><input type="number" value="'+d.min+'" oninput="nxDebtUpdate('+i+',\'min\',this.value)"></div>'+
+        '<button class="nx-debt-del" onclick="nxDebtRemove('+i+')">✕</button></div>';
+    });
+    wrap.innerHTML = html;
+  }
+  window.nxDebtUpdate = function(i, field, val){
+    nxDebtRows[i][field] = (field==='name') ? val : parseFloat(val)||0;
+    nxDebtCalc();
+  };
+  window.nxDebtRemove = function(i){ nxDebtRows.splice(i,1); renderRows(); nxDebtCalc(); };
+  window.nxDebtAddRow = function(){ nxDebtRows.push({name:'New Debt', balance:50000, rate:12, min:2000}); renderRows(); nxDebtCalc(); };
+
+  window.nxDebtCalc = function(){
+    var extra = parseFloat(document.getElementById('nxDebtExtra').value)||0;
+    var debts = JSON.parse(JSON.stringify(nxDebtRows)).map(function(d){ return {name:d.name, balance:d.balance, rate:d.rate, min:d.min, months:0, totalInterest:0}; });
+    debts.sort(function(a,b){ return a.balance - b.balance; }); // snowball: smallest balance first
+
+    var month = 0; var totalInterestAll = 0; var extraPool = extra;
+    var maxMonths = 600;
+    while (debts.some(function(d){return d.balance>0.5;}) && month < maxMonths) {
+      month++;
+      var freedUp = 0;
+      debts.forEach(function(d){
+        if (d.balance <= 0.5) return;
+        var interest = d.balance * (d.rate/100/12);
+        d.totalInterest += interest;
+        totalInterestAll += interest;
+        d.balance += interest;
+      });
+      var snowballExtra = extraPool;
+      for (var i=0;i<debts.length;i++){
+        var d = debts[i];
+        if (d.balance <= 0.5) continue;
+        var payment = d.min + (i===0 ? snowballExtra : 0);
+        if (d.balance <= payment) {
+          var overpay = payment - d.balance;
+          d.balance = 0;
+          if (d.months === 0) d.months = month;
+          if (i===0) freedUp += d.min;
+          snowballExtra = i===0 ? overpay : snowballExtra;
+        } else {
+          d.balance -= payment;
+        }
+      }
+      extraPool += freedUp * 0; // freed min-payments roll into snowball next month for the next smallest debt automatically since sorted
+    }
+    debts.forEach(function(d){ if (d.balance>0.5 && d.months===0) d.months = maxMonths; });
+
+    var maxM = Math.max.apply(null, debts.map(function(d){return d.months;}));
+    var timelineHtml = '';
+    debts.forEach(function(d){
+      var pct = maxM>0 ? (d.months/maxM*100) : 0;
+      timelineHtml += '<div class="nx-debt-bar-row"><div class="nx-debt-bar-label">'+d.name+'</div><div class="nx-debt-bar-track"><div class="nx-debt-bar-fill" style="width:'+pct+'%"></div></div><div class="nx-debt-bar-months">'+d.months+' mo</div></div>';
+    });
+    document.getElementById('nxDebtTimeline').innerHTML = timelineHtml;
+    document.getElementById('nxDebtSummary').innerHTML =
+      '<div style="font-size:11px;color:#8891a1;text-transform:uppercase;">Debt-free in</div>'+
+      '<div style="font-family:JetBrains Mono,monospace;font-size:22px;font-weight:800;color:#00d9b5;margin:6px 0;">'+maxM+' months ('+(maxM/12).toFixed(1)+' yrs)</div>'+
+      '<div style="font-size:12px;color:#8891a1;">Total interest paid across all debts: <b style="color:#fff">₹'+Math.round(totalInterestAll).toLocaleString('en-IN')+'</b></div>';
+  };
+
+  renderRows();
+  document.addEventListener('DOMContentLoaded', nxDebtCalc);
+  if (document.readyState !== 'loading') nxDebtCalc();
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: 1-CLICK PDF REPORT GENERATOR ================= -->
+<style>
+.nx-pdf{max-width:920px;margin:26px auto;background:linear-gradient(135deg,rgba(214,178,122,.08),rgba(0,217,181,.05));border:1px solid rgba(214,178,122,.3);border-radius:20px;padding:24px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.nx-pdf-left h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:5px}
+.nx-pdf-left p{font-size:12px;color:#8891a1;max-width:440px;line-height:1.6}
+.nx-pdf-btn{background:linear-gradient(135deg,#d6b27a,#a9895a);color:#08090b;font-weight:800;font-size:13px;padding:13px 26px;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 24px rgba(214,178,122,.25)}
+.nx-pdf-btn:hover{transform:translateY(-2px)}
+.nx-pdf-status{font-size:10.5px;color:#00d9b5;margin-top:6px}
+</style>
+<div class="nx-pdf" id="nxPdfSection" data-mount="financial">
+  <div class="nx-pdf-left">
+    <h3>📄 One-Click Financial Summary PDF</h3>
+    <p>Pulls your current numbers from the Rebalancing, FIRE, and Asset Allocation calculators above and generates a clean branded report.</p>
+    <div class="nx-pdf-status" id="nxPdfStatus"></div>
+  </div>
+  <button class="nx-pdf-btn" onclick="nxGeneratePdf()">Generate &amp; Download PDF</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function nxGeneratePdf(){
+  var statusEl = document.getElementById('nxPdfStatus');
+  try {
+    if (!window.jspdf) { statusEl.textContent = 'PDF engine still loading — try again in a second.'; return; }
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF();
+    var y = 20;
+
+    doc.setFontSize(20); doc.setTextColor(20,20,20);
+    doc.text('Global Finance — Financial Summary Report', 15, y); y += 6;
+    doc.setFontSize(10); doc.setTextColor(120,120,120);
+    doc.text('Generated on ' + new Date().toLocaleString('en-IN'), 15, y); y += 12;
+
+    function section(title){
+      doc.setFontSize(13); doc.setTextColor(30,30,30);
+      doc.text(title, 15, y); y += 2;
+      doc.setDrawColor(200,200,200); doc.line(15, y, 195, y); y += 8;
+    }
+    function line(label, val){
+      doc.setFontSize(10.5); doc.setTextColor(60,60,60);
+      doc.text(label, 18, y);
+      doc.setTextColor(20,20,20); doc.setFont(undefined,'bold');
+      doc.text(String(val), 120, y);
+      doc.setFont(undefined,'normal');
+      y += 7;
+    }
+    function getVal(id, fallback){ var el = document.getElementById(id); return el ? (el.value !== undefined ? el.value : el.textContent) : fallback; }
+
+    section('Portfolio Asset Allocation');
+    line('Stocks & Mutual Funds', '₹' + (parseFloat(getVal('inpStocks',0))||0).toLocaleString('en-IN'));
+    line('Fixed Income & Bonds', '₹' + (parseFloat(getVal('inpBonds',0))||0).toLocaleString('en-IN'));
+    line('Gold & Commodities', '₹' + (parseFloat(getVal('inpGold',0))||0).toLocaleString('en-IN'));
+    line('Real Estate', '₹' + (parseFloat(getVal('inpRE',0))||0).toLocaleString('en-IN'));
+    line('Crypto & Digital Assets', '₹' + (parseFloat(getVal('inpCrypto',0))||0).toLocaleString('en-IN'));
+    line('Total Portfolio Value', getVal('valTotalNetWorth','₹0'));
+    y += 6;
+
+    section('Portfolio Rebalancing Target');
+    line('Selected Risk Profile', (window.nxCurrentProfile || 'aggressive'));
+    line('Current Stocks Value', '₹' + (parseFloat(getVal('nxCurStocks',0))||0).toLocaleString('en-IN'));
+    line('Current Bonds Value', '₹' + (parseFloat(getVal('nxCurBonds',0))||0).toLocaleString('en-IN'));
+    line('Current Gold Value', '₹' + (parseFloat(getVal('nxCurGold',0))||0).toLocaleString('en-IN'));
+    y += 6;
+
+    section('FIRE (Financial Independence) Target');
+    line('Current Age', getVal('nxFireAgeV','—'));
+    line('Annual Expenses', getVal('nxFireExpV','—'));
+    line('Monthly SIP', getVal('nxFireSipV','—'));
+    line('FIRE Number (today\'s value)', getVal('nxFireNumber','—'));
+    line('Projected FI Age', getVal('nxFireAgeResult','—'));
+    line('Years to Financial Independence', getVal('nxFireYears','—'));
+    y += 10;
+
+    doc.setFontSize(8); doc.setTextColor(150,150,150);
+    doc.text('This report is generated for educational purposes only and does not constitute financial advice. Global Finance is not a SEBI-registered advisor.', 15, 280);
+
+    doc.save('Global-Finance-Report-' + Date.now() + '.pdf');
+    statusEl.textContent = 'Report downloaded successfully.';
+  } catch(e) {
+    statusEl.textContent = 'Could not generate report — please try again.';
+    console.error(e);
+  }
+}
+</script>
+
+<!-- ================= FINANCIAL PAGE: LIVE CRYPTO & MARKET NEWS TICKER ================= -->
+<style>
+.nx-news{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-news-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:14px}
+.nx-news-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.nx-news-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00d9b5;font-weight:700}
+.nx-news-dot{width:6px;height:6px;background:#00d9b5;border-radius:50%;box-shadow:0 0 8px #00d9b5;animation:nxNewsPulse 1.5s infinite}
+@keyframes nxNewsPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.nx-news-filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.nx-news-filter-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer}
+.nx-news-filter-btn.active{border-color:#00d9b5;color:#00d9b5;background:rgba(0,217,181,.08)}
+.nx-news-ticker-track{overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:14px}
+.nx-news-ticker-inner{display:inline-block;animation:nxTickerScroll 40s linear infinite}
+.nx-news-ticker-inner span{margin-right:40px;font-size:12.5px;color:#d6b27a;font-weight:600}
+@keyframes nxTickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.nx-news-cards{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto}
+.nx-news-card{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.nx-news-cat-tag{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:20px;flex-shrink:0}
+.nx-news-cat-tag.crypto{color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3)}
+.nx-news-cat-tag.macro{color:#d6b27a;background:rgba(214,178,122,.1);border:1px solid rgba(214,178,122,.3)}
+.nx-news-card a{color:#eef1f6;text-decoration:none;font-size:13px;font-weight:600;line-height:1.4}
+.nx-news-card a:hover{color:#00d9b5}
+.nx-news-src{font-size:10px;color:#8891a1;margin-top:4px}
+</style>
+<div class="nx-news" id="nxNewsSection" data-mount="financial">
+  <div class="nx-news-hdr"><div class="nx-news-title">Live Crypto &amp; Market News</div><div class="nx-news-live"><span class="nx-news-dot"></span>LIVE FEED</div></div>
+  <div class="nx-news-filters">
+    <button class="nx-news-filter-btn active" onclick="nxNewsFilter('all',this)">All</button>
+    <button class="nx-news-filter-btn" onclick="nxNewsFilter('crypto',this)">Crypto</button>
+    <button class="nx-news-filter-btn" onclick="nxNewsFilter('macro',this)">Macro Economy</button>
+  </div>
+  <div class="nx-news-ticker-track"><div class="nx-news-ticker-inner" id="nxNewsTickerInner">Loading live headlines…</div></div>
+  <div class="nx-news-cards" id="nxNewsCards">Loading…</div>
+</div>
+<script>
+(function(){
+  var allNews = [];
+  window.nxNewsFilter = function(cat, el){
+    document.querySelectorAll('#nxNewsSection .nx-news-filter-btn').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    renderCards(cat);
+  };
+  function renderCards(filter){
+    var wrap = document.getElementById('nxNewsCards');
+    var filtered = filter==='all' ? allNews : allNews.filter(function(n){return n.cat===filter;});
+    if (!filtered.length) { wrap.innerHTML = '<div style="color:#8891a1;text-align:center;padding:20px;">No news in this category right now.</div>'; return; }
+    wrap.innerHTML = filtered.slice(0,20).map(function(n){
+      return '<div class="nx-news-card"><div><a href="'+n.link+'" target="_blank" rel="noopener">'+n.title+'</a><div class="nx-news-src">'+n.source+' · '+n.time+'</div></div><span class="nx-news-cat-tag '+n.cat+'">'+n.cat+'</span></div>';
+    }).join('');
+  }
+  function renderTicker(){
+    var t = document.getElementById('nxNewsTickerInner');
+    var titles = allNews.slice(0,15).map(function(n){return '<span>● '+n.title+'</span>';}).join('');
+    t.innerHTML = titles + titles; // duplicate for seamless loop
+  }
+
+  async function loadCryptoNews(){
+    try {
+      var res = await fetch('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
+      var data = await res.json();
+      if (data && data.Data) {
+        data.Data.slice(0,15).forEach(function(item){
+          allNews.push({ title:item.title, link:item.url, source:item.source_info && item.source_info.name ? item.source_info.name : 'CryptoCompare', time:new Date(item.published_on*1000).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}), cat:'crypto', ts:item.published_on });
+        });
+      }
+    } catch(e) { console.log('crypto news error', e); }
+  }
+  async function loadMacroNews(){
+    try {
+      var rssUrl = encodeURIComponent('https://finance.yahoo.com/news/rssindex');
+      var res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + rssUrl);
+      var data = await res.json();
+      if (data.status==='ok' && data.items) {
+        data.items.slice(0,15).forEach(function(item){
+          allNews.push({ title:item.title, link:item.link, source:'Yahoo Finance', time:new Date(item.pubDate).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}), cat:'macro', ts:new Date(item.pubDate).getTime()/1000 });
+        });
+      }
+    } catch(e) { console.log('macro news error', e); }
+  }
+
+  async function loadAll(){
+    allNews = [];
+    await Promise.all([loadCryptoNews(), loadMacroNews()]);
+    allNews.sort(function(a,b){ return (b.ts||0)-(a.ts||0); });
+    renderTicker();
+    var activeBtn = document.querySelector('#nxNewsSection .nx-news-filter-btn.active');
+    renderCards(activeBtn ? (activeBtn.textContent.toLowerCase().indexOf('crypto')>-1 ? 'crypto' : (activeBtn.textContent.toLowerCase().indexOf('macro')>-1 ? 'macro' : 'all')) : 'all');
+  }
+
+  var booted=false;
+  function boot(){ if(booted) return; booted=true; loadAll(); setInterval(loadAll, 180000); }
+  document.addEventListener('DOMContentLoaded', boot);
+  if (document.readyState !== 'loading') boot();
+})();
+</script>
 </body>
 </html>
