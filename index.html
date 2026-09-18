@@ -4794,7 +4794,88 @@ tx4LevCalc();
 </script>
 
 
-        
+ <!-- ================= TRADING PAGE: TRADING POSTS/ARTICLES (add your own posts in tx5Posts below) ================= -->
+<style>
+#tx5PostsSection{max-width:920px;margin:26px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+#tx5PostsSection .tx5-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e1e;padding-bottom:14px;margin-bottom:22px}
+#tx5PostsSection .tx5-hdr h3{color:#fff;font-size:20px;font-weight:700;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif}
+#tx5PostsSection .tx5-hdr h3 span{color:#00e676}
+#tx5PostsSection .tx5-hdr small{color:#5f5f5f;font-size:11px;font-weight:600;letter-spacing:1px}
+#tx5PostsBox{background:linear-gradient(180deg,#0b0b0b 0%,#070707 100%);border:1px solid #1a1a1a;border-radius:16px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+#tx5PostsContainer{display:flex;flex-direction:column;gap:10px;padding:8px}
+.tx5-post-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:border-color .2s ease}
+.tx5-post-card:hover{border-color:#2a2a2a}
+.tx5-post-card .cat{color:#00e676;font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
+.tx5-post-card h4{color:#f1f1f1;margin:6px 0 4px;font-size:14.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif}
+.tx5-post-card p{color:#787878;font-size:11.5px;margin:0;line-height:1.4}
+.tx5-read-link{background:#141414;border:1px solid #00e676;color:#00e676;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .2s ease}
+.tx5-read-link:hover{background:#00e676;color:#0a0a0a}
+#tx5EmptyState{text-align:center;padding:46px 20px;color:#4a4a4a}
+#tx5EmptyState .ic{font-size:26px;margin-bottom:10px;color:#333}
+#tx5EmptyState .t{font-size:13.5px;font-weight:700;color:#666}
+#tx5EmptyState .s{font-size:11.5px;margin-top:4px;color:#444}
+#tx5LoadMoreBtn{background:linear-gradient(180deg,#151515 0%,#0d0d0d 100%);border:1px solid #00e676;color:#00e676;padding:12px 32px;border-radius:30px;font-weight:700;font-size:12.5px;letter-spacing:1px;cursor:pointer;transition:all .3s ease}
+#tx5LoadMoreBtn:disabled{cursor:default}
+</style>
+
+<div id="tx5PostsSection" data-mount="trading">
+  <div class="tx5-hdr"><h3><span>◈</span> Trading Guides &amp; Posts</h3><small>ARCHIVE</small></div>
+  <div id="tx5PostsBox">
+    <div id="tx5PostsContainer"></div>
+    <div id="tx5EmptyState" style="display:none;">
+      <div class="ic">◈</div><div class="t">Coming soon</div><div class="s">Trading posts will appear here once added</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:26px;" id="tx5LoadMoreWrap"><button onclick="tx5LoadMorePosts()" id="tx5LoadMoreBtn">LOAD MORE POSTS ✦</button></div>
+</div>
+
+<script>
+  /* Apne trading posts yahan add karo — { category, title, desc, link } */
+var tx5Posts = [
+  // { category: 'Price Action', title: 'Your title', desc: 'Short description', link: 'https://...' },
+];
+var TX5_INITIAL_COUNT = 15;
+
+function tx5Escape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function tx5BuildCard(post, hidden){
+  var url = (post.link || '').trim();
+  var linkHtml = url
+    ? '<a href="' + tx5Escape(url) + '" class="tx5-read-link" target="_blank" rel="nofollow noopener">Read →</a>'
+    : '<span class="tx5-read-link" style="pointer-events:none;opacity:.4;border-color:#3a3a3a;color:#666;">Coming soon</span>';
+  return '<div class="tx5-post-card" style="display:' + (hidden ? 'none' : 'flex') + ';">' +
+    '<div><span class="cat">' + (tx5Escape(post.category) || 'CATEGORY') + '</span>' +
+    '<h4>' + (tx5Escape(post.title) || 'Post title') + '</h4>' +
+    '<p>' + tx5Escape(post.desc) + '</p></div>' + linkHtml + '</div>';
+}
+
+function tx5RenderPosts(){
+  var container = document.getElementById('tx5PostsContainer');
+  var empty = document.getElementById('tx5EmptyState');
+  var loadMoreWrap = document.getElementById('tx5LoadMoreWrap');
+  if (!container) return;
+  if (!tx5Posts.length) { container.innerHTML = ''; empty.style.display = 'block'; loadMoreWrap.style.display = 'none'; return; }
+  empty.style.display = 'none';
+  var html = '';
+  tx5Posts.forEach(function(p, i){ html += tx5BuildCard(p, i >= TX5_INITIAL_COUNT); });
+  container.innerHTML = html;
+  loadMoreWrap.style.display = tx5Posts.length > TX5_INITIAL_COUNT ? 'block' : 'none';
+}
+
+function tx5LoadMorePosts() {
+  var cards = document.querySelectorAll('#tx5PostsContainer .tx5-post-card');
+  for (var i = TX5_INITIAL_COUNT; i < cards.length; i++) cards[i].style.display = 'flex';
+  var btn = document.getElementById('tx5LoadMoreBtn');
+  btn.innerText = 'ALL POSTS LOADED ✓';
+  btn.style.borderColor = '#00ff88';
+  btn.style.color = '#00ff88';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+}
+
+document.addEventListener('DOMContentLoaded', function(){ tx5RenderPosts(); });
+tx5RenderPosts();
+</script>       
 
 </body>
 </html>
