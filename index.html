@@ -3728,6 +3728,340 @@ function nxFinScrollTo(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
-    
+<!-- ================= TRADING PAGE: TECHNICAL ANALYSIS GAUGE METER ================= -->
+<style>
+.tx2-gauge{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,184,0,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx2-gauge-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx2-gauge-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx2-gauge-badge{font-size:10px;font-weight:800;color:#00e676;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:4px 10px;border-radius:20px}
+.tx2-gauge-symrow{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.tx2-gauge-select{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:8px 12px;border-radius:8px;font-size:12px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer}
+.tx2-gauge-box{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:6px;min-height:450px}
+</style>
+<div class="tx2-gauge" id="tx2GaugeSection" data-mount="trading">
+  <div class="tx2-gauge-hdr"><div class="tx2-gauge-title">Technical Analysis Gauge</div><div class="tx2-gauge-badge">LIVE · TRADINGVIEW</div></div>
+  <div class="tx2-gauge-symrow">
+    <select class="tx2-gauge-select" id="tx2GaugeSymbol" onchange="tx2LoadGauge()">
+      <option value="BITSTAMP:BTCUSD">BTC / USD</option>
+      <option value="BITSTAMP:ETHUSD">ETH / USD</option>
+      <option value="FX_IDC:EURUSD">EUR / USD</option>
+      <option value="FX_IDC:USDINR">USD / INR</option>
+      <option value="BSE:SENSEX">SENSEX</option>
+      <option value="NSE:NIFTY">NIFTY 50</option>
+    </select>
+    <select class="tx2-gauge-select" id="tx2GaugeInterval" onchange="tx2LoadGauge()">
+      <option value="15m">15 Minutes</option>
+      <option value="1h" selected>1 Hour</option>
+      <option value="4h">4 Hours</option>
+      <option value="1D">1 Day</option>
+      <option value="1W">1 Week</option>
+    </select>
+  </div>
+  <div class="tx2-gauge-box" id="tx2GaugeBox"></div>
+</div>
+<script>
+function tx2LoadGauge(){
+  var symbol = document.getElementById('tx2GaugeSymbol').value;
+  var interval = document.getElementById('tx2GaugeInterval').value;
+  var box = document.getElementById('tx2GaugeBox');
+  box.innerHTML = '';
+  var container = document.createElement('div');
+  container.className = 'tradingview-widget-container';
+  container.style.height = '100%'; container.style.width = '100%';
+  var widgetDiv = document.createElement('div');
+  widgetDiv.className = 'tradingview-widget-container__widget';
+  container.appendChild(widgetDiv);
+  box.appendChild(container);
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js';
+  script.async = true;
+  script.innerHTML = JSON.stringify({
+    interval: interval, width: '100%', isTransparent: true, height: 440,
+    symbol: symbol, showIntervalTabs: true, displayMode: 'single', locale: 'in', colorTheme: 'dark'
+  });
+  container.appendChild(script);
+}
+var tx2GaugeBooted = false;
+function tx2BootGauge(){
+  var tradingPage = document.getElementById('trading');
+  if (!tradingPage) return;
+  if (tradingPage.classList.contains('active') && !tx2GaugeBooted) { tx2GaugeBooted = true; tx2LoadGauge(); }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  tx2BootGauge();
+  var tradingPage = document.getElementById('trading');
+  if (tradingPage) new MutationObserver(tx2BootGauge).observe(tradingPage, { attributes:true, attributeFilter:['class'] });
+});
+if (document.readyState !== 'loading') tx2BootGauge();
+</script>
+
+<!-- ================= TRADING PAGE: LIVE ORDER BOOK & TRADE PRESSURE ================= -->
+<style>
+.tx2-book{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,230,118,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx2-book-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.tx2-book-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx2-book-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.tx2-book-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:tx2Pulse 1.5s infinite}
+@keyframes tx2Pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.tx2-book-symrow{margin-bottom:16px}
+.tx2-book-select{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:8px 12px;border-radius:8px;font-size:12px;font-family:'JetBrains Mono',monospace;outline:none;cursor:pointer}
+.tx2-pressure-bar{display:flex;height:36px;border-radius:10px;overflow:hidden;margin-bottom:8px;border:1px solid rgba(255,255,255,.08)}
+.tx2-pressure-buy{background:linear-gradient(90deg,#00c853,#00e676);display:flex;align-items:center;justify-content:flex-start;padding-left:12px;font-weight:800;font-size:12px;color:#04120a;transition:width .5s ease}
+.tx2-pressure-sell{background:linear-gradient(90deg,#ff5252,#ff1744);display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-weight:800;font-size:12px;color:#1a0404;transition:width .5s ease}
+.tx2-pressure-labels{display:flex;justify-content:space-between;font-size:11px;color:#8891a1;margin-bottom:20px}
+.tx2-book-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.tx2-book-cols{grid-template-columns:1fr}}
+.tx2-book-col-hdr{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
+.tx2-book-col-hdr.bids{color:#00e676}
+.tx2-book-col-hdr.asks{color:#ff5252}
+.tx2-book-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:4px 6px;position:relative;margin-bottom:2px;border-radius:4px;overflow:hidden}
+.tx2-book-row .depth-fill{position:absolute;top:0;bottom:0;right:0;z-index:0;opacity:.18}
+.tx2-book-row.bid .depth-fill{background:#00e676}
+.tx2-book-row.ask .depth-fill{background:#ff5252}
+.tx2-book-row span{position:relative;z-index:1}
+.tx2-book-row.bid .price{color:#00e676}
+.tx2-book-row.ask .price{color:#ff5252}
+.tx2-book-row .qty{color:#8891a1}
+</style>
+<div class="tx2-book" id="tx2BookSection" data-mount="trading">
+  <div class="tx2-book-hdr"><div class="tx2-book-title">Live Order Book &amp; Trade Pressure</div><div class="tx2-book-live"><span class="tx2-book-dot"></span>LIVE · BINANCE</div></div>
+  <div class="tx2-book-symrow">
+    <select class="tx2-book-select" id="tx2BookSymbol" onchange="tx2BookRestart()">
+      <option value="BTCUSDT">BTC / USDT</option>
+      <option value="ETHUSDT">ETH / USDT</option>
+      <option value="SOLUSDT">SOL / USDT</option>
+      <option value="BNBUSDT">BNB / USDT</option>
+    </select>
+  </div>
+  <div class="tx2-pressure-bar"><div class="tx2-pressure-buy" id="tx2PressureBuy" style="width:50%">BUYERS</div><div class="tx2-pressure-sell" id="tx2PressureSell" style="width:50%">SELLERS</div></div>
+  <div class="tx2-pressure-labels"><span id="tx2PressureBuyPct">50% buy pressure</span><span id="tx2PressureSellPct">50% sell pressure</span></div>
+  <div class="tx2-book-cols">
+    <div><div class="tx2-book-col-hdr bids">Bids (Buyers)</div><div id="tx2BidsList"></div></div>
+    <div><div class="tx2-book-col-hdr asks">Asks (Sellers)</div><div id="tx2AsksList"></div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var tx2BookInterval = null;
+  async function tx2LoadBook(){
+    var symbol = document.getElementById('tx2BookSymbol').value;
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/depth?symbol='+symbol+'&limit=10');
+      var data = await res.json();
+      var bids = data.bids.map(function(b){ return {price:parseFloat(b[0]), qty:parseFloat(b[1])}; });
+      var asks = data.asks.map(function(a){ return {price:parseFloat(a[0]), qty:parseFloat(a[1])}; });
+
+      var totalBidQty = bids.reduce(function(s,b){return s+b.qty;},0);
+      var totalAskQty = asks.reduce(function(s,a){return s+a.qty;},0);
+      var totalQty = totalBidQty + totalAskQty;
+      var buyPct = totalQty>0 ? (totalBidQty/totalQty*100) : 50;
+      var sellPct = 100 - buyPct;
+
+      document.getElementById('tx2PressureBuy').style.width = buyPct+'%';
+      document.getElementById('tx2PressureSell').style.width = sellPct+'%';
+      document.getElementById('tx2PressureBuyPct').textContent = buyPct.toFixed(1)+'% buy pressure';
+      document.getElementById('tx2PressureSellPct').textContent = sellPct.toFixed(1)+'% sell pressure';
+
+      var maxBidQty = Math.max.apply(null, bids.map(function(b){return b.qty;}));
+      var maxAskQty = Math.max.apply(null, asks.map(function(a){return a.qty;}));
+
+      var bidsHtml = bids.map(function(b){
+        var fillPct = (b.qty/maxBidQty*100);
+        return '<div class="tx2-book-row bid"><div class="depth-fill" style="width:'+fillPct+'%"></div><span class="price">'+b.price.toLocaleString(undefined,{minimumFractionDigits:2})+'</span><span class="qty">'+b.qty.toFixed(4)+'</span></div>';
+      }).join('');
+      var asksHtml = asks.map(function(a){
+        var fillPct = (a.qty/maxAskQty*100);
+        return '<div class="tx2-book-row ask"><div class="depth-fill" style="width:'+fillPct+'%"></div><span class="price">'+a.price.toLocaleString(undefined,{minimumFractionDigits:2})+'</span><span class="qty">'+a.qty.toFixed(4)+'</span></div>';
+      }).join('');
+
+      document.getElementById('tx2BidsList').innerHTML = bidsHtml;
+      document.getElementById('tx2AsksList').innerHTML = asksHtml;
+    } catch(e) { console.log('order book error', e); }
+  }
+  window.tx2BookRestart = function(){ tx2LoadBook(); };
+  var tx2BookBooted = false;
+  function tx2BookBoot(){
+    if (tx2BookBooted) return;
+    tx2BookBooted = true;
+    tx2LoadBook();
+    tx2BookInterval = setInterval(tx2LoadBook, 4000);
+  }
+  document.addEventListener('DOMContentLoaded', tx2BookBoot);
+  if (document.readyState !== 'loading') tx2BookBoot();
+})();
+</script>
+
+<!-- ================= TRADING PAGE: RISK-TO-REWARD MATRIX & WIN-RATE SIMULATOR ================= -->
+<style>
+.tx2-sim{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,184,0,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx2-sim-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.tx2-sim-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx2-sim-badge{font-size:10px;font-weight:800;color:#ffb800;background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);padding:4px 10px;border-radius:20px}
+.tx2-sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.tx2-sim-grid{grid-template-columns:1fr}}
+.tx2-sim-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
+.tx2-sim-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.tx2-sim-field-top span{color:#ffb800;font-weight:700}
+.tx2-sim-field input[type=range]{width:100%;accent-color:#ffb800;cursor:pointer}
+.tx2-sim-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.tx2-sim-stat{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center}
+.tx2-sim-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.tx2-sim-stat .v{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;margin-top:4px}
+.tx2-sim-stat .v.pos{color:#00e676}
+.tx2-sim-stat .v.neg{color:#ff5252}
+.tx2-sim-verdict{background:linear-gradient(135deg,rgba(255,184,0,.1),rgba(0,230,118,.05));border:1px solid rgba(255,184,0,.3);border-radius:14px;padding:16px;text-align:center;font-size:13px;color:#f1f5f9}
+.tx2-sim-verdict b{color:#ffb800}
+</style>
+<div class="tx2-sim" id="tx2SimSection" data-mount="trading">
+  <div class="tx2-sim-hdr"><div class="tx2-sim-title">Risk-to-Reward Matrix &amp; Win-Rate Simulator</div><div class="tx2-sim-badge">EXPECTANCY MODEL</div></div>
+  <div class="tx2-sim-grid">
+    <div class="tx2-sim-field"><div class="tx2-sim-field-top"><span>Win Rate</span><span id="tx2SimWinV">50%</span></div><input type="range" id="tx2SimWin" min="1" max="99" value="50" oninput="tx2SimCalc()"></div>
+    <div class="tx2-sim-field"><div class="tx2-sim-field-top"><span>Risk : Reward Ratio (1 : X)</span><span id="tx2SimRRV">1 : 2</span></div><input type="range" id="tx2SimRR" min="0.5" max="5" step="0.1" value="2" oninput="tx2SimCalc()"></div>
+    <div class="tx2-sim-field"><div class="tx2-sim-field-top"><span>Risk per Trade</span><span id="tx2SimRiskV">₹1,000</span></div><input type="range" id="tx2SimRisk" min="100" max="50000" step="100" value="1000" oninput="tx2SimCalc()"></div>
+    <div class="tx2-sim-field"><div class="tx2-sim-field-top"><span>Number of Trades</span><span id="tx2SimTradesV">20</span></div><input type="range" id="tx2SimTrades" min="5" max="200" step="5" value="20" oninput="tx2SimCalc()"></div>
+  </div>
+  <div class="tx2-sim-stats">
+    <div class="tx2-sim-stat"><div class="l">Expectancy / Trade</div><div class="v" id="tx2SimExpectancy">₹0</div></div>
+    <div class="tx2-sim-stat"><div class="l">Projected P&amp;L</div><div class="v" id="tx2SimTotal">₹0</div></div>
+    <div class="tx2-sim-stat"><div class="l">Winning Trades</div><div class="v" id="tx2SimWins">0</div></div>
+    <div class="tx2-sim-stat"><div class="l">Losing Trades</div><div class="v" id="tx2SimLosses">0</div></div>
+  </div>
+  <div class="tx2-sim-verdict" id="tx2SimVerdict">Calculating strategy viability…</div>
+</div>
+<script>
+function tx2SimCalc(){
+  var winRate = parseFloat(document.getElementById('tx2SimWin').value)/100;
+  var rr = parseFloat(document.getElementById('tx2SimRR').value);
+  var risk = parseFloat(document.getElementById('tx2SimRisk').value);
+  var trades = parseInt(document.getElementById('tx2SimTrades').value,10);
+
+  document.getElementById('tx2SimWinV').textContent = (winRate*100).toFixed(0)+'%';
+  document.getElementById('tx2SimRRV').textContent = '1 : '+rr.toFixed(1);
+  document.getElementById('tx2SimRiskV').textContent = '₹'+risk.toLocaleString('en-IN');
+  document.getElementById('tx2SimTradesV').textContent = trades;
+
+  var reward = risk * rr;
+  var lossRate = 1 - winRate;
+  var expectancy = (winRate * reward) - (lossRate * risk);
+  var totalPL = expectancy * trades;
+  var wins = Math.round(winRate * trades);
+  var losses = trades - wins;
+
+  var expEl = document.getElementById('tx2SimExpectancy');
+  var totEl = document.getElementById('tx2SimTotal');
+  expEl.textContent = '₹'+Math.round(expectancy).toLocaleString('en-IN');
+  expEl.className = 'v ' + (expectancy>=0?'pos':'neg');
+  totEl.textContent = '₹'+Math.round(totalPL).toLocaleString('en-IN');
+  totEl.className = 'v ' + (totalPL>=0?'pos':'neg');
+  document.getElementById('tx2SimWins').textContent = wins;
+  document.getElementById('tx2SimLosses').textContent = losses;
+
+  var verdict = document.getElementById('tx2SimVerdict');
+  if (expectancy > 0) {
+    verdict.innerHTML = 'This is a <b>positive expectancy</b> strategy — over enough trades, this edge should be profitable, even with a '+(winRate*100).toFixed(0)+'% win rate, because your average winner outweighs your average loser.';
+  } else if (expectancy < 0) {
+    verdict.innerHTML = 'This is a <b>negative expectancy</b> strategy — even winning trades won\'t save you long-term at this Risk:Reward and win rate. Consider improving your R:R ratio or win rate before sizing up.';
+  } else {
+    verdict.innerHTML = 'This strategy has <b>breakeven expectancy</b> — you\'ll roughly cover costs but won\'t grow your account net of fees and slippage.';
+  }
+}
+document.addEventListener('DOMContentLoaded', tx2SimCalc);
+tx2SimCalc();
+</script>
+
+<!-- ================= TRADING PAGE: QUICK TRADING JOURNAL (LOCAL STORAGE) ================= -->
+<style>
+.tx2-journal{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(56,189,248,.15);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx2-journal-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.tx2-journal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx2-journal-badge{font-size:10px;font-weight:800;color:#38bdf8;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);padding:4px 10px;border-radius:20px}
+.tx2-journal-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:700px){.tx2-journal-form{grid-template-columns:1fr 1fr}}
+.tx2-journal-form input,.tx2-journal-form select{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:9px 11px;border-radius:8px;font-size:12.5px;font-family:'JetBrains Mono',monospace;outline:none}
+.tx2-journal-form textarea{grid-column:1/-1;background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:10px 12px;border-radius:8px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;resize:vertical;min-height:60px}
+.tx2-journal-addbtn{grid-column:1/-1;background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#04121c;font-weight:800;font-size:13px;padding:10px;border:none;border-radius:8px;cursor:pointer}
+.tx2-journal-entries{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto}
+.tx2-journal-entry{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
+.tx2-journal-entry-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.tx2-journal-sym{font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace;font-size:14px}
+.tx2-journal-dir{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.tx2-journal-dir.long{background:rgba(0,230,118,.12);color:#00e676;border:1px solid rgba(0,230,118,.3)}
+.tx2-journal-dir.short{background:rgba(255,82,82,.12);color:#ff5252;border:1px solid rgba(255,82,82,.3)}
+.tx2-journal-meta{font-size:11px;color:#8891a1;display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.tx2-journal-note{font-size:12.5px;color:#d1d5db;line-height:1.5}
+.tx2-journal-del{background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);color:#ff5c7a;border-radius:6px;padding:4px 9px;cursor:pointer;font-size:10.5px;font-weight:700}
+.tx2-journal-empty{text-align:center;color:#8891a1;font-size:12.5px;padding:24px}
+</style>
+<div class="tx2-journal" id="tx2JournalSection" data-mount="trading">
+  <div class="tx2-journal-hdr"><div class="tx2-journal-title">Quick Trading Journal</div><div class="tx2-journal-badge">SAVED IN YOUR BROWSER</div></div>
+  <div class="tx2-journal-form">
+    <input type="text" id="tx2JSymbol" placeholder="Symbol e.g. BTCUSD">
+    <select id="tx2JDirection"><option value="long">Long</option><option value="short">Short</option></select>
+    <input type="number" id="tx2JEntry" placeholder="Entry price">
+    <input type="number" id="tx2JStop" placeholder="Stop loss">
+    <input type="number" id="tx2JTarget" placeholder="Target price">
+    <input type="text" id="tx2JTag" placeholder="Setup tag e.g. Breakout">
+    <textarea id="tx2JNote" placeholder="Why did you take this trade? Reason, emotion, plan…"></textarea>
+    <button class="tx2-journal-addbtn" onclick="tx2JournalAdd()">+ Add Journal Entry</button>
+  </div>
+  <div class="tx2-journal-entries" id="tx2JournalEntries"></div>
+</div>
+<script>
+(function(){
+  var TX2_JOURNAL_KEY = 'nx_trading_journal_v1';
+  function loadEntries(){ try { return JSON.parse(localStorage.getItem(TX2_JOURNAL_KEY)) || []; } catch(e){ return []; } }
+  function saveEntries(list){ try { localStorage.setItem(TX2_JOURNAL_KEY, JSON.stringify(list)); } catch(e){} }
+
+  window.tx2JournalAdd = function(){
+    var symbol = document.getElementById('tx2JSymbol').value.trim();
+    var direction = document.getElementById('tx2JDirection').value;
+    var entry = document.getElementById('tx2JEntry').value;
+    var stop = document.getElementById('tx2JStop').value;
+    var target = document.getElementById('tx2JTarget').value;
+    var tag = document.getElementById('tx2JTag').value.trim();
+    var note = document.getElementById('tx2JNote').value.trim();
+    if (!symbol) { alert('Symbol likhna zaroori hai.'); return; }
+
+    var list = loadEntries();
+    list.unshift({ id: Date.now(), symbol: symbol.toUpperCase(), direction: direction, entry: entry, stop: stop, target: target, tag: tag, note: note, date: new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}) });
+    saveEntries(list);
+    document.getElementById('tx2JSymbol').value = '';
+    document.getElementById('tx2JEntry').value = '';
+    document.getElementById('tx2JStop').value = '';
+    document.getElementById('tx2JTarget').value = '';
+    document.getElementById('tx2JTag').value = '';
+    document.getElementById('tx2JNote').value = '';
+    renderEntries();
+  };
+
+  window.tx2JournalDelete = function(id){
+    var list = loadEntries().filter(function(e){ return e.id !== id; });
+    saveEntries(list);
+    renderEntries();
+  };
+
+  function renderEntries(){
+    var wrap = document.getElementById('tx2JournalEntries');
+    var list = loadEntries();
+    if (!list.length) { wrap.innerHTML = '<div class="tx2-journal-empty">No journal entries yet — log your first trade above.</div>'; return; }
+    wrap.innerHTML = list.map(function(e){
+      var metaParts = [];
+      if (e.entry) metaParts.push('Entry: ₹'+e.entry);
+      if (e.stop) metaParts.push('SL: ₹'+e.stop);
+      if (e.target) metaParts.push('Target: ₹'+e.target);
+      if (e.tag) metaParts.push('Tag: '+e.tag);
+      return '<div class="tx2-journal-entry">'+
+        '<div class="tx2-journal-entry-top"><span class="tx2-journal-sym">'+e.symbol+'</span><span class="tx2-journal-dir '+e.direction+'">'+e.direction+'</span><button class="tx2-journal-del" onclick="tx2JournalDelete('+e.id+')">Delete</button></div>'+
+        '<div class="tx2-journal-meta"><span>'+e.date+'</span>'+(metaParts.length?'<span>'+metaParts.join(' · ')+'</span>':'')+'</div>'+
+        (e.note ? '<div class="tx2-journal-note">'+e.note.replace(/</g,'&lt;')+'</div>' : '') +
+        '</div>';
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', renderEntries);
+  if (document.readyState !== 'loading') renderEntries();
+})();
+</script>    
 </body>
 </html>
