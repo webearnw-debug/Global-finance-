@@ -5082,7 +5082,325 @@ function tx7ScrollTo(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
-    
+  <!-- ================= INVESTMENT PAGE: LIVE MULTI-ASSET PRICE BOARD ================= -->
+<style>
+.iv1-board{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(214,178,122,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv1-board-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.iv1-board-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv1-board-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.iv1-board-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:iv1Pulse 1.5s infinite}
+@keyframes iv1Pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.iv1-board-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.iv1-board-card{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:15px}
+.iv1-board-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.iv1-board-icon{width:30px;height:30px;border-radius:8px;background:rgba(214,178,122,.1);display:flex;align-items:center;justify-content:center;font-size:14px}
+.iv1-board-name{font-size:11px;color:#8891a1;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.iv1-board-price{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;color:#fff;margin-top:4px}
+.iv1-board-change{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;margin-top:3px}
+.iv1-board-change.pos{color:#00e676}
+.iv1-board-change.neg{color:#ff5252}
+</style>
+<div class="iv1-board" id="iv1BoardSection" data-mount="investment">
+  <div class="iv1-board-hdr"><div class="iv1-board-title">Live Market Snapshot</div><div class="iv1-board-live"><span class="iv1-board-dot"></span>LIVE</div></div>
+  <div class="iv1-board-grid" id="iv1BoardGrid">
+    <div style="grid-column:1/-1;text-align:center;color:#8891a1;padding:20px;font-size:12.5px;">Loading live prices…</div>
+  </div>
+</div>
+<script>
+(function(){
+  async function iv1LoadBoard(){
+    var html = '';
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=' + encodeURIComponent(JSON.stringify(['BTCUSDT','ETHUSDT','PAXGUSDT'])));
+      var data = await res.json();
+      var map = {}; data.forEach(function(d){ map[d.symbol] = d; });
+      var items = [
+        { key:'BTCUSDT', name:'Bitcoin', icon:'₿', prefix:'$' },
+        { key:'ETHUSDT', name:'Ethereum', icon:'Ξ', prefix:'$' },
+        { key:'PAXGUSDT', name:'Gold (PAXG)', icon:'🥇', prefix:'$' }
+      ];
+      items.forEach(function(it){
+        var d = map[it.key];
+        if (!d) return;
+        var price = parseFloat(d.lastPrice);
+        var change = parseFloat(d.priceChangePercent);
+        var isPos = change >= 0;
+        html += '<div class="iv1-board-card"><div class="iv1-board-card-top"><div class="iv1-board-icon">'+it.icon+'</div></div><div class="iv1-board-name">'+it.name+'</div><div class="iv1-board-price">'+it.prefix+price.toLocaleString(undefined,{maximumFractionDigits:2})+'</div><div class="iv1-board-change '+(isPos?'pos':'neg')+'">'+(isPos?'+':'')+change.toFixed(2)+'% (24h)</div></div>';
+      });
+    } catch(e) { console.log('iv1 board error', e); }
+
+    // Nifty & Sensex reference (live via TradingView ticker already in header) — add static labelled cards linking to live chart
+    html += '<div class="iv1-board-card"><div class="iv1-board-card-top"><div class="iv1-board-icon">📈</div></div><div class="iv1-board-name">Nifty 50 &amp; Sensex</div><div class="iv1-board-price" style="font-size:13px;color:#8891a1;">See live ticker above ↑</div><div class="iv1-board-change" style="color:#8891a1;font-size:10.5px;">Updates via header ticker</div></div>';
+
+    document.getElementById('iv1BoardGrid').innerHTML = html || '<div style="grid-column:1/-1;text-align:center;color:#8891a1;padding:20px;">Feed unavailable — retrying…</div>';
+  }
+  var iv1Booted = false;
+  function iv1Boot(){ if (iv1Booted) return; iv1Booted = true; iv1LoadBoard(); setInterval(iv1LoadBoard, 10000); }
+  document.addEventListener('DOMContentLoaded', iv1Boot);
+  if (document.readyState !== 'loading') iv1Boot();
+})();
+</script>
+
+<!-- ================= INVESTMENT PAGE: SIP FUND-CATEGORY RETURNS COMPARATOR ================= -->
+<style>
+.iv1-comp{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(214,178,122,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv1-comp-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.iv1-comp-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv1-comp-badge{font-size:10px;font-weight:800;color:#d6b27a;background:rgba(214,178,122,.1);border:1px solid rgba(214,178,122,.3);padding:4px 10px;border-radius:20px}
+.iv1-comp-note{font-size:10.5px;color:#8891a1;margin-bottom:18px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.iv1-comp-controls{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.iv1-comp-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px;flex:1;min-width:160px}
+.iv1-comp-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:5px;font-weight:600}
+.iv1-comp-field-top span{color:#d6b27a;font-weight:700}
+.iv1-comp-field input[type=range]{width:100%;accent-color:#d6b27a;cursor:pointer}
+.iv1-comp-rows{display:flex;flex-direction:column;gap:9px}
+.iv1-comp-row{display:grid;grid-template-columns:1.4fr .6fr 1fr 1fr;gap:10px;align-items:center;background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+@media(max-width:640px){.iv1-comp-row{grid-template-columns:1fr 1fr;font-size:11.5px}}
+.iv1-comp-cat{font-weight:700;color:#fff;font-size:13px}
+.iv1-comp-rate{font-family:'JetBrains Mono',monospace;color:#d6b27a;font-weight:700;font-size:12.5px}
+.iv1-comp-val{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14px;color:#00e676;text-align:right}
+.iv1-comp-gain{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8891a1;text-align:right}
+</style>
+<div class="iv1-comp" id="iv1CompSection" data-mount="investment">
+  <div class="iv1-comp-hdr"><div class="iv1-comp-title">SIP Returns by Fund Category</div><div class="iv1-comp-badge">REFERENCE RATES</div></div>
+  <div class="iv1-comp-note">Category returns below are commonly-cited long-run historical averages for Indian mutual fund categories (not live NAV data — no free live API exists for this without a paid data provider). Actual fund performance varies by scheme; always check a fund's actual CAGR before investing.</div>
+  <div class="iv1-comp-controls">
+    <div class="iv1-comp-field"><div class="iv1-comp-field-top"><span>Monthly SIP</span><span id="iv1CompSipV">₹10,000</span></div><input type="range" id="iv1CompSip" min="500" max="200000" step="500" value="10000" oninput="iv1CompCalc()"></div>
+    <div class="iv1-comp-field"><div class="iv1-comp-field-top"><span>Tenure</span><span id="iv1CompYearsV">15 yrs</span></div><input type="range" id="iv1CompYears" min="1" max="35" step="1" value="15" oninput="iv1CompCalc()"></div>
+  </div>
+  <div class="iv1-comp-rows" id="iv1CompRows"></div>
+</div>
+<script>
+(function(){
+  var iv1CompCategories = [
+    { name:'Large-Cap Equity Fund', rate:0.12 },
+    { name:'Flexi-Cap / Multi-Cap Fund', rate:0.135 },
+    { name:'Mid-Cap Equity Fund', rate:0.15 },
+    { name:'Small-Cap Equity Fund', rate:0.17 },
+    { name:'Index Fund (Nifty 50)', rate:0.115 },
+    { name:'Hybrid / Balanced Fund', rate:0.10 },
+    { name:'Debt Fund', rate:0.07 }
+  ];
+  window.iv1CompCalc = function(){
+    var sip = parseFloat(document.getElementById('iv1CompSip').value);
+    var years = parseInt(document.getElementById('iv1CompYears').value,10);
+    document.getElementById('iv1CompSipV').textContent = '₹'+sip.toLocaleString('en-IN');
+    document.getElementById('iv1CompYearsV').textContent = years+' yrs';
+
+    var invested = sip * years * 12;
+    var rowsHtml = '<div class="iv1-comp-row" style="background:transparent;border:none;font-size:10.5px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px;font-weight:800;"><span>Category</span><span>CAGR</span><span style="text-align:right;">Total Invested</span><span style="text-align:right;">Maturity Value</span></div>';
+
+    iv1CompCategories.forEach(function(cat){
+      var monthlyR = Math.pow(1+cat.rate,1/12)-1;
+      var n = years*12;
+      var maturity = sip * ((Math.pow(1+monthlyR,n)-1)/monthlyR) * (1+monthlyR);
+      rowsHtml += '<div class="iv1-comp-row"><span class="iv1-comp-cat">'+cat.name+'</span><span class="iv1-comp-rate">'+(cat.rate*100).toFixed(1)+'%</span><span class="iv1-comp-gain">₹'+Math.round(invested).toLocaleString('en-IN')+'</span><span class="iv1-comp-val">₹'+Math.round(maturity).toLocaleString('en-IN')+'</span></div>';
+    });
+
+    document.getElementById('iv1CompRows').innerHTML = rowsHtml;
+  };
+  document.addEventListener('DOMContentLoaded', iv1CompCalc);
+  iv1CompCalc();
+})();
+</script>
+
+<!-- ================= INVESTMENT PAGE: RISK PROFILE QUIZ ================= -->
+<style>
+.iv1-quiz{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,217,181,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv1-quiz-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.iv1-quiz-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv1-quiz-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.iv1-quiz-q{margin-bottom:18px}
+.iv1-quiz-q-text{font-size:13px;font-weight:700;color:#fff;margin-bottom:10px}
+.iv1-quiz-opts{display:flex;flex-direction:column;gap:7px}
+.iv1-quiz-opt{background:#0d1119;border:1px solid rgba(255,255,255,.08);color:#c3c9d4;padding:11px 14px;border-radius:10px;font-size:12.5px;cursor:pointer;text-align:left;transition:all .2s ease}
+.iv1-quiz-opt:hover{border-color:#00d9b5}
+.iv1-quiz-opt.selected{border-color:#00d9b5;background:rgba(0,217,181,.08);color:#00d9b5;font-weight:700}
+.iv1-quiz-result{display:none;background:linear-gradient(135deg,rgba(0,217,181,.1),rgba(214,178,122,.06));border:1px solid rgba(0,217,181,.3);border-radius:16px;padding:20px;text-align:center;margin-top:10px}
+.iv1-quiz-result.show{display:block}
+.iv1-quiz-result-label{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.iv1-quiz-result-profile{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#00d9b5;margin:8px 0}
+.iv1-quiz-result-alloc{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.iv1-quiz-alloc-box{background:rgba(255,255,255,.03);border-radius:10px;padding:10px;}
+.iv1-quiz-alloc-box .l{font-size:10px;color:#8891a1;text-transform:uppercase}
+.iv1-quiz-alloc-box .v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;color:#fff;margin-top:3px}
+.iv1-quiz-retake{margin-top:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8891a1;padding:8px 16px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer}
+</style>
+<div class="iv1-quiz" id="iv1QuizSection" data-mount="investment">
+  <div class="iv1-quiz-hdr"><div class="iv1-quiz-title">Which Investment Suits You?</div><div class="iv1-quiz-badge">RISK PROFILE QUIZ</div></div>
+  <div id="iv1QuizQuestions"></div>
+  <div class="iv1-quiz-result" id="iv1QuizResult">
+    <div class="iv1-quiz-result-label">Your Risk Profile</div>
+    <div class="iv1-quiz-result-profile" id="iv1QuizProfileName">—</div>
+    <div id="iv1QuizProfileDesc" style="font-size:12px;color:#8891a1;max-width:480px;margin:0 auto;"></div>
+    <div class="iv1-quiz-result-alloc" id="iv1QuizAlloc"></div>
+    <button class="iv1-quiz-retake" onclick="iv1QuizRetake()">Retake Quiz</button>
+  </div>
+</div>
+<script>
+(function(){
+  var iv1Questions = [
+    { q:'आपकी उम्र क्या है?', opts:[{t:'18–25 years', s:4},{t:'26–40 years', s:3},{t:'41–55 years', s:2},{t:'55+ years', s:1}] },
+    { q:'आपका investment goal क्या है?', opts:[{t:'Long-term wealth building (10+ yrs)', s:4},{t:'Mid-term goal (5–10 yrs)', s:3},{t:'Short-term goal (1–5 yrs)', s:2},{t:'Capital protection only', s:1}] },
+    { q:'अगर आपका portfolio 1 महीने में 20% गिर जाए, आप क्या करेंगे?', opts:[{t:'खुशी से और खरीदूंगा (buying opportunity)', s:4},{t:'Wait करूंगा, बेचूंगा नहीं', s:3},{t:'चिंतित हो जाऊंगा, कुछ बेच सकता हूं', s:2},{t:'तुरंत सब बेच दूंगा', s:1}] },
+    { q:'आपकी investing experience कैसी है?', opts:[{t:'Experienced — stocks/crypto में trade करता हूं', s:4},{t:'Moderate — mutual funds समझता हूं', s:3},{t:'Beginner — सीख रहा हूं', s:2},{t:'बिल्कुल नया हूं', s:1}] },
+    { q:'आपकी emergency savings कितनी है?', opts:[{t:'6+ महीने के खर्च जितनी', s:4},{t:'3–6 महीने जितनी', s:3},{t:'1–3 महीने जितनी', s:2},{t:'कोई emergency fund नहीं है', s:1}] }
+  ];
+  var iv1Answers = {};
+
+  function iv1RenderQuiz(){
+    var wrap = document.getElementById('iv1QuizQuestions');
+    var html = '';
+    iv1Questions.forEach(function(q, qi){
+      html += '<div class="iv1-quiz-q"><div class="iv1-quiz-q-text">'+(qi+1)+'. '+q.q+'</div><div class="iv1-quiz-opts">';
+      q.opts.forEach(function(opt, oi){
+        html += '<button class="iv1-quiz-opt" id="iv1opt-'+qi+'-'+oi+'" onclick="iv1SelectOpt('+qi+','+oi+','+opt.s+')">'+opt.t+'</button>';
+      });
+      html += '</div></div>';
+    });
+    wrap.innerHTML = html;
+  }
+
+  window.iv1SelectOpt = function(qi, oi, score){
+    document.querySelectorAll('[id^="iv1opt-'+qi+'-"]').forEach(function(b){ b.classList.remove('selected'); });
+    document.getElementById('iv1opt-'+qi+'-'+oi).classList.add('selected');
+    iv1Answers[qi] = score;
+    if (Object.keys(iv1Answers).length === iv1Questions.length) iv1ShowResult();
+  };
+
+  function iv1ShowResult(){
+    var total = Object.values(iv1Answers).reduce(function(a,b){return a+b;},0);
+    var maxScore = iv1Questions.length * 4;
+    var pct = total / maxScore;
+
+    var profile, desc, alloc;
+    if (pct >= 0.8) {
+      profile = 'Aggressive Growth Investor';
+      desc = 'You have high risk tolerance and a long time horizon. You can afford to weather volatility for higher potential returns.';
+      alloc = { Equity:70, 'Mid/Small-Cap':15, Debt:10, Gold:5 };
+    } else if (pct >= 0.6) {
+      profile = 'Growth-Oriented Investor';
+      desc = 'You are comfortable with market ups and downs while still keeping some stability in your portfolio.';
+      alloc = { Equity:55, 'Mid/Small-Cap':10, Debt:25, Gold:10 };
+    } else if (pct >= 0.4) {
+      profile = 'Balanced Investor';
+      desc = 'You want steady growth without too much volatility — a mix of equity and debt suits you well.';
+      alloc = { Equity:35, Debt:45, Gold:15, 'Cash/Liquid':5 };
+    } else {
+      profile = 'Conservative Investor';
+      desc = 'Capital protection matters most to you. Focus on stable, low-volatility instruments.';
+      alloc = { Debt:55, Equity:15, Gold:20, 'Cash/Liquid':10 };
+    }
+
+    document.getElementById('iv1QuizProfileName').textContent = profile;
+    document.getElementById('iv1QuizProfileDesc').textContent = desc;
+    var allocHtml = '';
+    Object.keys(alloc).forEach(function(k){
+      allocHtml += '<div class="iv1-quiz-alloc-box"><div class="l">'+k+'</div><div class="v">'+alloc[k]+'%</div></div>';
+    });
+    document.getElementById('iv1QuizAlloc').innerHTML = allocHtml;
+    document.getElementById('iv1QuizResult').classList.add('show');
+    document.getElementById('iv1QuizResult').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  window.iv1QuizRetake = function(){
+    iv1Answers = {};
+    document.getElementById('iv1QuizResult').classList.remove('show');
+    document.querySelectorAll('.iv1-quiz-opt').forEach(function(b){ b.classList.remove('selected'); });
+    document.getElementById('iv1QuizSection').scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  document.addEventListener('DOMContentLoaded', iv1RenderQuiz);
+  if (document.readyState !== 'loading') iv1RenderQuiz();
+})();
+</script>
+
+<!-- ================= INVESTMENT PAGE: STEP-UP SIP VISUALIZER ================= -->
+<style>
+.iv1-step{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(214,178,122,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv1-step-hdr{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.iv1-step-sub{font-size:11.5px;color:#8891a1;margin-bottom:18px;line-height:1.6}
+.iv1-step-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+.iv1-step-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.iv1-step-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.iv1-step-field-top span{color:#d6b27a;font-weight:700}
+.iv1-step-field input[type=range]{width:100%;accent-color:#d6b27a;cursor:pointer}
+.iv1-step-chart-wrap{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;height:300px;margin-bottom:16px}
+.iv1-step-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.iv1-step-stat{background:rgba(214,178,122,.06);border:1px solid rgba(214,178,122,.2);border-radius:10px;padding:12px;text-align:center}
+.iv1-step-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase}
+.iv1-step-stat .v{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:800;color:#d6b27a;margin-top:3px}
+</style>
+<div class="iv1-step" id="iv1StepSection" data-mount="investment">
+  <div class="iv1-step-hdr">Step-Up SIP vs Regular SIP</div>
+  <div class="iv1-step-sub">Step-up SIP means increasing your monthly investment every year — usually matching your salary growth. See how much extra wealth this small habit builds over time.</div>
+  <div class="iv1-step-controls">
+    <div class="iv1-step-field"><div class="iv1-step-field-top"><span>Starting Monthly SIP</span><span id="iv1StepSipV">₹10,000</span></div><input type="range" id="iv1StepSip" min="500" max="100000" step="500" value="10000" oninput="iv1StepRender()"></div>
+    <div class="iv1-step-field"><div class="iv1-step-field-top"><span>Annual Step-Up</span><span id="iv1StepUpV">10%</span></div><input type="range" id="iv1StepUp" min="0" max="30" step="1" value="10" oninput="iv1StepRender()"></div>
+    <div class="iv1-step-field"><div class="iv1-step-field-top"><span>Expected Return</span><span id="iv1StepRetV">12%</span></div><input type="range" id="iv1StepRet" min="4" max="25" step="0.5" value="12" oninput="iv1StepRender()"></div>
+    <div class="iv1-step-field"><div class="iv1-step-field-top"><span>Tenure</span><span id="iv1StepYearsV">20 yrs</span></div><input type="range" id="iv1StepYears" min="5" max="35" step="1" value="20" oninput="iv1StepRender()"></div>
+  </div>
+  <div class="iv1-step-chart-wrap"><canvas id="iv1StepCanvas"></canvas></div>
+  <div class="iv1-step-stats">
+    <div class="iv1-step-stat"><div class="l">Regular SIP Final Value</div><div class="v" id="iv1StepRegularVal">₹0</div></div>
+    <div class="iv1-step-stat"><div class="l">Step-Up SIP Final Value</div><div class="v" id="iv1StepUpVal">₹0</div></div>
+    <div class="iv1-step-stat"><div class="l">Extra Wealth from Step-Up</div><div class="v" id="iv1StepExtra">₹0</div></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script>
+(function(){
+  var iv1StepChart = null;
+  window.iv1StepRender = function(){
+    var startSip = parseFloat(document.getElementById('iv1StepSip').value);
+    var stepUpPct = parseFloat(document.getElementById('iv1StepUp').value)/100;
+    var ret = parseFloat(document.getElementById('iv1StepRet').value)/100;
+    var years = parseInt(document.getElementById('iv1StepYears').value,10);
+
+    document.getElementById('iv1StepSipV').textContent = '₹'+startSip.toLocaleString('en-IN');
+    document.getElementById('iv1StepUpV').textContent = (stepUpPct*100).toFixed(0)+'%';
+    document.getElementById('iv1StepRetV').textContent = (ret*100).toFixed(1)+'%';
+    document.getElementById('iv1StepYearsV').textContent = years+' yrs';
+
+    var monthlyR = Math.pow(1+ret,1/12)-1;
+    var labels = []; var regularData = []; var stepUpData = [];
+    var regularCorpus = 0; var stepUpCorpus = 0;
+    var currentStepSip = startSip;
+
+    for (var y=1;y<=years;y++){
+      for (var m=0;m<12;m++){
+        regularCorpus = regularCorpus*(1+monthlyR) + startSip;
+        stepUpCorpus = stepUpCorpus*(1+monthlyR) + currentStepSip;
+      }
+      currentStepSip = currentStepSip * (1+stepUpPct);
+      labels.push('Y'+y);
+      regularData.push(Math.round(regularCorpus));
+      stepUpData.push(Math.round(stepUpCorpus));
+    }
+
+    var ctx = document.getElementById('iv1StepCanvas').getContext('2d');
+    if (iv1StepChart) iv1StepChart.destroy();
+    iv1StepChart = new Chart(ctx, {
+      type:'line',
+      data:{ labels:labels, datasets:[
+        { label:'Regular SIP', data:regularData, borderColor:'#8891a1', backgroundColor:'rgba(136,145,161,.08)', fill:true, tension:.3 },
+        { label:'Step-Up SIP', data:stepUpData, borderColor:'#d6b27a', backgroundColor:'rgba(214,178,122,.12)', fill:true, tension:.3 }
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ labels:{ color:'#eef1f6' } } },
+        scales:{ x:{ ticks:{color:'#8891a1'}, grid:{color:'rgba(255,255,255,.05)'} }, y:{ ticks:{color:'#8891a1', callback:function(v){return '₹'+(v/100000).toFixed(1)+'L';}}, grid:{color:'rgba(255,255,255,.05)'} } } }
+    });
+
+    var regFinal = regularData[regularData.length-1];
+    var stepFinal = stepUpData[stepUpData.length-1];
+    document.getElementById('iv1StepRegularVal').textContent = '₹'+regFinal.toLocaleString('en-IN');
+    document.getElementById('iv1StepUpVal').textContent = '₹'+stepFinal.toLocaleString('en-IN');
+    document.getElementById('iv1StepExtra').textContent = '₹'+(stepFinal-regFinal).toLocaleString('en-IN');
+  };
+  document.addEventListener('DOMContentLoaded', iv1StepRender);
+  if (document.readyState !== 'loading') setTimeout(iv1StepRender, 100);
+})();
+</script>  
 </script>
 </body>
 </html>
