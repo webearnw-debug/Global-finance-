@@ -5630,6 +5630,232 @@ function iv3LoadMorePosts() {
 document.addEventListener('DOMContentLoaded', function(){ iv3RenderPosts(); });
 iv3RenderPosts();
 </script>
+<!-- ================= INVESTMENT PAGE: XIRR CALCULATOR (ACTUAL RETURNS) ================= -->
+<style>
+.iv4-xirr{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,217,181,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv4-xirr-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.iv4-xirr-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv4-xirr-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.iv4-xirr-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.iv4-xirr-rows{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.iv4-xirr-row{display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:center;background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
+@media(max-width:640px){.iv4-xirr-row{grid-template-columns:1fr 1fr;font-size:11.5px}}
+.iv4-xirr-row label{font-size:9px;color:#8891a1;display:block;margin-bottom:2px;text-transform:uppercase}
+.iv4-xirr-row input,.iv4-xirr-row select{background:transparent;border:none;color:#f1f5f9;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;outline:none;width:100%}
+.iv4-xirr-del{background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);color:#ff5c7a;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:11px;font-weight:700}
+.iv4-xirr-addbtn{background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);color:#00d9b5;padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;margin-bottom:16px}
+.iv4-xirr-result{background:linear-gradient(135deg,rgba(0,217,181,.1),rgba(214,178,122,.06));border:1px solid rgba(0,217,181,.3);border-radius:14px;padding:18px;text-align:center}
+.iv4-xirr-result .l{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.iv4-xirr-result .v{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800;color:#00d9b5;margin:6px 0}
+.iv4-xirr-result .sub{font-size:11px;color:#8891a1}
+</style>
+<div class="iv4-xirr" id="iv4XirrSection" data-mount="investment">
+  <div class="iv4-xirr-hdr"><div class="iv4-xirr-title">XIRR Calculator — Your Actual Return</div><div class="iv4-xirr-badge">REAL CASH FLOWS</div></div>
+  <div class="iv4-xirr-note">Unlike a simple CAGR, XIRR calculates your true annualized return when you've invested different amounts on different dates (lump sums, SIPs, top-ups, withdrawals). Add each real transaction below — negative for money you put in, positive for money you took out or the current value of your holding.</div>
+  <div class="iv4-xirr-rows" id="iv4XirrRows"></div>
+  <button class="iv4-xirr-addbtn" onclick="iv4XirrAddRow()">+ Add Transaction</button>
+  <div class="iv4-xirr-result">
+    <div class="l">Your Annualized Return (XIRR)</div>
+    <div class="v" id="iv4XirrResult">—</div>
+    <div class="sub" id="iv4XirrSub">Add at least one investment (negative) and one current value (positive) to calculate</div>
+  </div>
+</div>
+<script>
+(function(){
+  var iv4XirrRows = [
+    { date: '2022-01-15', amount: -50000, type: 'Investment' },
+    { date: '2023-01-15', amount: -50000, type: 'Investment' },
+    { date: '2024-06-01', amount: 130000, type: 'Current Value' }
+  ];
+
+  function iv4RenderRows(){
+    var wrap = document.getElementById('iv4XirrRows');
+    var html = '';
+    iv4XirrRows.forEach(function(r, i){
+      html += '<div class="iv4-xirr-row">'+
+        '<div><label>Date</label><input type="date" value="'+r.date+'" oninput="iv4XirrUpdate('+i+',\'date\',this.value)"></div>'+
+        '<div><label>Amount (₹) — negative = invested, positive = withdrawn/current value</label><input type="number" value="'+r.amount+'" oninput="iv4XirrUpdate('+i+',\'amount\',this.value)"></div>'+
+        '<div><label>Label</label><input type="text" value="'+r.type+'" oninput="iv4XirrUpdate('+i+',\'type\',this.value)"></div>'+
+        '<button class="iv4-xirr-del" onclick="iv4XirrRemove('+i+')">✕</button></div>';
+    });
+    wrap.innerHTML = html;
+  }
+  window.iv4XirrUpdate = function(i, field, val){
+    iv4XirrRows[i][field] = (field==='amount') ? parseFloat(val)||0 : val;
+    iv4XirrCalc();
+  };
+  window.iv4XirrRemove = function(i){ iv4XirrRows.splice(i,1); iv4RenderRows(); iv4XirrCalc(); };
+  window.iv4XirrAddRow = function(){
+    var today = new Date().toISOString().slice(0,10);
+    iv4XirrRows.push({ date: today, amount: -10000, type: 'Investment' });
+    iv4RenderRows(); iv4XirrCalc();
+  };
+
+  function iv4XNPV(rate, cashflows){
+    var t0 = new Date(cashflows[0].date).getTime();
+    var sum = 0;
+    cashflows.forEach(function(cf){
+      var days = (new Date(cf.date).getTime() - t0) / (1000*60*60*24);
+      sum += cf.amount / Math.pow(1+rate, days/365);
+    });
+    return sum;
+  }
+
+  window.iv4XirrCalc = function(){
+    var flows = iv4XirrRows.filter(function(r){ return r.date && !isNaN(r.amount) && r.amount !== 0; });
+    if (flows.length < 2) {
+      document.getElementById('iv4XirrResult').textContent = '—';
+      document.getElementById('iv4XirrSub').textContent = 'Add at least one investment (negative) and one current value (positive) to calculate';
+      return;
+    }
+    var hasNeg = flows.some(function(f){return f.amount<0;});
+    var hasPos = flows.some(function(f){return f.amount>0;});
+    if (!hasNeg || !hasPos) {
+      document.getElementById('iv4XirrResult').textContent = '—';
+      document.getElementById('iv4XirrSub').textContent = 'Need both negative (invested) and positive (current value/withdrawn) amounts';
+      return;
+    }
+    flows.sort(function(a,b){ return new Date(a.date) - new Date(b.date); });
+
+    // Bisection method to find XIRR
+    var low = -0.9999, high = 10;
+    var rate = 0.1;
+    var found = false;
+    for (var iter=0; iter<200; iter++){
+      var npv = iv4XNPV(rate, flows);
+      if (Math.abs(npv) < 0.01) { found = true; break; }
+      var npvLow = iv4XNPV(low, flows);
+      if ((npv>0 && npvLow>0) || (npv<0 && npvLow<0)) low = rate; else high = rate;
+      rate = (low+high)/2;
+    }
+
+    if (!isFinite(rate) || isNaN(rate)) {
+      document.getElementById('iv4XirrResult').textContent = 'Could not converge';
+      document.getElementById('iv4XirrSub').textContent = 'Check your dates and amounts for errors';
+      return;
+    }
+
+    var resultEl = document.getElementById('iv4XirrResult');
+    var pct = rate*100;
+    resultEl.textContent = (pct>=0?'+':'') + pct.toFixed(2) + '%';
+    resultEl.style.color = pct>=0 ? '#00d9b5' : '#ff5c7a';
+    document.getElementById('iv4XirrSub').textContent = 'Annualized return based on ' + flows.length + ' cash flows from ' + flows[0].date + ' to ' + flows[flows.length-1].date;
+  };
+
+  iv4RenderRows();
+  document.addEventListener('DOMContentLoaded', iv4XirrCalc);
+  if (document.readyState !== 'loading') iv4XirrCalc();
+})();
+</script>
+
+<!-- ================= INVESTMENT PAGE: TAX ON INVESTMENTS GUIDE (LTCG/STCG) ================= -->
+<style>
+.iv4-tax{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,159,67,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv4-tax-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.iv4-tax-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv4-tax-badge{font-size:10px;font-weight:800;color:#ff9f43;background:rgba(255,159,67,.1);border:1px solid rgba(255,159,67,.3);padding:4px 10px;border-radius:20px}
+.iv4-tax-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.iv4-tax-scroll{overflow-x:auto}
+.iv4-tax-table{width:100%;border-collapse:collapse;min-width:560px}
+.iv4-tax-table th{font-size:10.5px;color:#8891a1;text-transform:uppercase;letter-spacing:.4px;text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.iv4-tax-table td{font-size:12px;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.iv4-tax-table tr:last-child td{border-bottom:none}
+.iv4-tax-asset{font-weight:700;color:#fff;font-size:13px}
+.iv4-tax-rate{font-family:'JetBrains Mono',monospace;color:#ff9f43;font-weight:700}
+.iv4-tax-calc{margin-top:20px;background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px}
+.iv4-tax-calc-hdr{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:12px}
+.iv4-tax-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:600px){.iv4-tax-calc-grid{grid-template-columns:1fr}}
+.iv4-tax-calc-field{background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:9px 12px}
+.iv4-tax-calc-field label{font-size:10px;color:#8891a1;display:block;margin-bottom:3px;text-transform:uppercase}
+.iv4-tax-calc-field select,.iv4-tax-calc-field input{background:transparent;border:none;color:#f1f5f9;font-size:12.5px;font-family:'JetBrains Mono',monospace;outline:none;width:100%}
+.iv4-tax-calc-result{background:rgba(255,159,67,.08);border:1px solid rgba(255,159,67,.3);border-radius:10px;padding:12px;text-align:center;font-size:13px}
+.iv4-tax-calc-result b{color:#ff9f43;font-size:17px;font-family:'JetBrains Mono',monospace;display:block;margin-top:4px}
+</style>
+<div class="iv4-tax" id="iv4TaxSection" data-mount="investment">
+  <div class="iv4-tax-hdr"><div class="iv4-tax-title">Tax on Investment Gains (LTCG/STCG)</div><div class="iv4-tax-badge">FY 2025-26 RULES</div></div>
+  <div class="iv4-tax-note">Based on rules effective from Union Budget 2024 (applicable FY 2024-25 onwards, continuing into FY 2025-26). Always confirm current rates with a tax professional or the official Income Tax portal before filing, as these can change with future budgets.</div>
+  <div class="iv4-tax-scroll">
+    <table class="iv4-tax-table">
+      <tr><th>Asset</th><th>Short-Term (STCG)</th><th>Long-Term (LTCG)</th></tr>
+      <tr><td class="iv4-tax-asset">Equity Shares / Equity MF<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Held &lt;1yr = ST, &gt;1yr = LT</span></td><td class="iv4-tax-rate">20%</td><td class="iv4-tax-rate">12.5% (above ₹1.25L/yr exemption)</td></tr>
+      <tr><td class="iv4-tax-asset">Debt Mutual Funds<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Purchased after Apr 2023</span></td><td class="iv4-tax-rate">As per income slab</td><td class="iv4-tax-rate">As per income slab (no indexation)</td></tr>
+      <tr><td class="iv4-tax-asset">Gold ETF / Digital Gold<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Held &lt;2yr = ST, &gt;2yr = LT</span></td><td class="iv4-tax-rate">As per income slab</td><td class="iv4-tax-rate">12.5% (no indexation)</td></tr>
+      <tr><td class="iv4-tax-asset">Sovereign Gold Bond (SGB)<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Held to 8yr maturity</span></td><td class="iv4-tax-rate">As per income slab</td><td class="iv4-tax-rate" style="color:#00e676">Tax-free at maturity</td></tr>
+      <tr><td class="iv4-tax-asset">Real Estate<br><span style="color:#8891a1;font-weight:400;font-size:10.5px;">Held &lt;2yr = ST, &gt;2yr = LT</span></td><td class="iv4-tax-rate">As per income slab</td><td class="iv4-tax-rate">12.5% (no indexation) or 20% (with indexation, if bought before Jul 2024)</td></tr>
+      <tr><td class="iv4-tax-asset">Crypto / Virtual Digital Assets</td><td class="iv4-tax-rate" colspan="2">Flat 30% on gains (no ST/LT distinction, no loss offset allowed)</td></tr>
+    </table>
+  </div>
+  <div class="iv4-tax-calc">
+    <div class="iv4-tax-calc-hdr">Quick Gains Tax Estimator</div>
+    <div class="iv4-tax-calc-grid">
+      <div class="iv4-tax-calc-field"><label>Asset Type</label>
+        <select id="iv4TaxAssetType" onchange="iv4TaxCalc()">
+          <option value="equity_lt">Equity / Equity MF — Long Term</option>
+          <option value="equity_st">Equity / Equity MF — Short Term</option>
+          <option value="gold_lt">Gold ETF/Digital — Long Term</option>
+          <option value="crypto">Crypto</option>
+        </select>
+      </div>
+      <div class="iv4-tax-calc-field"><label>Capital Gain Amount (₹)</label><input type="number" id="iv4TaxGain" value="200000" oninput="iv4TaxCalc()"></div>
+    </div>
+    <div class="iv4-tax-calc-result">Estimated tax on this gain<b id="iv4TaxResult">₹0</b></div>
+  </div>
+</div>
+<script>
+function iv4TaxCalc(){
+  var type = document.getElementById('iv4TaxAssetType').value;
+  var gain = parseFloat(document.getElementById('iv4TaxGain').value) || 0;
+  var tax = 0;
+  if (type === 'equity_lt') {
+    var taxableGain = Math.max(0, gain - 125000);
+    tax = taxableGain * 0.125;
+  } else if (type === 'equity_st') {
+    tax = gain * 0.20;
+  } else if (type === 'gold_lt') {
+    tax = gain * 0.125;
+  } else if (type === 'crypto') {
+    tax = gain * 0.30;
+  }
+  document.getElementById('iv4TaxResult').textContent = '₹'+Math.round(tax).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', iv4TaxCalc);
+iv4TaxCalc();
+</script>
+
+<!-- ================= INVESTMENT PAGE: INTERNATIONAL / US STOCKS GUIDE ================= -->
+<style>
+.iv4-intl{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(56,189,248,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.iv4-intl-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.iv4-intl-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.iv4-intl-badge{font-size:10px;font-weight:800;color:#38bdf8;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);padding:4px 10px;border-radius:20px}
+.iv4-intl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.iv4-intl-grid{grid-template-columns:1fr}}
+.iv4-intl-col h5{font-size:11.5px;font-weight:800;color:#38bdf8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.iv4-intl-item{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.iv4-intl-item b{display:block;font-size:12.5px;color:#fff;margin-bottom:4px}
+.iv4-intl-item p{font-size:11.5px;color:#8891a1;line-height:1.55;margin:0}
+.iv4-intl-step-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.3);color:#38bdf8;border-radius:5px;font-size:10px;font-weight:800;margin-right:6px}
+</style>
+<div class="iv4-intl" id="iv4IntlSection" data-mount="investment">
+  <div class="iv4-intl-hdr"><div class="iv4-intl-title">Investing in US / International Stocks from India</div><div class="iv4-intl-badge">BEGINNER GUIDE</div></div>
+  <div class="iv4-intl-grid">
+    <div class="iv4-intl-col">
+      <h5>📋 How It Works</h5>
+      <div class="iv4-intl-item"><b><span class="iv4-intl-step-num">1</span>LRS Route</b><p>Under RBI's Liberalised Remittance Scheme (LRS), resident Indians can remit up to $250,000 per financial year to invest abroad, including in US stocks.</p></div>
+      <div class="iv4-intl-item"><b><span class="iv4-intl-step-num">2</span>Choose a Platform</b><p>Use a SEBI-registered broker with US stock access, or a direct US broker offering India-friendly onboarding — compare fees, forex spread, and withdrawal ease.</p></div>
+      <div class="iv4-intl-item"><b><span class="iv4-intl-step-num">3</span>Fund &amp; Invest</b><p>Transfer INR, it gets converted to USD (forex conversion charges apply), then you can buy fractional or full shares of US-listed companies.</p></div>
+    </div>
+    <div class="iv4-intl-col">
+      <h5>⚠️ Key Things to Know</h5>
+      <div class="iv4-intl-item"><b>Tax Compliance</b><p>Gains are taxed in India as capital gains (foreign assets), and you must disclose foreign holdings in your ITR under Schedule FA — non-disclosure has penalties.</p></div>
+      <div class="iv4-intl-item"><b>TCS on Remittance</b><p>Tax Collected at Source (TCS) applies on LRS remittances above a threshold — check the current rate before transferring, as it affects your effective cost.</p></div>
+      <div class="iv4-intl-item"><b>Currency Risk</b><p>Your returns depend on both the stock's performance AND the INR/USD exchange rate — a stock can rise in USD terms but your INR return could differ.</p></div>
+      <div class="iv4-intl-item"><b>Alternative: Index Funds</b><p>If direct stock-picking feels complex, Indian mutual funds that invest in US index funds (like Nasdaq 100 feeder funds) offer simpler exposure without LRS paperwork.</p></div>
+    </div>
+  </div>
+</div>
+    
 </script>
 </body>
 </html>
