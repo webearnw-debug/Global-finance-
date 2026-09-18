@@ -6111,6 +6111,669 @@ iv4TaxCalc();
   };
 })();
 </script>
+<!-- =======================================================
+     INVESTMENT PAGE — 4 NEW CALCULATORS
+     All four use data-mount="investment" — they'll auto-place on
+     the Investment page as long as the Mount Manager script
+     (gfMountAll) is present in your file.
+======================================================= -->
+
+<!-- ---------- 1) GOAL-BASED REVERSE SIP CALCULATOR ---------- -->
+<style>
+.gic{--gic-bg:#0b0d11;--gic-card:#12151c;--gic-border:rgba(255,255,255,.08);--gic-gold:#c9a869;--gic-emerald:#00e599;--gic-text:#e9e7e1;--gic-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--gic-bg);border:1px solid var(--gic-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--gic-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.gic-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--gic-border);padding-bottom:18px;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.gic-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gic-gold)}
+.gic-badge{background:rgba(0,229,153,.1);border:1px solid rgba(0,229,153,.3);color:var(--gic-emerald);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.gic-note{font-size:11.5px;color:var(--gic-muted);margin-bottom:22px;line-height:1.6;border-left:2px solid var(--gic-border);padding-left:12px}
+.gic-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.gic-grid{grid-template-columns:1fr}}
+.gic-field{margin-bottom:20px}
+.gic-label{display:flex;justify-content:space-between;font-size:13px;color:var(--gic-muted);margin-bottom:8px}
+.gic-label span{color:var(--gic-text);font-weight:700}
+.gic-input-wrap{position:relative;display:flex;align-items:center}
+.gic-input-wrap span{position:absolute;left:14px;color:var(--gic-gold);font-weight:600;font-size:14px}
+.gic-number{width:100%;background:var(--gic-card);border:1px solid var(--gic-border);color:var(--gic-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:none;transition:border-color .2s}
+.gic-number:focus{border-color:var(--gic-gold)}
+.gic-slider{width:100%;height:4px;background:var(--gic-border);border-radius:2px;outline:none;margin-top:10px;accent-color:var(--gic-emerald);cursor:pointer}
+.gic-result{background:var(--gic-card);border:1px solid var(--gic-border);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.gic-result-label{font-size:12px;color:var(--gic-muted);text-transform:uppercase;letter-spacing:.5px}
+.gic-result-val{font-size:32px;font-weight:800;color:var(--gic-emerald);margin:10px 0;font-family:'JetBrains Mono',monospace}
+.gic-result-sub{font-size:11.5px;color:var(--gic-muted);line-height:1.6}
+</style>
+
+<div class="gic" id="goalSipCalcSection" data-mount="investment">
+  <div class="gic-head">
+    <div class="gic-title">Goal-Based SIP Calculator</div>
+    <div class="gic-badge">Reverse Calculator</div>
+  </div>
+  <div class="gic-note">Tell us your target amount and timeline — this works backward to show exactly how much you need to invest every month to get there, instead of guessing a SIP amount and hoping.</div>
+  <div class="gic-grid">
+    <div>
+      <div class="gic-field">
+        <div class="gic-label">Target Amount <span id="gicTargetVal">₹50,00,000</span></div>
+        <div class="gic-input-wrap"><span>₹</span><input type="number" id="gicTarget" class="gic-number" value="5000000" step="50000" oninput="runGoalCalc()"></div>
+        <input type="range" id="gicTargetSlider" class="gic-slider" min="100000" max="50000000" step="50000" value="5000000" oninput="syncGoal('target')">
+      </div>
+      <div class="gic-field">
+        <div class="gic-label">Time to Goal <span id="gicYearsVal">10 yrs</span></div>
+        <input type="range" id="gicYears" class="gic-slider" min="1" max="35" step="1" value="10" oninput="runGoalCalc()">
+      </div>
+      <div class="gic-field">
+        <div class="gic-label">Expected Annual Return <span id="gicRateVal">12%</span></div>
+        <input type="range" id="gicRate" class="gic-slider" min="1" max="30" step="0.5" value="12" oninput="runGoalCalc()">
+      </div>
+    </div>
+    <div class="gic-result">
+      <div class="gic-result-label">Required Monthly SIP</div>
+      <div class="gic-result-val" id="gicRequiredSip">₹0</div>
+      <div class="gic-result-sub" id="gicResultSub">Total invested: ₹0 · Wealth gained: ₹0</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function syncGoal(type){
+  if(type === 'target') document.getElementById('gicTarget').value = document.getElementById('gicTargetSlider').value;
+  runGoalCalc();
+}
+function runGoalCalc(){
+  var target = parseFloat(document.getElementById('gicTarget').value) || 0;
+  document.getElementById('gicTargetSlider').value = target;
+  var years = parseInt(document.getElementById('gicYears').value, 10);
+  var ratePct = parseFloat(document.getElementById('gicRate').value);
+  document.getElementById('gicTargetVal').textContent = '₹' + target.toLocaleString('en-IN');
+  document.getElementById('gicYearsVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+  document.getElementById('gicRateVal').textContent = ratePct + '%';
+
+  var r = (ratePct / 100) / 12;
+  var n = years * 12;
+  var factor = (((Math.pow(1 + r, n) - 1) / r)) * (1 + r);
+  var requiredSip = target / factor;
+  var totalInvested = requiredSip * n;
+  var gained = target - totalInvested;
+
+  document.getElementById('gicRequiredSip').textContent = '₹' + Math.round(requiredSip).toLocaleString('en-IN') + '/mo';
+  document.getElementById('gicResultSub').textContent = 'Total invested: ₹' + Math.round(totalInvested).toLocaleString('en-IN') + ' · Wealth gained: ₹' + Math.round(gained).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', runGoalCalc);
+runGoalCalc();
+</script>
+
+
+<!-- ---------- 2) DIRECT vs REGULAR PLAN — EXPENSE RATIO IMPACT ---------- -->
+<style>
+.erc{--erc-bg:#0b0d11;--erc-card:#12151c;--erc-border:rgba(255,255,255,.08);--erc-gold:#c9a869;--erc-red:#ff5252;--erc-emerald:#00e599;--erc-text:#e9e7e1;--erc-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--erc-bg);border:1px solid var(--erc-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--erc-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.erc-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--erc-border);padding-bottom:18px;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.erc-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--erc-gold)}
+.erc-badge{background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);color:var(--erc-red);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.erc-note{font-size:11.5px;color:var(--erc-muted);margin-bottom:22px;line-height:1.6;border-left:2px solid var(--erc-border);padding-left:12px}
+.erc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.erc-grid{grid-template-columns:1fr}}
+.erc-field{margin-bottom:18px}
+.erc-label{display:flex;justify-content:space-between;font-size:13px;color:var(--erc-muted);margin-bottom:8px}
+.erc-label span{color:var(--erc-text);font-weight:700}
+.erc-input-wrap{position:relative;display:flex;align-items:center}
+.erc-input-wrap span{position:absolute;left:14px;color:var(--erc-gold);font-weight:600;font-size:14px}
+.erc-number{width:100%;background:var(--erc-card);border:1px solid var(--erc-border);color:var(--erc-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:none}
+.erc-slider{width:100%;height:4px;background:var(--erc-border);border-radius:2px;outline:none;margin-top:10px;accent-color:var(--erc-red);cursor:pointer}
+.erc-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.erc-plan-card{background:var(--erc-card);border:1px solid var(--erc-border);padding:16px;border-radius:10px;text-align:center}
+.erc-plan-name{font-size:11px;text-transform:uppercase;color:var(--erc-muted);letter-spacing:.5px}
+.erc-plan-val{font-size:19px;font-weight:800;color:var(--erc-text);margin:8px 0 2px;font-family:'JetBrains Mono',monospace}
+.erc-loss-box{background:linear-gradient(135deg,rgba(255,82,82,.15) 0%,rgba(255,82,82,.05) 100%);border:1px solid var(--erc-red);border-radius:10px;padding:16px;text-align:center}
+.erc-loss-title{font-size:12px;color:var(--erc-red);font-weight:700;text-transform:uppercase}
+.erc-loss-amt{font-size:22px;font-weight:800;color:var(--erc-red);margin-top:6px;font-family:'JetBrains Mono',monospace}
+</style>
+
+<div class="erc" id="expenseRatioCalcSection" data-mount="investment">
+  <div class="erc-head">
+    <div class="erc-title">Direct vs Regular Plan Impact</div>
+    <div class="erc-badge">Hidden Cost Alert</div>
+  </div>
+  <div class="erc-note">Regular plans (bought via a distributor/bank) carry a higher expense ratio than Direct plans (bought directly from the AMC) — same fund, same portfolio, only the ongoing fee differs. See how much that "small" 1% difference actually costs you over time.</div>
+  <div class="erc-grid">
+    <div>
+      <div class="erc-field">
+        <div class="erc-label">Monthly SIP <span id="ercSipVal">₹10,000</span></div>
+        <div class="erc-input-wrap"><span>₹</span><input type="number" id="ercSip" class="erc-number" value="10000" step="500" oninput="runErc()"></div>
+      </div>
+      <div class="erc-field">
+        <div class="erc-label">Tenure <span id="ercYearsVal">20 yrs</span></div>
+        <input type="range" id="ercYears" class="erc-slider" min="1" max="35" step="1" value="20" oninput="runErc()">
+      </div>
+      <div class="erc-field">
+        <div class="erc-label">Gross Expected Return (before fees) <span id="ercRateVal">13%</span></div>
+        <input type="range" id="ercRate" class="erc-slider" min="5" max="25" step="0.5" value="13" oninput="runErc()">
+      </div>
+      <div class="erc-field">
+        <div class="erc-label">Regular Plan Expense Ratio <span id="ercRegExpVal">1.5%</span></div>
+        <input type="range" id="ercRegExp" class="erc-slider" min="0.5" max="2.5" step="0.1" value="1.5" oninput="runErc()">
+      </div>
+      <div class="erc-field">
+        <div class="erc-label">Direct Plan Expense Ratio <span id="ercDirExpVal">0.5%</span></div>
+        <input type="range" id="ercDirExp" class="erc-slider" min="0.1" max="1.5" step="0.1" value="0.5" oninput="runErc()">
+      </div>
+    </div>
+    <div>
+      <div class="erc-compare">
+        <div class="erc-plan-card"><div class="erc-plan-name">Regular Plan</div><div class="erc-plan-val" id="ercRegularVal">₹0</div></div>
+        <div class="erc-plan-card" style="border-color:rgba(0,229,153,.4)"><div class="erc-plan-name" style="color:#00e599">Direct Plan</div><div class="erc-plan-val" style="color:#00e599" id="ercDirectVal">₹0</div></div>
+      </div>
+      <div class="erc-loss-box">
+        <div class="erc-loss-title">You Lose This Much by Choosing Regular</div>
+        <div class="erc-loss-amt" id="ercLossAmt">₹0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function runErc(){
+  var sip = parseFloat(document.getElementById('ercSip').value) || 0;
+  var years = parseInt(document.getElementById('ercYears').value, 10);
+  var grossRate = parseFloat(document.getElementById('ercRate').value);
+  var regExp = parseFloat(document.getElementById('ercRegExp').value);
+  var dirExp = parseFloat(document.getElementById('ercDirExp').value);
+
+  document.getElementById('ercSipVal').textContent = '₹' + sip.toLocaleString('en-IN');
+  document.getElementById('ercYearsVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+  document.getElementById('ercRateVal').textContent = grossRate + '%';
+  document.getElementById('ercRegExpVal').textContent = regExp + '%';
+  document.getElementById('ercDirExpVal').textContent = dirExp + '%';
+
+  function futureValue(netRatePct){
+    var r = (netRatePct / 100) / 12;
+    var n = years * 12;
+    return sip * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+  }
+
+  var regularVal = futureValue(grossRate - regExp);
+  var directVal = futureValue(grossRate - dirExp);
+  var loss = directVal - regularVal;
+
+  document.getElementById('ercRegularVal').textContent = '₹' + Math.round(regularVal).toLocaleString('en-IN');
+  document.getElementById('ercDirectVal').textContent = '₹' + Math.round(directVal).toLocaleString('en-IN');
+  document.getElementById('ercLossAmt').textContent = '₹' + Math.round(loss).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', runErc);
+runErc();
+</script>
+
+
+<!-- ---------- 3) FUND COMPARISON TOOL (side-by-side) ---------- -->
+<style>
+.fct{--fct-bg:#0b0d11;--fct-card:#12151c;--fct-border:rgba(255,255,255,.08);--fct-gold:#c9a869;--fct-emerald:#00e599;--fct-text:#e9e7e1;--fct-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--fct-bg);border:1px solid var(--fct-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--fct-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.fct-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--fct-border);padding-bottom:18px;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.fct-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--fct-gold)}
+.fct-badge{background:rgba(0,229,153,.1);border:1px solid rgba(0,229,153,.3);color:var(--fct-emerald);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.fct-note{font-size:11px;color:var(--fct-muted);margin-bottom:20px;line-height:1.6;border-left:2px solid var(--fct-border);padding-left:12px}
+.fct-selectors{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:640px){.fct-selectors{grid-template-columns:1fr}}
+.fct-select{width:100%;background:var(--fct-card);border:1px solid var(--fct-border);color:var(--fct-text);padding:10px 12px;border-radius:8px;font-size:13px;outline:none;cursor:pointer}
+.fct-common{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.fct-common label{font-size:12.5px;color:var(--fct-muted)}
+.fct-common input{width:130px;background:var(--fct-card);border:1px solid var(--fct-border);color:var(--fct-text);padding:8px 10px;border-radius:8px;font-size:13px;outline:none}
+.fct-table{width:100%;border-collapse:collapse}
+.fct-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--fct-muted);padding:10px;border-bottom:1px solid var(--fct-border)}
+.fct-table td{padding:12px 10px;border-bottom:1px solid var(--fct-border);font-size:13px}
+.fct-fund-name{font-weight:700;color:#fff}
+.fct-fund-cat{font-size:10.5px;color:var(--fct-muted)}
+.fct-cagr{color:var(--fct-emerald);font-weight:700;font-family:'JetBrains Mono',monospace}
+.fct-risk{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.fct-risk.low{background:rgba(0,229,153,.1);color:#00e599}
+.fct-risk.moderate{background:rgba(255,183,3,.1);color:#ffb703}
+.fct-risk.high{background:rgba(255,140,0,.12);color:#ff8c00}
+.fct-risk.veryhigh{background:rgba(255,82,82,.12);color:#ff5252}
+.fct-maturity{font-weight:800;color:#fff;font-family:'JetBrains Mono',monospace}
+</style>
+
+<div class="fct" id="fundCompareSection" data-mount="investment">
+  <div class="fct-head">
+    <div class="fct-title">Fund Comparison Tool</div>
+    <div class="fct-badge">Side-by-Side</div>
+  </div>
+  <div class="fct-note">Pick up to 3 funds to compare category, 5-year reference CAGR, risk level, and projected maturity value for the same SIP amount — reference data, not a live NAV feed; always verify current numbers on the AMC's site before investing.</div>
+  <div class="fct-selectors">
+    <select class="fct-select" id="fctSelA" onchange="renderFct()"></select>
+    <select class="fct-select" id="fctSelB" onchange="renderFct()"></select>
+    <select class="fct-select" id="fctSelC" onchange="renderFct()"></select>
+  </div>
+  <div class="fct-common">
+    <label>Monthly SIP for comparison:</label>
+    <input type="number" id="fctSip" value="10000" step="500" oninput="renderFct()">
+    <label>Tenure (yrs):</label>
+    <input type="number" id="fctYears" value="10" step="1" oninput="renderFct()">
+  </div>
+  <table class="fct-table">
+    <thead><tr><th>Fund</th><th>5Y CAGR</th><th>Risk</th><th>Projected Maturity</th></tr></thead>
+    <tbody id="fctBody"></tbody>
+  </table>
+</div>
+
+<script>
+(function(){
+  // Reference dataset — same style figures as your Top Mutual Funds Directory.
+  var fctFunds = [
+    { name:"HDFC Top 100 Fund", cat:"Large-Cap Equity", cagr:13.2, risk:"moderate" },
+    { name:"ICICI Prudential Bluechip Fund", cat:"Large-Cap Equity", cagr:12.8, risk:"moderate" },
+    { name:"SBI Bluechip Fund", cat:"Large-Cap Equity", cagr:12.1, risk:"moderate" },
+    { name:"Parag Parikh Flexi Cap Fund", cat:"Flexi-Cap Equity", cagr:18.5, risk:"high" },
+    { name:"HDFC Flexi Cap Fund", cat:"Flexi-Cap Equity", cagr:15.9, risk:"high" },
+    { name:"Kotak Flexicap Fund", cat:"Flexi-Cap Equity", cagr:14.3, risk:"high" },
+    { name:"Motilal Oswal Midcap Fund", cat:"Mid-Cap Equity", cagr:22.4, risk:"high" },
+    { name:"Kotak Emerging Equity Fund", cat:"Mid-Cap Equity", cagr:19.7, risk:"high" },
+    { name:"Nippon India Small Cap Fund", cat:"Small-Cap Equity", cagr:24.6, risk:"veryhigh" },
+    { name:"SBI Small Cap Fund", cat:"Small-Cap Equity", cagr:21.8, risk:"veryhigh" },
+    { name:"UTI Nifty 50 Index Fund", cat:"Index Fund (Nifty 50)", cagr:12.9, risk:"moderate" },
+    { name:"HDFC Index Fund Sensex Plan", cat:"Index Fund (Sensex)", cagr:12.6, risk:"moderate" },
+    { name:"ICICI Prudential Corporate Bond Fund", cat:"Debt Fund", cagr:7.1, risk:"low" },
+    { name:"HDFC Short Term Debt Fund", cat:"Debt Fund", cagr:6.8, risk:"low" }
+  ];
+
+  function populateSelectors(){
+    ['fctSelA','fctSelB','fctSelC'].forEach(function(id, idx){
+      var sel = document.getElementById(id);
+      sel.innerHTML = fctFunds.map(function(f, i){
+        return '<option value="' + i + '"' + (i === idx * 3 ? ' selected' : '') + '>' + f.name + '</option>';
+      }).join('');
+    });
+  }
+
+  function maturityValue(sip, years, cagr){
+    var r = (cagr / 100) / 12;
+    var n = years * 12;
+    return sip * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+  }
+
+  var riskLabels = { low:'Low', moderate:'Moderate', high:'High', veryhigh:'Very High' };
+
+  window.renderFct = function(){
+    var sip = parseFloat(document.getElementById('fctSip').value) || 0;
+    var years = parseInt(document.getElementById('fctYears').value, 10) || 0;
+    var idxs = [
+      parseInt(document.getElementById('fctSelA').value, 10),
+      parseInt(document.getElementById('fctSelB').value, 10),
+      parseInt(document.getElementById('fctSelC').value, 10)
+    ];
+    var body = document.getElementById('fctBody');
+    body.innerHTML = idxs.map(function(i){
+      var f = fctFunds[i];
+      var mv = maturityValue(sip, years, f.cagr);
+      return '<tr>' +
+        '<td><div class="fct-fund-name">' + f.name + '</div><div class="fct-fund-cat">' + f.cat + '</div></td>' +
+        '<td class="fct-cagr">' + f.cagr.toFixed(1) + '%</td>' +
+        '<td><span class="fct-risk ' + f.risk + '">' + riskLabels[f.risk] + '</span></td>' +
+        '<td class="fct-maturity">₹' + Math.round(mv).toLocaleString('en-IN') + '</td>' +
+        '</tr>';
+    }).join('');
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){ populateSelectors(); renderFct(); });
+  if (document.readyState !== 'loading') { populateSelectors(); renderFct(); }
+})();
+</script>
+
+
+<!-- ---------- 4) INFLATION-ADJUSTED REAL RETURN CALCULATOR ---------- -->
+<style>
+.irc{--irc-bg:#0b0d11;--irc-card:#12151c;--irc-border:rgba(255,255,255,.08);--irc-gold:#c9a869;--irc-emerald:#00e599;--irc-red:#ff5252;--irc-text:#e9e7e1;--irc-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--irc-bg);border:1px solid var(--irc-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--irc-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.irc-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--irc-border);padding-bottom:18px;margin-bottom:22px;flex-wrap:wrap;gap:10px}
+.irc-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--irc-gold)}
+.irc-badge{background:rgba(201,168,105,.1);border:1px solid rgba(201,168,105,.3);color:var(--irc-gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.irc-note{font-size:11.5px;color:var(--irc-muted);margin-bottom:22px;line-height:1.6;border-left:2px solid var(--irc-border);padding-left:12px}
+.irc-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.irc-grid{grid-template-columns:1fr}}
+.irc-field{margin-bottom:20px}
+.irc-label{display:flex;justify-content:space-between;font-size:13px;color:var(--irc-muted);margin-bottom:8px}
+.irc-label span{color:var(--irc-text);font-weight:700}
+.irc-input-wrap{position:relative;display:flex;align-items:center}
+.irc-input-wrap span{position:absolute;left:14px;color:var(--irc-gold);font-weight:600;font-size:14px}
+.irc-number{width:100%;background:var(--irc-card);border:1px solid var(--irc-border);color:var(--irc-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:none}
+.irc-slider{width:100%;height:4px;background:var(--irc-border);border-radius:2px;outline:none;margin-top:10px;accent-color:var(--irc-gold);cursor:pointer}
+.irc-result{background:var(--irc-card);border:1px solid var(--irc-border);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.irc-row{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--irc-border)}
+.irc-row:last-child{border-bottom:none;padding-bottom:0}
+.irc-row-label{font-size:12px;color:var(--irc-muted)}
+.irc-row-val{font-size:17px;font-weight:800;font-family:'JetBrains Mono',monospace}
+.irc-row-val.nominal{color:#fff}
+.irc-row-val.real{color:var(--irc-emerald)}
+.irc-row-val.loss{color:var(--irc-red)}
+</style>
+
+<div class="irc" id="inflationCalcSection" data-mount="investment">
+  <div class="irc-head">
+    <div class="irc-title">Inflation-Adjusted Real Return</div>
+    <div class="irc-badge">Purchasing Power</div>
+  </div>
+  <div class="irc-note">A ₹1 crore corpus 20 years from now won't buy what ₹1 crore buys today. This shows the real, inflation-adjusted value of your future money — what actually matters when planning long-term goals like retirement.</div>
+  <div class="irc-grid">
+    <div>
+      <div class="irc-field">
+        <div class="irc-label">Future Nominal Amount <span id="ircFvVal">₹1,00,00,000</span></div>
+        <div class="irc-input-wrap"><span>₹</span><input type="number" id="ircFv" class="irc-number" value="10000000" step="100000" oninput="runInflationCalc()"></div>
+      </div>
+      <div class="irc-field">
+        <div class="irc-label">Years From Now <span id="ircYearsVal">20 yrs</span></div>
+        <input type="range" id="ircYears" class="irc-slider" min="1" max="40" step="1" value="20" oninput="runInflationCalc()">
+      </div>
+      <div class="irc-field">
+        <div class="irc-label">Assumed Inflation Rate <span id="ircInflVal">6%</span></div>
+        <input type="range" id="ircInfl" class="irc-slider" min="2" max="12" step="0.5" value="6" oninput="runInflationCalc()">
+      </div>
+    </div>
+    <div class="irc-result">
+      <div class="irc-row"><span class="irc-row-label">Nominal Future Value</span><span class="irc-row-val nominal" id="ircNominal">₹0</span></div>
+      <div class="irc-row"><span class="irc-row-label">Real Value (today's purchasing power)</span><span class="irc-row-val real" id="ircReal">₹0</span></div>
+      <div class="irc-row"><span class="irc-row-label">Value Eroded by Inflation</span><span class="irc-row-val loss" id="ircLoss">₹0</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function runInflationCalc(){
+  var fv = parseFloat(document.getElementById('ircFv').value) || 0;
+  var years = parseInt(document.getElementById('ircYears').value, 10);
+  var infl = parseFloat(document.getElementById('ircInfl').value);
+
+  document.getElementById('ircFvVal').textContent = '₹' + fv.toLocaleString('en-IN');
+  document.getElementById('ircYearsVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+  document.getElementById('ircInflVal').textContent = infl + '%';
+
+  var real = fv / Math.pow(1 + infl / 100, years);
+  var lost = fv - real;
+
+  document.getElementById('ircNominal').textContent = '₹' + Math.round(fv).toLocaleString('en-IN');
+  document.getElementById('ircReal').textContent = '₹' + Math.round(real).toLocaleString('en-IN');
+  document.getElementById('ircLoss').textContent = '₹' + Math.round(lost).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', runInflationCalc);
+runInflationCalc();
+</script>
+
+
+<!-- =======================================================
+     PREMIUM GLOBAL FOOTER
+     This is NOT tied to any single page — it attaches itself
+     directly to the very end of <body>, so it stays visible on
+     every page (Home, Financial, Trading, etc.), not just one.
+     If you already have the old footer ("gf-ftr" / lxFooterSection)
+     and don't want both, delete that old block from your file.
+======================================================= -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+.pf-footer{
+  --pf-bg:#050608; --pf-panel:#0a0c10; --pf-border:rgba(255,255,255,.08);
+  --pf-gold:#c9a869; --pf-gold-2:#ecc98f; --pf-emerald:#00e599; --pf-text:#f2f0ea; --pf-muted:#7c8189;
+  font-family:'Plus Jakarta Sans',sans-serif; color:var(--pf-muted);
+  background:
+    radial-gradient(60% 100% at 10% 0%, rgba(201,168,105,.06) 0%, transparent 60%),
+    radial-gradient(60% 100% at 90% 100%, rgba(0,229,153,.05) 0%, transparent 60%),
+    var(--pf-bg);
+  border-top:1px solid var(--pf-border);
+  padding:60px 6% 24px; margin-top:40px; position:relative;
+}
+.pf-wrap{max-width:1200px; margin:0 auto}
+
+.pf-top{display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid var(--pf-border); margin-bottom:36px}
+.pf-brand{max-width:340px}
+.pf-brand-name{font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:#fff; display:flex; align-items:center; gap:10px}
+.pf-brand-name svg{width:24px; height:24px; color:var(--pf-emerald)}
+.pf-brand-name span{color:var(--pf-gold)}
+.pf-brand-desc{font-size:12.5px; line-height:1.7; margin-top:14px}
+.pf-social{display:flex; gap:10px; margin-top:20px}
+.pf-social a{
+  width:36px; height:36px; border-radius:10px; border:1px solid var(--pf-border);
+  background:rgba(255,255,255,.02); display:flex; align-items:center; justify-content:center;
+  color:var(--pf-muted); transition:all .25s ease; text-decoration:none;
+}
+.pf-social a:hover{border-color:var(--pf-gold); color:var(--pf-gold); transform:translateY(-3px)}
+.pf-social svg{width:16px; height:16px}
+
+.pf-newsletter{max-width:340px; width:100%}
+.pf-nl-title{font-size:14px; font-weight:800; color:#fff; margin-bottom:8px}
+.pf-nl-desc{font-size:12px; margin-bottom:16px; line-height:1.6}
+.pf-nl-form{display:flex; gap:8px}
+.pf-nl-form input{
+  flex:1; background:var(--pf-panel); border:1px solid var(--pf-border); color:var(--pf-text);
+  padding:11px 14px; border-radius:10px; font-size:13px; outline:none; transition:border-color .2s;
+}
+.pf-nl-form input:focus{border-color:var(--pf-gold)}
+.pf-nl-form button{
+  background:linear-gradient(135deg, var(--pf-gold), #a9895a); color:#08090b; border:none;
+  padding:0 20px; border-radius:10px; font-weight:800; font-size:12.5px; cursor:pointer;
+  white-space:nowrap; transition:all .25s ease;
+}
+.pf-nl-form button:hover{box-shadow:0 8px 20px rgba(201,168,105,.35); transform:translateY(-1px)}
+.pf-nl-msg{font-size:11px; color:var(--pf-emerald); margin-top:8px; min-height:14px}
+
+.pf-cols{display:grid; grid-template-columns:repeat(4, 1fr); gap:32px; margin-bottom:40px}
+@media(max-width:900px){.pf-cols{grid-template-columns:repeat(2, 1fr)}}
+@media(max-width:520px){.pf-cols{grid-template-columns:1fr}}
+.pf-col h4{font-size:11.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--pf-gold-2); margin-bottom:18px}
+.pf-col ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px}
+.pf-col a{
+  color:var(--pf-muted); text-decoration:none; font-size:13px; cursor:pointer;
+  transition:color .2s ease; display:inline-flex; align-items:center; gap:6px;
+}
+.pf-col a:hover{color:#fff}
+
+.pf-status-bar{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+  background:rgba(255,255,255,.02); border:1px solid var(--pf-border); border-radius:14px;
+  padding:16px 22px; margin-bottom:30px;
+}
+.pf-status-item{display:flex; align-items:center; gap:8px; font-size:11.5px}
+.pf-status-dot{width:7px; height:7px; border-radius:50%; background:var(--pf-emerald); box-shadow:0 0 8px var(--pf-emerald); animation:pfPulse 1.8s infinite}
+@keyframes pfPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.pf-status-item b{color:#fff; font-weight:700}
+.pf-trust-badges{display:flex; gap:16px; flex-wrap:wrap}
+.pf-trust-badge{display:flex; align-items:center; gap:6px; font-size:11px; color:var(--pf-muted)}
+.pf-trust-badge svg{width:14px; height:14px; color:var(--pf-gold)}
+
+.pf-disclaimer{font-size:10.5px; line-height:1.75; color:#5b5f66; border-top:1px solid var(--pf-border); padding-top:22px; margin-bottom:18px}
+.pf-disclaimer b{color:#8b9099}
+
+.pf-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:11px; color:#54585f}
+.pf-bottom-links{display:flex; gap:18px; flex-wrap:wrap}
+.pf-bottom-links a{color:#54585f; text-decoration:none; cursor:pointer; transition:color .2s}
+.pf-bottom-links a:hover{color:var(--pf-gold-2)}
+
+.pf-back-top{
+  position:fixed; bottom:24px; right:20px; width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg, var(--pf-gold), #a9895a); color:#08090b; border:none;
+  display:none; align-items:center; justify-content:center; cursor:pointer; z-index:500;
+  box-shadow:0 10px 24px rgba(0,0,0,.5); transition:all .25s ease;
+}
+.pf-back-top.show{display:flex}
+.pf-back-top:hover{transform:translateY(-3px)}
+.pf-back-top svg{width:18px; height:18px}
+</style>
+
+<footer class="pf-footer" id="pfPremiumFooter">
+  <div class="pf-wrap">
+
+    <div class="pf-top">
+      <div class="pf-brand">
+        <div class="pf-brand-name">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>
+          Global<span> Finance</span>
+        </div>
+        <p class="pf-brand-desc">Market intelligence, calculators and AI-assisted financial guidance — built for the modern Indian investor. Educational content only; not investment advice.</p>
+        <div class="pf-social">
+          <a href="#" aria-label="Twitter/X" onclick="return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.6L4.5 22H1.4l8.2-9.4L1 2h7l4.9 6L18.9 2z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" onclick="return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.5 8.65 22 11 22 14v7h-4v-6.2c0-1.5-.03-3.4-2.08-3.4-2.09 0-2.41 1.63-2.41 3.3V21h-4V9z"/></svg></a>
+          <a href="#" aria-label="YouTube" onclick="return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.6-.46-5.3a3 3 0 00-2.1-2.1C18.7 4.1 12 4.1 12 4.1s-6.7 0-8.4.5a3 3 0 00-2.1 2.1C1 8.4 1 12 1 12s0 3.6.5 5.3a3 3 0 002.1 2.1C5.3 20 12 20 12 20s6.7 0 8.4-.6a3 3 0 002.1-2.1C23 15.6 23 12 23 12zM10 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+          <a href="#" aria-label="Instagram" onclick="return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.3" cy="6.7" r="1"/></svg></a>
+        </div>
+      </div>
+
+      <div class="pf-newsletter">
+        <div class="pf-nl-title">Get market updates in your inbox</div>
+        <p class="pf-nl-desc">One crisp email — no spam, unsubscribe anytime.</p>
+        <form class="pf-nl-form" onsubmit="return PFFooter.subscribe(event)">
+          <input type="email" id="pfNlEmail" placeholder="you@example.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="pf-nl-msg" id="pfNlMsg"></div>
+      </div>
+    </div>
+
+    <div class="pf-cols">
+      <div class="pf-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a onclick="PFFooter.go('home')">Home</a></li>
+          <li><a onclick="PFFooter.go('financial')">Financial</a></li>
+          <li><a onclick="PFFooter.go('trading')">Trading</a></li>
+          <li><a onclick="PFFooter.go('investment')">Investment</a></li>
+          <li><a onclick="PFFooter.go('loans')">Loans</a></li>
+          <li><a onclick="PFFooter.go('earning')">Earning Tips</a></li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a onclick="PFFooter.go('investment')">SIP Calculator</a></li>
+          <li><a onclick="PFFooter.go('financial')">Tax Estimator</a></li>
+          <li><a onclick="PFFooter.go('loans')">Loan EMI Calculator</a></li>
+          <li><a onclick="PFFooter.go('trading')">Position Size Calculator</a></li>
+          <li><a onclick="PFFooter.go('alpha')">Alpha AI Assistant</a></li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="PFFooter.openLegal('about')">About Us</a></li>
+          <li><a onclick="PFFooter.openLegal('contact')">Contact Us</a></li>
+          <li><a onclick="PFFooter.openLegal('security')">Security &amp; Data Practices</a></li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a onclick="PFFooter.openLegal('privacy')">Privacy Policy</a></li>
+          <li><a onclick="PFFooter.openLegal('terms')">Terms of Service</a></li>
+          <li><a onclick="PFFooter.openLegal('disclaimer')">Financial Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pf-status-bar">
+      <div class="pf-status-item"><span class="pf-status-dot"></span> <span id="pfSystemStatus">Systems active</span></div>
+      <div class="pf-trust-badges">
+        <div class="pf-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg> 256-bit SSL Encrypted</div>
+        <div class="pf-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Live Market Data</div>
+        <div class="pf-trust-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> No Sensitive Data Stored</div>
+      </div>
+    </div>
+
+    <div class="pf-disclaimer"><b>Disclaimer.</b> Global Finance presents financial data, calculators and AI-generated responses for educational and informational purposes only. We are not a SEBI-registered investment advisor, bank or licensed broker. Always verify rates and consult a qualified professional before making financial decisions.</div>
+
+    <div class="pf-bottom">
+      <div>© <span id="pfYear"></span> Global Finance Inc. All rights reserved.</div>
+      <div class="pf-bottom-links">
+        <a onclick="PFFooter.openLegal('privacy')">Privacy</a>
+        <a onclick="PFFooter.openLegal('terms')">Terms</a>
+        <a onclick="PFFooter.openLegal('disclaimer')">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="pf-back-top" id="pfBackTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+var PFFooter = {
+  legalContent: {
+    privacy: { title:'Privacy Policy', body:'<p>Global Finance collects minimal non-personal technical data (IP, browser, page duration) to improve performance and security. Calculator inputs and Alpha AI queries are processed for the current session only — we do not store sensitive financial data or queries.</p>' },
+    terms: { title:'Terms of Service', body:'<p>By using Global Finance, you agree to these Terms. All calculators, UI components and the Alpha AI integration are proprietary to Global Finance. Reverse engineering or unauthorized redistribution is prohibited.</p>' },
+    disclaimer: { title:'Financial Disclaimer', body:'<p>Global Finance is an independent financial analytics and media portal — not a SEBI-registered investment advisor, bank, or licensed broker. All figures, projections and AI responses are for educational purposes only and do not constitute financial advice.</p>' },
+    security: { title:'Security & Data Practices', body:'<p>All traffic is secured with 256-bit SSL / TLS 1.3 encryption. We never request or store bank passwords, UPI PINs, card CVVs, or credit score login credentials. Live feeds use read-only public API endpoints over HTTPS.</p>' },
+    about: { title:'About Us', body:'<p>Global Finance provides fast, easy-to-use financial calculators, real-time market data, and an AI assistant for everyday financial questions.</p>' },
+    contact: { title:'Contact Us', body:'<p>Support: <a href="mailto:webearnw@gmail.com" style="color:#c9a869">webearnw@gmail.com</a><br>Operational Base: Himachal Pradesh, India</p>' }
+  },
+
+  go: function(pageId){
+    if (typeof openPage === 'function') openPage(pageId);
+    else {
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      var t = document.getElementById(pageId);
+      if (t) t.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  openLegal: function(key){
+    var data = this.legalContent[key];
+    if(!data) return;
+    var main = document.querySelector('main') || document.body;
+    var pageId = 'pflp-' + key;
+    var page = document.getElementById(pageId);
+    if(!page){
+      page = document.createElement('section');
+      page.id = pageId;
+      page.className = 'page';
+      page.innerHTML = '<div style="max-width:720px;margin:50px auto;padding:0 20px 70px;font-family:\'Plus Jakarta Sans\',sans-serif;color:#dcdad4;">' +
+        '<button onclick="document.querySelectorAll(\'.page\').forEach(s=>s.classList.remove(\'active\'));var h=document.getElementById(\'home\');if(h)h.classList.add(\'active\');window.scrollTo({top:0,behavior:\'smooth\'});" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#c9a869;background:none;border:none;font-size:12.5px;font-weight:600;cursor:pointer;border-bottom:1px solid rgba(201,168,105,.3);">← Back to Home</button>' +
+        '<h1 style="font-family:\'Playfair Display\',serif;font-size:30px;font-weight:700;color:#f2f0ea;margin-bottom:4px;">' + data.title + '</h1>' +
+        '<div style="font-size:11px;color:#6b7078;margin-bottom:30px;">Last updated — September 2026</div>' +
+        data.body +
+        '</div>';
+      main.appendChild(page);
+    }
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  subscribe: function(e){
+    e.preventDefault();
+    var msg = document.getElementById('pfNlMsg');
+    msg.textContent = '✓ Subscribed — you\'ll get our next update.';
+    document.getElementById('pfNlEmail').value = '';
+    setTimeout(function(){ msg.textContent = ''; }, 4000);
+    return false;
+  },
+
+  checkStatus: function(){
+    var el = document.getElementById('pfSystemStatus');
+    if(!el) return;
+    if(!navigator.onLine){ el.textContent = 'Offline'; return; }
+    var start = performance.now();
+    fetch('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', { mode:'no-cors', cache:'no-store' })
+      .then(function(){ el.textContent = 'Systems active — ' + Math.round(performance.now() - start) + 'ms'; })
+      .catch(function(){ el.textContent = 'Reconnecting…'; });
+  },
+
+  init: function(){
+    if (this._inited) return;
+    this._inited = true;
+    document.getElementById('pfYear').textContent = new Date().getFullYear();
+    this.checkStatus();
+    setInterval(this.checkStatus, 30000);
+
+    var backTop = document.getElementById('pfBackTop');
+    window.addEventListener('scroll', function(){
+      backTop.classList.toggle('show', window.scrollY > 500);
+    });
+
+    // Move the footer once, directly onto <body> (outside .page divs)
+    // so it stays visible on EVERY page, not just Home.
+    var footer = document.getElementById('pfPremiumFooter');
+    var btn = document.getElementById('pfBackTop');
+    if (footer && footer.parentNode !== document.body) document.body.appendChild(footer);
+    if (btn && btn.parentNode !== document.body) document.body.appendChild(btn);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function(){ PFFooter.init(); });
+if (document.readyState !== 'loading') PFFooter.init();
+</script>
+
+    
 </script>
 </body>
 </html>
