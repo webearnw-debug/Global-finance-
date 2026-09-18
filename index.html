@@ -4062,6 +4062,181 @@ tx2SimCalc();
   document.addEventListener('DOMContentLoaded', renderEntries);
   if (document.readyState !== 'loading') renderEntries();
 })();
-</script>    
+</script>   
+<!-- ================= TRADING PAGE: LIVE CRYPTO/FOREX NEWS FEED ================= -->
+<style>
+.tx3-news{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(212,175,55,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx3-news-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx3-news-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx3-news-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#d4af37;font-weight:700}
+.tx3-news-dot{width:6px;height:6px;background:#d4af37;border-radius:50%;box-shadow:0 0 8px #d4af37;animation:tx3Pulse 1.5s infinite}
+@keyframes tx3Pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.tx3-news-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tx3-news-tab{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer}
+.tx3-news-tab.active{border-color:#d4af37;color:#d4af37;background:rgba(212,175,55,.08)}
+.tx3-news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tx3-news-card{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;transition:border-color .2s ease}
+.tx3-news-card:hover{border-color:#d4af37}
+.tx3-news-cat{font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#38bdf8;margin-bottom:6px;display:block}
+.tx3-news-card a{color:#f1f5f9;text-decoration:none;font-size:13px;font-weight:600;line-height:1.4;display:block;margin-bottom:8px}
+.tx3-news-card a:hover{color:#d4af37}
+.tx3-news-meta{font-size:10.5px;color:#8891a1;display:flex;justify-content:space-between}
+.tx3-news-loading{grid-column:1/-1;text-align:center;padding:30px;color:#8891a1;font-size:12.5px}
+</style>
+<div class="tx3-news" id="tx3NewsSection" data-mount="trading">
+  <div class="tx3-news-hdr"><div class="tx3-news-title">Live Market News Feed</div><div class="tx3-news-live"><span class="tx3-news-dot"></span>LIVE</div></div>
+  <div class="tx3-news-tabs">
+    <button class="tx3-news-tab active" onclick="tx3NewsFilter('all',this)">All</button>
+    <button class="tx3-news-tab" onclick="tx3NewsFilter('crypto',this)">Crypto</button>
+    <button class="tx3-news-tab" onclick="tx3NewsFilter('forex',this)">Forex / Macro</button>
+  </div>
+  <div class="tx3-news-grid" id="tx3NewsGrid"><div class="tx3-news-loading">Fetching live headlines…</div></div>
+</div>
+<script>
+(function(){
+  var tx3AllNews = [];
+  window.tx3NewsFilter = function(cat, el){
+    document.querySelectorAll('#tx3NewsSection .tx3-news-tab').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    tx3RenderNews(cat);
+  };
+  function tx3RenderNews(filter){
+    var grid = document.getElementById('tx3NewsGrid');
+    var filtered = filter==='all' ? tx3AllNews : tx3AllNews.filter(function(n){return n.cat===filter;});
+    var top4 = filtered.slice(0,4);
+    if (!top4.length) { grid.innerHTML = '<div class="tx3-news-loading">No headlines in this category right now.</div>'; return; }
+    grid.innerHTML = top4.map(function(n){
+      return '<div class="tx3-news-card"><span class="tx3-news-cat">'+n.catLabel+'</span><a href="'+n.link+'" target="_blank" rel="noopener">'+n.title+'</a><div class="tx3-news-meta"><span>'+n.source+'</span><span>'+n.time+'</span></div></div>';
+    }).join('');
+  }
+  async function tx3LoadCrypto(){
+    try {
+      var res = await fetch('https://min-api.cryptocompare.com/data/v2/news/?lang=EN');
+      var data = await res.json();
+      if (data && data.Data) {
+        data.Data.slice(0,8).forEach(function(item){
+          tx3AllNews.push({ title:item.title, link:item.url, source:item.source_info && item.source_info.name ? item.source_info.name : 'CryptoCompare', time:new Date(item.published_on*1000).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}), cat:'crypto', catLabel:'Crypto', ts:item.published_on });
+        });
+      }
+    } catch(e) { console.log('tx3 crypto news error', e); }
+  }
+  async function tx3LoadForex(){
+    try {
+      var rssUrl = encodeURIComponent('https://finance.yahoo.com/news/rssindex');
+      var res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + rssUrl);
+      var data = await res.json();
+      if (data.status==='ok' && data.items) {
+        data.items.slice(0,8).forEach(function(item){
+          tx3AllNews.push({ title:item.title, link:item.link, source:'Yahoo Finance', time:new Date(item.pubDate).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}), cat:'forex', catLabel:'Forex / Macro', ts:new Date(item.pubDate).getTime()/1000 });
+        });
+      }
+    } catch(e) { console.log('tx3 forex news error', e); }
+  }
+  async function tx3LoadAll(){
+    tx3AllNews = [];
+    await Promise.all([tx3LoadCrypto(), tx3LoadForex()]);
+    tx3AllNews.sort(function(a,b){ return (b.ts||0)-(a.ts||0); });
+    var activeTab = document.querySelector('#tx3NewsSection .tx3-news-tab.active');
+    var filter = 'all';
+    if (activeTab) { var txt = activeTab.textContent.toLowerCase(); filter = txt.indexOf('crypto')>-1 ? 'crypto' : (txt.indexOf('forex')>-1 ? 'forex' : 'all'); }
+    tx3RenderNews(filter);
+  }
+  var tx3Booted = false;
+  function tx3Boot(){ if (tx3Booted) return; tx3Booted = true; tx3LoadAll(); setInterval(tx3LoadAll, 180000); }
+  document.addEventListener('DOMContentLoaded', tx3Boot);
+  if (document.readyState !== 'loading') tx3Boot();
+})();
+</script>
+
+<!-- ================= TRADING PAGE: TRADING HOTKEYS / CHEAT-SHEET CARD ================= -->
+<style>
+.tx3-cheat{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(139,92,246,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.tx3-cheat-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.tx3-cheat-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.tx3-cheat-badge{font-size:10px;font-weight:800;color:#a78bfa;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);padding:4px 10px;border-radius:20px}
+.tx3-cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.tx3-cheat-grid{grid-template-columns:1fr}}
+.tx3-cheat-col h5{font-size:11.5px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.tx3-cheat-item{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.tx3-cheat-item b{display:block;font-size:12.5px;color:#fff;margin-bottom:4px}
+.tx3-cheat-item p{font-size:11.5px;color:#8891a1;line-height:1.55;margin:0}
+.tx3-cheat-rule-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.3);color:#a78bfa;border-radius:5px;font-size:10px;font-weight:800;margin-right:6px}
+</style>
+<div class="tx3-cheat" id="tx3CheatSection" data-mount="trading">
+  <div class="tx3-cheat-hdr"><div class="tx3-cheat-title">Trading Cheat-Sheet for Beginners</div><div class="tx3-cheat-badge">RISK MANAGEMENT 101</div></div>
+  <div class="tx3-cheat-grid">
+    <div class="tx3-cheat-col">
+      <h5>🛑 Setting a Stop Loss</h5>
+      <div class="tx3-cheat-item"><b>Below/Above Structure</b><p>Long trades → place SL below the most recent swing low. Short trades → place SL above the most recent swing high, not at a random round number.</p></div>
+      <div class="tx3-cheat-item"><b>Volatility-Based (ATR)</b><p>Use 1.5x–2x the Average True Range (ATR) as buffer, so normal price noise doesn't stop you out prematurely.</p></div>
+      <div class="tx3-cheat-item"><b>Never Move SL Away From Entry</b><p>Once set, only move your stop loss in your favor (to lock profit) — never widen it to "give the trade more room."</p></div>
+    </div>
+    <div class="tx3-cheat-col">
+      <h5>⚖️ Core Risk Rules</h5>
+      <div class="tx3-cheat-item"><b><span class="tx3-cheat-rule-num">1</span>Risk 1–2% per trade</b><p>Never risk more than 1-2% of your total account on a single position — use the Position Size Calculator above to size correctly.</p></div>
+      <div class="tx3-cheat-item"><b><span class="tx3-cheat-rule-num">2</span>Minimum 1:1.5 Reward:Risk</b><p>Only take trades where potential reward is at least 1.5x your risk — check with the Risk/Reward Simulator above before entering.</p></div>
+      <div class="tx3-cheat-item"><b><span class="tx3-cheat-rule-num">3</span>Max daily loss limit</b><p>Set a hard stop for the day (e.g. -5% of account) — if hit, close the platform. Revenge trading destroys accounts faster than bad setups.</p></div>
+      <div class="tx3-cheat-item"><b><span class="tx3-cheat-rule-num">4</span>Journal every trade</b><p>Log entries, exits, and reasoning in the Trading Journal above — your past trades are the best teacher you have.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TRADING PAGE: RESET DESK BUTTON ================= -->
+<style>
+.tx3-reset{max-width:920px;margin:26px auto;background:linear-gradient(135deg,rgba(255,82,82,.06),rgba(255,184,0,.04));border:1px solid rgba(255,82,82,.25);border-radius:20px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.tx3-reset-left h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.tx3-reset-left p{font-size:11.5px;color:#8891a1;max-width:460px;line-height:1.55}
+.tx3-reset-btn{background:linear-gradient(135deg,#ff5252,#ff1744);color:#fff;font-weight:800;font-size:13px;padding:12px 24px;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 20px rgba(255,82,82,.25)}
+.tx3-reset-btn:hover{transform:translateY(-2px)}
+.tx3-reset-status{font-size:10.5px;color:#00e676;margin-top:6px}
+</style>
+<div class="tx3-reset" id="tx3ResetSection" data-mount="trading">
+  <div class="tx3-reset-left">
+    <h4>🔄 Reset Trading Desk</h4>
+    <p>Clears your Trading Journal entries, resets the Win-Rate Simulator and Position Size Calculator back to default values. This does not affect live market data widgets.</p>
+    <div class="tx3-reset-status" id="tx3ResetStatus"></div>
+  </div>
+  <button class="tx3-reset-btn" onclick="tx3ResetDesk()">Reset Desk</button>
+</div>
+<script>
+function tx3ResetDesk(){
+  if (!confirm('Ye Trading Journal ke saare entries permanently delete kar dega, aur Simulator/Position Calculator default values par reset ho jayenge. Continue karein?')) return;
+
+  try { localStorage.removeItem('nx_trading_journal_v1'); } catch(e) {}
+  if (typeof renderEntries === 'function') {
+    try { renderEntries(); } catch(e) {}
+  } else {
+    var journalWrap = document.getElementById('tx2JournalEntries');
+    if (journalWrap) journalWrap.innerHTML = '<div class="tx2-journal-empty">No journal entries yet — log your first trade above.</div>';
+  }
+
+  var winEl = document.getElementById('tx2SimWin'); if (winEl) winEl.value = 50;
+  var rrEl = document.getElementById('tx2SimRR'); if (rrEl) rrEl.value = 2;
+  var riskEl = document.getElementById('tx2SimRisk'); if (riskEl) riskEl.value = 1000;
+  var tradesEl = document.getElementById('tx2SimTrades'); if (tradesEl) tradesEl.value = 20;
+  if (typeof tx2SimCalc === 'function') tx2SimCalc();
+
+  var balEl = document.getElementById('tdBalance'); if (balEl) balEl.value = 100000;
+  var riskPctEl = document.getElementById('tdRiskPct'); if (riskPctEl) riskPctEl.value = 1;
+  var entryEl = document.getElementById('tdEntry'); if (entryEl) entryEl.value = 6250000;
+  var stopEl = document.getElementById('tdStop'); if (stopEl) stopEl.value = 6187500;
+  var targetEl = document.getElementById('tdTarget'); if (targetEl) targetEl.value = 6375000;
+  if (typeof gfCalcPosition === 'function') gfCalcPosition();
+
+  var jSymbol = document.getElementById('tx2JSymbol'); if (jSymbol) jSymbol.value = '';
+  var jEntry = document.getElementById('tx2JEntry'); if (jEntry) jEntry.value = '';
+  var jStop = document.getElementById('tx2JStop'); if (jStop) jStop.value = '';
+  var jTarget = document.getElementById('tx2JTarget'); if (jTarget) jTarget.value = '';
+  var jTag = document.getElementById('tx2JTag'); if (jTag) jTag.value = '';
+  var jNote = document.getElementById('tx2JNote'); if (jNote) jNote.value = '';
+
+  var status = document.getElementById('tx3ResetStatus');
+  status.textContent = '✓ Desk reset successfully — journal cleared, calculators back to default.';
+  setTimeout(function(){ status.textContent = ''; }, 4000);
+}
+</script>
+
+
+    
 </body>
 </html>
