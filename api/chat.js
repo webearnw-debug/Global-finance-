@@ -1,25 +1,26 @@
-// Vercel Serverless Function — tries Google Gemini FIRST, and if that fails for
-// any reason (including "daily limit khatam" / rate limit), automatically falls
-// back to Groq — both are genuinely free, no credit card needed. This roughly
-// doubles your usable daily capacity, and Groq also replies noticeably faster.
+// Vercel Serverless Function — tries up to 5 FREE providers in order.
+// If one fails (rate limit, quota khatam, network error, anything) it
+// automatically moves to the next one — no manual switching needed.
 //
-// SET UP TWO FREE KEYS:
+// SET UP 5 FREE KEYS (no credit card needed for any of these):
 //
-// 1) Gemini (you likely already have this one):
-//      https://aistudio.google.com -> "Get API key" -> "Create API key"
+// 1) Gemini    -> https://aistudio.google.com          -> "Get API key"
+// 2) Groq      -> https://console.groq.com              -> "API Keys" -> Create
+// 3) OpenRouter-> https://openrouter.ai/keys             -> Create Key
+// 4) Cerebras  -> https://cloud.cerebras.ai              -> API Keys -> Create
+// 5) Mistral   -> https://console.mistral.ai             -> API Keys -> Create
 //
-// 2) Groq (new — add this one too):
-//      https://console.groq.com -> sign up (email/Google/GitHub, no card)
-//      -> left sidebar "API Keys" -> "Create API Key" -> copy it
+// In Vercel: Settings -> Environment Variables -> add ALL FIVE:
+//      GEMINI_API_KEY     = <your gemini key>
+//      GROQ_API_KEY       = <your groq key>
+//      OPENROUTER_API_KEY = <your openrouter key>
+//      CEREBRAS_API_KEY   = <your cerebras key>
+//      MISTRAL_API_KEY    = <your mistral key>
+// Save, then push this file so Vercel redeploys and picks up the new vars.
+// You don't need all 5 — the code skips any key that's missing.
 //
-// Then in Vercel: Settings -> Environment Variables -> add BOTH:
-//      GEMINI_API_KEY = <your gemini key>
-//      GROQ_API_KEY   = <your groq key>
-// Save, then push this file (any small change to the repo) so Vercel builds a
-// fresh deployment that picks up both variables.
-//
-// The front-end does NOT need to change — it still sends {system, messages}
-// and gets back {content:[{type:"text", text}]}, exactly as before.
+// Front-end doesn't change at all — same {system, messages} in,
+// same {content:[{type:"text", text}]} out.
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -34,43 +35,56 @@ module.exports = async function handler(req, res) {
     chatMessages.push({ role: m.role, content: m.content });
   });
 
-  const geminiKey = process.env.GEMINI_API_KEY;
-  const groqKey = process.env.GROQ_API_KEY;
-  let lastError = { message: "No AI provider is configured. Set GEMINI_API_KEY and/or GROQ_API_KEY in Vercel." };
+  // Order = priority. First one with a key set is tried first; on failure,
+  // falls through to the next configured provider automatically.
+  const providers = [
+    {
+      name: "Gemini",
+      key: process.env.GEMINI_API_KEY,
+      endpoint: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      model: "gemini-3.6-flash"
+    },
+    {
+      name: "Groq",
+      key: process.env.GROQ_API_KEY,
+      endpoint: "https://api.groq.com/openai/v1/chat/completions",
+      model: "openai/gpt-oss-120b"
+    },
+    {
+      name: "OpenRouter",
+      key: process.env.OPENROUTER_API_KEY,
+      endpoint: "https://openrouter.ai/api/v1/chat/completions",
+      model: "meta-llama/llama-3.3-70b-instruct:free"
+    },
+    {
+      name: "Cerebras",
+      key: process.env.CEREBRAS_API_KEY,
+      endpoint: "https://api.cerebras.ai/v1/chat/completions",
+      model: "llama-3.3-70b"
+    },
+    {
+      name: "Mistral",
+      key: process.env.MISTRAL_API_KEY,
+      endpoint: "https://api.mistral.ai/v1/chat/completions",
+      model: "mistral-small-latest"
+    }
+  ];
 
-  // 1) Try Gemini first (primary)
-  if (geminiKey) {
-    const result = await callProvider(
-      "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-      geminiKey,
-      "gemini-3.6-flash",
-      chatMessages,
-      max_tokens
-    );
+  let lastError = { message: "No AI provider is configured. Set at least one of GEMINI_API_KEY, GROQ_API_KEY, OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY in Vercel." };
+
+  for (const provider of providers) {
+    if (!provider.key) continue; // key not set — skip silently
+
+    const result = await callProvider(provider.endpoint, provider.key, provider.model, chatMessages, max_tokens);
     if (result.ok) {
       res.status(200).json({ content: [{ type: "text", text: result.text }] });
       return;
     }
-    lastError = result.error || { message: "Gemini request failed" };
+    lastError = result.error || { message: provider.name + " request failed" };
+    // loop continues -> tries next provider automatically
   }
 
-  // 2) Fall back to Groq (also free, no card) if Gemini failed or wasn't configured
-  if (groqKey) {
-    const result = await callProvider(
-      "https://api.groq.com/openai/v1/chat/completions",
-      groqKey,
-      "openai/gpt-oss-120b",
-      chatMessages,
-      max_tokens
-    );
-    if (result.ok) {
-      res.status(200).json({ content: [{ type: "text", text: result.text }] });
-      return;
-    }
-    lastError = result.error || { message: "Groq request failed" };
-  }
-
-  // Both providers failed (or neither key is set) — report the most recent real error
+  // All configured providers failed
   res.status(500).json({ error: lastError });
 };
 
