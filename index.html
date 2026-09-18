@@ -3447,5 +3447,200 @@ function nxGeneratePdf(){
   if (document.readyState !== 'loading') boot();
 })();
 </script>
+    <!-- ================= FINANCIAL PAGE: COST OF DELAY / SIP DELAY CALCULATOR ================= -->
+<style>
+.nx-delay{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-delay-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-delay-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.nx-delay-badge{font-size:10px;font-weight:800;color:#ff9f43;background:rgba(255,159,67,.1);border:1px solid rgba(255,159,67,.3);padding:4px 10px;border-radius:20px}
+.nx-delay-sub{font-size:11.5px;color:#8891a1;margin-bottom:18px;line-height:1.6}
+.nx-delay-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:680px){.nx-delay-grid{grid-template-columns:1fr}}
+.nx-delay-field{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
+.nx-delay-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.nx-delay-field-top span{color:#d6b27a;font-weight:700}
+.nx-delay-field input[type=range]{width:100%;accent-color:#ff9f43;cursor:pointer}
+.nx-delay-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:600px){.nx-delay-compare{grid-template-columns:1fr}}
+.nx-delay-card{border-radius:14px;padding:18px;text-align:center}
+.nx-delay-card.start-now{background:rgba(0,217,181,.08);border:1px solid rgba(0,217,181,.3)}
+.nx-delay-card.start-later{background:rgba(255,92,122,.08);border:1px solid rgba(255,92,122,.3)}
+.nx-delay-card .l{font-size:10.5px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.nx-delay-card .v{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800;margin:6px 0}
+.nx-delay-card.start-now .v{color:#00d9b5}
+.nx-delay-card.start-later .v{color:#ff5c7a}
+.nx-delay-card .sub{font-size:11px;color:#8891a1}
+.nx-delay-loss{background:linear-gradient(135deg,rgba(255,159,67,.12),rgba(255,92,122,.06));border:1px solid rgba(255,159,67,.35);border-radius:14px;padding:18px;text-align:center}
+.nx-delay-loss .big{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800;color:#ff9f43;margin:6px 0}
+</style>
+<div class="nx-delay" id="nxDelaySection" data-mount="financial">
+  <div class="nx-delay-hdr"><div class="nx-delay-title">Cost of Delay Calculator</div><div class="nx-delay-badge">BEHAVIORAL FINANCE</div></div>
+  <div class="nx-delay-sub">See exactly how much waiting to start your SIP costs you — because compounding rewards time in the market, not timing the market.</div>
+  <div class="nx-delay-grid">
+    <div class="nx-delay-field"><div class="nx-delay-field-top"><span>Monthly SIP Amount</span><span id="nxDelaySipV">₹10,000</span></div><input type="range" id="nxDelaySip" min="500" max="200000" step="500" value="10000" oninput="nxDelayCalc()"></div>
+    <div class="nx-delay-field"><div class="nx-delay-field-top"><span>Expected Annual Return</span><span id="nxDelayRetV">12%</span></div><input type="range" id="nxDelayRet" min="4" max="25" step="0.5" value="12" oninput="nxDelayCalc()"></div>
+    <div class="nx-delay-field"><div class="nx-delay-field-top"><span>Total Investment Horizon</span><span id="nxDelayYearsV">25 yrs</span></div><input type="range" id="nxDelayYears" min="5" max="40" step="1" value="25" oninput="nxDelayCalc()"></div>
+    <div class="nx-delay-field"><div class="nx-delay-field-top"><span>Delay in Starting</span><span id="nxDelayGapV">5 yrs</span></div><input type="range" id="nxDelayGap" min="1" max="20" step="1" value="5" oninput="nxDelayCalc()"></div>
+  </div>
+  <div class="nx-delay-compare">
+    <div class="nx-delay-card start-now"><div class="l">Start Today</div><div class="v" id="nxDelayNowVal">₹0</div><div class="sub" id="nxDelayNowYears">invests for 25 yrs</div></div>
+    <div class="nx-delay-card start-later"><div class="l" id="nxDelayLaterLabel">Start in 5 years</div><div class="v" id="nxDelayLaterVal">₹0</div><div class="sub" id="nxDelayLaterYears">invests for 20 yrs</div></div>
+  </div>
+  <div class="nx-delay-loss">
+    <div style="font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px;">What that delay actually costs you</div>
+    <div class="big" id="nxDelayLoss">₹0</div>
+    <div style="font-size:11.5px;color:#8891a1;" id="nxDelaySameContrib">Even though you'd invest the same monthly amount for fewer years</div>
+  </div>
+</div>
+<script>
+function nxDelayCalc(){
+  var sip = parseFloat(document.getElementById('nxDelaySip').value);
+  var ret = parseFloat(document.getElementById('nxDelayRet').value)/100;
+  var years = parseInt(document.getElementById('nxDelayYears').value,10);
+  var gap = parseInt(document.getElementById('nxDelayGap').value,10);
+
+  document.getElementById('nxDelaySipV').textContent = '₹'+sip.toLocaleString('en-IN');
+  document.getElementById('nxDelayRetV').textContent = (ret*100).toFixed(1)+'%';
+  document.getElementById('nxDelayYearsV').textContent = years+' yrs';
+  document.getElementById('nxDelayGapV').textContent = gap+' yrs';
+
+  if (gap >= years) gap = years - 1;
+
+  var monthlyR = Math.pow(1+ret,1/12)-1;
+  function futureVal(monthlyAmt, y){
+    var n = y*12;
+    return monthlyAmt * ((Math.pow(1+monthlyR,n)-1)/monthlyR) * (1+monthlyR);
+  }
+
+  var nowVal = futureVal(sip, years);
+  var laterYears = years - gap;
+  var laterVal = futureVal(sip, laterYears);
+  var loss = nowVal - laterVal;
+
+  document.getElementById('nxDelayNowVal').textContent = '₹'+Math.round(nowVal).toLocaleString('en-IN');
+  document.getElementById('nxDelayNowYears').textContent = 'invests for '+years+' yrs';
+  document.getElementById('nxDelayLaterLabel').textContent = 'Start in '+gap+' years';
+  document.getElementById('nxDelayLaterVal').textContent = '₹'+Math.round(laterVal).toLocaleString('en-IN');
+  document.getElementById('nxDelayLaterYears').textContent = 'invests for '+laterYears+' yrs';
+  document.getElementById('nxDelayLoss').textContent = '₹'+Math.round(loss).toLocaleString('en-IN');
+  document.getElementById('nxDelaySameContrib').textContent = 'Waiting '+gap+' years to start costs you ₹'+Math.round(loss).toLocaleString('en-IN')+' in lost compounding — same monthly SIP, just started later.';
+}
+document.addEventListener('DOMContentLoaded', nxDelayCalc);
+nxDelayCalc();
+</script>
+
+<!-- ================= FINANCIAL PAGE: GOAL-BASED INVESTMENT PLANNER ================= -->
+<style>
+.nx-goal{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-goal-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-goal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.nx-goal-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.nx-goal-presets{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.nx-goal-preset-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:7px 14px;border-radius:20px;font-size:11.5px;font-weight:700;cursor:pointer}
+.nx-goal-preset-btn.active,.nx-goal-preset-btn:hover{border-color:#00d9b5;color:#00d9b5;background:rgba(0,217,181,.08)}
+.nx-goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.nx-goal-grid{grid-template-columns:1fr}}
+.nx-goal-field{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px}
+.nx-goal-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.nx-goal-field-top span{color:#d6b27a;font-weight:700}
+.nx-goal-field input[type=range]{width:100%;accent-color:#00d9b5;cursor:pointer}
+.nx-goal-risk-row{display:flex;gap:8px;margin-bottom:18px}
+.nx-goal-risk-btn{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:10px;border-radius:10px;font-size:11.5px;font-weight:700;cursor:pointer;text-align:center}
+.nx-goal-risk-btn.active{border-color:#00d9b5;color:#00d9b5;background:rgba(0,217,181,.08)}
+.nx-goal-result{background:linear-gradient(135deg,rgba(0,217,181,.1),rgba(214,178,122,.06));border:1px solid rgba(0,217,181,.3);border-radius:16px;padding:20px;text-align:center}
+.nx-goal-result .l{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.nx-goal-result .big{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800;color:#00d9b5;margin:8px 0}
+.nx-goal-sub-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.nx-goal-sub-stat{background:rgba(255,255,255,.03);border-radius:10px;padding:10px;font-size:11.5px}
+.nx-goal-sub-stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:15px;color:#fff;margin-top:3px}
+</style>
+<div class="nx-goal" id="nxGoalSection" data-mount="financial">
+  <div class="nx-goal-hdr"><div class="nx-goal-title">Goal-Based Investment Planner</div><div class="nx-goal-badge">SHORT & MID-TERM GOALS</div></div>
+  <div class="nx-goal-presets">
+    <button class="nx-goal-preset-btn active" onclick="nxGoalPreset('wedding',this)">💍 Wedding</button>
+    <button class="nx-goal-preset-btn" onclick="nxGoalPreset('car',this)">🚗 Car</button>
+    <button class="nx-goal-preset-btn" onclick="nxGoalPreset('education',this)">🎓 Education</button>
+    <button class="nx-goal-preset-btn" onclick="nxGoalPreset('house',this)">🏠 House Down Payment</button>
+    <button class="nx-goal-preset-btn" onclick="nxGoalPreset('custom',this)">✏️ Custom</button>
+  </div>
+  <div class="nx-goal-grid">
+    <div class="nx-goal-field"><div class="nx-goal-field-top"><span>Target Amount</span><span id="nxGoalTargetV">₹10,00,000</span></div><input type="range" id="nxGoalTarget" min="50000" max="20000000" step="10000" value="1000000" oninput="nxGoalCalc()"></div>
+    <div class="nx-goal-field"><div class="nx-goal-field-top"><span>Time to Goal</span><span id="nxGoalYearsV">5 yrs</span></div><input type="range" id="nxGoalYears" min="1" max="25" step="1" value="5" oninput="nxGoalCalc()"></div>
+    <div class="nx-goal-field"><div class="nx-goal-field-top"><span>Already Saved</span><span id="nxGoalSavedV">₹0</span></div><input type="range" id="nxGoalSaved" min="0" max="5000000" step="10000" value="0" oninput="nxGoalCalc()"></div>
+    <div class="nx-goal-field"><div class="nx-goal-field-top"><span>Inflation Adjustment</span><span id="nxGoalInfV">6%</span></div><input type="range" id="nxGoalInf" min="0" max="10" step="0.5" value="6" oninput="nxGoalCalc()"></div>
+  </div>
+  <div class="nx-goal-risk-row">
+    <button class="nx-goal-risk-btn active" id="nxGoalRiskLow" onclick="nxGoalSetRisk('low',this)">Conservative (7%)</button>
+    <button class="nx-goal-risk-btn" id="nxGoalRiskMed" onclick="nxGoalSetRisk('med',this)">Balanced (10%)</button>
+    <button class="nx-goal-risk-btn" id="nxGoalRiskHigh" onclick="nxGoalSetRisk('high',this)">Aggressive (14%)</button>
+  </div>
+  <div class="nx-goal-result">
+    <div class="l">Required Monthly SIP</div>
+    <div class="big" id="nxGoalSipRequired">₹0</div>
+    <div class="nx-goal-sub-stats">
+      <div class="nx-goal-sub-stat">Inflation-adjusted target<b id="nxGoalAdjTarget">₹0</b></div>
+      <div class="nx-goal-sub-stat">Total you'll invest<b id="nxGoalTotalInvest">₹0</b></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var nxGoalRiskRate = 0.10;
+  window.nxGoalSetRisk = function(type, el){
+    nxGoalRiskRate = type==='low' ? 0.07 : (type==='high' ? 0.14 : 0.10);
+    document.getElementById('nxGoalRiskLow').classList.toggle('active', type==='low');
+    document.getElementById('nxGoalRiskMed').classList.toggle('active', type==='med');
+    document.getElementById('nxGoalRiskHigh').classList.toggle('active', type==='high');
+    nxGoalCalc();
+  };
+  window.nxGoalPreset = function(type, el){
+    document.querySelectorAll('#nxGoalSection .nx-goal-preset-btn').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    var map = {
+      wedding: {target:1500000, years:5},
+      car: {target:800000, years:3},
+      education: {target:2500000, years:10},
+      house: {target:2000000, years:7},
+      custom: null
+    };
+    var p = map[type];
+    if (p) {
+      document.getElementById('nxGoalTarget').value = p.target;
+      document.getElementById('nxGoalYears').value = p.years;
+    }
+    nxGoalCalc();
+  };
+  window.nxGoalCalc = function(){
+    var target = parseFloat(document.getElementById('nxGoalTarget').value);
+    var years = parseInt(document.getElementById('nxGoalYears').value,10);
+    var saved = parseFloat(document.getElementById('nxGoalSaved').value);
+    var inf = parseFloat(document.getElementById('nxGoalInf').value)/100;
+
+    document.getElementById('nxGoalTargetV').textContent = '₹'+target.toLocaleString('en-IN');
+    document.getElementById('nxGoalYearsV').textContent = years+' yrs';
+    document.getElementById('nxGoalSavedV').textContent = '₹'+saved.toLocaleString('en-IN');
+    document.getElementById('nxGoalInfV').textContent = (inf*100).toFixed(1)+'%';
+
+    var adjTarget = target * Math.pow(1+inf, years);
+    var monthlyR = Math.pow(1+nxGoalRiskRate,1/12)-1;
+    var n = years*12;
+
+    var savedFV = saved * Math.pow(1+nxGoalRiskRate, years);
+    var remainingTarget = Math.max(0, adjTarget - savedFV);
+
+    var sipRequired = 0;
+    if (remainingTarget > 0 && n > 0) {
+      var factor = ((Math.pow(1+monthlyR,n)-1)/monthlyR) * (1+monthlyR);
+      sipRequired = remainingTarget / factor;
+    }
+
+    document.getElementById('nxGoalSipRequired').textContent = '₹'+Math.round(sipRequired).toLocaleString('en-IN')+' /month';
+    document.getElementById('nxGoalAdjTarget').textContent = '₹'+Math.round(adjTarget).toLocaleString('en-IN');
+    document.getElementById('nxGoalTotalInvest').textContent = '₹'+Math.round(sipRequired*n + saved).toLocaleString('en-IN');
+  };
+  document.addEventListener('DOMContentLoaded', nxGoalCalc);
+  if (document.readyState !== 'loading') nxGoalCalc();
+})();
+</script>
 </body>
 </html>
