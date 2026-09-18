@@ -210,6 +210,39 @@ main{width:100%;margin:0;padding:0}
 </head>
 <body>
 
+<!-- ================================================================
+     🧩 MOUNT MANAGER — add/remove sections easily
+     Kisi bhi naye widget/section ke sabse bahar wale <div> par
+     data-mount="trading"   (ya financial / investment / loans / earning / alpha / home)
+     laga do — code file me kahin bhi paste karo, ye apne aap us
+     section ke andar chala jayega. Hatana ho to bas wo poora
+     <div data-mount="...">...</div> block delete kar do, bas.
+     ================================================================ -->
+<script>
+(function(){
+  function gfMountAll(){
+    document.querySelectorAll('[data-mount]').forEach(function(el){
+      var targetId = el.getAttribute('data-mount');
+      var target = document.getElementById(targetId);
+      if (target && el.parentNode !== target) {
+        target.appendChild(el);
+      }
+    });
+  }
+  window.gfMountAll = gfMountAll;
+  document.addEventListener('DOMContentLoaded', gfMountAll);
+  if (document.readyState !== 'loading') gfMountAll();
+
+  // Agar future me koi script dynamically naya data-mount element daale,
+  // to wo bhi apne aap sahi section me chala jayega.
+  document.addEventListener('DOMContentLoaded', function(){
+    new MutationObserver(function(){ gfMountAll(); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<!-- ================================================================ -->
+
 <div class="ticker-wrap">
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
@@ -472,7 +505,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
-    };
+        };
 
     async function callAIProvider(messages, systemInstruction) {
         // messages: [{role:'user'|'assistant', content:'...'}] — the current mode's
@@ -1175,7 +1208,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 .ultra-card.alpha-card:hover .ultra-arrow-btn{background:#00dfd8;color:#000}
 </style>
 
-<div id="ultraCategoryWrapper" class="ultra-cat-wrapper">
+<div id="ultraCategoryWrapper" class="ultra-cat-wrapper" data-mount="home">
   <div class="ultra-section-header">
     <div class="ultra-title"><span class="ultra-title-dot"></span> Main Categories</div>
   </div>
@@ -1216,28 +1249,19 @@ if (errData.error && errData.error.message) detail = errData.error.message;
       <div class="ultra-top-bar"><div class="ultra-icon-box"><i class="fa-solid fa-bolt"></i></div><span class="ultra-badge">PRO AI ASSISTANT</span></div>
       <div class="ultra-card-content"><div class="ultra-text-group"><h3 style="background: linear-gradient(135deg, #ffffff, #00dfd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Alpha AI</h3><p style="color:#00dfd8;">Smart Trading Assistant</p></div><div class="ultra-arrow-btn"><i class="fa-solid fa-arrow-right"></i></div></div>
     </div>
-  </div>
+    </div>
 </div>
 
 <script>
-(function() {
-  function positionCards() {
-    var heroCard = document.querySelector('.hero-full-card');
-    var catWrapper = document.getElementById('ultraCategoryWrapper');
-    if (heroCard && catWrapper) heroCard.parentNode.insertBefore(catWrapper, heroCard.nextSibling);
+window.handleCategoryClick = function(pageId) {
+  if (typeof openPage === 'function') openPage(pageId);
+  else {
+    document.querySelectorAll('.page').forEach(function(sec){ sec.classList.remove('active'); });
+    var target = document.getElementById(pageId);
+    if (target) target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  window.handleCategoryClick = function(pageId) {
-    if (typeof openPage === 'function') openPage(pageId);
-    else {
-      document.querySelectorAll('.page').forEach(function(sec){ sec.classList.remove('active'); });
-      var target = document.getElementById(pageId);
-      if (target) target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-  document.addEventListener("DOMContentLoaded", positionCards);
-  positionCards();
-})();
+};
 </script>
 
 <!-- ======================================================= -->
@@ -1255,7 +1279,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 .rsi-subtitle{font-size:11px;color:#64748b;margin:2px 0 0 0}
 .rsi-status-badge{display:flex;align-items:center;gap:6px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:5px 12px;border-radius:30px;font-size:11px;color:#00e676;font-weight:700}
 .rsi-pulse-dot{width:7px;height:7px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:rP 1.5s infinite}
-@keyframes rP{0%,100%{transform:scale(.9);opacity:1}50%{transform:scale(1.3);opacity:.5}}
+@keyframes rP{0%,100%{opacity:1;transform:scale(.9)}50%{opacity:.5;transform:scale(1.3)}}
 .rsi-grid{display:grid;grid-template-columns:1fr;gap:12px}
 @media(min-width:768px){.rsi-grid{grid-template-columns:repeat(2,1fr)}}
 .rsi-item-card{background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;transition:all .3s ease}
@@ -1275,11 +1299,11 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 .rsi-item-footer{display:flex;justify-content:space-between;align-items:center}
 .rsi-timeframe{font-size:10px;color:#94a3b8;font-weight:600}
 .rsi-copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s ease}
-    .rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
+.rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
 #rsiToast{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;padding:10px 16px;border-radius:10px;font-size:11px;font-weight:800;display:none;z-index:99999}
 </style>
 
-<div id="alphaSignalSection" class="rsi-engine-wrapper">
+<div id="alphaSignalSection" class="rsi-engine-wrapper" data-mount="home">
   <div class="rsi-card">
     <div class="rsi-header">
       <div>
@@ -1297,11 +1321,6 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 
 <script>
 (function(){
-  function positionSection(){
-    var c=document.getElementById('ultraCategoryWrapper')||document.querySelector('.hero-full-card'),a=document.getElementById('alphaSignalSection');
-    if(c&&a)c.parentNode.insertBefore(a,c.nextSibling);
-  }
-
   const assets=[
     {symbol:'BTCUSDT',name:'Bitcoin',icon:'fa-brands fa-bitcoin'},
     {symbol:'ETHUSDT',name:'Ethereum',icon:'fa-brands fa-ethereum'},
@@ -1402,7 +1421,6 @@ if (errData.error && errData.error.message) detail = errData.error.message;
   function bootRsiOnce(){
     if (rsiBooted) return;
     rsiBooted = true;
-    positionSection();
     computeRealSignals();
     setInterval(computeRealSignals, 15000);
   }
@@ -1465,7 +1483,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 @media(max-width:480px){.wct-inner{padding:20px}.wct-title{font-size:19px}.wct-panel,.wct-result{padding:18px}}
 </style>
 
-<div class="wct" id="wealthCalcTool">
+<div class="wct" id="wealthCalcTool" data-mount="home">
   <div class="wct-inner">
     <div class="wct-head">
       <div class="wct-head-text">
@@ -1600,15 +1618,6 @@ if (errData.error && errData.error.message) detail = errData.error.message;
   updateSliderFill(monthlyEl); updateSliderFill(rateEl); updateSliderFill(yearsEl);
   compute();
   loadLiveRates();
-
-  function placeOnHome(){
-    var home = document.getElementById('home');
-    var tool = document.getElementById('wealthCalcTool');
-    if (!home || !tool) return;
-    if (tool.parentNode !== home) home.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnHome);
-  placeOnHome();
 })();
 </script>
 
@@ -1640,7 +1649,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 @media(max-width:480px){.hm-inner{padding:18px}}
 </style>
 
-<div class="hm-suite" id="hmSuiteSection">
+<div class="hm-suite" id="hmSuiteSection" data-mount="home">
   <div class="hm-suite-bg"></div>
   <div class="hm-suite-scrim"></div>
   <div class="hm-inner">
@@ -1695,17 +1704,6 @@ async function fetchHmMarket(){
 }
 calcHmEMI();
 fetchHmMarket();
-
-(function(){
-  function placeHmSuiteOnHome(){
-    var home = document.getElementById('home');
-    var hm = document.getElementById('hmSuiteSection');
-    if (!home || !hm) return;
-    if (hm.parentNode !== home) home.appendChild(hm);
-  }
-  document.addEventListener('DOMContentLoaded', placeHmSuiteOnHome);
-  placeHmSuiteOnHome();
-})();
 </script>
 
 <!-- ===== SINGLE-FILE FOOTER WITH LEGAL CONTENT ===== -->
@@ -1749,7 +1747,7 @@ fetchHmMarket();
 .gf-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 
-<footer class="gf-ftr" id="lxFooterSection">
+<footer class="gf-ftr" id="lxFooterSection" data-mount="home">
   <div class="gf-ftr-wrap">
     <div class="gf-mast">
       <div><div class="gf-word">Global<span> Finance</span></div><p class="gf-tag">Market intelligence, lending tools and AI-assisted financial guidance, built for the modern Indian investor.</p></div>
@@ -1886,9 +1884,6 @@ const LxFooter = {
     this.restoreRegion();
     this.checkLatency();
     setInterval(() => this.checkLatency(), 30000);
-    const home = document.getElementById('home');
-    const ftr = document.getElementById('lxFooterSection');
-    if(home && ftr && ftr.parentNode !== home) home.appendChild(ftr);
   }
 };
 
@@ -1924,7 +1919,7 @@ if (document.readyState !== 'loading') LxFooter.init();
 .gf-rec-amount{font-size:16px;font-weight:700;color:var(--tx-accent);margin-top:4px}
 </style>
 
-<div class="gf-tax-wrapper" id="gfTaxEngineSection">
+<div class="gf-tax-wrapper" id="gfTaxEngineSection" data-mount="financial">
   <div class="gf-tax-header">
     <div class="gf-tax-title">Tax Estimator</div>
     <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
@@ -2019,17 +2014,6 @@ function runTaxCalc() {
 
 document.addEventListener('DOMContentLoaded', runTaxCalc);
 runTaxCalc();
-
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var tool = document.getElementById('gfTaxEngineSection');
-    if (!financialPage || !tool) return;
-    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
 </script>
 
 <!-- ================= FINANCIAL PAGE: LIVE ASSET ALLOCATION VISUALIZER ================= -->
@@ -2057,7 +2041,7 @@ runTaxCalc();
 .gf-ast-chart-card{background:var(--as-card);border:1px solid var(--as-border);border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;position:relative}
 .gf-chart-container{position:relative;width:220px;height:220px}
 .gf-chart-center-val{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-.gf-chart-center-val .lbl{font-size:10px;text-transform:uppercase;color:var(--as-muted);letter-spacing:.8px}
+    .gf-chart-center-val .lbl{font-size:10px;text-transform:uppercase;color:var(--as-muted);letter-spacing:.8px}
 .gf-chart-center-val .amt{font-size:17px;font-weight:800;color:var(--as-emerald);margin-top:2px}
 .gf-ast-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-top:20px;border-top:1px solid rgba(255,255,255,.06);padding-top:14px}
 .gf-metric-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px;text-align:center}
@@ -2065,7 +2049,7 @@ runTaxCalc();
 .gf-metric-box .m-val{font-size:14px;font-weight:700;color:var(--as-gold);margin-top:3px}
 </style>
 
-<div class="gf-asset-engine-root" id="gfAssetWrapper">
+<div class="gf-asset-engine-root" id="gfAssetWrapper" data-mount="financial">
   <div class="gf-ast-header"><div class="gf-ast-title">Live Asset Allocation</div><div class="gf-ast-badge">Real-Time Visualizer</div></div>
   <div class="gf-ast-presets">
     <button class="gf-preset-btn active" onclick="applyAssetPreset('growth', event)">Aggressive Growth</button>
@@ -2153,21 +2137,10 @@ function applyAssetPreset(type, evt) {
 
 document.addEventListener('DOMContentLoaded', initAssetEngine);
 if (document.readyState === 'complete' || document.readyState === 'interactive') initAssetEngine();
-
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var tool = document.getElementById('gfAssetWrapper');
-    if (!financialPage || !tool) return;
-    if (tool.parentNode !== financialPage) financialPage.appendChild(tool);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
 </script>
 
 <!-- ================= FINANCIAL PAGE: LIVE MARKET WATCH ================= -->
-<div id="obsRealMarketSection" style="display:none;">
+<div id="obsRealMarketSection" data-mount="financial">
   <style>
     .obs-mkt-wrap{max-width:900px;margin:35px auto;padding:28px 20px;background:linear-gradient(145deg,#060608 0%,#0d0e12 100%);border:1px solid rgba(212,175,55,.3);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.9);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e5e5e5;text-align:center;position:relative;overflow:hidden}
     .obs-mkt-wrap::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent)}
@@ -2221,22 +2194,17 @@ function updateAssetCard(prefix, asset) {
   }
 }
 var _realMarketBooted = false;
-function placeRealMarketOnFinancial() {
-  var fin = document.getElementById('financial');
-  var sec = document.getElementById('obsRealMarketSection');
-  if (!fin || !sec) return;
-  if (sec.parentNode !== fin) fin.appendChild(sec);
-  sec.style.display = 'block';
+function bootRealMarket() {
   if (_realMarketBooted) return;
   _realMarketBooted = true;
   fetchRealMarketData();
 }
-document.addEventListener('DOMContentLoaded', placeRealMarketOnFinancial);
-if (document.readyState !== 'loading') placeRealMarketOnFinancial();
+document.addEventListener('DOMContentLoaded', bootRealMarket);
+if (document.readyState !== 'loading') bootRealMarket();
 </script>
 
-<!-- ================= FINANCIAL PAGE: TRADING SESSION CLOCK (bug fixed — JS was missing) ================= -->
-<div id="obsRealMarketSessions" style="display:none;">
+<!-- ================= FINANCIAL PAGE: TRADING SESSION CLOCK ================= -->
+<div id="obsRealMarketSessions" data-mount="financial">
   <style>
     .obs-sess-wrap{max-width:900px;margin:35px auto 15px;padding:22px 20px;background:linear-gradient(145deg,#050507 0%,#0c0d11 100%);border:1px solid rgba(212,175,55,.25);border-radius:16px;box-shadow:0 15px 40px rgba(0,0,0,.85);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e5e5e5}
     .obs-sess-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:12px;margin-bottom:16px}
@@ -2269,7 +2237,6 @@ if (document.readyState !== 'loading') placeRealMarketOnFinancial();
   function isSessionOpen(startHourUTC, endHourUTC, nowUTCHour, nowUTCMinuteFraction) {
     var now = nowUTCHour + nowUTCMinuteFraction;
     if (startHourUTC < endHourUTC) return now >= startHourUTC && now < endHourUTC;
-    // session wraps past midnight (e.g. Sydney 22:00 -> 07:00)
     return now >= startHourUTC || now < endHourUTC;
   }
 
@@ -2297,19 +2264,10 @@ if (document.readyState !== 'loading') placeRealMarketOnFinancial();
     });
   }
 
-  function placeSessionsOnFinancial(){
-    var fin = document.getElementById('financial');
-    var sec = document.getElementById('obsRealMarketSessions');
-    if (!fin || !sec) return;
-    if (sec.parentNode !== fin) fin.appendChild(sec);
-    sec.style.display = 'block';
-  }
-
   var sessionsBooted = false;
   function bootSessionsOnce(){
     if (sessionsBooted) return;
     sessionsBooted = true;
-    placeSessionsOnFinancial();
     updateSessions();
     setInterval(updateSessions, 1000);
   }
@@ -2336,7 +2294,7 @@ if (document.readyState !== 'loading') placeRealMarketOnFinancial();
 @media(max-width:620px){.gf-ai-launch{padding:24px}.gl-row{flex-direction:column;align-items:stretch}.gl-btn{justify-content:center}}
 </style>
 
-<div class="gf-ai-launch" id="gfAiLaunchSection">
+<div class="gf-ai-launch" id="gfAiLaunchSection" data-mount="financial">
   <div class="gl-row">
     <div class="gl-left">
       <div class="gl-icon">🧠</div>
@@ -2369,16 +2327,6 @@ function gfLaunchFinanceAI(){
     if (financeItem) financeItem.click();
   }, 150);
 }
-(function(){
-  function placeOnFinancialPage(){
-    var financialPage = document.getElementById('financial');
-    var card = document.getElementById('gfAiLaunchSection');
-    if (!financialPage || !card) return;
-    if (card.parentNode !== financialPage) financialPage.appendChild(card);
-  }
-  document.addEventListener('DOMContentLoaded', placeOnFinancialPage);
-  placeOnFinancialPage();
-})();
 </script>
 
 <!-- ================= FINANCIAL PAGE: ARTICLES (add your own posts to gfPosts below) ================= -->
@@ -2405,7 +2353,7 @@ function gfLaunchFinanceAI(){
 #loadMoreBtn:disabled{cursor:default}
 </style>
 
-<div id="gfArticleStreamSection">
+<div id="gfArticleStreamSection" data-mount="financial">
   <div class="gf-hdr"><h3><span>◈</span> Financial Guides</h3><small>ARCHIVE</small></div>
   <div id="gfArticleBox">
     <div id="articleContainer"></div>
@@ -2461,22 +2409,14 @@ function loadMoreObsidianArticles() {
   btn.disabled = true;
 }
 
-function gfPlaceArticleStreamOnFinancial() {
-  var financialPage = document.getElementById('financial');
-  var section = document.getElementById('gfArticleStreamSection');
-  if (!financialPage || !section) return;
-  if (section.parentNode !== financialPage) financialPage.appendChild(section);
-}
-
-document.addEventListener('DOMContentLoaded', function(){ gfRenderArticles(); gfPlaceArticleStreamOnFinancial(); });
+document.addEventListener('DOMContentLoaded', function(){ gfRenderArticles(); });
 gfRenderArticles();
-gfPlaceArticleStreamOnFinancial();
 </script>
 
 <!-- ================= TRADING PAGE: LIVE CHART + POSITION SIZE & RISK CALCULATOR ================= -->
 <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');.gf-tdesk{--td-bg:#05070a;--td-panel:#0b0e14;--td-hair:rgba(255,255,255,.08);--td-green:#00e676;--td-red:#ff3b5c;--td-gold:#ffb800;--td-text:#f1f5f9;--td-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;position:relative;max-width:1400px;margin:24px auto;padding:20px;background:var(--td-bg);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.9)}.gf-tdesk::before{content:'';position:absolute;top:-15%;left:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-green) 0%,transparent 70%);filter:blur(120px);opacity:.35;pointer-events:none}.gf-tdesk::after{content:'';position:absolute;bottom:-15%;right:8%;width:400px;height:400px;background:radial-gradient(circle,var(--td-red) 0%,transparent 70%);filter:blur(120px);opacity:.28;pointer-events:none}.td-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.55fr 1fr;gap:20px}@media(max-width:980px){.td-inner{grid-template-columns:1fr}}.td-chart-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:18px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6)}.td-chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--td-hair);flex-wrap:wrap;gap:10px}.td-live{display:flex;align-items:center;gap:9px}.td-dot{width:8px;height:8px;background:var(--td-green);border-radius:50%;box-shadow:0 0 10px var(--td-green);animation:tdPulse 1.6s infinite}@keyframes tdPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}.td-live span{color:var(--td-text);font-size:11px;font-weight:800;letter-spacing:1.6px}.td-sym-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);padding:6px 14px;border-radius:100px;border:1px solid var(--td-hair)}.td-sym-badge span:first-child{color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}.td-pro{color:var(--td-gold);background:rgba(255,184,0,.1);font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:1px}.td-symbol-select{background:transparent;border:1px solid var(--td-hair);color:var(--td-text);font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:6px 10px;border-radius:8px;outline:none;cursor:pointer}.td-symbol-select:focus{border-color:var(--td-green)}.td-chart-box{width:100%;height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--td-hair);background:#080b12}@media(max-width:600px){.td-chart-box{height:400px}}.td-calc-panel{background:rgba(13,18,28,.7);backdrop-filter:blur(24px);border:1px solid var(--td-hair);border-radius:20px;padding:20px;box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 20px 50px rgba(0,0,0,.6);display:flex;flex-direction:column}.td-calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--td-hair)}.td-calc-title{color:var(--td-text);font-size:13px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:8px}.td-calc-title svg{width:15px;height:15px;color:var(--td-gold)}.td-dir-toggle{display:flex;background:rgba(255,255,255,.03);border:1px solid var(--td-hair);border-radius:9px;padding:3px;gap:3px}.td-dir-btn{background:transparent;border:none;color:var(--td-muted);font-size:10.5px;font-weight:800;letter-spacing:.5px;padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .2s ease}.td-dir-btn.long.active{background:rgba(0,230,118,.15);color:var(--td-green);box-shadow:0 0 10px rgba(0,230,118,.15)}.td-dir-btn.short.active{background:rgba
 (255,59,92,.15);color:var(--td-red);box-shadow:0 0 10px rgba(255,59,92,.15)}.td-field{margin-bottom:14px}.td-label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--td-muted);margin-bottom:6px;font-weight:600}.td-input-wrap{position:relative}.td-input-wrap span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--td-gold);font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace}.td-input{width:100%;background:var(--td-panel);border:1px solid var(--td-hair);color:var(--td-text);padding:9px 11px 9px 26px;border-radius:8px;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s ease}.td-input:focus{border-color:var(--td-green)}.td-results{margin-top:6px;border-top:1px solid var(--td-hair);padding-top:14px}.td-res-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0}.td-res-label{font-size:11.5px;color:var(--td-muted)}.td-res-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--td-text)}.td-res-val.pos{color:var(--td-green)}.td-res-val.neg{color:var(--td-red)}.td-summary{margin-top:10px;background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(255,184,0,.05));border:1px solid rgba(0,230,118,.25);border-radius:12px;padding:14px;text-align:center}.td-summary-label{font-size:10px;color:var(--td-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}.td-summary-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--td-green);margin-top:4px}.td-warn{margin-top:10px;font-size:10.5px;color:var(--td-red);text-align:center;display:none}.td-warn.show{display:block}</style>
-<div class="gf-tdesk" id="gfTradeDeskSection">
+<div class="gf-tdesk" id="gfTradeDeskSection" data-mount="trading">
 <div class="td-inner">
 <div class="td-chart-panel">
 <div class="td-chart-head">
@@ -2567,20 +2507,12 @@ gfPlaceArticleStreamOnFinancial();
     } else { rrEl.textContent = '—'; rrEl.className = 'td-res-val'; }
   };
   var chartStarted = false;
-  function placeOnTradingPage(){
-    var tradingPage = document.getElementById('trading');
-    var section = document.getElementById('gfTradeDeskSection');
-    if (!tradingPage || !section) return false;
-    if (section.parentNode !== tradingPage) tradingPage.appendChild(section);
-    return true;
-  }
   function tryStartWhenActive(){
     var tradingPage = document.getElementById('trading');
     if (!tradingPage) return;
     if (tradingPage.classList.contains('active') && !chartStarted) { chartStarted = true; initChart('BITSTAMP:BTCUSD'); gfCalcPosition(); }
   }
   function boot(){
-    placeOnTradingPage();
     tryStartWhenActive();
     var tradingPage = document.getElementById('trading');
     if (tradingPage) new MutationObserver(tryStartWhenActive).observe(tradingPage, { attributes: true, attributeFilter: ['class'] });
