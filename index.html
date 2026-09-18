@@ -2531,7 +2531,448 @@ gfRenderArticles();
 .gf-links a{font-size:15px!important}
 </style>
             
+<!-- ================= FINANCIAL PAGE: PORTFOLIO REBALANCING CALCULATOR ================= -->
+<style>
+.nx-rebal{--nr-bg:#070a10;--nr-card:#0e131c;--nr-line:rgba(255,255,255,.08);--nr-teal:#00d9b5;--nr-gold:#d6b27a;--nr-red:#ff5c7a;--nr-text:#eef1f6;--nr-muted:#8891a1;font-family:'Plus Jakarta Sans',sans-serif;max-width:920px;margin:26px auto;background:var(--nr-bg);border:1px solid var(--nr-line);border-radius:20px;padding:26px;color:var(--nr-text);box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-rebal-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid var(--nr-line);padding-bottom:14px;margin-bottom:18px}
+.nx-rebal-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#fff}
+.nx-rebal-badge{font-size:10.5px;font-weight:800;color:var(--nr-teal);background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px;letter-spacing:.5px}
+.nx-rebal-profiles{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.nx-rp-btn{background:rgba(255,255,255,.03);border:1px solid var(--nr-line);color:var(--nr-muted);padding:7px 14px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer}
+.nx-rp-btn.active,.nx-rp-btn:hover{border-color:var(--nr-teal);color:var(--nr-teal);background:rgba(0,217,181,.08)}
+.nx-rebal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
+@media(max-width:680px){.nx-rebal-grid{grid-template-columns:1fr}}
+.nx-rebal-row{display:flex;flex-direction:column;gap:5px;background:var(--nr-card);border:1px solid var(--nr-line);border-radius:10px;padding:10px 12px}
+.nx-rebal-row-top{display:flex;justify-content:space-between;font-size:12px;color:var(--nr-muted);font-weight:700}
+.nx-rebal-row input{background:transparent;border:none;color:var(--nr-text);font-size:14px;font-weight:700;outline:none;font-family:'JetBrains Mono',monospace;width:100%}
+.nx-rebal-actions{margin-top:18px;border-top:1px solid var(--nr-line);padding-top:14px}
+.nx-rebal-action-row{display:grid;grid-template-columns:1.4fr .8fr .8fr .8fr;gap:8px;font-size:11.5px;padding:8px 4px;border-bottom:1px dashed var(--nr-line);align-items:center}
+.nx-rebal-action-row.head{color:var(--nr-muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--nr-line)}
+.nx-buy{color:var(--nr-teal);font-weight:700}
+.nx-sell{color:var(--nr-red);font-weight:700}
+</style>
+<div class="nx-rebal" id="nxRebalSection" data-mount="financial">
+  <div class="nx-rebal-hdr"><div class="nx-rebal-title">Portfolio Rebalancing Calculator</div><div class="nx-rebal-badge">TARGET VS ACTUAL</div></div>
+  <div class="nx-rebal-profiles">
+    <button class="nx-rp-btn active" onclick="nxSetProfile('aggressive',this)">Aggressive Growth</button>
+    <button class="nx-rp-btn" onclick="nxSetProfile('balanced',this)">Balanced</button>
+    <button class="nx-rp-btn" onclick="nxSetProfile('conservative',this)">Conservative</button>
+  </div>
+  <div class="nx-rebal-grid">
+    <div class="nx-rebal-row"><div class="nx-rebal-row-top"><span>Stocks & Mutual Funds</span><span id="nxTgtStocks">70%</span></div><div><span style="color:var(--nr-gold)">₹</span><input type="number" id="nxCurStocks" value="400000" oninput="nxCalcRebalance()"></div></div>
+    <div class="nx-rebal-row"><div class="nx-rebal-row-top"><span>Fixed Income & Bonds</span><span id="nxTgtBonds">15%</span></div><div><span style="color:var(--nr-gold)">₹</span><input type="number" id="nxCurBonds" value="300000" oninput="nxCalcRebalance()"></div></div>
+    <div class="nx-rebal-row"><div class="nx-rebal-row-top"><span>Gold & Commodities</span><span id="nxTgtGold">5%</span></div><div><span style="color:var(--nr-gold)">₹</span><input type="number" id="nxCurGold" value="150000" oninput="nxCalcRebalance()"></div></div>
+    <div class="nx-rebal-row"><div class="nx-rebal-row-top"><span>Real Estate</span><span id="nxTgtRE">5%</span></div><div><span style="color:var(--nr-gold)">₹</span><input type="number" id="nxCurRE" value="100000" oninput="nxCalcRebalance()"></div></div>
+    <div class="nx-rebal-row"><div class="nx-rebal-row-top"><span>Crypto & Digital Assets</span><span id="nxTgtCrypto">5%</span></div><div><span style="color:var(--nr-gold)">₹</span><input type="number" id="nxCurCrypto" value="50000" oninput="nxCalcRebalance()"></div></div>
+  </div>
+  <div class="nx-rebal-actions">
+    <div class="nx-rebal-action-row head"><span>Asset</span><span>Current %</span><span>Target %</span><span>Action</span></div>
+    <div id="nxRebalActionBody"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var nxProfiles = {
+    aggressive:{stocks:70,bonds:15,gold:5,re:5,crypto:5},
+    balanced:{stocks:40,bonds:30,gold:15,re:12,crypto:3},
+    conservative:{stocks:20,bonds:50,gold:20,re:10,crypto:0}
+  };
+  window.nxCurrentProfile = 'aggressive';
+  window.nxSetProfile = function(name, el){
+    nxCurrentProfile = name;
+    document.querySelectorAll('#nxRebalSection .nx-rp-btn').forEach(function(b){b.classList.remove('active');});
+    if (el) el.classList.add('active');
+    nxCalcRebalance();
+  };
+  window.nxCalcRebalance = function(){
+    var t = nxProfiles[nxCurrentProfile];
+    document.getElementById('nxTgtStocks').textContent = t.stocks+'%';
+    document.getElementById('nxTgtBonds').textContent = t.bonds+'%';
+    document.getElementById('nxTgtGold').textContent = t.gold+'%';
+    document.getElementById('nxTgtRE').textContent = t.re+'%';
+    document.getElementById('nxTgtCrypto').textContent = t.crypto+'%';
+    var cur = {
+      stocks: parseFloat(document.getElementById('nxCurStocks').value)||0,
+      bonds: parseFloat(document.getElementById('nxCurBonds').value)||0,
+      gold: parseFloat(document.getElementById('nxCurGold').value)||0,
+      re: parseFloat(document.getElementById('nxCurRE').value)||0,
+      crypto: parseFloat(document.getElementById('nxCurCrypto').value)||0
+    };
+    var total = cur.stocks+cur.bonds+cur.gold+cur.re+cur.crypto;
+    var labels = {stocks:'Stocks & MFs',bonds:'Bonds',gold:'Gold',re:'Real Estate',crypto:'Crypto'};
+    var body = '';
+    Object.keys(labels).forEach(function(k){
+      var curPct = total>0 ? (cur[k]/total*100) : 0;
+      var tgtAmt = total*(t[k]/100);
+      var diff = tgtAmt - cur[k];
+      var actionHtml = Math.abs(diff) < 1 ? '<span style="color:var(--nr-muted)">Hold</span>' :
+        (diff > 0 ? '<span class="nx-buy">Buy ₹'+Math.round(diff).toLocaleString('en-IN')+'</span>' : '<span class="nx-sell">Sell ₹'+Math.round(Math.abs(diff)).toLocaleString('en-IN')+'</span>');
+      body += '<div class="nx-rebal-action-row"><span>'+labels[k]+'</span><span>'+curPct.toFixed(1)+'%</span><span>'+t[k]+'%</span><span>'+actionHtml+'</span></div>';
+    });
+    document.getElementById('nxRebalActionBody').innerHTML = body;
+  };
+  document.addEventListener('DOMContentLoaded', function(){ nxCalcRebalance(); });
+  if (document.readyState !== 'loading') nxCalcRebalance();
+})();
+</script>
 
+<!-- ================= FINANCIAL PAGE: GLOBAL ECONOMIC CALENDAR ================= -->
+<style>
+.nx-cal{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-cal-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-cal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.nx-cal-note{font-size:11px;color:#8891a1;margin-bottom:14px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.nx-cal-item{display:flex;justify-content:space-between;align-items:center;background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.nx-cal-cat{font-size:9.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#d6b27a}
+.nx-cal-name{font-size:14px;font-weight:700;color:#fff;margin-top:3px}
+.nx-cal-date{font-size:11px;color:#8891a1}
+.nx-cal-countdown{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:6px 12px;border-radius:8px}
+</style>
+<div class="nx-cal" id="nxCalSection" data-mount="financial">
+  <div class="nx-cal-hdr"><div class="nx-cal-title">Global Economic Calendar</div></div>
+  <div class="nx-cal-note">Live countdown engine — Union Budget date is a confirmed annual constant (Feb 1). Add FOMC / RBI MPC / CPI release dates into <code>nxCalEvents</code> below once officially announced, so nothing inaccurate is ever shown.</div>
+  <div id="nxCalList"></div>
+</div>
+<script>
+(function(){
+  var nxCalEvents = [
+    { name: 'Union Budget of India (FY 2027-28)', category: 'India · Fiscal Policy', date: '2027-02-01T11:00:00+05:30' }
+    // Add more real events here once officially confirmed, e.g.:
+    // { name: 'US Fed FOMC Meeting', category: 'US · Monetary Policy', date: 'YYYY-MM-DDTHH:MM:00+00:00' }
+    // { name: 'RBI MPC Meeting', category: 'India · Monetary Policy', date: 'YYYY-MM-DDTHH:MM:00+05:30' }
+  ];
+  function render(){
+    var list = document.getElementById('nxCalList');
+    if (!list) return;
+    var now = new Date();
+    var html = '';
+    nxCalEvents.slice().sort(function(a,b){ return new Date(a.date)-new Date(b.date); }).forEach(function(ev){
+      var target = new Date(ev.date);
+      var diffMs = target - now;
+      var countdownText;
+      if (diffMs <= 0) countdownText = 'Event passed';
+      else {
+        var d = Math.floor(diffMs/86400000);
+        var h = Math.floor((diffMs%86400000)/3600000);
+        var m = Math.floor((diffMs%3600000)/60000);
+        countdownText = d+'d '+h+'h '+m+'m';
+      }
+      html += '<div class="nx-cal-item"><div><div class="nx-cal-cat">'+ev.category+'</div><div class="nx-cal-name">'+ev.name+'</div><div class="nx-cal-date">'+target.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})+'</div></div><div class="nx-cal-countdown">'+countdownText+'</div></div>';
+    });
+    list.innerHTML = html || '<div style="color:#8891a1;text-align:center;padding:20px;">No events added yet.</div>';
+  }
+  setInterval(render, 60000);
+  document.addEventListener('DOMContentLoaded', render);
+  if (document.readyState !== 'loading') render();
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: LIVE FEAR & GREED INDEX ================= -->
+<style>
+.nx-fng{max-width:560px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-fng-hdr{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:4px}
+.nx-fng-sub{font-size:11px;color:#8891a1;margin-bottom:18px}
+.nx-fng-gauge-wrap{position:relative;width:220px;height:120px;margin:0 auto 10px}
+.nx-fng-val{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:800;color:#fff;margin-top:6px}
+.nx-fng-label{font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
+.nx-fng-updated{font-size:10.5px;color:#8891a1;margin-top:12px}
+</style>
+<div class="nx-fng" id="nxFngSection" data-mount="financial">
+  <div class="nx-fng-hdr">Crypto Fear &amp; Greed Index</div>
+  <div class="nx-fng-sub">Live sentiment meter · 0 = Extreme Fear · 100 = Extreme Greed</div>
+  <div class="nx-fng-gauge-wrap"><svg id="nxFngSvg" viewBox="0 0 220 120" width="220" height="120"></svg></div>
+  <div class="nx-fng-val" id="nxFngValue">--</div>
+  <div class="nx-fng-label" id="nxFngLabel">Loading…</div>
+  <div class="nx-fng-updated" id="nxFngUpdated">Connecting to live feed…</div>
+</div>
+<script>
+(function(){
+  function drawGauge(value){
+    var svg = document.getElementById('nxFngSvg');
+    if (!svg) return;
+    var cx=110, cy=110, r=95;
+    var segs = [
+      {from:0,to:25,color:'#ff3b5c'},
+      {from:25,to:45,color:'#ff9f43'},
+      {from:45,to:55,color:'#ffd93d'},
+      {from:55,to:75,color:'#8ce99a'},
+      {from:75,to:100,color:'#00d9b5'}
+    ];
+    function pt(pct){ var ang = Math.PI - (pct/100)*Math.PI; return [cx+r*Math.cos(ang), cy-r*Math.sin(ang)]; }
+    var html = '';
+    segs.forEach(function(s){
+      var p1=pt(s.from), p2=pt(s.to);
+      var largeArc = (s.to-s.from) > 50 ? 1 : 0;
+      html += '<path d="M '+p1[0]+' '+p1[1]+' A '+r+' '+r+' 0 '+largeArc+' 1 '+p2[0]+' '+p2[1]+'" stroke="'+s.color+'" stroke-width="14" fill="none" stroke-linecap="round"/>';
+    });
+    var needleAng = Math.PI - (value/100)*Math.PI;
+    var nx2 = cx + (r-18)*Math.cos(needleAng);
+    var ny2 = cy - (r-18)*Math.sin(needleAng);
+    html += '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx2+'" y2="'+ny2+'" stroke="#fff" stroke-width="3" stroke-linecap="round"/>';
+    html += '<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="#fff"/>';
+    svg.innerHTML = html;
+  }
+  async function loadFng(){
+    try {
+      var res = await fetch('https://api.alternative.me/fng/?limit=1');
+      var data = await res.json();
+      var item = data && data.data && data.data[0];
+      if (item) {
+        var val = parseInt(item.value, 10);
+        drawGauge(val);
+        document.getElementById('nxFngValue').textContent = val;
+        document.getElementById('nxFngLabel').textContent = item.value_classification;
+        var ts = new Date(parseInt(item.timestamp,10)*1000);
+        document.getElementById('nxFngUpdated').textContent = 'Updated ' + ts.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+      }
+    } catch(e) {
+      document.getElementById('nxFngLabel').textContent = 'Feed unavailable';
+      document.getElementById('nxFngUpdated').textContent = 'Retrying shortly…';
+    }
+  }
+  var booted=false;
+  function boot(){ if(booted) return; booted=true; loadFng(); setInterval(loadFng, 300000); }
+  document.addEventListener('DOMContentLoaded', boot);
+  if (document.readyState !== 'loading') boot();
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: LIVE FOREX CONVERTER ================= -->
+<style>
+.nx-fx{max-width:640px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-fx-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-fx-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.nx-fx-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.nx-fx-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:12px}
+.nx-fx-row input, .nx-fx-row select{background:#0e131c;border:1px solid rgba(255,255,255,.08);color:#eef1f6;padding:10px 12px;border-radius:10px;font-size:14px;font-family:'JetBrains Mono',monospace;outline:none}
+.nx-fx-swap{text-align:center;margin:6px 0;cursor:pointer;color:#8891a1;font-size:18px}
+.nx-fx-result{background:linear-gradient(135deg,rgba(0,217,181,.1),rgba(214,178,122,.08));border:1px solid rgba(0,217,181,.3);border-radius:14px;padding:16px;text-align:center;margin-top:10px}
+.nx-fx-result-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:#00d9b5}
+.nx-fx-rateline{font-size:11px;color:#8891a1;margin-top:6px}
+</style>
+<div class="nx-fx" id="nxFxSection" data-mount="financial">
+  <div class="nx-fx-hdr"><div class="nx-fx-title">Live Forex Converter</div><div class="nx-fx-badge">LIVE RATES</div></div>
+  <div class="nx-fx-row"><input type="number" id="nxFxAmount" value="1000" oninput="nxFxConvert()"><select id="nxFxFrom" onchange="nxFxConvert()"></select></div>
+  <div class="nx-fx-swap" onclick="nxFxSwap()">⇅ swap</div>
+  <div class="nx-fx-row"><div style="display:flex;align-items:center;color:#8891a1;font-size:13px;">Converted amount</div><select id="nxFxTo" onchange="nxFxConvert()"></select></div>
+  <div class="nx-fx-result"><div class="nx-fx-result-val" id="nxFxResult">—</div><div class="nx-fx-rateline" id="nxFxRateLine">Fetching live rate…</div></div>
+</div>
+<script>
+(function(){
+  var nxFxRates = null;
+  var nxCurrencies = ['USD','INR','EUR','GBP','JPY','AED','SGD','AUD','CAD','CHF'];
+  window.nxFxSwap = function(){
+    var f = document.getElementById('nxFxFrom'), t = document.getElementById('nxFxTo');
+    var tmp = f.value; f.value = t.value; t.value = tmp;
+    nxFxConvert();
+  };
+  window.nxFxConvert = function(){
+    if (!nxFxRates) return;
+    var amt = parseFloat(document.getElementById('nxFxAmount').value) || 0;
+    var from = document.getElementById('nxFxFrom').value;
+    var to = document.getElementById('nxFxTo').value;
+    var usdAmt = amt / (nxFxRates[from] || 1);
+    var converted = usdAmt * (nxFxRates[to] || 1);
+    document.getElementById('nxFxResult').textContent = converted.toLocaleString('en-IN',{maximumFractionDigits:2}) + ' ' + to;
+    document.getElementById('nxFxRateLine').textContent = '1 ' + from + ' = ' + (nxFxRates[to]/nxFxRates[from]).toFixed(4) + ' ' + to + ' · live mid-market rate';
+  };
+  async function loadRates(){
+    try {
+      var res = await fetch('https://open.er-api.com/v6/latest/USD');
+      var data = await res.json();
+      if (data && data.rates) {
+        nxFxRates = data.rates;
+        nxFxConvert();
+      }
+    } catch(e) {
+      document.getElementById('nxFxRateLine').textContent = 'Live feed unavailable — retrying…';
+    }
+  }
+  function populateSelects(){
+    var f = document.getElementById('nxFxFrom'), t = document.getElementById('nxFxTo');
+    nxCurrencies.forEach(function(c){
+      f.insertAdjacentHTML('beforeend','<option value="'+c+'">'+c+'</option>');
+      t.insertAdjacentHTML('beforeend','<option value="'+c+'">'+c+'</option>');
+    });
+    f.value = 'USD'; t.value = 'INR';
+  }
+  var booted=false;
+  function boot(){ if(booted) return; booted=true; populateSelects(); loadRates(); setInterval(loadRates, 300000); }
+  document.addEventListener('DOMContentLoaded', boot);
+  if (document.readyState !== 'loading') boot();
+})();
+</script>
+
+<!-- ================= FINANCIAL PAGE: FIRE CALCULATOR ================= -->
+<style>
+.nx-fire{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-fire-hdr{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:18px}
+.nx-fire-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:700px){.nx-fire-grid{grid-template-columns:1fr}}
+.nx-fire-field{margin-bottom:16px}
+.nx-fire-label{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.nx-fire-label span{color:#d6b27a;font-weight:700}
+.nx-fire-slider{width:100%;accent-color:#00d9b5;cursor:pointer}
+.nx-fire-result{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;text-align:center}
+.nx-fire-res-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.08);font-size:13px}
+.nx-fire-res-row span:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff}
+.nx-fire-big{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:#00d9b5;margin:10px 0}
+</style>
+<div class="nx-fire" id="nxFireSection" data-mount="financial">
+  <div class="nx-fire-hdr">FIRE (Financial Independence) Calculator</div>
+  <div class="nx-fire-grid">
+    <div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Current Age</span><span id="nxFireAgeV">28</span></div><input type="range" class="nx-fire-slider" id="nxFireAge" min="18" max="60" value="28" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Current Annual Expenses</span><span id="nxFireExpV">₹6,00,000</span></div><input type="range" class="nx-fire-slider" id="nxFireExp" min="120000" max="5000000" step="10000" value="600000" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Current Savings/Investments</span><span id="nxFireSavV">₹5,00,000</span></div><input type="range" class="nx-fire-slider" id="nxFireSav" min="0" max="20000000" step="50000" value="500000" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Monthly Investment (SIP)</span><span id="nxFireSipV">₹20,000</span></div><input type="range" class="nx-fire-slider" id="nxFireSip" min="1000" max="500000" step="1000" value="20000" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Expected Annual Return</span><span id="nxFireRetV">11%</span></div><input type="range" class="nx-fire-slider" id="nxFireRet" min="4" max="20" step="0.5" value="11" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Inflation Rate</span><span id="nxFireInfV">6%</span></div><input type="range" class="nx-fire-slider" id="nxFireInf" min="2" max="12" step="0.5" value="6" oninput="nxCalcFire()"></div>
+      <div class="nx-fire-field"><div class="nx-fire-label"><span>Safe Withdrawal Rate</span><span id="nxFireSwrV">4%</span></div><input type="range" class="nx-fire-slider" id="nxFireSwr" min="2.5" max="6" step="0.25" value="4" oninput="nxCalcFire()"></div>
+    </div>
+    <div class="nx-fire-result">
+      <div style="font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px;">Your FIRE Number</div>
+      <div class="nx-fire-big" id="nxFireNumber">₹0</div>
+      <div class="nx-fire-res-row"><span>Projected FI Age</span><span id="nxFireAgeResult">—</span></div>
+      <div class="nx-fire-res-row"><span>Years to Financial Independence</span><span id="nxFireYears">—</span></div>
+      <div class="nx-fire-res-row"><span>Corpus needed (inflation-adjusted)</span><span id="nxFireCorpusAdj">₹0</span></div>
+    </div>
+  </div>
+</div>
+<script>
+function nxCalcFire(){
+  var age = parseInt(document.getElementById('nxFireAge').value,10);
+  var exp = parseFloat(document.getElementById('nxFireExp').value);
+  var sav = parseFloat(document.getElementById('nxFireSav').value);
+  var sip = parseFloat(document.getElementById('nxFireSip').value);
+  var ret = parseFloat(document.getElementById('nxFireRet').value)/100;
+  var inf = parseFloat(document.getElementById('nxFireInf').value)/100;
+  var swr = parseFloat(document.getElementById('nxFireSwr').value)/100;
+
+  document.getElementById('nxFireAgeV').textContent = age;
+  document.getElementById('nxFireExpV').textContent = '₹'+exp.toLocaleString('en-IN');
+  document.getElementById('nxFireSavV').textContent = '₹'+sav.toLocaleString('en-IN');
+  document.getElementById('nxFireSipV').textContent = '₹'+sip.toLocaleString('en-IN');
+  document.getElementById('nxFireRetV').textContent = (ret*100).toFixed(1)+'%';
+  document.getElementById('nxFireInfV').textContent = (inf*100).toFixed(1)+'%';
+  document.getElementById('nxFireSwrV').textContent = (swr*100).toFixed(2)+'%';
+
+  var fireNumberToday = exp / swr;
+  document.getElementById('nxFireNumber').textContent = '₹'+Math.round(fireNumberToday).toLocaleString('en-IN');
+
+  var monthlyRet = Math.pow(1+ret, 1/12)-1;
+  var corpus = sav;
+  var months = 0;
+  var maxMonths = 720;
+  var reached = false;
+  while (months < maxMonths) {
+    corpus = corpus * (1+monthlyRet) + sip;
+    months++;
+    var yearsElapsed = months/12;
+    var requiredCorpusThen = (exp * Math.pow(1+inf, yearsElapsed)) / swr;
+    if (corpus >= requiredCorpusThen) { reached = true; break; }
+  }
+  if (reached) {
+    var years = months/12;
+    document.getElementById('nxFireYears').textContent = years.toFixed(1)+' years';
+    document.getElementById('nxFireAgeResult').textContent = Math.round(age+years)+' years old';
+    var reqCorpus = (exp * Math.pow(1+inf, years)) / swr;
+    document.getElementById('nxFireCorpusAdj').textContent = '₹'+Math.round(reqCorpus).toLocaleString('en-IN');
+  } else {
+    document.getElementById('nxFireYears').textContent = '60+ years (increase SIP)';
+    document.getElementById('nxFireAgeResult').textContent = '—';
+    document.getElementById('nxFireCorpusAdj').textContent = '—';
+  }
+}
+document.addEventListener('DOMContentLoaded', nxCalcFire);
+nxCalcFire();
+</script>
+
+<!-- ================= FINANCIAL PAGE: RISK/REWARD & VaR ANALYZER ================= -->
+<style>
+.nx-var{max-width:920px;margin:26px auto;background:#070a10;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:26px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.7)}
+.nx-var-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:12px;margin-bottom:16px}
+.nx-var-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.nx-var-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.nx-var-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.nx-var-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:680px){.nx-var-grid{grid-template-columns:1fr}}
+.nx-var-row{background:#0e131c;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
+.nx-var-row-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:4px}
+.nx-var-row input{width:100%;background:transparent;border:none;color:#eef1f6;font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;outline:none}
+.nx-var-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px}
+.nx-var-card{background:linear-gradient(135deg,rgba(0,217,181,.08),rgba(255,59,92,.05));border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center}
+.nx-var-card .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.6px}
+.nx-var-card .v{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;color:#fff;margin-top:4px}
+.nx-var-live-tag{font-size:9px;color:#00d9b5;margin-top:3px}
+</style>
+<div class="nx-var" id="nxVarSection" data-mount="financial">
+  <div class="nx-var-hdr"><div class="nx-var-title">Risk / Reward &amp; Value-at-Risk Analyzer</div><div class="nx-var-badge">LIVE + REFERENCE DATA</div></div>
+  <div class="nx-var-note">Crypto volatility (BTC) is computed live from the last 30 days of Binance price data. Equity, Bond, Gold and Real Estate volatility use commonly cited long-run historical averages (reference figures, not live feeds) since free live volatility data isn't available for those asset classes without a paid provider.</div>
+  <div class="nx-var-grid">
+    <div class="nx-var-row"><div class="nx-var-row-top"><span>Stocks & MFs</span></div><input type="number" id="nxVarStocks" value="400000" oninput="nxCalcVar()"></div>
+    <div class="nx-var-row"><div class="nx-var-row-top"><span>Bonds</span></div><input type="number" id="nxVarBonds" value="300000" oninput="nxCalcVar()"></div>
+    <div class="nx-var-row"><div class="nx-var-row-top"><span>Gold</span></div><input type="number" id="nxVarGold" value="150000" oninput="nxCalcVar()"></div>
+    <div class="nx-var-row"><div class="nx-var-row-top"><span>Real Estate</span></div><input type="number" id="nxVarRE" value="100000" oninput="nxCalcVar()"></div>
+    <div class="nx-var-row"><div class="nx-var-row-top"><span>Crypto</span></div><input type="number" id="nxVarCrypto" value="50000" oninput="nxCalcVar()"></div>
+  </div>
+  <div class="nx-var-cards">
+    <div class="nx-var-card"><div class="l">Portfolio Value</div><div class="v" id="nxVarTotal">₹0</div></div>
+    <div class="nx-var-card"><div class="l">Est. Annual Volatility</div><div class="v" id="nxVarVol">—</div><div class="nx-var-live-tag" id="nxVarVolTag">crypto portion live</div></div>
+    <div class="nx-var-card"><div class="l">1-Day 95% VaR</div><div class="v" id="nxVarVaR">—</div></div>
+    <div class="nx-var-card"><div class="l">Crypto Max Drawdown (30d, live)</div><div class="v" id="nxVarDrawdown">—</div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var refVol = { stocks: 0.18, bonds: 0.06, gold: 0.15, re: 0.10 };
+  var liveCryptoVol = 0.55;
+  var liveCryptoDrawdown = null;
+
+  async function loadCryptoVol(){
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=31');
+      var klines = await res.json();
+      var closes = klines.map(function(k){ return parseFloat(k[4]); });
+      var returns = [];
+      for (var i=1;i<closes.length;i++) returns.push((closes[i]-closes[i-1])/closes[i-1]);
+      var mean = returns.reduce(function(a,b){return a+b;},0)/returns.length;
+      var variance = returns.reduce(function(a,b){return a+Math.pow(b-mean,2);},0)/returns.length;
+      var dailyStd = Math.sqrt(variance);
+      liveCryptoVol = dailyStd * Math.sqrt(365);
+      var peak = closes[0], maxDD = 0;
+      closes.forEach(function(c){ if (c>peak) peak=c; var dd=(peak-c)/peak; if (dd>maxDD) maxDD=dd; });
+      liveCryptoDrawdown = maxDD;
+      document.getElementById('nxVarVolTag').textContent = 'crypto volatility live from Binance (30d)';
+    } catch(e) {
+      document.getElementById('nxVarVolTag').textContent = 'live crypto feed unavailable — using reference figure';
+    }
+    nxCalcVar();
+  }
+
+  window.nxCalcVar = function(){
+    var v = {
+      stocks: parseFloat(document.getElementById('nxVarStocks').value)||0,
+      bonds: parseFloat(document.getElementById('nxVarBonds').value)||0,
+      gold: parseFloat(document.getElementById('nxVarGold').value)||0,
+      re: parseFloat(document.getElementById('nxVarRE').value)||0,
+      crypto: parseFloat(document.getElementById('nxVarCrypto').value)||0
+    };
+    var total = v.stocks+v.bonds+v.gold+v.re+v.crypto;
+    document.getElementById('nxVarTotal').textContent = '₹'+Math.round(total).toLocaleString('en-IN');
+    if (total <= 0) { return; }
+    var weightedVol = (v.stocks*refVol.stocks + v.bonds*refVol.bonds + v.gold*refVol.gold + v.re*refVol.re + v.crypto*liveCryptoVol)/total;
+    document.getElementById('nxVarVol').textContent = (weightedVol*100).toFixed(1)+'%';
+    var dailyVol = weightedVol/Math.sqrt(252);
+    var var95 = total * dailyVol * 1.65;
+    document.getElementById('nxVarVaR').textContent = '₹'+Math.round(var95).toLocaleString('en-IN');
+    document.getElementById('nxVarDrawdown').textContent = liveCryptoDrawdown !== null ? (liveCryptoDrawdown*100).toFixed(1)+'%' : 'Loading…';
+  };
+
+  document.addEventListener('DOMContentLoaded', loadCryptoVol);
+  if (document.readyState !== 'loading') loadCryptoVol();
+})();
+</script>
 </script>
 
 </body>
