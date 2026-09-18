@@ -70,7 +70,7 @@ main{width:100%;margin:0;padding:0}
         --p-accent-cyan: #38bdf8; --p-accent-purple: #c084fc; --p-accent-green: #4ade80;
         --p-accent-red: #f87171; --p-accent-yellow: #fbbf24;
         --p-text-main: #f9fafb; --p-text-muted: #9ca3af; --p-border-color: #1f2937;
-        --p-sidebar-width: 260px; --p-font-scale: 1;
+        --p-sidebar-width: 260px; --p-font-scale: 1.18;
 
         width: 100%; height: 85vh; min-height: 560px;
         background-color: var(--p-bg-base); color: var(--p-text-main);
@@ -101,41 +101,41 @@ main{width:100%;margin:0;padding:0}
         padding: 16px; display: flex; flex-direction: column; flex-shrink: 0;
         transition: all .3s cubic-bezier(.4,0,.2,1); z-index: 5; overflow-y: auto;
     }
-    .parnarav-ai-app .brand-logo { font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .parnarav-ai-app .brand-logo { font-size: 1.05em; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .parnarav-ai-app .parnarav-brain-icon { width: 28px; height: 28px; vertical-align: middle; filter: drop-shadow(0 0 6px rgba(59,130,246,.4)); flex-shrink: 0; }
-    .parnarav-ai-app .nav-section-title { font-size: .68rem; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 6px 6px; }
+    .parnarav-ai-app .nav-section-title { font-size: .68em; font-weight: 700; color: var(--p-text-muted); text-transform: uppercase; letter-spacing: .8px; margin: 14px 0 6px 6px; }
     .parnarav-ai-app .nav-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .parnarav-ai-app .nav-item { padding: 9px 12px; border-radius: 8px; color: var(--p-text-muted); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .82rem; transition: all .2s ease; }
+    .parnarav-ai-app .nav-item { padding: 12px 14px; border-radius: 10px; color: var(--p-text-muted); cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .82em; transition: all .2s ease; }
     .parnarav-ai-app .nav-item:hover, .parnarav-ai-app .nav-item.active { background-color: var(--p-bg-card); color: var(--p-accent-cyan); border: 1px solid var(--p-border-color); }
     .parnarav-ai-app .tools-menu { margin-top: 14px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px; }
-    .parnarav-ai-app .tool-btn { width: 100%; background: rgba(148,163,184,.08); border: 1px solid var(--p-border-color); color: var(--p-text-main); padding: 8px 10px; border-radius: 8px; font-weight: 600; font-size: .76rem; cursor: pointer; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
+    .parnarav-ai-app .tool-btn { width: 100%; background: rgba(148,163,184,.08); border: 1px solid var(--p-border-color); color: var(--p-text-main); padding: 8px 10px; border-radius: 8px; font-weight: 600; font-size: .76em; cursor: pointer; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
     .parnarav-ai-app .tool-btn:hover { border-color: var(--p-accent-cyan); color: var(--p-accent-cyan); }
 
     .parnarav-ai-app .workspace { flex: 1; height: 100%; display: flex; flex-direction: column; min-width: 0; position: relative; }
     .parnarav-ai-app .topbar { min-height: 54px; background-color: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; flex-shrink: 0; gap: 10px; flex-wrap: wrap; }
-    .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.15rem; cursor: pointer; }
+    .parnarav-ai-app .mobile-menu-btn { display: none; background: none; border: none; color: var(--p-text-main); font-size: 1.15em; cursor: pointer; }
     .parnarav-ai-app .topbar-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .parnarav-ai-app .mini-btn { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .72rem; display: flex; align-items: center; gap: 5px; font-weight: 600; transition: all .2s ease; }
+    .parnarav-ai-app .mini-btn { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: .72em; display: flex; align-items: center; gap: 5px; font-weight: 600; transition: all .2s ease; }
     .parnarav-ai-app .mini-btn:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .mini-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .mini-btn.danger:hover { color: var(--p-accent-red); border-color: var(--p-accent-red); }
     .parnarav-ai-app .voice-toggle-btn.active { background: rgba(56,189,248,.15); color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
-    .parnarav-ai-app .status-badge { display: flex; align-items: center; gap: 6px; font-size: .72rem; background: rgba(74,222,128,.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(74,222,128,.2); color: var(--p-accent-green); font-weight: 600; white-space: nowrap; }
+    .parnarav-ai-app .status-badge { display: flex; align-items: center; gap: 6px; font-size: .72em; background: rgba(74,222,128,.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(74,222,128,.2); color: var(--p-accent-green); font-weight: 600; white-space: nowrap; }
     .parnarav-ai-app .status-dot { width: 6px; height: 6px; background: var(--p-accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--p-accent-green); }
 
-    .parnarav-ai-app .offline-banner { display: none; background: rgba(248,113,113,.15); color: var(--p-accent-red); font-size: .72rem; font-weight: 600; text-align: center; padding: 5px; }
+    .parnarav-ai-app .offline-banner { display: none; background: rgba(248,113,113,.15); color: var(--p-accent-red); font-size: .72em; font-weight: 600; text-align: center; padding: 5px; }
     .parnarav-ai-app.is-offline .offline-banner { display: block; }
 
     .parnarav-ai-app .search-bar { display: none; padding: 8px 14px; gap: 8px; background: var(--p-bg-surface); border-bottom: 1px solid var(--p-border-color); }
     .parnarav-ai-app .search-bar.open { display: flex; }
-    .parnarav-ai-app .search-bar input { flex: 1; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 8px; padding: 6px 10px; color: var(--p-text-main); outline: none; font-size: .8rem; }
+    .parnarav-ai-app .search-bar input { flex: 1; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 8px; padding: 6px 10px; color: var(--p-text-main); outline: none; font-size: .8em; }
     .parnarav-ai-app mark { background: var(--p-accent-yellow); color: #1a1a1a; border-radius: 3px; padding: 0 2px; }
 
-    .parnarav-ai-app .pinned-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(251,191,36,.08); border-bottom: 1px solid var(--p-border-color); font-size: .72rem; color: var(--p-accent-yellow); cursor: pointer; }
+    .parnarav-ai-app .pinned-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(251,191,36,.08); border-bottom: 1px solid var(--p-border-color); font-size: .72em; color: var(--p-accent-yellow); cursor: pointer; }
     .parnarav-ai-app .pinned-bar.show { display: flex; }
     .parnarav-ai-app .pinned-bar span.txt { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    .parnarav-ai-app .chat-area { flex: 1; padding: 18px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; position: relative; }
+    .parnarav-ai-app .chat-area { flex: 1; padding: 20px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; scroll-behavior: smooth; position: relative; }
     .parnarav-ai-app.density-compact .chat-area { gap: 8px; padding: 10px 12px; }
     .parnarav-ai-app.density-compact .bubble { padding: 8px 12px; }
 
@@ -143,22 +143,22 @@ main{width:100%;margin:0;padding:0}
     .parnarav-ai-app .message-row.user { align-self: flex-end; flex-direction: row-reverse; }
     .parnarav-ai-app .message-row.pinned .bubble { border-color: var(--p-accent-yellow); }
 
-    .parnarav-ai-app .avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; font-weight: 800; }
+    .parnarav-ai-app .avatar { width: 34px; height: 34px; border-radius: 10px; background: var(--p-bg-card); border: 1px solid var(--p-border-color); display: flex; align-items: center; justify-content: center; font-size: .9em; flex-shrink: 0; font-weight: 800; }
     .parnarav-ai-app .user .avatar { background: linear-gradient(135deg,#3b82f6,#1d4ed8); color: #fff; border: none; box-shadow: 0 0 10px rgba(59,130,246,.4); }
 
     .parnarav-ai-app .msg-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .parnarav-ai-app .message-row.user .msg-col { align-items: flex-end; }
 
-    .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 12px 14px; line-height: 1.6; font-size: .88rem; word-wrap: break-word; overflow-x: auto; position: relative; }
+    .parnarav-ai-app .bubble { background-color: var(--p-bg-card); border: 1px solid var(--p-border-color); border-radius: 14px; padding: 16px 18px; line-height: 1.65; font-size: .88em; word-wrap: break-word; overflow-x: auto; position: relative; }
     .parnarav-ai-app .bubble a { color: var(--p-accent-cyan); }
-    .parnarav-ai-app .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .82rem; }
+    .parnarav-ai-app .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: .82em; }
     .parnarav-ai-app .bubble th, .parnarav-ai-app .bubble td { border: 1px solid var(--p-border-color); padding: 6px 8px; text-align: left; }
     .parnarav-ai-app .user .bubble { background-color: #1e3a8a; border-color: #3b82f6; color: #fff; }
 
-    .parnarav-ai-app .msg-time { font-size: .64rem; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
-    .parnarav-ai-app .msg-meta { font-size: .62rem; color: var(--p-text-muted); }
+    .parnarav-ai-app .msg-time { font-size: .64em; color: var(--p-text-muted); padding: 0 4px; display: flex; align-items: center; gap: 6px; }
+    .parnarav-ai-app .msg-meta { font-size: .62em; color: var(--p-text-muted); }
 
-    .parnarav-ai-app .widget-card { background: rgba(0,0,0,.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; }
+    .parnarav-ai-app .widget-card { background: rgba(0,0,0,.25); border: 1px solid var(--p-border-color); border-radius: 10px; padding: 12px; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: .8em; }
     .parnarav-ai-app .widget-title { color: var(--p-accent-purple); font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 
     .parnarav-ai-app .ai-action-bar { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,.15); flex-wrap: wrap; }
@@ -182,10 +182,10 @@ main{width:100%;margin:0;padding:0}
     .parnarav-ai-app .scroll-fab .badge { position: absolute; top: -6px; right: -6px; background: var(--p-accent-red); color: #fff; font-size: 10px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     .parnarav-ai-app .input-wrapper { padding: 10px 14px 12px; background: var(--p-bg-surface); border-top: 1px solid var(--p-border-color); flex-shrink: 0; }
-    .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: .66rem; color: var(--p-text-muted); padding: 0 4px 4px; flex-wrap: wrap; gap: 4px; }
+    .parnarav-ai-app .input-meta { display: flex; justify-content: space-between; font-size: .66em; color: var(--p-text-muted); padding: 0 4px 4px; flex-wrap: wrap; gap: 4px; }
     .parnarav-ai-app .input-box { display: flex; align-items: flex-end; gap: 8px; background: var(--p-bg-base); border: 1px solid var(--p-border-color); border-radius: 12px; padding: 6px 10px; }
     .parnarav-ai-app .input-box:focus-within { border-color: var(--p-accent-cyan); }
-    .parnarav-ai-app textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--p-text-main); font-size: .88rem; resize: none; min-height: 38px; max-height: 140px; padding-top: 9px; line-height: 1.4; overflow-y: auto; }
+    .parnarav-ai-app textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--p-text-main); font-size: .88em; resize: none; min-height: 38px; max-height: 140px; padding-top: 9px; line-height: 1.4; overflow-y: auto; }
     .parnarav-ai-app .btn-icon { background: rgba(255,255,255,.05); border: 1px solid var(--p-border-color); color: var(--p-text-muted); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s ease; flex-shrink: 0; }
     .parnarav-ai-app .btn-icon:hover { color: var(--p-accent-cyan); border-color: var(--p-accent-cyan); }
     .parnarav-ai-app .btn-icon.listening { background: rgba(239,68,68,.2); border-color: #ef4444; color: #ef4444; animation: parnaravPulseMic 1.2s infinite; }
@@ -460,7 +460,7 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
 ================================================================== -->
 
     <script>
-    const SYSTEM_CREATOR = "मुझे बिलासपुर में रहने वाले एक पर्सन ने बनाया है।";
+    const SYSTEM_CREATOR = "मुझे केशव ने बनाया है।";
     const PREFS_KEY = "parnarav_prefs_v3";
     const DRAFT_KEY = "parnarav_draft_v3";
 
@@ -469,25 +469,23 @@ document.addEventListener("keydown",e=>{"Escape"===e.key&&menu.classList.remove(
     // ANTHROPIC_API_KEY environment variable. Nothing secret sits in this HTML
     // file, so GitHub's secret scanning won't block your push, and no one can
     // steal the key via "View Page Source".
-       const AI_CONFIG = {
+    const AI_CONFIG = {
         endpoint: "/api/chat", // <-- our own serverless function, not Anthropic directly
         model: "claude-sonnet-4-6"
     };
 
-    async function callAIProvider(messages) {
-        // messages: [{role:'system'|'user'|'assistant', content:'...'}]
-        const systemMsg = messages.find(m => m.role === 'system');
-        const chatMsgs = messages.filter(m => m.role !== 'system')
-            .map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }));
-
+    async function callAIProvider(messages, systemInstruction) {
+        // messages: [{role:'user'|'assistant', content:'...'}] — the current mode's
+        // system prompt is passed separately and sent fresh with EVERY request, so
+        // switching modes actually changes how the AI behaves right away.
         const response = await fetch(AI_CONFIG.endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 model: AI_CONFIG.model,
                 max_tokens: 1000,
-                system: systemMsg ? systemMsg.content : undefined,
-                messages: chatMsgs
+                system: systemInstruction || undefined,
+                messages: messages
             })
         });
 
@@ -521,13 +519,10 @@ if (errData.error && errData.error.message) detail = errData.error.message;
         resetMemory: function() { this.chatHistory = []; },
 
         processChat: async function(userPrompt, systemInstruction, onChunkCallback, genId) {
-            if (this.chatHistory.length === 0 && systemInstruction) {
-                this.chatHistory.push({ role: "system", content: systemInstruction });
-            }
             this.chatHistory.push({ role: "user", content: userPrompt });
 
             try {
-                const fullReply = await callAIProvider(this.chatHistory);
+                const fullReply = await callAIProvider(this.chatHistory, systemInstruction);
                 if (genId !== undefined && genId !== this.activeGenId) return fullReply;
                 if (onChunkCallback) onChunkCallback(fullReply);
                 this.chatHistory.push({ role: "assistant", content: fullReply });
@@ -616,14 +611,24 @@ if (errData.error && errData.error.message) detail = errData.error.message;
     };
 
     const QuantEngine = {
-        runAnalysis: function() {
-            const rsi = (Math.random() * (75 - 25) + 25).toFixed(2);
-            let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
-            const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (illustrative)</div>
-                • Asset Pair: <b>BTC/USD</b><br>• RSI (14 Period, simulated): <b>${rsi}</b><br>
-                • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b><br>
-                <span style="color:var(--p-text-muted);font-size:.7rem">For real live RSI/EMA data see the Trading & Finance page.</span></div>`;
-            UIManager.appendMsg(html, 'ai', null, '📊');
+        runAnalysis: async function() {
+            UIManager.appendMsg(`<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE</div>Live BTC data fetch ho raha hai...</div>`, 'ai', null, '📊');
+            try {
+                let res = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=50');
+                let klines = await res.json();
+                let closes = klines.map(k => parseFloat(k[4]));
+                let rsi = parseFloat(window.ParnaravQuant.calculateRSI(closes, 14));
+                let ema = window.ParnaravQuant.calculateEMA(closes, 9);
+                let price = closes[closes.length - 1];
+                let signal = rsi < 35 ? "STRONG_BUY" : (rsi > 65 ? "STRONG_SELL" : "NEUTRAL");
+                const html = `<div class="widget-card"><div class="widget-title"><span class="ico">📊</span> QUANT DECISION ENGINE (live)</div>
+                    • Asset Pair: <b>BTC/USD</b><br>• Live Price: <b>$${price.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
+                    • RSI (14, live): <b>${rsi}</b> | EMA(9): <b>$${ema.toLocaleString(undefined,{maximumFractionDigits:2})}</b><br>
+                    • Decision Verdict: <b style="color:${signal === 'STRONG_BUY' ? 'var(--p-accent-green)' : (signal === 'STRONG_SELL' ? 'var(--p-accent-red)' : 'var(--p-accent-yellow)')}">${signal}</b></div>`;
+                UIManager.appendMsg(html, 'ai', null, '📊');
+            } catch (e) {
+                UIManager.appendMsg(`<div class="widget-card">Live data fetch fail ho gaya. Dobara try karein.</div>`, 'ai', null, '📊');
+            }
         }
     };
 
@@ -686,7 +691,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
                 btn.className = 'code-copy-btn'; btn.innerText = 'Copy';
                 btn.onclick = () => { navigator.clipboard.writeText(pre.innerText.replace('Copy','').trim()); btn.innerText = 'Copied!'; setTimeout(()=>btn.innerText='Copy', 1500); };
                 pre.appendChild(btn);
-            });
+                });
 
             bubble.innerHTML = bubble.innerHTML.replace(/(?<!href="|">)(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 
@@ -862,7 +867,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
                 const who = row.classList.contains('user') ? 'You' : 'Parnarav AI';
                 const bubble = row.querySelector('.bubble');
                 if (bubble) text += `${who}: ${bubble.innerText.trim()}\n\n`;
-            });
+                });
             const blob = new Blob([text], { type: 'text/plain' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob); a.download = `parnarav-ai-chat-${Date.now()}.txt`; a.click();
@@ -916,6 +921,7 @@ if (errData.error && errData.error.message) detail = errData.error.message;
 
         switchMode: function(mode, element) {
             this.currentMode = mode;
+            AIEngine.resetMemory(); // fresh conversation per mode, matching the visual chat reset below
             if (element) { document.querySelectorAll('.parnarav-ai-app .nav-item').forEach(el => el.classList.remove('active')); element.classList.add('active'); }
             document.getElementById('chatContainer').innerHTML = `
                 <div class="scroll-fab-group">
@@ -1043,7 +1049,8 @@ if (errData.error && errData.error.message) detail = errData.error.message;
             document.getElementById('stopBtn').style.display = 'none';
             document.getElementById('sendBtn').disabled = false;
         },
-processMessage: async function(promptText, displayText) {
+
+        processMessage: async function(promptText, displayText) {
             const mode = this.currentMode;
             const userRow = UIManager.appendMsg((displayText || promptText).replace(/</g, '&lt;'), 'user', null, null, promptText);
             UIManager.renderActionBar(userRow.id, { isAi: false });
@@ -1268,7 +1275,7 @@ processMessage: async function(promptText, displayText) {
 .rsi-item-footer{display:flex;justify-content:space-between;align-items:center}
 .rsi-timeframe{font-size:10px;color:#94a3b8;font-weight:600}
 .rsi-copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s ease}
-.rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
+    .rsi-copy-btn:hover{background:#00dfd8;color:#000;border-color:#00dfd8}
 #rsiToast{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#7928ca,#00dfd8);color:#fff;padding:10px 16px;border-radius:10px;font-size:11px;font-weight:800;display:none;z-index:99999}
 </style>
 
@@ -1641,10 +1648,10 @@ processMessage: async function(promptText, displayText) {
 
     <div class="hm-sec-h">⚡ Reference Rate Tracker</div>
     <div class="hm-trk-grid">
-      <div class="hm-card"><div class="hm-lbl">Typical FD Rate (indicative)</div><div class="hm-val">7.75% p.a.</div><div class="hm-badge">Check with your bank</div></div>
-      <div class="hm-card"><div class="hm-lbl">Typical Home Loan Rate</div><div class="hm-val">8.35% p.a.</div><div class="hm-badge">Indicative only</div></div>
+      <div class="hm-card"><div class="hm-lbl">Best FD Rate (top banks, Sep 2026)</div><div class="hm-val">7.40% p.a.</div><div class="hm-badge">Check with your bank</div></div>
+      <div class="hm-card"><div class="hm-lbl">Starting Home Loan Rate (PSU banks, Sep 2026)</div><div class="hm-val">7.35% p.a.</div><div class="hm-badge">Indicative only</div></div>
       <div class="hm-card"><div class="hm-lbl">Bitcoin / USD (Live)</div><div class="hm-val" id="hm-btc">Loading...</div><div class="hm-badge">● Live public API</div></div>
-      <div class="hm-card"><div class="hm-lbl">Typical Personal Loan Rate</div><div class="hm-val">10.49% p.a.</div><div class="hm-badge">Indicative only</div></div>
+      <div class="hm-card"><div class="hm-lbl">Starting Personal Loan Rate (top banks, Sep 2026)</div><div class="hm-val">9.99% p.a.</div><div class="hm-badge">Indicative only</div></div>
 
     </div>
 
@@ -1918,7 +1925,7 @@ if (document.readyState !== 'loading') LxFooter.init();
 </style>
 
 <div class="gf-tax-wrapper" id="gfTaxEngineSection">
-    <div class="gf-tax-header">
+  <div class="gf-tax-header">
     <div class="gf-tax-title">Tax Estimator</div>
     <div class="gf-tax-badge">FY 2026–27 (Budget Aligned)</div>
   </div>
@@ -2007,7 +2014,7 @@ function runTaxCalc() {
 
   if (newTax < oldTax) { cardNew.classList.add('winner'); recDetail.textContent = `New Regime saves you ₹${(oldTax-newTax).toLocaleString('en-IN')}`; }
   else if (oldTax < newTax) { cardOld.classList.add('winner'); recDetail.textContent = `Old Regime saves you ₹${(newTax-oldTax).toLocaleString('en-IN')}`; }
-    else { recDetail.textContent = `Both Regimes result in equal tax liability`; }
+  else { recDetail.textContent = `Both Regimes result in equal tax liability`; }
 }
 
 document.addEventListener('DOMContentLoaded', runTaxCalc);
@@ -2101,6 +2108,7 @@ function initAssetEngine() {
   });
   updateAssetVisuals();
 }
+
 function updateAssetVisuals() {
   if (!gfChart) return;
   const root = document.getElementById('gfAssetWrapper');
@@ -2140,7 +2148,7 @@ function applyAssetPreset(type, evt) {
   else if (type === 'balanced') { root.querySelector('#inpStocks').value = 400000; root.querySelector('#inpBonds').value = 300000; root.querySelector('#inpGold').value = 150000; root.querySelector('#inpRE').value = 120000; root.querySelector('#inpCrypto').value = 30000; }
   else if (type === 'conservative') { root.querySelector('#inpStocks').value = 200000; root.querySelector('#inpBonds').value = 500000; root.querySelector('#inpGold').value = 200000; root.querySelector('#inpRE').value = 100000; root.querySelector('#inpCrypto').value = 0; }
 
-  updateAssetVisuals();
+    updateAssetVisuals();
 }
 
 document.addEventListener('DOMContentLoaded', initAssetEngine);
@@ -2561,5 +2569,35 @@ gfPlaceArticleStreamOnFinancial();
   var chartStarted = false;
   function placeOnTradingPage(){
     var tradingPage = document.getElementById('trading');
-    var section = document
-      
+    var section = document.getElementById('gfTradeDeskSection');
+    if (!tradingPage || !section) return false;
+    if (section.parentNode !== tradingPage) tradingPage.appendChild(section);
+    return true;
+  }
+  function tryStartWhenActive(){
+    var tradingPage = document.getElementById('trading');
+    if (!tradingPage) return;
+    if (tradingPage.classList.contains('active') && !chartStarted) { chartStarted = true; initChart('BITSTAMP:BTCUSD'); gfCalcPosition(); }
+  }
+  function boot(){
+    placeOnTradingPage();
+    tryStartWhenActive();
+    var tradingPage = document.getElementById('trading');
+    if (tradingPage) new MutationObserver(tryStartWhenActive).observe(tradingPage, { attributes: true, attributeFilter: ['class'] });
+  }
+  document.addEventListener('DOMContentLoaded', boot);
+  boot();
+})();</script>
+
+<style id="gf-readability-boost">
+.rsi-badge,.rsi-coin-pair,.td-pro,.hm-badge,.obs-sess-title{font-size:12px!important}
+.obs-mkt-tag,.obs-sess-time,.obs-status-badge,.gf-disclaimer,.obs-disc-text,.wct-fx-status,.rsi-m-lbl{font-size:12.5px!important}
+.rsi-subtitle,.rsi-sig-badge,.rsi-timeframe,.rsi-copy-btn,.wct-field-scale,.hm-lbl,.gf-tax-badge,.gf-regime-name,.gf-metric-box .m-title,.gf-ast-badge,.td-summary-label,.action-btn,.gf-lp-updated{font-size:13px!important}
+.hm-tb,.gf-tax-note,.gf-preset-btn,.obs-mkt-card h5,.obs-mkt-change,.obs-clock,.td-live span{font-size:13.5px!important}
+.rsi-m-val,.wct-fx-rate,.obs-mkt-wrap p,.obsidian-card p,#gfEmptyState .s,.td-sym-badge span:first-child,.td-symbol-select,.td-label,.td-res-label,.gf-status-line,.gf-btm{font-size:14px!important}
+.gf-ast-label,.gf-tag,.gf-col p,.gf-lp-back{font-size:14.5px!important}
+.gf-links a{font-size:15px!important}
+</style>
+
+</body>
+</html>
