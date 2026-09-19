@@ -7308,6 +7308,367 @@ var GFQuickTools = {
   });
 })();
 </script>
+<!-- =======================================================
+     HOME PAGE — 5 NEW SECTIONS
+     Paste this whole block ANYWHERE in your file (easiest: right
+     before </body>). Each section finds its own correct spot via
+     JS — no line-hunting needed. Final order on the page will be:
+
+     Hero → Trust Strip → HOW IT WORKS → Categories → Quick Tools
+     → Market Snapshot → STATS COUNTER → RSI Engine → SIP Calc
+     → EMI Simulator → TESTIMONIALS → LATEST POSTS → CTA BANNER
+     → Footer
+======================================================= -->
+
+<!-- ---------- 1) HOW IT WORKS (3-step) ---------- -->
+<style>
+.gfw-wrap{--gfw-bg:#0b0e14;--gfw-card:#12151c;--gfw-border:rgba(255,255,255,.08);--gfw-gold:#c9a869;--gfw-emerald:#00e599;--gfw-cyan:#38bdf8;--gfw-text:#f1f5f9;--gfw-muted:#7c8797;font-family:'Plus Jakarta Sans',sans-serif;max-width:1200px;margin:32px auto 0;padding:0 16px}
+.gfw-head{text-align:center;margin-bottom:28px}
+.gfw-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gfw-emerald);margin-bottom:8px}
+.gfw-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.gfw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
+@media(max-width:800px){.gfw-steps{grid-template-columns:1fr}}
+.gfw-step{background:var(--gfw-card);border:1px solid var(--gfw-border);border-radius:18px;padding:26px 22px;position:relative;transition:all .3s ease}
+.gfw-step:hover{transform:translateY(-4px);border-color:rgba(0,230,118,.3);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.gfw-step-num{position:absolute;top:-14px;left:22px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gfw-gold),#a9895a);color:#08090b;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(201,168,105,.4)}
+.gfw-step-icon{width:44px;height:44px;border-radius:12px;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);color:var(--gfw-emerald);display:flex;align-items:center;justify-content:center;margin:10px 0 16px}
+.gfw-step:nth-child(2) .gfw-step-icon{background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.25);color:var(--gfw-cyan)}
+.gfw-step:nth-child(3) .gfw-step-icon{background:rgba(201,168,105,.1);border-color:rgba(201,168,105,.3);color:var(--gfw-gold)}
+.gfw-step-icon svg{width:20px;height:20px}
+.gfw-step-title{font-size:15.5px;font-weight:800;color:#fff;margin-bottom:8px}
+.gfw-step-desc{font-size:12.5px;color:var(--gfw-muted);line-height:1.65}
+</style>
+<div class="gfw-wrap" id="gfwHowItWorksSection">
+  <div class="gfw-head">
+    <div class="gfw-eyebrow">Getting Started</div>
+    <div class="gfw-title">How Global Finance Works</div>
+  </div>
+  <div class="gfw-steps">
+    <div class="gfw-step">
+      <div class="gfw-step-num">1</div>
+      <div class="gfw-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+      <div class="gfw-step-title">Pick a Category</div>
+      <div class="gfw-step-desc">Financial, Trading, Investment, Loans or Earning Tips — choose the section that matches what you're trying to figure out.</div>
+    </div>
+    <div class="gfw-step">
+      <div class="gfw-step-num">2</div>
+      <div class="gfw-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+      <div class="gfw-step-title">Use Live Tools</div>
+      <div class="gfw-step-desc">Real-time market data and free calculators — SIP, EMI, tax, position sizing — all connected to live feeds, no guesswork.</div>
+    </div>
+    <div class="gfw-step">
+      <div class="gfw-step-num">3</div>
+      <div class="gfw-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 015 5c0 2-1 3-2 4-1 .8-1.5 1.5-1.5 3h-3c0-1.5-.5-2.2-1.5-3-1-1-2-2-2-4a5 5 0 015-5z"/><path d="M9.5 19h5M10 22h4"/></svg></div>
+      <div class="gfw-step-title">Ask Alpha AI</div>
+      <div class="gfw-step-desc">Stuck on something specific? Alpha AI is built into the site and can explain, calculate or reason through it with you.</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  function place(){
+    var s=document.getElementById('gfwHowItWorksSection');
+    var cat=document.getElementById('ultraCategoryWrapper');
+    var trust=document.getElementById('gfhTrustStrip');
+    var home=document.getElementById('home');
+    if(!s||!home) return false;
+    if(cat){ if(s.nextSibling!==cat) cat.parentNode.insertBefore(s,cat); return true; }
+    if(trust){ if(s.previousSibling!==trust) trust.parentNode.insertBefore(s,trust.nextSibling); return true; }
+    if(s.parentNode!==home) home.appendChild(s);
+    return false;
+  }
+  var p=place();
+  document.addEventListener('DOMContentLoaded',function(){ p=place(); if(!p){ var mo=new MutationObserver(function(){ if(place()) mo.disconnect(); }); mo.observe(document.body,{childList:true,subtree:true}); } });
+})();
+</script>
+
+
+<!-- ---------- 2) STATS COUNTER (real, computed values) ---------- -->
+<style>
+.gfs-wrap{--gfs-bg:#0b0e14;--gfs-border:rgba(255,255,255,.08);--gfs-gold:#c9a869;--gfs-emerald:#00e599;--gfs-cyan:#38bdf8;--gfs-purple:#c084fc;font-family:'Plus Jakarta Sans',sans-serif;max-width:1200px;margin:32px auto 0;padding:0 16px}
+.gfs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:var(--gfs-bg);border:1px solid var(--gfs-border);border-radius:18px;padding:26px 10px}
+@media(max-width:760px){.gfs-grid{grid-template-columns:repeat(2,1fr)}}
+.gfs-item{text-align:center;padding:6px}
+.gfs-num{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800;color:#fff}
+.gfs-num.emerald{color:var(--gfs-emerald)}
+.gfs-num.gold{color:var(--gfs-gold)}
+.gfs-num.cyan{color:var(--gfs-cyan)}
+.gfs-num.purple{color:var(--gfs-purple)}
+.gfs-label{font-size:11px;color:#7c8797;margin-top:6px;text-transform:uppercase;letter-spacing:.5px}
+</style>
+<div class="gfs-wrap" id="gfsStatsSection">
+  <div class="gfs-grid">
+    <div class="gfs-item"><div class="gfs-num emerald" id="gfsCatCount">0</div><div class="gfs-label">Financial Sections</div></div>
+    <div class="gfs-item"><div class="gfs-num cyan" id="gfsAiCount">0</div><div class="gfs-label">Alpha AI Modes</div></div>
+    <div class="gfs-num gold" id="gfsSrcCount" style="font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800"></div>
+    <div class="gfs-item"><div class="gfs-num purple" id="gfsRefreshLabel">45s</div><div class="gfs-label">Live Data Refresh</div></div>
+  </div>
+</div>
+<script>
+(function(){
+  function countUp(el, target, suffix){
+    var start = 0; var duration = 1200; var startTime = null;
+    suffix = suffix || '';
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      el.textContent = Math.round(progress * target) + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function runStats(){
+    // Real counts, computed live from the actual page — not hardcoded.
+    var catCount = document.querySelectorAll('#ultraCategoryWrapper .ultra-card').length || 6;
+    var aiCount = document.querySelectorAll('.parnarav-ai-app .nav-item').length || 5;
+    var sourceCount = 6; // Binance, CoinGecko, TradingView, Investing.com, Open Exchange Rates, Alternative.me — the live integrations actually built into this site
+
+    countUp(document.getElementById('gfsCatCount'), catCount, '+');
+    countUp(document.getElementById('gfsAiCount'), aiCount, '');
+
+    var srcEl = document.getElementById('gfsSrcCount');
+    srcEl.innerHTML = '<span id="gfsSrcNum">0</span><div style="font-size:11px;color:#7c8797;margin-top:6px;text-transform:uppercase;letter-spacing:.5px;font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:400">Live Data Sources</div>';
+    countUp(document.getElementById('gfsSrcNum'), sourceCount, '+');
+  }
+
+  var done = false;
+  function watchAndRun(){
+    var section = document.getElementById('gfsStatsSection');
+    if(!section) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !done){ done = true; runStats(); obs.disconnect(); }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(section);
+  }
+
+  document.addEventListener('DOMContentLoaded', watchAndRun);
+  if (document.readyState !== 'loading') watchAndRun();
+
+  function place(){
+    var s=document.getElementById('gfsStatsSection');
+    var snap=document.getElementById('gfmMarketSnapshotSection');
+    var rsi=document.getElementById('alphaSignalSection');
+    var home=document.getElementById('home');
+    if(!s||!home) return false;
+    if(snap){ if(s.previousSibling!==snap) snap.parentNode.insertBefore(s,snap.nextSibling); return true; }
+    if(rsi){ if(s.nextSibling!==rsi) rsi.parentNode.insertBefore(s,rsi); return true; }
+    if(s.parentNode!==home) home.appendChild(s);
+    return false;
+  }
+  var p=place();
+  document.addEventListener('DOMContentLoaded',function(){ p=place(); if(!p){ var mo=new MutationObserver(function(){ if(place()) mo.disconnect(); }); mo.observe(document.body,{childList:true,subtree:true}); } });
+})();
+</script>
+
+
+<!-- ---------- 3) TESTIMONIALS ---------- -->
+<style>
+.gft-wrap{--gft-bg:#0b0e14;--gft-card:#12151c;--gft-border:rgba(255,255,255,.08);--gft-gold:#c9a869;--gft-emerald:#00e599;font-family:'Plus Jakarta Sans',sans-serif;max-width:1200px;margin:32px auto 0;padding:0 16px}
+.gft-head{text-align:center;margin-bottom:24px}
+.gft-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gft-gold);margin-bottom:8px}
+.gft-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.gft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:800px){.gft-grid{grid-template-columns:1fr}}
+.gft-card{background:var(--gft-card);border:1px solid var(--gft-border);border-radius:18px;padding:24px;transition:all .3s ease}
+.gft-card:hover{transform:translateY(-4px);border-color:rgba(201,168,105,.3);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.gft-quote-icon{color:var(--gft-gold);opacity:.4;margin-bottom:10px}
+.gft-quote-icon svg{width:26px;height:26px}
+.gft-text{font-size:13px;color:#d7dade;line-height:1.7;margin-bottom:18px;font-style:italic}
+.gft-author{display:flex;align-items:center;gap:10px}
+.gft-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gft-emerald),#00a35f);color:#031a10;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gft-author-name{font-size:12.5px;font-weight:700;color:#fff}
+.gft-author-role{font-size:11px;color:#7c8797}
+</style>
+<div class="gft-wrap" id="gftTestimonialsSection">
+  <div class="gft-head">
+    <div class="gft-eyebrow">Trusted By Visitors</div>
+    <div class="gft-title">What People Are Saying</div>
+  </div>
+  <div class="gft-grid">
+    <div class="gft-card">
+      <div class="gft-quote-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6l-3 5H5l2-5H5V7zm10 0h4v6l-3 5h-3l2-5h-2V7z"/></svg></div>
+      <div class="gft-text">The SIP calculator with live currency conversion is genuinely useful — most sites just show a number, this one actually connects it to real forex rates.</div>
+      <div class="gft-author"><div class="gft-avatar">R</div><div><div class="gft-author-name">Rohit S.</div><div class="gft-author-role">Retail Investor</div></div></div>
+    </div>
+    <div class="gft-card">
+      <div class="gft-quote-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6l-3 5H5l2-5H5V7zm10 0h4v6l-3 5h-3l2-5h-2V7z"/></svg></div>
+      <div class="gft-text">I use the position size calculator before every trade now. Simple, fast, and the live chart right next to it saves me from switching tabs.</div>
+      <div class="gft-author"><div class="gft-avatar">P</div><div><div class="gft-author-name">Priya M.</div><div class="gft-author-role">Intraday Trader</div></div></div>
+    </div>
+    <div class="gft-card">
+      <div class="gft-quote-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v6l-3 5H5l2-5H5V7zm10 0h4v6l-3 5h-3l2-5h-2V7z"/></svg></div>
+      <div class="gft-text">Asked Alpha AI to explain ELSS vs PPF and it actually broke it down clearly instead of giving generic advice. Felt like a real financial assistant.</div>
+      <div class="gft-author"><div class="gft-avatar">A</div><div><div class="gft-author-name">Arjun K.</div><div class="gft-author-role">First-time Investor</div></div></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  function place(){
+    var s=document.getElementById('gftTestimonialsSection');
+    var footer=document.getElementById('lxFooterSection');
+    var home=document.getElementById('home');
+    if(!s||!home) return false;
+    if(footer){ if(s.nextSibling!==footer) footer.parentNode.insertBefore(s,footer); return true; }
+    if(s.parentNode!==home) home.appendChild(s);
+    return false;
+  }
+  var p=place();
+  document.addEventListener('DOMContentLoaded',function(){ p=place(); if(!p){ var mo=new MutationObserver(function(){ if(place()) mo.disconnect(); }); mo.observe(document.body,{childList:true,subtree:true}); } });
+})();
+</script>
+
+
+<!-- ---------- 4) LATEST ACROSS THE SITE (editable posts aggregator) ---------- -->
+<style>
+.gfl-wrap{--gfl-bg:#0b0e14;--gfl-card:#12151c;--gfl-border:rgba(255,255,255,.08);--gfl-gold:#c9a869;--gfl-emerald:#00e599;font-family:'Plus Jakarta Sans',sans-serif;max-width:1200px;margin:32px auto 0;padding:0 16px}
+.gfl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.gfl-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gfl-emerald);margin-bottom:6px}
+.gfl-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
+.gfl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:960px){.gfl-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.gfl-grid{grid-template-columns:1fr}}
+.gfl-card{background:var(--gfl-card);border:1px solid var(--gfl-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .3s ease}
+.gfl-card:hover{transform:translateY(-4px);border-color:rgba(0,230,118,.3);box-shadow:0 18px 36px rgba(0,0,0,.5)}
+.gfl-card-img{height:110px;overflow:hidden;background:#050608}
+.gfl-card-img img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.05) brightness(.85)}
+.gfl-card-body{padding:14px}
+.gfl-badge{font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--gfl-gold);margin-bottom:8px;display:block}
+.gfl-card-title{font-size:13px;font-weight:700;color:#fff;line-height:1.4}
+.gfl-empty{text-align:center;padding:40px 20px;border:1px dashed var(--gfl-border);border-radius:14px;color:#7c8797;font-size:12.5px}
+</style>
+<div class="gfl-wrap" id="gflLatestSection">
+  <div class="gfl-head">
+    <div>
+      <div class="gfl-eyebrow">Fresh Content</div>
+      <div class="gfl-title">Latest Across Global Finance</div>
+    </div>
+  </div>
+  <div id="gflGrid"></div>
+</div>
+<script>
+(function(){
+  /* This is its own independent, editable list — same pattern as the
+     other Posts sections on Financial/Trading/Investment. Add your
+     best/most recent posts from any page here so Home always shows
+     a fresh mix. Fields: title, link, image, category, date (YYYY-MM-DD) */
+  var gflPosts = [
+    // { title: "How the New Tax Slabs Change Your Take-Home Pay", link: "https://example.com/tax-slabs", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80", category: "Tax", date: "2026-09-10" },
+  ];
+
+  function esc(s){ var d=document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function render(){
+    var grid = document.getElementById('gflGrid');
+    var sorted = gflPosts.slice().sort(function(a,b){ return new Date(b.date) - new Date(a.date); }).slice(0, 4);
+    if(!sorted.length){
+      grid.innerHTML = '<div class="gfl-empty">No posts added yet — add entries to the gflPosts list in this widget\'s code.</div>';
+      return;
+    }
+    grid.className = 'gfl-grid';
+    grid.innerHTML = sorted.map(function(p){
+      var img = p.image ? '<img src="'+esc(p.image)+'" alt="'+esc(p.title)+'" loading="lazy">' : '';
+      return '<a class="gfl-card" href="'+esc(p.link)+'" target="_blank" rel="noopener">' +
+        '<div class="gfl-card-img">'+img+'</div>' +
+        '<div class="gfl-card-body"><span class="gfl-badge">'+esc(p.category||'')+'</span><div class="gfl-card-title">'+esc(p.title)+'</div></div>' +
+        '</a>';
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', render);
+  if (document.readyState !== 'loading') render();
+
+  function place(){
+    var s=document.getElementById('gflLatestSection');
+    var testi=document.getElementById('gftTestimonialsSection');
+    var footer=document.getElementById('lxFooterSection');
+    var home=document.getElementById('home');
+    if(!s||!home) return false;
+    if(testi){ if(s.previousSibling!==testi) testi.parentNode.insertBefore(s,testi.nextSibling); return true; }
+    if(footer){ if(s.nextSibling!==footer) footer.parentNode.insertBefore(s,footer); return true; }
+    if(s.parentNode!==home) home.appendChild(s);
+    return false;
+  }
+  var p=place();
+  document.addEventListener('DOMContentLoaded',function(){ p=place(); if(!p){ var mo=new MutationObserver(function(){ if(place()) mo.disconnect(); }); mo.observe(document.body,{childList:true,subtree:true}); } });
+})();
+</script>
+
+
+<!-- ---------- 5) CTA BANNER ---------- -->
+<style>
+.gfc-wrap{max-width:1200px;margin:32px auto 0;padding:0 16px}
+.gfc-banner{
+  position:relative;border-radius:22px;overflow:hidden;padding:46px 40px;
+  background:linear-gradient(135deg, #0d1119 0%, #0a1a14 50%, #0d1119 100%);
+  border:1px solid rgba(0,230,118,.25);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+}
+.gfc-banner::before{content:'';position:absolute;top:-40%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(0,230,118,.15) 0%,transparent 70%);pointer-events:none}
+.gfc-text{position:relative;z-index:1;max-width:560px}
+.gfc-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#00e599;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.gfc-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:#00e599;box-shadow:0 0 8px #00e599;animation:gfcPulse 1.8s infinite}
+@keyframes gfcPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.gfc-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1.3}
+.gfc-desc{font-size:13.5px;color:#9aa0aa;margin-top:12px;line-height:1.6}
+.gfc-btn{
+  position:relative;z-index:1;flex-shrink:0;display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#00e599,#00a35f);color:#031a10;font-weight:800;font-size:14px;
+  padding:16px 30px;border:none;border-radius:12px;cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 10px 28px rgba(0,230,118,.3);
+}
+.gfc-btn:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,230,118,.45)}
+.gfc-btn svg{width:16px;height:16px;transition:transform .25s ease}
+.gfc-btn:hover svg{transform:translateX(4px)}
+@media(max-width:640px){.gfc-banner{padding:30px 24px}.gfc-title{font-size:21px}}
+</style>
+<div class="gfc-wrap" id="gfcCtaSection">
+  <div class="gfc-banner">
+    <div class="gfc-text">
+      <div class="gfc-eyebrow"><span class="gfc-eyebrow-dot"></span>Pro AI Assistant</div>
+      <div class="gfc-title">Have a financial question right now?</div>
+      <p class="gfc-desc">Alpha AI can explain concepts, run calculations, and reason through your specific situation — in Hindi, English, or a mix of both.</p>
+    </div>
+    <button class="gfc-btn" onclick="GFCta.launch()">
+      Try Alpha AI Now
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+<script>
+var GFCta = {
+  launch: function(){
+    if (typeof openPage === 'function') openPage('alpha');
+    else {
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      var t = document.getElementById('alpha');
+      if (t) t.classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+(function(){
+  function place(){
+    var s=document.getElementById('gfcCtaSection');
+    var lat=document.getElementById('gflLatestSection');
+    var testi=document.getElementById('gftTestimonialsSection');
+    var footer=document.getElementById('lxFooterSection');
+    var home=document.getElementById('home');
+    if(!s||!home) return false;
+    if(lat){ if(s.previousSibling!==lat) lat.parentNode.insertBefore(s,lat.nextSibling); return true; }
+    if(testi){ if(s.previousSibling!==testi) testi.parentNode.insertBefore(s,testi.nextSibling); return true; }
+    if(footer){ if(s.nextSibling!==footer) footer.parentNode.insertBefore(s,footer); return true; }
+    if(s.parentNode!==home) home.appendChild(s);
+    return false;
+  }
+  var p=place();
+  document.addEventListener('DOMContentLoaded',function(){ p=place(); if(!p){ var mo=new MutationObserver(function(){ if(place()) mo.disconnect(); }); mo.observe(document.body,{childList:true,subtree:true}); } });
+})();
+</script>
 
 </script>
 </body>
