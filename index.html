@@ -6813,6 +6813,123 @@ var PFFooter = {
 document.addEventListener('DOMContentLoaded', function(){ PFFooter.init(); });
 if (document.readyState !== 'loading') PFFooter.init();
 </script>
+<!-- =======================================================
+     HOME PAGE — TRUST / HIGHLIGHTS STRIP
+     Sits between the hero banner and the "Main Categories" grid.
+
+     ✅ PASTE THIS ANYWHERE in your file (easiest: right before
+     </body>). You do NOT need to find any specific line — the
+     script at the bottom of this block finds the Main Categories
+     grid itself and places this strip immediately above it,
+     no matter where in the file this code physically sits.
+======================================================= -->
+<style>
+.gfh-trust{
+  --gfh-bg:#0b0e14; --gfh-border:rgba(255,255,255,.08);
+  --gfh-gold:#c9a869; --gfh-emerald:#00e599; --gfh-cyan:#38bdf8;
+  --gfh-text:#f1f5f9; --gfh-muted:#7c8797;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  max-width:1200px; margin:20px auto 0; padding:0 16px;
+}
+.gfh-trust-grid{
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+  background:var(--gfh-bg); border:1px solid var(--gfh-border); border-radius:18px;
+  padding:6px;
+}
+@media(max-width:760px){.gfh-trust-grid{grid-template-columns:repeat(2, 1fr)}}
+
+.gfh-trust-item{
+  display:flex; align-items:center; gap:12px; padding:16px 14px; border-radius:14px;
+  transition:background .25s ease;
+}
+.gfh-trust-item:hover{background:rgba(255,255,255,.03)}
+.gfh-trust-icon{
+  flex-shrink:0; width:42px; height:42px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.25); color:var(--gfh-emerald);
+}
+.gfh-trust-icon svg{width:20px; height:20px}
+.gfh-trust-item:nth-child(2) .gfh-trust-icon{background:rgba(56,189,248,.08); border-color:rgba(56,189,248,.25); color:var(--gfh-cyan)}
+.gfh-trust-item:nth-child(3) .gfh-trust-icon{background:rgba(201,168,105,.1); border-color:rgba(201,168,105,.3); color:var(--gfh-gold)}
+.gfh-trust-item:nth-child(4) .gfh-trust-icon{background:rgba(0,230,118,.08); border-color:rgba(0,230,118,.25); color:var(--gfh-emerald)}
+.gfh-trust-text{min-width:0}
+.gfh-trust-title{font-size:13.5px; font-weight:800; color:#fff; white-space:nowrap}
+.gfh-trust-sub{font-size:11px; color:var(--gfh-muted); margin-top:2px; line-height:1.4}
+</style>
+
+<div class="gfh-trust" id="gfhTrustStrip">
+  <div class="gfh-trust-grid">
+    <div class="gfh-trust-item">
+      <div class="gfh-trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <div class="gfh-trust-text">
+        <div class="gfh-trust-title">Live Market Data</div>
+        <div class="gfh-trust-sub">Real-time crypto, forex &amp; index feeds</div>
+      </div>
+    </div>
+    <div class="gfh-trust-item">
+      <div class="gfh-trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 015 5c0 2-1 3-2 4-1 .8-1.5 1.5-1.5 3h-3c0-1.5-.5-2.2-1.5-3-1-1-2-2-2-4a5 5 0 015-5z"/><path d="M9.5 19h5M10 22h4"/></svg>
+      </div>
+      <div class="gfh-trust-text">
+        <div class="gfh-trust-title">AI-Powered Insights</div>
+        <div class="gfh-trust-sub">Alpha AI across every section</div>
+      </div>
+    </div>
+    <div class="gfh-trust-item">
+      <div class="gfh-trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M7 9V6a5 5 0 0110 0v3"/></svg>
+      </div>
+      <div class="gfh-trust-text">
+        <div class="gfh-trust-title">Free Financial Tools</div>
+        <div class="gfh-trust-sub">SIP, EMI, Tax &amp; Risk calculators</div>
+      </div>
+    </div>
+    <div class="gfh-trust-item">
+      <div class="gfh-trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+      </div>
+      <div class="gfh-trust-text">
+        <div class="gfh-trust-title">Nothing Stored</div>
+        <div class="gfh-trust-sub">256-bit SSL, zero sensitive data</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function placeTrustStrip(){
+    var strip = document.getElementById('gfhTrustStrip');
+    var categories = document.getElementById('ultraCategoryWrapper');
+    var home = document.getElementById('home');
+    if (!strip || !home) return false;
+
+    if (categories) {
+      // Exact spot: right above the Main Categories grid.
+      if (strip.nextSibling !== categories) categories.parentNode.insertBefore(strip, categories);
+      return true;
+    }
+    // Categories grid not in the DOM yet (or you removed it) — fall back
+    // to just appending inside Home so the strip still shows up.
+    if (strip.parentNode !== home) home.appendChild(strip);
+    return false;
+  }
+
+  var placed = placeTrustStrip();
+  document.addEventListener('DOMContentLoaded', function(){
+    placed = placeTrustStrip();
+    if (!placed) {
+      // Keep watching in case the categories grid mounts in shortly after.
+      var mo = new MutationObserver(function(){
+        if (placeTrustStrip()) mo.disconnect();
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
+  });
+})();
+</script>
 
 </script>
 </body>
