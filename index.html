@@ -7060,6 +7060,254 @@ var GFQuickTools = {
   });
 })();
 </script>
+<!-- =======================================================
+     HOME PAGE — LIVE MARKET SNAPSHOT DASHBOARD
+     Real, live data only:
+       • Sensex & Nifty  → official TradingView embedded widgets
+         (same live NSE/BSE feed your header ticker already uses)
+       • Gold (PAXG)     → CoinGecko public API
+       • Bitcoin/Ethereum → Binance public API
+       • USD/INR         → open.er-api.com public forex API
+     No manual numbers anywhere — everything below refreshes itself.
+
+     ✅ PASTE THIS ANYWHERE in your file (easiest: right before
+     </body>). The script at the bottom finds the right spot itself
+     — no line-hunting needed.
+======================================================= -->
+<style>
+.gfm-wrap{
+  --gfm-bg:#0b0e14; --gfm-card:#12151c; --gfm-border:rgba(255,255,255,.08);
+  --gfm-gold:#c9a869; --gfm-emerald:#00e599; --gfm-red:#ff5252; --gfm-cyan:#38bdf8;
+  --gfm-text:#f1f5f9; --gfm-muted:#7c8797;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  max-width:1200px; margin:24px auto 0; padding:0 16px;
+}
+.gfm-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px}
+.gfm-head-left{display:flex; align-items:center; gap:10px}
+.gfm-head-dot{width:8px; height:8px; border-radius:50%; background:var(--gfm-emerald); box-shadow:0 0 10px var(--gfm-emerald); animation:gfmPulse 1.8s infinite}
+@keyframes gfmPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.gfm-head-title{font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:#fff}
+.gfm-updated{font-size:10.5px; color:var(--gfm-muted); font-family:'JetBrains Mono',monospace}
+
+.gfm-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
+@media(max-width:900px){.gfm-grid{grid-template-columns:repeat(2, 1fr)}}
+@media(max-width:560px){.gfm-grid{grid-template-columns:1fr}}
+
+.gfm-card{
+  background:var(--gfm-card); border:1px solid var(--gfm-border); border-radius:16px;
+  padding:16px; transition:all .3s ease; position:relative; overflow:hidden;
+}
+.gfm-card:hover{border-color:rgba(0,230,118,.3); box-shadow:0 16px 34px rgba(0,0,0,.5)}
+.gfm-card-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+.gfm-card-name{display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:#fff}
+.gfm-card-icon{width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0}
+.gfm-live-badge{font-size:8.5px; font-weight:800; letter-spacing:.5px; text-transform:uppercase; color:var(--gfm-emerald); background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.25); padding:2px 7px; border-radius:20px}
+
+.gfm-price{font-size:20px; font-weight:800; color:#fff; font-family:'JetBrains Mono',monospace; letter-spacing:-.3px}
+.gfm-change{font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:4px}
+.gfm-change.up{color:var(--gfm-emerald)}
+.gfm-change.down{color:var(--gfm-red)}
+.gfm-change.flat{color:var(--gfm-muted)}
+
+.gfm-tv-card{padding:0; min-height:132px; display:flex; flex-direction:column}
+.gfm-tv-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px 0}
+.gfm-tv-embed{flex:1; min-height:100px}
+.gfm-tv-embed iframe{border:0 !important}
+</style>
+
+<div class="gfm-wrap" id="gfmMarketSnapshotSection">
+  <div class="gfm-head">
+    <div class="gfm-head-left"><span class="gfm-head-dot"></span><span class="gfm-head-title">Live Market Snapshot</span></div>
+    <div class="gfm-updated" id="gfmUpdatedText">Connecting to live feeds…</div>
+  </div>
+
+  <div class="gfm-grid">
+
+    <!-- SENSEX — live TradingView widget -->
+    <div class="gfm-card gfm-tv-card">
+      <div class="gfm-tv-head">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(201,168,105,.12);color:#c9a869;">₹</span> SENSEX</div>
+        <span class="gfm-live-badge">Live · BSE</span>
+      </div>
+      <div class="gfm-tv-embed">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+          { "symbols": [["BSE:SENSEX|1D"]], "chartOnly": false, "width": "100%", "height": "100", "locale": "in", "colorTheme": "dark", "autosize": true, "showVolume": false, "hideDateRanges": true, "hideMarketStatus": true, "hideSymbolLogo": true, "scalePosition": "no", "scaleMode": "Normal", "fontFamily": "Plus Jakarta Sans", "noTimeScale": true, "valuesTracking": "1", "changeMode": "price-and-percent", "chartType": "area", "lineWidth": 2, "lineType": 0, "isTransparent": true }
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- NIFTY 50 — live TradingView widget -->
+    <div class="gfm-card gfm-tv-card">
+      <div class="gfm-tv-head">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(56,189,248,.12);color:#38bdf8;">₹</span> NIFTY 50</div>
+        <span class="gfm-live-badge">Live · NSE</span>
+      </div>
+      <div class="gfm-tv-embed">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+          { "symbols": [["NSE:NIFTY|1D"]], "chartOnly": false, "width": "100%", "height": "100", "locale": "in", "colorTheme": "dark", "autosize": true, "showVolume": false, "hideDateRanges": true, "hideMarketStatus": true, "hideSymbolLogo": true, "scalePosition": "no", "scaleMode": "Normal", "fontFamily": "Plus Jakarta Sans", "noTimeScale": true, "valuesTracking": "1", "changeMode": "price-and-percent", "chartType": "area", "lineWidth": 2, "lineType": 0, "isTransparent": true }
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOLD (PAXG) — live CoinGecko API -->
+    <div class="gfm-card" id="gfmCardGold">
+      <div class="gfm-card-top">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(234,179,8,.12);color:#eab308;">🪙</span> Gold (oz)</div>
+        <span class="gfm-live-badge">Live · PAXG</span>
+      </div>
+      <div class="gfm-price" id="gfmGoldPrice">Loading…</div>
+      <div class="gfm-change flat" id="gfmGoldChange">—</div>
+    </div>
+
+    <!-- BITCOIN — live Binance API -->
+    <div class="gfm-card" id="gfmCardBtc">
+      <div class="gfm-card-top">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(247,147,26,.12);color:#f7931a;">₿</span> Bitcoin</div>
+        <span class="gfm-live-badge">Live · Binance</span>
+      </div>
+      <div class="gfm-price" id="gfmBtcPrice">Loading…</div>
+      <div class="gfm-change flat" id="gfmBtcChange">—</div>
+    </div>
+
+    <!-- ETHEREUM — live Binance API -->
+    <div class="gfm-card" id="gfmCardEth">
+      <div class="gfm-card-top">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(98,126,234,.12);color:#627eea;">Ξ</span> Ethereum</div>
+        <span class="gfm-live-badge">Live · Binance</span>
+      </div>
+      <div class="gfm-price" id="gfmEthPrice">Loading…</div>
+      <div class="gfm-change flat" id="gfmEthChange">—</div>
+    </div>
+
+    <!-- USD/INR — live open.er-api.com -->
+    <div class="gfm-card" id="gfmCardFx">
+      <div class="gfm-card-top">
+        <div class="gfm-card-name"><span class="gfm-card-icon" style="background:rgba(0,230,118,.12);color:#00e676;">$</span> USD/INR</div>
+        <span class="gfm-live-badge">Live · Forex</span>
+      </div>
+      <div class="gfm-price" id="gfmFxPrice">Loading…</div>
+      <div class="gfm-change flat" id="gfmFxChange">Mid-market rate</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  function setChange(elId, pct){
+    var el = document.getElementById(elId);
+    if (pct === null || pct === undefined || isNaN(pct)) { el.textContent = '—'; el.className = 'gfm-change flat'; return; }
+    var isUp = pct >= 0;
+    el.textContent = (isUp ? '▲ +' : '▼ ') + pct.toFixed(2) + '% (24h)';
+    el.className = 'gfm-change ' + (isUp ? 'up' : 'down');
+  }
+
+  async function loadCrypto(){
+    try {
+      var res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=%5B%22BTCUSDT%22,%22ETHUSDT%22%5D');
+      var data = await res.json();
+      var btc = data.find(function(d){ return d.symbol === 'BTCUSDT'; });
+      var eth = data.find(function(d){ return d.symbol === 'ETHUSDT'; });
+      if (btc){
+        document.getElementById('gfmBtcPrice').textContent = '$' + parseFloat(btc.lastPrice).toLocaleString(undefined,{maximumFractionDigits:2});
+        setChange('gfmBtcChange', parseFloat(btc.priceChangePercent));
+      }
+      if (eth){
+        document.getElementById('gfmEthPrice').textContent = '$' + parseFloat(eth.lastPrice).toLocaleString(undefined,{maximumFractionDigits:2});
+        setChange('gfmEthChange', parseFloat(eth.priceChangePercent));
+      }
+    } catch(e){
+      document.getElementById('gfmBtcPrice').textContent = 'Unavailable';
+      document.getElementById('gfmEthPrice').textContent = 'Unavailable';
+    }
+  }
+
+  async function loadGold(){
+    try {
+      var res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true');
+      var data = await res.json();
+      var g = data['pax-gold'];
+      if (g){
+        document.getElementById('gfmGoldPrice').textContent = '$' + parseFloat(g.usd).toLocaleString(undefined,{maximumFractionDigits:2});
+        setChange('gfmGoldChange', parseFloat(g.usd_24h_change));
+      }
+    } catch(e){
+      document.getElementById('gfmGoldPrice').textContent = 'Unavailable';
+    }
+  }
+
+  async function loadFx(){
+    try {
+      var res = await fetch('https://open.er-api.com/v6/latest/USD');
+      var data = await res.json();
+      if (data && data.rates && data.rates.INR){
+        document.getElementById('gfmFxPrice').textContent = '₹' + data.rates.INR.toFixed(4);
+      }
+    } catch(e){
+      document.getElementById('gfmFxPrice').textContent = 'Unavailable';
+    }
+  }
+
+  function stampUpdated(){
+    var el = document.getElementById('gfmUpdatedText');
+    if (el) el.textContent = 'Updated ' + new Date().toLocaleTimeString('en-IN');
+  }
+
+  function refreshAll(){
+    loadCrypto();
+    loadGold();
+    loadFx();
+    stampUpdated();
+  }
+
+  var booted = false;
+  function bootSnapshot(){
+    if (booted) return;
+    booted = true;
+    refreshAll();
+    setInterval(refreshAll, 45 * 1000); // refresh every 45s
+  }
+  document.addEventListener('DOMContentLoaded', bootSnapshot);
+  if (document.readyState !== 'loading') bootSnapshot();
+
+  // ---- Auto-placement: right after the Quick Tools grid ----
+  function placeSnapshot(){
+    var section = document.getElementById('gfmMarketSnapshotSection');
+    var quickTools = document.getElementById('gfqQuickToolsSection');
+    var categories = document.getElementById('ultraCategoryWrapper');
+    var home = document.getElementById('home');
+    if (!section || !home) return false;
+
+    if (quickTools) {
+      if (section.previousSibling !== quickTools) quickTools.parentNode.insertBefore(section, quickTools.nextSibling);
+      return true;
+    }
+    if (categories) {
+      if (section.previousSibling !== categories) categories.parentNode.insertBefore(section, categories.nextSibling);
+      return true;
+    }
+    if (section.parentNode !== home) home.appendChild(section);
+    return false;
+  }
+
+  var placed = placeSnapshot();
+  document.addEventListener('DOMContentLoaded', function(){
+    placed = placeSnapshot();
+    if (!placed) {
+      var mo = new MutationObserver(function(){
+        if (placeSnapshot()) mo.disconnect();
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
+  });
+})();
+</script>
 
 </script>
 </body>
