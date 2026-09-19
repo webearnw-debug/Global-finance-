@@ -6931,6 +6931,135 @@ if (document.readyState !== 'loading') PFFooter.init();
 })();
 </script>
               
+<!-- =======================================================
+     HOME PAGE — QUICK TOOLS SHORTCUT GRID
+     Sits right below the "Main Categories" grid, above the
+     Live RSI/EMA engine section.
+
+     ✅ PASTE THIS ANYWHERE in your file (easiest: right before
+     </body>). No line-hunting needed — the script at the bottom
+     finds the right spot itself and inserts there automatically,
+     no matter where in the file this code physically sits.
+======================================================= -->
+<style>
+.gfq-wrap{
+  --gfq-bg:#0b0e14; --gfq-card:#12151c; --gfq-border:rgba(255,255,255,.08);
+  --gfq-gold:#c9a869; --gfq-emerald:#00e599; --gfq-cyan:#38bdf8; --gfq-purple:#c084fc;
+  --gfq-text:#f1f5f9; --gfq-muted:#7c8797;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  max-width:1200px; margin:24px auto 0; padding:0 16px;
+}
+.gfq-head{display:flex; align-items:center; gap:8px; margin-bottom:14px}
+.gfq-head-dot{width:8px; height:8px; border-radius:50%; background:var(--gfq-emerald); box-shadow:0 0 10px var(--gfq-emerald)}
+.gfq-head-title{font-size:13px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--gfq-muted)}
+
+.gfq-grid{display:grid; grid-template-columns:repeat(5, 1fr); gap:12px}
+@media(max-width:900px){.gfq-grid{grid-template-columns:repeat(3, 1fr)}}
+@media(max-width:560px){.gfq-grid{grid-template-columns:repeat(2, 1fr)}}
+
+.gfq-card{
+  background:var(--gfq-card); border:1px solid var(--gfq-border); border-radius:16px;
+  padding:18px 14px; display:flex; flex-direction:column; align-items:flex-start; gap:10px;
+  cursor:pointer; transition:all .3s cubic-bezier(.16,1,.3,1); text-align:left;
+}
+.gfq-card:hover{transform:translateY(-4px); border-color:rgba(0,230,118,.35); box-shadow:0 16px 34px rgba(0,0,0,.5), 0 0 20px rgba(0,230,118,.08)}
+.gfq-icon{
+  width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.25); color:var(--gfq-emerald);
+}
+.gfq-icon svg{width:18px; height:18px}
+.gfq-card:nth-child(2) .gfq-icon{background:rgba(56,189,248,.08); border-color:rgba(56,189,248,.25); color:var(--gfq-cyan)}
+.gfq-card:nth-child(3) .gfq-icon{background:rgba(201,168,105,.1); border-color:rgba(201,168,105,.3); color:var(--gfq-gold)}
+.gfq-card:nth-child(4) .gfq-icon{background:rgba(192,132,252,.1); border-color:rgba(192,132,252,.3); color:var(--gfq-purple)}
+.gfq-card:nth-child(5) .gfq-icon{background:linear-gradient(135deg, rgba(121,40,202,.2), rgba(0,223,216,.15)); border-color:rgba(0,223,216,.3); color:#00dfd8}
+.gfq-name{font-size:13px; font-weight:800; color:#fff}
+.gfq-desc{font-size:11px; color:var(--gfq-muted); line-height:1.5}
+</style>
+
+<div class="gfq-wrap" id="gfqQuickToolsSection">
+  <div class="gfq-head"><span class="gfq-head-dot"></span><span class="gfq-head-title">Quick Tools</span></div>
+  <div class="gfq-grid">
+    <div class="gfq-card" onclick="GFQuickTools.open('home', 'wealthCalcTool')">
+      <div class="gfq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <div class="gfq-name">SIP Calculator</div>
+      <div class="gfq-desc">Project your mutual fund maturity value</div>
+    </div>
+    <div class="gfq-card" onclick="GFQuickTools.open('home', 'hmSuiteSection')">
+      <div class="gfq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M7 9V6a5 5 0 0110 0v3"/></svg></div>
+      <div class="gfq-name">EMI Calculator</div>
+      <div class="gfq-desc">Personal loan EMI simulator</div>
+    </div>
+    <div class="gfq-card" onclick="GFQuickTools.open('financial', 'gfTaxEngineSection')">
+      <div class="gfq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6M9 16h6M9 8h6M5 4h14v16H5z"/></svg></div>
+      <div class="gfq-name">Tax Estimator</div>
+      <div class="gfq-desc">Old vs New regime comparison</div>
+    </div>
+    <div class="gfq-card" onclick="GFQuickTools.open('trading', 'gfTradeDeskSection')">
+      <div class="gfq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
+      <div class="gfq-name">Position Size Calculator</div>
+      <div class="gfq-desc">Risk-based trade sizing</div>
+    </div>
+    <div class="gfq-card" onclick="GFQuickTools.open('alpha')">
+      <div class="gfq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 015 5c0 2-1 3-2 4-1 .8-1.5 1.5-1.5 3h-3c0-1.5-.5-2.2-1.5-3-1-1-2-2-2-4a5 5 0 015-5z"/><path d="M9.5 19h5M10 22h4"/></svg></div>
+      <div class="gfq-name">Ask Alpha AI</div>
+      <div class="gfq-desc">Any financial question, instantly</div>
+    </div>
+  </div>
+</div>
+
+<script>
+var GFQuickTools = {
+  open: function(pageId, scrollToElId){
+    if (typeof openPage === 'function') openPage(pageId);
+    else {
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      var t = document.getElementById(pageId);
+      if (t) t.classList.add('active');
+    }
+    if (scrollToElId){
+      setTimeout(function(){
+        var el = document.getElementById(scrollToElId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+};
+
+(function(){
+  function placeQuickTools(){
+    var section = document.getElementById('gfqQuickToolsSection');
+    var anchor = document.getElementById('alphaSignalSection'); // Live RSI/EMA block
+    var categories = document.getElementById('ultraCategoryWrapper');
+    var home = document.getElementById('home');
+    if (!section || !home) return false;
+
+    if (anchor) {
+      if (section.nextSibling !== anchor) anchor.parentNode.insertBefore(section, anchor);
+      return true;
+    }
+    if (categories && categories.nextSibling) {
+      categories.parentNode.insertBefore(section, categories.nextSibling);
+      return true;
+    }
+    if (section.parentNode !== home) home.appendChild(section);
+    return false;
+  }
+
+  var placed = placeQuickTools();
+  document.addEventListener('DOMContentLoaded', function(){
+    placed = placeQuickTools();
+    if (!placed) {
+      var mo = new MutationObserver(function(){
+        if (placeQuickTools()) mo.disconnect();
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
+  });
+})();
+</script>
 
 </script>
 </body>
