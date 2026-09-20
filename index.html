@@ -10325,6 +10325,364 @@ document.addEventListener('DOMContentLoaded', et2TtgCalc);
 et2TtgCalc();
 </script>
 
-  
+  <!-- ================= EARNING PAGE: INTERNATIONAL CLIENT PAYOUT CALCULATOR ================= -->
+<style>
+.ipc{--ipc-bg:#0b0d11;--ipc-card:#12151c;--ipc-panel:#0d0f14;--ipc-border:rgba(255,255,255,.08);
+  --ipc-gold:#c9a869;--ipc-gold-2:#e3c691;--ipc-emerald:#00d9b5;--ipc-red:#ff5c7a;
+  --ipc-text:#eef1f6;--ipc-muted:#8891a1;
+  font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180deg,#0d1119 0%,#070a10 100%);
+  border:1px solid var(--ipc-border);border-radius:22px;padding:28px;max-width:920px;margin:26px auto;
+  color:var(--ipc-text);box-shadow:0 30px 70px rgba(0,0,0,.75);position:relative;overflow:hidden}
+.ipc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--ipc-gold),var(--ipc-emerald),transparent);opacity:.7}
+.ipc-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  border-bottom:1px solid var(--ipc-border);padding-bottom:18px;margin-bottom:22px}
+.ipc-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#fff}
+.ipc-title span{color:var(--ipc-gold)}
+.ipc-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.5px;
+  color:var(--ipc-emerald);background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);
+  padding:5px 12px;border-radius:20px;white-space:nowrap}
+.ipc-dot{width:6px;height:6px;border-radius:50%;background:var(--ipc-emerald);box-shadow:0 0 8px var(--ipc-emerald);
+  animation:ipcPulse 1.6s infinite}
+@keyframes ipcPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
+
+.ipc-section-label{font-size:11px;font-weight:800;color:var(--ipc-muted);text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:10px}
+.ipc-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.ipc-tab{background:rgba(255,255,255,.03);border:1px solid var(--ipc-border);color:var(--ipc-muted);
+  padding:9px 16px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s}
+.ipc-tab.active{background:rgba(201,168,105,.14);border-color:var(--ipc-gold);color:var(--ipc-gold-2)}
+
+.ipc-amount-row{position:relative;display:flex;align-items:center;margin-bottom:22px}
+.ipc-amount-sym{position:absolute;left:16px;font-size:20px;font-weight:700;color:var(--ipc-gold);
+  font-family:'JetBrains Mono',monospace;pointer-events:none}
+.ipc-amount-input{width:100%;background:var(--ipc-card);border:1px solid var(--ipc-border);
+  color:#fff;padding:16px 16px 16px 38px;border-radius:12px;font-size:22px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s}
+.ipc-amount-input:focus{border-color:var(--ipc-gold)}
+
+.ipc-fee-row{margin-bottom:22px}
+.ipc-fee-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:12.5px;color:var(--ipc-muted)}
+.ipc-fee-top span{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--ipc-gold-2)}
+.ipc-slider{width:100%;height:4px;background:var(--ipc-border);border-radius:2px;outline:none;
+  cursor:pointer;accent-color:var(--ipc-gold)}
+.ipc-fee-hint{font-size:11px;color:var(--ipc-muted);margin-top:8px;line-height:1.55}
+
+.ipc-rate-line{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(0,217,181,.06);border:1px solid rgba(0,217,181,.2);border-radius:10px;
+  padding:10px 14px;margin-bottom:22px;font-size:12px}
+.ipc-rate-line b{font-family:'JetBrains Mono',monospace;color:var(--ipc-emerald);font-weight:700}
+
+.ipc-flow{background:var(--ipc-panel);border:1px solid var(--ipc-border);border-radius:16px;padding:20px}
+.ipc-flow-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;
+  border-bottom:1px dashed var(--ipc-border);font-size:13px}
+.ipc-flow-label{color:var(--ipc-muted)}
+.ipc-flow-val{font-family:'JetBrains Mono',monospace;font-weight:700}
+.ipc-flow-val.neg{color:var(--ipc-red)}
+.ipc-flow-final{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:18px}
+.ipc-flow-final-label{font-size:11px;color:var(--ipc-muted);text-transform:uppercase;letter-spacing:1px}
+.ipc-flow-final-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:800;
+  color:var(--ipc-emerald);margin:8px 0 4px}
+.ipc-flow-final-sub{font-size:11px;color:var(--ipc-muted)}
+
+.ipc-footnote{font-size:11px;color:var(--ipc-muted);line-height:1.7;margin-top:20px;
+  border-top:1px solid var(--ipc-border);padding-top:16px}
+.ipc-footnote b{color:#c3c9d4}
+</style>
+
+<div class="ipc" id="ipcPayoutSection" data-mount="earning">
+  <div class="ipc-head">
+    <div class="ipc-title">International Client <span>Payout</span> Calculator</div>
+    <div class="ipc-badge"><span class="ipc-dot"></span>Live Forex Rate</div>
+  </div>
+
+  <div class="ipc-section-label">Invoice Currency</div>
+  <div class="ipc-tabs" id="ipcCurrencyTabs">
+    <button class="ipc-tab active" onclick="IpcCalc.setCurrency('USD', this)">🇺🇸 USD</button>
+    <button class="ipc-tab" onclick="IpcCalc.setCurrency('EUR', this)">🇪🇺 EUR</button>
+    <button class="ipc-tab" onclick="IpcCalc.setCurrency('GBP', this)">🇬🇧 GBP</button>
+  </div>
+
+  <div class="ipc-section-label">Invoice Amount</div>
+  <div class="ipc-amount-row">
+    <span class="ipc-amount-sym" id="ipcCurrencySym">$</span>
+    <input type="number" id="ipcAmount" class="ipc-amount-input" value="1000" min="0" step="10" oninput="IpcCalc.run()">
+  </div>
+
+  <div class="ipc-section-label">Payout Platform</div>
+  <div class="ipc-tabs" id="ipcPlatformTabs">
+    <button class="ipc-tab active" onclick="IpcCalc.setPlatform('upwork', this)">Upwork</button>
+    <button class="ipc-tab" onclick="IpcCalc.setPlatform('fiverr', this)">Fiverr</button>
+    <button class="ipc-tab" onclick="IpcCalc.setPlatform('payoneer', this)">Payoneer</button>
+    <button class="ipc-tab" onclick="IpcCalc.setPlatform('direct', this)">Direct / Wire</button>
+  </div>
+
+  <div class="ipc-fee-row">
+    <div class="ipc-fee-top"><span>Platform Fee</span><span id="ipcFeeVal">10%</span></div>
+    <input type="range" id="ipcFeeSlider" class="ipc-slider" min="0" max="15" step="0.5" value="10" oninput="IpcCalc.run()">
+    <div class="ipc-fee-hint" id="ipcFeeHint">Upwork's freelancer fee is disclosed per contract (0–15%, most commonly 10%) — adjust to match your actual contract.</div>
+  </div>
+
+  <div class="ipc-rate-line">
+    <span>Live mid-market rate</span>
+    <b id="ipcRateText">Loading…</b>
+  </div>
+
+  <div class="ipc-flow" id="ipcFlowPanel">
+    <div class="ipc-flow-row"><span class="ipc-flow-label">Invoice Amount</span><span class="ipc-flow-val" id="ipcFlowGrossFx">$1,000.00</span></div>
+    <div class="ipc-flow-row"><span class="ipc-flow-label">Converted to INR</span><span class="ipc-flow-val" id="ipcFlowGrossInr">₹0</span></div>
+    <div class="ipc-flow-row" style="border-bottom:none;"><span class="ipc-flow-label" id="ipcFlowFeeLabel">Platform Fee</span><span class="ipc-flow-val neg" id="ipcFlowFee">−₹0</span></div>
+    <div class="ipc-flow-final">
+      <div class="ipc-flow-final-label">You Receive in Hand</div>
+      <div class="ipc-flow-final-val" id="ipcFlowNet">₹0</div>
+      <div class="ipc-flow-final-sub" id="ipcFlowEffRate">Effective rate: ₹0/USD</div>
+    </div>
+  </div>
+
+  <p class="ipc-footnote"><b>How this is calculated:</b> live mid-market forex rate × invoice amount, minus the platform fee you set above. <b>Fee defaults</b> — Upwork: 10% (varies 0–15% per contract, shown when you submit your proposal); Fiverr: 20% flat seller commission; Payoneer: 2% currency conversion/withdrawal fee (varies 1–4%; marketplace-direct payments skip the separate receiving fee); Direct/Wire: 2% typical bank FX markup — banks usually also add a flat SWIFT fee (₹500–2,500) not included here. Verified 20 Sept 2026 against published fee schedules — always confirm your exact rate before invoicing.</p>
+</div>
+
+<script>
+var IpcCalc = {
+  currency: 'USD',
+  platform: 'upwork',
+  fxRates: { USD: null, EUR: null, GBP: null },
+  fxLive: false,
+  currencySymbols: { USD: '$', EUR: '€', GBP: '£' },
+  platformDefaults: {
+    upwork:   { fee: 10, hint: "Upwork's freelancer fee is disclosed per contract (0–15%, most commonly 10%) — adjust to match your actual contract.", min: 0, max: 15 },
+    fiverr:   { fee: 20, hint: "Fiverr charges a flat 20% seller commission on every completed order — this rarely changes.", min: 15, max: 25 },
+    payoneer: { fee: 2,  hint: "Payoneer's USD/EUR/GBP → INR withdrawal fee typically runs 1–4% depending on how you were paid. Marketplace-direct payments (Upwork/Fiverr) skip the separate receiving fee.", min: 1, max: 4 },
+    direct:   { fee: 2,  hint: "Banks rarely give the mid-market rate — expect a ~1–3% FX markup, plus a separate flat SWIFT fee (₹500–2,500) not included here.", min: 0.5, max: 4 }
+  },
+
+  setCurrency: function(code, btn){
+    this.currency = code;
+    document.getElementById('ipcCurrencyTabs').querySelectorAll('.ipc-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('ipcCurrencySym').textContent = this.currencySymbols[code];
+    this.run();
+  },
+
+  setPlatform: function(key, btn){
+    this.platform = key;
+    document.getElementById('ipcPlatformTabs').querySelectorAll('.ipc-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    var p = this.platformDefaults[key];
+    var slider = document.getElementById('ipcFeeSlider');
+    slider.min = p.min; slider.max = p.max; slider.value = p.fee;
+    document.getElementById('ipcFeeHint').textContent = p.hint;
+    this.run();
+  },
+
+  fmtInr: function(n){
+    n = Math.round(n);
+    if (n < 0) n = 0;
+    return '₹' + n.toLocaleString('en-IN');
+  },
+  fmtFx: function(n, code){
+    return this.currencySymbols[code] + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  },
+
+  run: function(){
+    var amount = parseFloat(document.getElementById('ipcAmount').value) || 0;
+    var feePct = parseFloat(document.getElementById('ipcFeeSlider').value);
+    document.getElementById('ipcFeeVal').textContent = feePct + '%';
+    document.getElementById('ipcFlowFeeLabel').textContent = 'Platform Fee (−' + feePct + '%)';
+
+    var rate = this.fxRates[this.currency];
+    document.getElementById('ipcFlowGrossFx').textContent = this.fmtFx(amount, this.currency);
+
+    if (!rate){
+      document.getElementById('ipcRateText').textContent = 'Loading…';
+      return;
+    }
+
+    document.getElementById('ipcRateText').textContent = '1 ' + this.currency + ' = ' + this.fmtInr(rate) + (this.fxLive ? '' : ' (reference)');
+
+    var grossInr = amount * rate;
+    var feeAmt = grossInr * (feePct / 100);
+    var netInr = grossInr - feeAmt;
+    var effRate = amount > 0 ? netInr / amount : 0;
+
+    document.getElementById('ipcFlowGrossInr').textContent = this.fmtInr(grossInr);
+    document.getElementById('ipcFlowFee').textContent = '−' + this.fmtInr(feeAmt);
+    document.getElementById('ipcFlowNet').textContent = this.fmtInr(netInr);
+    document.getElementById('ipcFlowEffRate').textContent = 'Effective rate: ' + this.fmtInr(effRate) + '/' + this.currency + ' (live rate: ' + this.fmtInr(rate) + ')';
+  },
+
+  loadRates: async function(){
+    try {
+      var res = await fetch('https://open.er-api.com/v6/latest/USD');
+      var data = await res.json();
+      if (data && data.rates){
+        this.fxRates.USD = data.rates.INR;
+        this.fxRates.EUR = data.rates.INR / data.rates.EUR;
+        this.fxRates.GBP = data.rates.INR / data.rates.GBP;
+        this.fxLive = true;
+      }
+    } catch(e){ this.fxLive = false; }
+    this.run();
+  }
+};
+document.addEventListener('DOMContentLoaded', function(){ IpcCalc.loadRates(); });
+if (document.readyState !== 'loading') IpcCalc.loadRates();
+</script>
+
+<!-- ================= EARNING PAGE: CRYPTO PAYMENT CALCULATOR ================= -->
+<style>
+.cpc{--cpc-bg:#0b0d11;--cpc-card:#12151c;--cpc-panel:#0d0f14;--cpc-border:rgba(255,255,255,.08);
+  --cpc-orange:#f7931a;--cpc-emerald:#00d9b5;--cpc-text:#eef1f6;--cpc-muted:#8891a1;
+  font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180deg,#0d1119 0%,#070a10 100%);
+  border:1px solid var(--cpc-border);border-radius:22px;padding:28px;max-width:920px;margin:26px auto;
+  color:var(--cpc-text);box-shadow:0 30px 70px rgba(0,0,0,.75);position:relative;overflow:hidden}
+.cpc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cpc-orange),var(--cpc-emerald),transparent);opacity:.7}
+.cpc-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  border-bottom:1px solid var(--cpc-border);padding-bottom:18px;margin-bottom:22px}
+.cpc-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#fff}
+.cpc-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.5px;
+  color:var(--cpc-emerald);background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);
+  padding:5px 12px;border-radius:20px;white-space:nowrap}
+.cpc-dot{width:6px;height:6px;border-radius:50%;background:var(--cpc-emerald);box-shadow:0 0 8px var(--cpc-emerald);
+  animation:cpcPulse 1.6s infinite}
+@keyframes cpcPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
+
+.cpc-tabs{display:flex;gap:10px;margin-bottom:22px}
+.cpc-coin-tab{flex:1;background:rgba(255,255,255,.03);border:1px solid var(--cpc-border);
+  border-radius:14px;padding:16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px}
+.cpc-coin-tab.active{border-color:var(--cpc-orange);background:rgba(247,147,26,.08)}
+.cpc-coin-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;flex-shrink:0}
+.cpc-coin-name{font-size:13.5px;font-weight:700;color:#fff}
+.cpc-coin-sub{font-size:10.5px;color:var(--cpc-muted)}
+
+.cpc-amount-row{position:relative;display:flex;align-items:center;margin-bottom:22px}
+.cpc-amount-input{width:100%;background:var(--cpc-card);border:1px solid var(--cpc-border);
+  color:#fff;padding:16px;border-radius:12px;font-size:22px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .2s}
+.cpc-amount-input:focus{border-color:var(--cpc-orange)}
+.cpc-amount-unit{position:absolute;right:18px;font-size:13px;font-weight:700;color:var(--cpc-muted);pointer-events:none}
+
+.cpc-rate-line{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(247,147,26,.06);border:1px solid rgba(247,147,26,.2);border-radius:10px;
+  padding:10px 14px;margin-bottom:22px;font-size:12px}
+.cpc-rate-line b{font-family:'JetBrains Mono',monospace;color:var(--cpc-orange);font-weight:700}
+
+.cpc-result{background:var(--cpc-panel);border:1px solid var(--cpc-border);border-radius:16px;
+  padding:24px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.cpc-result-label{font-size:11px;color:var(--cpc-muted);text-transform:uppercase;letter-spacing:1px}
+.cpc-result-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:800;color:var(--cpc-emerald);
+  margin:8px 0 4px}
+.cpc-result-sub{font-size:11.5px;color:var(--cpc-muted)}
+
+.cpc-footnote{font-size:11px;color:var(--cpc-muted);line-height:1.7;margin-top:20px;
+  border-top:1px solid var(--cpc-border);padding-top:16px}
+.cpc-footnote b{color:#c3c9d4}
+</style>
+
+<div class="cpc" id="cpcCryptoSection" data-mount="earning">
+  <div class="cpc-head">
+    <div class="cpc-title">Crypto Payment Calculator</div>
+    <div class="cpc-badge"><span class="cpc-dot"></span>Live · Binance</div>
+  </div>
+
+  <div class="cpc-tabs" id="cpcCoinTabs">
+    <div class="cpc-coin-tab active" onclick="CpcCalc.setCoin('USDT', this)">
+      <div class="cpc-coin-icon" style="background:rgba(38,161,123,.15);color:#26a17b;">₮</div>
+      <div><div class="cpc-coin-name">USDT</div><div class="cpc-coin-sub">Tether (stablecoin)</div></div>
+    </div>
+    <div class="cpc-coin-tab" onclick="CpcCalc.setCoin('BTC', this)">
+      <div class="cpc-coin-icon" style="background:rgba(247,147,26,.15);color:#f7931a;">₿</div>
+      <div><div class="cpc-coin-name">BTC</div><div class="cpc-coin-sub">Bitcoin</div></div>
+    </div>
+  </div>
+
+  <div class="cpc-amount-row">
+    <input type="number" id="cpcAmount" class="cpc-amount-input" value="500" min="0" step="0.01" oninput="CpcCalc.run()">
+    <span class="cpc-amount-unit" id="cpcAmountUnit">USDT</span>
+  </div>
+
+  <div class="cpc-rate-line">
+    <span id="cpcRateLabel">Live USDT price</span>
+    <b id="cpcRateText">Loading…</b>
+  </div>
+
+  <div class="cpc-result">
+    <div class="cpc-result-label">You Receive (INR)</div>
+    <div class="cpc-result-val" id="cpcResultVal">₹0</div>
+    <div class="cpc-result-sub" id="cpcResultSub">Binance price × live USD/INR rate</div>
+  </div>
+
+  <p class="cpc-footnote"><b>How this is calculated:</b> USDT is priced against the live USD/INR rate, assuming its ~$1 peg holds. BTC is priced from Binance's live BTC/USDT pair, then converted the same way. <b>Tax note:</b> crypto received as payment is taxed as regular income at its receipt value; if you later sell it for more, that extra gain is taxed at a flat 30% + 4% cess, and a 1% TDS applies on the transfer (Section 115BBH / 194S) — no loss offset is allowed. Confirm exact treatment with a CA.</p>
+</div>
+
+<script>
+var CpcCalc = {
+  coin: 'USDT',
+  usdInr: null,
+  btcUsdt: null,
+
+  setCoin: function(coin, el){
+    this.coin = coin;
+    document.getElementById('cpcCoinTabs').querySelectorAll('.cpc-coin-tab').forEach(function(t){ t.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('cpcAmountUnit').textContent = coin;
+    document.getElementById('cpcRateLabel').textContent = coin === 'BTC' ? 'Live BTC price' : 'Live USDT price';
+    document.getElementById('cpcAmount').value = coin === 'BTC' ? 0.01 : 500;
+    document.getElementById('cpcAmount').step = coin === 'BTC' ? '0.0001' : '0.01';
+    this.run();
+  },
+
+  fmtInr: function(n){
+    n = Math.round(n);
+    if (n < 0) n = 0;
+    return '₹' + n.toLocaleString('en-IN');
+  },
+
+  run: function(){
+    var amount = parseFloat(document.getElementById('cpcAmount').value) || 0;
+    if (this.usdInr === null){
+      document.getElementById('cpcRateText').textContent = 'Loading…';
+      return;
+    }
+
+    var usdValue, rateText;
+    if (this.coin === 'USDT'){
+      usdValue = amount * 1;
+      rateText = '1 USDT ≈ $1.00 (stablecoin)';
+    } else {
+      if (this.btcUsdt === null){
+        document.getElementById('cpcRateText').textContent = 'Loading…';
+        return;
+      }
+      usdValue = amount * this.btcUsdt;
+      rateText = '1 BTC = $' + this.btcUsdt.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+
+    document.getElementById('cpcRateText').textContent = rateText;
+    var inrValue = usdValue * this.usdInr;
+    document.getElementById('cpcResultVal').textContent = this.fmtInr(inrValue);
+    document.getElementById('cpcResultSub').textContent = '≈ $' + usdValue.toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' at ₹' + this.usdInr.toFixed(2) + '/USD';
+  },
+
+  loadData: async function(){
+    try {
+      var fxRes = await fetch('https://open.er-api.com/v6/latest/USD');
+      var fxData = await fxRes.json();
+      if (fxData && fxData.rates) this.usdInr = fxData.rates.INR;
+    } catch(e){}
+    try {
+      var btcRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+      var btcData = await btcRes.json();
+      if (btcData && btcData.price) this.btcUsdt = parseFloat(btcData.price);
+    } catch(e){}
+    this.run();
+  }
+};
+document.addEventListener('DOMContentLoaded', function(){ CpcCalc.loadData(); setInterval(function(){ CpcCalc.loadData(); }, 15000); });
+if (document.readyState !== 'loading') CpcCalc.loadData();
+</script>
+
 </body>
 </html>
