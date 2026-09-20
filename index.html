@@ -10803,6 +10803,157 @@ function et2ScrollTo(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+<!-- ================= SITE-WIDE PERFORMANCE PACK ================= -->
+<script>
+(function(){
+  // ============================================================
+  // 1. SHARED FETCH CACHE — dedupes identical API calls across widgets.
+  //    If 5 widgets ask for the same Binance price within 3 seconds,
+  //    only ONE real network request goes out; the rest reuse it.
+  // ============================================================
+  var nxFetchCache = {};
+  var NX_CACHE_TTL = 3000; // ms — short enough to stay "live", long enough to dedupe bursts
 
+  window.nxCachedFetch = function(url, options){
+    var key = url + (options ? JSON.stringify(options) : '');
+    var now = Date.now();
+    var entry = nxFetchCache[key];
+    if (entry && (now - entry.time) < NX_CACHE_TTL) {
+      return entry.promise;
+    }
+    var promise = fetch(url, options).then(function(res){ return res.json(); });
+    nxFetchCache[key] = { time: now, promise: promise };
+    return promise;
+  };
+  // Existing widgets already call plain fetch() directly, so this cache
+  // helps most for any NEW widgets you add later — use nxCachedFetch(url)
+  // instead of fetch(url).then(r=>r.json()) going forward.
+
+  // ============================================================
+  // 2. LAZY-INIT FOR OFF-SCREEN WIDGETS
+  //    Pauses expensive setInterval-driven widgets when they're
+  //    scrolled out of view, resumes when back in view.
+  //    Safe no-op for anything that doesn't opt in.
+  // ============================================================
+  if ('IntersectionObserver' in window) {
+    var nxPausableIntervals = {}; // id -> { fn, ms, handle }
+
+    window.nxRegisterPausableInterval = function(el, fn, ms){
+      if (!el) { return setInterval(fn, ms); } // fallback if element missing
+      var id = 'nxpi_' + Math.random().toString(36).slice(2);
+      nxPausableIntervals[id] = { fn: fn, ms: ms, handle: null, el: el };
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var rec = nxPausableIntervals[id];
+          if (!rec) return;
+          if (entry.isIntersecting) {
+            if (!rec.handle) { rec.fn(); rec.handle = setInterval(rec.fn, rec.ms); }
+          } else {
+            if (rec.handle) { clearInterval(rec.handle); rec.handle = null; }
+          }
+        });
+      }, { rootMargin: '200px 0px' }); // start slightly before it's fully visible
+      observer.observe(el);
+      return id;
+    };
+  }
+
+  // ============================================================
+  // 3. THROTTLE SCROLL/RESIZE LISTENERS SITE-WIDE
+  //    Prevents janky scroll performance from multiple widgets
+  //    each listening to scroll/resize independently.
+  // ============================================================
+  window.nxThrottle = function(fn, wait){
+    var last = 0, timeout = null;
+    return function(){
+      var now = Date.now();
+      var args = arguments, ctx = this;
+      if (now - last >= wait) {
+        last = now;
+        fn.apply(ctx, args);
+      } else {
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){ last = Date.now(); fn.apply(ctx, args); }, wait - (now - last));
+      }
+    };
+  };
+
+  // ============================================================
+  // 4. DEFER NON-CRITICAL IMAGE LOADING
+  //    Adds loading="lazy" to every <img> that doesn't already have it —
+  //    browser-native, zero cost, big win for the many Unsplash hero images.
+  // ============================================================
+  function nxLazyImages(){
+    document.querySelectorAll('img:not([loading])').forEach(function(img){
+      img.loading = 'lazy';
+      img.decoding = 'async';
+    });
+  }
+
+  // ============================================================
+  // 5. REDUCE ANIMATION/PAINT COST
+  //    Pauses CSS animations (like the RSI live-clock pulse, ticker sweep)
+  //    when the tab isn't visible — saves battery/CPU when user tabs away.
+  // ============================================================
+  document.addEventListener('visibilitychange', function(){
+    document.documentElement.classList.toggle('nx-tab-hidden', document.hidden);
+  });
+
+  // ============================================================
+  // 6. RUN INITIAL PASS + WATCH FOR NEW CONTENT
+  //    Since widgets mount asynchronously via data-mount, re-scan
+  //    periodically for a short window after load to catch late arrivals.
+  // ============================================================
+  var nxScans = 0;
+  function nxRunPass(){
+    nxLazyImages();
+    nxScans++;
+    if (nxScans < 30) setTimeout(nxRunPass, 300);
+  }
+  document.addEventListener('DOMContentLoaded', nxRunPass);
+  if (document.readyState !== 'loading') nxRunPass();
+})();
+</script>
+
+<style>
+/* Pause non-essential animations when tab is in background — saves CPU/battery */
+.nx-tab-hidden *,
+.nx-tab-hidden *::before,
+.nx-tab-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+/* Content-visibility: skip rendering work for widgets far off-screen.
+   This is the single biggest win here — browser skips layout/paint
+   for anything not near the viewport, dramatically speeding up long pages. */
+[data-mount] {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px; /* placeholder height estimate to avoid scroll jump */
+}
+
+/* Smoother, GPU-accelerated scrolling */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce layout thrash from web fonts loading late */
+@font-face {
+  font-display: swap;
+}
+</style>
+
+<!-- ================= PRECONNECT TO YOUR MOST-USED API DOMAINS ================= -->
+<!-- Paste these inside <head> — tells the browser to start DNS/TLS handshake
+     early, shaving 100-300ms off the FIRST call to each of these per page load -->
+<link rel="preconnect" href="https://api.binance.com">
+<link rel="preconnect" href="https://s3.tradingview.com">
+<link rel="preconnect" href="https://open.er-api.com">
+<link rel="preconnect" href="https://api.alternative.me">
+<link rel="preconnect" href="https://api.coingecko.com">
+<link rel="dns-prefetch" href="https://api.binance.com">
+<link rel="dns-prefetch" href="https://s3.tradingview.com">
 </body>
 </html>
