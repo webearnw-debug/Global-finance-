@@ -8286,6 +8286,147 @@ runEligibility();
   if (document.readyState !== 'loading') { GlrTable.show('home'); stampVerified(); }
 })();
 </script>
-    
+  <!-- ================= LOANS PAGE: HOME LOAN TAX BENEFIT CALCULATOR ================= -->
+<style>
+.hlt{--hlt-bg:#0b0d11;--hlt-card:#12151c;--hlt-border:rgba(255,255,255,.08);--hlt-gold:#c9a869;--hlt-emerald:#00e599;--hlt-text:#e9e7e1;--hlt-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--hlt-bg);border:1px solid var(--hlt-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--hlt-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.hlt-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--hlt-border);padding-bottom:18px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.hlt-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--hlt-gold)}
+.hlt-badge{background:rgba(0,229,153,.1);border:1px solid rgba(0,229,153,.3);color:var(--hlt-emerald);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.hlt-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.hlt-tab{background:rgba(255,255,255,.03);border:1px solid var(--hlt-border);color:var(--hlt-muted);padding:8px 16px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s}
+.hlt-tab.active{background:rgba(201,168,105,.12);border-color:var(--hlt-gold);color:var(--hlt-gold)}
+.hlt-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.hlt-grid{grid-template-columns:1fr}}
+.hlt-field{margin-bottom:18px}
+.hlt-label{display:flex;justify-content:space-between;font-size:13px;color:var(--hlt-muted);margin-bottom:8px}
+.hlt-label span{color:var(--hlt-text);font-weight:700}
+.hlt-slider{width:100%;height:4px;background:var(--hlt-border);border-radius:2px;outline:none;margin-top:10px;accent-color:var(--hlt-gold);cursor:pointer}
+.hlt-slab-tabs{display:flex;gap:8px;margin-top:8px}
+.hlt-slab-tabs .hlt-tab{flex:1;text-align:center;padding:9px 8px}
+.hlt-result{background:var(--hlt-card);border:1px solid var(--hlt-border);border-radius:12px;padding:22px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.hlt-result-label{font-size:11px;color:var(--hlt-muted);text-transform:uppercase;letter-spacing:.5px}
+.hlt-result-val{font-size:28px;font-weight:800;color:var(--hlt-gold);margin:8px 0 4px;font-family:'JetBrains Mono',monospace}
+.hlt-result-val.muted{color:var(--hlt-muted)}
+.hlt-rows{width:100%;margin-top:14px}
+.hlt-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--hlt-border);font-size:12.5px;text-align:left}
+.hlt-row span:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff}
+.hlt-row.muted{color:var(--hlt-muted);font-size:11px}
+.hlt-result-note{font-size:12px;color:var(--hlt-muted);margin-top:10px;line-height:1.6}
+.hlt-footnote{font-size:11px;color:var(--hlt-muted);line-height:1.7;border-top:1px solid var(--hlt-border);padding-top:16px;margin-top:20px}
+.hlt-footnote b{color:#c3c9d4}
+</style>
+
+<div class="hlt" id="hltTaxCalcSection" data-mount="loans">
+  <div class="hlt-head">
+    <div class="hlt-title">Home Loan Tax Benefit Calculator</div>
+    <div class="hlt-badge">Old Regime Only</div>
+  </div>
+  <div class="hlt-tabs">
+    <button class="hlt-tab active" onclick="hltSetRegime('old', this)">Old Tax Regime</button>
+    <button class="hlt-tab" onclick="hltSetRegime('new', this)">New Tax Regime</button>
+  </div>
+  <div class="hlt-grid">
+    <div>
+      <div class="hlt-field">
+        <div class="hlt-label">Loan Amount <span id="hltAmountVal">₹30,00,000</span></div>
+        <input type="range" id="hltAmount" class="hlt-slider" min="500000" max="20000000" step="50000" value="3000000" oninput="hltRun()">
+      </div>
+      <div class="hlt-field">
+        <div class="hlt-label">Interest Rate (p.a.) <span id="hltRateVal">8.50%</span></div>
+        <input type="range" id="hltRate" class="hlt-slider" min="6" max="15" step="0.05" value="8.5" oninput="hltRun()">
+      </div>
+      <div class="hlt-field">
+        <div class="hlt-label">Tenure <span id="hltTenureVal">20 yrs</span></div>
+        <input type="range" id="hltTenure" class="hlt-slider" min="1" max="30" step="1" value="20" oninput="hltRun()">
+      </div>
+      <div class="hlt-field">
+        <div class="hlt-label">Your Tax Slab</div>
+        <div class="hlt-slab-tabs">
+          <button class="hlt-tab" onclick="hltSetSlab(5, this)">5%</button>
+          <button class="hlt-tab active" onclick="hltSetSlab(20, this)">20%</button>
+          <button class="hlt-tab" onclick="hltSetSlab(30, this)">30%</button>
+        </div>
+      </div>
+    </div>
+    <div class="hlt-result" id="hltResultPanel"></div>
+  </div>
+  <p class="hlt-footnote"><b>Assumptions:</b> self-occupied property, year-1 EMI split. Section 80C ki ₹1,50,000 limit PPF, ELSS, life insurance jaise dusre investments ke saath <b>combined</b> hai. Section 24(b) interest deduction self-occupied property ke liye ₹2,00,000/year tak capped hai. Figures FY 2026-27 (old regime) ke hisaab se, 20 Sept 2026 ko verify kiye gaye — final calculation CA se confirm karo.</p>
+</div>
+
+<script>
+var hltRegime = 'old';
+var hltSlab = 20;
+
+function hltSetRegime(val, btn){
+  hltRegime = val;
+  btn.parentElement.querySelectorAll('.hlt-tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  hltRun();
+}
+
+function hltSetSlab(val, btn){
+  hltSlab = val;
+  btn.parentElement.querySelectorAll('.hlt-tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  hltRun();
+}
+
+function hltFmt(n){
+  n = Math.round(n);
+  if (n < 0) n = 0;
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function hltYearOneSplit(P, annualRatePct, years){
+  var r = annualRatePct / 1200;
+  var n = Math.round(years * 12);
+  var emi = r === 0 ? P / n : P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+  var bal = P, intr = 0, princ = 0;
+  var months = Math.min(12, n);
+  for (var m = 0; m < months; m++){
+    var ip = bal * r;
+    var pp = emi - ip;
+    intr += ip; princ += pp; bal -= pp;
+  }
+  return { intr: intr, princ: princ };
+}
+
+function hltRun(){
+  var amount = parseFloat(document.getElementById('hltAmount').value) || 0;
+  var rate = parseFloat(document.getElementById('hltRate').value) || 0;
+  var years = parseInt(document.getElementById('hltTenure').value, 10) || 1;
+
+  document.getElementById('hltAmountVal').textContent = hltFmt(amount);
+  document.getElementById('hltRateVal').textContent = rate.toFixed(2) + '%';
+  document.getElementById('hltTenureVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+
+  var split = hltYearOneSplit(amount, rate, years);
+  var c80 = Math.min(split.princ, 150000);
+  var c24 = Math.min(split.intr, 200000);
+  var totalDeduction = c80 + c24;
+  var panel = document.getElementById('hltResultPanel');
+
+  if (hltRegime === 'old'){
+    var taxSaved = totalDeduction * (hltSlab / 100) * 1.04;
+    panel.innerHTML =
+      '<span class="hlt-result-label">Estimated Tax Saved (Year 1)</span>' +
+      '<span class="hlt-result-val">' + hltFmt(taxSaved) + '</span>' +
+      '<div class="hlt-rows">' +
+        '<div class="hlt-row"><span>Principal Deduction (80C)</span><span>' + hltFmt(c80) + '</span></div>' +
+        '<div class="hlt-row"><span>Interest Deduction (24b)</span><span>' + hltFmt(c24) + '</span></div>' +
+        '<div class="hlt-row"><span>Total Deduction</span><span>' + hltFmt(totalDeduction) + '</span></div>' +
+        '<div class="hlt-row muted"><span>At your slab</span><span>' + hltSlab + '% + 4% cess</span></div>' +
+      '</div>';
+  } else {
+    panel.innerHTML =
+      '<span class="hlt-result-label">Estimated Tax Saved (Year 1)</span>' +
+      '<span class="hlt-result-val muted">₹0</span>' +
+      '<p class="hlt-result-note">New tax regime me home loan principal (80C) aur self-occupied interest (24b) — dono deductions available nahi hain.</p>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', hltRun);
+hltRun();
+</script>  
 </body>
 </html>
