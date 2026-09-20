@@ -7974,8 +7974,9 @@ var GFCta = {
   document.addEventListener('DOMContentLoaded', hm3TryInit);
   if (document.readyState !== 'loading') hm3TryInit();
 })();
-</script> 
-   <!-- =======================================================
+</script>                                                                                   
+</script>
+  <!-- =======================================================
      LOANS PAGE — 3 WIDGETS
      All use data-mount="loans" — auto-place on the Loans page.
      Paste anywhere in your file (easiest: right before </body>).
@@ -8204,7 +8205,10 @@ runEligibility();
 .glr-table{width:100%;border-collapse:collapse}
 .glr-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--glr-muted);padding:10px;border-bottom:1px solid var(--glr-border)}
 .glr-table td{padding:12px 10px;border-bottom:1px solid var(--glr-border);font-size:13px}
-.glr-bank{font-weight:700;color:#fff}
+.glr-bank-link{font-weight:700;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .2s ease}
+.glr-bank-link:hover{color:var(--glr-emerald)}
+.glr-bank-link svg{width:11px;height:11px;opacity:.6}
+.glr-verified{font-size:10.5px;color:var(--glr-muted);text-align:right;margin-top:14px;font-family:'JetBrains Mono',monospace}
 .glr-rate{color:var(--glr-emerald);font-weight:700;font-family:'JetBrains Mono',monospace}
 .glr-processing{color:var(--glr-muted);font-size:11.5px}
 </style>
@@ -8224,36 +8228,43 @@ runEligibility();
     <thead><tr><th>Bank</th><th>Starting Rate (p.a.)</th><th>Processing Fee</th></tr></thead>
     <tbody id="glrTableBody"></tbody>
   </table>
+  <div class="glr-verified" id="glrVerifiedText"></div>
 </div>
 
 <script>
 (function(){
+  // ✏️ Edit "verifiedOn" yourself whenever you re-check these rates —
+  // this date is shown to visitors so they know how fresh the numbers are.
+  var glrVerifiedOn = "2026-09-20";
+
   var glrData = {
     home: [
-      { bank:"SBI", rate:"7.50%", fee:"0.35% (max ₹10,000)" },
-      { bank:"HDFC Bank", rate:"7.90%", fee:"Up to 0.50%" },
-      { bank:"ICICI Bank", rate:"7.95%", fee:"Up to 0.50%" },
-      { bank:"Bank of Baroda", rate:"7.45%", fee:"0.25%–0.50%" },
-      { bank:"Punjab National Bank", rate:"7.50%", fee:"Up to 0.35%" },
-      { bank:"Axis Bank", rate:"8.00%", fee:"Up to 1%" }
+      { bank:"SBI", rate:"7.50%", fee:"0.35% (max ₹10,000)", url:"https://sbi.co.in/web/personal-banking/loans/home-loans" },
+      { bank:"HDFC Bank", rate:"7.90%", fee:"Up to 0.50%", url:"https://www.hdfc.com/home-loan" },
+      { bank:"ICICI Bank", rate:"7.95%", fee:"Up to 0.50%", url:"https://www.icicibank.com/personal-banking/loans/home-loan" },
+      { bank:"Bank of Baroda", rate:"7.45%", fee:"0.25%–0.50%", url:"https://www.bankofbaroda.in/personal-banking/loans/home-loan" },
+      { bank:"Punjab National Bank", rate:"7.50%", fee:"Up to 0.35%", url:"https://www.pnbindia.in/home-loan.html" },
+      { bank:"Axis Bank", rate:"8.00%", fee:"Up to 1%", url:"https://www.axisbank.com/retail/loans/home-loan" }
     ],
     personal: [
-      { bank:"SBI", rate:"10.90%", fee:"Up to 1.5%" },
-      { bank:"HDFC Bank", rate:"10.50%", fee:"Up to 2.5%" },
-      { bank:"ICICI Bank", rate:"10.75%", fee:"Up to 2.5%" },
-      { bank:"Axis Bank", rate:"11.00%", fee:"Up to 2%" },
-      { bank:"Bajaj Finserv", rate:"11.50%", fee:"Up to 3.99%" },
-      { bank:"IDFC FIRST Bank", rate:"10.99%", fee:"Up to 2%" }
+      { bank:"SBI", rate:"10.90%", fee:"Up to 1.5%", url:"https://sbi.co.in/web/personal-banking/loans/personal-loans" },
+      { bank:"HDFC Bank", rate:"10.50%", fee:"Up to 2.5%", url:"https://www.hdfcbank.com/personal/borrow/popular-loans/personal-loan" },
+      { bank:"ICICI Bank", rate:"10.75%", fee:"Up to 2.5%", url:"https://www.icicibank.com/personal-banking/loans/personal-loan" },
+      { bank:"Axis Bank", rate:"11.00%", fee:"Up to 2%", url:"https://www.axisbank.com/retail/loans/personal-loan" },
+      { bank:"Bajaj Finserv", rate:"11.50%", fee:"Up to 3.99%", url:"https://www.bajajfinserv.in/personal-loan" },
+      { bank:"IDFC FIRST Bank", rate:"10.99%", fee:"Up to 2%", url:"https://www.idfcfirstbank.com/personal-loan" }
     ],
     car: [
-      { bank:"SBI", rate:"8.65%", fee:"₹2,500–₹9,500 flat" },
-      { bank:"HDFC Bank", rate:"9.20%", fee:"Up to 1%" },
-      { bank:"ICICI Bank", rate:"9.10%", fee:"Up to 1%" },
-      { bank:"Bank of Baroda", rate:"8.70%", fee:"₹5,000–₹10,000 flat" },
-      { bank:"Punjab National Bank", rate:"8.60%", fee:"Up to 1%" },
-      { bank:"Kotak Mahindra Bank", rate:"9.00%", fee:"Up to 1%" }
+      { bank:"SBI", rate:"8.65%", fee:"₹2,500–₹9,500 flat", url:"https://sbi.co.in/web/personal-banking/loans/auto-loans" },
+      { bank:"HDFC Bank", rate:"9.20%", fee:"Up to 1%", url:"https://www.hdfcbank.com/personal/borrow/popular-loans/car-loan" },
+      { bank:"ICICI Bank", rate:"9.10%", fee:"Up to 1%", url:"https://www.icicibank.com/personal-banking/loans/car-loan" },
+      { bank:"Bank of Baroda", rate:"8.70%", fee:"₹5,000–₹10,000 flat", url:"https://www.bankofbaroda.in/personal-banking/loans/car-loan" },
+      { bank:"Punjab National Bank", rate:"8.60%", fee:"Up to 1%", url:"https://www.pnbindia.in/car-loan.html" },
+      { bank:"Kotak Mahindra Bank", rate:"9.00%", fee:"Up to 1%", url:"https://www.kotak.com/en/personal-banking/loans/car-loan.html" }
     ]
   };
+
+  var linkIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg>';
 
   window.GlrTable = {
     show: function(cat, btn){
@@ -8261,40 +8272,20 @@ runEligibility();
       if (btn) btn.classList.add('active');
       var body = document.getElementById('glrTableBody');
       body.innerHTML = glrData[cat].map(function(row){
-        return '<tr><td class="glr-bank">' + row.bank + '</td><td class="glr-rate">' + row.rate + '</td><td class="glr-processing">' + row.fee + '</td></tr>';
+        return '<tr><td><a class="glr-bank-link" href="' + row.url + '" target="_blank" rel="noopener">' + row.bank + ' ' + linkIconSvg + '</a></td><td class="glr-rate">' + row.rate + '</td><td class="glr-processing">' + row.fee + '</td></tr>';
       }).join('');
     }
   };
 
-  document.addEventListener('DOMContentLoaded', function(){ GlrTable.show('home'); });
-  if (document.readyState !== 'loading') GlrTable.show('home');
+  function stampVerified(){
+    var d = new Date(glrVerifiedOn + 'T00:00:00');
+    document.getElementById('glrVerifiedText').textContent = 'Rates last manually verified on ' + d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) + ' — click any bank name to check today\'s current rate on their official page.';
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ GlrTable.show('home'); stampVerified(); });
+  if (document.readyState !== 'loading') { GlrTable.show('home'); stampVerified(); }
 })();
 </script>
-  <!      <option value="90">Last 3 Months</option>
-      <option value="180">Last 6 Months</option>
-      <option value="365" selected>Last 1 Year</option>
-    </select>
-    <button class="stm-run-btn" id="stmRunBtn" onclick="StmMachine.run()">Run Backtest</button>
-  </div>
-
-  <div class="stm-status" id="stmStatus">Choose an asset, SIP amount and period, then run the backtest.</div>
-
-  <div class="stm-body" id="stmBody">
-    <div class="stm-chart-wrap"><svg id="stmChart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg></div>
-    <div class="stm-results">
-      <div class="stm-res-card"><div class="stm-res-label">Total Invested</div><div class="stm-res-val white" id="stmInvested">$0</div></div>
-      <div class="stm-res-card"><div class="stm-res-label">Value Today</div><div class="stm-res-val white" id="stmCurrent">$0</div></div>
-      <div class="stm-res-card"><div class="stm-res-label">Gain / Loss</div><div class="stm-res-val" id="stmGain">0%</div></div>
-    </div>
-  </div>
-</div>
-
-<script>
-
-  
-                          
-</script>
-              
 
 </body>
 </html>
