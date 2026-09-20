@@ -8430,6 +8430,302 @@ hltRun();
 </script>  
   <meta name="monetag" content="0cd47094b47f7e09faf3705f8a299891">
   
+<!-- ================= LOANS PAGE: LOAN BALANCE TRANSFER CALCULATOR ================= -->
+<style>
+.ln1-bt{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(214,178,122,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.ln1-bt-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.ln1-bt-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.ln1-bt-badge{font-size:10px;font-weight:800;color:#d6b27a;background:rgba(214,178,122,.1);border:1px solid rgba(214,178,122,.3);padding:4px 10px;border-radius:20px}
+.ln1-bt-note{font-size:10.5px;color:#8891a1;margin-bottom:18px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.ln1-bt-section-label{font-size:11px;font-weight:800;color:#8891a1;text-transform:uppercase;letter-spacing:.6px;margin:16px 0 10px}
+.ln1-bt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.ln1-bt-grid{grid-template-columns:1fr}}
+.ln1-bt-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.ln1-bt-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.ln1-bt-field-top span{color:#d6b27a;font-weight:700}
+.ln1-bt-field input[type=range]{width:100%;accent-color:#d6b27a;cursor:pointer}
+.ln1-bt-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:18px}
+.ln1-bt-stat{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center}
+.ln1-bt-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.ln1-bt-stat .v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;margin-top:4px;color:#fff}
+.ln1-bt-verdict{margin-top:16px;border-radius:14px;padding:16px;text-align:center}
+.ln1-bt-verdict.good{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.3);}
+.ln1-bt-verdict.bad{background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.3);}
+.ln1-bt-verdict-amt{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;margin:6px 0}
+</style>
+<div class="ln1-bt" id="ln1BtSection" data-mount="loans">
+  <div class="ln1-bt-hdr"><div class="ln1-bt-title">Loan Balance Transfer Calculator</div><div class="ln1-bt-badge">SWITCH & SAVE</div></div>
+  <div class="ln1-bt-note">Compares your current loan's remaining cost against a new lender's rate, after subtracting transfer/processing charges. Uses standard reducing-balance EMI math — always confirm your exact outstanding principal and the new lender's actual processing fee before switching.</div>
 
+  <div class="ln1-bt-section-label">Your Current Loan</div>
+  <div class="ln1-bt-grid">
+    <div class="ln1-bt-field"><div class="ln1-bt-field-top"><span>Outstanding Principal</span><span id="ln1CurPrinV">₹25,00,000</span></div><input type="range" id="ln1CurPrin" min="100000" max="20000000" step="10000" value="2500000" oninput="ln1BtCalc()"></div>
+    <div class="ln1-bt-field"><div class="ln1-bt-field-top"><span>Current Interest Rate</span><span id="ln1CurRateV">9.5%</span></div><input type="range" id="ln1CurRate" min="6" max="20" step="0.05" value="9.5" oninput="ln1BtCalc()"></div>
+    <div class="ln1-bt-field"><div class="ln1-bt-field-top"><span>Remaining Tenure</span><span id="ln1CurTenV">15 yrs</span></div><input type="range" id="ln1CurTen" min="1" max="30" step="1" value="15" oninput="ln1BtCalc()"></div>
+  </div>
+
+  <div class="ln1-bt-section-label">New Lender Offer</div>
+  <div class="ln1-bt-grid">
+    <div class="ln1-bt-field"><div class="ln1-bt-field-top"><span>New Interest Rate</span><span id="ln1NewRateV">7.9%</span></div><input type="range" id="ln1NewRate" min="6" max="20" step="0.05" value="7.9" oninput="ln1BtCalc()"></div>
+    <div class="ln1-bt-field"><div class="ln1-bt-field-top"><span>Processing/Transfer Fee</span><span id="ln1FeeV">₹25,000</span></div><input type="range" id="ln1Fee" min="0" max="300000" step="1000" value="25000" oninput="ln1BtCalc()"></div>
+  </div>
+
+  <div class="ln1-bt-stats">
+    <div class="ln1-bt-stat"><div class="l">Current EMI</div><div class="v" id="ln1CurEmi">₹0</div></div>
+    <div class="ln1-bt-stat"><div class="l">New EMI</div><div class="v" id="ln1NewEmi">₹0</div></div>
+    <div class="ln1-bt-stat"><div class="l">Monthly EMI Savings</div><div class="v" id="ln1EmiSavings">₹0</div></div>
+    <div class="ln1-bt-stat"><div class="l">Total Interest Saved</div><div class="v" id="ln1IntSavings">₹0</div></div>
+  </div>
+  <div class="ln1-bt-verdict" id="ln1Verdict"></div>
+</div>
+<script>
+function ln1EMI(p, annualRate, years){
+  var r = annualRate/12/100;
+  var n = years*12;
+  if (r === 0) return p/n;
+  return (p * r * Math.pow(1+r,n)) / (Math.pow(1+r,n)-1);
+}
+function ln1BtCalc(){
+  var prin = parseFloat(document.getElementById('ln1CurPrin').value);
+  var curRate = parseFloat(document.getElementById('ln1CurRate').value);
+  var tenure = parseInt(document.getElementById('ln1CurTen').value,10);
+  var newRate = parseFloat(document.getElementById('ln1NewRate').value);
+  var fee = parseFloat(document.getElementById('ln1Fee').value);
+
+  document.getElementById('ln1CurPrinV').textContent = '₹'+prin.toLocaleString('en-IN');
+  document.getElementById('ln1CurRateV').textContent = curRate.toFixed(2)+'%';
+  document.getElementById('ln1CurTenV').textContent = tenure+' yrs';
+  document.getElementById('ln1NewRateV').textContent = newRate.toFixed(2)+'%';
+  document.getElementById('ln1FeeV').textContent = '₹'+fee.toLocaleString('en-IN');
+
+  var curEmi = ln1EMI(prin, curRate, tenure);
+  var newEmi = ln1EMI(prin, newRate, tenure);
+  var curTotalInterest = (curEmi * tenure * 12) - prin;
+  var newTotalInterest = (newEmi * tenure * 12) - prin;
+  var netInterestSavings = curTotalInterest - newTotalInterest - fee;
+
+  document.getElementById('ln1CurEmi').textContent = '₹'+Math.round(curEmi).toLocaleString('en-IN');
+  document.getElementById('ln1NewEmi').textContent = '₹'+Math.round(newEmi).toLocaleString('en-IN');
+  document.getElementById('ln1EmiSavings').textContent = '₹'+Math.round(curEmi-newEmi).toLocaleString('en-IN')+'/mo';
+  document.getElementById('ln1IntSavings').textContent = '₹'+Math.round(curTotalInterest-newTotalInterest).toLocaleString('en-IN');
+
+  var verdictEl = document.getElementById('ln1Verdict');
+  if (netInterestSavings > 0) {
+    verdictEl.className = 'ln1-bt-verdict good';
+    verdictEl.innerHTML = '<div style="font-size:11px;color:#8891a1;text-transform:uppercase;">Net Savings After Transfer Fee</div><div class="ln1-bt-verdict-amt" style="color:#00e676;">₹'+Math.round(netInterestSavings).toLocaleString('en-IN')+'</div><div style="font-size:12px;color:#8891a1;">Switching looks worth it — you come out ahead even after the transfer cost.</div>';
+  } else {
+    verdictEl.className = 'ln1-bt-verdict bad';
+    verdictEl.innerHTML = '<div style="font-size:11px;color:#8891a1;text-transform:uppercase;">Net Result After Transfer Fee</div><div class="ln1-bt-verdict-amt" style="color:#ff5c7a;">₹'+Math.round(netInterestSavings).toLocaleString('en-IN')+'</div><div style="font-size:12px;color:#8891a1;">The transfer fee eats into or exceeds your interest savings — may not be worth switching.</div>';
+  }
+}
+document.addEventListener('DOMContentLoaded', ln1BtCalc);
+ln1BtCalc();
+</script>
+
+<!-- ================= LOANS PAGE: PREPAYMENT IMPACT CALCULATOR ================= -->
+<style>
+.ln1-pre{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,217,181,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.ln1-pre-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.ln1-pre-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.ln1-pre-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.ln1-pre-mode-row{display:flex;gap:8px;margin-bottom:16px}
+.ln1-pre-mode-btn{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:10px;border-radius:10px;font-size:11.5px;font-weight:700;cursor:pointer;text-align:center}
+.ln1-pre-mode-btn.active{border-color:#00d9b5;color:#00d9b5;background:rgba(0,217,181,.08)}
+.ln1-pre-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:680px){.ln1-pre-grid{grid-template-columns:1fr}}
+.ln1-pre-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.ln1-pre-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.ln1-pre-field-top span{color:#00d9b5;font-weight:700}
+.ln1-pre-field input[type=range]{width:100%;accent-color:#00d9b5;cursor:pointer}
+.ln1-pre-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.ln1-pre-stat{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center}
+.ln1-pre-stat .l{font-size:10px;color:#8891a1;text-transform:uppercase;letter-spacing:.5px}
+.ln1-pre-stat .v{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;margin-top:4px;color:#00d9b5}
+</style>
+<div class="ln1-pre" id="ln1PreSection" data-mount="loans">
+  <div class="ln1-pre-hdr"><div class="ln1-pre-title">Prepayment Impact Calculator</div><div class="ln1-pre-badge">SAVE ON INTEREST</div></div>
+  <div class="ln1-pre-mode-row">
+    <button class="ln1-pre-mode-btn active" id="ln1PreModeTenure" onclick="ln1PreSetMode('tenure')">Reduce Tenure</button>
+    <button class="ln1-pre-mode-btn" id="ln1PreModeEmi" onclick="ln1PreSetMode('emi')">Reduce EMI</button>
+  </div>
+  <div class="ln1-pre-grid">
+    <div class="ln1-pre-field"><div class="ln1-pre-field-top"><span>Outstanding Loan Amount</span><span id="ln1PrePrinV">₹25,00,000</span></div><input type="range" id="ln1PrePrin" min="100000" max="20000000" step="10000" value="2500000" oninput="ln1PreCalc()"></div>
+    <div class="ln1-pre-field"><div class="ln1-pre-field-top"><span>Interest Rate</span><span id="ln1PreRateV">8.5%</span></div><input type="range" id="ln1PreRate" min="6" max="20" step="0.05" value="8.5" oninput="ln1PreCalc()"></div>
+    <div class="ln1-pre-field"><div class="ln1-pre-field-top"><span>Remaining Tenure</span><span id="ln1PreTenV">15 yrs</span></div><input type="range" id="ln1PreTen" min="1" max="30" step="1" value="15" oninput="ln1PreCalc()"></div>
+    <div class="ln1-pre-field"><div class="ln1-pre-field-top"><span>Annual Lump-Sum Prepayment</span><span id="ln1PreAmtV">₹1,00,000</span></div><input type="range" id="ln1PreAmt" min="0" max="2000000" step="10000" value="100000" oninput="ln1PreCalc()"></div>
+  </div>
+  <div class="ln1-pre-stats">
+    <div class="ln1-pre-stat"><div class="l">Without Prepayment — Interest</div><div class="v" id="ln1PreNoInterest">₹0</div></div>
+    <div class="ln1-pre-stat"><div class="l">With Prepayment — Interest</div><div class="v" id="ln1PreWithInterest">₹0</div></div>
+    <div class="ln1-pre-stat"><div class="l">Total Interest Saved</div><div class="v" id="ln1PreSaved" style="color:#00e676;">₹0</div></div>
+    <div class="ln1-pre-stat" id="ln1PreExtraStatBox"><div class="l" id="ln1PreExtraLabel">Tenure Reduced By</div><div class="v" id="ln1PreExtraVal">0</div></div>
+  </div>
+</div>
+<script>
+(function(){
+  window.ln1PreMode = 'tenure';
+  window.ln1PreSetMode = function(mode){
+    ln1PreMode = mode;
+    document.getElementById('ln1PreModeTenure').classList.toggle('active', mode==='tenure');
+    document.getElementById('ln1PreModeEmi').classList.toggle('active', mode==='emi');
+    ln1PreCalc();
+  };
+
+  function ln1SimulateLoan(principal, annualRate, years, annualPrepay, mode){
+    var r = annualRate/12/100;
+    var n = years*12;
+    var emi = ln1EMI(principal, annualRate, years);
+    var balance = principal;
+    var month = 0;
+    var totalInterest = 0;
+    var currentEmi = emi;
+    var maxMonths = 600;
+
+    while (balance > 1 && month < maxMonths) {
+      month++;
+      var interestPortion = balance * r;
+      var principalPortion = currentEmi - interestPortion;
+      if (principalPortion > balance) principalPortion = balance;
+      totalInterest += interestPortion;
+      balance -= principalPortion;
+
+      // Apply annual prepayment every 12th month
+      if (annualPrepay > 0 && month % 12 === 0 && balance > 1) {
+        var prepay = Math.min(annualPrepay, balance);
+        balance -= prepay;
+        if (mode === 'emi' && balance > 1) {
+          var remainingMonths = n - month;
+          if (remainingMonths > 0) currentEmi = ln1EMI(balance, annualRate, remainingMonths/12);
+        }
+      }
+    }
+    return { months: month, totalInterest: totalInterest };
+  }
+
+  window.ln1PreCalc = function(){
+    var prin = parseFloat(document.getElementById('ln1PrePrin').value);
+    var rate = parseFloat(document.getElementById('ln1PreRate').value);
+    var tenure = parseInt(document.getElementById('ln1PreTen').value,10);
+    var prepay = parseFloat(document.getElementById('ln1PreAmt').value);
+
+    document.getElementById('ln1PrePrinV').textContent = '₹'+prin.toLocaleString('en-IN');
+    document.getElementById('ln1PreRateV').textContent = rate.toFixed(2)+'%';
+    document.getElementById('ln1PreTenV').textContent = tenure+' yrs';
+    document.getElementById('ln1PreAmtV').textContent = '₹'+prepay.toLocaleString('en-IN');
+
+    var withoutPrepay = ln1SimulateLoan(prin, rate, tenure, 0, 'tenure');
+    var withPrepay = ln1SimulateLoan(prin, rate, tenure, prepay, ln1PreMode);
+
+    document.getElementById('ln1PreNoInterest').textContent = '₹'+Math.round(withoutPrepay.totalInterest).toLocaleString('en-IN');
+    document.getElementById('ln1PreWithInterest').textContent = '₹'+Math.round(withPrepay.totalInterest).toLocaleString('en-IN');
+    document.getElementById('ln1PreSaved').textContent = '₹'+Math.round(withoutPrepay.totalInterest - withPrepay.totalInterest).toLocaleString('en-IN');
+
+    if (ln1PreMode === 'tenure') {
+      var monthsSaved = withoutPrepay.months - withPrepay.months;
+      document.getElementById('ln1PreExtraLabel').textContent = 'Tenure Reduced By';
+      document.getElementById('ln1PreExtraVal').textContent = Math.max(0,Math.round(monthsSaved/12*10)/10)+' yrs';
+    } else {
+      var originalEmi = ln1EMI(prin, rate, tenure);
+      document.getElementById('ln1PreExtraLabel').textContent = 'EMI Reduces Over Time';
+      document.getElementById('ln1PreExtraVal').textContent = 'from ₹'+Math.round(originalEmi).toLocaleString('en-IN');
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', ln1PreCalc);
+  ln1PreCalc();
+})();
+</script>
+
+<!-- ================= LOANS PAGE: CREDIT SCORE IMPACT SIMULATOR ================= -->
+<style>
+.ln1-cs{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(56,189,248,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.ln1-cs-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.ln1-cs-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.ln1-cs-badge{font-size:10px;font-weight:800;color:#38bdf8;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);padding:4px 10px;border-radius:20px}
+.ln1-cs-note{font-size:10.5px;color:#8891a1;margin-bottom:18px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.ln1-cs-slider-wrap{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;margin-bottom:16px}
+.ln1-cs-score-display{text-align:center;margin-bottom:12px}
+.ln1-cs-score-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:800;}
+.ln1-cs-score-label{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.ln1-cs-slider{width:100%;accent-color:#38bdf8;cursor:pointer}
+.ln1-cs-scale{display:flex;justify-content:space-between;font-size:10px;color:#8891a1;margin-top:4px}
+.ln1-cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:680px){.ln1-cs-grid{grid-template-columns:1fr}}
+.ln1-cs-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.ln1-cs-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.ln1-cs-field-top span{color:#38bdf8;font-weight:700}
+.ln1-cs-field input[type=range]{width:100%;accent-color:#38bdf8;cursor:pointer}
+.ln1-cs-result{background:linear-gradient(135deg,rgba(56,189,248,.1),rgba(214,178,122,.06));border:1px solid rgba(56,189,248,.3);border-radius:14px;padding:16px;text-align:center}
+.ln1-cs-result-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px dashed rgba(255,255,255,.08)}
+.ln1-cs-result-row:last-child{border-bottom:none}
+.ln1-cs-result-row b{font-family:'JetBrains Mono',monospace;color:#fff}
+</style>
+<div class="ln1-cs" id="ln1CsSection" data-mount="loans">
+  <div class="ln1-cs-hdr"><div class="ln1-cs-title">Credit Score Impact Simulator</div><div class="ln1-cs-badge">CIBIL-BASED ESTIMATE</div></div>
+  <div class="ln1-cs-note">Interest rate adjustments below are indicative bands commonly used by Indian lenders based on credit score tiers (as of late 2026) — actual rates vary by bank and loan type. Use this to understand roughly how much a better score could save you, not as an exact quote.</div>
+  <div class="ln1-cs-slider-wrap">
+    <div class="ln1-cs-score-display"><div class="ln1-cs-score-val" id="ln1CsScoreVal">750</div><div class="ln1-cs-score-label" id="ln1CsScoreLabel">Excellent</div></div>
+    <input type="range" class="ln1-cs-slider" id="ln1CsScore" min="300" max="900" step="10" value="750" oninput="ln1CsCalc()">
+    <div class="ln1-cs-scale"><span>300 Poor</span><span>550 Fair</span><span>700 Good</span><span>900 Excellent</span></div>
+  </div>
+  <div class="ln1-cs-grid">
+    <div class="ln1-cs-field"><div class="ln1-cs-field-top"><span>Loan Amount</span><span id="ln1CsPrinV">₹25,00,000</span></div><input type="range" id="ln1CsPrin" min="100000" max="20000000" step="10000" value="2500000" oninput="ln1CsCalc()"></div>
+    <div class="ln1-cs-field"><div class="ln1-cs-field-top"><span>Tenure</span><span id="ln1CsTenV">20 yrs</span></div><input type="range" id="ln1CsTen" min="1" max="30" step="1" value="20" oninput="ln1CsCalc()"></div>
+  </div>
+  <div class="ln1-cs-result">
+    <div class="ln1-cs-result-row"><span>Estimated Rate at Your Score</span><b id="ln1CsYourRate">—</b></div>
+    <div class="ln1-cs-result-row"><span>Your Estimated EMI</span><b id="ln1CsYourEmi">—</b></div>
+    <div class="ln1-cs-result-row"><span>Rate If Score Was 900 (Best Tier)</span><b id="ln1CsBestRate">—</b></div>
+    <div class="ln1-cs-result-row"><span>What You'd Save with a Better Score</span><b id="ln1CsPotentialSavings" style="color:#00e676;">—</b></div>
+  </div>
+</div>
+<script>
+function ln1CsGetRateForScore(score){
+  if (score >= 800) return 7.4;
+  if (score >= 750) return 7.9;
+  if (score >= 700) return 8.5;
+  if (score >= 650) return 9.5;
+  if (score >= 600) return 11.0;
+  if (score >= 550) return 13.5;
+  return 16.0;
+}
+function ln1CsGetLabel(score){
+  if (score >= 800) return 'Excellent';
+  if (score >= 750) return 'Very Good';
+  if (score >= 700) return 'Good';
+  if (score >= 650) return 'Fair';
+  if (score >= 600) return 'Below Average';
+  if (score >= 550) return 'Poor';
+  return 'Very Poor';
+}
+function ln1CsCalc(){
+  var score = parseInt(document.getElementById('ln1CsScore').value,10);
+  var prin = parseFloat(document.getElementById('ln1CsPrin').value);
+  var tenure = parseInt(document.getElementById('ln1CsTen').value,10);
+
+  document.getElementById('ln1CsScoreVal').textContent = score;
+  var label = ln1CsGetLabel(score);
+  var labelEl = document.getElementById('ln1CsScoreLabel');
+  labelEl.textContent = label;
+  labelEl.style.color = score>=750 ? '#00e676' : (score>=650 ? '#ffb800' : '#ff5252');
+  document.getElementById('ln1CsScoreVal').style.color = score>=750 ? '#00e676' : (score>=650 ? '#ffb800' : '#ff5252');
+  document.getElementById('ln1CsPrinV').textContent = '₹'+prin.toLocaleString('en-IN');
+  document.getElementById('ln1CsTenV').textContent = tenure+' yrs';
+
+  var yourRate = ln1CsGetRateForScore(score);
+  var bestRate = ln1CsGetRateForScore(900);
+  var yourEmi = ln1EMI(prin, yourRate, tenure);
+  var bestEmi = ln1EMI(prin, bestRate, tenure);
+  var yourTotalInterest = (yourEmi*tenure*12) - prin;
+  var bestTotalInterest = (bestEmi*tenure*12) - prin;
+
+  document.getElementById('ln1CsYourRate').textContent = yourRate.toFixed(2)+'% p.a.';
+  document.getElementById('ln1CsYourEmi').textContent = '₹'+Math.round(yourEmi).toLocaleString('en-IN')+'/mo';
+  document.getElementById('ln1CsBestRate').textContent = bestRate.toFixed(2)+'% p.a.';
+  document.getElementById('ln1CsPotentialSavings').textContent = '₹'+Math.round(yourTotalInterest-bestTotalInterest).toLocaleString('en-IN')+' in total interest';
+}
+document.addEventListener('DOMContentLoaded', ln1CsCalc);
+ln1CsCalc();
+</script>
 </body>
 </html>
