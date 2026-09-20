@@ -9243,6 +9243,85 @@ ln4RenderPosts();
   };
 })();
 </script>
+<!-- ================= LOANS PAGE: DEDICATED FOOTER ================= -->
+<style>
+.ln5-footer{max-width:920px;margin:40px auto 20px;background:linear-gradient(180deg,#070a10 0%,#050609 100%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.6)}
+.ln5-footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:20px}
+.ln5-footer-brand{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.ln5-footer-brand span{color:#d6b27a}
+.ln5-footer-tag{font-size:11.5px;color:#8891a1;margin-top:6px;max-width:340px;line-height:1.6}
+.ln5-footer-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.ln5-footer-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:ln5Pulse 1.6s infinite}
+@keyframes ln5Pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ln5-footer-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:22px}
+@media(max-width:700px){.ln5-footer-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.ln5-footer-cols{grid-template-columns:1fr}}
+.ln5-footer-col h5{font-size:11.5px;font-weight:800;color:#d6b27a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.ln5-footer-links{list-style:none;padding:0;margin:0}
+.ln5-footer-links li{margin-bottom:9px}
+.ln5-footer-links a{color:#8891a1;font-size:12.5px;text-decoration:none;cursor:pointer;transition:color .2s ease;border-bottom:1px solid transparent}
+.ln5-footer-links a:hover{color:#d6b27a;border-bottom-color:#d6b27a}
+.ln5-footer-disclaimer{font-size:10.5px;line-height:1.7;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:14px}
+.ln5-footer-disclaimer b{color:#8891a1}
+.ln5-footer-btm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+.ln5-footer-security{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.ln5-footer-sec-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#8891a1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:5px 12px;border-radius:20px}
+</style>
+<div class="ln5-footer" id="ln5LoansFooterSection" data-mount="loans">
+  <div class="ln5-footer-top">
+    <div>
+      <div class="ln5-footer-brand">Global<span> Finance</span> — Loans &amp; Credit</div>
+      <p class="ln5-footer-tag">Every calculator here runs on real loan-amortization math. Documents checklist progress stays only in your browser — nothing is stored on our servers.</p>
+    </div>
+    <div class="ln5-footer-live"><span class="ln5-footer-dot"></span>ALL TOOLS LIVE</div>
+  </div>
 
+  <div class="ln5-footer-cols">
+    <div class="ln5-footer-col">
+      <h5>EMI &amp; Eligibility</h5>
+      <ul class="ln5-footer-links">
+        <li><a onclick="ln5ScrollTo('ln1BtSection')">Balance Transfer Calculator</a></li>
+        <li><a onclick="ln5ScrollTo('ln1PreSection')">Prepayment Impact Calculator</a></li>
+        <li><a onclick="ln5ScrollTo('ln4CostSection')">Total Cost of Loan Calculator</a></li>
+        <li><a onclick="ln5ScrollTo('ln1CsSection')">Credit Score Impact Simulator</a></li>
+      </ul>
+    </div>
+    <div class="ln5-footer-col">
+      <h5>Compare &amp; Decide</h5>
+      <ul class="ln5-footer-links">
+        <li><a onclick="ln5ScrollTo('ln2CmpSection')">Loan Type Comparison</a></li>
+        <li><a onclick="ln5ScrollTo('ln4QuizSection')">Which Loan Should You Take?</a></li>
+        <li><a onclick="ln5ScrollTo('ln2DocsSection')">Documents Checklist</a></li>
+      </ul>
+    </div>
+    <div class="ln5-footer-col">
+      <h5>Learn &amp; Get Help</h5>
+      <ul class="ln5-footer-links">
+        <li><a onclick="ln5ScrollTo('ln4PostsSection')">Loan Guides &amp; Posts</a></li>
+        <li><a onclick="ln5ScrollTo('ln4AiSection')">Ask Alpha AI</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ln5-footer-security">
+    <span class="ln5-footer-sec-badge">🔒 256-bit SSL</span>
+    <span class="ln5-footer-sec-badge">💾 Checklist data stays local</span>
+    <span class="ln5-footer-sec-badge">🧮 Standard EMI amortization math</span>
+    <span class="ln5-footer-sec-badge">📋 Reference rates — verify with your bank</span>
+  </div>
+
+  <div class="ln5-footer-disclaimer"><b>Disclaimer.</b> Loan figures, EMI calculations, eligibility estimates, and interest rate comparisons on this page are for educational purposes only and are not an offer or guarantee of credit from any bank. Actual rates, fees, and eligibility depend on the lender's current policy, your credit profile, and documentation. Global Finance is not a bank, NBFC, or licensed lending intermediary.</div>
+
+  <div class="ln5-footer-btm">
+    <div>© 2026 Global Finance Inc. Loans &amp; Credit</div>
+    <div>Powered by Alpha AI · standard financial formulas</div>
+  </div>
+</div>
+<script>
+function ln5ScrollTo(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
