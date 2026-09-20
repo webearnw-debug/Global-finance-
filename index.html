@@ -9323,5 +9323,665 @@ function ln5ScrollTo(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+  <!-- ================= EARNING PAGE: PASSIVE INCOME IDEAS DIRECTORY ================= -->
+<style>
+.et1-dir{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,230,118,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et1-dir-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et1-dir-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et1-dir-badge{font-size:10px;font-weight:800;color:#00e676;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:4px 10px;border-radius:20px}
+.et1-dir-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.et1-dir-tab{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:7px 14px;border-radius:20px;font-size:11.5px;font-weight:700;cursor:pointer}
+.et1-dir-tab.active{border-color:#00e676;color:#00e676;background:rgba(0,230,118,.08)}
+.et1-dir-grid{display:flex;flex-direction:column;gap:10px}
+.et1-dir-card{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;transition:border-color .2s ease}
+.et1-dir-card:hover{border-color:#00e676}
+.et1-dir-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.et1-dir-card-name{font-size:14px;font-weight:700;color:#fff}
+.et1-dir-card-desc{font-size:11.5px;color:#8891a1;line-height:1.55;margin-bottom:10px}
+.et1-dir-meta-row{display:flex;gap:16px;flex-wrap:wrap}
+.et1-dir-meta{display:flex;flex-direction:column;gap:2px}
+.et1-dir-meta .l{font-size:9px;color:#8891a1;text-transform:uppercase;letter-spacing:.4px}
+.et1-dir-meta .v{font-size:11.5px;font-weight:700;color:#00e676;font-family:'JetBrains Mono',monospace}
+.et1-dir-diff{font-size:9px;font-weight:800;padding:3px 9px;border-radius:20px;flex-shrink:0}
+.et1-dir-diff.easy{background:rgba(0,230,118,.12);color:#00e676}
+.et1-dir-diff.medium{background:rgba(255,159,67,.12);color:#ff9f43}
+.et1-dir-diff.hard{background:rgba(255,82,82,.12);color:#ff5252}
+</style>
+<div class="et1-dir" id="et1DirSection" data-mount="earning">
+  <div class="et1-dir-hdr"><div class="et1-dir-title">Passive Income Ideas Directory</div><div class="et1-dir-badge">CURATED LIST</div></div>
+  <div class="et1-dir-tabs">
+    <button class="et1-dir-tab active" onclick="et1DirFilter('all',this)">All</button>
+    <button class="et1-dir-tab" onclick="et1DirFilter('invest',this)">Investing</button>
+    <button class="et1-dir-tab" onclick="et1DirFilter('content',this)">Content</button>
+    <button class="et1-dir-tab" onclick="et1DirFilter('freelance',this)">Freelance/Skills</button>
+    <button class="et1-dir-tab" onclick="et1DirFilter('digital',this)">Digital Products</button>
+    <button class="et1-dir-tab" onclick="et1DirFilter('realestate',this)">Real Estate</button>
+  </div>
+  <div class="et1-dir-grid" id="et1DirGrid"></div>
+</div>
+<script>
+(function(){
+  var et1DirData = [
+    { name:'Dividend Stock Investing', cat:'invest', desc:'Buy shares of companies that regularly pay dividends — earn quarterly/annual payouts without selling.', start:'₹5,000+', time:'Low (research once, hold long)', diff:'easy' },
+    { name:'REITs (Real Estate Investment Trusts)', cat:'invest', desc:'Invest in commercial real estate through the stock market without buying physical property.', start:'₹300+ (per unit)', time:'Very Low', diff:'easy' },
+    { name:'Peer-to-Peer Lending', cat:'invest', desc:'Lend money to individuals/businesses via P2P platforms and earn interest — higher risk than FDs.', start:'₹1,000+', time:'Low', diff:'medium' },
+    { name:'YouTube Channel (Evergreen Content)', cat:'content', desc:'Create tutorials, reviews, or explainer videos on topics with lasting search demand — earn via ads + sponsorships.', start:'₹0 – ₹20,000 (equipment)', time:'High upfront, low after growth', diff:'medium' },
+    { name:'Blog with SEO Content', cat:'content', desc:'Write in-depth articles targeting search traffic, monetize via ads, affiliate links, or sponsored posts.', start:'₹1,000 – ₹5,000 (hosting/domain)', time:'High upfront, low after ranking', diff:'medium' },
+    { name:'Stock Photography/Video', cat:'content', desc:'Upload photos/videos to stock platforms and earn royalties every time someone licenses your work.', start:'₹0 (if you have a camera/phone)', time:'Medium upfront', diff:'easy' },
+    { name:'Freelance Skill Selling', cat:'freelance', desc:'Offer writing, design, coding, or marketing services on freelance platforms — trade time for money initially, can scale into an agency.', start:'₹0', time:'Ongoing (active income)', diff:'easy' },
+    { name:'Online Course Creation', cat:'digital', desc:'Package your expertise into a video course, sell it repeatedly on a course platform or your own site.', start:'₹0 – ₹10,000 (recording gear)', time:'High upfront, then passive', diff:'hard' },
+    { name:'E-book Publishing', cat:'digital', desc:'Write and self-publish an e-book on a platform — earn royalties on every sale with no reprinting cost.', start:'₹0', time:'High upfront, then passive', diff:'medium' },
+    { name:'Print-on-Demand / Digital Templates', cat:'digital', desc:'Design templates, printables, or merch designs that get produced/sold only when someone buys — no inventory.', start:'₹0 – ₹2,000', time:'Medium upfront', diff:'medium' },
+    { name:'Rental Property', cat:'realestate', desc:'Buy a property and earn monthly rent — the classic passive income route, but high capital requirement.', start:'₹10,00,000+', time:'Low (after setup, with a manager)', diff:'hard' },
+    { name:'Fractional Real Estate Investing', cat:'realestate', desc:'Invest a smaller amount in a share of a commercial property via fractional ownership platforms, earn proportional rent.', start:'₹25,000+', time:'Very Low', diff:'medium' }
+  ];
+
+  function et1DirEscape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  window.et1DirFilter = function(cat, el){
+    document.querySelectorAll('#et1DirSection .et1-dir-tab').forEach(function(b){b.classList.remove('active');});
+    el.classList.add('active');
+    et1DirRender(cat);
+  };
+
+  function et1DirRender(filter){
+    var wrap = document.getElementById('et1DirGrid');
+    var list = filter==='all' ? et1DirData : et1DirData.filter(function(d){return d.cat===filter;});
+    wrap.innerHTML = list.map(function(item){
+      return '<div class="et1-dir-card"><div class="et1-dir-card-top"><div class="et1-dir-card-name">'+et1DirEscape(item.name)+'</div><span class="et1-dir-diff '+item.diff+'">'+item.diff.toUpperCase()+'</span></div><div class="et1-dir-card-desc">'+et1DirEscape(item.desc)+'</div><div class="et1-dir-meta-row"><div class="et1-dir-meta"><span class="l">Starting Capital</span><span class="v">'+item.start+'</span></div><div class="et1-dir-meta"><span class="l">Time Commitment</span><span class="v" style="color:#38bdf8;">'+item.time+'</span></div></div></div>';
+    }).join('');
+  }
+  document.addEventListener('DOMContentLoaded', function(){ et1DirRender('all'); });
+  et1DirRender('all');
+})();
+</script>
+
+<!-- ================= EARNING PAGE: FREELANCE RATE CALCULATOR ================= -->
+<style>
+.et1-rate{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(56,189,248,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et1-rate-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et1-rate-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et1-rate-badge{font-size:10px;font-weight:800;color:#38bdf8;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);padding:4px 10px;border-radius:20px}
+.et1-rate-mode-row{display:flex;gap:8px;margin-bottom:16px}
+.et1-rate-mode-btn{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:10px;border-radius:10px;font-size:11.5px;font-weight:700;cursor:pointer;text-align:center}
+.et1-rate-mode-btn.active{border-color:#38bdf8;color:#38bdf8;background:rgba(56,189,248,.08)}
+.et1-rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.et1-rate-grid{grid-template-columns:1fr}}
+.et1-rate-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.et1-rate-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.et1-rate-field-top span{color:#38bdf8;font-weight:700}
+.et1-rate-field input[type=range]{width:100%;accent-color:#38bdf8;cursor:pointer}
+.et1-rate-result{background:linear-gradient(135deg,rgba(56,189,248,.1),rgba(214,178,122,.06));border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:20px;text-align:center}
+.et1-rate-result .l{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.et1-rate-result .big{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800;color:#38bdf8;margin:8px 0}
+.et1-rate-sub-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.et1-rate-sub-stat{background:rgba(255,255,255,.03);border-radius:10px;padding:10px;font-size:11.5px}
+.et1-rate-sub-stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:15px;color:#fff;margin-top:3px}
+</style>
+<div class="et1-rate" id="et1RateSection" data-mount="earning">
+  <div class="et1-rate-hdr"><div class="et1-rate-title">Freelance Rate Calculator</div><div class="et1-rate-badge">REVERSE CALCULATE</div></div>
+  <div class="et1-rate-mode-row">
+    <button class="et1-rate-mode-btn active" id="et1RateModeGoal" onclick="et1RateSetMode('goal')">I have an income goal</button>
+    <button class="et1-rate-mode-btn" id="et1RateModeRate" onclick="et1RateSetMode('rate')">I have a rate</button>
+  </div>
+
+  <div id="et1RateGoalMode">
+    <div class="et1-rate-grid">
+      <div class="et1-rate-field"><div class="et1-rate-field-top"><span>Monthly Income Goal</span><span id="et1RateGoalV">₹80,000</span></div><input type="range" id="et1RateGoal" min="5000" max="500000" step="1000" value="80000" oninput="et1RateCalc()"></div>
+      <div class="et1-rate-field"><div class="et1-rate-field-top"><span>Billable Hours per Week</span><span id="et1RateHoursV">20 hrs</span></div><input type="range" id="et1RateHours" min="2" max="60" step="1" value="20" oninput="et1RateCalc()"></div>
+    </div>
+  </div>
+  <div id="et1RateRateMode" style="display:none;">
+    <div class="et1-rate-grid">
+      <div class="et1-rate-field"><div class="et1-rate-field-top"><span>Your Hourly Rate</span><span id="et1RateHourlyV">₹1,000</span></div><input type="range" id="et1RateHourly" min="100" max="20000" step="50" value="1000" oninput="et1RateCalc()"></div>
+      <div class="et1-rate-field"><div class="et1-rate-field-top"><span>Billable Hours per Week</span><span id="et1RateHours2V">20 hrs</span></div><input type="range" id="et1RateHours2" min="2" max="60" step="1" value="20" oninput="et1RateCalc()"></div>
+    </div>
+  </div>
+
+  <div class="et1-rate-result">
+    <div class="l" id="et1RateResultLabel">Hourly Rate You Need to Charge</div>
+    <div class="big" id="et1RateBigResult">₹0/hr</div>
+    <div class="et1-rate-sub-stats">
+      <div class="et1-rate-sub-stat">Weekly Earnings<b id="et1RateWeekly">₹0</b></div>
+      <div class="et1-rate-sub-stat">Monthly Earnings<b id="et1RateMonthly">₹0</b></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  window.et1RateMode = 'goal';
+  window.et1RateSetMode = function(mode){
+    et1RateMode = mode;
+    document.getElementById('et1RateModeGoal').classList.toggle('active', mode==='goal');
+    document.getElementById('et1RateModeRate').classList.toggle('active', mode==='rate');
+    document.getElementById('et1RateGoalMode').style.display = mode==='goal' ? 'block' : 'none';
+    document.getElementById('et1RateRateMode').style.display = mode==='rate' ? 'block' : 'none';
+    et1RateCalc();
+  };
+
+  window.et1RateCalc = function(){
+    var weeksPerMonth = 4.33;
+    if (et1RateMode === 'goal') {
+      var goal = parseFloat(document.getElementById('et1RateGoal').value);
+      var hours = parseFloat(document.getElementById('et1RateHours').value);
+      document.getElementById('et1RateGoalV').textContent = '₹'+goal.toLocaleString('en-IN');
+      document.getElementById('et1RateHoursV').textContent = hours+' hrs';
+
+      var monthlyHours = hours * weeksPerMonth;
+      var hourlyNeeded = goal / monthlyHours;
+
+      document.getElementById('et1RateResultLabel').textContent = 'Hourly Rate You Need to Charge';
+      document.getElementById('et1RateBigResult').textContent = '₹'+Math.round(hourlyNeeded).toLocaleString('en-IN')+'/hr';
+      document.getElementById('et1RateWeekly').textContent = '₹'+Math.round(goal/weeksPerMonth).toLocaleString('en-IN');
+      document.getElementById('et1RateMonthly').textContent = '₹'+Math.round(goal).toLocaleString('en-IN');
+    } else {
+      var rate = parseFloat(document.getElementById('et1RateHourly').value);
+      var hours2 = parseFloat(document.getElementById('et1RateHours2').value);
+      document.getElementById('et1RateHourlyV').textContent = '₹'+rate.toLocaleString('en-IN');
+      document.getElementById('et1RateHours2V').textContent = hours2+' hrs';
+
+      var weekly = rate * hours2;
+      var monthly = weekly * weeksPerMonth;
+
+      document.getElementById('et1RateResultLabel').textContent = 'Your Estimated Monthly Earnings';
+      document.getElementById('et1RateBigResult').textContent = '₹'+Math.round(monthly).toLocaleString('en-IN');
+      document.getElementById('et1RateWeekly').textContent = '₹'+Math.round(weekly).toLocaleString('en-IN');
+      document.getElementById('et1RateMonthly').textContent = '₹'+Math.round(monthly).toLocaleString('en-IN');
+    }
+  };
+  document.addEventListener('DOMContentLoaded', et1RateCalc);
+  et1RateCalc();
+})();
+</script>
+
+<!-- ================= EARNING PAGE: SIDE HUSTLE INCOME TRACKER (LOCAL STORAGE) ================= -->
+<style>
+.et1-track{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,184,0,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et1-track-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et1-track-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et1-track-badge{font-size:10px;font-weight:800;color:#ffb800;background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);padding:4px 10px;border-radius:20px}
+.et1-track-summary{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;text-align:center;margin-bottom:16px}
+.et1-track-summary .l{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.et1-track-summary .v{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:#ffb800;margin:6px 0}
+.et1-track-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:16px}
+@media(max-width:700px){.et1-track-form{grid-template-columns:1fr 1fr}}
+.et1-track-form input,.et1-track-form select{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:9px 11px;border-radius:8px;font-size:12.5px;font-family:'JetBrains Mono',monospace;outline:none}
+.et1-track-addbtn{background:linear-gradient(135deg,#ffb800,#ff9500);color:#1a1200;font-weight:800;border:none;border-radius:8px;cursor:pointer;font-size:12.5px;padding:9px 14px}
+.et1-track-list{display:flex;flex-direction:column;gap:9px}
+.et1-track-row{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.et1-track-row-name{font-weight:700;color:#fff;font-size:13px}
+.et1-track-row-meta{font-size:10.5px;color:#8891a1;margin-top:2px}
+.et1-track-row-amt{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14px;color:#00e676}
+.et1-track-del{background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);color:#ff5c7a;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:10.5px;font-weight:700}
+.et1-track-empty{text-align:center;color:#8891a1;font-size:12.5px;padding:20px}
+.et1-track-bysource{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.et1-track-source-card{background:rgba(255,184,0,.06);border:1px solid rgba(255,184,0,.2);border-radius:10px;padding:10px;text-align:center}
+.et1-track-source-card .l{font-size:10px;color:#8891a1;}
+.et1-track-source-card .v{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:#ffb800;margin-top:3px}
+</style>
+<div class="et1-track" id="et1TrackSection" data-mount="earning">
+  <div class="et1-track-hdr"><div class="et1-track-title">Side Hustle Income Tracker</div><div class="et1-track-badge">SAVED IN YOUR BROWSER</div></div>
+  <div class="et1-track-summary"><div class="l">This Month's Total Earnings</div><div class="v" id="et1TrackTotal">₹0</div></div>
+  <div class="et1-track-form">
+    <select id="et1TrackSource"><option>Freelancing</option><option>YouTube/Content</option><option>Blog</option><option>Stock/Crypto Trading</option><option>Rental Income</option><option>Dividends</option><option>Other</option></select>
+    <input type="text" id="et1TrackDesc" placeholder="Description">
+    <input type="number" id="et1TrackAmt" placeholder="Amount (₹)">
+    <button class="et1-track-addbtn" onclick="et1TrackAdd()">+ Add</button>
+  </div>
+  <div class="et1-track-list" id="et1TrackList"></div>
+  <div class="et1-track-bysource" id="et1TrackBySource"></div>
+</div>
+<script>
+(function(){
+  var ET1_TRACK_KEY = 'nx_side_hustle_income_v1';
+
+  function et1TrackLoad(){ try { return JSON.parse(localStorage.getItem(ET1_TRACK_KEY)) || []; } catch(e) { return []; } }
+  function et1TrackSave(list){ try { localStorage.setItem(ET1_TRACK_KEY, JSON.stringify(list)); } catch(e) {} }
+  function et1TrackEscape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  window.et1TrackAdd = function(){
+    var source = document.getElementById('et1TrackSource').value;
+    var desc = document.getElementById('et1TrackDesc').value.trim();
+    var amt = parseFloat(document.getElementById('et1TrackAmt').value);
+    if (!amt || amt <= 0) { alert('Valid amount daalo.'); return; }
+
+    var list = et1TrackLoad();
+    list.unshift({ id: Date.now(), source: source, desc: desc || source, amt: amt, date: new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) });
+    et1TrackSave(list);
+    document.getElementById('et1TrackDesc').value = '';
+    document.getElementById('et1TrackAmt').value = '';
+    et1TrackRender();
+  };
+
+  window.et1TrackDelete = function(id){
+    var list = et1TrackLoad().filter(function(e){ return e.id !== id; });
+    et1TrackSave(list);
+    et1TrackRender();
+  };
+
+  function et1TrackRender(){
+    var list = et1TrackLoad();
+    var wrap = document.getElementById('et1TrackList');
+    if (!list.length) { wrap.innerHTML = '<div class="et1-track-empty">No income logged yet — add your first entry above.</div>'; }
+    else {
+      wrap.innerHTML = list.map(function(e){
+        return '<div class="et1-track-row"><div><div class="et1-track-row-name">'+et1TrackEscape(e.desc)+'</div><div class="et1-track-row-meta">'+et1TrackEscape(e.source)+' · '+e.date+'</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="et1-track-row-amt">+₹'+Math.round(e.amt).toLocaleString('en-IN')+'</span><button class="et1-track-del" onclick="et1TrackDelete('+e.id+')">✕</button></div></div>';
+      }).join('');
+    }
+
+    var total = list.reduce(function(s,e){ return s+e.amt; }, 0);
+    document.getElementById('et1TrackTotal').textContent = '₹'+Math.round(total).toLocaleString('en-IN');
+
+    var bySource = {};
+    list.forEach(function(e){ bySource[e.source] = (bySource[e.source]||0) + e.amt; });
+    var sourceHtml = Object.keys(bySource).map(function(src){
+      return '<div class="et1-track-source-card"><div class="l">'+et1TrackEscape(src)+'</div><div class="v">₹'+Math.round(bySource[src]).toLocaleString('en-IN')+'</div></div>';
+    }).join('');
+    document.getElementById('et1TrackBySource').innerHTML = sourceHtml;
+  }
+
+  document.addEventListener('DOMContentLoaded', et1TrackRender);
+  if (document.readyState !== 'loading') et1TrackRender();
+})();
+</script>
+
+<!-- ================= EARNING PAGE: WHICH SIDE HUSTLE SUITS YOU? QUIZ ================= -->
+<style>
+.et1-quiz{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,217,181,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et1-quiz-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.et1-quiz-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et1-quiz-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.et1-quiz-q{margin-bottom:18px}
+.et1-quiz-q-text{font-size:13px;font-weight:700;color:#fff;margin-bottom:10px}
+.et1-quiz-opts{display:flex;flex-direction:column;gap:7px}
+.et1-quiz-opt{background:#0d1119;border:1px solid rgba(255,255,255,.08);color:#c3c9d4;padding:11px 14px;border-radius:10px;font-size:12.5px;cursor:pointer;text-align:left;transition:all .2s ease}
+.et1-quiz-opt:hover{border-color:#00d9b5}
+.et1-quiz-opt.selected{border-color:#00d9b5;background:rgba(0,217,181,.08);color:#00d9b5;font-weight:700}
+.et1-quiz-result{display:none;background:linear-gradient(135deg,rgba(0,217,181,.1),rgba(214,178,122,.06));border:1px solid rgba(0,217,181,.3);border-radius:16px;padding:20px;text-align:center;margin-top:10px}
+.et1-quiz-result.show{display:block}
+.et1-quiz-result-label{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.et1-quiz-result-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#00d9b5;margin:8px 0}
+.et1-quiz-result-desc{font-size:12px;color:#c3c9d4;max-width:480px;margin:0 auto;line-height:1.6}
+.et1-quiz-retake{margin-top:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8891a1;padding:8px 16px;border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer}
+</style>
+<div class="et1-quiz" id="et1QuizSection" data-mount="earning">
+  <div class="et1-quiz-hdr"><div class="et1-quiz-title">Which Side Hustle Suits You?</div><div class="et1-quiz-badge">QUICK QUIZ</div></div>
+  <div id="et1QuizQuestions"></div>
+  <div class="et1-quiz-result" id="et1QuizResult">
+    <div class="et1-quiz-result-label">Recommended For You</div>
+    <div class="et1-quiz-result-name" id="et1QuizName">—</div>
+    <div class="et1-quiz-result-desc" id="et1QuizDesc"></div>
+    <button class="et1-quiz-retake" onclick="et1QuizRetake()">Retake Quiz</button>
+  </div>
+</div>
+<script>
+(function(){
+  var et1Questions = [
+    { q:'Aapke paas kitna free time hai weekly?', opts:[
+      {t:'Bahut kam (2-5 hours)', v:'low'},
+      {t:'Moderate (5-15 hours)', v:'med'},
+      {t:'Kaafi zyada (15+ hours)', v:'high'}
+    ]},
+    { q:'Aap kis mein sabse comfortable hain?', opts:[
+      {t:'Likhna/Content banana', v:'content'},
+      {t:'Koi technical skill (coding, design)', v:'skill'},
+      {t:'Numbers/analysis (finance, investing)', v:'analytical'},
+      {t:'Baat karna/log samjhana', v:'social'}
+    ]},
+    { q:'Aap kitna upfront invest kar sakte hain?', opts:[
+      {t:'₹0 — kuch nahi', v:'none'},
+      {t:'₹5,000 tak', v:'small'},
+      {t:'₹50,000+', v:'large'}
+    ]},
+    { q:'Aapko kya chahiye — turant paisa ya long-term growth?', opts:[
+      {t:'Turant paisa (is month se)', v:'immediate'},
+      {t:'Long-term, dheere dheere grow ho', v:'longterm'}
+    ]}
+  ];
+  var et1Answers = {};
+
+  function et1RenderQuiz(){
+    var wrap = document.getElementById('et1QuizQuestions');
+    var html = '';
+    et1Questions.forEach(function(q, qi){
+      html += '<div class="et1-quiz-q"><div class="et1-quiz-q-text">'+(qi+1)+'. '+q.q+'</div><div class="et1-quiz-opts">';
+      q.opts.forEach(function(opt, oi){
+        html += '<button class="et1-quiz-opt" id="et1opt-'+qi+'-'+oi+'" onclick="et1SelectOpt('+qi+','+oi+',\''+opt.v+'\')">'+opt.t+'</button>';
+      });
+      html += '</div></div>';
+    });
+    wrap.innerHTML = html;
+  }
+
+  window.et1SelectOpt = function(qi, oi, val){
+    document.querySelectorAll('[id^="et1opt-'+qi+'-"]').forEach(function(b){ b.classList.remove('selected'); });
+    document.getElementById('et1opt-'+qi+'-'+oi).classList.add('selected');
+    et1Answers[qi] = val;
+    if (Object.keys(et1Answers).length === et1Questions.length) et1ShowResult();
+  };
+
+  function et1ShowResult(){
+    var time = et1Answers[0], skill = et1Answers[1], budget = et1Answers[2], speed = et1Answers[3];
+    var name, desc;
+
+    if (speed === 'immediate' && skill === 'skill') {
+      name = 'Freelance Skill Selling';
+      desc = 'Aapke paas technical skills hain aur turant paisa chahiye — Freelance platforms par apni services list karo, use hamara Freelance Rate Calculator to price yourself correctly.';
+    } else if (speed === 'immediate' && skill === 'social') {
+      name = 'Freelance Consulting/Coaching';
+      desc = 'Aap log samjhane mein achhe hain aur turant income chahiye — 1-on-1 consulting ya coaching services shuru karo apni expertise ke area mein.';
+    } else if (skill === 'content' && time !== 'low') {
+      name = 'YouTube/Blog Content';
+      desc = 'Aapke paas content banane ka talent aur waqt dono hai — YouTube channel ya blog long-term mein compounding returns deta hai, but patience chahiye.';
+    } else if (skill === 'analytical' && budget === 'large') {
+      name = 'Dividend Investing / REITs';
+      desc = 'Numbers mein comfortable ho aur invest karne layak capital hai — passive investing route (dividends, REITs) aapke liye best fit hai.';
+    } else if (budget === 'none' && time === 'low') {
+      name = 'Micro-Freelancing (Small Gigs)';
+      desc = 'Kam time aur zero budget — chhote-chhote freelance gigs (proofreading, data entry, simple design tasks) shuru point ho sakte hain.';
+    } else if (skill === 'content' && budget === 'small') {
+      name = 'Digital Products (E-books/Templates)';
+      desc = 'Content banana aata hai aur thoda invest kar sakte ho — e-book ya digital templates banao jo baar-baar bik saken bina extra effort ke.';
+    } else {
+      name = 'Freelance Skill Selling';
+      desc = 'Sabse flexible starting point — apni existing skills ko freelance platform par offer karo, aur waha se dheere-dheere explore karo ki kya aur suit karta hai.';
+    }
+
+    document.getElementById('et1QuizName').textContent = name;
+    document.getElementById('et1QuizDesc').textContent = desc;
+    document.getElementById('et1QuizResult').classList.add('show');
+    document.getElementById('et1QuizResult').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  window.et1QuizRetake = function(){
+    et1Answers = {};
+    document.getElementById('et1QuizResult').classList.remove('show');
+    document.querySelectorAll('.et1-quiz-opt').forEach(function(b){ b.classList.remove('selected'); });
+    document.getElementById('et1QuizSection').scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  document.addEventListener('DOMContentLoaded', et1RenderQuiz);
+  if (document.readyState !== 'loading') et1RenderQuiz();
+})();
+</script>
+
+<!-- ================= EARNING PAGE: FREELANCE VS FULL-TIME JOB COMPARATOR ================= -->
+<style>
+.et1-ff{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,159,67,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et1-ff-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:14px}
+.et1-ff-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et1-ff-badge{font-size:10px;font-weight:800;color:#ff9f43;background:rgba(255,159,67,.1);border:1px solid rgba(255,159,67,.3);padding:4px 10px;border-radius:20px}
+.et1-ff-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.et1-ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:680px){.et1-ff-grid{grid-template-columns:1fr}}
+.et1-ff-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.et1-ff-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.et1-ff-field-top span{color:#ff9f43;font-weight:700}
+.et1-ff-field input[type=range]{width:100%;accent-color:#ff9f43;cursor:pointer}
+.et1-ff-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.et1-ff-compare{grid-template-columns:1fr}}
+.et1-ff-card{border-radius:14px;padding:16px;}
+.et1-ff-card.job{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.25);}
+.et1-ff-card.freelance{background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.25);}
+.et1-ff-card-title{font-size:13px;font-weight:800;margin-bottom:10px;}
+.et1-ff-card.job .et1-ff-card-title{color:#38bdf8;}
+.et1-ff-card.freelance .et1-ff-card-title{color:#00e676;}
+.et1-ff-card-row{display:flex;justify-content:space-between;padding:7px 0;font-size:11.5px;border-bottom:1px dashed rgba(255,255,255,.08);}
+.et1-ff-card-row:last-child{border-bottom:none;}
+.et1-ff-card-row b{font-family:'JetBrains Mono',monospace;color:#fff;}
+</style>
+<div class="et1-ff" id="et1FfSection" data-mount="earning">
+  <div class="et1-ff-hdr"><div class="et1-ff-title">Freelance vs Full-Time Job</div><div class="et1-ff-badge">TAKE-HOME COMPARISON</div></div>
+  <div class="et1-ff-note">A rough side-by-side of take-home pay, accounting for typical freelance overheads (no paid leave, self-funded tools, inconsistent months) versus a full-time salary's fixed benefits. Actual numbers depend heavily on your specific situation and tax planning — use this for a directional comparison only.</div>
+  <div class="et1-ff-grid">
+    <div class="et1-ff-field"><div class="et1-ff-field-top"><span>Full-Time Monthly CTC</span><span id="et1FfJobV">₹60,000</span></div><input type="range" id="et1FfJob" min="15000" max="500000" step="1000" value="60000" oninput="et1FfCalc()"></div>
+    <div class="et1-ff-field"><div class="et1-ff-field-top"><span>Freelance Monthly Billing (avg)</span><span id="et1FfFreeV">₹70,000</span></div><input type="range" id="et1FfFree" min="15000" max="500000" step="1000" value="70000" oninput="et1FfCalc()"></div>
+    <div class="et1-ff-field"><div class="et1-ff-field-top"><span>Freelance Income Variability</span><span id="et1FfVarV">20%</span></div><input type="range" id="et1FfVar" min="0" max="60" step="5" value="20" oninput="et1FfCalc()"></div>
+    <div class="et1-ff-field"><div class="et1-ff-field-top"><span>Freelance Tools/Overhead Cost</span><span id="et1FfOvV">₹3,000</span></div><input type="range" id="et1FfOv" min="0" max="30000" step="500" value="3000" oninput="et1FfCalc()"></div>
+  </div>
+  <div class="et1-ff-compare">
+    <div class="et1-ff-card job">
+      <div class="et1-ff-card-title">💼 Full-Time Job</div>
+      <div class="et1-ff-card-row"><span>Monthly CTC</span><b id="et1FfJobOut">₹0</b></div>
+      <div class="et1-ff-card-row"><span>Paid Leave (typical ~15 days/yr)</span><b style="color:#00e676;">Included</b></div>
+      <div class="et1-ff-card-row"><span>Health Insurance</span><b style="color:#00e676;">Usually Included</b></div>
+      <div class="et1-ff-card-row"><span>Income Stability</span><b style="color:#00e676;">Fixed monthly</b></div>
+    </div>
+    <div class="et1-ff-card freelance">
+      <div class="et1-ff-card-title">🧑‍💻 Freelance</div>
+      <div class="et1-ff-card-row"><span>Avg Monthly (after overhead)</span><b id="et1FfFreeOut">₹0</b></div>
+      <div class="et1-ff-card-row"><span>Good Month vs Bad Month Range</span><b id="et1FfRange">₹0 – ₹0</b></div>
+      <div class="et1-ff-card-row"><span>Paid Leave</span><b style="color:#ff5c7a;">Self-funded / none</b></div>
+      <div class="et1-ff-card-row"><span>Health Insurance</span><b style="color:#ff5c7a;">Self-funded</b></div>
+    </div>
+  </div>
+</div>
+<script>
+function et1FfCalc(){
+  var job = parseFloat(document.getElementById('et1FfJob').value);
+  var free = parseFloat(document.getElementById('et1FfFree').value);
+  var variability = parseFloat(document.getElementById('et1FfVar').value)/100;
+  var overhead = parseFloat(document.getElementById('et1FfOv').value);
+
+  document.getElementById('et1FfJobV').textContent = '₹'+job.toLocaleString('en-IN');
+  document.getElementById('et1FfFreeV').textContent = '₹'+free.toLocaleString('en-IN');
+  document.getElementById('et1FfVarV').textContent = (variability*100).toFixed(0)+'%';
+  document.getElementById('et1FfOvV').textContent = '₹'+overhead.toLocaleString('en-IN');
+
+  var netFreelance = free - overhead;
+  var lowMonth = netFreelance * (1 - variability);
+  var highMonth = netFreelance * (1 + variability);
+
+  document.getElementById('et1FfJobOut').textContent = '₹'+Math.round(job).toLocaleString('en-IN');
+  document.getElementById('et1FfFreeOut').textContent = '₹'+Math.round(netFreelance).toLocaleString('en-IN');
+  document.getElementById('et1FfRange').textContent = '₹'+Math.round(lowMonth).toLocaleString('en-IN')+' – ₹'+Math.round(highMonth).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', et1FfCalc);
+et1FfCalc();
+</script>
+
+<!-- ================= EARNING PAGE: ARTICLES/GUIDES (add your own posts in et1Posts below) ================= -->
+<style>
+#et1PostsSection{max-width:920px;margin:26px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+#et1PostsSection .et1-hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e1e1e;padding-bottom:14px;margin-bottom:22px}
+#et1PostsSection .et1-hdr h3{color:#fff;font-size:20px;font-weight:700;margin:0;letter-spacing:.3px;display:flex;align-items:center;gap:10px;font-family:'Plus Jakarta Sans',sans-serif}
+#et1PostsSection .et1-hdr h3 span{color:#00e676}
+#et1PostsSection .et1-hdr small{color:#5f5f5f;font-size:11px;font-weight:600;letter-spacing:1px}
+#et1PostsBox{background:linear-gradient(180deg,#0b0b0b 0%,#070707 100%);border:1px solid #1a1a1a;border-radius:16px;padding:8px;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+#et1PostsContainer{display:flex;flex-direction:column;gap:10px;padding:8px}
+.et1-post-card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;transition:border-color .2s ease}
+.et1-post-card:hover{border-color:#2a2a2a}
+.et1-post-card .cat{color:#00e676;font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}
+.et1-post-card h4{color:#f1f1f1;margin:6px 0 4px;font-size:14.5px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif}
+.et1-post-card p{color:#787878;font-size:11.5px;margin:0;line-height:1.4}
+.et1-read-link{background:#141414;border:1px solid #00e676;color:#00e676;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;transition:all .2s ease}
+.et1-read-link:hover{background:#00e676;color:#0a0a0a}
+#et1EmptyState{text-align:center;padding:46px 20px;color:#4a4a4a}
+#et1EmptyState .ic{font-size:26px;margin-bottom:10px;color:#333}
+#et1EmptyState .t{font-size:13.5px;font-weight:700;color:#666}
+#et1EmptyState .s{font-size:11.5px;margin-top:4px;color:#444}
+#et1LoadMoreBtn{background:linear-gradient(180deg,#151515 0%,#0d0d0d 100%);border:1px solid #00e676;color:#00e676;padding:12px 32px;border-radius:30px;font-weight:700;font-size:12.5px;letter-spacing:1px;cursor:pointer;transition:all .3s ease}
+#et1LoadMoreBtn:disabled{cursor:default}
+</style>
+<div id="et1PostsSection" data-mount="earning">
+  <div class="et1-hdr"><h3><span>◈</span> Earning Guides &amp; Posts</h3><small>ARCHIVE</small></div>
+  <div id="et1PostsBox">
+    <div id="et1PostsContainer"></div>
+    <div id="et1EmptyState" style="display:none;">
+      <div class="ic">◈</div><div class="t">Coming soon</div><div class="s">Earning guides will appear here once added</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:26px;" id="et1LoadMoreWrap"><button onclick="et1LoadMorePosts()" id="et1LoadMoreBtn">LOAD MORE GUIDES ✦</button></div>
+</div>
+<script>
+  /* Apne earning guides yahan add karo — { category, title, desc, link } */
+var et1Posts = [
+  // { category: 'Freelancing', title: 'Your title', desc: 'Short description', link: 'https://...' },
+];
+var ET1_INITIAL_COUNT = 15;
+
+function et1Escape(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function et1BuildCard(post, hidden){
+  var url = (post.link || '').trim();
+  var linkHtml = url
+    ? '<a href="' + et1Escape(url) + '" class="et1-read-link" target="_blank" rel="nofollow noopener">Read →</a>'
+    : '<span class="et1-read-link" style="pointer-events:none;opacity:.4;border-color:#3a3a3a;color:#666;">Coming soon</span>';
+  return '<div class="et1-post-card" style="display:' + (hidden ? 'none' : 'flex') + ';">' +
+    '<div><span class="cat">' + (et1Escape(post.category) || 'CATEGORY') + '</span>' +
+    '<h4>' + (et1Escape(post.title) || 'Post title') + '</h4>' +
+    '<p>' + et1Escape(post.desc) + '</p></div>' + linkHtml + '</div>';
+}
+
+function et1RenderPosts(){
+  var container = document.getElementById('et1PostsContainer');
+  var empty = document.getElementById('et1EmptyState');
+  var loadMoreWrap = document.getElementById('et1LoadMoreWrap');
+  if (!container) return;
+  if (!et1Posts.length) { container.innerHTML = ''; empty.style.display = 'block'; loadMoreWrap.style.display = 'none'; return; }
+  empty.style.display = 'none';
+  var html = '';
+  et1Posts.forEach(function(p, i){ html += et1BuildCard(p, i >= ET1_INITIAL_COUNT); });
+  container.innerHTML = html;
+  loadMoreWrap.style.display = et1Posts.length > ET1_INITIAL_COUNT ? 'block' : 'none';
+}
+
+function et1LoadMorePosts() {
+  var cards = document.querySelectorAll('#et1PostsContainer .et1-post-card');
+  for (var i = ET1_INITIAL_COUNT; i < cards.length; i++) cards[i].style.display = 'flex';
+  var btn = document.getElementById('et1LoadMoreBtn');
+  btn.innerText = 'ALL GUIDES LOADED ✓';
+  btn.style.borderColor = '#00ff88';
+  btn.style.color = '#00ff88';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+}
+
+document.addEventListener('DOMContentLoaded', function(){ et1RenderPosts(); });
+et1RenderPosts();
+</script>
+
+<!-- ================= EARNING PAGE: EMBEDDED ALPHA AI (OMNI MODE) CHAT BOX ================= -->
+<style>
+.et1-ai{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(192,132,252,.2);border-radius:22px;padding:0;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8);overflow:hidden}
+.et1-ai-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(135deg,rgba(192,132,252,.06),rgba(0,230,118,.04))}
+.et1-ai-title-wrap{display:flex;align-items:center;gap:10px}
+.et1-ai-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#ff4d4d,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:16px}
+.et1-ai-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff}
+.et1-ai-sub{font-size:10.5px;color:#8891a1;margin-top:1px}
+.et1-ai-badge{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:#00e676;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:5px 11px;border-radius:20px}
+.et1-ai-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:et1AiPulse 1.5s infinite}
+@keyframes et1AiPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.et1-ai-chat-area{height:400px;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;background:#070a10}
+.et1-ai-msg-row{display:flex;gap:9px;max-width:88%;animation:et1AiFadeIn .25s ease}
+@keyframes et1AiFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.et1-ai-msg-row.user{align-self:flex-end;flex-direction:row-reverse}
+.et1-ai-avatar{width:28px;height:28px;border-radius:8px;background:#111827;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.et1-ai-msg-row.user .et1-ai-avatar{background:linear-gradient(135deg,#3b82f6,#1d4ed8);border:none}
+.et1-ai-bubble{background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:11px 14px;font-size:13px;line-height:1.55;word-wrap:break-word}
+.et1-ai-msg-row.user .et1-ai-bubble{background:#1e3a8a;border-color:#3b82f6;color:#fff}
+.et1-ai-bubble p{margin:0 0 6px}
+.et1-ai-bubble p:last-child{margin-bottom:0}
+.et1-ai-typing{display:inline-flex;gap:4px;align-items:center}
+.et1-ai-typing span{width:5px;height:5px;border-radius:50%;background:#c084fc;animation:et1AiTypingBlink 1.2s infinite ease-in-out}
+.et1-ai-typing span:nth-child(2){animation-delay:.2s}
+.et1-ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes et1AiTypingBlink{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1.15)}}
+.et1-ai-suggestions{display:flex;gap:7px;flex-wrap:wrap;padding:0 20px 14px;background:#070a10}
+.et1-ai-chip{background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.25);color:#c084fc;font-size:11px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all .2s ease}
+.et1-ai-chip:hover{background:rgba(192,132,252,.15);border-color:#c084fc}
+.et1-ai-input-wrap{padding:14px 18px;background:#0b0f19;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:8px;align-items:flex-end}
+.et1-ai-input-wrap textarea{flex:1;background:#070a10;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#f1f5f9;font-size:13px;padding:10px 13px;outline:none;resize:none;min-height:40px;max-height:100px;font-family:inherit}
+.et1-ai-input-wrap textarea:focus{border-color:#c084fc}
+.et1-ai-send-btn{background:linear-gradient(135deg,#c084fc,#00e676);border:none;width:40px;height:40px;border-radius:10px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.et1-ai-send-btn:disabled{opacity:.5;cursor:not-allowed}
+.et1-ai-footer-note{font-size:9.5px;color:#5e626a;text-align:center;padding:8px 18px 14px;background:#0b0f19}
+</style>
+<div class="et1-ai" id="et1AiSection" data-mount="earning">
+  <div class="et1-ai-hdr">
+    <div class="et1-ai-title-wrap">
+      <div class="et1-ai-icon">🧠</div>
+      <div><div class="et1-ai-title">Alpha AI — Career &amp; Earning Advice</div><div class="et1-ai-sub">Same Omni assistant as your Alpha AI page</div></div>
+    </div>
+    <div class="et1-ai-badge"><span class="et1-ai-dot"></span>ONLINE</div>
+  </div>
+  <div class="et1-ai-chat-area" id="et1AiChatArea">
+    <div class="et1-ai-msg-row"><div class="et1-ai-avatar">🧠</div><div class="et1-ai-bubble">नमस्ते! Passive income, freelancing, ya kisi side-hustle idea के बारे में सवाल है? पूछो — मैं यही Omni Super AI हूँ जो पूरी site पर चलता है।</div></div>
+  </div>
+  <div class="et1-ai-suggestions">
+    <button class="et1-ai-chip" onclick="et1AskSuggestion('Freelancing shuru karne ke liye pehla step kya hai?')">Freelancing कैसे शुरू करें?</button>
+    <button class="et1-ai-chip" onclick="et1AskSuggestion('YouTube channel se paise kamane mein kitna time lagta hai?')">YouTube से कमाई?</button>
+    <button class="et1-ai-chip" onclick="et1AskSuggestion('Passive income aur active income mein kya farak hai?')">Passive vs Active Income?</button>
+  </div>
+  <div class="et1-ai-input-wrap">
+    <textarea id="et1AiInput" rows="1" placeholder="Earning ke baare mein kuch bhi pucho…" onkeydown="et1AiHandleKey(event)" oninput="et1AiAutoGrow(this)"></textarea>
+    <button class="et1-ai-send-btn" id="et1AiSendBtn" onclick="et1AiSend()">➤</button>
+  </div>
+  <div class="et1-ai-footer-note">Same Alpha AI engine, same conversation memory as the OMNI mode on the Alpha AI page</div>
+</div>
+<script>
+(function(){
+  function et1Escape2(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function et1AppendMsg(text, sender){
+    var area = document.getElementById('et1AiChatArea');
+    var row = document.createElement('div');
+    row.className = 'et1-ai-msg-row ' + sender;
+    var icon = sender === 'user' ? '👤' : '🧠';
+    row.innerHTML = '<div class="et1-ai-avatar">'+icon+'</div><div class="et1-ai-bubble">'+(sender==='user' ? et1Escape2(text) : (window.marked ? marked.parse(text) : et1Escape2(text)))+'</div>';
+    area.appendChild(row);
+    area.scrollTop = area.scrollHeight;
+    return row;
+  }
+
+  window.et1AiAutoGrow = function(el){
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+  };
+
+  window.et1AiHandleKey = function(e){
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); et1AiSend(); }
+  };
+
+  window.et1AskSuggestion = function(text){
+    document.getElementById('et1AiInput').value = text;
+    et1AiSend();
+  };
+
+  window.et1AiSend = async function(){
+    var input = document.getElementById('et1AiInput');
+    var text = input.value.trim();
+    if (!text) return;
+    var sendBtn = document.getElementById('et1AiSendBtn');
+
+    if (typeof AppController === 'undefined' || typeof AIEngine === 'undefined') {
+      et1AppendMsg(text, 'user');
+      et1AppendMsg('**[Setup needed]** Ye box seedha Alpha AI ke OMNI mode se connected hai, lekin us mode ka engine abhi page par load nahi hua. Ek baar Alpha AI page khol lo taaki engine initialize ho jaaye, fir yahan try karo.', 'ai');
+      return;
+    }
+
+    AppController.currentMode = 'OMNI';
+
+    et1AppendMsg(text, 'user');
+    input.value = ''; input.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    var typingRow = et1AppendMsg('<span class="et1-ai-typing"><span></span><span></span><span></span></span>', 'ai');
+    var bubble = typingRow.querySelector('.et1-ai-bubble');
+
+    var omniSystemPrompt = 'ROLE: Universal General Knowledge Assistant. Adapt tone between Hindi/Hinglish/English. Always give accurate, well-reasoned, structured answers. CREATOR RULE: "मुझे केशव ने बनाया है।".';
+
+    try {
+      var reply = await AIEngine.processChat(text, omniSystemPrompt, null, undefined);
+      bubble.innerHTML = window.marked ? marked.parse(reply) : et1Escape2(reply);
+    } catch (err) {
+      bubble.innerHTML = '**[Configuration needed]** Alpha AI abhi connect nahi ho paya.<br><br>**Error:** `' + (err && err.message ? err.message : err) + '`';
+    } finally {
+      sendBtn.disabled = false;
+      document.getElementById('et1AiChatArea').scrollTop = document.getElementById('et1AiChatArea').scrollHeight;
+    }
+  };
+})();
+</script>
 </body>
 </html>
