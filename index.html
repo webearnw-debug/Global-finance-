@@ -10793,20 +10793,6 @@ function et2ScrollTo(id){
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
-<!-- ================= IN-PAGE PUSH BANNER AD (MONETAG) ================= -->
-<!-- Sits in its own contained slot — does not overlay content, does not redirect on random clicks -->
-<style>
-.mt-ad-slot{max-width:920px;margin:26px auto;padding:0 16px;}
-.mt-ad-slot-label{font-size:9.5px;color:#5e626a;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:8px;}
-.mt-ad-slot-box{min-height:90px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;}
-</style>
-<div class="mt-ad-slot" id="mtAdSlotHome" data-mount="home">
-  <div class="mt-ad-slot-label">Advertisement</div>
-  <div class="mt-ad-slot-box" id="mtAdContainer1"></div>
-</div>
-<script>
-(function(s){s.dataset.zone='11847398',s.src='https://nap5k.com/tag.min.js'})([document.getElementById('mtAdContainer1')].filter(Boolean).pop().appendChild(document.createElement('script')))
-</script>
-  
+
 </body>
 </html>
