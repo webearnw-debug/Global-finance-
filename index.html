@@ -9983,5 +9983,348 @@ et1RenderPosts();
   };
 })();
 </script>
+<!-- ================= EARNING PAGE: SKILL RATE BENCHMARK TABLE ================= -->
+<style>
+.et2-rates{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,230,118,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et2-rates-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et2-rates-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et2-rates-badge{font-size:10px;font-weight:800;color:#00e676;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);padding:4px 10px;border-radius:20px}
+.et2-rates-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.et2-rates-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.et2-rates-search{flex:1;min-width:180px;background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:10px 14px;border-radius:10px;font-size:12.5px;outline:none}
+.et2-rates-search:focus{border-color:#00e676}
+.et2-rates-filter{background:#0d1119;border:1px solid rgba(255,255,255,.1);color:#f1f5f9;padding:10px 12px;border-radius:10px;font-size:12.5px;outline:none;cursor:pointer}
+.et2-rates-table{width:100%;border-collapse:collapse}
+.et2-rates-table th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:#8891a1;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.et2-rates-table td{padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12.5px}
+.et2-skill-name{font-weight:700;color:#fff}
+.et2-skill-cat{font-size:10px;color:#8891a1;margin-top:2px}
+.et2-rate-range{font-family:'JetBrains Mono',monospace;font-weight:700;color:#00e676}
+.et2-level-badge{font-size:9px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase}
+.et2-level-badge.beginner{background:rgba(56,189,248,.12);color:#38bdf8}
+.et2-level-badge.intermediate{background:rgba(255,184,0,.12);color:#ffb800}
+.et2-level-badge.expert{background:rgba(255,82,82,.12);color:#ff5252}
+.et2-empty-row{text-align:center;color:#8891a1;padding:24px;font-size:12px}
+</style>
+<div class="et2-rates" id="et2RatesSection" data-mount="earning">
+  <div class="et2-rates-hdr"><div class="et2-rates-title">Skill Rate Benchmark</div><div class="et2-rates-badge">India Reference Rates</div></div>
+  <div class="et2-rates-note">Typical freelance rate ranges commonly seen on Indian freelance platforms — not a live feed (no free API exists for freelancer pricing data). Actual rates vary by your experience, portfolio and niche; use this as a starting anchor, not a fixed price.</div>
+  <div class="et2-rates-controls">
+    <input type="text" class="et2-rates-search" id="et2Search" placeholder="Search a skill (e.g. video editing)…" oninput="et2Render()">
+    <select class="et2-rates-filter" id="et2CatFilter" onchange="et2Render()">
+      <option value="all">All Categories</option>
+      <option value="writing">Writing</option>
+      <option value="design">Design</option>
+      <option value="dev">Development</option>
+      <option value="video">Video/Audio</option>
+      <option value="marketing">Marketing</option>
+      <option value="teaching">Teaching</option>
+    </select>
+  </div>
+  <table class="et2-rates-table">
+    <thead><tr><th>Skill</th><th>Hourly Range</th><th>Level</th></tr></thead>
+    <tbody id="et2TableBody"></tbody>
+  </table>
+</div>
+<script>
+(function(){
+  var et2Skills = [
+    { name:'Content Writing', cat:'writing', range:'₹300 – ₹1,200/hr', level:'beginner' },
+    { name:'Technical/SEO Writing', cat:'writing', range:'₹800 – ₹2,500/hr', level:'intermediate' },
+    { name:'Copywriting (Sales/Ads)', cat:'writing', range:'₹1,000 – ₹4,000/hr', level:'expert' },
+    { name:'Graphic Design (Basic)', cat:'design', range:'₹400 – ₹1,500/hr', level:'beginner' },
+    { name:'UI/UX Design', cat:'design', range:'₹1,000 – ₹3,500/hr', level:'intermediate' },
+    { name:'Brand Identity/Logo Design', cat:'design', range:'₹1,500 – ₹5,000/hr', level:'expert' },
+    { name:'WordPress Development', cat:'dev', range:'₹500 – ₹2,000/hr', level:'beginner' },
+    { name:'Full-Stack Web Development', cat:'dev', range:'₹1,200 – ₹4,500/hr', level:'intermediate' },
+    { name:'Mobile App Development', cat:'dev', range:'₹1,500 – ₹6,000/hr', level:'expert' },
+    { name:'Video Editing (Basic)', cat:'video', range:'₹300 – ₹1,000/hr', level:'beginner' },
+    { name:'YouTube Video Editing', cat:'video', range:'₹500 – ₹2,000/hr', level:'intermediate' },
+    { name:'Motion Graphics/VFX', cat:'video', range:'₹1,200 – ₹4,000/hr', level:'expert' },
+    { name:'Voiceover Work', cat:'video', range:'₹500 – ₹2,500/hr', level:'intermediate' },
+    { name:'Social Media Management', cat:'marketing', range:'₹400 – ₹1,500/hr', level:'beginner' },
+    { name:'Performance Marketing (Ads)', cat:'marketing', range:'₹1,000 – ₹3,500/hr', level:'intermediate' },
+    { name:'SEO Consulting', cat:'marketing', range:'₹1,200 – ₹4,000/hr', level:'expert' },
+    { name:'Online Tutoring (School Level)', cat:'teaching', range:'₹300 – ₹1,000/hr', level:'beginner' },
+    { name:'Competitive Exam Coaching', cat:'teaching', range:'₹600 – ₹2,500/hr', level:'intermediate' },
+    { name:'Corporate Training/Workshops', cat:'teaching', range:'₹2,000 – ₹8,000/hr', level:'expert' }
+  ];
+
+  function et2Esc(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  window.et2Render = function(){
+    var q = document.getElementById('et2Search').value.trim().toLowerCase();
+    var cat = document.getElementById('et2CatFilter').value;
+    var filtered = et2Skills.filter(function(s){
+      var matchesQ = !q || s.name.toLowerCase().indexOf(q) !== -1;
+      var matchesCat = cat === 'all' || s.cat === cat;
+      return matchesQ && matchesCat;
+    });
+    var body = document.getElementById('et2TableBody');
+    if (!filtered.length) { body.innerHTML = '<tr><td colspan="3" class="et2-empty-row">No skills match your search.</td></tr>'; return; }
+    body.innerHTML = filtered.map(function(s){
+      return '<tr><td><div class="et2-skill-name">'+et2Esc(s.name)+'</div></td>' +
+        '<td class="et2-rate-range">'+s.range+'</td>' +
+        '<td><span class="et2-level-badge '+s.level+'">'+s.level+'</span></td></tr>';
+    }).join('');
+  };
+  document.addEventListener('DOMContentLoaded', et2Render);
+  if (document.readyState !== 'loading') et2Render();
+})();
+</script>
+
+
+<!-- ================= EARNING PAGE: REINVEST YOUR SIDE INCOME SIP CALCULATOR ================= -->
+<style>
+.et2-reinvest{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(201,168,105,.2);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et2-reinvest-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et2-reinvest-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#c9a869}
+.et2-reinvest-badge{font-size:10px;font-weight:800;color:#c9a869;background:rgba(201,168,105,.1);border:1px solid rgba(201,168,105,.3);padding:4px 10px;border-radius:20px}
+.et2-reinvest-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.et2-reinvest-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.et2-reinvest-grid{grid-template-columns:1fr}}
+.et2-reinvest-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.et2-reinvest-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.et2-reinvest-field-top span{color:#c9a869;font-weight:700}
+.et2-reinvest-field input[type=range]{width:100%;accent-color:#c9a869;cursor:pointer}
+.et2-reinvest-result{background:linear-gradient(135deg,rgba(201,168,105,.12),rgba(0,230,118,.06));border:1px solid rgba(201,168,105,.3);border-radius:16px;padding:20px;text-align:center}
+.et2-reinvest-result .l{font-size:11px;color:#8891a1;text-transform:uppercase;letter-spacing:1px}
+.et2-reinvest-result .big{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800;color:#00e676;margin:8px 0}
+.et2-reinvest-sub-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.et2-reinvest-sub-stat{background:rgba(255,255,255,.03);border-radius:10px;padding:10px;font-size:11.5px}
+.et2-reinvest-sub-stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:15px;color:#fff;margin-top:3px}
+</style>
+<div class="et2-reinvest" id="et2ReinvestSection" data-mount="earning">
+  <div class="et2-reinvest-hdr"><div class="et2-reinvest-title">Reinvest Your Side Income</div><div class="et2-reinvest-badge">SIDE HUSTLE → SIP</div></div>
+  <div class="et2-reinvest-note">Instead of letting your extra earnings sit idle, see what happens if you channel a slice of it into a SIP every month — genuine compound-growth math, same formula as our Investment page calculators.</div>
+  <div class="et2-reinvest-grid">
+    <div class="et2-reinvest-field"><div class="et2-reinvest-field-top"><span>Avg. Monthly Side Income</span><span id="et2RIncomeV">₹15,000</span></div><input type="range" id="et2RIncome" min="1000" max="200000" step="500" value="15000" oninput="et2RCalc()"></div>
+    <div class="et2-reinvest-field"><div class="et2-reinvest-field-top"><span>% You'll Invest Each Month</span><span id="et2RPctV">40%</span></div><input type="range" id="et2RPct" min="5" max="100" step="5" value="40" oninput="et2RCalc()"></div>
+    <div class="et2-reinvest-field"><div class="et2-reinvest-field-top"><span>Expected Annual Return</span><span id="et2RRateV">12%</span></div><input type="range" id="et2RRate" min="4" max="25" step="0.5" value="12" oninput="et2RCalc()"></div>
+    <div class="et2-reinvest-field"><div class="et2-reinvest-field-top"><span>Time Horizon</span><span id="et2RYearsV">10 yrs</span></div><input type="range" id="et2RYears" min="1" max="30" step="1" value="10" oninput="et2RCalc()"></div>
+  </div>
+  <div class="et2-reinvest-result">
+    <div class="l">Projected Corpus From This Habit Alone</div>
+    <div class="big" id="et2RBigResult">₹0</div>
+    <div class="et2-reinvest-sub-stats">
+      <div class="et2-reinvest-sub-stat">Monthly SIP Amount<b id="et2RMonthlySip">₹0</b></div>
+      <div class="et2-reinvest-sub-stat">Total Invested<b id="et2RInvested">₹0</b></div>
+    </div>
+  </div>
+</div>
+<script>
+function et2RCalc(){
+  var income = parseFloat(document.getElementById('et2RIncome').value);
+  var pct = parseFloat(document.getElementById('et2RPct').value);
+  var ratePct = parseFloat(document.getElementById('et2RRate').value);
+  var years = parseInt(document.getElementById('et2RYears').value, 10);
+
+  document.getElementById('et2RIncomeV').textContent = '₹'+income.toLocaleString('en-IN');
+  document.getElementById('et2RPctV').textContent = pct+'%';
+  document.getElementById('et2RRateV').textContent = ratePct+'%';
+  document.getElementById('et2RYearsV').textContent = years+(years===1?' yr':' yrs');
+
+  var monthlySip = income * (pct/100);
+  var r = (ratePct/100)/12;
+  var n = years*12;
+  var futureValue = monthlySip * ((Math.pow(1+r,n)-1)/r) * (1+r);
+  var totalInvested = monthlySip * n;
+
+  document.getElementById('et2RBigResult').textContent = '₹'+Math.round(futureValue).toLocaleString('en-IN');
+  document.getElementById('et2RMonthlySip').textContent = '₹'+Math.round(monthlySip).toLocaleString('en-IN');
+  document.getElementById('et2RInvested').textContent = '₹'+Math.round(totalInvested).toLocaleString('en-IN');
+}
+document.addEventListener('DOMContentLoaded', et2RCalc);
+et2RCalc();
+</script>
+
+
+<!-- ================= EARNING PAGE: INCOME TREND CHART (real data from your Income Tracker) ================= -->
+<style>
+.et2-trend{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(255,184,0,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et2-trend-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:18px}
+.et2-trend-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et2-trend-badge{font-size:10px;font-weight:800;color:#ffb800;background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.3);padding:4px 10px;border-radius:20px}
+.et2-trend-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6}
+.et2-trend-chart-wrap{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;min-height:220px}
+.et2-trend-chart-wrap svg{width:100%;height:200px;display:block;overflow:visible}
+.et2-trend-empty{text-align:center;color:#8891a1;font-size:12.5px;padding:60px 20px}
+.et2-trend-bar-label{font-size:9px;fill:#8891a1;font-family:'Plus Jakarta Sans',sans-serif}
+.et2-trend-bar-val{font-size:10px;fill:#ffb800;font-weight:700;font-family:'JetBrains Mono',monospace}
+</style>
+<div class="et2-trend" id="et2TrendSection" data-mount="earning">
+  <div class="et2-trend-hdr"><div class="et2-trend-title">Your Income Trend</div><div class="et2-trend-badge">FROM YOUR TRACKER</div></div>
+  <div class="et2-trend-note">Built directly from what you've logged in the Side Hustle Income Tracker above — grouped by month, straight out of your browser's local storage. Nothing fetched, nothing invented.</div>
+  <div class="et2-trend-chart-wrap"><div id="et2TrendChartInner"></div></div>
+</div>
+<script>
+(function(){
+  var ET2_TRACK_KEY = 'nx_side_hustle_income_v1'; // same key the Income Tracker widget writes to
+
+  function et2TrendLoad(){ try { return JSON.parse(localStorage.getItem(ET2_TRACK_KEY)) || []; } catch(e){ return []; } }
+
+  function et2ParseTrackedDate(dStr, fallbackTs){
+    // The tracker stores dates as "DD Mon" (e.g. "20 Sep") with no year.
+    // We reconstruct a real month key using the entry's own id (a Date.now() timestamp)
+    // as the reliable source of truth for which month it was actually logged in.
+    var d = new Date(fallbackTs);
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+  }
+
+  function et2MonthLabel(key){
+    var parts = key.split('-');
+    var d = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, 1);
+    return d.toLocaleDateString('en-IN', { month:'short', year:'2-digit' });
+  }
+
+  function et2Render(){
+    var entries = et2TrendLoad();
+    var wrap = document.getElementById('et2TrendChartInner');
+
+    if (!entries.length) {
+      wrap.innerHTML = '<div class="et2-trend-empty">No income logged yet. Add a few entries in the Side Hustle Income Tracker above, then this chart will build itself from that real data.</div>';
+      return;
+    }
+
+    var byMonth = {};
+    entries.forEach(function(e){
+      var key = et2ParseTrackedDate(e.date, e.id);
+      byMonth[key] = (byMonth[key] || 0) + e.amt;
+    });
+
+    var months = Object.keys(byMonth).sort().slice(-6); // last 6 real months of data
+    var values = months.map(function(m){ return byMonth[m]; });
+    var maxVal = Math.max.apply(null, values) || 1;
+
+    var w = 600, h = 200, padBottom = 30, padTop = 20;
+    var barGap = 14;
+    var barWidth = (w - barGap * (months.length + 1)) / months.length;
+
+    var bars = '';
+    months.forEach(function(m, i){
+      var val = byMonth[m];
+      var barH = ((val / maxVal) * (h - padBottom - padTop));
+      var x = barGap + i * (barWidth + barGap);
+      var y = h - padBottom - barH;
+      bars += '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+barWidth.toFixed(1)+'" height="'+barH.toFixed(1)+'" rx="4" fill="#ffb800" fill-opacity="0.85"/>';
+      bars += '<text class="et2-trend-bar-val" x="'+(x+barWidth/2).toFixed(1)+'" y="'+(y-6).toFixed(1)+'" text-anchor="middle">₹'+Math.round(val).toLocaleString('en-IN')+'</text>';
+      bars += '<text class="et2-trend-bar-label" x="'+(x+barWidth/2).toFixed(1)+'" y="'+(h-10).toFixed(1)+'" text-anchor="middle">'+et2MonthLabel(m)+'</text>';
+    });
+
+    wrap.innerHTML = '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet">'+bars+'</svg>';
+  }
+
+  document.addEventListener('DOMContentLoaded', et2Render);
+  if (document.readyState !== 'loading') et2Render();
+
+  // Re-render automatically whenever the tracker widget adds/deletes an entry
+  var origAdd = window.et1TrackAdd;
+  if (typeof origAdd === 'function') {
+    window.et1TrackAdd = function(){ origAdd.apply(this, arguments); et2Render(); };
+  }
+  var origDel = window.et1TrackDelete;
+  if (typeof origDel === 'function') {
+    window.et1TrackDelete = function(){ origDel.apply(this, arguments); et2Render(); };
+  }
+})();
+</script>
+
+
+<!-- ================= EARNING PAGE: TIME-TO-GOAL HUSTLE COMPARATOR ================= -->
+<style>
+.et2-ttg{max-width:920px;margin:26px auto;background:linear-gradient(180deg,#080a0f 0%,#050608 100%);border:1px solid rgba(0,217,181,.18);border-radius:22px;padding:24px;color:#f1f5f9;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 30px 70px rgba(0,0,0,.8)}
+.et2-ttg-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:14px;margin-bottom:16px}
+.et2-ttg-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.et2-ttg-badge{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.1);border:1px solid rgba(0,217,181,.3);padding:4px 10px;border-radius:20px}
+.et2-ttg-note{font-size:10.5px;color:#8891a1;margin-bottom:16px;line-height:1.6;border-left:2px solid rgba(255,255,255,.1);padding-left:10px}
+.et2-ttg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:680px){.et2-ttg-grid{grid-template-columns:1fr}}
+.et2-ttg-field{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:11px 14px}
+.et2-ttg-field-top{display:flex;justify-content:space-between;font-size:12px;color:#8891a1;margin-bottom:6px;font-weight:600}
+.et2-ttg-field-top span{color:#00d9b5;font-weight:700}
+.et2-ttg-field input[type=range]{width:100%;accent-color:#00d9b5;cursor:pointer}
+.et2-ttg-results{display:flex;flex-direction:column;gap:10px}
+.et2-ttg-row{background:#0d1119;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.et2-ttg-row.fastest{border-color:#00d9b5;background:rgba(0,217,181,.06)}
+.et2-ttg-row-name{display:flex;align-items:center;gap:10px}
+.et2-ttg-row-name .ico{font-size:18px}
+.et2-ttg-row-title{font-size:13px;font-weight:700;color:#fff}
+.et2-ttg-row-sub{font-size:10.5px;color:#8891a1;margin-top:2px}
+.et2-ttg-row-time{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;color:#00d9b5;text-align:right}
+.et2-ttg-crown{font-size:10px;font-weight:800;color:#00d9b5;background:rgba(0,217,181,.15);padding:2px 8px;border-radius:20px;margin-left:8px}
+</style>
+<div class="et2-ttg" id="et2TtgSection" data-mount="earning">
+  <div class="et2-ttg-hdr"><div class="et2-ttg-title">Time-to-Goal Comparator</div><div class="et2-ttg-badge">WHICH HUSTLE GETS YOU THERE FASTEST?</div></div>
+  <div class="et2-ttg-note">Set a money goal, and see how long each route would genuinely take at the pace you tell it — based on your own inputs, not a fixed guess. Freelancing and YouTube use the income rate you set; investing uses real compound-growth math, so it always looks slower short-term — that's accurate, not a bug.</div>
+  <div class="et2-ttg-grid">
+    <div class="et2-ttg-field"><div class="et2-ttg-field-top"><span>Money Goal</span><span id="et2TtgGoalV">₹1,00,000</span></div><input type="range" id="et2TtgGoal" min="10000" max="2000000" step="10000" value="100000" oninput="et2TtgCalc()"></div>
+    <div class="et2-ttg-field"><div class="et2-ttg-field-top"><span>Freelancing: Monthly Earning Rate</span><span id="et2TtgFreeV">₹20,000/mo</span></div><input type="range" id="et2TtgFree" min="2000" max="150000" step="1000" value="20000" oninput="et2TtgCalc()"></div>
+    <div class="et2-ttg-field"><div class="et2-ttg-field-top"><span>YouTube/Content: Monthly Earning Rate</span><span id="et2TtgYtV">₹8,000/mo</span></div><input type="range" id="et2TtgYt" min="0" max="100000" step="1000" value="8000" oninput="et2TtgCalc()"></div>
+    <div class="et2-ttg-field"><div class="et2-ttg-field-top"><span>Investing: Monthly SIP + Return</span><span id="et2TtgInvV">₹10,000/mo @ 12%</span></div><input type="range" id="et2TtgInv" min="1000" max="100000" step="1000" value="10000" oninput="et2TtgCalc()"></div>
+  </div>
+  <div class="et2-ttg-results" id="et2TtgResults"></div>
+</div>
+<script>
+function et2TtgMonthsForFlat(goal, monthlyRate){
+  if (monthlyRate <= 0) return Infinity;
+  return goal / monthlyRate;
+}
+function et2TtgMonthsForSip(goal, monthlySip, annualRatePct){
+  if (monthlySip <= 0) return Infinity;
+  var r = (annualRatePct/100)/12;
+  if (r === 0) return goal / monthlySip;
+  // Solve n from FV = P * ((1+r)^n - 1)/r * (1+r)  →  n via iteration (real numeric solve, no shortcuts)
+  var n = 0, fv = 0;
+  while (fv < goal && n < 1200) {
+    n++;
+    fv = monthlySip * ((Math.pow(1+r, n) - 1) / r) * (1+r);
+  }
+  return n >= 1200 ? Infinity : n;
+}
+function et2TtgFormatMonths(months){
+  if (!isFinite(months)) return 'Not reachable at this rate';
+  var years = Math.floor(months / 12);
+  var rem = Math.round(months % 12);
+  if (years === 0) return rem + ' mo';
+  if (rem === 0) return years + ' yr';
+  return years + 'y ' + rem + 'mo';
+}
+
+function et2TtgCalc(){
+  var goal = parseFloat(document.getElementById('et2TtgGoal').value);
+  var freeRate = parseFloat(document.getElementById('et2TtgFree').value);
+  var ytRate = parseFloat(document.getElementById('et2TtgYt').value);
+  var invSip = parseFloat(document.getElementById('et2TtgInv').value);
+  var invReturn = 12; // fixed reference return, kept simple/transparent for this comparator
+
+  document.getElementById('et2TtgGoalV').textContent = '₹'+goal.toLocaleString('en-IN');
+  document.getElementById('et2TtgFreeV').textContent = '₹'+freeRate.toLocaleString('en-IN')+'/mo';
+  document.getElementById('et2TtgYtV').textContent = '₹'+ytRate.toLocaleString('en-IN')+'/mo';
+  document.getElementById('et2TtgInvV').textContent = '₹'+invSip.toLocaleString('en-IN')+'/mo @ '+invReturn+'%';
+
+  var routes = [
+    { name:'Freelancing', ico:'🧑‍💻', sub:'Direct earning, no growth curve', months: et2TtgMonthsForFlat(goal, freeRate) },
+    { name:'YouTube / Content', ico:'🎥', sub:'Assumes steady monthly rate from day 1 (unrealistic early on, but shown as set)', months: et2TtgMonthsForFlat(goal, ytRate) },
+    { name:'Investing (SIP)', ico:'📈', sub:'Compounds — starts slow, accelerates over time', months: et2TtgMonthsForSip(goal, invSip, invReturn) }
+  ];
+
+  var validMonths = routes.filter(function(r){ return isFinite(r.months); }).map(function(r){ return r.months; });
+  var fastest = validMonths.length ? Math.min.apply(null, validMonths) : null;
+
+  var html = routes.map(function(r){
+    var isFastest = fastest !== null && r.months === fastest;
+    return '<div class="et2-ttg-row'+(isFastest ? ' fastest' : '')+'">' +
+      '<div class="et2-ttg-row-name"><span class="ico">'+r.ico+'</span><div><div class="et2-ttg-row-title">'+r.name+(isFastest ? '<span class="et2-ttg-crown">FASTEST</span>' : '')+'</div><div class="et2-ttg-row-sub">'+r.sub+'</div></div></div>' +
+      '<div class="et2-ttg-row-time">'+et2TtgFormatMonths(r.months)+'</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('et2TtgResults').innerHTML = html;
+}
+document.addEventListener('DOMContentLoaded', et2TtgCalc);
+et2TtgCalc();
+</script>
+
+  
 </body>
 </html>
