@@ -10683,6 +10683,83 @@ var CpcCalc = {
 document.addEventListener('DOMContentLoaded', function(){ CpcCalc.loadData(); setInterval(function(){ CpcCalc.loadData(); }, 15000); });
 if (document.readyState !== 'loading') CpcCalc.loadData();
 </script>
+<!-- ================= EARNING PAGE: DEDICATED FOOTER ================= -->
+<style>
+.et2-footer{max-width:920px;margin:40px auto 20px;background:linear-gradient(180deg,#070a10 0%,#050609 100%);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;color:#eef1f6;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 25px 60px rgba(0,0,0,.6)}
+.et2-footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:20px}
+.et2-footer-brand{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:#fff}
+.et2-footer-brand span{color:#00e676}
+.et2-footer-tag{font-size:11.5px;color:#8891a1;margin-top:6px;max-width:340px;line-height:1.6}
+.et2-footer-live{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#00e676;font-weight:700}
+.et2-footer-dot{width:6px;height:6px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676;animation:et2Pulse 1.6s infinite}
+@keyframes et2Pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.et2-footer-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:22px}
+@media(max-width:700px){.et2-footer-cols{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.et2-footer-cols{grid-template-columns:1fr}}
+.et2-footer-col h5{font-size:11.5px;font-weight:800;color:#00e676;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.et2-footer-links{list-style:none;padding:0;margin:0}
+.et2-footer-links li{margin-bottom:9px}
+.et2-footer-links a{color:#8891a1;font-size:12.5px;text-decoration:none;cursor:pointer;transition:color .2s ease;border-bottom:1px solid transparent}
+.et2-footer-links a:hover{color:#00e676;border-bottom-color:#00e676}
+.et2-footer-disclaimer{font-size:10.5px;line-height:1.7;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:14px}
+.et2-footer-disclaimer b{color:#8891a1}
+.et2-footer-btm{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;color:#5e626a;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+.et2-footer-security{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.et2-footer-sec-badge{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#8891a1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:5px 12px;border-radius:20px}
+</style>
+<div class="et2-footer" id="et2EarningFooterSection" data-mount="earning">
+  <div class="et2-footer-top">
+    <div>
+      <div class="et2-footer-brand">Global<span> Finance</span> — Earning Tips</div>
+      <p class="et2-footer-tag">Every calculator here runs on real, transparent math — live forex and crypto rates where applicable. Your income tracker and logged entries stay only in your browser.</p>
+    </div>
+    <div class="et2-footer-live"><span class="et2-footer-dot"></span>ALL TOOLS LIVE</div>
+  </div>
 
+  <div class="et2-footer-cols">
+    <div class="et2-footer-col">
+      <h5>Ideas &amp; Rates</h5>
+      <ul class="et2-footer-links">
+        <li><a onclick="et2ScrollTo('et1DirSection')">Passive Income Directory</a></li>
+        <li><a onclick="et2ScrollTo('et1RateSection')">Freelance Rate Calculator</a></li>
+        <li><a onclick="et2ScrollTo('et1FfSection')">Freelance vs Full-Time Job</a></li>
+      </ul>
+    </div>
+    <div class="et2-footer-col">
+      <h5>Track &amp; Grow</h5>
+      <ul class="et2-footer-links">
+        <li><a onclick="et2ScrollTo('et1TrackSection')">Side Hustle Income Tracker</a></li>
+        <li><a onclick="et2ScrollTo('et1QuizSection')">Which Side Hustle Suits You?</a></li>
+      </ul>
+    </div>
+    <div class="et2-footer-col">
+      <h5>Learn &amp; Get Help</h5>
+      <ul class="et2-footer-links">
+        <li><a onclick="et2ScrollTo('et1PostsSection')">Earning Guides &amp; Posts</a></li>
+        <li><a onclick="et2ScrollTo('et1AiSection')">Ask Alpha AI</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="et2-footer-security">
+    <span class="et2-footer-sec-badge">🔒 256-bit SSL</span>
+    <span class="et2-footer-sec-badge">💾 Income tracker stays local</span>
+    <span class="et2-footer-sec-badge">📡 Live forex &amp; crypto rates</span>
+    <span class="et2-footer-sec-badge">🧮 Transparent formulas, no black boxes</span>
+  </div>
+
+  <div class="et2-footer-disclaimer"><b>Disclaimer.</b> Earning estimates, rate benchmarks, and income projections on this page are for educational purposes only and are not a guarantee of income. Actual freelance rates, platform fees, and returns depend on your skills, market conditions, and the specific platform you use. Global Finance is not a career counselor, tax advisor, or investment advisor — verify tax treatment and platform terms independently.</div>
+
+  <div class="et2-footer-btm">
+    <div>© 2026 Global Finance Inc. Earning Tips</div>
+    <div>Powered by Alpha AI · live public data feeds</div>
+  </div>
+</div>
+<script>
+function et2ScrollTo(id){
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
