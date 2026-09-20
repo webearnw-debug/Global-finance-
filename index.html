@@ -7974,7 +7974,303 @@ var GFCta = {
   document.addEventListener('DOMContentLoaded', hm3TryInit);
   if (document.readyState !== 'loading') hm3TryInit();
 })();
-</script>                                                                                   
+</script> 
+   <!-- =======================================================
+     LOANS PAGE — 3 WIDGETS
+     All use data-mount="loans" — auto-place on the Loans page.
+     Paste anywhere in your file (easiest: right before </body>).
+======================================================= -->
+
+<!-- ---------- 1) MULTI-LOAN EMI CALCULATOR (tabbed) ---------- -->
+<style>
+.gml{--gml-bg:#0b0d11;--gml-card:#12151c;--gml-border:rgba(255,255,255,.08);--gml-gold:#c9a869;--gml-emerald:#00e599;--gml-text:#e9e7e1;--gml-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--gml-bg);border:1px solid var(--gml-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--gml-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.gml-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--gml-border);padding-bottom:18px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.gml-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gml-gold)}
+.gml-badge{background:rgba(0,229,153,.1);border:1px solid rgba(0,229,153,.3);color:var(--gml-emerald);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.gml-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.gml-tab{background:rgba(255,255,255,.03);border:1px solid var(--gml-border);color:var(--gml-muted);padding:8px 16px;border-radius:9px;font-size:12.5px;font-weight:700;cursor:pointer;transition:.2s}
+.gml-tab.active{background:rgba(201,168,105,.12);border-color:var(--gml-gold);color:var(--gml-gold)}
+.gml-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.gml-grid{grid-template-columns:1fr}}
+.gml-field{margin-bottom:18px}
+.gml-label{display:flex;justify-content:space-between;font-size:13px;color:var(--gml-muted);margin-bottom:8px}
+.gml-label span{color:var(--gml-text);font-weight:700}
+.gml-input-wrap{position:relative;display:flex;align-items:center}
+.gml-input-wrap span{position:absolute;left:14px;color:var(--gml-gold);font-weight:600;font-size:14px}
+.gml-number{width:100%;background:var(--gml-card);border:1px solid var(--gml-border);color:var(--gml-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:none}
+.gml-slider{width:100%;height:4px;background:var(--gml-border);border-radius:2px;outline:none;margin-top:10px;accent-color:var(--gml-emerald);cursor:pointer}
+.gml-result{background:var(--gml-card);border:1px solid var(--gml-border);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.gml-res-box{text-align:center;padding-bottom:14px;border-bottom:1px solid var(--gml-border)}
+.gml-res-label{font-size:10px;color:var(--gml-muted);text-transform:uppercase;letter-spacing:.5px}
+.gml-res-val{font-size:26px;font-weight:800;color:var(--gml-emerald);margin-top:6px;font-family:'JetBrains Mono',monospace}
+.gml-row{display:flex;justify-content:space-between;font-size:12.5px}
+.gml-row span:last-child{font-weight:700;color:#fff;font-family:'JetBrains Mono',monospace}
+</style>
+
+<div class="gml" id="gmlEmiCalcSection" data-mount="loans">
+  <div class="gml-head">
+    <div class="gml-title">Loan EMI Calculator</div>
+    <div class="gml-badge">All Loan Types</div>
+  </div>
+  <div class="gml-tabs">
+    <button class="gml-tab active" id="gmlTabHome" onclick="GmlCalc.setType('home', this)">🏠 Home Loan</button>
+    <button class="gml-tab" id="gmlTabPersonal" onclick="GmlCalc.setType('personal', this)">💳 Personal Loan</button>
+    <button class="gml-tab" id="gmlTabCar" onclick="GmlCalc.setType('car', this)">🚗 Car Loan</button>
+    <button class="gml-tab" id="gmlTabEdu" onclick="GmlCalc.setType('education', this)">🎓 Education Loan</button>
+  </div>
+  <div class="gml-grid">
+    <div>
+      <div class="gml-field">
+        <div class="gml-label">Loan Amount <span id="gmlAmtVal">₹30,00,000</span></div>
+        <div class="gml-input-wrap"><span>₹</span><input type="number" id="gmlAmt" class="gml-number" value="3000000" step="10000" oninput="GmlCalc.run()"></div>
+        <input type="range" id="gmlAmtSlider" class="gml-slider" min="10000" max="20000000" step="10000" value="3000000" oninput="GmlCalc.syncAmt()">
+      </div>
+      <div class="gml-field">
+        <div class="gml-label">Interest Rate (p.a.) <span id="gmlRateVal">8.5%</span></div>
+        <input type="range" id="gmlRate" class="gml-slider" min="6" max="24" step="0.1" value="8.5" oninput="GmlCalc.run()">
+      </div>
+      <div class="gml-field">
+        <div class="gml-label">Tenure <span id="gmlTenureVal">20 yrs</span></div>
+        <input type="range" id="gmlTenure" class="gml-slider" min="1" max="30" step="1" value="20" oninput="GmlCalc.run()">
+      </div>
+    </div>
+    <div class="gml-result">
+      <div class="gml-res-box"><div class="gml-res-label">Monthly EMI</div><div class="gml-res-val" id="gmlEmiVal">₹0</div></div>
+      <div class="gml-row"><span>Principal Amount</span><span id="gmlPrincipalVal">₹0</span></div>
+      <div class="gml-row"><span>Total Interest Payable</span><span id="gmlInterestVal">₹0</span></div>
+      <div class="gml-row"><span>Total Payment (Principal + Interest)</span><span id="gmlTotalVal">₹0</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var GmlCalc = {
+  presets: {
+    home:      { rate: 8.5,  tenure: 20, min:100000,  max:20000000, tenureMax:30 },
+    personal:  { rate: 11.5, tenure: 5,  min:10000,   max:2500000,  tenureMax:7  },
+    car:       { rate: 9.5,  tenure: 7,  min:50000,   max:5000000,  tenureMax:8  },
+    education: { rate: 10.5, tenure: 10, min:50000,   max:7500000,  tenureMax:15 }
+  },
+  currentType: 'home',
+
+  setType: function(type, btn){
+    this.currentType = type;
+    document.querySelectorAll('.gml-tab').forEach(function(t){ t.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    var p = this.presets[type];
+    document.getElementById('gmlRate').value = p.rate;
+    document.getElementById('gmlTenure').value = Math.min(p.tenure, p.tenureMax);
+    document.getElementById('gmlTenure').max = p.tenureMax;
+    document.getElementById('gmlAmtSlider').max = p.max;
+    this.run();
+  },
+
+  syncAmt: function(){
+    document.getElementById('gmlAmt').value = document.getElementById('gmlAmtSlider').value;
+    this.run();
+  },
+
+  run: function(){
+    var amt = parseFloat(document.getElementById('gmlAmt').value) || 0;
+    document.getElementById('gmlAmtSlider').value = amt;
+    var ratePct = parseFloat(document.getElementById('gmlRate').value);
+    var years = parseInt(document.getElementById('gmlTenure').value, 10);
+
+    document.getElementById('gmlAmtVal').textContent = '₹' + amt.toLocaleString('en-IN');
+    document.getElementById('gmlRateVal').textContent = ratePct + '%';
+    document.getElementById('gmlTenureVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+
+    var r = (ratePct / 12) / 100;
+    var n = years * 12;
+    var emi = (amt * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    var totalPayment = emi * n;
+    var totalInterest = totalPayment - amt;
+
+    document.getElementById('gmlEmiVal').textContent = '₹' + Math.round(emi).toLocaleString('en-IN');
+    document.getElementById('gmlPrincipalVal').textContent = '₹' + Math.round(amt).toLocaleString('en-IN');
+    document.getElementById('gmlInterestVal').textContent = '₹' + Math.round(totalInterest).toLocaleString('en-IN');
+    document.getElementById('gmlTotalVal').textContent = '₹' + Math.round(totalPayment).toLocaleString('en-IN');
+  }
+};
+document.addEventListener('DOMContentLoaded', function(){ GmlCalc.run(); });
+GmlCalc.run();
+</script>
+
+
+<!-- ---------- 2) LOAN ELIGIBILITY CALCULATOR ---------- -->
+<style>
+.gle{--gle-bg:#0b0d11;--gle-card:#12151c;--gle-border:rgba(255,255,255,.08);--gle-gold:#c9a869;--gle-emerald:#00e599;--gle-red:#ff5252;--gle-text:#e9e7e1;--gle-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--gle-bg);border:1px solid var(--gle-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--gle-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.gle-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--gle-border);padding-bottom:18px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.gle-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gle-gold)}
+.gle-badge{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);color:#38bdf8;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.gle-note{font-size:11.5px;color:var(--gle-muted);margin-bottom:22px;line-height:1.6;border-left:2px solid var(--gle-border);padding-left:12px}
+.gle-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:768px){.gle-grid{grid-template-columns:1fr}}
+.gle-field{margin-bottom:18px}
+.gle-label{display:flex;justify-content:space-between;font-size:13px;color:var(--gle-muted);margin-bottom:8px}
+.gle-label span{color:var(--gle-text);font-weight:700}
+.gle-input-wrap{position:relative;display:flex;align-items:center}
+.gle-input-wrap span{position:absolute;left:14px;color:var(--gle-gold);font-weight:600;font-size:14px}
+.gle-number{width:100%;background:var(--gle-card);border:1px solid var(--gle-border);color:var(--gle-text);padding:10px 14px 10px 30px;border-radius:8px;font-size:14px;font-weight:600;outline:none}
+.gle-slider{width:100%;height:4px;background:var(--gle-border);border-radius:2px;outline:none;margin-top:10px;accent-color:#38bdf8;cursor:pointer}
+.gle-result{background:var(--gle-card);border:1px solid var(--gle-border);border-radius:12px;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.gle-result-label{font-size:12px;color:var(--gle-muted);text-transform:uppercase;letter-spacing:.5px}
+.gle-result-val{font-size:30px;font-weight:800;color:var(--gle-emerald);margin:10px 0;font-family:'JetBrains Mono',monospace}
+.gle-result-sub{font-size:11.5px;color:var(--gle-muted);line-height:1.6}
+.gle-warn{margin-top:14px;font-size:11px;color:var(--gle-red);display:none}
+.gle-warn.show{display:block}
+</style>
+
+<div class="gle" id="gleEligibilitySection" data-mount="loans">
+  <div class="gle-head">
+    <div class="gle-title">Loan Eligibility Calculator</div>
+    <div class="gle-badge">FOIR-Based Estimate</div>
+  </div>
+  <div class="gle-note">Banks typically cap your total EMIs (existing + new) at ~50% of your monthly income — this is called FOIR (Fixed Obligation to Income Ratio). This gives a quick estimate; actual eligibility also depends on credit score, employer type, and the specific bank's policy.</div>
+  <div class="gle-grid">
+    <div>
+      <div class="gle-field">
+        <div class="gle-label">Monthly Net Income <span id="gleIncomeVal">₹80,000</span></div>
+        <div class="gle-input-wrap"><span>₹</span><input type="number" id="gleIncome" class="gle-number" value="80000" step="1000" oninput="runEligibility()"></div>
+      </div>
+      <div class="gle-field">
+        <div class="gle-label">Existing Monthly EMIs (if any) <span id="gleExistingVal">₹0</span></div>
+        <div class="gle-input-wrap"><span>₹</span><input type="number" id="gleExisting" class="gle-number" value="0" step="500" oninput="runEligibility()"></div>
+      </div>
+      <div class="gle-field">
+        <div class="gle-label">Interest Rate (p.a.) <span id="gleRateVal">9%</span></div>
+        <input type="range" id="gleRate" class="gle-slider" min="6" max="20" step="0.1" value="9" oninput="runEligibility()">
+      </div>
+      <div class="gle-field">
+        <div class="gle-label">Desired Tenure <span id="gleTenureVal">15 yrs</span></div>
+        <input type="range" id="gleTenure" class="gle-slider" min="1" max="30" step="1" value="15" oninput="runEligibility()">
+      </div>
+      <div class="gle-field">
+        <div class="gle-label">FOIR Cap Used by Bank <span id="gleFoirVal">50%</span></div>
+        <input type="range" id="gleFoir" class="gle-slider" min="30" max="65" step="5" value="50" oninput="runEligibility()">
+      </div>
+    </div>
+    <div class="gle-result">
+      <div class="gle-result-label">Estimated Loan Eligibility</div>
+      <div class="gle-result-val" id="gleEligibleAmt">₹0</div>
+      <div class="gle-result-sub" id="gleAvailEmiSub">Available EMI capacity: ₹0/month</div>
+      <div class="gle-warn" id="gleWarn">⚠ Existing EMIs already exceed your FOIR limit — new loan eligibility may be ₹0 with this bank's policy.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function runEligibility(){
+  var income = parseFloat(document.getElementById('gleIncome').value) || 0;
+  var existing = parseFloat(document.getElementById('gleExisting').value) || 0;
+  var ratePct = parseFloat(document.getElementById('gleRate').value);
+  var years = parseInt(document.getElementById('gleTenure').value, 10);
+  var foirPct = parseFloat(document.getElementById('gleFoir').value);
+
+  document.getElementById('gleIncomeVal').textContent = '₹' + income.toLocaleString('en-IN');
+  document.getElementById('gleExistingVal').textContent = '₹' + existing.toLocaleString('en-IN');
+  document.getElementById('gleRateVal').textContent = ratePct + '%';
+  document.getElementById('gleTenureVal').textContent = years + (years === 1 ? ' yr' : ' yrs');
+  document.getElementById('gleFoirVal').textContent = foirPct + '%';
+
+  var maxTotalEmi = income * (foirPct / 100);
+  var availableEmi = Math.max(0, maxTotalEmi - existing);
+
+  var r = (ratePct / 12) / 100;
+  var n = years * 12;
+  var eligibleAmt = availableEmi * ((Math.pow(1 + r, n) - 1) / (r * Math.pow(1 + r, n)));
+
+  document.getElementById('gleEligibleAmt').textContent = '₹' + Math.round(eligibleAmt).toLocaleString('en-IN');
+  document.getElementById('gleAvailEmiSub').textContent = 'Available EMI capacity: ₹' + Math.round(availableEmi).toLocaleString('en-IN') + '/month';
+
+  var warnEl = document.getElementById('gleWarn');
+  warnEl.classList.toggle('show', availableEmi <= 0);
+}
+document.addEventListener('DOMContentLoaded', runEligibility);
+runEligibility();
+</script>
+
+
+<!-- ---------- 3) BANK-WISE INTEREST RATE COMPARISON (reference) ---------- -->
+<style>
+.glr{--glr-bg:#0b0d11;--glr-card:#12151c;--glr-border:rgba(255,255,255,.08);--glr-gold:#c9a869;--glr-emerald:#00e599;--glr-text:#e9e7e1;--glr-muted:#82868f;font-family:'Plus Jakarta Sans',sans-serif;background:var(--glr-bg);border:1px solid var(--glr-border);border-radius:16px;padding:28px;max-width:900px;margin:24px auto;color:var(--glr-text);box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.glr-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--glr-border);padding-bottom:18px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.glr-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--glr-gold)}
+.glr-badge{background:rgba(201,168,105,.1);border:1px solid rgba(201,168,105,.3);color:var(--glr-gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.glr-note{font-size:11px;color:var(--glr-muted);margin-bottom:20px;line-height:1.6;border-left:2px solid var(--glr-border);padding-left:12px}
+.glr-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.glr-tab{background:rgba(255,255,255,.03);border:1px solid var(--glr-border);color:var(--glr-muted);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+.glr-tab.active{background:rgba(0,229,153,.1);border-color:var(--glr-emerald);color:var(--glr-emerald)}
+.glr-table{width:100%;border-collapse:collapse}
+.glr-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--glr-muted);padding:10px;border-bottom:1px solid var(--glr-border)}
+.glr-table td{padding:12px 10px;border-bottom:1px solid var(--glr-border);font-size:13px}
+.glr-bank{font-weight:700;color:#fff}
+.glr-rate{color:var(--glr-emerald);font-weight:700;font-family:'JetBrains Mono',monospace}
+.glr-processing{color:var(--glr-muted);font-size:11.5px}
+</style>
+
+<div class="glr" id="glrRateCompareSection" data-mount="loans">
+  <div class="glr-head">
+    <div class="glr-title">Interest Rate Comparison</div>
+    <div class="glr-badge">Reference Rates</div>
+  </div>
+  <div class="glr-note">Indicative starting rates commonly cited across major Indian banks as of late 2026 — not a live feed (no free API exists for bank-level lending rates). Actual rate depends on your credit score, income and the bank's current offers — always confirm on the bank's official site before applying.</div>
+  <div class="glr-tabs">
+    <button class="glr-tab active" onclick="GlrTable.show('home', this)">Home Loan</button>
+    <button class="glr-tab" onclick="GlrTable.show('personal', this)">Personal Loan</button>
+    <button class="glr-tab" onclick="GlrTable.show('car', this)">Car Loan</button>
+  </div>
+  <table class="glr-table">
+    <thead><tr><th>Bank</th><th>Starting Rate (p.a.)</th><th>Processing Fee</th></tr></thead>
+    <tbody id="glrTableBody"></tbody>
+  </table>
+</div>
+
+<script>
+(function(){
+  var glrData = {
+    home: [
+      { bank:"SBI", rate:"7.50%", fee:"0.35% (max ₹10,000)" },
+      { bank:"HDFC Bank", rate:"7.90%", fee:"Up to 0.50%" },
+      { bank:"ICICI Bank", rate:"7.95%", fee:"Up to 0.50%" },
+      { bank:"Bank of Baroda", rate:"7.45%", fee:"0.25%–0.50%" },
+      { bank:"Punjab National Bank", rate:"7.50%", fee:"Up to 0.35%" },
+      { bank:"Axis Bank", rate:"8.00%", fee:"Up to 1%" }
+    ],
+    personal: [
+      { bank:"SBI", rate:"10.90%", fee:"Up to 1.5%" },
+      { bank:"HDFC Bank", rate:"10.50%", fee:"Up to 2.5%" },
+      { bank:"ICICI Bank", rate:"10.75%", fee:"Up to 2.5%" },
+      { bank:"Axis Bank", rate:"11.00%", fee:"Up to 2%" },
+      { bank:"Bajaj Finserv", rate:"11.50%", fee:"Up to 3.99%" },
+      { bank:"IDFC FIRST Bank", rate:"10.99%", fee:"Up to 2%" }
+    ],
+    car: [
+      { bank:"SBI", rate:"8.65%", fee:"₹2,500–₹9,500 flat" },
+      { bank:"HDFC Bank", rate:"9.20%", fee:"Up to 1%" },
+      { bank:"ICICI Bank", rate:"9.10%", fee:"Up to 1%" },
+      { bank:"Bank of Baroda", rate:"8.70%", fee:"₹5,000–₹10,000 flat" },
+      { bank:"Punjab National Bank", rate:"8.60%", fee:"Up to 1%" },
+      { bank:"Kotak Mahindra Bank", rate:"9.00%", fee:"Up to 1%" }
+    ]
+  };
+
+  window.GlrTable = {
+    show: function(cat, btn){
+      document.querySelectorAll('.glr-tab').forEach(function(t){ t.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      var body = document.getElementById('glrTableBody');
+      body.innerHTML = glrData[cat].map(function(row){
+        return '<tr><td class="glr-bank">' + row.bank + '</td><td class="glr-rate">' + row.rate + '</td><td class="glr-processing">' + row.fee + '</td></tr>';
+      }).join('');
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){ GlrTable.show('home'); });
+  if (document.readyState !== 'loading') GlrTable.show('home');
+})();
+</script>
+                           
 </script>
 </body>
 </html>
