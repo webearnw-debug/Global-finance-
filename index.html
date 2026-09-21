@@ -10968,6 +10968,451 @@ body {
         document.getElementsByTagName('body')[0].appendChild(s);
       }());
 </script>                                                                                                                                        
-  
+  <!-- ================= SITE-WIDE POLISH PACK ================= -->
+<style>
+.px-scrolltop{position:fixed;bottom:22px;right:18px;width:44px;height:44px;border-radius:50%;background:#00e676;color:#04120a;border:none;display:none;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(0,230,118,.4);z-index:9999;}
+.px-scrolltop.show{display:flex;}
+.px-new-badge{background:linear-gradient(135deg,#ff4d4d,#c084fc);color:#fff;font-size:8.5px;font-weight:800;padding:2px 7px;border-radius:20px;margin-left:6px;letter-spacing:.5px;vertical-align:middle;}
+.px-copy-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);color:#8891a1;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;margin-top:10px;display:inline-flex;align-items:center;gap:5px;}
+.px-copy-btn:hover{color:#00e676;border-color:#00e676;}
+.px-docs-bar-track{background:rgba(255,255,255,.06);border-radius:20px;height:6px;overflow:hidden;margin-top:6px;}
+.px-docs-bar-fill{height:100%;background:linear-gradient(90deg,#00c853,#00e676);border-radius:20px;transition:width .4s ease;}
+.px-sort-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:6px 13px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;margin-left:8px;}
+.px-sort-btn.active{border-color:#d6b27a;color:#d6b27a;background:rgba(214,178,122,.08);}
+.px-currency-toggle{display:inline-flex;gap:6px;margin-top:10px;}
+.px-cur-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:#8891a1;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;}
+.px-cur-btn.active{border-color:#38bdf8;color:#38bdf8;background:rgba(56,189,248,.08);}
+.px-confetti-piece{position:fixed;top:-10px;width:8px;height:8px;pointer-events:none;z-index:99999;animation:pxFall 2.5s linear forwards;}
+@keyframes pxFall{to{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+</style>
+
+<script>
+(function(){
+  // ============ 1. SCROLL-TO-TOP (site-wide) ============
+  var pxTopBtn = document.createElement('button');
+  pxTopBtn.className = 'px-scrolltop';
+  pxTopBtn.innerHTML = '↑';
+  pxTopBtn.onclick = function(){ window.scrollTo({top:0, behavior:'smooth'}); };
+  document.body.appendChild(pxTopBtn);
+  window.addEventListener('scroll', function(){
+    pxTopBtn.classList.toggle('show', window.scrollY > 500);
+  });
+
+  // ============ 2. "NEW" BADGE ON ALPHA AI CARD ============
+  function pxAddAlphaBadge(){
+    var alphaCard = document.querySelector('[onclick="handleCategoryClick(\'alpha\')"]');
+    if (alphaCard && !alphaCard.querySelector('.px-new-badge')) {
+      var titleEl = alphaCard.querySelector('h3, .ultra-text-group h3');
+      if (titleEl) titleEl.insertAdjacentHTML('beforeend', '<span class="px-new-badge">NEW</span>');
+    }
+  }
+  var pxAlphaAttempts = 0;
+  var pxAlphaTimer = setInterval(function(){
+    pxAddAlphaBadge();
+    pxAlphaAttempts++;
+    if (pxAlphaAttempts > 30) clearInterval(pxAlphaTimer);
+  }, 300);
+
+  // ============ CONFETTI HELPER (reused below) ============
+  window.pxFireConfetti = function(){
+    var colors = ['#00e676','#d6b27a','#38bdf8','#c084fc','#ff9f43'];
+    for (var i=0;i<40;i++){
+      (function(){
+        var piece = document.createElement('div');
+        piece.className = 'px-confetti-piece';
+        piece.style.left = Math.random()*100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+        piece.style.animationDelay = (Math.random()*0.4) + 's';
+        piece.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
+        document.body.appendChild(piece);
+        setTimeout(function(){ piece.remove(); }, 3000);
+      })();
+    }
+  };
+})();
+</script>
+
+<!-- ================= FINANCIAL: COPY RESULT BUTTONS ================= -->
+<script>
+(function(){
+  function pxCopyToClipboard(text, btn){
+    navigator.clipboard.writeText(text).then(function(){
+      var orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied!';
+      setTimeout(function(){ btn.innerHTML = orig; }, 1800);
+    });
+  }
+
+  function pxAddCopyButtons(){
+    // FIRE Calculator copy button
+    var fireResult = document.getElementById('nxFireCorpusAdj');
+    if (fireResult && !document.getElementById('pxFireCopyBtn')) {
+      var fireBtn = document.createElement('button');
+      fireBtn.className = 'px-copy-btn';
+      fireBtn.id = 'pxFireCopyBtn';
+      fireBtn.innerHTML = '📋 Copy Result';
+      fireBtn.onclick = function(){
+        var num = document.getElementById('nxFireNumber');
+        var age = document.getElementById('nxFireAgeResult');
+        var years = document.getElementById('nxFireYears');
+        var text = 'My FIRE Plan (Global Finance):\nFIRE Number: ' + (num?num.textContent:'') + '\nProjected FI Age: ' + (age?age.textContent:'') + '\nYears to Independence: ' + (years?years.textContent:'');
+        pxCopyToClipboard(text, fireBtn);
+      };
+      fireResult.closest('.nx-fire-result').appendChild(fireBtn);
+    }
+
+    // Tax Estimator copy button
+    var taxResult = document.querySelector('#gfTaxEngineSection .gf-tax-recommendation');
+    if (taxResult && !document.getElementById('pxTaxCopyBtn')) {
+      var taxBtn = document.createElement('button');
+      taxBtn.className = 'px-copy-btn';
+      taxBtn.id = 'pxTaxCopyBtn';
+      taxBtn.innerHTML = '📋 Copy Result';
+      taxBtn.onclick = function(){
+        var oldTax = document.getElementById('valOldTax');
+        var newTax = document.getElementById('valNewTax');
+        var rec = document.getElementById('recDetail');
+        var text = 'My Tax Estimate (Global Finance):\nOld Regime: ' + (oldTax?oldTax.textContent:'') + '\nNew Regime: ' + (newTax?newTax.textContent:'') + '\n' + (rec?rec.textContent:'');
+        pxCopyToClipboard(text, taxBtn);
+      };
+      taxResult.appendChild(taxBtn);
+    }
+  }
+
+  var pxFinAttempts = 0;
+  var pxFinTimer = setInterval(function(){
+    pxAddCopyButtons();
+    pxFinAttempts++;
+    if (pxFinAttempts > 30) clearInterval(pxFinTimer);
+  }, 300);
+})();
+</script>
+
+<!-- ================= TRADING: WATCHLIST DRAG-REORDER + POSITION COPY ================= -->
+<script>
+(function(){
+  var PX_WATCH_ORDER_KEY = 'px_watchlist_order_v1';
+
+  function pxGetSavedOrder(){
+    try { return JSON.parse(localStorage.getItem(PX_WATCH_ORDER_KEY)) || []; } catch(e) { return []; }
+  }
+  function pxSaveOrder(order){ try { localStorage.setItem(PX_WATCH_ORDER_KEY, JSON.stringify(order)); } catch(e) {} }
+
+  function pxApplyWatchOrder(){
+    var list = document.getElementById('tx4WatchList');
+    if (!list) return;
+    var rows = Array.prototype.slice.call(list.querySelectorAll('.tx4-watch-row'));
+    if (!rows.length) return;
+    var saved = pxGetSavedOrder();
+    if (saved.length) {
+      rows.sort(function(a,b){
+        var ai = saved.indexOf(a.id), bi = saved.indexOf(b.id);
+        if (ai === -1) ai = 999; if (bi === -1) bi = 999;
+        return ai - bi;
+      });
+      rows.forEach(function(r){ list.appendChild(r); });
+    }
+    rows.forEach(function(row){
+      if (row.dataset.pxDraggable) return;
+      row.dataset.pxDraggable = '1';
+      row.setAttribute('draggable', 'true');
+      row.style.cursor = 'grab';
+      row.addEventListener('dragstart', function(e){
+        e.dataTransfer.setData('text/plain', row.id);
+        row.style.opacity = '0.4';
+      });
+      row.addEventListener('dragend', function(){ row.style.opacity = '1'; });
+      row.addEventListener('dragover', function(e){ e.preventDefault(); });
+      row.addEventListener('drop', function(e){
+        e.preventDefault();
+        var draggedId = e.dataTransfer.getData('text/plain');
+        var draggedEl = document.getElementById(draggedId);
+        if (draggedEl && draggedEl !== row) {
+          row.parentNode.insertBefore(draggedEl, row);
+          var newOrder = Array.prototype.slice.call(list.querySelectorAll('.tx4-watch-row')).map(function(r){ return r.id; });
+          pxSaveOrder(newOrder);
+        }
+      });
+    });
+  }
+
+  if ('MutationObserver' in window) {
+    var pxWatchObserverTarget = null;
+    var pxWatchTimer = setInterval(function(){
+      var list = document.getElementById('tx4WatchList');
+      if (list && !pxWatchObserverTarget) {
+        pxWatchObserverTarget = list;
+        new MutationObserver(function(){ pxApplyWatchOrder(); }).observe(list, { childList: true });
+        pxApplyWatchOrder();
+        clearInterval(pxWatchTimer);
+      }
+    }, 400);
+  }
+
+  // Position Calculator — Copy as Text
+  function pxAddPositionCopyBtn(){
+    var summary = document.querySelector('#gfTradeDeskSection .td-summary');
+    if (summary && !document.getElementById('pxPosCopyBtn')) {
+      var btn = document.createElement('button');
+      btn.className = 'px-copy-btn';
+      btn.id = 'pxPosCopyBtn';
+      btn.style.marginTop = '10px';
+      btn.innerHTML = '📋 Copy Trade Plan';
+      btn.onclick = function(){
+        function v(id){ var el = document.getElementById(id); return el ? (el.value !== undefined ? el.value : el.textContent) : ''; }
+        var text = 'Trade Plan (Global Finance):\nBalance: ₹' + v('tdBalance') + '\nRisk: ' + v('tdRiskPct') + '%\nEntry: ₹' + v('tdEntry') + '\nStop Loss: ₹' + v('tdStop') + '\nTarget: ₹' + v('tdTarget') + '\nPosition Size: ' + v('tdPosSize') + '\nReward:Risk: ' + v('tdRR');
+        navigator.clipboard.writeText(text).then(function(){
+          var orig = btn.innerHTML;
+          btn.innerHTML = '✓ Copied!';
+          setTimeout(function(){ btn.innerHTML = orig; }, 1800);
+        });
+      };
+      summary.parentNode.appendChild(btn);
+    }
+  }
+  var pxPosAttempts = 0;
+  var pxPosTimer = setInterval(function(){
+    pxAddPositionCopyBtn();
+    pxPosAttempts++;
+    if (pxPosAttempts > 30) clearInterval(pxPosTimer);
+  }, 300);
+})();
+</script>
+
+<!-- ================= INVESTMENT: FUND SORT + GOAL CONFETTI ================= -->
+<script>
+(function(){
+  // Fund Directory — Sort by CAGR
+  function pxAddSortButton(){
+    var tabs = document.querySelector('#iv2FundsSection .iv2-funds-tabs');
+    if (tabs && !document.getElementById('pxSortCagrBtn')) {
+      var btn = document.createElement('button');
+      btn.className = 'px-sort-btn';
+      btn.id = 'pxSortCagrBtn';
+      btn.innerHTML = '↕ Sort by CAGR';
+      var sortDesc = true;
+      btn.onclick = function(){
+        var list = document.getElementById('iv2FundsList');
+        var cards = Array.prototype.slice.call(list.querySelectorAll('.iv2-funds-row'));
+        cards.sort(function(a,b){
+          var av = parseFloat((a.querySelector('.iv2-funds-cagr')||{}).textContent || '0');
+          var bv = parseFloat((b.querySelector('.iv2-funds-cagr')||{}).textContent || '0');
+          return sortDesc ? bv-av : av-bv;
+        });
+        cards.forEach(function(c){ list.appendChild(c); });
+        sortDesc = !sortDesc;
+        btn.classList.toggle('active');
+        btn.innerHTML = sortDesc ? '↕ Sort by CAGR (High→Low)' : '↕ Sort by CAGR (Low→High)';
+      };
+      tabs.appendChild(btn);
+    }
+  }
+  var pxSortAttempts = 0;
+  var pxSortTimer = setInterval(function(){
+    pxAddSortButton();
+    pxSortAttempts++;
+    if (pxSortAttempts > 30) clearInterval(pxSortTimer);
+  }, 300);
+
+  // Goal Planner — confetti when goal is already achievable with current savings
+  if (typeof window.nxGoalCalc === 'function') {
+    var pxOriginalGoalCalc = window.nxGoalCalc;
+    var pxLastConfettiState = false;
+    window.nxGoalCalc = function(){
+      pxOriginalGoalCalc();
+      var sipEl = document.getElementById('nxGoalSipRequired');
+      if (sipEl) {
+        var isZero = sipEl.textContent.indexOf('₹0 ') === 0 || sipEl.textContent.trim() === '₹0 /month';
+        if (isZero && !pxLastConfettiState) {
+          pxLastConfettiState = true;
+          if (typeof window.pxFireConfetti === 'function') window.pxFireConfetti();
+        } else if (!isZero) {
+          pxLastConfettiState = false;
+        }
+      }
+    };
+  }
+})();
+</script>
+
+<!-- ================= LOANS: DOCUMENTS CHECKLIST PROGRESS BAR ================= -->
+<script>
+(function(){
+  function pxEnsureBar(){
+    var progressEl = document.getElementById('ln2DocsProgress');
+    if (progressEl && !document.getElementById('pxDocsBarTrack')) {
+      var barHtml = '<div class="px-docs-bar-track" id="pxDocsBarTrack"><div class="px-docs-bar-fill" id="pxDocsBarFill" style="width:0%"></div></div>';
+      progressEl.insertAdjacentHTML('afterend', barHtml);
+    }
+  }
+  function pxUpdateBar(){
+    pxEnsureBar();
+    var cols = document.getElementById('ln2DocsCols');
+    var fill = document.getElementById('pxDocsBarFill');
+    if (!cols || !fill) return;
+    var total = cols.querySelectorAll('.ln2-docs-item').length;
+    var checked = cols.querySelectorAll('.ln2-docs-item.checked').length;
+    var pct = total > 0 ? (checked/total*100) : 0;
+    fill.style.width = pct + '%';
+  }
+
+  if (typeof window.ln2DocsToggle === 'function') {
+    var pxOrigToggle = window.ln2DocsToggle;
+    window.ln2DocsToggle = function(type, key){ pxOrigToggle(type, key); setTimeout(pxUpdateBar, 50); };
+  }
+  if (typeof window.ln2DocsShow === 'function') {
+    var pxOrigShow = window.ln2DocsShow;
+    window.ln2DocsShow = function(type, el){ pxOrigShow(type, el); setTimeout(pxUpdateBar, 50); };
+  }
+  var pxDocsAttempts = 0;
+  var pxDocsTimer = setInterval(function(){
+    pxUpdateBar();
+    pxDocsAttempts++;
+    if (pxDocsAttempts > 30) clearInterval(pxDocsTimer);
+  }, 300);
+})();
+</script>
+
+<!-- ================= EARNING: CSV EXPORT + FREELANCE CURRENCY TOGGLE ================= -->
+<script>
+(function(){
+  // Income Tracker — CSV export
+  function pxAddCsvExportBtn(){
+    var summary = document.querySelector('#et1TrackSection .et1-track-summary');
+    if (summary && !document.getElementById('pxCsvExportBtn')) {
+      var btn = document.createElement('button');
+      btn.className = 'px-copy-btn';
+      btn.id = 'pxCsvExportBtn';
+      btn.style.marginTop = '10px';
+      btn.innerHTML = '⬇ Export CSV';
+      btn.onclick = function(){
+        var list = [];
+        try { list = JSON.parse(localStorage.getItem('nx_side_hustle_income_v1')) || []; } catch(e) {}
+        if (!list.length) { alert('Koi income entry nahi hai abhi export karne ke liye.'); return; }
+        var csv = 'Date,Source,Description,Amount\n';
+        list.forEach(function(e){
+          csv += '"' + e.date + '","' + e.source + '","' + (e.desc||'').replace(/"/g,'""') + '",' + e.amt + '\n';
+        });
+        var blob = new Blob([csv], { type: 'text/csv' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'side-hustle-income-' + Date.now() + '.csv';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      };
+      summary.parentNode.insertBefore(btn, summary.nextSibling);
+    }
+  }
+  var pxCsvAttempts = 0;
+  var pxCsvTimer = setInterval(function(){
+    pxAddCsvExportBtn();
+    pxCsvAttempts++;
+    if (pxCsvAttempts > 30) clearInterval(pxCsvTimer);
+  }, 300);
+
+  // Freelance Rate Calculator — USD toggle
+  var pxUsdRate = 0.0114; // reference fallback, refined below if live fetch succeeds
+  fetch('https://open.er-api.com/v6/latest/INR').then(function(r){ return r.json(); }).then(function(d){
+    if (d && d.rates && d.rates.USD) pxUsdRate = d.rates.USD;
+  }).catch(function(){});
+
+  function pxAddCurrencyToggle(){
+    var resultBox = document.querySelector('#et1RateSection .et1-rate-result');
+    if (resultBox && !document.getElementById('pxCurToggle')) {
+      var wrap = document.createElement('div');
+      wrap.className = 'px-currency-toggle';
+      wrap.id = 'pxCurToggle';
+      wrap.innerHTML = '<button class="px-cur-btn active" id="pxCurInr">₹ INR</button><button class="px-cur-btn" id="pxCurUsd">$ USD</button>';
+      resultBox.appendChild(wrap);
+
+      var isUsd = false;
+      function pxConvertDisplay(){
+        var bigEl = document.getElementById('et1RateBigResult');
+        var weekEl = document.getElementById('et1RateWeekly');
+        var monEl = document.getElementById('et1RateMonthly');
+        if (!bigEl) return;
+        if (!bigEl.dataset.pxOrigInr) {
+          bigEl.dataset.pxOrigInr = bigEl.textContent;
+          weekEl.dataset.pxOrigInr = weekEl.textContent;
+          monEl.dataset.pxOrigInr = monEl.textContent;
+        }
+      }
+
+      document.getElementById('pxCurInr').onclick = function(){
+        isUsd = false;
+        document.getElementById('pxCurInr').classList.add('active');
+        document.getElementById('pxCurUsd').classList.remove('active');
+        var bigEl = document.getElementById('et1RateBigResult');
+        var weekEl = document.getElementById('et1RateWeekly');
+        var monEl = document.getElementById('et1RateMonthly');
+        if (bigEl && bigEl.dataset.pxOrigInr) bigEl.textContent = bigEl.dataset.pxOrigInr;
+        if (weekEl && weekEl.dataset.pxOrigInr) weekEl.textContent = weekEl.dataset.pxOrigInr;
+        if (monEl && monEl.dataset.pxOrigInr) monEl.textContent = monEl.dataset.pxOrigInr;
+      };
+      document.getElementById('pxCurUsd').onclick = function(){
+        isUsd = true;
+        document.getElementById('pxCurUsd').classList.add('active');
+        document.getElementById('pxCurInr').classList.remove('active');
+        [['et1RateBigResult'],['et1RateWeekly'],['et1RateMonthly']].forEach(function(pair){
+          var el = document.getElementById(pair[0]);
+          if (!el) return;
+          if (!el.dataset.pxOrigInr) el.dataset.pxOrigInr = el.textContent;
+          var num = parseFloat(el.dataset.pxOrigInr.replace(/[₹,]/g,'').replace(/\/hr|\/month/g,''));
+          if (isNaN(num)) return;
+          var usdVal = (num * pxUsdRate).toFixed(2);
+          var suffix = el.dataset.pxOrigInr.indexOf('/hr') > -1 ? '/hr' : (el.dataset.pxOrigInr.indexOf('/month') > -1 ? '/month' : '');
+          el.textContent = '$' + Number(usdVal).toLocaleString('en-US') + suffix;
+        });
+      };
+    }
+  }
+  var pxCurAttempts = 0;
+  var pxCurTimer = setInterval(function(){
+    pxAddCurrencyToggle();
+    pxCurAttempts++;
+    if (pxCurAttempts > 30) clearInterval(pxCurTimer);
+  }, 300);
+})();
+</script>
+  <!-- ================= ALPHA AI: UPDATE CREATOR RESPONSE (BOTH PARTNERS) ================= -->
+<script>
+(function(){
+  var PX_CREATOR_LINE = "मुझे केशव और [sartik rehal ] ने मिलकर बनाया है — दोनों इस प्रोजेक्ट के partners हैं।";
+  var PX_OLD_CREATOR_LINE = "मुझे केशव ने बनाया है।";
+
+  function pxPatchAIEngine(){
+    if (typeof AIEngine === 'undefined' || !AIEngine.processChat || AIEngine._pxPatched) return false;
+
+    var pxOriginalProcessChat = AIEngine.processChat.bind(AIEngine);
+    AIEngine.processChat = function(userPrompt, systemInstruction, onChunkCallback, genId){
+      if (systemInstruction && systemInstruction.indexOf(PX_OLD_CREATOR_LINE) > -1) {
+        systemInstruction = systemInstruction.split(PX_OLD_CREATOR_LINE).join(PX_CREATOR_LINE);
+      }
+      return pxOriginalProcessChat(userPrompt, systemInstruction, onChunkCallback, genId);
+    };
+    AIEngine._pxPatched = true;
+    return true;
+  }
+
+  // Also patch the standalone welcome-message generator, which builds its own prompt separately
+  function pxPatchWelcomeGenerator(){
+    if (typeof AIEngine === 'undefined' || !AIEngine.generateWelcome || AIEngine._pxWelcomePatched) return false;
+    var pxOriginalWelcome = AIEngine.generateWelcome.bind(AIEngine);
+    AIEngine.generateWelcome = async function(mode){
+      return pxOriginalWelcome(mode);
+    };
+    AIEngine._pxWelcomePatched = true;
+    return true;
+  }
+
+  var pxAttempts = 0;
+  var pxTimer = setInterval(function(){
+    var done1 = pxPatchAIEngine();
+    var done2 = pxPatchWelcomeGenerator();
+    pxAttempts++;
+    if ((done1 && done2) || pxAttempts > 40) clearInterval(pxTimer);
+  }, 200);
+})();
+</script>
 </body>
 </html>
