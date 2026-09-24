@@ -1,1 +1,467 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Game Hub — 12 Mast Games</title>
+<style>
+:root{
+  --bg1:#0f0c29; --bg2:#302b63; --bg3:#24243e;
+  --accent:#ff6ec7; --accent2:#00e5ff; --gold:#ffd166;
+  --card:#1c1836; --text:#f5f5ff;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+body{
+  height:100%;
+  font-family:'Segoe UI',system-ui,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ---------- INTRO ANIMATION ---------- */
+#intro{
+  position:fixed; inset:0; z-index:999;
+  display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 50% 50%, #2a1b5e, #0a0818 80%);
+  overflow:hidden;
+}
+.orbit-wrap{position:relative; width:280px; height:280px; animation:spinAll 3.2s cubic-bezier(.6,-0.2,.3,1.2) forwards;}
+@keyframes spinAll{
+  0%{transform:rotate(0deg) scale(0.2); opacity:0;}
+  40%{opacity:1;}
+  70%{transform:rotate(720deg) scale(1.15);}
+  100%{transform:rotate(900deg) scale(1); opacity:1;}
+}
+.orbit-ball{
+  position:absolute; width:34px; height:34px; border-radius:50%;
+  top:50%; left:50%; margin:-17px;
+  box-shadow:0 0 18px 4px currentColor;
+  animation:orbitspin 2.4s linear infinite;
+}
+.orbit-ball:nth-child(1){color:var(--accent); animation-delay:0s;}
+.orbit-ball:nth-child(2){color:var(--accent2); animation-delay:-0.8s;}
+.orbit-ball:nth-child(3){color:var(--gold); animation-delay:-1.6s;}
+@keyframes orbitspin{
+  from{transform:rotate(0deg) translateX(120px) rotate(0deg);}
+  to{transform:rotate(360deg) translateX(120px) rotate(-360deg);}
+}
+#introTitle{
+  position:absolute; text-align:center; font-size:2.1rem; font-weight:900;
+  background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  letter-spacing:2px; opacity:0; animation:fadeInTitle 1s ease forwards 2.1s;
+  text-shadow:0 0 30px rgba(255,255,255,.15);
+}
+@keyframes fadeInTitle{to{opacity:1;}}
+#intro.hide{animation:fadeOutIntro .6s ease forwards;}
+@keyframes fadeOutIntro{to{opacity:0; visibility:hidden;}}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center; padding:26px 14px 10px;
+  animation:dropIn .8s ease both;
+}
+@keyframes dropIn{from{transform:translateY(-30px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+header h1{
+  font-size:1.9rem; font-weight:900;
+  background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+header p{color:#bcb8e0; margin-top:6px; font-size:.9rem;}
+
+/* ---------- GRID ---------- */
+#grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:14px; padding:18px; max-width:1100px; margin:0 auto;
+}
+.card{
+  background:var(--card); border-radius:16px; padding:16px 10px;
+  text-align:center; cursor:pointer; border:1px solid #3a3568;
+  transform-style:preserve-3d; transition:transform .3s, box-shadow .3s;
+  opacity:0; animation:cardIn .5s ease forwards;
+}
+.card:hover{transform:translateY(-6px) rotate(-1deg) scale(1.04); box-shadow:0 10px 24px rgba(255,110,199,.25);}
+.card .ic{font-size:2.1rem; display:block; margin-bottom:6px;}
+.card .nm{font-weight:700; font-size:.92rem;}
+@keyframes cardIn{from{opacity:0; transform:translateY(24px) rotate(6deg);} to{opacity:1; transform:translateY(0) rotate(0);}}
+
+/* ---------- GAME PANEL ---------- */
+#panel{
+  display:none; max-width:520px; margin:20px auto 60px; background:var(--card);
+  border-radius:20px; padding:20px; border:1px solid #3a3568;
+  animation:panelIn .35s ease both;
+}
+@keyframes panelIn{from{opacity:0; transform:scale(.9);} to{opacity:1; transform:scale(1);}}
+#panel h2{margin-bottom:10px; color:var(--gold);}
+#backBtn{
+  background:none; border:1px solid var(--accent2); color:var(--accent2);
+  padding:6px 14px; border-radius:20px; cursor:pointer; margin-bottom:14px; font-size:.85rem;
+}
+#gameArea{min-height:220px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;}
+button.act{
+  background:linear-gradient(90deg,var(--accent),var(--accent2)); border:none; color:#111;
+  font-weight:700; padding:9px 18px; border-radius:24px; cursor:pointer; font-size:.9rem;
+}
+.cell{
+  width:64px; height:64px; background:#26214a; border:1px solid #453f80; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; font-size:1.8rem; cursor:pointer; user-select:none;
+}
+.grid3{display:grid; grid-template-columns:repeat(3,64px); gap:6px;}
+.grid4{display:grid; grid-template-columns:repeat(4,60px); gap:6px;}
+.small{width:60px; height:60px; font-size:1.4rem;}
+#status{font-size:.95rem; color:#cfcaee; text-align:center;}
+input.txt{padding:8px 10px; border-radius:10px; border:1px solid #453f80; background:#100e26; color:#fff; width:70%;}
+.simonbtn{width:70px; height:70px; border-radius:14px; opacity:.5; cursor:pointer;}
+.mole{width:64px; height:64px; background:#2c2650; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; cursor:pointer;}
+footer{text-align:center; color:#7c78a3; padding:20px; font-size:.8rem;}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <div class="orbit-wrap">
+    <div class="orbit-ball"></div>
+    <div class="orbit-ball"></div>
+    <div class="orbit-ball"></div>
+  </div>
+  <div id="introTitle">🎮 GAME HUB 🎮</div>
+</div>
+
+<header>
+  <h1>🎮 Ultimate Game Hub</h1>
+  <p>12 mast games — ek jagah, bina download ke!</p>
+</header>
+
+<div id="grid"></div>
+
+<div id="panel">
+  <button id="backBtn">⬅ Wapas</button>
+  <h2 id="gTitle"></h2>
+  <div id="gameArea"></div>
+</div>
+
+<footer>Made with ❤️ — sab games isi page par chalte hain</footer>
+
+<script>
+/* ---------------- INTRO ---------------- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('intro').classList.add('hide');
+  },2900);
+});
+
+/* ---------------- GAME LIST ---------------- */
+const games=[
+ {id:'ttt', icon:'❌⭕', name:'Tic Tac Toe'},
+ {id:'rps', icon:'✊✋✌️', name:'Rock Paper Scissors'},
+ {id:'memory', icon:'🧠', name:'Memory Match'},
+ {id:'guess', icon:'🔢', name:'Number Guess'},
+ {id:'reaction', icon:'⚡', name:'Reaction Test'},
+ {id:'coin', icon:'🪙', name:'Coin Flip'},
+ {id:'dice', icon:'🎲', name:'Dice Roll'},
+ {id:'simon', icon:'🎵', name:'Simon Says'},
+ {id:'mole', icon:'🔨', name:'Whack-a-Mole'},
+ {id:'color', icon:'🎨', name:'Color Match'},
+ {id:'type', icon:'⌨️', name:'Typing Speed'},
+ {id:'quiz', icon:'❓', name:'Quick Quiz'},
+];
+
+const grid=document.getElementById('grid');
+games.forEach((g,i)=>{
+  const c=document.createElement('div');
+  c.className='card';
+  c.style.animationDelay=(i*0.06)+'s';
+  c.innerHTML=`<span class="ic">${g.icon}</span><span class="nm">${g.name}</span>`;
+  c.onclick=()=>openGame(g.id,g.name);
+  grid.appendChild(c);
+});
+
+const panel=document.getElementById('panel');
+const gameArea=document.getElementById('gameArea');
+const gTitle=document.getElementById('gTitle');
+document.getElementById('backBtn').onclick=()=>{panel.style.display='none'; grid.style.display='grid';};
+
+function openGame(id,name){
+  grid.style.display='none';
+  panel.style.display='block';
+  gTitle.textContent=name;
+  gameArea.innerHTML='';
+  const builders={ttt:buildTTT,rps:buildRPS,memory:buildMemory,guess:buildGuess,
+    reaction:buildReaction,coin:buildCoin,dice:buildDice,simon:buildSimon,
+    mole:buildMole,color:buildColor,type:buildType,quiz:buildQuiz};
+  builders[id]();
+}
+
+/* ---------------- TIC TAC TOE ---------------- */
+function buildTTT(){
+  let board=Array(9).fill(''); let turn='X'; let over=false;
+  const wrap=document.createElement('div'); wrap.className='grid3';
+  const status=document.createElement('div'); status.id='status'; status.textContent="Turn: X";
+  for(let i=0;i<9;i++){
+    const c=document.createElement('div'); c.className='cell';
+    c.onclick=()=>{
+      if(over||board[i])return;
+      board[i]=turn; c.textContent=turn;
+      const w=checkWin(board);
+      if(w){status.textContent=w+" jeet gaya! 🎉"; over=true; return;}
+      if(!board.includes('')){status.textContent="Draw!"; over=true; return;}
+      turn=turn==='X'?'O':'X'; status.textContent="Turn: "+turn;
+    };
+    wrap.appendChild(c);
+  }
+  const reset=mkBtn('🔄 Restart',()=>buildTTT());
+  gameArea.append(wrap,status,reset);
+}
+function checkWin(b){
+  const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for(const [a,b1,c] of L){ if(b[a]&&b[a]===b[b1]&&b[a]===b[c]) return b[a]; }
+  return null;
+}
+
+/* ---------------- ROCK PAPER SCISSORS ---------------- */
+function buildRPS(){
+  const status=document.createElement('div'); status.id='status'; status.textContent="Choose your move:";
+  const row=document.createElement('div'); row.style.display='flex'; row.style.gap='10px';
+  const opts={'✊':'Rock','✋':'Paper','✌️':'Scissors'};
+  Object.entries(opts).forEach(([emo,name])=>{
+    const b=document.createElement('div'); b.className='cell small'; b.textContent=emo;
+    b.onclick=()=>{
+      const keys=Object.keys(opts); const cpu=keys[Math.floor(Math.random()*3)];
+      let res='Draw! 🤝';
+      if(name!==opts[cpu]){
+        const beats={'Rock':'Scissors','Paper':'Rock','Scissors':'Paper'};
+        res = beats[name]===opts[cpu] ? 'Aap jeete! 🎉' : 'Computer jeeta! 🤖';
+      }
+      status.textContent=`Aap: ${emo}  |  Computer: ${cpu}  →  ${res}`;
+    };
+    row.appendChild(b);
+  });
+  gameArea.append(status,row);
+}
+
+/* ---------------- MEMORY MATCH ---------------- */
+function buildMemory(){
+  const icons=['🍎','🍌','🍇','🍉','🍓','🍒','🍍','🥝'];
+  let cards=[...icons,...icons].sort(()=>Math.random()-.5);
+  let flipped=[]; let matched=0; let lock=false;
+  const status=document.createElement('div'); status.id='status'; status.textContent="Pairs mila do!";
+  const wrap=document.createElement('div'); wrap.className='grid4';
+  cards.forEach((icon,idx)=>{
+    const c=document.createElement('div'); c.className='cell small'; c.textContent='❔';
+    c.onclick=()=>{
+      if(lock||c.dataset.done||flipped.includes(c))return;
+      c.textContent=icon; flipped.push(c);
+      if(flipped.length===2){
+        lock=true;
+        setTimeout(()=>{
+          if(flipped[0].textContent===flipped[1].textContent){
+            flipped.forEach(f=>f.dataset.done='1'); matched++;
+            if(matched===icons.length) status.textContent="🎉 Sab match ho gaye!";
+          } else { flipped.forEach(f=>f.textContent='❔'); }
+          flipped=[]; lock=false;
+        },700);
+      }
+    };
+    wrap.appendChild(c);
+  });
+  gameArea.append(status,wrap);
+}
+
+/* ---------------- NUMBER GUESS ---------------- */
+function buildGuess(){
+  const target=Math.floor(Math.random()*100)+1; let tries=0;
+  const status=document.createElement('div'); status.id='status'; status.textContent="1-100 ke beech number socho!";
+  const inp=document.createElement('input'); inp.className='txt'; inp.type='number';
+  const btn=mkBtn('Guess',()=>{
+    const v=parseInt(inp.value); if(!v)return; tries++;
+    if(v===target) status.textContent=`🎉 Sahi! ${tries} tries me mila.`;
+    else if(v<target) status.textContent="Thoda aur bada socho ⬆️ (tries: "+tries+")";
+    else status.textContent="Thoda chota socho ⬇️ (tries: "+tries+")";
+  });
+  gameArea.append(status,inp,btn);
+}
+
+/* ---------------- REACTION TEST ---------------- */
+function buildReaction(){
+  const status=document.createElement('div'); status.id='status'; status.textContent="Ready ho jao...";
+  const box=document.createElement('div'); box.className='cell'; box.style.width='140px'; box.style.height='140px';
+  box.style.background='#553'; box.textContent="Wait...";
+  let start=0, waiting=false;
+  function go(){
+    waiting=false;
+    box.style.background='#553'; box.textContent="Wait...";
+    const delay=1000+Math.random()*2500;
+    setTimeout(()=>{ waiting=true; box.style.background='#1fbf5e'; box.textContent="TAP NOW!"; start=Date.now(); },delay);
+  }
+  box.onclick=()=>{
+    if(!waiting){ status.textContent="Bahut jaldi! Dobara try karo."; go(); return;}
+    const t=Date.now()-start;
+    status.textContent=`⚡ Reaction time: ${t} ms`;
+    go();
+  };
+  go();
+  gameArea.append(status,box);
+}
+
+/* ---------------- COIN FLIP ---------------- */
+function buildCoin(){
+  const status=document.createElement('div'); status.id='status'; status.textContent="Sikka uchalo!";
+  const coin=document.createElement('div'); coin.style.fontSize='4rem'; coin.textContent='🪙';
+  const btn=mkBtn('Flip',()=>{
+    coin.style.transition='transform .6s'; coin.style.transform='rotateY(1080deg)';
+    setTimeout(()=>{
+      const r=Math.random()<0.5?'Heads 🙂':'Tails 🙃';
+      status.textContent="Result: "+r;
+      coin.style.transition='none'; coin.style.transform='rotateY(0deg)';
+    },600);
+  });
+  gameArea.append(coin,status,btn);
+}
+
+/* ---------------- DICE ROLL ---------------- */
+function buildDice(){
+  const faces=['⚀','⚁','⚂','⚃','⚄','⚅'];
+  const status=document.createElement('div'); status.id='status'; status.textContent="Dice roll karo!";
+  const dice=document.createElement('div'); dice.style.fontSize='4rem'; dice.textContent='⚀';
+  const btn=mkBtn('Roll 🎲',()=>{
+    let n=0; const t=setInterval(()=>{ dice.textContent=faces[Math.floor(Math.random()*6)]; n++;
+      if(n>10){ clearInterval(t); const f=Math.floor(Math.random()*6); dice.textContent=faces[f]; status.textContent="Aapko mila: "+(f+1); }
+    },60);
+  });
+  gameArea.append(dice,status,btn);
+}
+
+/* ---------------- SIMON SAYS ---------------- */
+function buildSimon(){
+  const colors=[{c:'#ff5e5e',n:'red'},{c:'#5ef2ff',n:'blue'},{c:'#ffe45e',n:'yellow'},{c:'#7dff5e',n:'green'}];
+  let seq=[]; let userSeq=[]; let level=0; let accepting=false;
+  const status=document.createElement('div'); status.id='status'; status.textContent="Start dabao";
+  const wrap=document.createElement('div'); wrap.style.display='grid'; wrap.style.gridTemplateColumns='repeat(2,70px)'; wrap.style.gap='8px';
+  const btns=colors.map(col=>{
+    const b=document.createElement('div'); b.className='simonbtn'; b.style.background=col.c;
+    b.onclick=()=>{
+      if(!accepting)return;
+      flash(b); userSeq.push(col.n);
+      if(userSeq[userSeq.length-1]!==seq[userSeq.length-1]){ status.textContent="❌ Galat! Level "+level+" tak pahunche. Fir try karo."; accepting=false; return; }
+      if(userSeq.length===seq.length){ accepting=false; status.textContent="✅ Sahi! Agla level..."; setTimeout(nextLevel,900); }
+    };
+    wrap.appendChild(b); return b;
+  });
+  function flash(b){ b.style.opacity=1; setTimeout(()=>b.style.opacity=.5,250); }
+  function nextLevel(){
+    level++; userSeq=[]; seq.push(colors[Math.floor(Math.random()*4)].n);
+    status.textContent="Dekho level "+level; accepting=false;
+    let i=0;
+    const t=setInterval(()=>{
+      const idx=colors.findIndex(c=>c.n===seq[i]); flash(btns[idx]); i++;
+      if(i>=seq.length){ clearInterval(t); accepting=true; status.textContent="Ab dohrao!"; }
+    },600);
+  }
+  const start=mkBtn('▶ Start',()=>{ seq=[]; level=0; nextLevel(); });
+  gameArea.append(status,wrap,start);
+}
+
+/* ---------------- WHACK-A-MOLE ---------------- */
+function buildMole(){
+  let score=0; let timeLeft=20; let running=true;
+  const status=document.createElement('div'); status.id='status'; status.textContent="Score: 0 | Time: 20s";
+  const wrap=document.createElement('div'); wrap.className='grid3';
+  const holes=[];
+  for(let i=0;i<9;i++){ const h=document.createElement('div'); h.className='mole';
+    h.onclick=()=>{ if(h.textContent==='🐹'&&running){ score++; h.textContent=''; status.textContent=`Score: ${score} | Time: ${timeLeft}s`; } };
+    wrap.appendChild(h); holes.push(h);
+  }
+  const popper=setInterval(()=>{
+    if(!running)return;
+    holes.forEach(h=>h.textContent='');
+    holes[Math.floor(Math.random()*9)].textContent='🐹';
+  },700);
+  const timer=setInterval(()=>{
+    timeLeft--; status.textContent=`Score: ${score} | Time: ${timeLeft}s`;
+    if(timeLeft<=0){ running=false; clearInterval(timer); clearInterval(popper); holes.forEach(h=>h.textContent=''); status.textContent=`⏱️ Khatam! Final Score: ${score}`; }
+  },1000);
+  gameArea.append(status,wrap);
+}
+
+/* ---------------- COLOR MATCH ---------------- */
+function buildColor(){
+  const cols=['#ff5e5e','#5ef2ff','#ffe45e','#7dff5e','#c07dff','#ff9e5e'];
+  let score=0;
+  const status=document.createElement('div'); status.id='status'; status.textContent="Sahi color pe click karo!";
+  const target=document.createElement('div'); target.style.width='60px'; target.style.height='60px'; target.style.borderRadius='50%';
+  const wrap=document.createElement('div'); wrap.className='grid3';
+  function round(){
+    const correct=cols[Math.floor(Math.random()*cols.length)];
+    target.style.background=correct;
+    const opts=[correct]; while(opts.length<6){ const c=cols[Math.floor(Math.random()*cols.length)]; if(!opts.includes(c)) opts.push(c); }
+    opts.sort(()=>Math.random()-.5);
+    wrap.innerHTML='';
+    opts.forEach(c=>{
+      const b=document.createElement('div'); b.className='cell'; b.style.background=c;
+      b.onclick=()=>{ if(c===correct){ score++; status.textContent="✅ Sahi! Score: "+score; round(); } else status.textContent="❌ Galat, fir try karo. Score: "+score; };
+      wrap.appendChild(b);
+    });
+  }
+  round();
+  gameArea.append(status,target,wrap);
+}
+
+/* ---------------- TYPING SPEED ---------------- */
+function buildType(){
+  const sentences=["Practice makes a person perfect","Coding is fun and creative","Never give up on your dreams","Speed and accuracy dono zaruri hain"];
+  const target=sentences[Math.floor(Math.random()*sentences.length)];
+  const status=document.createElement('div'); status.id='status'; status.textContent="Neeche likhi line type karo:";
+  const show=document.createElement('div'); show.style.fontWeight='700'; show.style.color='var(--gold)'; show.textContent=target;
+  const inp=document.createElement('input'); inp.className='txt'; inp.style.width='90%';
+  let start=null;
+  inp.oninput=()=>{
+    if(!start) start=Date.now();
+    if(inp.value===target){
+      const secs=((Date.now()-start)/1000).toFixed(1);
+      const wpm=Math.round((target.split(' ').length/secs)*60);
+      status.textContent=`🎉 Poora! Time: ${secs}s  |  Speed: ${wpm} WPM`;
+    }
+  };
+  gameArea.append(status,show,inp);
+}
+
+/* ---------------- QUICK QUIZ ---------------- */
+function buildQuiz(){
+  const qs=[
+    {q:"Bharat ki rajdhani kya hai?",o:["Mumbai","Delhi","Kolkata","Chennai"],a:1},
+    {q:"Surya kis disha se udta hai?",o:["Purab","Paschim","Uttar","Dakshin"],a:0},
+    {q:"2+2*2 = ?",o:["6","8","4","2"],a:0},
+    {q:"Sabse bada grah kaunsa hai?",o:["Earth","Mars","Jupiter","Venus"],a:2},
+    {q:"Pani ka formula kya hai?",o:["CO2","H2O","O2","NaCl"],a:1},
+  ];
+  let i=0, score=0;
+  const status=document.createElement('div'); status.id='status';
+  const qBox=document.createElement('div'); qBox.style.fontWeight='700';
+  const wrap=document.createElement('div'); wrap.style.display='flex'; wrap.style.flexDirection='column'; wrap.style.gap='8px'; wrap.style.width='100%';
+  function render(){
+    if(i>=qs.length){ status.textContent=`🏁 Quiz khatam! Score: ${score}/${qs.length}`; qBox.textContent=''; wrap.innerHTML=''; return; }
+    const cur=qs[i]; qBox.textContent=`Q${i+1}: ${cur.q}`; wrap.innerHTML=''; status.textContent='';
+    cur.o.forEach((opt,idx)=>{
+      const b=mkBtn(opt,()=>{
+        if(idx===cur.a){ score++; status.textContent="✅ Sahi!"; } else status.textContent="❌ Galat!";
+        i++; setTimeout(render,600);
+      });
+      wrap.appendChild(b);
+    });
+  }
+  render();
+  gameArea.append(qBox,wrap,status);
+}
+
+/* ---------------- HELPERS ---------------- */
+function mkBtn(txt,fn){ const b=document.createElement('button'); b.className='act'; b.textContent=txt; b.onclick=fn; return b; }
+</script>
+</body>
+</html>
 
